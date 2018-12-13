@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7867C36215F8BE32510B3549 /* Pods_Mzyoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */; };
+		DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */; };
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
@@ -79,6 +80,7 @@
 /* Begin PBXFileReference section */
 		84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mzyoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5457EC0C6335A24A15B04CE /* Pods-Mzyoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mzyoon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon.release.xcconfig"; sourceTree = "<group>"; };
+		DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApprovalViewController.swift; sourceTree = "<group>"; };
 		DDB0F57EB0056E4AF113C9BB /* Pods-Mzyoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mzyoon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon.debug.xcconfig"; sourceTree = "<group>"; };
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				FD60980321A2CC8A00DCCF58 /* LocationViewController.swift */,
 				FD53A3D421A809450097B4D9 /* TailorListViewController.swift */,
 				FD63D6D221AEC2910024AE96 /* TailorListTableViewCell.swift */,
+				DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */,
 			);
 			path = HOME;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				FDFE07352189E49F0056E773 /* ActivityView.swift in Sources */,
 				FD60980221A2B27600DCCF58 /* AddressViewController.swift in Sources */,
 				FD5774B0219AB2F30026DBF8 /* GenderTableViewCell.swift in Sources */,
+				DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */,
 				FDC9BB922186F6F7003BA5C9 /* CartViewController.swift in Sources */,
 				FDC9BB8E2186F6CD003BA5C9 /* ProfileViewController.swift in Sources */,
 				FDC9BB872186F30D003BA5C9 /* HomeViewController.swift in Sources */,
