@@ -8,9 +8,12 @@
 
 import UIKit
 
-class OrderApprovalViewController: UIViewController {
+class OrderApprovalViewController: UIViewController
+{
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
+        print("SUCCESS")
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
