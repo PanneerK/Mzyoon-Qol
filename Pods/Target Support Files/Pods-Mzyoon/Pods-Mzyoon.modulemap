@@ -1,0 +1,6 @@
+framework module Pods_Mzyoon {
+  umbrella header "Pods-Mzyoon-umbrella.h"
+
+  export *
+  module * { export * }
+}

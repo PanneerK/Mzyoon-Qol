@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        GMSServices.provideAPIKey("AIzaSyDzbSJiihL4mPGX4J23kHxm-1swwYWIStA")
+
+        UserDefaults.standard.set(0, forKey: "screenValue")
+        
+        checkLogin()
+        
         return true
+    }
+    
+    func checkLogin()
+    {
+        if let screen = UserDefaults.standard.value(forKey: "screenAppearance") as? Int
+        {
+            print("SCREEN VALUE", screen)
+            
+            if screen == 0
+            {
+                window = UIWindow(frame: UIScreen.main.bounds)
+                let loginScreen = LoginViewController()
+                let navigationScreen = UINavigationController(rootViewController: loginScreen)
+                navigationScreen.isNavigationBarHidden = true
+                window?.rootViewController = navigationScreen
+                window?.makeKeyAndVisible()
+
+            }
+            else
+            {
+                window = UIWindow(frame: UIScreen.main.bounds)
+                let loginScreen = HomeViewController()
+                let navigationScreen = UINavigationController(rootViewController: loginScreen)
+                navigationScreen.isNavigationBarHidden = true
+                window?.rootViewController = navigationScreen
+                window?.makeKeyAndVisible()
+            }
+        }
+        else
+        {
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let loginScreen = LoginViewController()
+            let navigationScreen = UINavigationController(rootViewController: loginScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

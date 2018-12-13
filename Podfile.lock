@@ -1,0 +1,43 @@
+PODS:
+  - AlamofireDomain (4.1)
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
+    - GoogleMaps/Base
+  - GooglePlaces (2.7.0):
+    - GoogleMaps/Base (= 2.7.0)
+  - NVActivityIndicatorView (4.4.0):
+    - NVActivityIndicatorView/Presenter (= 4.4.0)
+  - NVActivityIndicatorView/Presenter (4.4.0)
+  - ReachabilitySwift (4.3.0)
+  - SideMenu (5.0.1)
+
+DEPENDENCIES:
+  - AlamofireDomain (~> 4.1)
+  - GoogleMaps
+  - GooglePlaces
+  - NVActivityIndicatorView
+  - ReachabilitySwift (~> 4.3)
+  - SideMenu
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AlamofireDomain
+    - GoogleMaps
+    - GooglePlaces
+    - NVActivityIndicatorView
+    - ReachabilitySwift
+    - SideMenu
+
+SPEC CHECKSUMS:
+  AlamofireDomain: 6a17c975e5fe8c10d8dbfdb1ab28e6dd0ae7cd41
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
+  NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SideMenu: 87efd943737bb83aedf0358884d09fcf5576636d
+
+PODFILE CHECKSUM: 253d33f97a05d3456207d7c708b96c1ae7cdba13
+
+COCOAPODS: 1.5.3
