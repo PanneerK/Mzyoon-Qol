@@ -42,7 +42,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
-    var customizationArray = [Int]()
+    var customizationArray = Int()
     let selectionImage1 = UIImageView()
 
     override func viewDidLoad()
@@ -461,41 +461,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selectionImage1.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         selectionImage1.image = UIImage(named: "selectionImage")
         selectionImage1.tag = sender.tag
+        sender.addSubview(selectionImage1)
         
-        if customizationArray.isEmpty == true
-        {
-            sender.addSubview(selectionImage1)
-            customizationArray.append(sender.tag)
-        }
-        else
-        {
-            for views in sender.subviews
-            {
-                if let findView = views.viewWithTag(sender.tag)
-                {
-                    if findView.tag == sender.tag
-                    {
-                        print("FIND VIEW", findView.description)
-                        findView.removeFromSuperview()
-                    }
-                    else
-                    {
-                        print("NOT SAME VIEW")
-                    }
-                }
-            }
-            
-            if customizationArray[0] != sender.tag
-            {
-                customizationArray.removeAll()
-                sender.addSubview(selectionImage1)
-                customizationArray.append(sender.tag)
-            }
-            else
-            {
-                customizationArray.removeAll()
-            }
-        }
+        customizationArray = sender.tag
     }
     
     @objc func dropDownButtonAction(sender : UIButton)
