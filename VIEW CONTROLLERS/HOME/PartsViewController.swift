@@ -8,11 +8,27 @@
 
 import UIKit
 
-class PartsViewController: UIViewController, UITextFieldDelegate
+class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDelegate
 {
+    let serviceCall = ServerAPI()
 
+    var viewTag = Int()
+    
     var x = CGFloat()
     var y = CGFloat()
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
+    // Parts...
+    var PartsIdArray = NSArray()
+    var PartsImagesArray = NSArray()
+    var convertedPartsImageArray = [UIImage]()
     
     
     override func viewDidLoad()
@@ -25,7 +41,8 @@ class PartsViewController: UIViewController, UITextFieldDelegate
         
         view.backgroundColor = UIColor.white
         
-        partsContent()
+        serviceCall.API_GetMeasurementParts(MeasurementParts: viewTag, delegate: self)
+        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -38,6 +55,94 @@ class PartsViewController: UIViewController, UITextFieldDelegate
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+        print("ERROR MESSAGE", errorMessage)
+    }
+    
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "MeasureScrollViewController"
+        // MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+    }
+    
+    
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+        }
+    }
+    
+    func API_CALLBACK_GetMeasurementParts(getParts: NSDictionary)
+    {
+        let ResponseMsg = getParts.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = getParts.object(forKey: "Result") as! NSArray
+            print("Result OF MEASUREMENT-2", Result)
+            
+            // Body Parts :
+            PartsIdArray = Result.value(forKey: "Id") as! NSArray
+            PartsImagesArray = Result.value(forKey: "Image") as! NSArray
+            
+            for i in 0..<PartsImagesArray.count
+            {
+                if let imageName = PartsImagesArray[i] as? String
+                {
+                    
+                    //  let api = "http://192.168.0.21/TailorAPI/images/Measurement2/\(imageName)"
+                    let api = "http://appsapi.mzyoon.com/images/Measurement2/\(imageName)"
+                    let apiurl = URL(string: api)
+                    print("PArts : ", api)
+                    
+                    if apiurl != nil
+                    {
+                        if let data = try? Data(contentsOf: apiurl!)
+                        {
+                            print("DATA OF IMAGE", data)
+                            if let image = UIImage(data: data)
+                            {
+                                self.convertedPartsImageArray.append(image)
+                                partsContent()
+                            }
+                        }
+                        else
+                        {
+                            let emptyImage = UIImage(named: "empty")
+                            self.convertedPartsImageArray.append(emptyImage!)
+                        }
+                    }
+                }
+                else if PartsImagesArray[i] is NSNull
+                {
+                    let emptyImage = UIImage(named: "empty")
+                    self.convertedPartsImageArray.append(emptyImage!)
+                }
+            }
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getParts.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetMeasurementParts"
+            ErrorStr = Result
+            DeviceError()
+        }
     }
     
     func partsContent()

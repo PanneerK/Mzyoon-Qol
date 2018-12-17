@@ -413,12 +413,22 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     @objc func dressTypeButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set(dressTypeArray[sender.tag - 1], forKey: "DressType")
-        print("DRESS TYPE OF SELECTED - \(sender.tag)", dressTypeArray[sender.tag])
-        let dressSubScreen = DressSubTypeViewController()
-        dressSubScreen.screenTag = sender.tag
-        dressSubScreen.headingTitle = dressTypeArray[sender.tag - 1] as! String
-        self.navigationController?.pushViewController(dressSubScreen, animated: true)
+        if sender.tag == 1
+        {
+            UserDefaults.standard.set(dressTypeArray[sender.tag - 1], forKey: "DressType")
+            print("DRESS TYPE OF SELECTED - \(sender.tag)", dressTypeArray[sender.tag])
+            let dressSubScreen = DressSubTypeViewController()
+            dressSubScreen.screenTag = sender.tag
+            dressSubScreen.headingTitle = dressTypeArray[sender.tag - 1] as! String
+            self.navigationController?.pushViewController(dressSubScreen, animated: true)
+        }
+        else
+        {
+            let emptyAlert = UIAlertController(title: "Alert", message: "We don't have sub types in this", preferredStyle: .alert)
+            emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(emptyAlert, animated: true, completion: nil)
+        }
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

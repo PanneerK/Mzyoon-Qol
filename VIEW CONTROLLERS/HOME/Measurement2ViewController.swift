@@ -120,7 +120,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         if ResponseMsg == "Success"
         {
             let Result = GetMeasurement1val.object(forKey: "Result") as! NSDictionary
-            print("Result OF MEASUREMENT-2", Result)
+            print("Result OF MEASUREMENT-21", Result)
             
             // Gender :
             let GenderImages = Result.object(forKey: "Image") as! NSArray
@@ -227,7 +227,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         if ResponseMsg == "Success"
         {
             let Result = GetMeasurement2val.object(forKey: "Result") as! NSArray
-            print("Result OF MEASUREMENT-2", Result)
+            print("Result OF MEASUREMENT-23", Result)
             
             // Body Parts :
             PartsIdArray = Result.value(forKey: "Id") as! NSArray
@@ -927,7 +927,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHandKneeLabel)
                 }
                 
-                for view in subView.subviews
+                /*for view in subView.subviews
                 {
                     for i in 0..<PartsIdArray.count
                     {
@@ -940,7 +940,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                             
                         }
                     }
-                }
+                }*/
             }
             else
             {
@@ -1356,8 +1356,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         return (5 * y)
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
         let partsScreen = PartsViewController()
+        partsScreen.viewTag = 2
         self.navigationController?.pushViewController(partsScreen, animated: true)
     }
 

@@ -17,8 +17,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-    var baseURL:String = "http://192.168.0.21/TailorAPI"
-//    var baseURL:String = "http://appsapi.mzyoon.com"
+//    var baseURL:String = "http://192.168.0.21/TailorAPI"
+    var baseURL:String = "http://appsapi.mzyoon.com"
     
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -488,13 +488,13 @@ class ServerAPI : NSObject
         }
     }
     
-    func API_IntroProfile(Id : Int,Name : String , delegate : ServerAPIDelegate)
+    func API_IntroProfile(Id : String, Name : String, profilePic : UIImage, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Intro Profile Page")
             
-            let parameters = ["Id" : Id, "Name" : Name] as [String : Any]
+            let parameters = ["Id" : Id, "Name" : Name, "ProfilePicture" : profilePic] as [String : Any]
             
             let urlString:String = String(format: "%@/Api/Shop/InsertBuyerName", arguments: [baseURL])
             
@@ -502,7 +502,6 @@ class ServerAPI : NSObject
             print("PARAMETERS", parameters)
             
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
-                print("REQUEST", request)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate

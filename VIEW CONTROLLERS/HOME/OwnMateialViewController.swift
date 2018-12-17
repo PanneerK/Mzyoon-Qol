@@ -13,7 +13,8 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     //ADD MATERIAL PARAMETERS
     let addMaterialView = UIView()
     let addMaterialImage = UIImageView()
-    
+    let notifyLabel = UILabel()
+
     //ADD MATERIAL PAGE PARAMETERS
     var materialCount = 0
     var imagePicker = UIImagePickerController()
@@ -100,22 +101,34 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         navigationTitle.text = "ADD MATERIAL"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        navigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         addMaterialNavigationBar.addSubview(navigationTitle)
         
-        addMaterialImage.frame = CGRect(x: (3 * x), y: addMaterialNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: view.frame.width - (4 * x))
+        addMaterialImage.frame = CGRect(x: (3 * x), y: addMaterialNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
         addMaterialImage.layer.cornerRadius = 5
         addMaterialImage.layer.borderWidth = 1
         addMaterialImage.layer.borderColor = UIColor.gray.cgColor
-        addMaterialImage.backgroundColor = UIColor.lightGray
+        addMaterialImage.backgroundColor = UIColor.white
         addMaterialImage.contentMode = .scaleToFill
         view.addSubview(addMaterialImage)
+        
+        if imageArray.count == 0
+        {
+            notifyLabel.frame = CGRect(x: x, y: ((addMaterialImage.frame.height - (3 * y)) / 2), width: addMaterialImage.frame.width - (2 * x), height: (5 * y))
+            notifyLabel.text = "Please add Image for reference"
+            notifyLabel.textColor = UIColor.black
+            notifyLabel.textAlignment = .center
+            notifyLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+            notifyLabel.font = notifyLabel.font.withSize((2 * x))
+            addMaterialImage.addSubview(notifyLabel)
+        }
         
         let addMaterialLabel = UILabel()
         addMaterialLabel.frame = CGRect(x: (2 * x), y: addMaterialImage.frame.maxY + (2 * x), width: view.frame.width, height: (2 * y))
         addMaterialLabel.text = "Add material image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
+        addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         view.addSubview(addMaterialLabel)
         
         addMaterialScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width, height: (8.25 * y))
@@ -221,6 +234,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             
             imageArray.append(pickedImage)
             materialCount += 1
+            notifyLabel.removeFromSuperview()
             addReferenceSubImage()
         }
         self.dismiss(animated: true, completion: nil)
