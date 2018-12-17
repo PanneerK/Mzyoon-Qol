@@ -12,6 +12,8 @@ import NVActivityIndicatorView
 class LoginViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate, UITextFieldDelegate
 {
     
+    let commonScreen = CommonViewController()
+    
     var x = CGFloat()
     var y = CGFloat()
     
@@ -54,7 +56,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     var selectedIndex = Int()
     
     var disableKeyboard = UITapGestureRecognizer()
-    var activityView = UIImageView()
+    var splashView = UIImageView()
     
     // Error PAram...
     var DeviceNum:String!
@@ -69,12 +71,13 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     let activityIndication = UIActivityIndicatorView()
     
     let countryCodeTableView = UITableView()
+    
+    let activeView = UIView()
+    let activityIndicator = UIActivityIndicatorView()
 
     override func viewDidLoad()
     {
         UserDefaults.standard.set(0, forKey: "screenAppearance")
-        
-        server.API_Profile(delegate: self)
         
         x = 10 / 375 * 100
         x = x * view.frame.width / 100
@@ -88,8 +91,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         button.addTarget(self, action: Selector(("helpless")), for: .touchUpInside)
 //        self.view.addSubview(button)
         deviceInformation()
-        screenContents()
-        startActivity()
+
+        splashScreen()
 
         self.addDoneButtonOnKeyboard()
         
@@ -98,24 +101,17 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         // Do any additional setup after loading the view.
     }
     
-    func startActivity()
+    func splashScreen()
     {
-        activityView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        activityView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        activityView.image = UIImage(named: "splashScreen")
-        view.addSubview(activityView)
-        
-        activityIndication.frame = CGRect(x: ((view.frame.width - (5 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
-        activityIndication.color = UIColor.white
-        activityIndication.style = .whiteLarge
-        activityIndication.startAnimating()
-//        activityView.addSubview(activityIndication)
+        splashView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        splashView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        splashView.image = UIImage(named: "splashScreen")
+        view.addSubview(splashView)
     }
     
-    func stopActivity()
+    func removeSplashScreen()
     {
-        activityView.removeFromSuperview()
-        activityIndication.stopAnimating()
+        splashView.removeFromSuperview()
     }
     
     func deviceInformation()
@@ -226,6 +222,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             countryFlagArray = result.value(forKey: "Flag") as! NSArray
        // }
+            
+            screenContents()
         
         print("COUNT OF", countryFlagArray.count)
         
@@ -269,7 +267,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
             
             countryCodeTableView.reloadData()
-            stopActivity()
+            removeSplashScreen()
         }
         else if responseMsg == "Failure"
         {
@@ -301,6 +299,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if responseMsg == "Success"
         {
+            activeStop()
             otpContents()
             secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
         }
@@ -333,16 +332,19 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         let ResponseMsg = loginResult.object(forKey: "ResponseMsg") as! String
      if ResponseMsg == "Success"
      {
-        let result = loginResult.object(forKey: "Result") as! String
+        let result = loginResult.object(forKey: "Result") as! Int
+        let UserId = loginResult.object(forKey: "UserId") as! String
+        
+        UserDefaults.standard.set(UserId, forKey: "userId")
                 
-        if result != "2" || result != "1"
+        if result != 2 || result != 1
         {
             let introProfileScreen = IntroProfileViewController()
             self.navigationController?.pushViewController(introProfileScreen, animated: true)
         }
         else
         {
-            let errorAlert = UIAlertController(title: "Error", message: result, preferredStyle: .alert)
+            let errorAlert = UIAlertController(title: "Error", message: "\(result)", preferredStyle: .alert)
             errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(errorAlert, animated: true, completion: nil)
         }
@@ -371,43 +373,56 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         view.addSubview(logoImageView)
                 
         let numberView = UIView()
-        numberView.frame = CGRect(x: 20, y: logoImageView.frame.maxY + 50, width: view.frame.width - 40, height: 50)
+        numberView.frame = CGRect(x: (2 * x), y: logoImageView.frame.maxY + (5 * y), width: view.frame.width - (4 * x), height: (5 * y))
         numberView.layer.cornerRadius = 5
         numberView.layer.borderWidth = 2
         numberView.layer.borderColor = UIColor.blue.cgColor
         //        view.addSubview(numberView)
         
-        mobileCountryCodeButton.frame = CGRect(x: 20, y: logoImageView.frame.maxY + (10 * y), width: 100, height: 30)
+        mobileCountryCodeButton.frame = CGRect(x: (2 * x), y: logoImageView.frame.maxY + (10 * y), width: (10 * x), height: (3 * y))
         mobileCountryCodeButton.backgroundColor = UIColor(red: 0.7647, green: 0.7882, blue: 0.7765, alpha: 1.0)
         mobileCountryCodeButton.addTarget(self, action: #selector(self.countryCodeButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(mobileCountryCodeButton)
         
         flagImageView.frame = CGRect(x: (x / 2), y: (y / 2), width: (2.5 * x), height: (mobileCountryCodeButton.frame.height - y))
-        flagImageView.image = UIImage(named: "empty")
+        if let imageName = countryFlagArray[0] as? String
+        {
+            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+            let apiurl = URL(string: api)
+            
+            if apiurl != nil
+            {
+                flagImageView.dowloadFromServer(url: apiurl!)
+            }
+            else
+            {
+                flagImageView.image = UIImage(named: "empty")
+            }
+        }
         mobileCountryCodeButton.addSubview(flagImageView)
         
         mobileCountryCodeLabel.frame = CGRect(x: flagImageView.frame.maxX + (x / 2), y: 0, width: (4 * x), height: mobileCountryCodeButton.frame.height)
-        mobileCountryCodeLabel.text = ""
+        mobileCountryCodeLabel.text = countryCodeArray[0] as! String
         mobileCountryCodeLabel.textColor = UIColor.black
         mobileCountryCodeLabel.textAlignment = .left
-        mobileCountryCodeLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
+        mobileCountryCodeLabel.font = UIFont(name: "Avenir-Heavy", size: (1.8 * x))
         mobileCountryCodeButton.addSubview(mobileCountryCodeLabel)
         
         let downArrowImageView = UIImageView()
-        downArrowImageView.frame = CGRect(x: mobileCountryCodeButton.frame.width - 20, y: ((mobileCountryCodeButton.frame.height - 15) / 2), width: 15, height: 15)
+        downArrowImageView.frame = CGRect(x: mobileCountryCodeButton.frame.width - (2 * y), y: ((mobileCountryCodeButton.frame.height - (1.5 * x)) / 2), width: (1.5 * x), height: (1.5 * y))
         downArrowImageView.image = UIImage(named: "downArrow")
         mobileCountryCodeButton.addSubview(downArrowImageView)
         
         let mobileImageView = UIImageView()
-        mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: logoImageView.frame.maxY + (10 * y), width: 18, height: 28)
+        mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: logoImageView.frame.maxY + (10 * y), width: (1.8 * x), height: (2.8 * y))
         mobileImageView.image = UIImage(named: "mobile")
         view.addSubview(mobileImageView)
         
-        mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: logoImageView.frame.maxY + (10 * y), width: numberView.frame.width - 120, height: 30)
+        mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: logoImageView.frame.maxY + (10 * y), width: numberView.frame.width - (12 * x), height: (3 * y))
         mobileTextField.placeholder = "Mobile Number"
         mobileTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
         mobileTextField.textAlignment = .left
-        mobileTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
+        mobileTextField.font = UIFont(name: "Avenir-Heavy", size: (1.8 * x))
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.mobileTextField.frame.height))
         mobileTextField.leftView = paddingView
         mobileTextField.leftViewMode = UITextField.ViewMode.always
@@ -423,12 +438,12 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         underline.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
         view.addSubview(underline)
         
-        continueButton.frame = CGRect(x: 20, y: mobileTextField.frame.maxY + 50, width: view.frame.width - 40, height: 40)
+        continueButton.frame = CGRect(x: (2 * x), y: mobileTextField.frame.maxY + (5 * y), width: view.frame.width - (4 * x), height: (4 * y))
         continueButton.layer.cornerRadius = 5
         continueButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         continueButton.setTitle("CONTINUE", for: .normal)
         continueButton.setTitleColor(UIColor.white, for: .normal)
-        //        continueButton.setImage(UIImage(named: "continue"), for: .normal)
+        continueButton.titleLabel?.font = continueButton.titleLabel?.font.withSize(1.5 * x)
         continueButton.addTarget(self, action: #selector(self.continueButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(continueButton)
         
@@ -437,12 +452,18 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         languageHeadingLabel.text = "CHOOSE LANGUAGE"
         languageHeadingLabel.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
         languageHeadingLabel.textAlignment = .center
-        languageHeadingLabel.font = UIFont(name: "Avenir-Heavy", size: 12)
+        languageHeadingLabel.font = UIFont(name: "Avenir-Heavy", size: (1.2 * x))
         view.addSubview(languageHeadingLabel)
         
         let languageButton = UIButton()
-        languageButton.frame = CGRect(x: 20, y: languageHeadingLabel.frame.maxY + y, width: view.frame.width - 40, height: 40)
-        languageButton.setImage(UIImage(named: "languageBackground"), for: .normal)
+        languageButton.frame = CGRect(x: (2 * x), y: languageHeadingLabel.frame.maxY + y, width: view.frame.width - (4 * x), height: (4 * y))
+        languageButton.layer.borderWidth = 1
+        languageButton.layer.borderColor = UIColor.lightGray.cgColor
+        languageButton.backgroundColor = UIColor.white
+        languageButton.setTitle("English", for: .normal)
+        languageButton.setTitleColor(UIColor.black, for: .normal)
+        languageButton.titleLabel?.font = languageButton.titleLabel?.font.withSize(1.5 * x)
+//        languageButton.setImage(UIImage(named: "languageBackground"), for: .normal)
 //        languageButton.addTarget(self, action: #selector(self.continueButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(languageButton)
         
@@ -457,7 +478,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         languageLabel.textColor = UIColor.black
         languageLabel.textAlignment = .left
         languageLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
-        languageButton.addSubview(languageLabel)
+//        languageButton.addSubview(languageLabel)
     }
     
     
@@ -547,9 +568,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     {
         blurView.removeFromSuperview()
     }
-    
-    
-    
+        
     @objc func continueButtonAction(sender : UIButton)
     {
         let deviceId = UIDevice.current.identifierForVendor
@@ -575,9 +594,29 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
             else
             {
+                active()
                 server.API_LoginUser(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, delegate: self)
             }
         }
+    }
+    
+    func active()
+    {
+        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(activeView)
+        
+        activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicator.color = UIColor.white
+        activityIndicator.style = .whiteLarge
+        activityIndicator.startAnimating()
+        activeView.addSubview(activityIndicator)
+    }
+    
+    func activeStop()
+    {
+        activeView.removeFromSuperview()
+        activityIndicator.stopAnimating()
     }
     
     func otpContents()
@@ -607,7 +646,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
 //        otpNavigationBar.addSubview(otpBackButton)
         
         let otpImageView = UIImageView()
-        otpImageView.frame = CGRect(x: ((otpNavigationBar.frame.width - (10 * x)) / 2), y: otpNavigationBar.frame.height - (5 * y), width: (10 * x), height: (10 * y))
+        otpImageView.frame = CGRect(x: ((otpNavigationBar.frame.width - (10 * x)) / 2), y: otpNavigationBar.frame.height - (5 * x), width: (10 * x), height: (10 * x))
         otpImageView.layer.cornerRadius = otpImageView.frame.height / 2
         otpImageView.image = UIImage(named: "otpMessage")
         otpNavigationBar.addSubview(otpImageView)
@@ -621,11 +660,12 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
 //        otpView.addSubview(titleLabel)
         
         let otpEnterLabel = UILabel()
-        otpEnterLabel.frame = CGRect(x: 0, y: otpImageView.frame.maxY + (2 * y), width: otpView.frame.width, height: (2 * y))
+        otpEnterLabel.frame = CGRect(x: 0, y: otpImageView.frame.maxY + y, width: otpView.frame.width, height: (2 * y))
         otpEnterLabel.text = "Verify your phone number"
         otpEnterLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         otpEnterLabel.textAlignment = .center
-        otpEnterLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        otpEnterLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+        otpEnterLabel.font = otpEnterLabel.font.withSize(1.5 * x)
         otpView.addSubview(otpEnterLabel)
         
         
@@ -635,7 +675,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         //        otp1Letter.layer.borderColor = UIColor.white.cgColor
         otp1Letter.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         otp1Letter.textAlignment = .center
-        otp1Letter.font = UIFont(name: "Avenir-Heavy", size: 40)
+        otp1Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp1Letter.adjustsFontSizeToFitWidth = true
         otp1Letter.keyboardType = .numberPad
         otp1Letter.clearsOnBeginEditing = true
@@ -659,7 +699,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         //        otp2Letter.layer.borderColor = UIColor.white.cgColor
         otp2Letter.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         otp2Letter.textAlignment = .center
-        otp2Letter.font = UIFont(name: "Avenir-Heavy", size: 40)
+        otp2Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp2Letter.adjustsFontSizeToFitWidth = true
         otp2Letter.keyboardType = .numberPad
         otp2Letter.clearsOnBeginEditing = true
@@ -681,7 +721,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         //        otp3Letter.layer.borderColor = UIColor.white.cgColor
         otp3Letter.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         otp3Letter.textAlignment = .center
-        otp3Letter.font = UIFont(name: "Avenir-Heavy", size: 40)
+        otp3Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp3Letter.adjustsFontSizeToFitWidth = true
         otp3Letter.keyboardType = .numberPad
         otp3Letter.clearsOnBeginEditing = true
@@ -703,7 +743,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         //        otp4Letter.layer.borderColor = UIColor.white.cgColor
         otp4Letter.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         otp4Letter.textAlignment = .center
-        otp4Letter.font = UIFont(name: "Avenir-Heavy", size: 40)
+        otp4Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp4Letter.adjustsFontSizeToFitWidth = true
         otp4Letter.keyboardType = .numberPad
         otp4Letter.clearsOnBeginEditing = true
@@ -725,7 +765,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         //        otp5Letter.layer.borderColor = UIColor.white.cgColor
         otp5Letter.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         otp5Letter.textAlignment = .center
-        otp5Letter.font = UIFont(name: "Avenir-Heavy", size: 40)
+        otp5Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp5Letter.keyboardType = .numberPad
         otp5Letter.clearsOnBeginEditing = true
         otp5Letter.returnKeyType = .next
@@ -746,7 +786,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         //        otp6Letter.layer.borderColor = UIColor.white.cgColor
         otp6Letter.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         otp6Letter.textAlignment = .center
-        otp6Letter.font = UIFont(name: "Avenir-Heavy", size: 40)
+        otp6Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp6Letter.adjustsFontSizeToFitWidth = true
         otp6Letter.keyboardType = .numberPad
         otp6Letter.clearsOnBeginEditing = true
@@ -762,7 +802,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp6Letter.layer.addSublayer(border6)
         otp6Letter.layer.masksToBounds = true
         
-        act = NVActivityIndicatorView(frame: CGRect(x: ((view.frame.width - (15 * x)) / 2), y: otp6Letter.frame.maxY + (5 * y), width: (15 * x), height: (15 * y)), type: NVActivityIndicatorType.circleStrokeSpin, color: UIColor.orange, padding: 5.0)
+        act = NVActivityIndicatorView(frame: CGRect(x: ((view.frame.width - (15 * x)) / 2), y: otp6Letter.frame.maxY + (3 * y), width: (15 * x), height: (15 * x)), type: NVActivityIndicatorType.circleStrokeSpin, color: UIColor.orange, padding: 5.0)
         act.startAnimating()
         otpView.addSubview(act)
         
@@ -774,13 +814,13 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
 //        otpView.addSubview(whiteCircle)
         
         secButton.isEnabled = false
-        secButton.frame = CGRect(x: ((view.frame.width - (7.5 * x)) / 2), y: act.frame.minY + ((act.frame.height - (7.5 * y)) / 2), width: (7.5 * x), height: (7.5 * y))
+        secButton.frame = CGRect(x: ((view.frame.width - (7.5 * x)) / 2), y: act.frame.minY + ((act.frame.height - (7.5 * x)) / 2), width: (7.5 * x), height: (7.5 * x))
         secButton.layer.cornerRadius = secButton.frame.height / 2
         secButton.layer.masksToBounds = true
         secButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0)
         secButton.setTitle("30 s", for: .normal)
         secButton.setTitleColor(UIColor.white, for: .normal)
-        secButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 17)
+        secButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: (1.7 * x))
         secButton.addTarget(self, action: #selector(self.resendButtonAction(sender:)), for: .touchUpInside)
         otpView.addSubview(secButton)
         

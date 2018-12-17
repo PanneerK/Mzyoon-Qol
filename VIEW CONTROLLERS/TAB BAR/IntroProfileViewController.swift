@@ -31,6 +31,9 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     let serviceCall = ServerAPI()
     
+    let activeView = UIView()
+    let activityIndicator = UIActivityIndicatorView()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -85,6 +88,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func API_CALLBACK_IntroProfile(introProf: NSDictionary)
     {
+        print("introProf", introProf)
         let ResponseMsg = introProf.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
@@ -94,6 +98,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
             
             if Result == "1"
             {
+                activeStop()
                 let homeScreen = HomeViewController()
                 self.navigationController?.pushViewController(homeScreen, animated: true)
             }
@@ -151,7 +156,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         introProfileNavigationBar.addSubview(navigationTitle)
         
-        userImage.frame = CGRect(x: ((view.frame.width - (20 * x)) / 2), y: introProfileNavigationBar.frame.maxY + (5 * y), width: (20 * x), height: (20 * y))
+        userImage.frame = CGRect(x: ((view.frame.width - (20 * x)) / 2), y: introProfileNavigationBar.frame.maxY + (5 * y), width: (20 * x), height: (20 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.backgroundColor = UIColor.red
         userImage.image = UIImage(named: "imgpsh_fullsizebai")
@@ -202,6 +207,25 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         introProfileNextButton.setTitleColor(UIColor.white, for: .normal)
         introProfileNextButton.addTarget(self, action: #selector(self.introProfileNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(introProfileNextButton)
+    }
+    
+    func active()
+    {
+        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(activeView)
+        
+        activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicator.color = UIColor.white
+        activityIndicator.style = .whiteLarge
+        activityIndicator.startAnimating()
+        activeView.addSubview(activityIndicator)
+    }
+    
+    func activeStop()
+    {
+        activeView.removeFromSuperview()
+        activityIndicator.stopAnimating()
     }
     
     @objc func cameraButtonAction(sender : UIButton)
@@ -256,14 +280,37 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         }
         else
         {
-            FileHandler().saveImageDocumentDirectory(image: userImage.image!)
-            UserDefaults.standard.set(userNameTextField.text!, forKey: "UserName")
-            let profName = userNameTextField.text
-            let profId = 1
-            print("ENTERED NAME", userNameTextField.text!)
-            serviceCall.API_IntroProfile(Id: profId, Name: userNameTextField.text!, delegate: self)
-            UserDefaults.standard.set(userNameTextField.text!, forKey: "Name")
+            active()
+            
+            if userImage.image != nil
+            {
+                FileHandler().saveImageDocumentDirectory(image: userImage.image!)
+                
+                UserDefaults.standard.set(userNameTextField.text!, forKey: "UserName")
+                print("WELCOME", UserDefaults.standard.value(forKey: "userId"))
+//                if let profId = UserDefaults.standard.value(forKey: "userId") as? String
+//                {
+//                    print("ENTERED NAME", userNameTextField.text!)
+//                    serviceCall.API_IntroProfile(Id: profId, Name: userNameTextField.text!, profilePic: userImage.image!, delegate: self)
+//                }
+                UserDefaults.standard.set(userNameTextField.text!, forKey: "Name")
+                
+                activeStop()
+                let homeScreen = HomeViewController()
+                self.navigationController?.pushViewController(homeScreen, animated: true)
+            }
+            else
+            {
+                let imageAlert = UIAlertController(title: "Alert", message: "Please choose profile image", preferredStyle: .alert)
+                imageAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: imageAlertOkAction(action:)))
+                self.present(imageAlert, animated: true, completion: nil)
+            }
         }
+    }
+    
+    func imageAlertOkAction(action : UIAlertAction)
+    {
+        self.activeStop()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

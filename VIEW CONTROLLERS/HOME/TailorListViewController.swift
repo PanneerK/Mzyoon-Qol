@@ -545,6 +545,11 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func mapViewContents(isHidden : Bool)
     {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestWhenInUseAuthorization()
             locationManager.delegate = self

@@ -221,9 +221,19 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     @objc func dressTypeButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set(dressSubTypeArray[sender.tag], forKey: "DressSubType")
-        let orderTypeScreen = OrderTypeViewController()
-        self.navigationController?.pushViewController(orderTypeScreen, animated: true)
+        if sender.tag == 1
+        {
+            UserDefaults.standard.set(dressSubTypeArray[sender.tag], forKey: "DressSubType")
+            let orderTypeScreen = OrderTypeViewController()
+            self.navigationController?.pushViewController(orderTypeScreen, animated: true)
+        }
+        else
+        {
+            let emptyAlert = UIAlertController(title: "Alert", message: "We don't have sub types", preferredStyle: .alert)
+            emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(emptyAlert, animated: true, completion: nil)
+        }
+        
     }
     
     /*

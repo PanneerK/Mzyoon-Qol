@@ -13,6 +13,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     //ADD MATERIAL PARAMETERS
     let addReferenceView = UIView()
     let addReferenceImage = UIImageView()
+    let notifyLabel = UILabel()
     
     //ADD MATERIAL PAGE PARAMETERS
     var materialCount = 0
@@ -69,18 +70,31 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         navigationTitle.text = "ADD REFERENCE IMAGE"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        navigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         addMaterialNavigationBar.addSubview(navigationTitle)
         
-        addReferenceImage.frame = CGRect(x: (3 * x), y: addMaterialNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: view.frame.width - (4 * x))
-        addReferenceImage.backgroundColor = UIColor.lightGray
+        addReferenceImage.frame = CGRect(x: (3 * x), y: addMaterialNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
+        addReferenceImage.layer.borderWidth = 1
+        addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
+        addReferenceImage.backgroundColor = UIColor.white
         view.addSubview(addReferenceImage)
+        
+        if materialCount == 0
+        {
+            notifyLabel.frame = CGRect(x: x, y: ((addReferenceImage.frame.height - (3 * y)) / 2), width: addReferenceImage.frame.width - (2 * x), height: (5 * y))
+            notifyLabel.text = "Please add Image for reference"
+            notifyLabel.textColor = UIColor.black
+            notifyLabel.textAlignment = .center
+            notifyLabel.font = notifyLabel.font.withSize((1.5 * x))
+            addReferenceImage.addSubview(notifyLabel)
+        }
         
         let addMaterialLabel = UILabel()
         addMaterialLabel.frame = CGRect(x: (2 * x), y: addReferenceImage.frame.maxY + (2 * x), width: view.frame.width, height: (2 * y))
         addMaterialLabel.text = "Add material image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
+        addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         view.addSubview(addMaterialLabel)
         
         addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width, height: (8.25 * y))

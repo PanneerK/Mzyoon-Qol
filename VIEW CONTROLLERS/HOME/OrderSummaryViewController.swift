@@ -216,8 +216,18 @@ class OrderSummaryViewController: CommonViewController
     @objc func submitButtonAction(sender : UIButton)
     {
         let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(randomInt)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func navigateToHomeScreen(action : UIAlertAction)
+    {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let loginScreen = HomeViewController()
+        let navigationScreen = UINavigationController(rootViewController: loginScreen)
+        navigationScreen.isNavigationBarHidden = true
+        window?.rootViewController = navigationScreen
+        window?.makeKeyAndVisible()
     }
 
     /*

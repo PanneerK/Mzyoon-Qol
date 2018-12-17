@@ -216,8 +216,6 @@ class CommonViewController: UIViewController
             stopActivity()
             navigateScreen = ContactUsViewController()
         }*/
-        
-     
     }
     
 
