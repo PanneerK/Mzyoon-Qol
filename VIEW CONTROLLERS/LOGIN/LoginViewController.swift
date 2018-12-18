@@ -119,7 +119,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         print("MODEL", UIDevice.current.model)
         print("SYSTEM NAME", UIDevice.current.systemName)
         print("VERSION", UIDevice.current.systemVersion)
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString)
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
     }
     
     func addDoneButtonOnKeyboard()
