@@ -1046,5 +1046,38 @@ class ServerAPI : NSObject
     }
     
     
+    // Order Summary...
+    func API_InsertOrderSummary(dressType : Int, CustomerId : Int, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [UIImage], ReferenceImage : [UIImage], OrderCustomizationAttributeId : [Int], OrderCustomizationAttributeImageId : [Int], TailorId : [Int], MeasurementBy : String, CreatedBy : Int, MeasurementName : String, UserMeasurementValuesId : [Int], UserMeasurementValues : String, DeliveryTypeId : Int, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Order Summary Page")
+            
+            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage[0][Image]" : "\(MaterialImage)", "ReferenceImage[0][Image]" : "\(ReferenceImage)" , "OrderCustomization[0][CustomizationAttributeId]" : "\(OrderCustomizationAttributeId)", "OrderCustomization[0][AttributeImageId]" : "\(OrderCustomizationAttributeImageId)", "TailorId[0][Id]" : "\(TailorId)", "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurementValues[0][UserMeasurementId]" : "\(UserMeasurementValuesId)", "UserMeasurementValues[0][Value]" : "\(UserMeasurementValues)", "DeliveryTypeId" : DeliveryTypeId ] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/InsertOrder", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_InsertOrderSummary!(insertOrder: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Insert Order Summary Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
     
 }
