@@ -564,6 +564,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     @objc func saveAndNextButtonAction(sender : UIButton)
     {
+        let BuyerId = 10
         let FirstNameStr = firstNameEnglishTextField.text
         let lastNameStr = secondNameEnglishTextField.text
         let CountryId = 1
@@ -579,7 +580,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let latitude = 1.2345
         let longitude = 2.2345
         
-        serviceCall.API_InsertAddress(FirstName: FirstNameStr!, LastName: lastNameStr!, CountryId: CountryId, StateId: stateId, Area: AreaStr!, Floor: floorStr!, LandMark: LandmarkStr!, LocationType: locationTypeStr!, ShippingNotes: shippingStr!, IsDefault: SetDefaultStr, CountryCode: CountryCode, PhoneNo: PhoneNum!, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+        serviceCall.API_InsertAddress(BuyerId: BuyerId, FirstName: FirstNameStr!, LastName: lastNameStr!, CountryId: CountryId, StateId: stateId, Area: AreaStr!, Floor: floorStr!, LandMark: LandmarkStr!, LocationType: locationTypeStr!, ShippingNotes: shippingStr!, IsDefault: SetDefaultStr, CountryCode: CountryCode, PhoneNo: PhoneNum!, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
     }
 
     /*
