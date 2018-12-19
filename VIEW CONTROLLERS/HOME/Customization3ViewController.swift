@@ -44,6 +44,12 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     var customizationArray = Int()
     let selectionImage1 = UIImageView()
+    
+    var customLapels = [String : String]()
+    var customButtons = [String : String]()
+    var customPockets = [String : String]()
+    var selectedCustom = String()
+    var customDict = [String : String]()
 
     override func viewDidLoad()
     {
@@ -364,6 +370,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownButton.addTarget(self, action: #selector(self.dropDownButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(dropDownButton)
         
+        customDict["\(CustomizationAttNameArray[0])"] = ""
+        selectedCustom = CustomizationAttNameArray[0] as! String
+        
         let dropDownImageView = UIImageView()
         dropDownImageView.frame = CGRect(x: dropDownButton.frame.width - (3 * x), y: y, width: (2 * x), height: (2 * y))
         dropDownImageView.image = UIImage(named: "downArrow")
@@ -463,6 +472,21 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selectionImage1.tag = sender.tag
         sender.addSubview(selectionImage1)
         
+        for i in 0..<CustomizationAttNameArray.count
+        {
+            if let selectionCustom = CustomizationAttNameArray[i] as? String
+            {
+                print("EQUATING", selectionCustom, selectedCustom)
+
+                if selectionCustom == selectedCustom
+                {
+                    customDict[selectedCustom] = "\(sender.tag)"
+                }
+            }
+        }
+        
+        print("CUSTOM DICT", customDict)
+        
         customizationArray = sender.tag
     }
     
@@ -484,6 +508,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     func customizaionAlertAction(action : UIAlertAction)
     {
         print("ALERT ADD ACTION", action.title!.uppercased())
+        
+        selectedCustom = action.title!.lowercased()
+        
         dropDownButton.setTitle(action.title!.uppercased(), for: .normal)
         
         for i in 0..<CustomizationAttNameArray.count
@@ -501,8 +528,52 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func customization3NextButtonAction(sender : UIButton)
     {
-        let measurement1Screen = Measurement1ViewController()
-        self.navigationController?.pushViewController(measurement1Screen, animated: true)
+        print("NEXT ACTION", CustomizationAttNameArray.count, customDict.count)
+        
+        print("SELECTED CUSTOM", customDict.count)
+        if CustomizationAttNameArray.count == customDict.count
+        {
+            let measurement1Screen = Measurement1ViewController()
+            self.navigationController?.pushViewController(measurement1Screen, animated: true)
+        }
+        else
+        {
+            for i in 0..<customDict.count
+            {
+                for j in 0..<CustomizationAttNameArray.count
+                {
+                    if let str = CustomizationAttNameArray[j] as? String
+                    {
+                        if str != Array(customDict)[i].key
+                        {
+                            let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(str) and procced to next", preferredStyle: .alert)
+                            customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                            self.present(customEmptyAlert, animated: true, completion: nil)
+                            
+                            return
+                        }
+                    }
+                }
+            }
+            
+            /*for i in 0..<CustomizationAttNameArray.count
+            {
+                if let str = CustomizationAttNameArray[i] as? String
+                {
+                    if str != Array(customDict)[i].key
+                    {
+                        let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(str) and procced to next", preferredStyle: .alert)
+                        customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(customEmptyAlert, animated: true, completion: nil)
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+            }*/
+            
+        }
     }
 
     /*

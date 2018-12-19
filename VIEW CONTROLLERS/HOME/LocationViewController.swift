@@ -33,7 +33,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
-        locationManager.requestWhenInUseAuthorization()
         locationManager.requestAlwaysAuthorization()
         
         locationContents()
@@ -73,7 +72,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         
 
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestAlwaysAuthorization()
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -91,21 +90,21 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             print("Current Loc:",currentLocation.coordinate)
         }
         
-        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
+//        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
 
         mapView.frame = CGRect(x: 0, y: locationNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (6.4 * y))
-        mapView.camera = camera
+//        mapView.camera = camera
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
         
-        markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
+        markerImageView.frame = CGRect(x: ((view.frame.width - (6 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (6 * x), height: (5 * y))
         markerImageView.image = UIImage(named: "marker")
         view.addSubview(markerImageView)
         
-        marker.position = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-        marker.iconView = markerImageView
+//        marker.position = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+//        marker.iconView = markerImageView
 //        marker.map = mapView
     }
     
@@ -140,13 +139,13 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         
         //  let camera = GMSCameraPosition(target: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), zoom: 16.0, bearing: 0.5, viewingAngle: 1.0)
         
-        let camera = GMSCameraPosition(target:location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        let camera = GMSCameraPosition(target:location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
         mapView.camera = camera
         
-        marker.position = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-        marker.iconView = markerImageView
-        marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
-        marker.map = mapView
+//        marker.position = CLLocationCoordinate2D(latitude: camera.target.latitude, longitude: camera.target.longitude)
+//        marker.iconView = markerImageView
+//        marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+//        marker.map = mapView
         
         locationManager.stopUpdatingLocation()
 
@@ -161,7 +160,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition)
     {
-        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
+//        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
         print("LAT OF - \(position.target.latitude), LONG OF - \(position.target.longitude)")
         reverseGeocodeCoordinate(position.target)
     }

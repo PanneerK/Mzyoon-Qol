@@ -11,32 +11,24 @@ import UIKit
 class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
     //ADD MATERIAL PARAMETERS
-    let addMaterialView = UIView()
-    let addMaterialImage = UIImageView()
+    let addReferenceView = UIView()
+    let addReferenceImage = UIImageView()
     let notifyLabel = UILabel()
-
+    
     //ADD MATERIAL PAGE PARAMETERS
     var materialCount = 0
     var imagePicker = UIImagePickerController()
-    let addMaterialScrolView = UIScrollView()
-    let addMaterialImageCollection = UIButton()
+    let addReferenceScrolView = UIScrollView()
+    let addreferenceImageCollection = UIButton()
     var imageArray = [UIImage]()
     
     var selectedImage = UIImage()
     var selectedTag = Int()
     
-    // Error PAram...
-    var DeviceNum:String!
-    var UserType:String!
-    var AppVersion:String!
-    var ErrorStr:String!
-    var PageNumStr:String!
-    var MethodName:String!
-    
-    let serviceCall = ServerAPI()
-    
     override func viewDidLoad()
     {
+        navigationBar.isHidden = true
+        
         self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
@@ -44,45 +36,22 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             self.addMaterialContent()
         }
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
-    
-    func DeviceError()
-    {
-        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
-        AppVersion = UIDevice.current.systemVersion
-        UserType = "customer"
-        ErrorStr = "Default Error"
-        PageNumStr = "First"
-        MethodName = "do"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
-        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        // Do any additional setup after loading the view.
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
         print("OWN MATERIAL", errorMessage)
     }
-  
     
-    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
-    {
-        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
-        
-        if ResponseMsg == "Success"
-        {
-            let Result = deviceError.object(forKey: "Result") as! String
-            print("Result", Result)
-        }
-    }
     func addMaterialContent()
     {
         self.stopActivity()
-        addMaterialView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        addMaterialView.backgroundColor = UIColor.white
-//        view.addSubview(addMaterialView)
+        
+        
+        addReferenceView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        addReferenceView.backgroundColor = UIColor.white
+        //        view.addSubview(addMaterialView)
         
         let addMaterialNavigationBar = UIView()
         addMaterialNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -98,52 +67,49 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         
         let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: addMaterialNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ADD MATERIAL"
+        navigationTitle.text = "ADD REFERENCE IMAGE"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         addMaterialNavigationBar.addSubview(navigationTitle)
         
-        addMaterialImage.frame = CGRect(x: (3 * x), y: addMaterialNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
-        addMaterialImage.layer.cornerRadius = 5
-        addMaterialImage.layer.borderWidth = 1
-        addMaterialImage.layer.borderColor = UIColor.gray.cgColor
-        addMaterialImage.backgroundColor = UIColor.white
-        addMaterialImage.contentMode = .scaleToFill
-        view.addSubview(addMaterialImage)
+        addReferenceImage.frame = CGRect(x: (3 * x), y: addMaterialNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
+        addReferenceImage.layer.borderWidth = 1
+        addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
+        addReferenceImage.backgroundColor = UIColor.white
+        view.addSubview(addReferenceImage)
         
-        if imageArray.count == 0
+        if materialCount == 0
         {
-            notifyLabel.frame = CGRect(x: x, y: ((addMaterialImage.frame.height - (3 * y)) / 2), width: addMaterialImage.frame.width - (2 * x), height: (5 * y))
-            notifyLabel.text = "Please add Image for reference"
+            notifyLabel.frame = CGRect(x: x, y: ((addReferenceImage.frame.height - (3 * y)) / 2), width: addReferenceImage.frame.width - (2 * x), height: (5 * y))
+            notifyLabel.text = "Please add Image for material"
             notifyLabel.textColor = UIColor.black
             notifyLabel.textAlignment = .center
-            notifyLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-            notifyLabel.font = notifyLabel.font.withSize((2 * x))
-            addMaterialImage.addSubview(notifyLabel)
+            notifyLabel.font = notifyLabel.font.withSize((1.5 * x))
+            addReferenceImage.addSubview(notifyLabel)
         }
         
         let addMaterialLabel = UILabel()
-        addMaterialLabel.frame = CGRect(x: (2 * x), y: addMaterialImage.frame.maxY + (2 * x), width: view.frame.width, height: (2 * y))
+        addMaterialLabel.frame = CGRect(x: (2 * x), y: addReferenceImage.frame.maxY + (2 * x), width: view.frame.width, height: (2 * y))
         addMaterialLabel.text = "Add material image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         view.addSubview(addMaterialLabel)
         
-        addMaterialScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width, height: (8.25 * y))
-        view.addSubview(addMaterialScrolView)
+        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width, height: (8.25 * y))
+        view.addSubview(addReferenceScrolView)
         
-        addMaterialImageCollection.frame = CGRect(x: x, y: y, width: (6.25 * x), height: (6.25 * y))
-        addMaterialImageCollection.backgroundColor = UIColor.blue
-        addMaterialImageCollection.setTitle("+", for: .normal)
-        addMaterialImageCollection.setTitleColor(UIColor.white, for: .normal)
-        addMaterialImageCollection.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
-        addMaterialScrolView.addSubview(addMaterialImageCollection)
-        
+        addreferenceImageCollection.frame = CGRect(x: x, y: y, width: (6.25 * x), height: (6.25 * y))
+        addreferenceImageCollection.backgroundColor = UIColor.blue
+        addreferenceImageCollection.setTitle("+", for: .normal)
+        addreferenceImageCollection.setTitleColor(UIColor.white, for: .normal)
+        addreferenceImageCollection.tag = -1
+        addreferenceImageCollection.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
+        addReferenceScrolView.addSubview(addreferenceImageCollection)
         
         let addMaterialNextButton = UIButton()
-        addMaterialNextButton.frame = CGRect(x: view.frame.width - (15 * x), y: addMaterialScrolView.frame.maxY + y, width: (13 * x), height: (4 * y))
+        addMaterialNextButton.frame = CGRect(x: view.frame.width - (15 * x), y: addReferenceScrolView.frame.maxY + y, width: (13 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = 10
         addMaterialNextButton.backgroundColor = UIColor.blue
         addMaterialNextButton.setTitle("Next", for: .normal)
@@ -159,10 +125,10 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     @objc func addMaterialNextButtonAction(sender : UIButton)
     {
-        let custom3Screen = Customization3ViewController()
-        self.navigationController?.pushViewController(custom3Screen, animated: true)
+        let tailorListScreen = TailorListViewController()
+        self.navigationController?.pushViewController(tailorListScreen, animated: true)
     }
-
+    
     @objc func addMaterialButtonAction(sender : UIButton)
     {
         UserDefaults.standard.set(1, forKey: "screenValue")
@@ -221,20 +187,9 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.addMaterialImage.image = pickedImage
-            
-            let imageName = pickedImage // your image name here
-            let imagePath: String = "\(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])/\(imageName).png"
-            let imageUrl: URL = URL(fileURLWithPath: imagePath)
-            
-            let newImage: UIImage = pickedImage// create your UIImage here
-            try? UIImage.pngData(newImage)()?.write(to : imageUrl)
-//                try? UIImagePNGRepresentation(newImage)?.write(to: imageUrl)
-            
-            
+            self.addReferenceImage.image = pickedImage
             imageArray.append(pickedImage)
             materialCount += 1
-            notifyLabel.removeFromSuperview()
             addReferenceSubImage()
         }
         self.dismiss(animated: true, completion: nil)
@@ -242,42 +197,43 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     func addReferenceSubImage()
     {
-        print("materialCount", self.imageArray.count)
+        print("materialCount", materialCount)
         
         var x1:CGFloat = x
         
-        if imageArray.count != 0
+        if materialCount > 0
         {
-            for i in 0..<imageArray.count
+            for i in 0..<materialCount
             {
-                let addMaterialImageButton = UIButton()
-                addMaterialImageButton.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
-                addMaterialImageButton.backgroundColor = UIColor.blue
-                addMaterialImageButton.setImage(imageArray[i], for: .normal)
-                addMaterialImageButton.addTarget(self, action: #selector(self.selectedMaterialButtonAction(sender:)), for: .touchUpInside)
-                addMaterialScrolView.addSubview(addMaterialImageButton)
+                let selectMaterialImageButton = UIButton()
+                selectMaterialImageButton.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
+                selectMaterialImageButton.backgroundColor = UIColor.blue
+                selectMaterialImageButton.setImage(imageArray[i], for: .normal)
+                selectMaterialImageButton.tag = i
+                selectMaterialImageButton.addTarget(self, action: #selector(self.selectedMaterialButtonAction(sender:)), for: .touchUpInside)
+                addReferenceScrolView.addSubview(selectMaterialImageButton)
                 
                 let cancelMaterialImageCollection = UIButton()
-                cancelMaterialImageCollection.frame = CGRect(x: addMaterialImageButton.frame.width - (1 * x), y: 0, width: (1 * x), height: (1 * y))
-                cancelMaterialImageCollection.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+                cancelMaterialImageCollection.frame = CGRect(x: selectMaterialImageButton.frame.width - (2 * x), y: 0, width: (2 * x), height: (2 * y))
+                //                cancelMaterialImageCollection.backgroundColor = UIColor.red
                 cancelMaterialImageCollection.setImage(UIImage(named: "close"), for: .normal)
-//                cancelMaterialImageCollection.setTitle("\(i)", for: .normal)
-//                cancelMaterialImageCollection.setTitleColor(UIColor.black, for: .normal)
+                //                cancelMaterialImageCollection.setTitle("\(i)", for: .normal)
+                //                cancelMaterialImageCollection.setTitleColor(UIColor.black, for: .normal)
                 cancelMaterialImageCollection.tag = i
-//                cancelMaterialImageCollection.addTarget(self, action: #selector(self.removeMaterialButtonAction(sender:)), for: .touchUpInside)
-                addMaterialImageButton.addSubview(cancelMaterialImageCollection)
+                //                cancelMaterialImageCollection.addTarget(self, action: #selector(self.removeMaterialButtonAction(sender:)), for: .touchUpInside)
+                selectMaterialImageButton.addSubview(cancelMaterialImageCollection)
                 
-                x1 = addMaterialImageButton.frame.maxX + x
+                x1 = selectMaterialImageButton.frame.maxX + x
             }
             
-            addMaterialImageCollection.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
-            addMaterialScrolView.contentSize.width = addMaterialImageCollection.frame.maxX + (3 * x)
+            addreferenceImageCollection.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
+            addReferenceScrolView.contentSize.width = addreferenceImageCollection.frame.maxX + (3 * x)
         }
         else
         {
-            self.addMaterialImage.image = nil
-            addMaterialImageCollection.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
-            addMaterialScrolView.contentSize.width = addMaterialImageCollection.frame.maxX + (3 * x)
+            self.addReferenceImage.image = nil
+            addreferenceImageCollection.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
+            addReferenceScrolView.contentSize.width = addreferenceImageCollection.frame.maxX + (3 * x)
         }
     }
     
@@ -305,13 +261,13 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     func viewAlertAction(action : UIAlertAction)
     {
-        self.addMaterialImage.image = selectedImage
+        self.addReferenceImage.image = selectedImage
     }
     
     func deleteAlertAction(action : UIAlertAction)
     {
         print("BEFORE", materialCount, self.selectedTag, imageArray)
-        for views in addMaterialScrolView.subviews
+        for views in addReferenceScrolView.subviews
         {
             if views.tag == self.selectedTag
             {
@@ -328,14 +284,16 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     }
     
     
+    
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
