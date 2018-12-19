@@ -91,7 +91,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         
         let addMaterialLabel = UILabel()
         addMaterialLabel.frame = CGRect(x: (2 * x), y: addReferenceImage.frame.maxY + (2 * x), width: view.frame.width, height: (2 * y))
-        addMaterialLabel.text = "Add material image for tailor refrence"
+        addMaterialLabel.text = "Add reference image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))

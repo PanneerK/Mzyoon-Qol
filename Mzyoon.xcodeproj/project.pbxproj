@@ -12,7 +12,6 @@
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
-		FD1E6CB3218AC54200395814 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB2218AC54200395814 /* UserViewController.swift */; };
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
@@ -24,11 +23,9 @@
 		FD2ADFE62175A5AB0033025B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFE52175A5AB0033025B /* LoginViewController.swift */; };
 		FD2ADFED2175C0230033025B /* ServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFEB2175C0230033025B /* ServerAPI.swift */; };
 		FD2ADFEE2175C0230033025B /* ServerAPIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFEC2175C0230033025B /* ServerAPIDelegate.swift */; };
-		FD2ADFF021760FBD0033025B /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFEF21760FBD0033025B /* DashboardViewController.swift */; };
 		FD3B7C1B219D4F0C00CD8198 /* NewOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3B7C1A219D4F0C00CD8198 /* NewOrderViewController.swift */; };
 		FD462DDA21AD0E9A0073B53B /* Measurement2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD462DD921AD0E9A0073B53B /* Measurement2ViewController.swift */; };
 		FD4631DC21775055002C06CA /* CountryCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4631DB21775055002C06CA /* CountryCodeTableViewCell.swift */; };
-		FD4E8EEC2192AFE90006D52B /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4E8EEB2192AFE90006D52B /* TestViewController.swift */; };
 		FD53A3D521A809450097B4D9 /* TailorListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD53A3D421A809450097B4D9 /* TailorListViewController.swift */; };
 		FD5774AE219AA2950026DBF8 /* FilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5774AD219AA2950026DBF8 /* FilterTableViewCell.swift */; };
 		FD5774B0219AB2F30026DBF8 /* GenderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5774AF219AB2F30026DBF8 /* GenderTableViewCell.swift */; };
@@ -57,7 +54,6 @@
 		FDF7485421BFBF4E00F3BEFF /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7485321BFBF4700F3BEFF /* FileHandler.swift */; };
 		FDFE07352189E49F0056E773 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFE07342189E49F0056E773 /* ActivityView.swift */; };
 		FDFF309321898928002A1A27 /* SlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFF309221898928002A1A27 /* SlideViewController.swift */; };
-		FDFF309521898B45002A1A27 /* SlideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFF309421898B45002A1A27 /* SlideMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +81,6 @@
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
-		FD1E6CB2218AC54200395814 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
@@ -103,11 +98,9 @@
 		FD2ADFE52175A5AB0033025B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FD2ADFEB2175C0230033025B /* ServerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerAPI.swift; sourceTree = "<group>"; };
 		FD2ADFEC2175C0230033025B /* ServerAPIDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerAPIDelegate.swift; sourceTree = "<group>"; };
-		FD2ADFEF21760FBD0033025B /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		FD3B7C1A219D4F0C00CD8198 /* NewOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewOrderViewController.swift; sourceTree = "<group>"; };
 		FD462DD921AD0E9A0073B53B /* Measurement2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement2ViewController.swift; sourceTree = "<group>"; };
 		FD4631DB21775055002C06CA /* CountryCodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewCell.swift; sourceTree = "<group>"; };
-		FD4E8EEB2192AFE90006D52B /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		FD53A3D421A809450097B4D9 /* TailorListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailorListViewController.swift; sourceTree = "<group>"; };
 		FD5774AD219AA2950026DBF8 /* FilterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCell.swift; sourceTree = "<group>"; };
 		FD5774AF219AB2F30026DBF8 /* GenderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderTableViewCell.swift; sourceTree = "<group>"; };
@@ -136,7 +129,6 @@
 		FDF7485321BFBF4700F3BEFF /* FileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
 		FDFE07342189E49F0056E773 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		FDFF309221898928002A1A27 /* SlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideViewController.swift; sourceTree = "<group>"; };
-		FDFF309421898B45002A1A27 /* SlideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,9 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				FD2ADFE52175A5AB0033025B /* LoginViewController.swift */,
-				FD4E8EEB2192AFE90006D52B /* TestViewController.swift */,
-				FD1E6CB2218AC54200395814 /* UserViewController.swift */,
-				FD2ADFEF21760FBD0033025B /* DashboardViewController.swift */,
 				FD4631DB21775055002C06CA /* CountryCodeTableViewCell.swift */,
 			);
 			path = LOGIN;
@@ -337,7 +326,6 @@
 			isa = PBXGroup;
 			children = (
 				FDFF309221898928002A1A27 /* SlideViewController.swift */,
-				FDFF309421898B45002A1A27 /* SlideMenuView.swift */,
 			);
 			path = "SLIDE MENU";
 			sourceTree = "<group>";
@@ -560,10 +548,8 @@
 				FD71D262219F055300FFC067 /* Customization1ViewController.swift in Sources */,
 				FD71D268219F29AD00FFC067 /* Measurement1ViewController.swift in Sources */,
 				FD462DDA21AD0E9A0073B53B /* Measurement2ViewController.swift in Sources */,
-				FD1E6CB3218AC54200395814 /* UserViewController.swift in Sources */,
 				FD71D26A219F2EFE00FFC067 /* ReferenceImageViewController.swift in Sources */,
 				FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */,
-				FD2ADFF021760FBD0033025B /* DashboardViewController.swift in Sources */,
 				FDFF309321898928002A1A27 /* SlideViewController.swift in Sources */,
 				FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */,
 				FD3B7C1B219D4F0C00CD8198 /* NewOrderViewController.swift in Sources */,
@@ -595,9 +581,7 @@
 				FD53A3D521A809450097B4D9 /* TailorListViewController.swift in Sources */,
 				FDC9BB942186F707003BA5C9 /* ContactUsViewController.swift in Sources */,
 				FD71D25C219EE62F00FFC067 /* DressTypeViewController.swift in Sources */,
-				FD4E8EEC2192AFE90006D52B /* TestViewController.swift in Sources */,
 				FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */,
-				FDFF309521898B45002A1A27 /* SlideMenuView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,7 +760,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.qolsofts.Mzyoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -796,7 +780,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.qolsofts.Mzyoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

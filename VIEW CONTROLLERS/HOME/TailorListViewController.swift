@@ -45,6 +45,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var ShopNameArray = NSArray()
     var ShopOwnerImageArray = NSArray()
     var ConvertedShopOwnerImageArray = [UIImage]()
+    var orderCountArray = NSArray()
+    var ratingArray = NSArray()
     
     let totalTailersSelectedCountLabel = UILabel()
     
@@ -117,11 +119,17 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             TailorNameArray = Result.value(forKey: "TailorNameInEnglish") as! NSArray
             print("TailorNameArray", TailorNameArray)
             
-            AddressArray = Result.value(forKey: "AddressInEnglish") as! NSArray
-            print("AddressArray", AddressArray)
-            
             ShopNameArray = Result.value(forKey: "ShopNameInEnglish") as! NSArray
             print("ShopNameArray", ShopNameArray)
+            
+            orderCountArray = Result.value(forKey: "OrderCount") as! NSArray
+            print("ORDER COUNT ARRAY", orderCountArray)
+            
+            ratingArray = Result.value(forKey: "Rating") as! NSArray
+            print("RATING ARRAY", ratingArray)
+            
+            AddressArray = Result.value(forKey: "AddressInEnglish") as! NSArray
+            print("AddressArray", AddressArray)
             
             latitudeArray = Result.value(forKey: "Latitude") as! NSArray
             print("latitudeArray", latitudeArray)
@@ -396,7 +404,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             nameLabel.text = "Name : "
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
-            nameLabel.font = nameLabel.font.withSize(14)
+            nameLabel.font = nameLabel.font.withSize(1.2 * x)
             tailorView.addSubview(nameLabel)
             
             let tailorName = UILabel()
@@ -404,7 +412,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             tailorName.text = TailorNameArray[i] as? String
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
-            tailorName.font = tailorName.font.withSize(14)
+            tailorName.font = tailorName.font.withSize(1.2 * x)
             tailorView.addSubview(tailorName)
             
             let shopLabel = UILabel()
@@ -412,7 +420,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             shopLabel.text = "Shop Name : "
             shopLabel.textColor = UIColor.blue
             shopLabel.textAlignment = .left
-            shopLabel.font = nameLabel.font.withSize(14)
+            shopLabel.font = nameLabel.font.withSize(1.2 * x)
             tailorView.addSubview(shopLabel)
             
             let shopName = UILabel()
@@ -420,7 +428,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             shopName.text = ShopNameArray[i] as? String
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
-            shopName.font = tailorName.font.withSize(14)
+            shopName.font = tailorName.font.withSize(1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
             tailorView.addSubview(shopName)
             
@@ -429,15 +437,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ordersLabel.text = "No. of Orders : "
             ordersLabel.textColor = UIColor.blue
             ordersLabel.textAlignment = .left
-            ordersLabel.font = ordersLabel.font.withSize(14)
+            ordersLabel.font = ordersLabel.font.withSize(1.2 * x)
             tailorView.addSubview(ordersLabel)
             
             let ordersCountLabel = UILabel()
             ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
-            ordersCountLabel.text = "\(IdArray[i])"
+            ordersCountLabel.text = "\(orderCountArray[i])"
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
-            ordersCountLabel.font = ordersCountLabel.font.withSize(14)
+            ordersCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ordersCountLabel.adjustsFontSizeToFitWidth = true
             tailorView.addSubview(ordersCountLabel)
             
@@ -446,15 +454,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingLabel.text = "Rating : "
             ratingLabel.textColor = UIColor.blue
             ratingLabel.textAlignment = .left
-            ratingLabel.font = ratingLabel.font.withSize(14)
+            ratingLabel.font = ratingLabel.font.withSize(1.2 * x)
             tailorView.addSubview(ratingLabel)
             
             let ratingCountLabel = UILabel()
             ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
-            ratingCountLabel.text = "\(IdArray[i])"
+            ratingCountLabel.text = "\(ratingArray[i])"
             ratingCountLabel.textColor = UIColor.black
             ratingCountLabel.textAlignment = .left
-            ratingCountLabel.font = ordersCountLabel.font.withSize(14)
+            ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
             tailorView.addSubview(ratingCountLabel)
             
@@ -464,7 +472,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             distanceLabel.text = "\(i) Km. from your location"
             distanceLabel.textColor = UIColor.white
             distanceLabel.textAlignment = .center
-            distanceLabel.font = ordersCountLabel.font.withSize(14)
+            distanceLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             distanceLabel.adjustsFontSizeToFitWidth = true
             tailorView.addSubview(distanceLabel)
             
@@ -545,13 +553,13 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func mapViewContents(isHidden : Bool)
     {
-        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestAlwaysAuthorization()
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -590,7 +598,36 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
         marker.iconView = markerImageView
         marker.map = mapView
+        
+        for i in 0..<latitudeArray.count
+        {
+            let marker = GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
+            marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+            marker.map = mapView
+        }
+        
     }
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print("WELCOME FOR MARKER", marker.groundAnchor.y)
+        return true
+    }
+    
+    func markerView(yPos : CGFloat)
+    {
+        let addressView = UIView()
+        addressView.frame = CGRect(x: x, y: yPos, width: mapView.frame.width - (2 * x), height: (10 * y))
+        addressView.backgroundColor = UIColor.white
+        mapView.addSubview(addressView)
+        
+        let address1 = UILabel()
+        address1.frame = CGRect(x: x, y: y, width: addressView.frame.width - (2 * x), height: (2 * y))
+        address1.text = "NEW ADDRESS"
+        addressView.addSubview(address1)
+    }
+    
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 10
     }
@@ -600,7 +637,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(TailorListTableViewCell.self), for: indexPath as IndexPath) as! TailorListTableViewCell
-        cell.textLabel!.text = "PADMAPANNEER"
         cell.backgroundColor = UIColor.white
         return cell
     }

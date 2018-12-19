@@ -139,6 +139,26 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         self.otp6Letter.inputAccessoryView = doneToolbar
         
+        let doneToolbar1: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar1.barStyle = UIBarStyle.default
+        
+        let flexSpace1 = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done1: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.done1ButtonAction))
+        
+        var items1 = [UIBarButtonItem]()
+        items1.append(flexSpace1)
+        items1.append(done1)
+        
+        doneToolbar1.items = items1
+        doneToolbar1.sizeToFit()
+        
+        self.mobileTextField.inputAccessoryView = doneToolbar1
+        
+    }
+    
+    @objc func done1ButtonAction()
+    {
+        self.view.endEditing(true)
     }
     
     @objc func doneButtonAction()
@@ -427,7 +447,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         mobileTextField.leftView = paddingView
         mobileTextField.leftViewMode = UITextField.ViewMode.always
         mobileTextField.adjustsFontSizeToFitWidth = true
-        mobileTextField.keyboardType = .default
+        mobileTextField.keyboardType = .numberPad
         mobileTextField.clearsOnBeginEditing = true
         mobileTextField.returnKeyType = .done
         mobileTextField.delegate = self
@@ -678,7 +698,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp1Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp1Letter.adjustsFontSizeToFitWidth = true
         otp1Letter.keyboardType = .numberPad
-        otp1Letter.clearsOnBeginEditing = true
+        otp1Letter.clearsOnBeginEditing = false
         otp1Letter.returnKeyType = .next
         otp1Letter.delegate = self
         otp1Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -702,7 +722,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp2Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp2Letter.adjustsFontSizeToFitWidth = true
         otp2Letter.keyboardType = .numberPad
-        otp2Letter.clearsOnBeginEditing = true
+        otp2Letter.clearsOnBeginEditing = false
         otp2Letter.returnKeyType = .next
         otp2Letter.delegate = self
         otp2Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -724,7 +744,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp3Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp3Letter.adjustsFontSizeToFitWidth = true
         otp3Letter.keyboardType = .numberPad
-        otp3Letter.clearsOnBeginEditing = true
+        otp3Letter.clearsOnBeginEditing = false
         otp3Letter.returnKeyType = .next
         otp3Letter.delegate = self
         otp3Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -746,7 +766,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp4Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp4Letter.adjustsFontSizeToFitWidth = true
         otp4Letter.keyboardType = .numberPad
-        otp4Letter.clearsOnBeginEditing = true
+        otp4Letter.clearsOnBeginEditing = false
         otp4Letter.returnKeyType = .next
         otp4Letter.delegate = self
         otp4Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -767,7 +787,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp5Letter.textAlignment = .center
         otp5Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp5Letter.keyboardType = .numberPad
-        otp5Letter.clearsOnBeginEditing = true
+        otp5Letter.clearsOnBeginEditing = false
         otp5Letter.returnKeyType = .next
         otp5Letter.delegate = self
         otp5Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -789,7 +809,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp6Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp6Letter.adjustsFontSizeToFitWidth = true
         otp6Letter.keyboardType = .numberPad
-        otp6Letter.clearsOnBeginEditing = true
+        otp6Letter.clearsOnBeginEditing = false
         otp6Letter.returnKeyType = .done
         otp6Letter.delegate = self
         otp6Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -845,6 +865,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let text = textField.text
         
+        print("ENTERED TEXTFIELD")
         if (text?.utf16.count)! >= 1{
             switch textField{
             case otp1Letter:
@@ -854,14 +875,29 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             case otp3Letter:
                 otp4Letter.becomeFirstResponder()
             case otp4Letter:
-                otp5Letter.resignFirstResponder()
+                otp5Letter.becomeFirstResponder()
             case otp5Letter:
                 otp6Letter.becomeFirstResponder()
             default:
                 break
             }
-        }else{
-            
+        }
+        else if (text?.utf16.count)! == 0
+        {
+            switch textField{
+            case otp6Letter:
+                otp5Letter.becomeFirstResponder()
+            case otp5Letter:
+                otp4Letter.becomeFirstResponder()
+            case otp4Letter:
+                otp3Letter.becomeFirstResponder()
+            case otp3Letter:
+                otp2Letter.becomeFirstResponder()
+            case otp2Letter:
+                otp1Letter.becomeFirstResponder()
+            default:
+                break
+            }
         }
     }
     
@@ -963,34 +999,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         blurView.removeFromSuperview()
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
-    {
-        let text = textField.text
-        
-        if (text?.count)! > 0
-        {
-            switch textField
-            {
-                case otp1Letter:
-                    otp2Letter.becomeFirstResponder()
-                case otp2Letter:
-                    otp3Letter.becomeFirstResponder()
-                case otp3Letter:
-                    otp4Letter.becomeFirstResponder()
-                case otp4Letter:
-                    otp5Letter.becomeFirstResponder()
-                case otp5Letter:
-                    otp6Letter.becomeFirstResponder()
-                case otp6Letter:
-                    otp6Letter.resignFirstResponder()
-                default:
-                    break
-            }
-        }
-        
-        return true
-    }
-    
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
         if textField == otp6Letter
@@ -1015,6 +1023,16 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         UserDefaults.standard.set(mobileTextField.text!, forKey: "Phone")
         self.view.endEditing(true)
         return false
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let  char = string.cString(using: String.Encoding.utf8)!
+        let isBackSpace = strcmp(char, "\\b")
+        
+        if (isBackSpace == -92) {
+            print("Backspace was pressed")
+        }
+        return true
     }
     
 

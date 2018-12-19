@@ -245,16 +245,16 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         super.viewWillAppear(true)
         newOrderView.removeFromSuperview()
         
-        if let screen = UserDefaults.standard.value(forKey: "screenValue") as? Int{
-            if screen == 1
-            {
-                addMaterialContent()
-            }
-            else
-            {
-                
-            }
-        }
+//        if let screen = UserDefaults.standard.value(forKey: "screenValue") as? Int{
+//            if screen == 1
+//            {
+//                addMaterialContent()
+//            }
+//            else
+//            {
+//                
+//            }
+//        }
     }
     
   //    override func viewWillDisappear(_ animated: Bool)
@@ -662,9 +662,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
     
     @objc func slideViewOpenGesture(gesture : UISwipeGestureRecognizer)
     {
-        slideView = SlideMenuView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-        self.view.addSubview(slideView)
-    }
+     }
     
     @objc func slideViewCloseGesture(gesture : UISwipeGestureRecognizer)
     {
@@ -1220,8 +1218,6 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         seasonalScrollView.contentSize.width = view.frame.width * 1.55
         customization1View.addSubview(seasonalScrollView)
         
-        let buttonTitleText = ["Summer", "Autumn", "Winter", "Spring"]
-        let imageName = ["men", "women", "boy", "girl"]
         var x1:CGFloat = (2 * x)
         
         for i in 0..<seasonalNameArray.count

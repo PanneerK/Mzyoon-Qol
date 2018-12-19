@@ -38,7 +38,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         self.serviceCall.API_Measurement1(delegate: self)
         
-        self.serviceCall.API_ExistingUserMeasurement(DressTypeId: 1, UserId: 1, delegate: self)
+        if let userId = UserDefaults.standard.value(forKey: "UserId") as? String, let dressId = UserDefaults.standard.value(forKey: "DressType") as? String
+        {
+            self.serviceCall.API_ExistingUserMeasurement(DressTypeId: dressId, UserId: userId, delegate: self)
+        }
         
         super.viewDidLoad()
 
@@ -303,7 +306,16 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func forWhomButtonAction(sender : UIButton)
     {
-        let userListAlert = UIAlertController(title: "For Whom ?", message: "Please select your option", preferredStyle: .alert)
+        var userListAlert : UIAlertController!
+        
+        if nameArray.count == 0
+        {
+            userListAlert = UIAlertController(title: "Please enter measurement name", message: "", preferredStyle: .alert)
+        }
+        else
+        {
+            userListAlert = UIAlertController(title: "Please select your option", message: "", preferredStyle: .alert)
+        }
         
         for i in 0..<nameArray.count
         {

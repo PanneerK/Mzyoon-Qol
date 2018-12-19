@@ -743,7 +743,7 @@ class ServerAPI : NSObject
     }
     
      // Measurement-1 Manually list show of existing user..
-    func API_ExistingUserMeasurement(DressTypeId : Int , UserId : Int, delegate : ServerAPIDelegate)
+    func API_ExistingUserMeasurement(DressTypeId : String, UserId : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
