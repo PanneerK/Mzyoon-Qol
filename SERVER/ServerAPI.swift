@@ -553,13 +553,13 @@ class ServerAPI : NSObject
     }
     
     // Insert Buyer Address..
-    func API_InsertAddress(FirstName : String, LastName : String, CountryId : Int, StateId : Int, Area : String, Floor : String, LandMark : String, LocationType : String, ShippingNotes : String, IsDefault : String, CountryCode : Int, PhoneNo : String, Longitude : Float, Latitude : Float, delegate : ServerAPIDelegate)
+    func API_InsertAddress(BuyerId : Int, FirstName : String, LastName : String, CountryId : Int, StateId : Int, Area : String, Floor : String, LandMark : String, LocationType : String, ShippingNotes : String, IsDefault : String, CountryCode : Int, PhoneNo : String, Longitude : Float, Latitude : Float, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Address Page")
             
-            let parameters = ["FirstName" : "\(FirstName)", "LastName" : LastName, "CountryId" : CountryId, "StateId" : StateId, "Area" : Area, "Floor" : Floor, "LandMark" : LandMark, "LocationType" : LocationType, "ShippingNotes" : ShippingNotes, "IsDefault" : IsDefault, "CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "Longitude" : Longitude, "Latitude" : Latitude] as [String : Any]
+            let parameters = ["BuyerId" : "\(BuyerId)", "FirstName" : "\(FirstName)", "LastName" : LastName, "CountryId" : CountryId, "StateId" : StateId, "Area" : Area, "Floor" : Floor, "LandMark" : LandMark, "LocationType" : LocationType, "ShippingNotes" : ShippingNotes, "IsDefault" : IsDefault, "CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "Longitude" : Longitude, "Latitude" : Latitude] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Shop/InsertBuyerAddress", arguments: [baseURL])
             
