@@ -579,7 +579,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             print("Current Loc:",currentLocation.coordinate)
         }
         
-        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
+        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 16.0, bearing: 0, viewingAngle: 0)
 
         
         mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
@@ -615,15 +615,19 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
     }
     
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print("WELCOME FOR MARKER", marker.groundAnchor.y)
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool
+    {
+        let camera = GMSCameraPosition(target: marker.position, zoom: mapView.camera.zoom, bearing: 0.0, viewingAngle: 0.0)
+
+        mapView.camera = camera
         addressOfMarker(marker: marker)
+        
         return true
     }
     
     func addressOfMarker(marker : GMSMarker)
     {
-        addressLabel.frame = CGRect(x: marker.groundAnchor.x, y: marker.groundAnchor.y, width: (20 * x), height: (5 * y))
+        addressLabel.frame = CGRect(x: (2 * x), y: ((view.frame.height - (5 * y)) / 2), width: view.frame.width - (4 * x), height: (3 * y))
         addressLabel.backgroundColor = UIColor.white
         addressLabel.text = "\(marker.title!) \(marker.snippet!)"
         addressLabel.textColor = UIColor.black
