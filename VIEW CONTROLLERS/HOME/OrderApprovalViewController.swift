@@ -12,7 +12,10 @@ class OrderApprovalViewController: CommonViewController
 {
     let PricingButton = UIButton()
     let DeliveryDetailsButton = UIButton()
-
+    let ProceedToPayButton = UIButton()
+    let CurrencyButton = UIButton()
+    var CurrencyCodes = [String]()
+    
     override func viewDidLoad()
     {
        // print("SUCCESS")
@@ -68,25 +71,28 @@ class OrderApprovalViewController: CommonViewController
         DressDetView.addSubview(DressImageView)
         
         let DressTypeLabel = UILabel()
-        DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: 0, width: (30 * x), height: (4 * y))
+        DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: 5, width: (20 * x), height: (2 * y))
         DressTypeLabel.text = "Men's Mandarin Suits "
         DressTypeLabel.textColor = UIColor.white
+    //  DressTypeLabel.backgroundColor = UIColor.gray
         DressTypeLabel.textAlignment = .left
         DressTypeLabel.font = DressTypeLabel.font.withSize(16)
         DressDetView.addSubview(DressTypeLabel)
         
         
         let ColorLabel = UILabel()
-        ColorLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: DressTypeLabel.frame.minY + (2.5 * y), width: (8 * x), height: (4 * y))
+        ColorLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: DressTypeLabel.frame.minY + (2.5 * y), width: (6 * x), height: (2 * y))
         ColorLabel.text = "Color  : "
         ColorLabel.textColor = UIColor.white
+    //  ColorLabel.backgroundColor = UIColor.gray
         ColorLabel.textAlignment = .left
         ColorLabel.font = ColorLabel.font.withSize(14)
         DressDetView.addSubview(ColorLabel)
         
         let ColorTypeLabel = UILabel()
-        ColorTypeLabel.frame = CGRect(x: ColorLabel.frame.maxX - (2 * x), y: DressTypeLabel.frame.minY + (2.5 * y), width: (8 * x), height: (4 * y))
+        ColorTypeLabel.frame = CGRect(x: ColorLabel.frame.maxX , y: DressTypeLabel.frame.minY + (2.5 * y), width: (8 * x), height: (2 * y))
         ColorTypeLabel.text = "Grey"
+       // ColorTypeLabel.backgroundColor = UIColor.gray
         ColorTypeLabel.textColor = UIColor.white
         ColorTypeLabel.textAlignment = .left
         ColorTypeLabel.font = ColorLabel.font.withSize(14)
@@ -94,23 +100,24 @@ class OrderApprovalViewController: CommonViewController
         
         
         let QtyLabel = UILabel()
-        QtyLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: ColorLabel.frame.minY + (2.5 * y), width: (8 * x), height: (4 * y))
+        QtyLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: ColorLabel.frame.minY + (2.5 * y), width: (8 * x), height: (2 * y))
         QtyLabel.text = "Qty     : "
         QtyLabel.textColor = UIColor.white
         QtyLabel.textAlignment = .left
-        QtyLabel.font = ColorLabel.font.withSize(14)
+        QtyLabel.font = QtyLabel.font.withSize(14)
         DressDetView.addSubview(QtyLabel)
         
         
         let QtyNumTF = UITextField()
-        QtyNumTF.frame = CGRect(x: QtyLabel.frame.maxX - (2 * x), y: ColorTypeLabel.frame.minY + (2.5 * y), width: (5 * x), height: (4 * y))
+        QtyNumTF.frame = CGRect(x: QtyLabel.frame.maxX - (2 * x), y: ColorTypeLabel.frame.minY + (2.5 * y), width: (4 * x), height: (2 * y))
+        QtyNumTF.backgroundColor = UIColor.white
         QtyNumTF.text = "1"
-        QtyNumTF.textColor = UIColor.white
-        QtyNumTF.textAlignment = .left
-        QtyNumTF.font = ColorLabel.font.withSize(14)
+        QtyNumTF.textColor = UIColor.black
+        QtyNumTF.textAlignment = .center
+        QtyNumTF.font = QtyNumTF.font!.withSize(12)
         DressDetView.addSubview(QtyNumTF)
         
-        PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((view.frame.width / 2) - 1), height: 50)
+        PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((view.frame.width / 2) - 1), height: 40)
         PricingButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PricingButton.setTitle("PRICE DETAILS", for: .normal)
         PricingButton.setTitleColor(UIColor.white, for: .normal)
@@ -118,7 +125,7 @@ class OrderApprovalViewController: CommonViewController
         PricingButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(PricingButton)
         
-        DeliveryDetailsButton.frame = CGRect(x: PricingButton.frame.maxX + 1, y: DressDetView.frame.maxY + y, width: view.frame.width / 2, height: 50)
+        DeliveryDetailsButton.frame = CGRect(x: PricingButton.frame.maxX + 1, y: DressDetView.frame.maxY + y, width: view.frame.width / 2, height: 40)
         DeliveryDetailsButton.backgroundColor = UIColor.lightGray
         DeliveryDetailsButton.setTitle("DELIVERY DETAILS", for: .normal)
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
@@ -171,53 +178,556 @@ class OrderApprovalViewController: CommonViewController
     
     func PricingViewContents(isHidden : Bool)
     {
+        let PricingView = UIView()
+        PricingView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (45 * x))
+        PricingView.backgroundColor = UIColor.white
+        view.addSubview(PricingView)
         
+        let backgroundImage = UIImageView()
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: PricingView.frame.width, height: PricingView.frame.height)
+        backgroundImage.image = UIImage(named: "background")
+        PricingView.addSubview(backgroundImage)
        
+        PricingView.isHidden = isHidden
+       
+        // Currency Button:-
+        CurrencyButton.frame = CGRect(x: (24 * x), y: PricingView.frame.minY - (24 * y), width: (8 * x), height: (2 * y))
+        CurrencyButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        CurrencyButton.setTitle("AED", for: .normal)
+        CurrencyButton.setTitleColor(UIColor.white, for: .normal)
+        CurrencyButton.addTarget(self, action: #selector(self.CurrencyButtonAction(sender:)), for: .touchUpInside)
+        PricingView.addSubview(CurrencyButton)
+        
+        let downArrowImageView = UIImageView()
+        downArrowImageView.frame = CGRect(x: CurrencyButton.frame.width - 15, y: ((CurrencyButton.frame.height - (1.5 * x)) / 2), width: (1.5 * x), height: (1.5 * y))
+        downArrowImageView.image = UIImage(named: "downArrow")
+        CurrencyButton.addSubview(downArrowImageView)
+        
+        // MeasurementChargesLabel..
+        let MeasurementChargesLabel = UILabel()
+        MeasurementChargesLabel.frame = CGRect(x: x, y: CurrencyButton.frame.minY + (4 * y), width: (PricingView.frame.width / 2), height: 30)
+       // MeasurementChargesLabel.backgroundColor = UIColor.gray
+        MeasurementChargesLabel.text = "Measurement Charges"
+        MeasurementChargesLabel.textColor = UIColor.black
+        MeasurementChargesLabel.textAlignment = .left
+        MeasurementChargesLabel.font = MeasurementChargesLabel.font.withSize(14)
+        PricingView.addSubview(MeasurementChargesLabel)
+        
+        //TextField1..
+        let MeasureRupeeTF = UITextField()
+        MeasureRupeeTF.frame = CGRect(x: MeasurementChargesLabel.frame.maxX + (2 * x), y: CurrencyButton.frame.minY + (4 * y), width: (6 * x), height: 30)
+        MeasureRupeeTF.backgroundColor = UIColor.white
+        MeasureRupeeTF.layer.borderColor = UIColor.lightGray.cgColor
+        MeasureRupeeTF.layer.borderWidth = 1.0
+        MeasureRupeeTF.text = "750"
+        MeasureRupeeTF.textColor = UIColor.blue
+        MeasureRupeeTF.textAlignment = .center
+        MeasureRupeeTF.font = MeasureRupeeTF.font!.withSize(12)
+        PricingView.addSubview(MeasureRupeeTF)
+        
+        //TextField2..
+        let MeasurePaiseTF = UITextField()
+        MeasurePaiseTF.frame = CGRect(x: MeasureRupeeTF.frame.maxX + 1, y: CurrencyButton.frame.minY + (4 * y), width: (4 * x), height: 30)
+        MeasurePaiseTF.backgroundColor = UIColor.white
+        MeasurePaiseTF.layer.borderColor = UIColor.lightGray.cgColor
+        MeasurePaiseTF.layer.borderWidth = 1.0
+        MeasurePaiseTF.text = "00"
+        MeasurePaiseTF.textColor = UIColor.blue
+        MeasurePaiseTF.textAlignment = .center
+        MeasurePaiseTF.font = MeasurePaiseTF.font!.withSize(12)
+        PricingView.addSubview(MeasurePaiseTF)
+        
+        // CurrencyLabel..
+        let CurrencyLabel = UILabel()
+        CurrencyLabel.frame = CGRect(x: MeasurePaiseTF.frame.maxX + 1, y: CurrencyButton.frame.minY + (4 * y), width: (3 * x), height: 30)
+       // CurrencyLabel.backgroundColor = UIColor.gray
+        CurrencyLabel.text = "AED"
+        CurrencyLabel.textColor = UIColor.blue
+        CurrencyLabel.textAlignment = .center
+        CurrencyLabel.font = CurrencyLabel.font.withSize(13)
+        PricingView.addSubview(CurrencyLabel)
+        
+        
+        // Customization and Stiching Charges Label..
+        let StichingChargesLabel = UILabel()
+        StichingChargesLabel.frame = CGRect(x: x, y: MeasurementChargesLabel.frame.maxY + 8 , width: (PricingView.frame.width / 2), height: 40)
+       // StichingChargesLabel.backgroundColor = UIColor.gray
+        StichingChargesLabel.text = "Customization and Stiching Charges"
+        StichingChargesLabel.textColor = UIColor.black
+        StichingChargesLabel.textAlignment = .left
+        StichingChargesLabel.lineBreakMode = .byWordWrapping
+        StichingChargesLabel.numberOfLines = 2
+        StichingChargesLabel.font = StichingChargesLabel.font.withSize(14)
+        PricingView.addSubview(StichingChargesLabel)
+        
+      
+        //TextField1..
+        let StichingRupeeTF = UITextField()
+        StichingRupeeTF.frame = CGRect(x: StichingChargesLabel.frame.maxX + (2 * x), y: MeasurementChargesLabel.frame.minY + (4 * y), width: (6 * x), height: 30)
+        StichingRupeeTF.backgroundColor = UIColor.white
+        StichingRupeeTF.layer.borderColor = UIColor.lightGray.cgColor
+        StichingRupeeTF.layer.borderWidth = 1.0
+        StichingRupeeTF.text = "4205"
+        StichingRupeeTF.textColor = UIColor.blue
+        StichingRupeeTF.textAlignment = .center
+        StichingRupeeTF.font = StichingRupeeTF.font!.withSize(12)
+        PricingView.addSubview(StichingRupeeTF)
+        
+        //TextField2..
+        let StichingPaiseTF = UITextField()
+        StichingPaiseTF.frame = CGRect(x: StichingRupeeTF.frame.maxX + 1, y: MeasurementChargesLabel.frame.minY + (4 * y), width: (4 * x), height: 30)
+        StichingPaiseTF.backgroundColor = UIColor.white
+        StichingPaiseTF.layer.borderColor = UIColor.lightGray.cgColor
+        StichingPaiseTF.layer.borderWidth = 1.0
+        StichingPaiseTF.text = "00"
+        StichingPaiseTF.textColor = UIColor.blue
+        StichingPaiseTF.textAlignment = .center
+        StichingPaiseTF.font = StichingPaiseTF.font!.withSize(12)
+        PricingView.addSubview(StichingPaiseTF)
+        
+        // CurrencyLabel..
+        let StichingCurrLabel = UILabel()
+        StichingCurrLabel.frame = CGRect(x: StichingPaiseTF.frame.maxX + 1, y: MeasurementChargesLabel.frame.minY + (4 * y), width: (3 * x), height: 30)
+      //  StichingCurrLabel.backgroundColor = UIColor.gray
+        StichingCurrLabel.text = "AED"
+        StichingCurrLabel.textColor = UIColor.blue
+        StichingCurrLabel.textAlignment = .center
+        StichingCurrLabel.font = StichingCurrLabel.font.withSize(13)
+        PricingView.addSubview(StichingCurrLabel)
+        
+        
+        // Appointment Charges Label..
+        let AppointmentChargesLabel = UILabel()
+        AppointmentChargesLabel.frame = CGRect(x: x, y: StichingChargesLabel.frame.maxY + 8 , width: (PricingView.frame.width / 2), height: 30)
+      //  AppointmentChargesLabel.backgroundColor = UIColor.gray
+        AppointmentChargesLabel.text = "Appointment Charges"
+        AppointmentChargesLabel.textColor = UIColor.black
+        AppointmentChargesLabel.textAlignment = .left
+        AppointmentChargesLabel.font = AppointmentChargesLabel.font.withSize(14)
+        PricingView.addSubview(AppointmentChargesLabel)
+        
+        
+        //TextField1..
+        let AppointmentRupeeTF = UITextField()
+        AppointmentRupeeTF.frame = CGRect(x: AppointmentChargesLabel.frame.maxX + (2 * x), y: StichingChargesLabel.frame.minY + (4 * y), width: (6 * x), height: 30)
+        AppointmentRupeeTF.backgroundColor = UIColor.white
+        AppointmentRupeeTF.layer.borderColor = UIColor.lightGray.cgColor
+        AppointmentRupeeTF.layer.borderWidth = 1.0
+        AppointmentRupeeTF.text = "300"
+        AppointmentRupeeTF.textColor = UIColor.blue
+        AppointmentRupeeTF.textAlignment = .center
+        AppointmentRupeeTF.font = AppointmentRupeeTF.font!.withSize(12)
+        PricingView.addSubview(AppointmentRupeeTF)
+        
+        //TextField2..
+        let AppointmentPaiseTF = UITextField()
+        AppointmentPaiseTF.frame = CGRect(x: AppointmentRupeeTF.frame.maxX + 1, y: StichingChargesLabel.frame.minY + (4 * y), width: (4 * x), height: 30)
+        AppointmentPaiseTF.backgroundColor = UIColor.white
+        AppointmentPaiseTF.layer.borderColor = UIColor.lightGray.cgColor
+        AppointmentPaiseTF.layer.borderWidth = 1.0
+        AppointmentPaiseTF.text = "00"
+        AppointmentPaiseTF.textColor = UIColor.blue
+        AppointmentPaiseTF.textAlignment = .center
+        AppointmentPaiseTF.font = AppointmentPaiseTF.font!.withSize(12)
+        PricingView.addSubview(AppointmentPaiseTF)
+        
+        // CurrencyLabel..
+        let AppointmentCurrLabel = UILabel()
+        AppointmentCurrLabel.frame = CGRect(x: AppointmentPaiseTF.frame.maxX + 1, y: StichingChargesLabel.frame.minY + (4 * y), width: (3 * x), height: 30)
+      //  AppointmentCurrLabel.backgroundColor = UIColor.gray
+        AppointmentCurrLabel.text = "AED"
+        AppointmentCurrLabel.textColor = UIColor.blue
+        AppointmentCurrLabel.textAlignment = .center
+        AppointmentCurrLabel.font = AppointmentCurrLabel.font.withSize(13)
+        PricingView.addSubview(AppointmentCurrLabel)
+        
+        
+        // Material Delivery Charges Label..
+        let MaterialDeliveryChargesLabel = UILabel()
+        MaterialDeliveryChargesLabel.frame = CGRect(x: x, y: AppointmentChargesLabel.frame.maxY + 8 , width: (PricingView.frame.width / 2), height: 30)
+      //  MaterialDeliveryChargesLabel.backgroundColor = UIColor.gray
+        MaterialDeliveryChargesLabel.text = "Material Delivery Charges"
+        MaterialDeliveryChargesLabel.textColor = UIColor.black
+        MaterialDeliveryChargesLabel.textAlignment = .left
+        MaterialDeliveryChargesLabel.font = MaterialDeliveryChargesLabel.font.withSize(14)
+        PricingView.addSubview(MaterialDeliveryChargesLabel)
+        
+        //TextField1..
+        let MaterialRupeeTF = UITextField()
+        MaterialRupeeTF.frame = CGRect(x: MaterialDeliveryChargesLabel.frame.maxX + (2 * x), y: AppointmentChargesLabel.frame.minY + (3 * y), width: (6 * x), height: 30)
+        MaterialRupeeTF.backgroundColor = UIColor.white
+        MaterialRupeeTF.layer.borderColor = UIColor.lightGray.cgColor
+        MaterialRupeeTF.layer.borderWidth = 1.0
+        MaterialRupeeTF.text = "750"
+        MaterialRupeeTF.textColor = UIColor.blue
+        MaterialRupeeTF.textAlignment = .center
+        MaterialRupeeTF.font = MaterialRupeeTF.font!.withSize(12)
+        PricingView.addSubview(MaterialRupeeTF)
+        
+        //TextField2..
+        let MaterialPaiseTF = UITextField()
+        MaterialPaiseTF.frame = CGRect(x: MaterialRupeeTF.frame.maxX + 1, y: AppointmentChargesLabel.frame.minY + (3 * y), width: (4 * x), height: 30)
+        MaterialPaiseTF.backgroundColor = UIColor.white
+        MaterialPaiseTF.layer.borderColor = UIColor.lightGray.cgColor
+        MaterialPaiseTF.layer.borderWidth = 1.0
+        MaterialPaiseTF.text = "00"
+        MaterialPaiseTF.textColor = UIColor.blue
+        MaterialPaiseTF.textAlignment = .center
+        MaterialPaiseTF.font = MaterialPaiseTF.font!.withSize(12)
+        PricingView.addSubview(MaterialPaiseTF)
+        
+        // CurrencyLabel..
+        let MaterialCurrLabel = UILabel()
+        MaterialCurrLabel.frame = CGRect(x: MaterialPaiseTF.frame.maxX + 1, y: AppointmentChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+       // MaterialCurrLabel.backgroundColor = UIColor.gray
+        MaterialCurrLabel.text = "AED"
+        MaterialCurrLabel.textColor = UIColor.blue
+        MaterialCurrLabel.textAlignment = .center
+        MaterialCurrLabel.font = MaterialCurrLabel.font.withSize(13)
+        PricingView.addSubview(MaterialCurrLabel)
+        
+        
+        // Urgent Stiching Charges Label..
+        let UrgentStichChargesLabel = UILabel()
+        UrgentStichChargesLabel.frame = CGRect(x: x, y: MaterialDeliveryChargesLabel.frame.maxY + 8 , width: (PricingView.frame.width / 2), height: 30)
+      //  UrgentStichChargesLabel.backgroundColor = UIColor.gray
+        UrgentStichChargesLabel.text = "Urgent Stiching Charges"
+        UrgentStichChargesLabel.textColor = UIColor.black
+        UrgentStichChargesLabel.textAlignment = .left
+        UrgentStichChargesLabel.font = UrgentStichChargesLabel.font.withSize(14)
+        PricingView.addSubview(UrgentStichChargesLabel)
+        
+        //TextField1..
+        let UrgentRupeeTF = UITextField()
+        UrgentRupeeTF.frame = CGRect(x: UrgentStichChargesLabel.frame.maxX + (2 * x), y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (6 * x), height: 30)
+        UrgentRupeeTF.backgroundColor = UIColor.white
+        UrgentRupeeTF.layer.borderColor = UIColor.lightGray.cgColor
+        UrgentRupeeTF.layer.borderWidth = 1.0
+        UrgentRupeeTF.text = "800"
+        UrgentRupeeTF.textColor = UIColor.blue
+        UrgentRupeeTF.textAlignment = .center
+        UrgentRupeeTF.font = UrgentRupeeTF.font!.withSize(12)
+        PricingView.addSubview(UrgentRupeeTF)
+        
+        //TextField2..
+        let UrgentPaiseTF = UITextField()
+        UrgentPaiseTF.frame = CGRect(x: UrgentRupeeTF.frame.maxX + 1, y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (4 * x), height: 30)
+        UrgentPaiseTF.backgroundColor = UIColor.white
+        UrgentPaiseTF.layer.borderColor = UIColor.lightGray.cgColor
+        UrgentPaiseTF.layer.borderWidth = 1.0
+        UrgentPaiseTF.text = "00"
+        UrgentPaiseTF.textColor = UIColor.blue
+        UrgentPaiseTF.textAlignment = .center
+        UrgentPaiseTF.font = UrgentPaiseTF.font!.withSize(12)
+        PricingView.addSubview(UrgentPaiseTF)
+        
+        // CurrencyLabel..
+        let UrgentCurrLabel = UILabel()
+        UrgentCurrLabel.frame = CGRect(x: UrgentPaiseTF.frame.maxX + 1, y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+       // UrgentCurrLabel.backgroundColor = UIColor.gray
+        UrgentCurrLabel.text = "AED"
+        UrgentCurrLabel.textColor = UIColor.blue
+        UrgentCurrLabel.textAlignment = .center
+        UrgentCurrLabel.font = UrgentCurrLabel.font.withSize(13)
+        PricingView.addSubview(UrgentCurrLabel)
+        
+        
+        // Delivery Charges Label..
+        let DeliveryChargesLabel = UILabel()
+        DeliveryChargesLabel.frame = CGRect(x: x, y: UrgentStichChargesLabel.frame.maxY + 8 , width: (PricingView.frame.width / 2), height: 30)
+      //  DeliveryChargesLabel.backgroundColor = UIColor.gray
+        DeliveryChargesLabel.text = "Delivery Charges"
+        DeliveryChargesLabel.textColor = UIColor.black
+        DeliveryChargesLabel.textAlignment = .left
+        DeliveryChargesLabel.font = DeliveryChargesLabel.font.withSize(14)
+        PricingView.addSubview(DeliveryChargesLabel)
+        
+        //TextField1..
+        let DeliveryRupeeTF = UITextField()
+        DeliveryRupeeTF.frame = CGRect(x: DeliveryChargesLabel.frame.maxX + (2 * x), y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (6 * x), height: 30)
+        DeliveryRupeeTF.backgroundColor = UIColor.white
+        DeliveryRupeeTF.layer.borderColor = UIColor.lightGray.cgColor
+        DeliveryRupeeTF.layer.borderWidth = 1.0
+        DeliveryRupeeTF.text = "100"
+        DeliveryRupeeTF.textColor = UIColor.blue
+        DeliveryRupeeTF.textAlignment = .center
+        DeliveryRupeeTF.font = DeliveryRupeeTF.font!.withSize(12)
+        PricingView.addSubview(DeliveryRupeeTF)
+        
+        //TextField2..
+        let DeliveryPaiseTF = UITextField()
+        DeliveryPaiseTF.frame = CGRect(x: DeliveryRupeeTF.frame.maxX + 1, y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (4 * x), height: 30)
+        DeliveryPaiseTF.backgroundColor = UIColor.white
+        DeliveryPaiseTF.layer.borderColor = UIColor.lightGray.cgColor
+        DeliveryPaiseTF.layer.borderWidth = 1.0
+        DeliveryPaiseTF.text = "00"
+        DeliveryPaiseTF.textColor = UIColor.blue
+        DeliveryPaiseTF.textAlignment = .center
+        DeliveryPaiseTF.font = DeliveryPaiseTF.font!.withSize(12)
+        PricingView.addSubview(DeliveryPaiseTF)
+        
+        // CurrencyLabel..
+        let DeliveryCurrLabel = UILabel()
+        DeliveryCurrLabel.frame = CGRect(x: DeliveryPaiseTF.frame.maxX + 1, y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+      //  DeliveryCurrLabel.backgroundColor = UIColor.gray
+        DeliveryCurrLabel.text = "AED"
+        DeliveryCurrLabel.textColor = UIColor.blue
+        DeliveryCurrLabel.textAlignment = .center
+        DeliveryCurrLabel.font = DeliveryCurrLabel.font.withSize(13)
+        PricingView.addSubview(DeliveryCurrLabel)
+        
+        
+        // Service Charges Label..
+        let ServiceChargesLabel = UILabel()
+        ServiceChargesLabel.frame = CGRect(x: x, y: DeliveryChargesLabel.frame.maxY + 8 , width: (PricingView.frame.width / 2), height: 30)
+       // ServiceChargesLabel.backgroundColor = UIColor.gray
+        ServiceChargesLabel.text = "Service Charges"
+        ServiceChargesLabel.textColor = UIColor.black
+        ServiceChargesLabel.textAlignment = .left
+        ServiceChargesLabel.font = ServiceChargesLabel.font.withSize(14)
+        PricingView.addSubview(ServiceChargesLabel)
+        
+        //TextField1..
+        let ServiceRupeeTF = UITextField()
+        ServiceRupeeTF.frame = CGRect(x: ServiceChargesLabel.frame.maxX + (2 * x), y: DeliveryChargesLabel.frame.minY + (3 * y), width: (6 * x), height: 30)
+        ServiceRupeeTF.backgroundColor = UIColor.white
+        ServiceRupeeTF.layer.borderColor = UIColor.lightGray.cgColor
+        ServiceRupeeTF.layer.borderWidth = 1.0
+        ServiceRupeeTF.text = "150"
+        ServiceRupeeTF.textColor = UIColor.blue
+        ServiceRupeeTF.textAlignment = .center
+        ServiceRupeeTF.font = ServiceRupeeTF.font!.withSize(12)
+        PricingView.addSubview(ServiceRupeeTF)
+        
+        //TextField2..
+        let ServicePaiseTF = UITextField()
+        ServicePaiseTF.frame = CGRect(x: ServiceRupeeTF.frame.maxX + 1, y: DeliveryChargesLabel.frame.minY + (3 * y), width: (4 * x), height: 30)
+        ServicePaiseTF.backgroundColor = UIColor.white
+        ServicePaiseTF.layer.borderColor = UIColor.lightGray.cgColor
+        ServicePaiseTF.layer.borderWidth = 1.0
+        ServicePaiseTF.text = "00"
+        ServicePaiseTF.textColor = UIColor.blue
+        ServicePaiseTF.textAlignment = .center
+        ServicePaiseTF.font = ServicePaiseTF.font!.withSize(12)
+        PricingView.addSubview(ServicePaiseTF)
+        
+        // CurrencyLabel..
+        let ServiceCurrLabel = UILabel()
+        ServiceCurrLabel.frame = CGRect(x: ServicePaiseTF.frame.maxX + 1, y: DeliveryChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+     //   ServiceCurrLabel.backgroundColor = UIColor.gray
+        ServiceCurrLabel.text = "AED"
+        ServiceCurrLabel.textColor = UIColor.blue
+        ServiceCurrLabel.textAlignment = .center
+        ServiceCurrLabel.font = ServiceCurrLabel.font.withSize(13)
+        PricingView.addSubview(ServiceCurrLabel)
+        
+        
+        // Tax Charges Label..
+        let TaxChargesLabel = UILabel()
+        TaxChargesLabel.frame = CGRect(x: x, y: ServiceChargesLabel.frame.maxY + 8 , width: (PricingView.frame.width / 2), height: 30)
+    //    TaxChargesLabel.backgroundColor = UIColor.gray
+        TaxChargesLabel.text = "Tax"
+        TaxChargesLabel.textColor = UIColor.black
+        TaxChargesLabel.textAlignment = .left
+        TaxChargesLabel.font = TaxChargesLabel.font.withSize(14)
+        PricingView.addSubview(TaxChargesLabel)
+        
+        //TextField1..
+        let TaxRupeeTF = UITextField()
+        TaxRupeeTF.frame = CGRect(x: TaxChargesLabel.frame.maxX + (2 * x), y: ServiceChargesLabel.frame.minY + (3 * y), width: (6 * x), height: 30)
+        TaxRupeeTF.backgroundColor = UIColor.white
+        TaxRupeeTF.layer.borderColor = UIColor.lightGray.cgColor
+        TaxRupeeTF.layer.borderWidth = 1.0
+        TaxRupeeTF.text = "750"
+        TaxRupeeTF.textColor = UIColor.blue
+        TaxRupeeTF.textAlignment = .center
+        TaxRupeeTF.font = TaxRupeeTF.font!.withSize(12)
+        PricingView.addSubview(TaxRupeeTF)
+        
+        //TextField2..
+        let TaxPaiseTF = UITextField()
+        TaxPaiseTF.frame = CGRect(x: TaxRupeeTF.frame.maxX + 1, y: ServiceChargesLabel.frame.minY + (3 * y), width: (4 * x), height: 30)
+        TaxPaiseTF.backgroundColor = UIColor.white
+        TaxPaiseTF.layer.borderColor = UIColor.lightGray.cgColor
+        TaxPaiseTF.layer.borderWidth = 1.0
+        TaxPaiseTF.text = "00"
+        TaxPaiseTF.textColor = UIColor.blue
+        TaxPaiseTF.textAlignment = .center
+        TaxPaiseTF.font = TaxPaiseTF.font!.withSize(12)
+        PricingView.addSubview(TaxPaiseTF)
+        
+        // CurrencyLabel..
+        let TaxCurrLabel = UILabel()
+        TaxCurrLabel.frame = CGRect(x: TaxPaiseTF.frame.maxX + 1, y: ServiceChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+      //  TaxCurrLabel.backgroundColor = UIColor.gray
+        TaxCurrLabel.text = "AED"
+        TaxCurrLabel.textColor = UIColor.blue
+        TaxCurrLabel.textAlignment = .center
+        TaxCurrLabel.font = TaxCurrLabel.font.withSize(13)
+        PricingView.addSubview(TaxCurrLabel)
+        
+        
     }
     
     func DeliveryDetailsViewContents(isHidden : Bool)
     {
         
         let deliveryDetailsView = UIView()
-        deliveryDetailsView.frame = CGRect(x: (4 * x), y: DeliveryDetailsButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (28 * x))
+        deliveryDetailsView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (40 * x))
         deliveryDetailsView.backgroundColor = UIColor.white
         view.addSubview(deliveryDetailsView)
         
-     //   let dressTypeArray = ["Appointments  -  Nil", "Delivery Type  -  Urgent", "Stiching time required for stiches  -  4 days", "Approximate Delivery Date  -  24-12-2018 to 28-12-2018"]
+        deliveryDetailsView.isHidden = isHidden
         
-        var y1:CGFloat = y
+      //   var y1:CGFloat = y
         
-     
-     //   for i in 0..<dressTypeArray.count
-      //  {
-            let AppointmentViewLabels = UILabel()
-            AppointmentViewLabels.frame = CGRect(x: x, y: y1 + 2, width: deliveryDetailsView.frame.width - (2 * x), height: (6 * y))
-            AppointmentViewLabels.layer.cornerRadius = 10
-            AppointmentViewLabels.layer.masksToBounds = true
-            AppointmentViewLabels.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        // AppointmentView :-
+            let AppointmentsView = UIView()
+            AppointmentsView.frame = CGRect(x: x, y: 10, width: deliveryDetailsView.frame.width - (2 * x), height: (6 * y))
+            AppointmentsView.layer.cornerRadius = 10
+            AppointmentsView.layer.masksToBounds = true
+            AppointmentsView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        
           //  DeliveryDetLabels.text = dressTypeArray[i]
            // AppointmentViewLabels.textColor = UIColor.white
            // AppointmentViewLabels.textAlignment = .left
            // AppointmentViewLabels.font = AppointmentViewLabels.font.withSize(14)
-            deliveryDetailsView.addSubview(AppointmentViewLabels)
+            deliveryDetailsView.addSubview(AppointmentsView)
             
-            y1 = AppointmentViewLabels.frame.maxY + (y / 2)
+    //        y1 = AppointmentsView.frame.maxY + (y / 2)
         
-        
+        // Label :-
            let AppointmentsLabels = UILabel()
-           AppointmentsLabels.frame = CGRect(x: 0, y: 0 , width: 20 * x, height: (3 * y))
-          // AppointmentsLabels.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-           AppointmentsLabels.text = "Appointments          - "
-          AppointmentsLabels.textColor = UIColor.white
-          AppointmentsLabels.textAlignment = .left
-          AppointmentsLabels.font = AppointmentsLabels.font.withSize(14)
-          AppointmentViewLabels.addSubview(AppointmentsLabels)
+           AppointmentsLabels.frame = CGRect(x: 5, y: 10 , width: 15 * x, height: (3 * y))
+         //  AppointmentsLabels.backgroundColor = UIColor.gray
+           AppointmentsLabels.text = "Appointments"
+           AppointmentsLabels.textColor = UIColor.white
+           AppointmentsLabels.textAlignment = .left
+           AppointmentsLabels.font = AppointmentsLabels.font.withSize(14)
+           AppointmentsView.addSubview(AppointmentsLabels)
+        
+        // DeliveryColonLabel :-
+        let AppointColonLabel = UILabel()
+        AppointColonLabel.frame = CGRect(x: AppointmentsLabels.frame.maxX, y: AppointmentsView.frame.minY , width: 2 * x, height: (2 * y))
+       // AppointColonLabel = UIColor.gray
+        AppointColonLabel.text = "-"
+        AppointColonLabel.textColor = UIColor.white
+        AppointColonLabel.textAlignment = .center
+        AppointColonLabel.font = AppointColonLabel.font.withSize(14)
+        AppointmentsView.addSubview(AppointColonLabel)
+        
+        // DeliveryTypeView :-
+        let DeliveryTypeView = UIView()
+        DeliveryTypeView.frame = CGRect(x: x, y: 25 + (6 * y), width: AppointmentsView.frame.width , height: (5 * y))
+        DeliveryTypeView.layer.cornerRadius = 10
+        DeliveryTypeView.layer.masksToBounds = true
+        DeliveryTypeView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        deliveryDetailsView.addSubview(DeliveryTypeView)
+       
+        // Label :-
+        let DeliveryTypeLabel = UILabel()
+        DeliveryTypeLabel.frame = CGRect(x: 5, y: 6 , width: 15 * x, height: (3 * y))
+        DeliveryTypeLabel.backgroundColor = UIColor.gray
+        DeliveryTypeLabel.text = "Delivery Type"
+        DeliveryTypeLabel.textColor = UIColor.white
+        DeliveryTypeLabel.textAlignment = .left
+        DeliveryTypeLabel.font = DeliveryTypeLabel.font.withSize(14)
+        DeliveryTypeView.addSubview(DeliveryTypeLabel)
+        
+        // DeliveryColonLabel :-
+        let DeliveryColonLabel = UILabel()
+        DeliveryColonLabel.frame = CGRect(x: DeliveryTypeLabel.frame.minX, y: DeliveryTypeView.frame.minY , width: 2 * x, height: (2 * y))
+        DeliveryColonLabel.backgroundColor = UIColor.gray
+        DeliveryColonLabel.text = "-"
+        DeliveryColonLabel.textColor = UIColor.white
+        DeliveryColonLabel.textAlignment = .center
+        DeliveryColonLabel.font = DeliveryColonLabel.font.withSize(14)
+        DeliveryTypeView.addSubview(DeliveryColonLabel)
         
         
-      //  }
         
-     
+        // StichTimeView :-
+        let StichTimeView = UIView()
+        StichTimeView.frame = CGRect(x: x, y: 105 + (6 * y), width: DeliveryTypeView.frame.width , height: (6 * y))
+        StichTimeView.layer.cornerRadius = 10
+        StichTimeView.layer.masksToBounds = true
+        StichTimeView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        deliveryDetailsView.addSubview(StichTimeView)
+        
+        
+        // Label :-
+        let StichTimeLabel = UILabel()
+        StichTimeLabel.frame = CGRect(x: 5, y: 8 , width: 15 * x, height: (3 * y))
+        StichTimeLabel.backgroundColor = UIColor.gray
+        StichTimeLabel.text = "Stiching time required for stiches"
+        StichTimeLabel.lineBreakMode = .byWordWrapping
+        StichTimeLabel.numberOfLines = 2
+        StichTimeLabel.textColor = UIColor.white
+        StichTimeLabel.textAlignment = .left
+        StichTimeLabel.font = StichTimeLabel.font.withSize(14)
+        StichTimeView.addSubview(StichTimeLabel)
+        
+        
+        // StichColon Label :-
+        let StichColonLabel = UILabel()
+        StichColonLabel.frame = CGRect(x: StichTimeLabel.frame.maxX, y: StichTimeView.frame.minY , width: 2 * x, height: (2 * y))
+        StichColonLabel.backgroundColor = UIColor.gray
+        StichColonLabel.text = "-"
+        StichColonLabel.textColor = UIColor.white
+        StichColonLabel.textAlignment = .center
+        StichColonLabel.font = StichColonLabel.font.withSize(12)
+        StichTimeView.addSubview(StichColonLabel)
+       
+        
+        // DeliveryDateView :-
+        let DeliveryDateView = UIView()
+        DeliveryDateView.frame = CGRect(x: x, y: 195 + (6 * y), width: StichTimeView.frame.width , height: (10 * y))
+        DeliveryDateView.layer.cornerRadius = 10
+        DeliveryDateView.layer.masksToBounds = true
+        DeliveryDateView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        deliveryDetailsView.addSubview(DeliveryDateView)
+ 
+        // Label :-
+        let DeliveryDateLabel = UILabel()
+        DeliveryDateLabel.frame = CGRect(x: 5, y: 25 , width: 15 * x, height: (3 * y))
+        DeliveryDateLabel.backgroundColor = UIColor.gray
+        DeliveryDateLabel.text = "Approximate delivery date"
+        DeliveryDateLabel.lineBreakMode = .byWordWrapping
+        DeliveryDateLabel.numberOfLines = 2
+        DeliveryDateLabel.textColor = UIColor.white
+        DeliveryDateLabel.textAlignment = .left
+        DeliveryDateLabel.font = DeliveryDateLabel.font.withSize(14)
+        DeliveryDateView.addSubview(DeliveryDateLabel)
+        
+        // DateColon Label :-
+        let DateColonLabel = UILabel()
+        DateColonLabel.frame = CGRect(x: DeliveryDateLabel.frame.maxX, y: DeliveryDateView.frame.minY , width: 2 * x, height: (2 * y))
+         DateColonLabel.backgroundColor = UIColor.gray
+        DateColonLabel.text = "-"
+        DateColonLabel.textColor = UIColor.white
+        DateColonLabel.textAlignment = .center
+        DateColonLabel.font = DateColonLabel.font.withSize(12)
+        DeliveryDateView.addSubview(DateColonLabel)
+        
+        // Pay Button :-
+        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY + y, width: view.frame.width , height: 40)
+        ProceedToPayButton.backgroundColor = UIColor.orange
+        ProceedToPayButton.setTitle("PROCEED TO PAY", for: .normal)
+        ProceedToPayButton.setTitleColor(UIColor.white, for: .normal)
+        ProceedToPayButton.addTarget(self, action: #selector(self.ProccedToPayButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(ProceedToPayButton)
         
     }
+    
+    @objc func ProccedToPayButtonAction(sender : UIButton)
+    {
+        print("Redirect To Next Page.. !")
+    }
+    
+    @objc func CurrencyButtonAction(sender : UIButton)
+    {
+        print("Pop UP.. !")
+    }
+    
 
 }
