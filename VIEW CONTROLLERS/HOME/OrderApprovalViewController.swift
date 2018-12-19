@@ -16,6 +16,8 @@ class OrderApprovalViewController: CommonViewController
     let CurrencyButton = UIButton()
     var CurrencyCodes = [String]()
     
+    let deliveryDetailsView = UIView()
+    
     override func viewDidLoad()
     {
        // print("SUCCESS")
@@ -76,7 +78,7 @@ class OrderApprovalViewController: CommonViewController
         DressTypeLabel.textColor = UIColor.white
     //  DressTypeLabel.backgroundColor = UIColor.gray
         DressTypeLabel.textAlignment = .left
-        DressTypeLabel.font = DressTypeLabel.font.withSize(16)
+        DressTypeLabel.font = UIFont(name: "Avenir Next", size: 16)
         DressDetView.addSubview(DressTypeLabel)
         
         
@@ -86,7 +88,7 @@ class OrderApprovalViewController: CommonViewController
         ColorLabel.textColor = UIColor.white
     //  ColorLabel.backgroundColor = UIColor.gray
         ColorLabel.textAlignment = .left
-        ColorLabel.font = ColorLabel.font.withSize(14)
+        ColorLabel.font = UIFont(name: "Avenir Next", size: 14)
         DressDetView.addSubview(ColorLabel)
         
         let ColorTypeLabel = UILabel()
@@ -95,7 +97,7 @@ class OrderApprovalViewController: CommonViewController
        // ColorTypeLabel.backgroundColor = UIColor.gray
         ColorTypeLabel.textColor = UIColor.white
         ColorTypeLabel.textAlignment = .left
-        ColorTypeLabel.font = ColorLabel.font.withSize(14)
+        ColorTypeLabel.font = UIFont(name: "Avenir Next", size: 14)
         DressDetView.addSubview(ColorTypeLabel)
         
         
@@ -104,7 +106,7 @@ class OrderApprovalViewController: CommonViewController
         QtyLabel.text = "Qty     : "
         QtyLabel.textColor = UIColor.white
         QtyLabel.textAlignment = .left
-        QtyLabel.font = QtyLabel.font.withSize(14)
+        QtyLabel.font = UIFont(name: "Avenir Next", size: 14)
         DressDetView.addSubview(QtyLabel)
         
         
@@ -121,6 +123,7 @@ class OrderApprovalViewController: CommonViewController
         PricingButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PricingButton.setTitle("PRICE DETAILS", for: .normal)
         PricingButton.setTitleColor(UIColor.white, for: .normal)
+        PricingButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 16)
         PricingButton.tag = 0
         PricingButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(PricingButton)
@@ -129,6 +132,7 @@ class OrderApprovalViewController: CommonViewController
         DeliveryDetailsButton.backgroundColor = UIColor.lightGray
         DeliveryDetailsButton.setTitle("DELIVERY DETAILS", for: .normal)
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
+        DeliveryDetailsButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 16)
         DeliveryDetailsButton.tag = 1
         DeliveryDetailsButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(DeliveryDetailsButton)
@@ -137,7 +141,8 @@ class OrderApprovalViewController: CommonViewController
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
         PricingViewContents(isHidden: false)
         DeliveryDetailsViewContents(isHidden: true)
-       
+        
+        
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -191,10 +196,13 @@ class OrderApprovalViewController: CommonViewController
         PricingView.isHidden = isHidden
        
         // Currency Button:-
-        CurrencyButton.frame = CGRect(x: (24 * x), y: PricingView.frame.minY - (24 * y), width: (8 * x), height: (2 * y))
+        CurrencyButton.frame = CGRect(x: (24 * x), y: PricingView.frame.minY - (22 * y), width: (8 * x), height: (2 * y))
         CurrencyButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         CurrencyButton.setTitle("AED", for: .normal)
         CurrencyButton.setTitleColor(UIColor.white, for: .normal)
+        CurrencyButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 14)
+        CurrencyButton.layer.cornerRadius = 5;  // this value vary as per your desire
+        CurrencyButton.clipsToBounds = true;
         CurrencyButton.addTarget(self, action: #selector(self.CurrencyButtonAction(sender:)), for: .touchUpInside)
         PricingView.addSubview(CurrencyButton)
         
@@ -210,7 +218,8 @@ class OrderApprovalViewController: CommonViewController
         MeasurementChargesLabel.text = "Measurement Charges"
         MeasurementChargesLabel.textColor = UIColor.black
         MeasurementChargesLabel.textAlignment = .left
-        MeasurementChargesLabel.font = MeasurementChargesLabel.font.withSize(14)
+        MeasurementChargesLabel.font = UIFont(name: "Avenir Next", size: 14)
+       // MeasurementChargesLabel.font = MeasurementChargesLabel.font.withSize(14)
         PricingView.addSubview(MeasurementChargesLabel)
         
         //TextField1..
@@ -257,7 +266,7 @@ class OrderApprovalViewController: CommonViewController
         StichingChargesLabel.textAlignment = .left
         StichingChargesLabel.lineBreakMode = .byWordWrapping
         StichingChargesLabel.numberOfLines = 2
-        StichingChargesLabel.font = StichingChargesLabel.font.withSize(14)
+        StichingChargesLabel.font = UIFont(name: "Avenir Next", size: 14)
         PricingView.addSubview(StichingChargesLabel)
         
       
@@ -303,7 +312,7 @@ class OrderApprovalViewController: CommonViewController
         AppointmentChargesLabel.text = "Appointment Charges"
         AppointmentChargesLabel.textColor = UIColor.black
         AppointmentChargesLabel.textAlignment = .left
-        AppointmentChargesLabel.font = AppointmentChargesLabel.font.withSize(14)
+        AppointmentChargesLabel.font = UIFont(name: "Avenir Next", size: 14)
         PricingView.addSubview(AppointmentChargesLabel)
         
         
@@ -349,7 +358,7 @@ class OrderApprovalViewController: CommonViewController
         MaterialDeliveryChargesLabel.text = "Material Delivery Charges"
         MaterialDeliveryChargesLabel.textColor = UIColor.black
         MaterialDeliveryChargesLabel.textAlignment = .left
-        MaterialDeliveryChargesLabel.font = MaterialDeliveryChargesLabel.font.withSize(14)
+        MaterialDeliveryChargesLabel.font = UIFont(name: "Avenir Next", size: 14)
         PricingView.addSubview(MaterialDeliveryChargesLabel)
         
         //TextField1..
@@ -394,7 +403,7 @@ class OrderApprovalViewController: CommonViewController
         UrgentStichChargesLabel.text = "Urgent Stiching Charges"
         UrgentStichChargesLabel.textColor = UIColor.black
         UrgentStichChargesLabel.textAlignment = .left
-        UrgentStichChargesLabel.font = UrgentStichChargesLabel.font.withSize(14)
+        UrgentStichChargesLabel.font = UIFont(name: "Avenir Next", size: 14)
         PricingView.addSubview(UrgentStichChargesLabel)
         
         //TextField1..
@@ -439,7 +448,7 @@ class OrderApprovalViewController: CommonViewController
         DeliveryChargesLabel.text = "Delivery Charges"
         DeliveryChargesLabel.textColor = UIColor.black
         DeliveryChargesLabel.textAlignment = .left
-        DeliveryChargesLabel.font = DeliveryChargesLabel.font.withSize(14)
+        DeliveryChargesLabel.font = UIFont(name: "Avenir Next", size: 14)
         PricingView.addSubview(DeliveryChargesLabel)
         
         //TextField1..
@@ -484,7 +493,7 @@ class OrderApprovalViewController: CommonViewController
         ServiceChargesLabel.text = "Service Charges"
         ServiceChargesLabel.textColor = UIColor.black
         ServiceChargesLabel.textAlignment = .left
-        ServiceChargesLabel.font = ServiceChargesLabel.font.withSize(14)
+        ServiceChargesLabel.font = UIFont(name: "Avenir Next", size: 14)
         PricingView.addSubview(ServiceChargesLabel)
         
         //TextField1..
@@ -529,7 +538,7 @@ class OrderApprovalViewController: CommonViewController
         TaxChargesLabel.text = "Tax"
         TaxChargesLabel.textColor = UIColor.black
         TaxChargesLabel.textAlignment = .left
-        TaxChargesLabel.font = TaxChargesLabel.font.withSize(14)
+        TaxChargesLabel.font = UIFont(name: "Avenir Next", size: 14)
         PricingView.addSubview(TaxChargesLabel)
         
         //TextField1..
@@ -566,13 +575,13 @@ class OrderApprovalViewController: CommonViewController
         TaxCurrLabel.font = TaxCurrLabel.font.withSize(13)
         PricingView.addSubview(TaxCurrLabel)
         
-        
+         ProceedToPayButton.isHidden = true
     }
     
     func DeliveryDetailsViewContents(isHidden : Bool)
     {
         
-        let deliveryDetailsView = UIView()
+       // let deliveryDetailsView = UIView()
         deliveryDetailsView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (40 * x))
         deliveryDetailsView.backgroundColor = UIColor.white
         view.addSubview(deliveryDetailsView)
@@ -710,13 +719,16 @@ class OrderApprovalViewController: CommonViewController
         DeliveryDateView.addSubview(DateColonLabel)
         
         // Pay Button :-
-        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY + y, width: view.frame.width , height: 40)
+        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY + (3 * y), width: view.frame.width , height: 40)
         ProceedToPayButton.backgroundColor = UIColor.orange
         ProceedToPayButton.setTitle("PROCEED TO PAY", for: .normal)
         ProceedToPayButton.setTitleColor(UIColor.white, for: .normal)
+        ProceedToPayButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 16)
         ProceedToPayButton.addTarget(self, action: #selector(self.ProccedToPayButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(ProceedToPayButton)
         
+       ProceedToPayButton.isHidden = isHidden
+   
     }
     
     @objc func ProccedToPayButtonAction(sender : UIButton)

@@ -51,5 +51,6 @@ import Foundation
     @objc optional func API_CALLBACK_DeviceDetails(deviceDet : NSDictionary)
     @objc optional func API_CALLBACK_InsertErrorDevice(deviceError : NSDictionary)
     
-    // Latest one- Updated on 10-12-2018...
+    // 19-12-2018..
+    @objc optional func API_CALLBACK_InsertOrderSummary(insertOrder : NSDictionary)
 }

@@ -8,11 +8,22 @@
 
 import UIKit
 
-class OrderSummaryViewController: CommonViewController
+class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
 {
-
+    
     let randomInt = Int.random(in: 10265..<10365)
 
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
+    let serviceCall = ServerAPI()
+    
+    
     
     override func viewDidLoad()
     {
@@ -215,9 +226,13 @@ class OrderSummaryViewController: CommonViewController
     
     @objc func submitButtonAction(sender : UIButton)
     {
+        
+        self.serviceCall.API_InsertOrderSummary(dressType: 1, CustomerId: 1, AddressId: 2, PatternId: 1, Ordertype: 3, MeasurementId: -1, MaterialImage: [], ReferenceImage: [], OrderCustomizationAttributeId: [1], OrderCustomizationAttributeImageId: [1], TailorId: [2], MeasurementBy: "Tailor", CreatedBy: 1, MeasurementName: "Raghu", UserMeasurementValuesId: [19], UserMeasurementValues: "20.00", DeliveryTypeId: 1, delegate: self)
+       
         let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(randomInt)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
         self.present(alert, animated: true, completion: nil)
+ 
     }
     
     func navigateToHomeScreen(action : UIAlertAction)
@@ -230,6 +245,62 @@ class OrderSummaryViewController: CommonViewController
         window?.makeKeyAndVisible()
     }
 
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+         print("Order Summary", errorMessage)
+    }
+    
+    func API_CALLBACK_InsertOrderSummary(insertOrder: NSDictionary)
+    {
+        let ResponseMsg = insertOrder.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = insertOrder.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            
+            let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(Result)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
+            self.present(alert, animated: true, completion: nil)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = insertOrder.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "InsertOrder"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        //  ErrorStr = "Default Error"
+        PageNumStr = "OrderSummary ViewController"
+        // MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+    }
+    
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
