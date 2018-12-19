@@ -58,7 +58,7 @@ class OrderApprovalViewController: CommonViewController
         orderApprovalNavigationBar.addSubview(navigationTitle)
         
         let DressDetView = UIView()
-        DressDetView.frame = CGRect(x: x + 15 , y: orderApprovalNavigationBar.frame.maxY + y, width: view.frame.width - (5 * x), height: (12 * y))
+        DressDetView.frame = CGRect(x: x + 15 , y: orderApprovalNavigationBar.frame.maxY + y, width: view.frame.width - (5 * x), height: (10 * y))
         DressDetView.layer.cornerRadius = 5
         DressDetView.layer.borderWidth = 1
         DressDetView.layer.backgroundColor = UIColor.orange.cgColor
@@ -66,7 +66,7 @@ class OrderApprovalViewController: CommonViewController
         view.addSubview(DressDetView)
         
         let DressImageView = UIImageView()
-        DressImageView.frame = CGRect(x: x, y: y, width: (10 * x), height:(10 * y))
+        DressImageView.frame = CGRect(x: x, y: y, width: (8 * x), height:(8 * y))
         DressImageView.backgroundColor = UIColor.gray
         DressDetView.addSubview(DressImageView)
         
