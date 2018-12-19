@@ -50,6 +50,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     var customPockets = [String : String]()
     var selectedCustom = String()
     var customDict = [String : String]()
+    var customDictValuesCount = 0
 
     override func viewDidLoad()
     {
@@ -144,6 +145,14 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             CustomizationAttIdArray = CustomizationAttributes.value(forKey: "Id") as! NSArray
             CustomizationAttNameArray = CustomizationAttributes.value(forKey: "AttributeNameInEnglish") as! NSArray
+            
+            for i in 0..<CustomizationAttNameArray.count
+            {
+                if let customString = CustomizationAttNameArray[i] as? String
+                {
+                    customDict[customString] = ""
+                }
+            }
             
             
             /*// AttributeImages:
@@ -370,7 +379,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownButton.addTarget(self, action: #selector(self.dropDownButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(dropDownButton)
         
-        customDict["\(CustomizationAttNameArray[0])"] = ""
         selectedCustom = CustomizationAttNameArray[0] as! String
         
         let dropDownImageView = UIImageView()
@@ -530,92 +538,37 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     {
         print("NEXT ACTION", CustomizationAttNameArray.count, customDict.count)
         
-        print("SELECTED CUSTOM", customDict.values.isEmpty)
+        print("SELECTED CUSTOM", customDict, selectedCustom, customDictValuesCount)
         
-        if customDict.count == 1
+        for (keys, values) in customDict
         {
-            let customEmptyAlert = UIAlertController(title: "Alert", message: "You didn't select any customization", preferredStyle: .alert)
-            customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(customEmptyAlert, animated: true, completion: nil)
-        }
-        else
-        {
-            if CustomizationAttNameArray.count == customDict.count
+            print("KEYS - \(keys), VALUES - \(values)")
+            
+            if values.isEmpty == true || values == ""
             {
-                let measurement1Screen = Measurement1ViewController()
-                self.navigationController?.pushViewController(measurement1Screen, animated: true)
+                let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and procced to next", preferredStyle: .alert)
+                customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(customEmptyAlert, animated: true, completion: nil)
             }
             else
             {
-                if CustomizationAttNameArray.count == customDict.count
+                if CustomizationAttNameArray.count != customDictValuesCount
                 {
-                    let measurement1Screen = Measurement1ViewController()
-                    self.navigationController?.pushViewController(measurement1Screen, animated: true)
+                    customDictValuesCount = customDictValuesCount + 1
                 }
-                else
-                {
-                    for i in 0..<customDict.count
-                    {
-                        if CustomizationAttNameArray.contains(Array(customDict)[i].key)
-                        {
-                            
-                        }
-                        else
-                        {
-                            let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for and procced to next", preferredStyle: .alert)
-                            customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                            self.present(customEmptyAlert, animated: true, completion: nil)
-                        }
-                    }
-                }
-                
             }
-            
         }
         
-        /*if CustomizationAttNameArray.count == customDict.count
+        print("EQUAL COUNT", CustomizationAttNameArray.count, customDictValuesCount)
+        if CustomizationAttNameArray.count == customDictValuesCount
         {
             let measurement1Screen = Measurement1ViewController()
             self.navigationController?.pushViewController(measurement1Screen, animated: true)
         }
         else
         {
-            for i in 0..<customDict.count
-            {
-                for j in 0..<CustomizationAttNameArray.count
-                {
-                    if let str = CustomizationAttNameArray[j] as? String
-                    {
-                        if str != Array(customDict)[i].key
-                        {
-                            let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(str) and procced to next", preferredStyle: .alert)
-                            customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                            self.present(customEmptyAlert, animated: true, completion: nil)
-                            
-                            return
-                        }
-                    }
-                }
-            }
             
-            /*for i in 0..<CustomizationAttNameArray.count
-            {
-                if let str = CustomizationAttNameArray[i] as? String
-                {
-                    if str != Array(customDict)[i].key
-                    {
-                        let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(str) and procced to next", preferredStyle: .alert)
-                        customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                        self.present(customEmptyAlert, animated: true, completion: nil)
-                    }
-                    else
-                    {
-                        
-                    }
-                }
-            }*/
-            
-        }*/
+        }
     }
 
     /*

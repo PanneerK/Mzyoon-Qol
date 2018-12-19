@@ -27,6 +27,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     let mapView = GMSMapView()
     let marker = GMSMarker()
+    let addressLabel = UILabel()
+
     
     var IdArray = NSArray()
     var TailorNameArray = NSArray()
@@ -604,6 +606,10 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+            marker.title = ShopNameArray[i] as? String
+            marker.snippet = AddressArray[i] as? String
+            marker.tracksInfoWindowChanges = true
+            marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
             marker.map = mapView
         }
         
@@ -611,7 +617,26 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         print("WELCOME FOR MARKER", marker.groundAnchor.y)
+        addressOfMarker(marker: marker)
         return true
+    }
+    
+    func addressOfMarker(marker : GMSMarker)
+    {
+        addressLabel.frame = CGRect(x: marker.groundAnchor.x, y: marker.groundAnchor.y, width: (20 * x), height: (5 * y))
+        addressLabel.backgroundColor = UIColor.white
+        addressLabel.text = "\(marker.title!) \(marker.snippet!)"
+        addressLabel.textColor = UIColor.black
+        addressLabel.textAlignment = .left
+        addressLabel.numberOfLines = 2
+        mapView.addSubview(addressLabel)
+        
+        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
+    }
+    
+    @objc func closeAddressLabel()
+    {
+        addressLabel.removeFromSuperview()
     }
     
     func markerView(yPos : CGFloat)
