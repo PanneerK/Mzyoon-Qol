@@ -530,8 +530,50 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     {
         print("NEXT ACTION", CustomizationAttNameArray.count, customDict.count)
         
-        print("SELECTED CUSTOM", customDict.count)
-        if CustomizationAttNameArray.count == customDict.count
+        print("SELECTED CUSTOM", customDict.values.isEmpty)
+        
+        if customDict.count == 1
+        {
+            let customEmptyAlert = UIAlertController(title: "Alert", message: "You didn't select any customization", preferredStyle: .alert)
+            customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(customEmptyAlert, animated: true, completion: nil)
+        }
+        else
+        {
+            if CustomizationAttNameArray.count == customDict.count
+            {
+                let measurement1Screen = Measurement1ViewController()
+                self.navigationController?.pushViewController(measurement1Screen, animated: true)
+            }
+            else
+            {
+                if CustomizationAttNameArray.count == customDict.count
+                {
+                    let measurement1Screen = Measurement1ViewController()
+                    self.navigationController?.pushViewController(measurement1Screen, animated: true)
+                }
+                else
+                {
+                    for i in 0..<customDict.count
+                    {
+                        if CustomizationAttNameArray.contains(Array(customDict)[i].key)
+                        {
+                            
+                        }
+                        else
+                        {
+                            let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for and procced to next", preferredStyle: .alert)
+                            customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                            self.present(customEmptyAlert, animated: true, completion: nil)
+                        }
+                    }
+                }
+                
+            }
+            
+        }
+        
+        /*if CustomizationAttNameArray.count == customDict.count
         {
             let measurement1Screen = Measurement1ViewController()
             self.navigationController?.pushViewController(measurement1Screen, animated: true)
@@ -573,7 +615,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 }
             }*/
             
-        }
+        }*/
     }
 
     /*
