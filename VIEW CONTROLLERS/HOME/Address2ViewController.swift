@@ -14,6 +14,9 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var x = CGFloat()
     var y = CGFloat()
     
+    var addressString = String()
+    var splittedAddress = [String]()
+    
     let serviceCall = ServerAPI()
     
     let firstNameEnglishTextField = UITextField()
@@ -25,6 +28,9 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     let mobileTextField = UITextField()
     let shippingNotesTextField = UITextField()
     
+    let countryButton = UIButton()
+    let stateButton = UIButton()
+    
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -32,6 +38,14 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var ErrorStr:String!
     var PageNumStr:String!
     var MethodName:String!
+    
+    //COUNTRY CODE API PARAMETER
+    var countryCodeArray = NSArray()
+    var countryNameArray = NSArray()
+    var countryFlagArray = NSArray()
+    var individualCountryFlagArray = [UIImage]()
+    
+    let countryAlert = UIAlertController(title: "Country", message: "Please choose your country", preferredStyle: .alert)
     
     override func viewDidLoad()
     {
@@ -41,7 +55,17 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
+        serviceCall.API_CountryCode(delegate: self)
+        
         view.backgroundColor = UIColor.white
+        
+        let split1 = addressString.split(separator: ",")
+        
+        for i in 0..<split1.count
+        {
+            splittedAddress.append(String(split1[i]))
+        }
+        print("SPLIT", splittedAddress)
         
         self.addressContents()
         
@@ -119,6 +143,43 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
     }
     
+    func API_CALLBACK_CountryCode(countryCodes: NSDictionary) {
+        
+        let responseMsg = countryCodes.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = countryCodes.object(forKey: "Result") as! NSArray
+            
+            countryNameArray = result.value(forKey: "CountryName") as! NSArray
+            
+            countryCodeArray = result.value(forKey: "PhoneCode") as! NSArray
+            
+            countryFlagArray = result.value(forKey: "Flag") as! NSArray
+            
+            print("COUNT OF", countryFlagArray.count)
+            
+            for i in 0..<countryNameArray.count
+            {
+                if let country = countryNameArray[i] as? String
+                {
+                    let convertedString = country.split(separator: "(")
+                    print("convertedString", convertedString[0])
+                    countryAlert.addAction(UIAlertAction(title: "\(convertedString[0])", style: .default, handler: countryCodeAlertAction(action:)))
+                }
+            }
+        }
+        else if responseMsg == "Failure"
+        {
+            let Result = countryCodes.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "getallcountries"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
     func addressContents()
     {
         let addressNavigationBar = UIView()
@@ -163,12 +224,13 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         view.addSubview(locationView)
         
         let address1Label = UILabel()
-        address1Label.frame = CGRect(x: x, y: y / 2, width: locationView.frame.width - (8 * x), height: (2 * y))
-        address1Label.text = "Qol Tower, Sheik Kha;ifa Bin Saeed Street"
+        address1Label.frame = CGRect(x: x, y: y / 2, width: locationView.frame.width - (9 * x), height: (6 * y))
+        address1Label.text = addressString
         address1Label.textColor = UIColor.black
         address1Label.textAlignment = .left
-        address1Label.font = UIFont(name: "Avenir-Regular", size: 15)
-        address1Label.font = address1Label.font.withSize(15)
+        address1Label.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        address1Label.font = address1Label.font.withSize(1.5 * x)
+        address1Label.numberOfLines = 3
         locationView.addSubview(address1Label)
         
         let address2Label = UILabel()
@@ -178,7 +240,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         address2Label.textAlignment = .left
         address2Label.font = UIFont(name: "Avenir-Regular", size: 15)
         address2Label.font = address2Label.font.withSize(15)
-        locationView.addSubview(address2Label)
+//        locationView.addSubview(address2Label)
         
         let address3Label = UILabel()
         address3Label.frame = CGRect(x: x, y: address2Label.frame.maxY, width: locationView.frame.width - (8 * x), height: (2 * y))
@@ -187,7 +249,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         address3Label.textAlignment = .left
         address3Label.font = UIFont(name: "Avenir-Regular", size: 15)
         address3Label.font = address3Label.font.withSize(15)
-        locationView.addSubview(address3Label)
+//        locationView.addSubview(address3Label)
         
         let editLocationButton = UIButton()
         editLocationButton.frame = CGRect(x: locationView.frame.width - (8.1 * x), y: 0.1 * y, width: (7.8 * x), height: (7.8 * y))
@@ -303,12 +365,12 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         countryIcon.frame = CGRect(x: x, y: underline2.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
         countryIcon.image = UIImage(named: "men")
         addressScrollView.addSubview(countryIcon)
-        
-        let countryButton = UIButton()
+
         countryButton.frame = CGRect(x: countryIcon.frame.maxX + x, y: underline2.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
         countryButton.setTitle("Country", for: .normal)
-        countryButton.setTitleColor(UIColor.lightGray, for: .normal)
+        countryButton.setTitleColor(UIColor.black, for: .normal)
         countryButton.contentHorizontalAlignment = .left
+        countryButton.addTarget(self, action: #selector(self.countryButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(countryButton)
         
         let countryDropDownIcon = UIImageView()
@@ -326,10 +388,9 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         stateIcon.image = UIImage(named: "men")
         addressScrollView.addSubview(stateIcon)
         
-        let stateButton = UIButton()
         stateButton.frame = CGRect(x: stateIcon.frame.maxX + x, y: underline3.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        stateButton.setTitle("State", for: .normal)
-        stateButton.setTitleColor(UIColor.lightGray, for: .normal)
+        stateButton.setTitle("state", for: .normal)
+        stateButton.setTitleColor(UIColor.black, for: .normal)
         stateButton.contentHorizontalAlignment = .left
         addressScrollView.addSubview(stateButton)
         
@@ -349,10 +410,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(areaIcon)
         
         areaNameTextField.frame = CGRect(x: areaIcon.frame.maxX + x, y: underline4.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        areaNameTextField.placeholder = "Area"
-        areaNameTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        areaNameTextField.text = "Area"
+        areaNameTextField.textColor = UIColor.black
         areaNameTextField.textAlignment = .left
-        areaNameTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
+        areaNameTextField.font = UIFont(name: "Avenir-Regular", size: 18)
 //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
 //        areaNameTextField.leftView = paddingView2
         areaNameTextField.leftViewMode = UITextField.ViewMode.always
@@ -558,13 +619,33 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     @objc func locationEditButtonAction(sender : UIButton)
     {
-        let mapScreen = LocationViewController()
-        self.navigationController?.pushViewController(mapScreen, animated: true)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func countryButtonAction(sender : UIButton)
+    {
+        countryAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(countryAlert, animated: true, completion: nil)
+    }
+    
+    func countryCodeAlertAction(action : UIAlertAction)
+    {
+        countryButton.setTitle(action.title, for: .normal)
+    }
+    
+    @objc func stateButtonAction(sender : UIButton)
+    {
+        
     }
     
     @objc func saveAndNextButtonAction(sender : UIButton)
     {
-        let BuyerId = 10
+        var buyerId = String()
+        
+        if let getBuyerId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            buyerId = getBuyerId
+        }
         let FirstNameStr = firstNameEnglishTextField.text
         let lastNameStr = secondNameEnglishTextField.text
         let CountryId = 1
@@ -580,7 +661,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let latitude = 1.2345
         let longitude = 2.2345
         
-        serviceCall.API_InsertAddress(BuyerId: BuyerId, FirstName: FirstNameStr!, LastName: lastNameStr!, CountryId: CountryId, StateId: stateId, Area: AreaStr!, Floor: floorStr!, LandMark: LandmarkStr!, LocationType: locationTypeStr!, ShippingNotes: shippingStr!, IsDefault: SetDefaultStr, CountryCode: CountryCode, PhoneNo: PhoneNum!, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+        serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr!, LastName: lastNameStr!, CountryId: CountryId, StateId: stateId, Area: AreaStr!, Floor: floorStr!, LandMark: LandmarkStr!, LocationType: locationTypeStr!, ShippingNotes: shippingStr!, IsDefault: SetDefaultStr, CountryCode: CountryCode, PhoneNo: PhoneNum!, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
     }
 
     /*

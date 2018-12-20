@@ -24,6 +24,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     let marker = GMSMarker()
     
     let markerImageView = UIImageView()
+    
+    let addressLabel = UILabel()
 
     override func viewDidLoad()
     {
@@ -92,12 +94,29 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         
 //        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
 
-        mapView.frame = CGRect(x: 0, y: locationNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (6.4 * y))
+        mapView.frame = CGRect(x: 0, y: locationNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (11.4 * y))
 //        mapView.camera = camera
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
+        
+        addressLabel.frame = CGRect(x: x, y: y, width: view.frame.width - (2 * x), height: (5 * y))
+        addressLabel.layer.borderWidth = 1
+        addressLabel.layer.borderColor = UIColor.lightGray.cgColor
+        addressLabel.backgroundColor = UIColor.white
+        addressLabel.textColor = UIColor.black
+        addressLabel.textAlignment = .left
+        addressLabel.font = UIFont(name: "Avenir-Next", size: (2 * x))
+        mapView.addSubview(addressLabel)
+        
+        let addAddressButton = UIButton()
+        addAddressButton.frame = CGRect(x: 0, y: mapView.frame.maxY, width: view.frame.width, height: (5 * y))
+        addAddressButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        addAddressButton.setTitle("Add Address", for: .normal)
+        addAddressButton.setTitleColor(UIColor.white, for: .normal)
+        addAddressButton.addTarget(self, action: #selector(self.addAddressButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(addAddressButton)
         
         markerImageView.frame = CGRect(x: ((view.frame.width - (6 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (6 * x), height: (5 * y))
         markerImageView.image = UIImage(named: "marker")
@@ -114,9 +133,11 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     }
     
     
-    @objc func currentLocationButtonAction(sender : UIButton)
+    @objc func addAddressButtonAction(sender : UIButton)
     {
-        
+        let address2Screen = Address2ViewController()
+        address2Screen.addressString = addressLabel.text!
+        self.navigationController?.pushViewController(address2Screen, animated: true)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
@@ -178,7 +199,9 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             }
             
             // 3
-            print(lines.joined(separator: "\n"))
+            print("GET CURRENT ADDRESS", lines.joined(separator: "\n"))
+            
+            self.addressLabel.text = lines.joined(separator: "\n")
             
             //  self.addressLabel.text = lines.joined(separator: "\n")
             

@@ -505,7 +505,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     @objc func countryCodeButtonAction(sender : UIButton)
     {
         let countryCodeTableView = UITableView()
-        countryCodeTableView.frame = CGRect(x: mobileCountryCodeButton.frame.minX, y: mobileCountryCodeButton.frame.maxY, width: mobileCountryCodeButton.frame.width, height: 150)
+        countryCodeTableView.frame = CGRect(x: mobileCountryCodeButton.frame.minX, y: mobileCountryCodeButton.frame.maxY, width: mobileCountryCodeButton.frame.width, height: (15 * y))
         countryCodeTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         countryCodeTableView.dataSource = self
         countryCodeTableView.delegate = self

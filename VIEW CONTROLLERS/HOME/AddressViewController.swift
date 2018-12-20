@@ -26,7 +26,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     var Longitude = NSArray()
     var CountryId = NSArray()
     var StateId = NSArray()
-    var Area = NSArray()
+    var areaArray = NSArray()
     var Building = NSArray()
     var Floor = NSArray()
     var LandMark = NSArray()
@@ -34,7 +34,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     var ShippingNotes = NSArray()
     var PhoneNo = NSArray()
     var CountryCode = NSArray()
-    var IsDefault = NSArray()
+    var isDefault = NSArray()
     var CreatedBy = NSArray()
     var ModifiedBy = NSArray()
     
@@ -110,6 +110,9 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             LastName = Result.value(forKey: "LastName") as! NSArray
             print("LastName", LastName)
             
+            areaArray = Result.value(forKey: "Area") as! NSArray
+            print("Area", areaArray)
+            
             PhoneNo = Result.value(forKey: "PhoneNo") as! NSArray
             print("PhoneNo", PhoneNo)
             
@@ -119,7 +122,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             Longitude = Result.value(forKey: "Longitude") as! NSArray
             print("Longitude", Longitude)
             
-             addressContent()
+            isDefault = Result.value(forKey: "IsDefault") as! NSArray
+            print("IsDefault", isDefault)
+            
+            addressContent()
         }
         else if ResponseMsg == "Failure"
         {
@@ -235,7 +241,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             for i in 0..<FirstName.count
             {
                 let addressView = UIView()
-                addressView.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (18 * y))
+                addressView.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
                 addressView.backgroundColor = UIColor.white
                 addressScrollView.addSubview(addressView)
                 
@@ -302,7 +308,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 
                 let getAddressLabel = UILabel()
                 getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (6 * x))
-                getAddressLabel.text = "Qol Tower, Sheikh Khalifa Bin Saeed Street, Dubai, P.O.Box 901"
+                getAddressLabel.text = areaArray[i] as? String
                 getAddressLabel.textColor = UIColor.black
                 getAddressLabel.textAlignment = .left
                 getAddressLabel.numberOfLines = 3
@@ -321,6 +327,32 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 getMobileLabel.textColor = UIColor.black
                 getMobileLabel.textAlignment = .left
                 addressView.addSubview(getMobileLabel)
+                
+                if let defaultString = isDefault[i] as? Int
+                {
+                    let defaultAddressLabel = UILabel()
+                    defaultAddressLabel.frame = CGRect(x: addressView.frame.width - (20 * x), y: mobileLabel.frame.maxY + y, width: (12 * x), height: (2 * y))
+//                    defaultAddressLabel.backgroundColor = UIColor.orange
+                    defaultAddressLabel.text = "Default Address"
+                    defaultAddressLabel.textColor = UIColor.black
+                    defaultAddressLabel.textAlignment = .left
+                    defaultAddressLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                    addressView.addSubview(defaultAddressLabel)
+                    
+                    let defaultSwitch = UISwitch()
+                    defaultSwitch.frame = CGRect(x: defaultAddressLabel.frame.maxX + x, y: mobileLabel.frame.maxY + y, width: (3 * x), height: (2 * y))
+                    
+                    if defaultString == 1
+                    {
+                        defaultSwitch.isOn = true
+                    }
+                    else
+                    {
+                        defaultSwitch.isOn = false
+                    }
+                    defaultSwitch.isUserInteractionEnabled = false
+                    addressView.addSubview(defaultSwitch)
+                }
             }
             
             addressScrollView.contentSize.height = y1

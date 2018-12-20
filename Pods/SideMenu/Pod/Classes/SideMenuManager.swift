@@ -75,8 +75,6 @@ open class SideMenuManager: NSObject {
      */
     open var menuWidth: CGFloat = min(round(min((appScreenRect.width), (appScreenRect.height)) * 0.75), 240)
     
-    
-    
     /// Duration of the animation when the menu is presented without gestures. Default is 0.35 seconds.
     open var menuAnimationPresentDuration: Double = 0.35
     

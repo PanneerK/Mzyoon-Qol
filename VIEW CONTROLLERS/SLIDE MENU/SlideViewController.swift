@@ -49,7 +49,7 @@ class SlideViewController: UIViewController
         view.addSubview(userImage)
         
         let userName = UILabel()
-        userName.frame = CGRect(x: 0, y: userImage.frame.maxY + y, width: 240, height: (3 * y))
+        userName.frame = CGRect(x: 0, y: userImage.frame.maxY + y, width: (24 * x), height: (3 * y))
         if let name = UserDefaults.standard.value(forKey: "UserName") as? String
         {
             userName.text = name
