@@ -27,6 +27,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     let mapView = GMSMapView()
     let marker = GMSMarker()
+    let addressLabel = UILabel()
+
     
     var IdArray = NSArray()
     var TailorNameArray = NSArray()
@@ -577,7 +579,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             print("Current Loc:",currentLocation.coordinate)
         }
         
-        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
+        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 16.0, bearing: 0, viewingAngle: 0)
 
         
         mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
@@ -604,14 +606,41 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+            marker.title = ShopNameArray[i] as? String
+            marker.snippet = AddressArray[i] as? String
+            marker.tracksInfoWindowChanges = true
+            marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
             marker.map = mapView
         }
         
     }
     
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print("WELCOME FOR MARKER", marker.groundAnchor.y)
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool
+    {
+        let camera = GMSCameraPosition(target: marker.position, zoom: mapView.camera.zoom, bearing: 0.0, viewingAngle: 0.0)
+
+        mapView.camera = camera
+        addressOfMarker(marker: marker)
+        
         return true
+    }
+    
+    func addressOfMarker(marker : GMSMarker)
+    {
+        addressLabel.frame = CGRect(x: (2 * x), y: ((view.frame.height - (5 * y)) / 2), width: view.frame.width - (4 * x), height: (3 * y))
+        addressLabel.backgroundColor = UIColor.white
+        addressLabel.text = "\(marker.title!) \(marker.snippet!)"
+        addressLabel.textColor = UIColor.black
+        addressLabel.textAlignment = .left
+        addressLabel.numberOfLines = 2
+        mapView.addSubview(addressLabel)
+        
+        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
+    }
+    
+    @objc func closeAddressLabel()
+    {
+        addressLabel.removeFromSuperview()
     }
     
     func markerView(yPos : CGFloat)
