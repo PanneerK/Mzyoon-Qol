@@ -165,7 +165,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         view.addSubview(userImage)
         
         let cameraButton = UIButton()
-        cameraButton.frame = CGRect(x: userImage.frame.maxX - (5 * x), y: userImage.frame.maxY - (5 * y), width: (5 * x), height: (5 * y))
+        cameraButton.frame = CGRect(x: userImage.frame.maxX - (5 * x), y: userImage.frame.maxY - (5 * y), width: (5 * x), height: (5 * x))
         cameraButton.backgroundColor = UIColor.white
         cameraButton.layer.cornerRadius = cameraButton.frame.height / 2
         cameraButton.setImage(UIImage(named: "camera"), for: .normal)

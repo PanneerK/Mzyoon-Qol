@@ -75,8 +75,6 @@ open class SideMenuManager: NSObject {
      */
     open var menuWidth: CGFloat = min(round(min((appScreenRect.width), (appScreenRect.height)) * 0.75), 240)
     
-    
-    
     /// Duration of the animation when the menu is presented without gestures. Default is 0.35 seconds.
     open var menuAnimationPresentDuration: Double = 0.35
     
@@ -116,8 +114,8 @@ open class SideMenuManager: NSObject {
     /// The animation options when a menu is displayed. Ignored when displayed with a gesture.
     open var menuAnimationOptions: UIView.AnimationOptions = .curveEaseInOut
 
-	///	Animation curve of the remaining animation when the menu is partially dismissed with gestures. Default is .easeIn.
-	open var menuAnimationCompletionCurve: UIView.AnimationCurve = .easeIn
+    ///    Animation curve of the remaining animation when the menu is partially dismissed with gestures. Default is .easeIn.
+    open var menuAnimationCompletionCurve: UIView.AnimationCurve = .easeIn
     
     /// The animation spring damping when a menu is displayed. Ignored when displayed with a gesture.
     open var menuAnimationUsingSpringWithDamping: CGFloat = 1

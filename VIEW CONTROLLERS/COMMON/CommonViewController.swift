@@ -87,7 +87,7 @@ class CommonViewController: UIViewController
         navigationBar.addSubview(navigationTitle)
         
         let userImage = UIImageView()
-        userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: 40, height: 40)
+        userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: (4 * y), height: (4 * y))
 //        userImage.image = UIImage(named: "women")
         userImage.image = FileHandler().getImageFromDocumentDirectory()
         userImage.layer.cornerRadius = userImage.frame.height / 2
@@ -104,7 +104,7 @@ class CommonViewController: UIViewController
     func tabContents()
     {
         let slideMenuButton = UIButton()
-        slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
+        slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
         slideMenuButton.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
         slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
@@ -177,6 +177,8 @@ class CommonViewController: UIViewController
     @objc func slideMenuButtonAction(sender : UIButton)
     {
         sender.setImage(UIImage(named: "closeMenu"), for: .normal)
+        
+        print("MENU WIDTH", SideMenuManager.default.menuWidth)
         present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
     
