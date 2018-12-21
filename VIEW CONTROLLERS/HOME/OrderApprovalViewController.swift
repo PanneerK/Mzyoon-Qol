@@ -184,15 +184,15 @@ class OrderApprovalViewController: CommonViewController
     func PricingViewContents(isHidden : Bool)
     {
         let PricingView = UIView()
-        PricingView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (45 * x))
-        PricingView.backgroundColor = UIColor.white
+        PricingView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (46 * x))
+        PricingView.backgroundColor = UIColor.gray
         view.addSubview(PricingView)
         
         let backgroundImage = UIImageView()
         backgroundImage.frame = CGRect(x: 0, y: 0, width: PricingView.frame.width, height: PricingView.frame.height)
         backgroundImage.image = UIImage(named: "background")
         PricingView.addSubview(backgroundImage)
-       
+ 
         PricingView.isHidden = isHidden
        
         // Currency Button:-
@@ -575,6 +575,49 @@ class OrderApprovalViewController: CommonViewController
         TaxCurrLabel.font = TaxCurrLabel.font.withSize(13)
         PricingView.addSubview(TaxCurrLabel)
         
+        
+        // Grand Total...
+        
+        let upperLineLabel = UILabel()
+        upperLineLabel.frame = CGRect(x: 0, y: TaxChargesLabel.frame.minY + (4 * y), width: PricingView.frame.width, height: 10)
+       // upperLineLabel.backgroundColor = UIColor.gray
+        upperLineLabel.text = "-------------------------------------------"
+        PricingView.addSubview(upperLineLabel)
+        
+        let OrderTotalLabel = UILabel()
+        OrderTotalLabel.frame = CGRect(x: x, y: upperLineLabel.frame.minY + (2 * y), width: (PricingView.frame.width / 2), height: 30)
+       // OrderTotalLabel.backgroundColor = UIColor.gray
+        OrderTotalLabel.text = "ORDER TOTAL"
+        OrderTotalLabel.textColor = UIColor.blue
+        OrderTotalLabel.textAlignment = .left
+        OrderTotalLabel.font = UIFont(name: "Avenir Next", size: 18)
+        PricingView.addSubview(OrderTotalLabel)
+        
+        let OrderTotalValueLBL = UILabel()
+        OrderTotalValueLBL.frame = CGRect(x: OrderTotalLabel.frame.maxX + (2 * x) , y: upperLineLabel.frame.minY + (2 * y), width: (10 * x), height: 30)
+        OrderTotalValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        OrderTotalValueLBL.text = "6710.00"
+        OrderTotalValueLBL.textColor = UIColor.white
+        OrderTotalValueLBL.textAlignment = .center
+        OrderTotalValueLBL.font = UIFont(name: "Avenir Next", size: 16)
+        PricingView.addSubview(OrderTotalValueLBL)
+        
+        // CurrencyLabel..
+        let TotalCurrLabel = UILabel()
+        TotalCurrLabel.frame = CGRect(x: OrderTotalValueLBL.frame.maxX + 1, y: upperLineLabel.frame.minY + (2 * y), width: (3 * x), height: 30)
+        //TaxCurrLabel.backgroundColor = UIColor.gray
+        TotalCurrLabel.text = "AED"
+        TotalCurrLabel.textColor = UIColor.blue
+        TotalCurrLabel.textAlignment = .center
+        TotalCurrLabel.font = UIFont(name: "Avenir Next", size: 13)
+        PricingView.addSubview(TotalCurrLabel)
+        
+        let LowerLineLabel = UILabel()
+        LowerLineLabel.frame = CGRect(x: 0, y: OrderTotalLabel.frame.minY + (3 * y), width: PricingView.frame.width, height: 10)
+       // LowerLineLabel.backgroundColor = UIColor.gray
+        LowerLineLabel.text = "-------------------------------------------"
+        PricingView.addSubview(LowerLineLabel)
+        
          ProceedToPayButton.isHidden = true
     }
     
@@ -582,9 +625,14 @@ class OrderApprovalViewController: CommonViewController
     {
         
        // let deliveryDetailsView = UIView()
-        deliveryDetailsView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (40 * x))
-        deliveryDetailsView.backgroundColor = UIColor.white
+        deliveryDetailsView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (44 * x))
+        deliveryDetailsView.backgroundColor = UIColor.gray
         view.addSubview(deliveryDetailsView)
+        
+        let backgroundImage = UIImageView()
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: deliveryDetailsView.frame.width, height: deliveryDetailsView.frame.height)
+        backgroundImage.image = UIImage(named: "background")
+        deliveryDetailsView.addSubview(backgroundImage)
         
         deliveryDetailsView.isHidden = isHidden
         
@@ -608,7 +656,7 @@ class OrderApprovalViewController: CommonViewController
         // Label :-
            let AppointmentsLabels = UILabel()
            AppointmentsLabels.frame = CGRect(x: 5, y: 10 , width: 15 * x, height: (3 * y))
-         //  AppointmentsLabels.backgroundColor = UIColor.gray
+           AppointmentsLabels.backgroundColor = UIColor.gray
            AppointmentsLabels.text = "Appointments"
            AppointmentsLabels.textColor = UIColor.white
            AppointmentsLabels.textAlignment = .left
@@ -618,7 +666,7 @@ class OrderApprovalViewController: CommonViewController
         // DeliveryColonLabel :-
         let AppointColonLabel = UILabel()
         AppointColonLabel.frame = CGRect(x: AppointmentsLabels.frame.maxX, y: AppointmentsView.frame.minY , width: 2 * x, height: (2 * y))
-       // AppointColonLabel = UIColor.gray
+        AppointColonLabel.backgroundColor = UIColor.gray
         AppointColonLabel.text = "-"
         AppointColonLabel.textColor = UIColor.white
         AppointColonLabel.textAlignment = .center
@@ -719,7 +767,7 @@ class OrderApprovalViewController: CommonViewController
         DeliveryDateView.addSubview(DateColonLabel)
         
         // Pay Button :-
-        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY + (3 * y), width: view.frame.width , height: 40)
+        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY - 5, width: view.frame.width , height: 40)
         ProceedToPayButton.backgroundColor = UIColor.orange
         ProceedToPayButton.setTitle("PROCEED TO PAY", for: .normal)
         ProceedToPayButton.setTitleColor(UIColor.white, for: .normal)
@@ -734,6 +782,9 @@ class OrderApprovalViewController: CommonViewController
     @objc func ProccedToPayButtonAction(sender : UIButton)
     {
         print("Redirect To Next Page.. !")
+        
+        let OrderDetailsScreen = OrderDetailsViewController()
+        self.navigationController?.pushViewController(OrderDetailsScreen, animated: true)
     }
     
     @objc func CurrencyButtonAction(sender : UIButton)
