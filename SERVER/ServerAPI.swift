@@ -1079,11 +1079,12 @@ class ServerAPI : NSObject
         }
     }
     
-    
     func API_GetStateListByCountry(countryId : String, delegate : ServerAPIDelegate)
-    // Order Approval .. 21/12/2018..
-    func API_OrderApprovalPrice(TailorResponseId : Int, delegate : ServerAPIDelegate)
     {
+        
+        if (Reachability()?.isReachable)!
+        {
+          
             print("Server Reached - State List Page")
             
             let parameters = ["Id" : countryId] as [String : Any]
@@ -1095,16 +1096,49 @@ class ServerAPI : NSObject
             
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
             
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_GetStateListByCountry!(stateList: self.resultDict)
+                    print("response", self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "State List Failed")
+                }
+          }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    // Order Approval .. 21/12/2018..
+    func API_OrderApprovalPrice(TailorResponseId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached -  Value")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetTailorResponseList?TailorResponseId==\(TailorResponseId)", arguments: [baseURL])
+            
+            print("Order Approval Pricing: ", urlString)
+            
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 print("REQUEST", request)
                 if response.result.value != nil
-                    delegate.API_CALLBACK_GetStateListByCountry!(stateList: self.resultDict)
-                    print("response", self.resultDict)
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                   // print("response", self.resultDict)
                     delegate.API_CALLBACK_OrderApprovalPrice!(orderApprovalPrice: self.resultDict)
                 }
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "State List Failed")
+                else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Order Approval Page Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Order Approval Pricing Failed")
                 }
             }
         }
@@ -1113,6 +1147,5 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
-    
     
 }
