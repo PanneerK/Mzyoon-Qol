@@ -53,4 +53,7 @@ import Foundation
     
     // 19-12-2018..
     @objc optional func API_CALLBACK_InsertOrderSummary(insertOrder : NSDictionary)
+    
+    // 20-12-2018 - rohith
+    @objc optional func API_CALLBACK_OrderApprovalPrice(orderApprovalPrice : NSDictionary)
 }

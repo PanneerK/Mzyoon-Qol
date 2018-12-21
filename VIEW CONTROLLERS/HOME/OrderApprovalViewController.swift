@@ -8,8 +8,10 @@
 
 import UIKit
 
-class OrderApprovalViewController: CommonViewController
+class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
 {
+    
+    
     let PricingButton = UIButton()
     let DeliveryDetailsButton = UIButton()
     let ProceedToPayButton = UIButton()
@@ -17,6 +19,15 @@ class OrderApprovalViewController: CommonViewController
     var CurrencyCodes = [String]()
     
     let deliveryDetailsView = UIView()
+    let serviceCall = ServerAPI()
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
     
     override func viewDidLoad()
     {
@@ -27,12 +38,65 @@ class OrderApprovalViewController: CommonViewController
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
             // Your code with delay
        
+        self.serviceCall.API_OrderApprovalPrice(TailorResponseId: 27, delegate: self)
             self.orderApprovalContent()
+            
         }
         
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("Tailor List : ", errorMessage)
+    }
+    
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "OrderApprovalViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+    }
+    
+    
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+        }
+    }
+    func API_CALLBACK_OrderApprovalPrice(orderApprovalPrice: NSDictionary)
+    {
+        let ResponseMsg = orderApprovalPrice.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = orderApprovalPrice.object(forKey: "Result") as! NSArray
+            print("Result", Result)
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = orderApprovalPrice.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetTailorResponseList"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
     }
     
     func orderApprovalContent()
