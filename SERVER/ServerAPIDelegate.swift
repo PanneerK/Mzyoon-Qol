@@ -59,4 +59,6 @@ import Foundation
     
     // 20-12-2018 - rohith
     @objc optional func API_CALLBACK_OrderApprovalPrice(orderApprovalPrice : NSDictionary)
+    @objc optional func API_CALLBACK_OrderApprovalDelivery(orderApprovalDelivery : NSDictionary)
+    
 }
