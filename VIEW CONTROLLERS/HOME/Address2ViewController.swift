@@ -45,7 +45,13 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var countryFlagArray = NSArray()
     var individualCountryFlagArray = [UIImage]()
     
+    //State CODE API PARAMETER
+    var stateCodeArray = NSArray()
+    var stateNameArray = NSArray()
+    
     let countryAlert = UIAlertController(title: "Country", message: "Please choose your country", preferredStyle: .alert)
+    
+    let stateAlert = UIAlertController(title: "State", message: "Please choose your state", preferredStyle: .alert)
     
     override func viewDidLoad()
     {
@@ -179,6 +185,40 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             DeviceError()
         }
     }
+    
+    func API_CALLBACK_GetStateListByCountry(stateList: NSDictionary)
+    {
+        print("STATE LIST", stateList)
+        
+        let responseMsg = stateList.object(forKey: "ResponseMsg") as! String
+
+        if responseMsg == "Success"
+        {
+            let result = stateList.object(forKey: "Result") as! NSArray
+            
+            stateNameArray = result.value(forKey: "StateName") as! NSArray
+            
+            stateCodeArray = result.value(forKey: "Id") as! NSArray
+            
+            for i in 0..<stateNameArray.count
+            {
+                if let state = stateNameArray[i] as? String
+                {
+                    stateAlert.addAction(UIAlertAction(title: "\(state)", style: .default, handler: stateAlertAction(action:)))
+                }
+            }
+        }
+        else if responseMsg == "Failure"
+        {
+            let Result = stateList.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "getState"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
     
     func addressContents()
     {
@@ -392,6 +432,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         stateButton.setTitle("state", for: .normal)
         stateButton.setTitleColor(UIColor.black, for: .normal)
         stateButton.contentHorizontalAlignment = .left
+        stateButton.addTarget(self, action: #selector(self.stateButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(stateButton)
         
         let stateDropDownIcon = UIImageView()
@@ -631,11 +672,31 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     func countryCodeAlertAction(action : UIAlertAction)
     {
         countryButton.setTitle(action.title, for: .normal)
+        
+        for i in 0..<countryNameArray.count
+        {
+            if let country = countryNameArray[i] as? String
+            {
+                let convertedString = country.split(separator: "(")
+                
+                if action.title == "\(convertedString[0])"
+                {
+                    let int = i + 1
+                    serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
+                }
+            }
+        }
     }
     
     @objc func stateButtonAction(sender : UIButton)
     {
-        
+        stateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(stateAlert, animated: true, completion: nil)
+    }
+    
+    func stateAlertAction(action : UIAlertAction)
+    {
+        stateButton.setTitle(action.title, for: .normal)
     }
     
     @objc func saveAndNextButtonAction(sender : UIButton)

@@ -17,10 +17,9 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-    var baseURL:String = "http://192.168.0.21/TailorAPI"
-  //  var baseURL:String = "http://appsapi.mzyoon.com"
- 
-
+//    var baseURL:String = "http://192.168.0.21/TailorAPI"
+    var baseURL:String = "http://appsapi.mzyoon.com"
+    
     let deviceId = UIDevice.current.identifierForVendor
 
     func API_LoginUser(CountryCode : String, PhoneNo : String, delegate:ServerAPIDelegate)
@@ -1081,28 +1080,29 @@ class ServerAPI : NSObject
     }
     
     
+    func API_GetStateListByCountry(countryId : String, delegate : ServerAPIDelegate)
     // Order Approval .. 21/12/2018..
     func API_OrderApprovalPrice(TailorResponseId : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
-        {
-            print("Server Reached - Order Approval Pricing")
+            print("Server Reached - State List Page")
             
-           // let parameters = [:] as [String : Any]
+            let parameters = ["Id" : countryId] as [String : Any]
             
-            let urlString:String = String(format: "%@/API/Order/GetTailorResponseList?TailorResponseId=\(TailorResponseId)", arguments: [baseURL])
+            let urlString:String = String(format: "%@/api/Shop/DisplayStatebyCountry", arguments: [baseURL])
             
-            print("Order Approval:", urlString)
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 print("REQUEST", request)
                 if response.result.value != nil
-                {
-                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_GetStateListByCountry!(stateList: self.resultDict)
                     print("response", self.resultDict)
                     delegate.API_CALLBACK_OrderApprovalPrice!(orderApprovalPrice: self.resultDict)
                 }
-                else
+                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "State List Failed")
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Order Approval Page Failed")
                 }
@@ -1113,4 +1113,6 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
+    
 }
