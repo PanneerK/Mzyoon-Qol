@@ -39,7 +39,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
             // Your code with delay
        
         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: 27, delegate: self)
-            self.orderApprovalContent()
+        self.orderApprovalContent()
             
         }
         
