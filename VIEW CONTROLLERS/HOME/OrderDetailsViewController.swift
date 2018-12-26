@@ -45,7 +45,7 @@ class OrderDetailsViewController: CommonViewController
         orderDetailsNavigationBar.addSubview(navigationTitle)
         
        // Scrollview...
-      let OrderDetailsScrollView = UIScrollView()
+        let OrderDetailsScrollView = UIScrollView()
         OrderDetailsScrollView.frame = CGRect(x: 0, y: orderDetailsNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
         OrderDetailsScrollView.backgroundColor = UIColor.clear
         OrderDetailsScrollView.contentSize.height = (1.75 * view.frame.height)
@@ -335,8 +335,8 @@ class OrderDetailsViewController: CommonViewController
         
         let MapImageView = UIImageView()
         MapImageView.frame = CGRect(x: x, y: DeliveryInfoLabel.frame.maxY + (2 * y), width: (8 * x), height:(8 * y))
-        MapImageView.backgroundColor = UIColor.gray
-        
+        MapImageView.backgroundColor = UIColor.white
+        MapImageView.image = UIImage(named: "marker")
         /*
          if let imageName = DressImageArray[0] as? String
          {
