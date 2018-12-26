@@ -17,8 +17,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-//    var baseURL:String = "http://192.168.0.21/TailorAPI"
-    var baseURL:String = "http://appsapi.mzyoon.com"
+     //  var baseURL:String = "http://192.168.0.21/TailorAPI"
+         var baseURL:String = "http://appsapi.mzyoon.com"
     
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -129,7 +129,6 @@ class ServerAPI : NSObject
             print("Server Reached - Flag Images Page")
             
             let parameters = [:] as [String : Any]
-            
             
             let urlString:String = String(format: "%@/images/flags/\(imageName)", arguments: [baseURL])
             
@@ -1124,7 +1123,7 @@ class ServerAPI : NSObject
             
             let parameters = [:] as [String : Any]
             
-            let urlString:String = String(format: "%@/API/Order/GetTailorResponseList?TailorResponseId==\(TailorResponseId)", arguments: [baseURL])
+            let urlString:String = String(format: "%@/API/Order/GetTailorResponseList?TailorResponseId=\(TailorResponseId)", arguments: [baseURL])
             
             print("Order Approval Pricing: ", urlString)
             
@@ -1147,5 +1146,38 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
+    func API_OrderApprovalDelivery(TailorResponseId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached -  Value")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetTailorResponseList2?TailorResponseId=\(TailorResponseId)", arguments: [baseURL])
+            
+            print("Order Approval Delivery: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    // print("response", self.resultDict)
+                    delegate.API_CALLBACK_OrderApprovalDelivery!(orderApprovalDelivery: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Order Approval Delivery Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
     
 }
