@@ -51,9 +51,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
        
         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: 27, delegate: self)
             
-        self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
+      //  self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
         
-       // self.orderApprovalContent()
+      //  self.orderApprovalContent()
             
         }
         
@@ -101,25 +101,25 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             let Result = orderApprovalPrice.object(forKey: "Result") as! NSDictionary
-            //print("Result", Result)
+            print("Result", Result)
             
             let DressSubType = Result.object(forKey: "DressSubType") as! NSArray
-            print("DressSubType:",DressSubType)
+           // print("DressSubType:",DressSubType)
             
             DressImageArray = DressSubType.value(forKey: "Image") as! NSArray
-            print("DressImageArray:",DressImageArray)
+            //print("DressImageArray:",DressImageArray)
             
             DressNameArray = DressSubType.value(forKey: "NameInEnglish") as! NSArray
-            print("DressNameArray:",DressNameArray)
+            //print("DressNameArray:",DressNameArray)
             
             let TailorCharges = Result.object(forKey: "TailorCharges") as! NSArray
-            print("TailorCharges:",TailorCharges)
+           // print("TailorCharges:",TailorCharges)
             
             ChargesNameArray = TailorCharges.value(forKey: "DescInEnglish") as! NSArray
-            print("ChargesNameArray:",ChargesNameArray)
+            //print("ChargesNameArray:",ChargesNameArray)
             
             ChargesAmountArray = TailorCharges.value(forKey: "Amount") as! NSArray
-           print("ChargesAmountArray:",ChargesAmountArray)
+           //print("ChargesAmountArray:",ChargesAmountArray)
             
            
         }
@@ -135,7 +135,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
             
         }
         
-         self.orderApprovalContent()
+        self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
+        
+        // self.orderApprovalContent()
     }
     
     func API_CALLBACK_OrderApprovalDelivery(orderApprovalDelivery: NSDictionary)
@@ -150,15 +152,19 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
          
             let Appointments = Result.object(forKey: "Appoinments") as! NSArray
             AppoinmentArray = Appointments.value(forKey: "Appoinment") as! NSArray
+            print("AppoinmentArray", AppoinmentArray)
             
-           let DeliveryDate = Result.object(forKey: "DeliveryDate") as! NSArray
+            let DeliveryDate = Result.object(forKey: "DeliveryDate") as! NSArray
             DeliveryDateArray = DeliveryDate.value(forKey: "DeliveryDate") as! NSArray
-           
+            print("DeliveryDateArray", DeliveryDateArray)
+            
             let DeliveryTypes = Result.object(forKey: "DeliveryTypes") as! NSArray
             DeliveryTypeArray = DeliveryTypes.value(forKey: "DeliveryType") as! NSArray
+            print("DeliveryTypes", DeliveryTypes)
             
             let StichingTime = Result.object(forKey: "StichingTime") as! NSArray
             StichingTimesArray = StichingTime.value(forKey: "StichingTimes") as! NSArray
+            print("StichingTime", StichingTime)
             
         }
         else if ResponseMsg == "Failure"
@@ -173,7 +179,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
             
         }
         
-      //  self.orderApprovalContent()
+        self.orderApprovalContent()
     }
      
  
@@ -303,17 +309,25 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
     {
         if sender.tag == 0
         {
+            // self.serviceCall.API_OrderApprovalPrice(TailorResponseId: 27, delegate: self)
+            
             DeliveryDetailsButton.backgroundColor = UIColor.lightGray
             DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
             PricingViewContents(isHidden: false)
             DeliveryDetailsViewContents(isHidden: true)
+            
+           
         }
         else if sender.tag == 1
         {
+          //  self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
+            
             PricingButton.backgroundColor = UIColor.lightGray
             PricingButton.setTitleColor(UIColor.black, for: .normal)
             PricingViewContents(isHidden: true)
             DeliveryDetailsViewContents(isHidden: false)
+            
+            
         }
         
         sender.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -374,13 +388,13 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let MeasureRupeeValueLBL = UILabel()
         MeasureRupeeValueLBL.frame = CGRect(x: MeasurementChargesLabel.frame.maxX + (2 * x) , y: CurrencyButton.frame.minY + (4 * y), width: (10 * x), height: 30)
        // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        MeasureRupeeValueLBL.text = DressNameArray[4] as? String
+        MeasureRupeeValueLBL.text = ChargesAmountArray[4] as? String
         MeasureRupeeValueLBL.textColor = UIColor.blue
         MeasureRupeeValueLBL.textAlignment = .center
         MeasureRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
         PricingView.addSubview(MeasureRupeeValueLBL)
         
-     /*
+    /*
         //TextField1..
         let MeasureRupeeTF = UITextField()
         MeasureRupeeTF.frame = CGRect(x: MeasurementChargesLabel.frame.maxX + (2 * x), y: CurrencyButton.frame.minY + (4 * y), width: (6 * x), height: 30)
@@ -404,8 +418,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         MeasurePaiseTF.textAlignment = .center
         MeasurePaiseTF.font = MeasurePaiseTF.font!.withSize(12)
         PricingView.addSubview(MeasurePaiseTF)
-         
-     */
+   */
         
         // CurrencyLabel..
         let CurrencyLabel = UILabel()
@@ -434,7 +447,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let StichingRupeeValueLBL = UILabel()
         StichingRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + (2 * x) , y: MeasurementChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        StichingRupeeValueLBL.text = DressNameArray[1] as? String
+        StichingRupeeValueLBL.text = ChargesAmountArray[1] as? String
         StichingRupeeValueLBL.textColor = UIColor.blue
         StichingRupeeValueLBL.textAlignment = .center
         StichingRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -517,7 +530,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let AppointmentRupeeValueLBL = UILabel()
         AppointmentRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + (2 * x) , y: StichingChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        AppointmentRupeeValueLBL.text = DressNameArray[0] as? String
+        AppointmentRupeeValueLBL.text = ChargesAmountArray[0] as? String
         AppointmentRupeeValueLBL.textColor = UIColor.blue
         AppointmentRupeeValueLBL.textAlignment = .center
         AppointmentRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -573,7 +586,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let MaterialRupeeValueLBL = UILabel()
         MaterialRupeeValueLBL.frame = CGRect(x: MaterialDeliveryChargesLabel.frame.maxX + (2 * x) , y: AppointmentChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        MaterialRupeeValueLBL.text = DressNameArray[3] as? String
+        MaterialRupeeValueLBL.text = ChargesAmountArray[3] as? String
         MaterialRupeeValueLBL.textColor = UIColor.blue
         MaterialRupeeValueLBL.textAlignment = .center
         MaterialRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -629,7 +642,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let UrgentStichValueLBL = UILabel()
         UrgentStichValueLBL.frame = CGRect(x: UrgentStichChargesLabel.frame.maxX + (2 * x) , y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        UrgentStichValueLBL.text = DressNameArray[8] as? String
+        UrgentStichValueLBL.text = ChargesAmountArray[8] as? String
         UrgentStichValueLBL.textColor = UIColor.blue
         UrgentStichValueLBL.textAlignment = .center
         UrgentStichValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -685,7 +698,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let DeliveryRupeeValueLBL = UILabel()
         DeliveryRupeeValueLBL.frame = CGRect(x: DeliveryChargesLabel.frame.maxX + (2 * x) , y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        DeliveryRupeeValueLBL.text = DressNameArray[2] as? String
+        DeliveryRupeeValueLBL.text = ChargesAmountArray[2] as? String
         DeliveryRupeeValueLBL.textColor = UIColor.blue
         DeliveryRupeeValueLBL.textAlignment = .center
         DeliveryRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -741,7 +754,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let ServiceRupeeValueLBL = UILabel()
         ServiceRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + (2 * x) , y: DeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        ServiceRupeeValueLBL.text = DressNameArray[5] as? String
+        ServiceRupeeValueLBL.text = ChargesAmountArray[5] as? String
         ServiceRupeeValueLBL.textColor = UIColor.blue
         ServiceRupeeValueLBL.textAlignment = .center
         ServiceRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -797,7 +810,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let TaxRupeeValueLBL = UILabel()
         TaxRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + (2 * x) , y: ServiceChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        TaxRupeeValueLBL.text = DressNameArray[6] as? String
+        TaxRupeeValueLBL.text = ChargesAmountArray[6] as? String
         TaxRupeeValueLBL.textColor = UIColor.blue
         TaxRupeeValueLBL.textAlignment = .center
         TaxRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -835,7 +848,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let OrderTotalValueLBL = UILabel()
         OrderTotalValueLBL.frame = CGRect(x: OrderTotalLabel.frame.maxX + (2 * x) , y: TaxChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
         OrderTotalValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        OrderTotalValueLBL.text = DressNameArray[7] as? String
+        OrderTotalValueLBL.text = ChargesAmountArray[7] as? String
         OrderTotalValueLBL.textColor = UIColor.white
         OrderTotalValueLBL.textAlignment = .center
         OrderTotalValueLBL.font = UIFont(name: "Avenir Next", size: 16)
