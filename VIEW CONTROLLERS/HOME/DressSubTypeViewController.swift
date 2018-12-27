@@ -107,8 +107,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     func subTypeContents()
     {
-        self.stopActivity()
-        
         let orderSubTypeNavigationBar = UIView()
         orderSubTypeNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         orderSubTypeNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -199,6 +197,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                 print("SUB TYPE IMAGES", api)
                 let apiurl = URL(string: api)
                 dressTypeImageView.dowloadFromServer(url: apiurl!)
+                self.stopActivity()
             }
             dressTypeButton.addSubview(dressTypeImageView)
             

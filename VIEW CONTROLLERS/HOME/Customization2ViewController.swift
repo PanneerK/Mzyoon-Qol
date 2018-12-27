@@ -277,7 +277,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         let materialScrollView = UIScrollView()
         materialScrollView.frame = CGRect(x: (3 * x), y: (10.5 * y), width: view.frame.width, height: (12 * y))
-        materialScrollView.contentSize.width = view.frame.width + (12 * x * CGFloat(materialsArray.count))
         view.addSubview(materialScrollView)
         
         let buttonTitleText = ["All Material Type", "Fabric", "Synthetic", "Coton"]
@@ -319,9 +318,11 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             x1 = materialButton.frame.maxX + (2 * x)
         }
         
+        materialScrollView.contentSize.width = x1 + (2 * x)
+
+        
         let colorScrollView = UIScrollView()
         colorScrollView.frame = CGRect(x: (3 * x), y: materialScrollView.frame.maxY + (5 * y), width: view.frame.width - (3 * x), height: (12 * y))
-        colorScrollView.contentSize.width = view.frame.width + (12 * x * CGFloat(colorsArray.count))
         view.addSubview(colorScrollView)
         
         let buttonTitleText2 = ["All Color", "Red", "Green", "Black"]
@@ -361,9 +362,10 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             x2 = colorButton.frame.maxX + (2 * x)
         }
         
+        colorScrollView.contentSize.width = x2 + (2 * x)
+        
         let patternScrollView = UIScrollView()
         patternScrollView.frame = CGRect(x: (3 * x), y: colorScrollView.frame.maxY + (5 * y), width: view.frame.width, height: (12 * y))
-        patternScrollView.contentSize.width = view.frame.width + (12 * x * CGFloat(patternsArray.count))
         view.addSubview(patternScrollView)
         
         let buttonTitleText3 = ["All Pattern", "Checked", "Houndstooth", "Twill"]
@@ -403,6 +405,9 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             
             x3 = patternButton.frame.maxX + (2 * x)
         }
+        
+        patternScrollView.contentSize.width = x3 + (2 * x)
+
         
         let customization2NextButton = UIButton()
         customization2NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))

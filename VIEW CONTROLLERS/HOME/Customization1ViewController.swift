@@ -248,7 +248,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func customization1Content()
     {
-        self.stopActivity()
         customization1View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         customization1View.backgroundColor = UIColor.white
 //        view.addSubview(customization1View)
@@ -321,6 +320,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 let apiurl = URL(string: api)
                 print("SEASONAL API", apiurl!)
                 buttonImage.dowloadFromServer(url: apiurl!)
+                
+                self.stopActivity()
             }
             buttonImage.tag = -1
             seasonalButton.addSubview(buttonImage)
