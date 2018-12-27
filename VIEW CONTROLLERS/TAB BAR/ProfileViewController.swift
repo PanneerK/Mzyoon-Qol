@@ -38,6 +38,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
 
     let serviceCall = ServerAPI()
     
+    let datePick = UIDatePicker()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -57,6 +59,29 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.dob.inputView = doneToolbar
+    }
+    
+    @objc func doneButtonAction()
+    {
+        self.view.endEditing(true)
     }
     
     @objc func closeKeyboard(gesture : UITapGestureRecognizer)
@@ -220,7 +245,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         email.isUserInteractionEnabled = false
         email.frame = CGRect(x: nameIcon.frame.maxX + x, y: mobileIcon.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
-        email.text = "panneer@qolsofts.com"
+        email.text = ""
         email.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         email.delegate = self
         view.addSubview(email)
@@ -237,13 +262,15 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         dob.isUserInteractionEnabled = false
         dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (4 * y), width: view.frame.width - (12 * x), height: (2 * y))
-        dob.text = "26/Sep/1990"
+        dob.text = ""
         dob.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        dob.addTarget(self, action: #selector(self.calendarButtonAction), for: .allEditingEvents)
         dob.delegate = self
         view.addSubview(dob)
         
         calendarButton.frame = CGRect(x: view.frame.width - (5 * x), y: emailIcon.frame.maxY + (4 * y), width: (2 * x), height: (2 * y))
         calendarButton.setImage(UIImage(named: "calender"), for: .normal)
+        calendarButton.addTarget(self, action: #selector(self.calendarButtonAction), for: .touchUpInside)
         view.addSubview(calendarButton)
         
         let dobUnderline = UILabel()
@@ -311,6 +338,17 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         {
             sender.backgroundColor = UIColor.blue
         }
+    }
+    
+    @objc func calendarButtonAction()
+    {
+        datePick.frame = CGRect(x: 0, y: dob.frame.maxY + (5 * y), width: view.frame.width, height: (20 * y))
+        datePick.backgroundColor = UIColor.white
+        datePick.datePickerMode = .date
+        datePick.locale = Locale.current
+        datePick.maximumDate = Date()
+        datePick.timeZone = TimeZone.current
+        view.addSubview(datePick)
     }
     
     @objc func updateButtonAction(sender : UIButton)

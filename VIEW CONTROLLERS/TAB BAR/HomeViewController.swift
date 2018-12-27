@@ -124,17 +124,35 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
          deviceInformation()
         // DeviceError()
         
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
             // Your code with delay
             self.checkContent()
-            
-            
         }
-        
         
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func API_CALLBACK_ExistingUserProfile(userProfile: NSDictionary)
+    {
+        print("SELF OF EXISTING USER", userProfile)
+        
+        let responseMsg = userProfile.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = userProfile.object(forKey: "Result") as! NSArray
+            print("RESULT IN EXISTING", result)
+            
+            let name = result.value(forKey: "Name") as! NSArray
+            print("NAME", name)
+        }
     }
     
     func deviceInformation()
@@ -154,8 +172,6 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         UserType = "customer"
         
         self.serviceCall.API_InsertDeviceDetails(DeviceId: self.DeviceNum, Os: self.Os, Manufacturer: self.Manufacturer, CountryCode: self.CountryCode, PhoneNumber: self.PhoneNumber, Model: self.Model, AppVersion: self.AppVersion, Type: self.UserType, delegate: self)
-        
-        
     }
     
     func DeviceError()

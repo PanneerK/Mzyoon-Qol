@@ -11,6 +11,7 @@
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */; };
+		FD0611A821D4F481006FDAC4 /* MeasurementCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0611A721D4F481006FDAC4 /* MeasurementCall.swift */; };
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
@@ -82,6 +83,7 @@
 		DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApprovalViewController.swift; sourceTree = "<group>"; };
 		DDB0F57EB0056E4AF113C9BB /* Pods-Mzyoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mzyoon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon.debug.xcconfig"; sourceTree = "<group>"; };
+		FD0611A721D4F481006FDAC4 /* MeasurementCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementCall.swift; sourceTree = "<group>"; };
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				FD71D256219E994100FFC067 /* CommonViewController.swift */,
+				FD0611A721D4F481006FDAC4 /* MeasurementCall.swift */,
 				FDF7485321BFBF4700F3BEFF /* FileHandler.swift */,
 			);
 			path = COMMON;
@@ -584,6 +587,7 @@
 				FDC9BB922186F6F7003BA5C9 /* CartViewController.swift in Sources */,
 				FDC9BB8E2186F6CD003BA5C9 /* ProfileViewController.swift in Sources */,
 				FDC9BB872186F30D003BA5C9 /* HomeViewController.swift in Sources */,
+				FD0611A821D4F481006FDAC4 /* MeasurementCall.swift in Sources */,
 				FD2ADFED2175C0230033025B /* ServerAPI.swift in Sources */,
 				FD71D25E219EF24200FFC067 /* OrderTypeViewController.swift in Sources */,
 				FD53A3D521A809450097B4D9 /* TailorListViewController.swift in Sources */,
