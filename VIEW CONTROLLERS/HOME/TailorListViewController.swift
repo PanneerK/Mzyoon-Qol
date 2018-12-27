@@ -578,12 +578,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             currentLocation = locationManager.location
             print("Current Loc:",currentLocation.coordinate)
         }
-        
-        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 16.0, bearing: 0, viewingAngle: 0)
 
-        
         mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
-        mapView.camera = camera
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true

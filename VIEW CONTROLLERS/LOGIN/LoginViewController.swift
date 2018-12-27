@@ -153,7 +153,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         doneToolbar1.sizeToFit()
         
         self.mobileTextField.inputAccessoryView = doneToolbar1
-        
     }
     
     @objc func done1ButtonAction()
@@ -698,7 +697,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp1Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp1Letter.adjustsFontSizeToFitWidth = true
         otp1Letter.keyboardType = .numberPad
-        otp1Letter.clearsOnBeginEditing = false
+        otp1Letter.clearsOnBeginEditing = true
         otp1Letter.returnKeyType = .next
         otp1Letter.delegate = self
         otp1Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -722,7 +721,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp2Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp2Letter.adjustsFontSizeToFitWidth = true
         otp2Letter.keyboardType = .numberPad
-        otp2Letter.clearsOnBeginEditing = false
+        otp2Letter.clearsOnBeginEditing = true
         otp2Letter.returnKeyType = .next
         otp2Letter.delegate = self
         otp2Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -744,7 +743,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp3Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp3Letter.adjustsFontSizeToFitWidth = true
         otp3Letter.keyboardType = .numberPad
-        otp3Letter.clearsOnBeginEditing = false
+        otp3Letter.clearsOnBeginEditing = true
         otp3Letter.returnKeyType = .next
         otp3Letter.delegate = self
         otp3Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -766,7 +765,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp4Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp4Letter.adjustsFontSizeToFitWidth = true
         otp4Letter.keyboardType = .numberPad
-        otp4Letter.clearsOnBeginEditing = false
+        otp4Letter.clearsOnBeginEditing = true
         otp4Letter.returnKeyType = .next
         otp4Letter.delegate = self
         otp4Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -787,7 +786,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp5Letter.textAlignment = .center
         otp5Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp5Letter.keyboardType = .numberPad
-        otp5Letter.clearsOnBeginEditing = false
+        otp5Letter.clearsOnBeginEditing = true
         otp5Letter.returnKeyType = .next
         otp5Letter.delegate = self
         otp5Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -809,7 +808,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp6Letter.font = UIFont(name: "Avenir-Heavy", size: (4 * x))
         otp6Letter.adjustsFontSizeToFitWidth = true
         otp6Letter.keyboardType = .numberPad
-        otp6Letter.clearsOnBeginEditing = false
+        otp6Letter.clearsOnBeginEditing = true
         otp6Letter.returnKeyType = .done
         otp6Letter.delegate = self
         otp6Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
@@ -878,6 +877,15 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 otp5Letter.becomeFirstResponder()
             case otp5Letter:
                 otp6Letter.becomeFirstResponder()
+            case otp6Letter:
+                if otp6Letter.text?.count == 1
+                {
+                    doneButtonAction()
+                }
+                else
+                {
+                    
+                }
             default:
                 break
             }
