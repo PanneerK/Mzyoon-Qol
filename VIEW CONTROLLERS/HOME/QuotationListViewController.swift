@@ -8,12 +8,32 @@
 
 import UIKit
 
-class QuotationListViewController: CommonViewController
+class QuotationListViewController: CommonViewController,ServerAPIDelegate
 {
-
+    
+    
+   let ServiceCall = ServerAPI()
+    
     let quotationListNavigationBar = UIView()
     let tailorListScrollView = UIScrollView()
     var selectedTailorListArray = [Int]()
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
+    var OrderIdArray = NSArray()
+    var IdArray = NSArray()
+    var TailorNameArray = NSArray()
+    var ShopImageArray = NSArray()
+    var ShopNameArray = NSArray()
+    var StichTimeArray = NSArray()
+    var TotalAmountArray = NSArray()
+    
     
     override func viewDidLoad()
     {
@@ -21,7 +41,85 @@ class QuotationListViewController: CommonViewController
 
         // Do any additional setup after loading the view.
         
-        quotationListContent()
+        self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
+       // quotationListContent()
+    }
+    
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "QuotationListViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.ServiceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+    }
+    
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+        }
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+         print("Quotation List : ", errorMessage)
+    }
+    
+    func API_CALLBACK_GetQuotationList(quotationList: NSDictionary)
+    {
+        let ResponseMsg = quotationList.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = quotationList.object(forKey: "Result") as! NSDictionary
+            print("Result:", Result)
+            
+            let QuotationList = Result.object(forKey: "QuotationList") as! NSArray
+             // print("QuotationList:",QuotationList)
+            
+            OrderIdArray = QuotationList.value(forKey: "OrderId") as! NSArray
+          //  print("OrderIdArray", OrderIdArray)
+            
+            IdArray = QuotationList.value(forKey: "Id") as! NSArray
+           // print("IdArray", IdArray)
+            
+            TailorNameArray = QuotationList.value(forKey: "TailorNameInEnglish") as! NSArray
+           // print("TailorNameArray", TailorNameArray)
+            
+            ShopImageArray = QuotationList.value(forKey: "ShopOwnerImageURL") as! NSArray
+          //  print("ShopImageArray ", ShopImageArray)
+            
+            ShopNameArray = QuotationList.value(forKey: "ShopNameInEnglish") as! NSArray
+           // print("ShopNameArray", ShopNameArray)
+            
+            StichTimeArray = QuotationList.value(forKey: "StichingTime") as! NSArray
+            //print("StichTimeArray", StichTimeArray)
+            
+            TotalAmountArray = QuotationList.value(forKey: "TotalAmount") as! NSArray
+           // print("TotalAmountArray", TotalAmountArray)
+            
+            self.quotationListContent()
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = quotationList.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetQuotationList"
+            ErrorStr = Result
+            DeviceError()
+        }
+        
     }
     
    func quotationListContent()
@@ -59,7 +157,7 @@ class QuotationListViewController: CommonViewController
     func TailorListView()
     {
         let backDrop = UIView()
-        backDrop.frame = CGRect(x: (3 * x), y: quotationListNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (10 * y))
+        backDrop.frame = CGRect(x: (3 * x), y: quotationListNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
         backDrop.backgroundColor = UIColor.clear
         view.addSubview(backDrop)
         
@@ -75,7 +173,7 @@ class QuotationListViewController: CommonViewController
         tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (45 * y))
         backDrop.addSubview(tailorListScrollView)
         
-        tailorListScrollView.contentSize.height = (12 * y * CGFloat(6))
+        tailorListScrollView.contentSize.height = (12 * y * CGFloat(IdArray.count))
         
         for views in tailorListScrollView.subviews
         {
@@ -84,7 +182,7 @@ class QuotationListViewController: CommonViewController
         
         var y1:CGFloat = 0
         
-        for i in 0..<6
+        for i in 0..<IdArray.count
         {
             let tailorView = UIView()
             tailorView.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
@@ -94,12 +192,13 @@ class QuotationListViewController: CommonViewController
             let tailorImageButton = UIButton()
             tailorImageButton.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
             tailorImageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            //            tailorImageButton.setImage(UIImage(named: "men"), for: .normal)
+           // tailorImageButton.setImage(UIImage(named: "men"), for: .normal)
          
-          /*
-            if let imageName = ShopOwnerImageArray[i] as? String
+          
+            if let imageName = ShopImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
+               // let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
+                let api = "http://192.168.0.21/TailorAPI/Images/TailorImages/\(imageName)"
                 print("SMALL ICON", api)
                 let apiurl = URL(string: api)
                 
@@ -109,7 +208,7 @@ class QuotationListViewController: CommonViewController
                 dummyImageView.tag = -1
                 tailorImageButton.addSubview(dummyImageView)
             }
-         */
+         
             
             tailorImageButton.tag = i
             tailorImageButton.addTarget(self, action: #selector(self.tailorSelectionButtonAction(sender:)), for: .touchUpInside)
@@ -125,7 +224,7 @@ class QuotationListViewController: CommonViewController
             
             let tailorName = UILabel()
             tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: tailorView.frame.width / 2, height: (2 * y))
-            tailorName.text = "Abdullah"
+            tailorName.text = TailorNameArray[i] as? String
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -141,7 +240,7 @@ class QuotationListViewController: CommonViewController
             
             let shopName = UILabel()
             shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
-            shopName.text =  "Golden Stitching"
+            shopName.text =  ShopNameArray[i] as? String
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -158,7 +257,7 @@ class QuotationListViewController: CommonViewController
             
             let ordersCountLabel = UILabel()
             ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
-            ordersCountLabel.text =  "2366 AED"
+            ordersCountLabel.text =  TotalAmountArray[i] as? String
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -175,7 +274,7 @@ class QuotationListViewController: CommonViewController
             
             let ratingCountLabel = UILabel()
             ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
-            ratingCountLabel.text = "5 Days"
+            ratingCountLabel.text = StichTimeArray[i] as? String
             ratingCountLabel.textColor = UIColor.black
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -200,14 +299,36 @@ class QuotationListViewController: CommonViewController
     selectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
     selectionImage.image = UIImage(named: "selectionImage")
     selectionImage.tag = sender.tag
+    print("Selection Tag:",selectionImage.tag)
+    print("sender Tag:",sender.tag)
     
-   if selectedTailorListArray.isEmpty == true
-   {
-    selectedTailorListArray.append(sender.tag)
-    sender.addSubview(selectionImage)
+    
+    if selectedTailorListArray.isEmpty == true
+    {
+       
+      selectedTailorListArray.append(sender.tag)
+      sender.addSubview(selectionImage)
    }
    else
    {
+    
+      if (!selectedTailorListArray .contains(sender.tag))
+      {
+         selectedTailorListArray.removeAll()
+        
+        
+         selectedTailorListArray.append(sender.tag)
+         sender.addSubview(selectionImage)
+      }
+      else
+      {
+        // selectedTailorListArray.removeAll()
+        
+      }
+   
+ 
+   
+    /*
      if selectedTailorListArray.contains(sender.tag)
      {
        if let index = selectedTailorListArray.index(where: {$0 == sender.tag})
@@ -233,12 +354,14 @@ class QuotationListViewController: CommonViewController
     }
     else
     {
+        
       selectedTailorListArray.append(sender.tag)
       sender.addSubview(selectionImage)
     }
-  }
+    */
+    }
         print("Tailor List Arr:", selectedTailorListArray)
-   }
+  }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
