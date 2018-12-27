@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
                 
-                let loginScreen = OwnMateialViewController()
+                let loginScreen = QuotationListViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen

@@ -61,4 +61,7 @@ import Foundation
     @objc optional func API_CALLBACK_OrderApprovalPrice(orderApprovalPrice : NSDictionary)
     @objc optional func API_CALLBACK_OrderApprovalDelivery(orderApprovalDelivery : NSDictionary)
     
+    // 27-12-2018  - rohith
+    @objc optional func API_CALLBACK_GetQuotationList(quotationList : NSDictionary)
+    
 }
