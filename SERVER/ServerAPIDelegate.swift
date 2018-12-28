@@ -58,11 +58,11 @@ import Foundation
     //21.12.2018
     @objc optional func API_CALLBACK_GetStateListByCountry(stateList : NSDictionary)
     
-    // 20-12-2018 - rohith
+    // 20-12-2018
     @objc optional func API_CALLBACK_OrderApprovalPrice(orderApprovalPrice : NSDictionary)
     @objc optional func API_CALLBACK_OrderApprovalDelivery(orderApprovalDelivery : NSDictionary)
     
-    // 27-12-2018  - rohith
+    // 27-12-2018
     @objc optional func API_CALLBACK_GetQuotationList(quotationList : NSDictionary)
     
 }

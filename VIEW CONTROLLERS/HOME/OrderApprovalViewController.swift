@@ -11,7 +11,6 @@ import UIKit
 class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
 {
     
-    
     let PricingButton = UIButton()
     let DeliveryDetailsButton = UIButton()
     let ProceedToPayButton = UIButton()
@@ -48,12 +47,15 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
             // Your code with delay
+            
        
         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: 27, delegate: self)
             
       //  self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
         
       //  self.orderApprovalContent()
+            
+        self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
             
         }
         

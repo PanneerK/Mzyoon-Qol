@@ -16,7 +16,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     
     let quotationListNavigationBar = UIView()
     let tailorListScrollView = UIScrollView()
-    var selectedTailorListArray = [Int]()
+   // var selectedTailorListArray = [Int]()
     
     // Error PAram...
     var DeviceNum:String!
@@ -40,6 +40,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         
         self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
        // quotationListContent()
@@ -170,7 +172,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         //        sortButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         backDrop.addSubview(sortButton)
         
-        tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (45 * y))
+        tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (48 * y))
         backDrop.addSubview(tailorListScrollView)
         
         tailorListScrollView.contentSize.height = (12 * y * CGFloat(IdArray.count))
@@ -184,15 +186,15 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         
         for i in 0..<IdArray.count
         {
-            let tailorView = UIView()
-            tailorView.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
-            tailorView.backgroundColor = UIColor.white
-            tailorListScrollView.addSubview(tailorView)
+            let tailorViewButton = UIButton()
+            tailorViewButton.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
+            tailorViewButton.backgroundColor = UIColor.white
+            tailorListScrollView.addSubview(tailorViewButton)
             
-            let tailorImageButton = UIButton()
-            tailorImageButton.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
-            tailorImageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-           // tailorImageButton.setImage(UIImage(named: "men"), for: .normal)
+            let tailorImageView = UIImageView()
+            tailorImageView.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
+            tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+           // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
          
           
             if let imageName = ShopImageArray[i] as? String
@@ -203,166 +205,102 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
                 let apiurl = URL(string: api)
                 
                 let dummyImageView = UIImageView()
-                dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageButton.frame.width, height: tailorImageButton.frame.height)
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
                 dummyImageView.dowloadFromServer(url: apiurl!)
                 dummyImageView.tag = -1
-                tailorImageButton.addSubview(dummyImageView)
+                tailorImageView.addSubview(dummyImageView)
             }
-         
+             tailorViewButton.addSubview(tailorImageView)
             
+          /*
             tailorImageButton.tag = i
             tailorImageButton.addTarget(self, action: #selector(self.tailorSelectionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(tailorImageButton)
+          */
             
             let nameLabel = UILabel()
-            nameLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: 0, width: (5 * x), height: (2 * y))
+            nameLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: 0, width: (5 * x), height: (2 * y))
             nameLabel.text = "Name : "
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
-            tailorView.addSubview(nameLabel)
+            tailorViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: tailorView.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: tailorViewButton.frame.width / 2, height: (2 * y))
             tailorName.text = TailorNameArray[i] as? String
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            tailorView.addSubview(tailorName)
+            tailorViewButton.addSubview(tailorName)
             
             let shopLabel = UILabel()
-            shopLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: nameLabel.frame.maxY, width: (8 * x), height: (2 * y))
+            shopLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: nameLabel.frame.maxY, width: (8 * x), height: (2 * y))
             shopLabel.text = "Shop Name : "
             shopLabel.textColor = UIColor.blue
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            tailorView.addSubview(shopLabel)
+            tailorViewButton.addSubview(shopLabel)
             
             let shopName = UILabel()
-            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
+            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
             shopName.text =  ShopNameArray[i] as? String
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
-            tailorView.addSubview(shopName)
+            tailorViewButton.addSubview(shopName)
             
             let ordersLabel = UILabel()
-            ordersLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: shopLabel.frame.maxY, width: (9 * x), height: (2 * y))
+            ordersLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: shopLabel.frame.maxY, width: (9 * x), height: (2 * y))
             ordersLabel.text = "Price : "
             ordersLabel.textColor = UIColor.blue
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            tailorView.addSubview(ordersLabel)
+            tailorViewButton.addSubview(ordersLabel)
             
             let ordersCountLabel = UILabel()
-            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
+            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
             ordersCountLabel.text =  TotalAmountArray[i] as? String
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ordersCountLabel.adjustsFontSizeToFitWidth = true
-            tailorView.addSubview(ordersCountLabel)
+            tailorViewButton.addSubview(ordersCountLabel)
             
             let ratingLabel = UILabel()
-            ratingLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ordersLabel.frame.maxY, width: (8 * x), height: (2 * y))
+            ratingLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ordersLabel.frame.maxY, width: (8 * x), height: (2 * y))
             ratingLabel.text = "No Of Days : "
             ratingLabel.textColor = UIColor.blue
             ratingLabel.textAlignment = .left
             ratingLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            tailorView.addSubview(ratingLabel)
+            tailorViewButton.addSubview(ratingLabel)
             
             let ratingCountLabel = UILabel()
-            ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
+            ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
             ratingCountLabel.text = StichTimeArray[i] as? String
             ratingCountLabel.textColor = UIColor.black
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
-            tailorView.addSubview(ratingCountLabel)
+            tailorViewButton.addSubview(ratingCountLabel)
             
-           y1 = tailorView.frame.maxY + y
+            tailorViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
+            
+           y1 = tailorViewButton.frame.maxY + y
         }
         
+      /*
         let confirmSelectionButton = UIButton()
         confirmSelectionButton.frame = CGRect(x: ((backDrop.frame.width - (17 * x)) / 2), y: tailorListScrollView.frame.maxY + y, width: (17 * x), height: (3 * y))
         confirmSelectionButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         confirmSelectionButton.setTitle("Confirm Selection", for: .normal)
         confirmSelectionButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
         backDrop.addSubview(confirmSelectionButton)
-        
+     */
     }
     
- @objc func tailorSelectionButtonAction(sender : UIButton)
- {
-    let selectionImage = UIImageView()
-    selectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
-    selectionImage.image = UIImage(named: "selectionImage")
-    selectionImage.tag = sender.tag
-    print("Selection Tag:",selectionImage.tag)
-    print("sender Tag:",sender.tag)
-    
-    
-    if selectedTailorListArray.isEmpty == true
-    {
-       
-      selectedTailorListArray.append(sender.tag)
-      sender.addSubview(selectionImage)
-   }
-   else
-   {
-    
-      if (!selectedTailorListArray .contains(sender.tag))
-      {
-         selectedTailorListArray.removeAll()
-        
-        
-         selectedTailorListArray.append(sender.tag)
-         sender.addSubview(selectionImage)
-      }
-      else
-      {
-        // selectedTailorListArray.removeAll()
-        
-      }
-   
  
-   
-    /*
-     if selectedTailorListArray.contains(sender.tag)
-     {
-       if let index = selectedTailorListArray.index(where: {$0 == sender.tag})
-       {
-          selectedTailorListArray.remove(at: index)
-       }
-    
-     for views in sender.subviews
-     {
-       if let findView = views.viewWithTag(sender.tag)
-       {
-         if findView.tag == sender.tag
-         {
-           print("FIND VIEW", findView.description)
-           findView.removeFromSuperview()
-         }
-         else
-         {
-           print("NOT SAME VIEW")
-         }
-       }
-     }
-    }
-    else
-    {
-        
-      selectedTailorListArray.append(sender.tag)
-      sender.addSubview(selectionImage)
-    }
-    */
-    }
-        print("Tailor List Arr:", selectedTailorListArray)
-  }
-    
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
         let orderApproveScreen = OrderApprovalViewController()

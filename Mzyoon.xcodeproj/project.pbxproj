@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7867C36215F8BE32510B3549 /* Pods_Mzyoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */; };
+		DA077FC021D62A5400D9E565 /* ListOfOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */; };
+		DA077FC221D6608000D9E565 /* OrderRequestListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */; };
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */; };
@@ -79,6 +81,8 @@
 /* Begin PBXFileReference section */
 		84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mzyoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5457EC0C6335A24A15B04CE /* Pods-Mzyoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mzyoon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon.release.xcconfig"; sourceTree = "<group>"; };
+		DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfOrdersViewController.swift; sourceTree = "<group>"; };
+		DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestListViewController.swift; sourceTree = "<group>"; };
 		DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotationListViewController.swift; sourceTree = "<group>"; };
 		DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApprovalViewController.swift; sourceTree = "<group>"; };
@@ -290,6 +294,8 @@
 				FD60980321A2CC8A00DCCF58 /* LocationViewController.swift */,
 				FD53A3D421A809450097B4D9 /* TailorListViewController.swift */,
 				FD63D6D221AEC2910024AE96 /* TailorListTableViewCell.swift */,
+				DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */,
+				DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */,
 				DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */,
 				DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */,
 				DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */,
@@ -578,6 +584,7 @@
 				FDC9BB902186F6E1003BA5C9 /* OrdersViewController.swift in Sources */,
 				FD71D264219F1F2200FFC067 /* Customization2ViewController.swift in Sources */,
 				FD71D260219EF93700FFC067 /* OwnMateialViewController.swift in Sources */,
+				DA077FC221D6608000D9E565 /* OrderRequestListViewController.swift in Sources */,
 				FD2ADFB82175A5480033025B /* AppDelegate.swift in Sources */,
 				FD696A8721AC208600E622FC /* IntroProfileViewController.swift in Sources */,
 				FDFE07352189E49F0056E773 /* ActivityView.swift in Sources */,
@@ -593,6 +600,7 @@
 				FD53A3D521A809450097B4D9 /* TailorListViewController.swift in Sources */,
 				FDC9BB942186F707003BA5C9 /* ContactUsViewController.swift in Sources */,
 				FD71D25C219EE62F00FFC067 /* DressTypeViewController.swift in Sources */,
+				DA077FC021D62A5400D9E565 /* ListOfOrdersViewController.swift in Sources */,
 				FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
