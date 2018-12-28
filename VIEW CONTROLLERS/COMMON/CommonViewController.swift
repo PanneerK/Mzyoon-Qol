@@ -135,8 +135,9 @@ class CommonViewController: UIViewController
         tab4Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
         tabBar.addSubview(tab4Button)
         
-        let tabTitle = ["Home", "Order", "Cart", "Contact-Us"]
-        let tabImages = ["home", "order", "cart", "contact-us"]
+     //   let tabTitle = ["Home", "Order", "Cart", "Contact-Us"]
+        let tabTitle = ["Home", "Request", "Order", "Cart"]
+        let tabImages = ["home", "order", "order", "cart"]
         
         for i in 0..<4
         {
@@ -183,11 +184,11 @@ class CommonViewController: UIViewController
     }
     
     @objc func tabBarButtonAction(sender : UIButton)
-    {
+    {        
         var navigateScreen = UIViewController()
-        let alertControls = UIAlertController(title: "Alert", message: "Under development", preferredStyle: .alert)
+        let alertControls = UIAlertController(title: "Alert", message: "No Data", preferredStyle: .alert)
         alertControls.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
+        // Home..
         if sender.tag == 0
         {
             navigateScreen = HomeViewController()
@@ -197,22 +198,43 @@ class CommonViewController: UIViewController
             window?.rootViewController = navigationScreen
             window?.makeKeyAndVisible()
         }
+        // Request..
+        else if sender.tag == 1
+        {
+            navigateScreen = OrderRequestListViewController()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let navigationScreen = UINavigationController(rootViewController: navigateScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+            
+           /*
+             stopActivity()
+            navigateScreen = OrdersViewController()
+            self.present(alertControls, animated: true, completion: nil)
+           */
+        }
+         // Orders...
+        else if sender.tag == 2
+        {
+            navigateScreen = ListOfOrdersViewController()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let navigationScreen = UINavigationController(rootViewController: navigateScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+            
+            /*
+            stopActivity()
+            navigateScreen = CartViewController()
+            */
+        }
         else
         {
             stopActivity()
             self.present(alertControls, animated: true, completion: nil)
         }
-        /*else if sender.tag == 1
-        {
-            stopActivity()
-            navigateScreen = OrdersViewController()
-            self.present(alertControls, animated: true, completion: nil)
-        }
-        else if sender.tag == 2
-        {
-            stopActivity()
-            navigateScreen = CartViewController()
-        }
+        /*  // Cart..
         else if sender.tag == 3
         {
             stopActivity()
