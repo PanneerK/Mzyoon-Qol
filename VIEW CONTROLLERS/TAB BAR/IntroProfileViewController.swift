@@ -266,6 +266,8 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.userImage.image = pickedImage
+            FileHandler().saveImageDocumentDirectory(image: userImage.image!)
+            print("IMAGE NAME", FileHandler().imagePath())
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -284,8 +286,6 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
             
             if userImage.image != nil
             {
-                FileHandler().saveImageDocumentDirectory(image: userImage.image!)
-                
                 UserDefaults.standard.set(userNameTextField.text!, forKey: "UserName")
                 print("WELCOME", UserDefaults.standard.value(forKey: "userId"))
 //                if let profId = UserDefaults.standard.value(forKey: "userId") as? String

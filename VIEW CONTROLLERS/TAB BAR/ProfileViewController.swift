@@ -8,13 +8,15 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITextFieldDelegate, ServerAPIDelegate
+class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITextFieldDelegate, ServerAPIDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     
     var x = CGFloat()
     var y = CGFloat()
     
-    
+    let userImage = UIImageView()
+    var imagePicker = UIImagePickerController()
+
     let userName = UITextField()
     let mobileNumber = UITextField()
     let email = UITextField()
@@ -38,7 +40,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
 
     let serviceCall = ServerAPI()
     
-    let datePick = UIDatePicker()
+    var datePick = UIDatePicker()
     
     override func viewDidLoad()
     {
@@ -53,9 +55,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         let closeKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.closeKeyboard(gesture:)))
         closeKeyboard.delegate = self
         view.addGestureRecognizer(closeKeyboard)
-        
         screenContents()
-        
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -76,7 +76,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         doneToolbar.items = items
         doneToolbar.sizeToFit()
         
-        self.dob.inputView = doneToolbar
+        dob.inputAccessoryView = doneToolbar
     }
     
     @objc func doneButtonAction()
@@ -188,26 +188,34 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         navigationBar.addSubview(navigationTitle)
         
-        let userImage = UIImageView()
         userImage.frame = CGRect(x: ((view.frame.width - 150) / 2), y: navigationBar.frame.maxY + y, width: 150, height: 150)
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.backgroundColor = UIColor.red
-        userImage.image = UIImage(named: "imgpsh_fullsizebai")
         userImage.layer.masksToBounds = true
         backgroundImage.addSubview(userImage)
+        
+        let cameraButton = UIButton()
+        cameraButton.frame = CGRect(x: userImage.frame.maxX - (5 * x), y: userImage.frame.maxY - (5 * y), width: (5 * x), height: (5 * x))
+        cameraButton.backgroundColor = UIColor.white
+        cameraButton.layer.cornerRadius = cameraButton.frame.height / 2
+        cameraButton.setImage(UIImage(named: "camera"), for: .normal)
+        cameraButton.addTarget(self, action: #selector(self.cameraButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(cameraButton)
         
         let nameIcon = UIImageView()
         nameIcon.frame = CGRect(x: (3 * x), y: userImage.frame.maxY + (4 * y), width: (2.5 * x), height: (2 * y))
         nameIcon.image = UIImage(named: "account")
         view.addSubview(nameIcon)
         
-        
-        
         userName.isUserInteractionEnabled = false
         userName.frame = CGRect(x: nameIcon.frame.maxX + x, y: userImage.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
         if let getUserName = UserDefaults.standard.value(forKey: "Name") as? String
         {
             userName.text = getUserName
+        }
+        else
+        {
+            userName.placeholder = "Please enter your name"
         }
         userName.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         userName.delegate = self
@@ -229,6 +237,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         {
             mobileNumber.text = getMobileNumber
         }
+        else
+        {
+            mobileNumber.placeholder = "Please enter your mobile number"
+        }
         mobileNumber.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         mobileNumber.delegate = self
         view.addSubview(mobileNumber)
@@ -245,7 +257,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         email.isUserInteractionEnabled = false
         email.frame = CGRect(x: nameIcon.frame.maxX + x, y: mobileIcon.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
-        email.text = ""
+        email.placeholder = "Please enter your email"
         email.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         email.delegate = self
         view.addSubview(email)
@@ -262,7 +274,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         dob.isUserInteractionEnabled = false
         dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (4 * y), width: view.frame.width - (12 * x), height: (2 * y))
-        dob.text = ""
+        dob.placeholder = "yyyy/mm/dd"
         dob.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         dob.addTarget(self, action: #selector(self.calendarButtonAction), for: .allEditingEvents)
         dob.delegate = self
@@ -285,9 +297,11 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         genderLabel.textAlignment = .left
         view.addSubview(genderLabel)
         
+        maleButton.isEnabled = false
         maleButton.frame = CGRect(x: (3 * x), y: genderLabel.frame.maxY + y, width: (2 * x), height: (2 * x))
         maleButton.layer.cornerRadius = maleButton.frame.height / 2
-        maleButton.backgroundColor = UIColor.green
+        maleButton.backgroundColor = UIColor.white
+        maleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
         maleButton.tag = 1
         maleButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(maleButton)
@@ -299,9 +313,11 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         maleLabel.textAlignment = .left
         view.addSubview(maleLabel)
         
+        femaleButton.isEnabled = false
         femaleButton.frame = CGRect(x: maleLabel.frame.maxX + (3 * x), y: genderLabel.frame.maxY + y, width: (2 * x), height: (2 * x))
         femaleButton.layer.cornerRadius = femaleButton.frame.height / 2
-        femaleButton.backgroundColor = UIColor.green
+        femaleButton.backgroundColor = UIColor.white
+        femaleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
         femaleButton.tag = 2
         femaleButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(femaleButton)
@@ -323,6 +339,85 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         view.addSubview(updateButton)
     }
     
+    @objc func cameraButtonAction(sender : UIButton)
+    {
+        let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+        cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+        cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+        cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(cameraAlert, animated: true, completion: nil)
+    }
+    
+    func cameraAlertAction(action : UIAlertAction)
+    {
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            print("Button capture")
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType = .camera;
+            imagePicker.allowsEditing = false
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func galleryAlertAction(action : UIAlertAction)
+    {
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            print("Button capture")
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType = .savedPhotosAlbum;
+            imagePicker.allowsEditing = false
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.userImage.image = pickedImage
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func pickUpDate(_ textField : UITextField){
+        
+        // DatePicker
+        self.datePick = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
+        self.datePick.backgroundColor = UIColor.white
+        self.datePick.datePickerMode = UIDatePicker.Mode.date
+        textField.inputView = self.datePick
+        
+        // ToolBar
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.doneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        textField.inputAccessoryView = toolBar
+        
+    }
+    
+    @objc func doneClick() {
+        let dateFormatter1 = DateFormatter()
+        dateFormatter1.dateStyle = .medium
+        dateFormatter1.timeStyle = .none
+        dateFormatter1.dateFormat = "yyyy/MM/dd"
+        dob.text = dateFormatter1.string(from: datePick.date)
+        dob.resignFirstResponder()
+    }
+    @objc func cancelClick() {
+        dob.resignFirstResponder()
+    }
+    
     @objc func backButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
@@ -332,23 +427,31 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     {
         if sender.tag == 1
         {
-            sender.backgroundColor = UIColor.blue
+            GenderStr = "male"
+            femaleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
         }
         else
         {
-            sender.backgroundColor = UIColor.blue
+            GenderStr = "female"
+            maleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
         }
+        
+        sender.setImage(UIImage(named: "checkMark"), for: .normal)
     }
     
     @objc func calendarButtonAction()
     {
-        datePick.frame = CGRect(x: 0, y: dob.frame.maxY + (5 * y), width: view.frame.width, height: (20 * y))
-        datePick.backgroundColor = UIColor.white
-        datePick.datePickerMode = .date
-        datePick.locale = Locale.current
-        datePick.maximumDate = Date()
-        datePick.timeZone = TimeZone.current
-        view.addSubview(datePick)
+        pickUpDate(dob)
+
+//        datePick.frame = CGRect(x: 0, y: dob.frame.maxY + (5 * y), width: view.frame.width, height: (20 * y))
+//        datePick.backgroundColor = UIColor.white
+//        datePick.datePickerMode = .date
+//        datePick.locale = Locale.current
+//        datePick.maximumDate = Date()
+//        datePick.timeZone = TimeZone.current
+//        view.addSubview(datePick)
+//
+//        dob.inputView = datePick
     }
     
     @objc func updateButtonAction(sender : UIButton)
@@ -359,6 +462,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         mobileNumber.isUserInteractionEnabled = true
         email.isUserInteractionEnabled = true
         dob.isUserInteractionEnabled = true
+        
+        femaleButton.isEnabled = true
+        maleButton.isEnabled = true
         
         userName.becomeFirstResponder()
         
@@ -388,6 +494,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         email.isUserInteractionEnabled = false
         dob.isUserInteractionEnabled = false
         
+        femaleButton.isEnabled = false
+        maleButton.isEnabled = false
+        
+        userName.text = ""
+        mobileNumber.text = ""
+        email.text = ""
+        dob.text = ""
+        
         updateButton.isHidden = false
         
         sender.removeFromSuperview()
@@ -401,12 +515,15 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         email.isUserInteractionEnabled = false
         dob.isUserInteractionEnabled = false
         
+        femaleButton.isEnabled = false
+        maleButton.isEnabled = false
+        
         updateButton.isHidden = false
         
         sender.removeFromSuperview()
         cancelButton.removeFromSuperview()
         
-        let ProfId = 1
+        let ProfId = UserDefaults.standard.value(forKey: "userId") as! String
         let EmailID = email.text
         let DobStr = dob.text
         let ModifyStr = "user"

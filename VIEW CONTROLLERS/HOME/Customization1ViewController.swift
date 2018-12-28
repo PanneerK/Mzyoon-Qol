@@ -466,6 +466,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         if sender.tag != 0
         {
+            seasonalTagIntArray = seasonalTagIntArray.filter { $0 != 0 }
+            
+            for views in seasonalScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(0)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == 0
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+
             if seasonalTagIntArray.isEmpty == true
             {
                 seasonalTagIntArray.append(sender.tag)
@@ -506,6 +522,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
+            for views in seasonalScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(views.tag)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == views.tag
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
+            seasonalTagIntArray.removeAll()
+            
             if seasonalTagIntArray.contains(sender.tag)
             {
                 if let index = seasonalTagIntArray.index(where: {$0 == sender.tag}) {
