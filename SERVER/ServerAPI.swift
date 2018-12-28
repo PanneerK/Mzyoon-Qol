@@ -518,6 +518,37 @@ class ServerAPI : NSObject
         }
     }
     
+    func API_ExistingUserProfile(Id : String, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Existing User Profile Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/Api/Order/GetExistingUserProfile?Id=\(Id)", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
+            request(urlString, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_ExistingUserProfile!(userProfile: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 11, errorMessage: "Existing User Profile Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
     // Profile Update
     func API_ProfileUpdate(Id : Int,Email : String ,Dob : String ,Gender : String ,ModifiedBy : String ,delegate : ServerAPIDelegate)
     {
@@ -746,7 +777,7 @@ class ServerAPI : NSObject
     {
         if (Reachability()?.isReachable)!
         {
-            print("Server Reached - Profile User Type")
+            print("Server Reached - Existing User Measurement Page")
             
             let parameters = [:] as [String : Any]
             
@@ -853,7 +884,6 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("response", self.resultDict)
                     
                     delegate.API_CALLBACK_ProfileUserType!(userType: self.resultDict)
                 }

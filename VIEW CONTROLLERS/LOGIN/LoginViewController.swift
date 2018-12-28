@@ -349,34 +349,58 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         print("VALIDATE OTP", loginResult)
         
         let ResponseMsg = loginResult.object(forKey: "ResponseMsg") as! String
-     if ResponseMsg == "Success"
-     {
-        let result = loginResult.object(forKey: "Result") as! Int
-        let UserId = loginResult.object(forKey: "UserId") as! String
-        
-        UserDefaults.standard.set(UserId, forKey: "userId")
+        if ResponseMsg == "Success"
+        {
+            
+            let result = loginResult.object(forKey: "Result") as! Int
+            let UserId = loginResult.object(forKey: "UserId") as! String
+            
+            UserDefaults.standard.set(UserId, forKey: "userId")
                 
-        if result != 2 || result != 1
-        {
-            let introProfileScreen = IntroProfileViewController()
-            self.navigationController?.pushViewController(introProfileScreen, animated: true)
+            if result != 2 || result != 1
+            {
+                serviceCall.API_IsProfileUserType(UserType: "Customer", UserId: Int(UserId)!, delegate: self)
+            }
+            else
+            {
+                let errorAlert = UIAlertController(title: "Error", message: "\(result)", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+            }
         }
-        else
+        else if ResponseMsg == "Failure"
         {
-            let errorAlert = UIAlertController(title: "Error", message: "\(result)", preferredStyle: .alert)
-            errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(errorAlert, animated: true, completion: nil)
-        }
-      }
-     else if ResponseMsg == "Failure"
-     {
-        let Result = loginResult.object(forKey: "Result") as! String
-        print("Result", Result)
+            let Result = loginResult.object(forKey: "Result") as! String
+            print("Result", Result)
         
-        MethodName = "ValidateOTP"
-        ErrorStr = Result
-        DeviceError()
-      }
+            MethodName = "ValidateOTP"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
+    func API_CALLBACK_ProfileUserType(userType: NSDictionary) {
+        print("WELCOME TO CHECK USER TYPE", userType)
+        
+        let responseMsg = userType.object(forKey: "ResponseMsg") as! String
+        print("ResponseMsg", responseMsg)
+        
+        if responseMsg == "Success"
+        {
+            let result = userType.object(forKey: "Result") as! String
+            print("Result", result)
+            
+            if result == "Existing User"
+            {
+                let homeScreen = HomeViewController()
+                self.navigationController?.pushViewController(homeScreen, animated: true)
+            }
+            else
+            {
+                let introProfileScreen = IntroProfileViewController()
+                self.navigationController?.pushViewController(introProfileScreen, animated: true)
+            }
+        }
     }
     
     func screenContents()

@@ -37,7 +37,8 @@ import Foundation
     @objc optional func API_CALLBACK_IntroProfile(introProf : NSDictionary)
     @objc optional func API_CALLBACK_ProfileImageUpload(ImageUpload : NSDictionary)
     @objc optional func API_CALLBACK_ProfileUpdate(profUpdate : NSDictionary)
-     @objc optional func API_CALLBACK_ProfileUserType(userType : NSDictionary)
+    @objc optional func API_CALLBACK_ProfileUserType(userType : NSDictionary)
+    @objc optional func API_CALLBACK_ExistingUserProfile(userProfile : NSDictionary)
     
     @objc optional func API_CALLBACK_Measurement1(measure1 : NSDictionary)
     @objc optional func API_CALLBACK_GetMeasurement1Value(GetMeasurement1val : NSDictionary)
