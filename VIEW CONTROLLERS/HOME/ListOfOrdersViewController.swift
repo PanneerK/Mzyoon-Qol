@@ -152,8 +152,11 @@ class ListOfOrdersViewController: CommonViewController
         DeliveredButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(DeliveredButton)
         
-     
-        PendingViewContents(isHidden : false)
+        DeliveredButton.backgroundColor = UIColor.lightGray
+        DeliveredButton.setTitleColor(UIColor.black, for: .normal)
+        
+        PendingViewContents(isHidden: false)
+        DeliveredViewContents(isHidden: true)
     }
  
     
@@ -218,10 +221,10 @@ class ListOfOrdersViewController: CommonViewController
         
         for i in 0..<4
         {
-            let RequestViewButton = UIButton()
-            RequestViewButton.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
-            RequestViewButton.backgroundColor = UIColor.white
-            tailorListScrollView.addSubview(RequestViewButton)
+            let PendingViewButton = UIButton()
+            PendingViewButton.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
+            PendingViewButton.backgroundColor = UIColor.white
+            tailorListScrollView.addSubview(PendingViewButton)
             
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
@@ -244,7 +247,7 @@ class ListOfOrdersViewController: CommonViewController
              }
              */
             
-            RequestViewButton.addSubview(tailorImageView)
+            PendingViewButton.addSubview(tailorImageView)
             
             
             
@@ -254,15 +257,15 @@ class ListOfOrdersViewController: CommonViewController
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
-            RequestViewButton.addSubview(nameLabel)
+            PendingViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: RequestViewButton.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: PendingViewButton.frame.width / 2, height: (2 * y))
             tailorName.text = "00000"
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(tailorName)
+            PendingViewButton.addSubview(tailorName)
             
             let shopLabel = UILabel()
             shopLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: nameLabel.frame.maxY, width: (10 * x), height: (2 * y))
@@ -270,16 +273,16 @@ class ListOfOrdersViewController: CommonViewController
             shopLabel.textColor = UIColor.blue
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(shopLabel)
+            PendingViewButton.addSubview(shopLabel)
             
             let shopName = UILabel()
-            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
             shopName.text =  "Sha"
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(shopName)
+            PendingViewButton.addSubview(shopName)
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: shopLabel.frame.maxY, width: (10 * x), height: (2 * y))
@@ -287,16 +290,16 @@ class ListOfOrdersViewController: CommonViewController
             ordersLabel.textColor = UIColor.blue
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(ordersLabel)
+            PendingViewButton.addSubview(ordersLabel)
             
             let ordersCountLabel = UILabel()
-            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
             ordersCountLabel.text =  "Golden Works"
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ordersCountLabel.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(ordersCountLabel)
+            PendingViewButton.addSubview(ordersCountLabel)
             
             let ProductLabel = UILabel()
             ProductLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ordersLabel.frame.maxY, width: (10 * x), height: (2 * y))
@@ -304,16 +307,16 @@ class ListOfOrdersViewController: CommonViewController
             ProductLabel.textColor = UIColor.blue
             ProductLabel.textAlignment = .left
             ProductLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(ProductLabel)
+            PendingViewButton.addSubview(ProductLabel)
             
             let ProductNameLabel = UILabel()
-            ProductNameLabel.frame = CGRect(x: ProductLabel.frame.maxX, y: ordersLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            ProductNameLabel.frame = CGRect(x: ProductLabel.frame.maxX, y: ordersLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
             ProductNameLabel.text =  "Slim Fit"
             ProductNameLabel.textColor = UIColor.black
             ProductNameLabel.textAlignment = .left
             ProductNameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ProductNameLabel.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(ProductNameLabel)
+            PendingViewButton.addSubview(ProductNameLabel)
             
             
             let OrderDateLabel = UILabel()
@@ -322,20 +325,20 @@ class ListOfOrdersViewController: CommonViewController
             OrderDateLabel.textColor = UIColor.blue
             OrderDateLabel.textAlignment = .left
             OrderDateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(OrderDateLabel)
+            PendingViewButton.addSubview(OrderDateLabel)
             
             let OrderDatesLabel = UILabel()
-            OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX, y: ProductLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX, y: ProductLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
             OrderDatesLabel.text =  "28-10-2018"
             OrderDatesLabel.textColor = UIColor.black
             OrderDatesLabel.textAlignment = .left
             OrderDatesLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             OrderDatesLabel.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(OrderDatesLabel)
+            PendingViewButton.addSubview(OrderDatesLabel)
             
           //  RequestViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
-            y1 = RequestViewButton.frame.maxY + y
+            y1 = PendingViewButton.frame.maxY + y
         }
     }
     
@@ -374,10 +377,10 @@ class ListOfOrdersViewController: CommonViewController
         
         for i in 0..<4
         {
-            let RequestViewButton = UIButton()
-            RequestViewButton.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
-            RequestViewButton.backgroundColor = UIColor.white
-            tailorListScrollView.addSubview(RequestViewButton)
+            let DeliveredViewButton = UIButton()
+            DeliveredViewButton.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
+            DeliveredViewButton.backgroundColor = UIColor.white
+            tailorListScrollView.addSubview(DeliveredViewButton)
             
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
@@ -400,7 +403,7 @@ class ListOfOrdersViewController: CommonViewController
              }
              */
             
-            RequestViewButton.addSubview(tailorImageView)
+            DeliveredViewButton.addSubview(tailorImageView)
             
             
             
@@ -410,15 +413,15 @@ class ListOfOrdersViewController: CommonViewController
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
-            RequestViewButton.addSubview(nameLabel)
+            DeliveredViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: RequestViewButton.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: DeliveredViewButton.frame.width / 2, height: (2 * y))
             tailorName.text = "123456789"
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(tailorName)
+            DeliveredViewButton.addSubview(tailorName)
             
             let shopLabel = UILabel()
             shopLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: nameLabel.frame.maxY, width: (10 * x), height: (2 * y))
@@ -426,16 +429,16 @@ class ListOfOrdersViewController: CommonViewController
             shopLabel.textColor = UIColor.blue
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(shopLabel)
+            DeliveredViewButton.addSubview(shopLabel)
             
             let shopName = UILabel()
-            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
             shopName.text =  "Abdullah"
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(shopName)
+            DeliveredViewButton.addSubview(shopName)
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: shopLabel.frame.maxY, width: (10 * x), height: (2 * y))
@@ -443,16 +446,16 @@ class ListOfOrdersViewController: CommonViewController
             ordersLabel.textColor = UIColor.blue
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(ordersLabel)
+            DeliveredViewButton.addSubview(ordersLabel)
             
             let ordersCountLabel = UILabel()
-            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
             ordersCountLabel.text =  "Golden Stiching"
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ordersCountLabel.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(ordersCountLabel)
+            DeliveredViewButton.addSubview(ordersCountLabel)
             
             let ProductLabel = UILabel()
             ProductLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ordersLabel.frame.maxY, width: (10 * x), height: (2 * y))
@@ -460,16 +463,16 @@ class ListOfOrdersViewController: CommonViewController
             ProductLabel.textColor = UIColor.blue
             ProductLabel.textAlignment = .left
             ProductLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(ProductLabel)
+            DeliveredViewButton.addSubview(ProductLabel)
             
             let ProductNameLabel = UILabel()
-            ProductNameLabel.frame = CGRect(x: ProductLabel.frame.maxX, y: ordersLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            ProductNameLabel.frame = CGRect(x: ProductLabel.frame.maxX, y: ordersLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
             ProductNameLabel.text =  "One button Slim Fit"
             ProductNameLabel.textColor = UIColor.black
             ProductNameLabel.textAlignment = .left
             ProductNameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ProductNameLabel.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(ProductNameLabel)
+            DeliveredViewButton.addSubview(ProductNameLabel)
             
             
             let OrderDateLabel = UILabel()
@@ -478,20 +481,20 @@ class ListOfOrdersViewController: CommonViewController
             OrderDateLabel.textColor = UIColor.blue
             OrderDateLabel.textAlignment = .left
             OrderDateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            RequestViewButton.addSubview(OrderDateLabel)
+            DeliveredViewButton.addSubview(OrderDateLabel)
             
             let OrderDatesLabel = UILabel()
-            OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX, y: ProductLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX, y: ProductLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
             OrderDatesLabel.text =  "28-10-2018"
             OrderDatesLabel.textColor = UIColor.black
             OrderDatesLabel.textAlignment = .left
             OrderDatesLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             OrderDatesLabel.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(OrderDatesLabel)
+            DeliveredViewButton.addSubview(OrderDatesLabel)
             
-            RequestViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
+            DeliveredViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
-            y1 = RequestViewButton.frame.maxY + y
+            y1 = DeliveredViewButton.frame.maxY + y
         }
     }
     
