@@ -19,6 +19,9 @@ class CommonViewController: UIViewController
     let backgroundImage = UIImageView()
     let navigationBar = UIView()
     let navigationTitle = UILabel()
+    
+    let slideMenuButton = UIButton()
+    let tabBar = UIView()
 
     let tab1Button = UIButton()
     let tab2Button = UIButton()
@@ -103,14 +106,14 @@ class CommonViewController: UIViewController
     
     func tabContents()
     {
-        let slideMenuButton = UIButton()
+        //let slideMenuButton = UIButton()
         slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
         slideMenuButton.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
         slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(slideMenuButton)
         
-        let tabBar = UIView()
+       // let tabBar = UIView()
         tabBar.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
         tabBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         view.addSubview(tabBar)
@@ -255,7 +258,8 @@ class CommonViewController: UIViewController
 
 }
 
-extension UIImageView {
+extension UIImageView
+{
     func dowloadFromServer(url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         contentMode = mode
         URLSession.shared.dataTask(with: url) { data, response, error in

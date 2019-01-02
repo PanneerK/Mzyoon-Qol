@@ -193,7 +193,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
-            tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+          //  tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
          
           

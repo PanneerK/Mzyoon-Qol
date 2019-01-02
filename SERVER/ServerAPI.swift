@@ -17,8 +17,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-     //   var baseURL:String = "http://192.168.0.21/TailorAPI"
-       var baseURL:String = "http://appsapi.mzyoon.com"
+        var baseURL:String = "http://192.168.0.21/TailorAPI"
+      // var baseURL:String = "http://appsapi.mzyoon.com"
     
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -1243,4 +1243,35 @@ class ServerAPI : NSObject
         }
     }
     
+    func API_GetOrderRequest(RequestId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached -  Value")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetOrderRequest?Id=\(RequestId)", arguments: [baseURL])
+            
+            print("Order Request List: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                     print("response", self.resultDict)
+                    delegate.API_CALLBACK_GetOrderRequest!(requestList: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 22, errorMessage: "Get Order Request Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
 }

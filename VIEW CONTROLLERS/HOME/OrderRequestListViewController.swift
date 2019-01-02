@@ -8,20 +8,108 @@
 
 import UIKit
 
-class OrderRequestListViewController: CommonViewController
+class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
 {
 
+    let serviceCall = ServerAPI()
+    
     let RequestListNavigationBar = UIView()
     let RequestListScrollView = UIScrollView()
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
+    var NoOfTailorsArray = NSArray()
+    var OrderIdArray = NSArray()
+    var ProductImageArray = NSArray()
+    var ProductNameArray = NSArray()
+    var RequestDtArray = NSArray()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
          self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-        OrderRequestListContent()
-        
+       
+        self.serviceCall.API_GetOrderRequest(RequestId: 1, delegate: self)
         // Do any additional setup after loading the view.
     }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("Order Request : ", errorMessage)
+    }
+    
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "OrderRequestListViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+    }
+    
+    
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+        }
+    }
+    
+    func API_CALLBACK_GetOrderRequest(requestList: NSDictionary)
+    {
+        let ResponseMsg = requestList.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = requestList.object(forKey: "Result") as! NSArray
+            print("Request List:", Result)
+            
+            
+            NoOfTailorsArray = Result.value(forKey: "NoOfTailors") as! NSArray
+            print("NoOfTailorsArray", NoOfTailorsArray)
+            
+            OrderIdArray = Result.value(forKey: "OrderId") as! NSArray
+            print("OrderIdArray", OrderIdArray)
+            
+            ProductImageArray = Result.value(forKey: "ProductImage") as! NSArray
+            print("ProductImageArray", ProductImageArray)
+            
+            ProductNameArray = Result.value(forKey: "Product_NameInEnglish") as! NSArray
+            print("ProductNameArray", ProductNameArray)
+            
+            RequestDtArray = Result.value(forKey: "RequestDt") as! NSArray
+            print("RequestDtArray", RequestDtArray)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = requestList.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "/GetOrderRequest"
+            ErrorStr = Result
+            DeviceError()
+        }
+        
+         OrderRequestListContent()
+    }
+        
     
     func OrderRequestListContent()
     {
@@ -70,7 +158,7 @@ class OrderRequestListViewController: CommonViewController
        // RequestListScrollView.backgroundColor = UIColor.gray
         backDrop.addSubview(RequestListScrollView)
         
-        RequestListScrollView.contentSize.height = (12 * y * CGFloat(4))
+        RequestListScrollView.contentSize.height = (12 * y * CGFloat(OrderIdArray.count))
         
         for views in RequestListScrollView.subviews
         {
@@ -79,7 +167,7 @@ class OrderRequestListViewController: CommonViewController
         
         var y1:CGFloat = 0
         
-        for i in 0..<4
+        for i in 0..<OrderIdArray.count
         {
             let RequestViewButton = UIButton()
             RequestViewButton.frame = CGRect(x: 0, y: y1, width: RequestListScrollView.frame.width, height: (10 * y))
@@ -88,11 +176,11 @@ class OrderRequestListViewController: CommonViewController
             
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
-            tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+           // tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
-          /*
-            if let imageName = ShopImageArray[i] as? String
+        
+            if let imageName = ProductImageArray[i] as? String
             {
                 // let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
                 let api = "http://192.168.0.21/TailorAPI/Images/TailorImages/\(imageName)"
@@ -105,7 +193,7 @@ class OrderRequestListViewController: CommonViewController
                 dummyImageView.tag = -1
                 tailorImageView.addSubview(dummyImageView)
             }
-         */
+         
             RequestViewButton.addSubview(tailorImageView)
  
          
@@ -120,7 +208,7 @@ class OrderRequestListViewController: CommonViewController
             
             let tailorName = UILabel()
             tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: y, width: RequestViewButton.frame.width / 2, height: (2 * y))
-            tailorName.text = "05-12-2018"
+            tailorName.text = RequestDtArray[i] as? String
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -136,7 +224,7 @@ class OrderRequestListViewController: CommonViewController
             
             let shopName = UILabel()
             shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
-            shopName.text =  "One Button Slim Fit"
+            shopName.text =  ProductNameArray[i] as? String
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -153,7 +241,7 @@ class OrderRequestListViewController: CommonViewController
             
             let ordersCountLabel = UILabel()
             ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
-            ordersCountLabel.text =  "05"
+            ordersCountLabel.text =  NoOfTailorsArray[i] as? String
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)

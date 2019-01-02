@@ -65,4 +65,6 @@ import Foundation
     // 27-12-2018
     @objc optional func API_CALLBACK_GetQuotationList(quotationList : NSDictionary)
     
+    // 2-1-2019
+    @objc optional func API_CALLBACK_GetOrderRequest(requestList : NSDictionary)
 }
