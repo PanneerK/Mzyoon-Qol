@@ -61,7 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             navigationScreen.isNavigationBarHidden = true
             window?.rootViewController = navigationScreen
             window?.makeKeyAndVisible()
-
         }
     }
 

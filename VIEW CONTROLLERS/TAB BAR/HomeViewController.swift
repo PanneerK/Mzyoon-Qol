@@ -128,6 +128,10 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         {
             serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
         }
+        else
+        {
+            
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
             // Your code with delay
@@ -152,6 +156,23 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
             
             let name = result.value(forKey: "Name") as! NSArray
             print("NAME", name)
+            
+//            UserDefaults.standard.set(name[0], forKey: "userName")
+            
+            let dob = result.value(forKey: "Dob") as! NSArray
+            print("DOB", dob)
+            
+//            UserDefaults.standard.set(dob[0], forKey: "dob")
+            
+            let mobileNumber = result.value(forKey: "PhoneNumber") as! NSArray
+            print("MOBILE NUMBER", mobileNumber)
+            
+            UserDefaults.standard.set(mobileNumber[0], forKey: "mobileNumber")
+            
+            let email = result.value(forKey: "Email") as! NSArray
+            print("EMAIL", email)
+            
+//            UserDefaults.standard.set(email[0], forKey: "email")
         }
     }
     

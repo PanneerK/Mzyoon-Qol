@@ -49,7 +49,12 @@ class FileHandler {
     }
     
     func imagePath() -> String{
-        return (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("signature.png")
+        let timeStamp = Date().timeIntervalSince1970
+        
+        let timeStampInt = Int(timeStamp)
+        print("TIME STAMP", timeStampInt)
+
+        return (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("\(timeStampInt).png")
     }
 }
 

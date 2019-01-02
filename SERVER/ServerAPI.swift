@@ -550,7 +550,7 @@ class ServerAPI : NSObject
     }
     
     // Profile Update
-    func API_ProfileUpdate(Id : Int,Email : String ,Dob : String ,Gender : String ,ModifiedBy : String ,delegate : ServerAPIDelegate)
+    func API_ProfileUpdate(Id : String, Email : String, Dob : String, Gender : String, ModifiedBy : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
