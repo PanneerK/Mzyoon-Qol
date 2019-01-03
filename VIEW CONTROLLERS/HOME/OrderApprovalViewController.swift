@@ -296,9 +296,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
         DeliveryDetailsButton.backgroundColor = UIColor.lightGray
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
+        
         PricingViewContents(isHidden: false)
         DeliveryDetailsViewContents(isHidden: true)
-        
         
     }
     
@@ -349,8 +349,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
     func PricingViewContents(isHidden : Bool)
     {
         let PricingView = UIView()
-        PricingView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (38 * x))
-        PricingView.backgroundColor = UIColor.gray
+        PricingView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: view.frame.height - (32 * y))
+        PricingView.backgroundColor = UIColor.clear
         view.addSubview(PricingView)
         
         let backgroundImage = UIImageView()
@@ -390,7 +390,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let MeasureRupeeValueLBL = UILabel()
         MeasureRupeeValueLBL.frame = CGRect(x: MeasurementChargesLabel.frame.maxX + (2 * x) , y: CurrencyButton.frame.minY + (4 * y), width: (10 * x), height: 30)
        // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        MeasureRupeeValueLBL.text = ChargesAmountArray[4] as? String
+        let MeasureRupeeValue : Int = ChargesAmountArray[4] as! Int
+        MeasureRupeeValueLBL.text =  "\(MeasureRupeeValue)"
         MeasureRupeeValueLBL.textColor = UIColor.blue
         MeasureRupeeValueLBL.textAlignment = .center
         MeasureRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -449,7 +450,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let StichingRupeeValueLBL = UILabel()
         StichingRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + (2 * x) , y: MeasurementChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        StichingRupeeValueLBL.text = ChargesAmountArray[1] as? String
+        let StichingRupeeValue : Int = ChargesAmountArray[1] as! Int
+        StichingRupeeValueLBL.text =  "\(StichingRupeeValue)"
         StichingRupeeValueLBL.textColor = UIColor.blue
         StichingRupeeValueLBL.textAlignment = .center
         StichingRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -532,7 +534,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let AppointmentRupeeValueLBL = UILabel()
         AppointmentRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + (2 * x) , y: StichingChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        AppointmentRupeeValueLBL.text = ChargesAmountArray[0] as? String
+        let AppointmentRupeeValue : Int = ChargesAmountArray[0] as! Int
+        AppointmentRupeeValueLBL.text =  "\(AppointmentRupeeValue)"
         AppointmentRupeeValueLBL.textColor = UIColor.blue
         AppointmentRupeeValueLBL.textAlignment = .center
         AppointmentRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -588,7 +591,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let MaterialRupeeValueLBL = UILabel()
         MaterialRupeeValueLBL.frame = CGRect(x: MaterialDeliveryChargesLabel.frame.maxX + (2 * x) , y: AppointmentChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        MaterialRupeeValueLBL.text = ChargesAmountArray[3] as? String
+        let MaterialRupeeValue : Int = ChargesAmountArray[3] as! Int
+        MaterialRupeeValueLBL.text =  "\(MaterialRupeeValue)"
         MaterialRupeeValueLBL.textColor = UIColor.blue
         MaterialRupeeValueLBL.textAlignment = .center
         MaterialRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -644,7 +648,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let UrgentStichValueLBL = UILabel()
         UrgentStichValueLBL.frame = CGRect(x: UrgentStichChargesLabel.frame.maxX + (2 * x) , y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        UrgentStichValueLBL.text = ChargesAmountArray[8] as? String
+        let UrgentStichValue : Int = ChargesAmountArray[8] as! Int
+        UrgentStichValueLBL.text =  "\(UrgentStichValue)"
         UrgentStichValueLBL.textColor = UIColor.blue
         UrgentStichValueLBL.textAlignment = .center
         UrgentStichValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -700,7 +705,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let DeliveryRupeeValueLBL = UILabel()
         DeliveryRupeeValueLBL.frame = CGRect(x: DeliveryChargesLabel.frame.maxX + (2 * x) , y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        DeliveryRupeeValueLBL.text = ChargesAmountArray[2] as? String
+        let DeliveryRupeeValue : Int = ChargesAmountArray[2] as! Int
+        DeliveryRupeeValueLBL.text =  "\(DeliveryRupeeValue)"
         DeliveryRupeeValueLBL.textColor = UIColor.blue
         DeliveryRupeeValueLBL.textAlignment = .center
         DeliveryRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -756,7 +762,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let ServiceRupeeValueLBL = UILabel()
         ServiceRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + (2 * x) , y: DeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        ServiceRupeeValueLBL.text = ChargesAmountArray[5] as? String
+        let ServiceRupeeValue : Int = ChargesAmountArray[5] as! Int
+        ServiceRupeeValueLBL.text =  "\(ServiceRupeeValue)"
         ServiceRupeeValueLBL.textColor = UIColor.blue
         ServiceRupeeValueLBL.textAlignment = .center
         ServiceRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -812,7 +819,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let TaxRupeeValueLBL = UILabel()
         TaxRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + (2 * x) , y: ServiceChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        TaxRupeeValueLBL.text = ChargesAmountArray[6] as? String
+        let TaxRupeeValue : Int = ChargesAmountArray[6] as! Int
+        TaxRupeeValueLBL.text =  "\(TaxRupeeValue)"
         TaxRupeeValueLBL.textColor = UIColor.blue
         TaxRupeeValueLBL.textAlignment = .center
         TaxRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -850,7 +858,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         let OrderTotalValueLBL = UILabel()
         OrderTotalValueLBL.frame = CGRect(x: OrderTotalLabel.frame.maxX + (2 * x) , y: TaxChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
         OrderTotalValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        OrderTotalValueLBL.text = ChargesAmountArray[7] as? String
+        let OrderTotalValue : Int = ChargesAmountArray[7] as! Int
+        OrderTotalValueLBL.text =  "\(OrderTotalValue)"
         OrderTotalValueLBL.textColor = UIColor.white
         OrderTotalValueLBL.textAlignment = .center
         OrderTotalValueLBL.font = UIFont(name: "Avenir Next", size: 16)
@@ -880,14 +889,15 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
     {
         
        // let deliveryDetailsView = UIView()
-        deliveryDetailsView.frame = CGRect(x: (2 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (35.5 * x))
-        deliveryDetailsView.backgroundColor = UIColor.gray
+        deliveryDetailsView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: view.frame.height - (32 * y))
+       deliveryDetailsView.backgroundColor = UIColor.gray
         view.addSubview(deliveryDetailsView)
-        
+   
         let backgroundImage = UIImageView()
         backgroundImage.frame = CGRect(x: 0, y: 0, width: deliveryDetailsView.frame.width, height: deliveryDetailsView.frame.height)
         backgroundImage.image = UIImage(named: "background")
         deliveryDetailsView.addSubview(backgroundImage)
+      
         
         deliveryDetailsView.isHidden = isHidden
         
@@ -895,7 +905,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
         // AppointmentView :-
             let AppointmentsView = UIView()
-            AppointmentsView.frame = CGRect(x: x, y: 10, width: deliveryDetailsView.frame.width - (2 * x), height: (6 * y))
+            AppointmentsView.frame = CGRect(x: x, y: deliveryDetailsView.frame.minY - (22 * y), width: deliveryDetailsView.frame.width - (2 * x), height: (6 * y))
             AppointmentsView.layer.cornerRadius = 10
             AppointmentsView.layer.masksToBounds = true
             AppointmentsView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -909,10 +919,10 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
             
     //        y1 = AppointmentsView.frame.maxY + (y / 2)
         
-        // Label :-
+        // Label :-  width: 15 * x
            let AppointmentsLabels = UILabel()
-           AppointmentsLabels.frame = CGRect(x: 5, y: 10 , width: 15 * x, height: (3 * y))
-          // AppointmentsLabels.backgroundColor = UIColor.gray
+           AppointmentsLabels.frame = CGRect(x: x, y: AppointmentsView.frame.minY , width:AppointmentsView.frame.width - (20 * x) , height: (5 * y))
+           //AppointmentsLabels.backgroundColor = UIColor.gray
            AppointmentsLabels.text = "Appointments"
            AppointmentsLabels.textColor = UIColor.white
            AppointmentsLabels.textAlignment = .left
@@ -921,8 +931,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
         // DeliveryColonLabel :-
         let AppointColonLabel = UILabel()
-        AppointColonLabel.frame = CGRect(x: AppointmentsLabels.frame.maxX + 5, y: AppointmentsView.frame.minY , width: 2 * x, height: (2 * y))
-      //  AppointColonLabel.backgroundColor = UIColor.gray
+        AppointColonLabel.frame = CGRect(x: AppointmentsLabels.frame.maxX , y: AppointmentsView.frame.minY , width: 2 * x, height: (5 * y))
+        AppointColonLabel.backgroundColor = UIColor.gray
         AppointColonLabel.text = "-"
         AppointColonLabel.textColor = UIColor.white
         AppointColonLabel.textAlignment = .center
@@ -931,8 +941,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
         // AppointmentValueLabel :-
         let AppointmentValueLabel = UILabel()
-        AppointmentValueLabel.frame = CGRect(x: AppointColonLabel.frame.maxX + 5, y: AppointmentsView.frame.minY , width: 15 * x, height: (4 * y))
-        //  AppointColonLabel.backgroundColor = UIColor.gray
+        AppointmentValueLabel.frame = CGRect(x: AppointColonLabel.frame.maxX , y: AppointmentsView.frame.minY , width: 15 * x, height: (5 * y))
+          AppointColonLabel.backgroundColor = UIColor.gray
         AppointmentValueLabel.text = AppoinmentArray[0] as? String
         AppointmentValueLabel.lineBreakMode = .byWordWrapping
         AppointmentValueLabel.numberOfLines = 3
@@ -1035,7 +1045,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         DeliveryDateView.addSubview(DateColonLabel)
         
         // Pay Button :-
-        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY - 5, width: view.frame.width , height: 40)
+        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY + y, width: view.frame.width , height: 40)
         ProceedToPayButton.backgroundColor = UIColor.orange
         ProceedToPayButton.setTitle("PROCEED TO PAY", for: .normal)
         ProceedToPayButton.setTitleColor(UIColor.white, for: .normal)

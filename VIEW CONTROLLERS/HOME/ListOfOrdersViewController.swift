@@ -157,6 +157,7 @@ class ListOfOrdersViewController: CommonViewController
         
         PendingViewContents(isHidden: false)
         DeliveredViewContents(isHidden: true)
+        
     }
  
     

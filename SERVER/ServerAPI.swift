@@ -1256,7 +1256,7 @@ class ServerAPI : NSObject
             print("Order Request List: ", urlString)
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
-                print("REQUEST", request)
+               // print("REQUEST", request)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
