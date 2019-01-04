@@ -17,6 +17,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     let quotationListNavigationBar = UIView()
     let tailorListScrollView = UIScrollView()
    // var selectedTailorListArray = [Int]()
+    var OrderId:Int!
     
     // Error PAram...
     var DeviceNum:String!
@@ -43,7 +44,11 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         
          self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         
-        self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
+         print("request Order ID :",OrderId)
+        
+      //  self.ServiceCall.API_GetQuotationList(OrderId: OrderId, delegate: self)
+          self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
+        
        // quotationListContent()
     }
     
@@ -193,7 +198,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
-            tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+          //  tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
          
           
@@ -252,7 +257,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorViewButton.addSubview(shopName)
             
             let ordersLabel = UILabel()
-            ordersLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: shopLabel.frame.maxY, width: (9 * x), height: (2 * y))
+            ordersLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: shopLabel.frame.maxY, width: (5 * x), height: (2 * y))
             ordersLabel.text = "Price : "
             ordersLabel.textColor = UIColor.blue
             ordersLabel.textAlignment = .left
@@ -261,7 +266,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             let ordersCountLabel = UILabel()
             ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
-            ordersCountLabel.text =  TotalAmountArray[i] as? String
+            let orderPrice : Int = TotalAmountArray[i] as! Int
+            ordersCountLabel.text =  "\(orderPrice)"
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)

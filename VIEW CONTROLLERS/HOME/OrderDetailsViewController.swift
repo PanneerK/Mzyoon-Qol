@@ -16,6 +16,7 @@ class OrderDetailsViewController: CommonViewController
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         
         orderDetailsContent()
     }
@@ -59,7 +60,7 @@ class OrderDetailsViewController: CommonViewController
         
         // Order Id Label..
         let orderIdLabel = UILabel()
-        orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (8 * x), height: (2 * x))
+        orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (10 * x), height: (2 * x))
        // orderIdLabel.backgroundColor = UIColor.gray
         orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
         orderIdLabel.text = "ORDER ID : "
@@ -299,7 +300,7 @@ class OrderDetailsViewController: CommonViewController
         
         // Order Status View..
         let OrderStatusView = UIView()
-        OrderStatusView.frame = CGRect(x: (3 * x), y: PaymentInfoView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (20 * y))
+        OrderStatusView.frame = CGRect(x: (3 * x), y: PaymentInfoView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (18 * y))
         OrderStatusView.backgroundColor = UIColor.white
         OrderDetailsScrollView.addSubview(OrderStatusView)
         
@@ -315,14 +316,66 @@ class OrderDetailsViewController: CommonViewController
         OrderStatusView.addSubview(OrderStatusLabel)
         
         
-        // Order Status View..
+        // Imageview
+        let TrackImageView = UIImageView()
+        TrackImageView.frame = CGRect(x: (2 * x), y: OrderStatusLabel.frame.maxY + (2 * y), width: x, height:(6 * y))
+        TrackImageView.backgroundColor = UIColor.white
+        TrackImageView.image = UIImage(named: "TrackingStatus")
+        OrderStatusView.addSubview(TrackImageView)
+        
+        
+        //orderedLabel..
+        let orderedLabel = UILabel()
+        orderedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: OrderStatusLabel.frame.minY + (5 * y), width: (20 * x), height: (2 * y))
+        orderedLabel.text = "Ordered"
+        orderedLabel.textColor = UIColor.black
+       // orderedLabel.backgroundColor = UIColor.gray
+        orderedLabel.textAlignment = .left
+        orderedLabel.font = UIFont(name: "Avenir Next", size: 16)
+        OrderStatusView.addSubview(orderedLabel)
+        
+        //DateLabel..
+        let DateLabel = UILabel()
+        DateLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: orderedLabel.frame.maxY, width: (20 * x), height: (2 * y))
+        DateLabel.text = "Mon,15th Nov 2018"
+        DateLabel.textColor = UIColor.lightGray
+       // DateLabel.backgroundColor = UIColor.gray
+        DateLabel.textAlignment = .left
+        DateLabel.font = UIFont(name: "Avenir Next", size: 14)
+        OrderStatusView.addSubview(DateLabel)
+        
+        //PackedLabel..
+        let PackedLabel = UILabel()
+        PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
+        PackedLabel.text = "Packed"
+        PackedLabel.textColor = UIColor.lightGray
+        // PackedLabel.backgroundColor = UIColor.gray
+        PackedLabel.textAlignment = .left
+        PackedLabel.font = UIFont(name: "Avenir Next", size: 16)
+        OrderStatusView.addSubview(PackedLabel)
+        
+        
+        //TrackingButton
+        let TrackingButton = UIButton()
+        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (2 * y))
+        TrackingButton.backgroundColor = UIColor.orange
+        TrackingButton.setTitle("Tracking Details", for: .normal)
+        TrackingButton.setTitleColor(UIColor.white, for: .normal)
+        TrackingButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: 10)
+        TrackingButton.layer.cornerRadius = 10;  // this value vary as per your desire
+        TrackingButton.clipsToBounds = true;
+        TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
+        OrderStatusView.addSubview(TrackingButton)
+        
+        
+        // Delivery Info View..
         let DeliveryInfoView = UIView()
         DeliveryInfoView.frame = CGRect(x: (3 * x), y: OrderStatusView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (20 * y))
         DeliveryInfoView.backgroundColor = UIColor.white
         OrderDetailsScrollView.addSubview(DeliveryInfoView)
         
         
-        // Order status Label..
+        // Delivery Info Label..
         let DeliveryInfoLabel = UILabel()
         DeliveryInfoLabel.frame = CGRect(x: 0, y: 0, width: DeliveryInfoView.frame.width, height: (4 * x))
         DeliveryInfoLabel.text = " DELIVERY INFORMATION"
@@ -334,24 +387,14 @@ class OrderDetailsViewController: CommonViewController
         
         
         let MapImageView = UIImageView()
-        MapImageView.frame = CGRect(x: x, y: DeliveryInfoLabel.frame.maxY + (2 * y), width: (8 * x), height:(8 * y))
+        MapImageView.frame = CGRect(x: x, y: DeliveryInfoLabel.frame.maxY + (2 * y), width: (6 * x), height:(6 * y))
         MapImageView.backgroundColor = UIColor.white
-        MapImageView.image = UIImage(named: "marker")
-        /*
-         if let imageName = DressImageArray[0] as? String
-         {
-         let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
-         //  let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
-         let apiurl = URL(string: api)
-         print("Image Of Dress", apiurl!)
-         DressImageView.dowloadFromServer(url: apiurl!)
-         }
-         */
+        MapImageView.image = UIImage(named: "locationMarker")
         DeliveryInfoView.addSubview(MapImageView)
         
         // Name Label..
         let NameLabel = UILabel()
-        NameLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: DeliveryInfoLabel.frame.maxY + (3 * y) , width: (20 * x), height: (2 * y))
+        NameLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: DeliveryInfoLabel.frame.maxY + (2 * y) , width: (20 * x), height: (2 * y))
         NameLabel.text = "Noorul Huq"
         NameLabel.textColor = UIColor.black
         //NameLabel.backgroundColor = UIColor.gray
@@ -367,6 +410,13 @@ class OrderDetailsViewController: CommonViewController
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func TrackingButtonAction(sender : UIButton)
+    {
+       // print("Tracking ViewController")
+        let TrackingScreen = TrackingViewController()
+        self.navigationController?.pushViewController(TrackingScreen, animated: true)
     }
     
     /*

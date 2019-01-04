@@ -12,7 +12,8 @@ import SideMenu
 class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, ServerAPIDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     let newOrderView = UIView()
-    let slideMenuButton = UIButton()
+   // let slideMenuButton = UIButton()
+    let slideMB = UIButton()
     var slideView = UIView()
     
     let dressTypeView = UIView()
@@ -274,7 +275,8 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     @objc func closeSlideView(gesture : UITapGestureRecognizer)
     {
         slideView.removeFromSuperview()
-        slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
+       // slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
+        slideMB.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -735,7 +737,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         newOrderView.backgroundColor = UIColor.white
         view.addSubview(newOrderView)
         
-        self.view.bringSubviewToFront(slideMenuButton)
+        self.view.bringSubviewToFront(slideMB)
         
         let newOrderNavigationBar = UIView()
         newOrderNavigationBar.frame = CGRect(x: 0, y: 0, width: newOrderView.frame.width, height: (6.4 * y))
@@ -842,7 +844,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         dressTypeView.backgroundColor = UIColor.white
         view.addSubview(dressTypeView)
         
-        self.view.bringSubviewToFront(slideMenuButton)
+        self.view.bringSubviewToFront(slideMB)
         
         let dressTypeNavigationBar = UIView()
         dressTypeNavigationBar.frame = CGRect(x: 0, y: 0, width: newOrderView.frame.width, height: (6.4 * y))
