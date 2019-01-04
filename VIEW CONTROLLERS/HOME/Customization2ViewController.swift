@@ -10,7 +10,7 @@ import UIKit
 
 class Customization2ViewController: CommonViewController, ServerAPIDelegate
 {
-    var brandArray = [Int]()
+    var brandArray = String()
     let serviceCall = ServerAPI()
     
     
@@ -54,14 +54,12 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
+        print("SELECTED BRANDS IN 2", brandArray)
         navigationBar.isHidden = true
         
         self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
-            // Your code with delay
-            self.serviceCall.API_Customization2(originId: [0], seasonId: [0], ColorId: [0], delegate: self)
-        }
+        self.serviceCall.API_Customization2(brandId: self.brandArray, materialId: [0], ColorId: [0], delegate: self)
         
         super.viewDidLoad()
 

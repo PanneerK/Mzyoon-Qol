@@ -806,11 +806,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         let custom2Screen = Customization2ViewController()
         if brandTagIntArray.count == 0
         {
-            custom2Screen.brandArray = [0]
+            custom2Screen.brandArray = "0"
         }
         else
         {
-            custom2Screen.brandArray = brandTagIntArray
+            for i in 0..<brandTagIntArray.count
+            {
+                if i == 0
+                {
+                    custom2Screen.brandArray.append("\(brandTagIntArray[i])")
+                }
+                else
+                {
+                    custom2Screen.brandArray.append(",\(brandTagIntArray[i])")
+                }
+            }
+            
         }
         self.navigationController?.pushViewController(custom2Screen, animated: true)
     }
