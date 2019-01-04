@@ -454,16 +454,17 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             customizationButton.addSubview(buttonTitle)
             
             x3 = customizationButton.frame.maxX + (2 * x)
-        }
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                              
         
         customizationScrollView.contentSize.width = x3 
         
         let customization3NextButton = UIButton()
-        customization3NextButton.frame = CGRect(x: view.frame.width - (10 * x), y: customizationScrollView.frame.maxY + y, width: (8 * x), height: (3 * y))
+        customization3NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * y))
         customization3NextButton.layer.masksToBounds = true
-        customization3NextButton.backgroundColor = UIColor.orange
-        customization3NextButton.setTitle("NEXT", for: .normal)
-        customization3NextButton.setTitleColor(UIColor.white, for: .normal)
+        customization3NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
+//        customization3NextButton.backgroundColor = UIColor.orange
+//        customization3NextButton.setTitle("NEXT", for: .normal)
+//        customization3NextButton.setTitleColor(UIColor.white, for: .normal)
         customization3NextButton.addTarget(self, action: #selector(self.customization3NextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(customization3NextButton)
     }

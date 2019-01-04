@@ -17,8 +17,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-      //  var baseURL:String = "http://192.168.0.21/TailorAPI"
-          var baseURL:String = "http://appsapi.mzyoon.com"
+//        var baseURL:String = "http://192.168.0.21/TailorAPI"
+       var baseURL:String = "http://appsapi.mzyoon.com"
     
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -273,8 +273,6 @@ class ServerAPI : NSObject
             
             let urlString:String = String(format: "%@/API/Order/GetCustomization1", arguments: [baseURL])
             
-//            let urlString = "http://192.168.0.21/TailorAPI/API/Order/GetCustomization1"
-            
             print("Customization 1URL STRING", urlString)
             print("Customization 1 PARAMETERS", parameters)
             
@@ -282,6 +280,8 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    
+                    print("SELF RESULT DICT", self.resultDict)
                     
                     delegate.API_CALLBACK_Customization1!(custom1: self.resultDict)
                 }

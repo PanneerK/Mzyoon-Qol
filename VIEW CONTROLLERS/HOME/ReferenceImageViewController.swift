@@ -100,11 +100,12 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         view.addSubview(addReferenceScrolView)
         
         let addMaterialNextButton = UIButton()
-        addMaterialNextButton.frame = CGRect(x: view.frame.width - (15 * x), y: addReferenceScrolView.frame.maxY + y, width: (13 * x), height: (4 * y))
+        addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = 10
-        addMaterialNextButton.backgroundColor = UIColor.blue
-        addMaterialNextButton.setTitle("Next", for: .normal)
-        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
+        addMaterialNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
+//        addMaterialNextButton.backgroundColor = UIColor.blue
+//        addMaterialNextButton.setTitle("Next", for: .normal)
+//        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialNextButton.addTarget(self, action: #selector(self.addMaterialNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addMaterialNextButton)
         

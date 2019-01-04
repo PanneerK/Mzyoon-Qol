@@ -1594,11 +1594,12 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         }
         
         let customization3NextButton = UIButton()
-        customization3NextButton.frame = CGRect(x: view.frame.width - (10 * x), y: customizationScrollView.frame.maxY + y, width: (8 * x), height: (3 * y))
+        customization3NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * y))
         customization3NextButton.layer.masksToBounds = true
-        customization3NextButton.backgroundColor = UIColor.orange
-        customization3NextButton.setTitle("NEXT", for: .normal)
-        customization3NextButton.setTitleColor(UIColor.white, for: .normal)
+        customization3NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
+//        customization3NextButton.backgroundColor = UIColor.orange
+//        customization3NextButton.setTitle("NEXT", for: .normal)
+//        customization3NextButton.setTitleColor(UIColor.white, for: .normal)
         customization3View.addSubview(customization3NextButton)
     }
     
@@ -1843,11 +1844,12 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         
         
         let addMaterialNextButton = UIButton()
-        addMaterialNextButton.frame = CGRect(x: view.frame.width - (15 * x), y: addMaterialScrolView.frame.maxY + y, width: (13 * x), height: (4 * y))
+        addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addMaterialScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = 10
-        addMaterialNextButton.backgroundColor = UIColor.blue
-        addMaterialNextButton.setTitle("Next", for: .normal)
-        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
+        addMaterialNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
+//        addMaterialNextButton.backgroundColor = UIColor.blue
+//        addMaterialNextButton.setTitle("Next", for: .normal)
+//        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialView.addSubview(addMaterialNextButton)
     }
     

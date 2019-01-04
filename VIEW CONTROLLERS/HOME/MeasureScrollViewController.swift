@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, ServerAPIDelegate
+class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, ServerAPIDelegate, UIScrollViewDelegate
 {
     let serviceCall = ServerAPI()
     
@@ -20,6 +20,8 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
     
     var pickerMeasure = 0
     let partsMeasurementLabel = UILabel()
+    let rulerScroll = UIScrollView()
+
 
     // Parts...
     var PartsIdArray = NSArray()
@@ -183,7 +185,7 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
         rulerLabel.text = "Measurement Ruler"
         rulerLabel.textColor = UIColor.black
         rulerLabel.textAlignment = .center
-        view.addSubview(rulerLabel)
+//        view.addSubview(rulerLabel)
         
         let measurePicker = UIPickerView()
         measurePicker.frame = CGRect(x: (2 * x), y: (10 * y), width: (10 * x), height: view.frame.height - (12 * y))
@@ -191,7 +193,9 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
         measurePicker.showsSelectionIndicator = true
         measurePicker.dataSource = self
         measurePicker.delegate = self
-        view.addSubview(measurePicker)
+//        view.addSubview(measurePicker)
+        
+        rulerContents()
         
         let partsImageView = UIImageView()
         partsImageView.frame = CGRect(x: measurePicker.frame.maxX + (3 * x), y: (10 * y), width: (20 * x), height: (20 * y))
@@ -214,13 +218,110 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
         view.addSubview(partsMeasurementLabel)
         
         let saveButton = UIButton()
-        saveButton.frame = CGRect(x: view.frame.width - (12 * x), y: partsMeasurementLabel.frame.maxY + (5 * y), width: (10 * x), height: (3 * y))
+        saveButton.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (15 * x)) / 2), y: partsMeasurementLabel.frame.maxY + (3 * y), width: (15 * x), height: (3 * y))
         saveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         saveButton.setTitle("SAVE", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.addTarget(self, action: #selector(self.saveButtonAction(sender:)), for: .touchUpInside)
         saveButton.tag = 3
         view.addSubview(saveButton)
+    }
+    
+    func rulerContents()
+    {
+        rulerScroll.frame = CGRect(x: (2 * x), y: (3 * y), width: (11 * x), height: view.frame.height - (6 * y))
+        rulerScroll.delegate = self
+        rulerScroll.scrollsToTop = true
+        view.addSubview(rulerScroll)
+        
+        var y1:CGFloat = (30.4 * y)
+        var y2:CGFloat = (29.4 * y)
+        
+        for i in 0..<1039
+        {
+            let measureLabel = UILabel()
+            
+            if (i % 10) == 0
+            {
+                measureLabel.frame = CGRect(x: 0, y: y1, width: (7.5 * x), height: (0.2 * y))
+            }
+            else if (i % 5) == 0
+            {
+                measureLabel.frame = CGRect(x: 0, y: y1, width: (5 * x), height: (0.2 * y))
+            }
+            else
+            {
+                measureLabel.frame = CGRect(x: 0, y: y1, width: (2.5 * x), height: (0.2 * y))
+            }
+            measureLabel.backgroundColor = UIColor.black
+            
+            if i < 1001
+            {
+                rulerScroll.addSubview(measureLabel)
+            }
+            
+            let measureSizeLabel = UILabel()
+            if(i % 10) == 0
+            {
+                y2 = measureLabel.frame.minY - y
+                
+                measureSizeLabel.frame = CGRect(x: measureLabel.frame.maxX + 5, y: y2, width: (3.5 * x), height: (2 * y))
+                measureSizeLabel.text = "\(i / 10)"
+            }
+            else if (i % 5) == 0
+            {
+                y2 = measureLabel.frame.minY - y
+                
+                measureSizeLabel.frame = CGRect(x: measureLabel.frame.maxX + 5, y: y2, width: (4 * x), height: (2 * y))
+                
+                let halfValue = (i / 10)
+                measureSizeLabel.text = "\(halfValue).5"
+            }
+            
+            measureSizeLabel.textColor = UIColor.black
+            measureSizeLabel.textAlignment = .left
+            
+            if i < 1001
+            {
+                rulerScroll.addSubview(measureSizeLabel)
+            }
+            
+            y1 = measureLabel.frame.maxY + y
+        }
+        
+        rulerScroll.contentSize.height = y1 - (16.5 * y)
+        
+        let selectedMeasureImage = UIImageView()
+        selectedMeasureImage.frame = CGRect(x: 0, y: ((view.frame.height - (4 * y)) / 2), width: (4 * x), height: (4 * y))
+        selectedMeasureImage.image = UIImage(named: "arrowPointer")
+        view.addSubview(selectedMeasureImage)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    {
+        let value = Double(scrollView.contentOffset.y / (12 * y))
+        let convertedString = "\(value)"
+        print("SCROLL VIEW POSITION", convertedString)
+        
+        let splitted = convertedString.split(separator: ".")
+        print("SPLITTED", splitted)
+        
+        let wholeNumber = splitted[0]
+        let decimalNumber = splitted[1].prefix(1)
+        
+        if wholeNumber == "100"
+        {
+            scrollView.contentOffset.y = scrollView.contentOffset.y
+        }
+        
+        if decimalNumber == "0"
+        {
+            partsMeasurementLabel.text = "\(wholeNumber)"
+        }
+        else
+        {
+            partsMeasurementLabel.text = "\(wholeNumber).\(decimalNumber)"
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

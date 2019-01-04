@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Measurement2ViewController: CommonViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ServerAPIDelegate
+class Measurement2ViewController: CommonViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ServerAPIDelegate, UIPickerViewDataSource, UIPickerViewDelegate
 {
     let serviceCall = ServerAPI()
 
@@ -59,6 +59,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     let partsTableView = UITableView()
     
+    let partsMeasurementLabel = UILabel()
+    let rulerScroll = UIScrollView()
+    let backView = UIView()
+    let partsImageView = UIImageView()
+
+    
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -66,6 +72,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var ErrorStr:String!
     var PageNumStr:String!
     var MethodName:String!
+    
+    // Parts...
+    var selectedPartsIdArray = NSArray()
+    var selectedPartsImagesArray = NSArray()
+    var selectedconvertedPartsImageArray = [UIImage]()
     
     override func viewDidLoad()
     {
@@ -307,6 +318,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func measurement2Contents()
     {
         self.stopActivity()
+        backView.removeFromSuperview()
         
         let measurement1NavigationBar = UIView()
         measurement1NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -1201,7 +1213,230 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             measureScreen.viewTag = 19
         }
         
-        self.navigationController?.pushViewController(measureScreen, animated: true)
+//        self.navigationController?.pushViewController(measureScreen, animated: true)
+        
+        serviceCall.API_GetMeasurementParts(MeasurementParts: (sender.tag + 1), delegate: self)
+    }
+    
+    func API_CALLBACK_GetMeasurementParts(getParts: NSDictionary)
+    {
+        let ResponseMsg = getParts.object(forKey: "ResponseMsg") as! String
+        
+        let emptyArray = NSArray()
+        
+        selectedPartsIdArray = emptyArray
+        selectedPartsImagesArray = emptyArray
+        selectedconvertedPartsImageArray.removeAll()
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = getParts.object(forKey: "Result") as! NSArray
+            print("Result OF MEASUREMENT-2", Result)
+            
+            // Body Parts :
+            selectedPartsIdArray = Result.value(forKey: "Id") as! NSArray
+            selectedPartsImagesArray = Result.value(forKey: "Image") as! NSArray
+            
+            for i in 0..<selectedPartsImagesArray.count
+            {
+                if let imageName = selectedPartsImagesArray[i] as? String
+                {
+                    
+                    //  let api = "http://192.168.0.21/TailorAPI/images/Measurement2/\(imageName)"
+                    let api = "http://appsapi.mzyoon.com/images/Measurement2/\(imageName)"
+                    let apiurl = URL(string: api)
+                    print("PArts : ", api)
+                    
+                    if apiurl != nil
+                    {
+                        if let data = try? Data(contentsOf: apiurl!)
+                        {
+                            print("DATA OF IMAGE", data)
+                            if let image = UIImage(data: data)
+                            {
+                                self.selectedconvertedPartsImageArray.append(image)
+                            }
+                        }
+                        else
+                        {
+                            let emptyImage = UIImage(named: "empty")
+                            self.selectedconvertedPartsImageArray.append(emptyImage!)
+                        }
+                    }
+                }
+                else if selectedPartsImagesArray[i] is NSNull
+                {
+                    let emptyImage = UIImage(named: "empty")
+                    self.selectedconvertedPartsImageArray.append(emptyImage!)
+                }
+            }
+            
+            measureScrollContents()
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getParts.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetMeasurementParts"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
+    func measureScrollContents()
+    {
+        backView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
+        backView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+        view.addSubview(backView)
+        
+        rulerContents()
+        
+        partsImageView.frame = CGRect(x: rulerScroll.frame.maxX + (2 * y), y: (10 * y), width: (20 * x), height: (20 * y))
+        partsImageView.backgroundColor = UIColor.white
+        partsImageView.image = selectedconvertedPartsImageArray[0]
+        backView.addSubview(partsImageView)
+        
+        let partsNameLabel = UILabel()
+        partsNameLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsImageView.frame.maxY + y, width: (10 * x), height: (3 * y))
+        partsNameLabel.text = "NECK"
+        partsNameLabel.textColor = UIColor.white
+        partsNameLabel.textAlignment = .center
+        backView.addSubview(partsNameLabel)
+        
+        partsMeasurementLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsNameLabel.frame.maxY + y, width: (10 * x), height: (3 * y))
+        partsMeasurementLabel.layer.cornerRadius = 10
+        partsMeasurementLabel.layer.masksToBounds = true
+        partsMeasurementLabel.backgroundColor = UIColor.orange
+        partsMeasurementLabel.text = "0.0"
+        partsMeasurementLabel.textColor = UIColor.white
+        partsMeasurementLabel.textAlignment = .center
+        backView.addSubview(partsMeasurementLabel)
+        
+        let cancelButton = UIButton()
+        cancelButton.frame = CGRect(x: rulerScroll.frame.maxX + x, y: partsMeasurementLabel.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
+        cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        cancelButton.setTitle("CANCEL", for: .normal)
+        cancelButton.setTitleColor(UIColor.white, for: .normal)
+        cancelButton.addTarget(self, action: #selector(self.measureScrollCancelButtonAction(sender:)), for: .touchUpInside)
+        cancelButton.tag = 3
+        backView.addSubview(cancelButton)
+        
+        let saveButton = UIButton()
+        saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * y), y: partsMeasurementLabel.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
+        saveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        saveButton.setTitle("SAVE", for: .normal)
+        saveButton.setTitleColor(UIColor.white, for: .normal)
+        saveButton.addTarget(self, action: #selector(self.saveButtonAction(sender:)), for: .touchUpInside)
+        saveButton.tag = 3
+        backView.addSubview(saveButton)
+    }
+    
+    @objc func measureScrollCancelButtonAction(sender : UIButton)
+    {
+        backView.removeFromSuperview()
+    }
+    
+    @objc func saveButtonAction(sender : UIButton)
+    {
+        
+    }
+    
+    func rulerContents()
+    {
+        rulerScroll.frame = CGRect(x: (2 * x), y: (3 * y), width: (9 * x), height: backView.frame.height - (6 * y))
+        rulerScroll.delegate = self
+        rulerScroll.scrollsToTop = true
+        backView.addSubview(rulerScroll)
+        
+        var y1:CGFloat = (30.4 * y)
+        var y2:CGFloat = (29.4 * y)
+        
+        for i in 0..<1039
+        {
+            let measureLabel = UILabel()
+            
+            if (i % 10) == 0
+            {
+                measureLabel.frame = CGRect(x: 0, y: y1, width: (6 * x), height: (0.2 * y))
+            }
+            else if (i % 5) == 0
+            {
+                measureLabel.frame = CGRect(x: 0, y: y1, width: (4 * x), height: (0.2 * y))
+            }
+            else
+            {
+                measureLabel.frame = CGRect(x: 0, y: y1, width: (2 * x), height: (0.2 * y))
+            }
+            measureLabel.backgroundColor = UIColor.white
+            
+            if i < 1001
+            {
+                rulerScroll.addSubview(measureLabel)
+            }
+            
+            let measureSizeLabel = UILabel()
+            if(i % 10) == 0
+            {
+                y2 = measureLabel.frame.minY - y
+                
+                measureSizeLabel.frame = CGRect(x: measureLabel.frame.maxX + 5, y: y2, width: (3.5 * x), height: (2 * y))
+                measureSizeLabel.text = "\(i / 10)"
+            }
+            else if (i % 5) == 0
+            {
+                y2 = measureLabel.frame.minY - y
+                
+                measureSizeLabel.frame = CGRect(x: measureLabel.frame.maxX + 5, y: y2, width: (4 * x), height: (2 * y))
+                
+                let halfValue = (i / 10)
+                measureSizeLabel.text = "\(halfValue).5"
+            }
+            
+            measureSizeLabel.textColor = UIColor.white
+            measureSizeLabel.textAlignment = .left
+            
+            if i < 1001
+            {
+                rulerScroll.addSubview(measureSizeLabel)
+            }
+            
+            y1 = measureLabel.frame.maxY + y
+        }
+        
+        rulerScroll.contentSize.height = y1 - (16.5 * y)
+        
+        let selectedMeasureImage = UIImageView()
+        selectedMeasureImage.frame = CGRect(x: 0, y: ((view.frame.height - (4 * y)) / 2), width: (4 * x), height: (4 * y))
+        selectedMeasureImage.image = UIImage(named: "arrowPointer")
+        backView.addSubview(selectedMeasureImage)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    {
+        let value = Double(scrollView.contentOffset.y / (12 * y))
+        let convertedString = "\(value)"
+        print("SCROLL VIEW POSITION", convertedString)
+        
+        let splitted = convertedString.split(separator: ".")
+        print("SPLITTED", splitted)
+        
+        let wholeNumber = splitted[0]
+        let decimalNumber = splitted[1].prefix(1)
+        
+        if wholeNumber == "100"
+        {
+            scrollView.contentOffset.y = scrollView.contentOffset.y
+        }
+        
+        if decimalNumber == "0"
+        {
+            partsMeasurementLabel.text = "\(wholeNumber)"
+        }
+        else
+        {
+            partsMeasurementLabel.text = "\(wholeNumber).\(decimalNumber)"
+        }
     }
     
     func popBackValue(value : String, viewTag : Int)
@@ -1361,6 +1596,24 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         let partsScreen = PartsViewController()
         partsScreen.viewTag = 2
         self.navigationController?.pushViewController(partsScreen, animated: true)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 100
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(row + 1)"
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("SELECTED ROW", row + 1)
+        partsMeasurementLabel.text = "\(row + 1)"
+//        UserDefaults.standard.set(row + 1, forKey: "Measure-\(headingTitle)")
     }
 
     /*

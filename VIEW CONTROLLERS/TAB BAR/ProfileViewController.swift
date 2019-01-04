@@ -56,9 +56,27 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         closeKeyboard.delegate = self
         view.addGestureRecognizer(closeKeyboard)
         screenContents()
+        
+//        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillHide:")), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
     
     func addDoneButtonOnKeyboard()
@@ -192,6 +210,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.backgroundColor = UIColor.red
         userImage.layer.masksToBounds = true
+        userImage.image = FileHandler().getImageFromDocumentDirectory()
         backgroundImage.addSubview(userImage)
         
         let cameraButton = UIButton()
@@ -387,6 +406,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         self.datePick = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
         self.datePick.backgroundColor = UIColor.white
         self.datePick.datePickerMode = UIDatePicker.Mode.date
+        self.datePick.maximumDate = Date()
         textField.inputView = self.datePick
         
         // ToolBar

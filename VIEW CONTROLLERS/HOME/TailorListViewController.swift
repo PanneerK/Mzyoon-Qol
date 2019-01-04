@@ -559,7 +559,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
+        currentLocation = locationManager.location
+
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestAlwaysAuthorization()
             locationManager.delegate = self
@@ -587,15 +588,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         mapView.isHidden = isHidden
         
-        let markerImageView = UIImageView()
-        markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
-        markerImageView.image = UIImage(named: "marker")
-        view.addSubview(markerImageView)
-        
-//        marker.position = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-        marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
-        marker.iconView = markerImageView
-        marker.map = mapView
+        print("WELCOME OF", mapView.myLocation?.coordinate.latitude, mapView.myLocation?.coordinate.longitude)
         
         for i in 0..<latitudeArray.count
         {
@@ -608,6 +601,30 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
             marker.map = mapView
         }
+        
+        if isHidden == false
+        {
+            let markerImageView = UIImageView()
+            markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
+            markerImageView.image = UIImage(named: "marker")
+            mapView.addSubview(markerImageView)
+            
+            marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
+            marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+            marker.iconView = markerImageView
+            marker.map = mapView
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let location = locations.last
+        
+        let camera = GMSCameraPosition.camera(withLatitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!, zoom: 17.0)
+        
+        self.mapView.animate(to: camera)
+        
+        //Finally stop updating location otherwise it will come again and again in this delegate
         
     }
     

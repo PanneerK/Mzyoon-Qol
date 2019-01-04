@@ -121,7 +121,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         
         let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderSubTypeNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = headingTitle
+        navigationTitle.text = "SUB TYPE OF : \(headingTitle.uppercased())"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)

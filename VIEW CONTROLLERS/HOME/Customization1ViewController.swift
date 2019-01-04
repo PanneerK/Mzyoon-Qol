@@ -223,6 +223,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 }
             }*/
             
+            print("FINAL BRAND NAME ARRAY", brandNameArray)
+            
             if updateId == 0
             {
                 customization1Content()
@@ -536,8 +538,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 }
             }
             
-            seasonalTagIntArray.removeAll()
-            
             if seasonalTagIntArray.contains(sender.tag)
             {
                 if let index = seasonalTagIntArray.index(where: {$0 == sender.tag}) {
@@ -562,6 +562,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             }
             else
             {
+                seasonalTagIntArray.removeAll()
+
                 seasonalTagIntArray.append(sender.tag)
                 sender.addSubview(seasonalSelectionImage)
             }
@@ -583,6 +585,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         if sender.tag != 0
         {
+            industryTagIntArray = industryTagIntArray.filter { $0 != 0 }
+            
+            for views in industryScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(0)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == 0
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
             if industryTagIntArray.isEmpty == true
             {
                 industryTagIntArray.append(sender.tag)
@@ -623,6 +641,20 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
+            for views in industryScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(views.tag)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == views.tag
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
             if industryTagIntArray.contains(sender.tag)
             {
                 if let index = industryTagIntArray.index(where: {$0 == sender.tag}) {
@@ -647,12 +679,15 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             }
             else
             {
+                industryTagIntArray.removeAll()
+                
                 industryTagIntArray.append(sender.tag)
                 sender.addSubview(industrySelectionImage)
             }
             
             self.serviceCall(originIdArray: [0], seasonIdArray: [0])
         }
+        
         updateId = 2
     }
     
@@ -665,6 +700,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         if sender.tag != 0
         {
+            brandTagIntArray = brandTagIntArray.filter { $0 != 0 }
+            
+            for views in brandScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(0)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == 0
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
             if brandTagIntArray.isEmpty == true
             {
                 brandTagIntArray.append(sender.tag)
@@ -700,9 +751,24 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     sender.addSubview(brandSelectionImage)
                 }
             }
+            print("BRAND ARRAY", brandTagIntArray)
         }
         else
         {
+            for views in brandScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(views.tag)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == views.tag
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
             if brandTagIntArray.contains(sender.tag)
             {
                 if let index = brandTagIntArray.index(where: {$0 == sender.tag}) {
@@ -727,12 +793,12 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             }
             else
             {
+                brandTagIntArray.removeAll()
+                
                 brandTagIntArray.append(sender.tag)
                 sender.addSubview(brandSelectionImage)
             }
         }
-        
-        print("BRAND ARRAY", brandTagIntArray)
     }
     
     @objc func customization1NextButtonAction(sender : UIButton)
