@@ -265,11 +265,40 @@ class ServerAPI : NSObject
     
     func API_Customization1(originId : [Int], seasonId : [Int], delegate : ServerAPIDelegate)
     {
+        var season = String()
+        var origin = String()
+        
+        for i in 0..<originId.count
+        {
+            if i == 0
+            {
+                origin.append("\(originId[i])")
+            }
+            else
+            {
+                origin.append(",\(originId[i])")
+            }
+        }
+        
+        for i in 0..<seasonId.count
+        {
+            if i == 0
+            {
+                season.append("\(seasonId[i])")
+            }
+            else
+            {
+                season.append(",\(seasonId[i])")
+            }
+        }
+        
+        print("SEASAON", origin)
+        
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Customization 1 Page")
             
-            let parameters = ["placeofOrginId[0][id]" : "\(originId)", "seasonId[0][id]" : "\(seasonId)"] as [String : Any]
+            let parameters = ["placeofOrginId[0][id]" : "\(origin)", "seasonId[0][id]" : "\(season)"] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetCustomization1", arguments: [baseURL])
             
@@ -297,13 +326,13 @@ class ServerAPI : NSObject
         }
     }
     
-    func API_Customization2(originId : [Int], seasonId : [Int], ColorId : [Int], delegate : ServerAPIDelegate)
+    func API_Customization2(brandId : String, materialId : [Int], ColorId : [Int], delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Customization 2 Page")
             
-            let parameters = ["BrandId[0][Id]" : "\(originId)", "MaterialTypeId[0][Id]" : "\(seasonId)", "ColorId[0][Id]" : ColorId] as [String : Any]
+            let parameters = ["BrandId[0][Id]" : "\(brandId)", "MaterialTypeId[0][Id]" : "\(materialId)", "ColorId[0][Id]" : "\(ColorId)"] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetCustomization2", arguments: [baseURL])
             
