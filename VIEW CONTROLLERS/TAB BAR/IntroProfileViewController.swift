@@ -201,10 +201,11 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         view.addSubview(underLine)
         
         let introProfileNextButton = UIButton()
-        introProfileNextButton.frame = CGRect(x: view.frame.width - (13 * x), y: underLine.frame.maxY + (5 * y), width: (10 * x), height: (4 * y))
-        introProfileNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        introProfileNextButton.setTitle("NEXT", for: .normal)
-        introProfileNextButton.setTitleColor(UIColor.white, for: .normal)
+        introProfileNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: underLine.frame.maxY + (5 * y), width: (4 * x), height: (4 * y))
+        introProfileNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
+//        introProfileNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+//        introProfileNextButton.setTitle("NEXT", for: .normal)
+//        introProfileNextButton.setTitleColor(UIColor.white, for: .normal)
         introProfileNextButton.addTarget(self, action: #selector(self.introProfileNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(introProfileNextButton)
     }

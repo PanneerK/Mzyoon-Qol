@@ -14,13 +14,16 @@ class SlideViewController: UIViewController
     var x = CGFloat()
     var y = CGFloat()
     
+    var slideViewWidth = CGFloat()
     
     override func viewDidLoad()
     {
         print("MENU WIDTH", self.view.frame.width)
         
+        slideViewWidth = (view.frame.width / 2) + (view.frame.width / 4)
+        
         x = 10 / 375 * 100
-        x = x * view.frame.width / 100
+        x = x * slideViewWidth / 100
         
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
@@ -40,7 +43,7 @@ class SlideViewController: UIViewController
     func screenContents()
     {
         let userImage = UIImageView()
-        userImage.frame = CGRect(x: (7 * x), y: (2.5 * y), width: (10 * x), height: (10 * x))
+        userImage.frame = CGRect(x: ((slideViewWidth - (10 * x)) / 2), y: (2.5 * y), width: (10 * x), height: (10 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.borderWidth = 0.50
         userImage.layer.borderColor = UIColor.white.cgColor
@@ -49,7 +52,7 @@ class SlideViewController: UIViewController
         view.addSubview(userImage)
         
         let userName = UILabel()
-        userName.frame = CGRect(x: 0, y: userImage.frame.maxY + y, width: (24 * x), height: (3 * y))
+        userName.frame = CGRect(x: 0, y: userImage.frame.maxY + y, width: slideViewWidth, height: (3 * y))
         if let name = UserDefaults.standard.value(forKey: "UserName") as? String
         {
             userName.text = name
@@ -64,12 +67,12 @@ class SlideViewController: UIViewController
         view.addSubview(userName)
         
         let underline = UILabel()
-        underline.frame = CGRect(x: 0, y: userName.frame.maxY + y, width: view.frame.width, height: 0.25)
+        underline.frame = CGRect(x: 0, y: userName.frame.maxY + y, width: slideViewWidth, height: 0.25)
         underline.backgroundColor = UIColor.white
         view.addSubview(underline)
         
-        let buttonTitle = ["My Account", "Address" ,"Transaction" ,"Rewards", "Refer Friends", "FAQ", "Terms and Conditions", "Settings", "Log Out"]
-        let buttonImage = ["my_account", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
+        let buttonTitle = ["My Account", "Address", "Book an Appointment", "Transaction" ,"Rewards", "Refer Friends", "FAQ", "Terms and Conditions", "Settings", "Log Out"]
+        let buttonImage = ["my_account", "appointment-1", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
         
         var y1:CGFloat = userName.frame.maxY + (2 * y)
         
@@ -77,7 +80,7 @@ class SlideViewController: UIViewController
         for i in 0..<buttonTitle.count
         {
             let slideMenusButton = UIButton()
-            slideMenusButton.frame = CGRect(x: 0, y: y1, width: view.frame.width, height: (4 * y))
+            slideMenusButton.frame = CGRect(x: 0, y: y1, width: slideViewWidth, height: (4 * y))
             slideMenusButton.tag = i
             
             if i == 0 || i == 1
@@ -89,15 +92,16 @@ class SlideViewController: UIViewController
             y1 = slideMenusButton.frame.maxY + y
             
             let slideMenuButonImage = UIImageView()
-            slideMenuButonImage.frame = CGRect(x: (2 * x), y: y, width: (2 * x), height: (2 * y))
+            slideMenuButonImage.frame = CGRect(x: (2 * x), y: y, width: (3 * x), height: (2 * y))
             slideMenuButonImage.image = UIImage(named: buttonImage[i])
             slideMenusButton.addSubview(slideMenuButonImage)
             
             let slideMenuButtonTitle = UILabel()
-            slideMenuButtonTitle.frame = CGRect(x: slideMenuButonImage.frame.maxX + x, y: y, width: slideMenusButton.frame.width, height: (2 * y))
+            slideMenuButtonTitle.frame = CGRect(x: slideMenuButonImage.frame.maxX + x, y: y, width: slideMenusButton.frame.width - (4 * x), height: (2 * y))
             slideMenuButtonTitle.text = buttonTitle[i]
             slideMenuButtonTitle.textColor = UIColor.white
             slideMenuButtonTitle.textAlignment = .left
+            slideMenuButtonTitle.font = slideMenuButtonTitle.font.withSize(2 * x)
             slideMenusButton.addSubview(slideMenuButtonTitle)
         }
     }

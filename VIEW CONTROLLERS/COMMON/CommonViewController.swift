@@ -91,6 +91,7 @@ class CommonViewController: UIViewController
 //        userImage.image = UIImage(named: "women")
         userImage.image = FileHandler().getImageFromDocumentDirectory()
         userImage.layer.cornerRadius = userImage.frame.height / 2
+        userImage.layer.borderWidth = 1
         userImage.layer.masksToBounds = true
         navigationBar.addSubview(userImage)
         
@@ -137,7 +138,7 @@ class CommonViewController: UIViewController
         
      //   let tabTitle = ["Home", "Order", "Cart", "Contact-Us"]
         let tabTitle = ["Home", "Request", "Order", "Cart"]
-        let tabImages = ["home", "order", "order", "cart"]
+        let tabImages = ["home", "request", "order", "cart"]
         
         for i in 0..<4
         {
@@ -179,7 +180,8 @@ class CommonViewController: UIViewController
     {
         sender.setImage(UIImage(named: "closeMenu"), for: .normal)
         
-        print("MENU WIDTH", SideMenuManager.default.menuWidth)
+        print("WIDTH OF SLIDE", SideMenuManager.default.menuWidth)
+        
         present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
     

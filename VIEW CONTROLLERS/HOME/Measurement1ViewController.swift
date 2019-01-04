@@ -290,11 +290,12 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         let measurement1NextButton = UIButton()
-        measurement1NextButton.frame = CGRect(x: view.frame.width - (10 * x), y: comeButton.frame.maxY + y, width: (8 * x), height: (3 * y))
+        measurement1NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: comeButton.frame.maxY + y, width: (4 * x), height: (4 * y))
         measurement1NextButton.layer.masksToBounds = true
-        measurement1NextButton.backgroundColor = UIColor.orange
-        measurement1NextButton.setTitle("NEXT", for: .normal)
-        measurement1NextButton.setTitleColor(UIColor.white, for: .normal)
+//        measurement1NextButton.backgroundColor = UIColor.orange
+//        measurement1NextButton.setTitle("NEXT", for: .normal)
+//        measurement1NextButton.setTitleColor(UIColor.white, for: .normal)
+        measurement1NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         measurement1NextButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
 //        view.addSubview(measurement1NextButton)
     }
