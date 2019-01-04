@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if screen == 0
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = Customization1ViewController()
+                let loginScreen = HomeViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = Customization1ViewController()
+                let loginScreen = AppointmentViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen
@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else
         {
             window = UIWindow(frame: UIScreen.main.bounds)
-            let loginScreen = Customization1ViewController()
+            let loginScreen = HomeViewController()
             let navigationScreen = UINavigationController(rootViewController: loginScreen)
             navigationScreen.isNavigationBarHidden = true
             window?.rootViewController = navigationScreen

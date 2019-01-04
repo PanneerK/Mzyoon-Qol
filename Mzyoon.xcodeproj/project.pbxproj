@@ -12,6 +12,8 @@
 		DA077FC221D6608000D9E565 /* OrderRequestListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */; };
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
+		DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */; };
+		DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */; };
 		DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */; };
 		DAE1A10C21DCDD61009A612F /* TrackingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10B21DCDD61009A612F /* TrackingTableViewCell.swift */; };
 		DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */; };
@@ -87,6 +89,8 @@
 		DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestListViewController.swift; sourceTree = "<group>"; };
 		DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotationListViewController.swift; sourceTree = "<group>"; };
 		DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
+		DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
+		DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentViewController.swift; sourceTree = "<group>"; };
 		DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		DAE1A10B21DCDD61009A612F /* TrackingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingTableViewCell.swift; sourceTree = "<group>"; };
 		DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApprovalViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +184,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DAB3CE0C21DF29F50080549A /* APPOINTMENTS */ = {
+			isa = PBXGroup;
+			children = (
+				DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */,
+				DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */,
+			);
+			path = APPOINTMENTS;
+			sourceTree = "<group>";
+		};
 		F1E738CD7CDE0ADB4E968820 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +258,7 @@
 		FD2ADFE72175BFF00033025B /* VIEW CONTROLLERS */ = {
 			isa = PBXGroup;
 			children = (
+				DAB3CE0C21DF29F50080549A /* APPOINTMENTS */,
 				FD71D258219EB20200FFC067 /* HOME */,
 				FD71D255219E991300FFC067 /* COMMON */,
 				FDC9BB882186F621003BA5C9 /* LOGIN */,
@@ -567,6 +581,7 @@
 				FDC9BB8C2186F667003BA5C9 /* TabViewController.swift in Sources */,
 				FDF7485421BFBF4E00F3BEFF /* FileHandler.swift in Sources */,
 				FD71D266219F234B00FFC067 /* Customization3ViewController.swift in Sources */,
+				DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */,
 				DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */,
 				FD71D262219F055300FFC067 /* Customization1ViewController.swift in Sources */,
 				FD71D268219F29AD00FFC067 /* Measurement1ViewController.swift in Sources */,
@@ -583,6 +598,7 @@
 				FD2ADFEE2175C0230033025B /* ServerAPIDelegate.swift in Sources */,
 				FD71D25A219EB21700FFC067 /* GenderViewController.swift in Sources */,
 				FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */,
+				DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */,
 				FD63D6D321AEC2910024AE96 /* TailorListTableViewCell.swift in Sources */,
 				FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */,
 				FD5774AE219AA2950026DBF8 /* FilterTableViewCell.swift in Sources */,

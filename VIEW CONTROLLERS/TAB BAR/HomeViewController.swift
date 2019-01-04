@@ -720,6 +720,9 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         else if sender.tag == 1
         {
             print("BOOK AN APPOINTMENT")
+            
+            let AppointmentScreen = AppointmentListViewController()
+            self.navigationController?.pushViewController(AppointmentScreen, animated: true)
         }
         else if sender.tag == 2
         {
