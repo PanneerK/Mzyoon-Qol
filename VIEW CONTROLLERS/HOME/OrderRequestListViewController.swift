@@ -140,10 +140,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         RequestListView()
     }
     
-    @objc func otpBackButtonAction(sender : UIButton)
-    {
-        self.navigationController?.popViewController(animated: true)
-    }
+  
     
     func RequestListView()
     {
@@ -191,8 +188,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         
             if let imageName = ProductImageArray[i] as? String
             {
-                // let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
-                let api = "http://192.168.0.21/TailorAPI/Images/TailorImages/\(imageName)"
+                // let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
+                let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
                 print("SMALL ICON", api)
                 let apiurl = URL(string: api)
                 
