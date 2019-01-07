@@ -17,6 +17,10 @@ class ListOfOrdersViewController: CommonViewController
     let ListOfOrdersNavigationBar = UIView()
     let tailorListScrollView = UIScrollView()
     
+    let DeliveredViewBackDrop = UIView()
+    let PendingViewBackDrop = UIView()
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -189,9 +193,9 @@ class ListOfOrdersViewController: CommonViewController
     
     func PendingViewContents(isHidden : Bool)
     {
-        let PendingViewBackDrop = UIView()
+       // let PendingViewBackDrop = UIView()
         PendingViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
-        PendingViewBackDrop.backgroundColor = UIColor.clear
+        PendingViewBackDrop.backgroundColor = UIColor.cyan
         view.addSubview(PendingViewBackDrop)
         
         PendingViewBackDrop.isHidden = isHidden
@@ -208,7 +212,7 @@ class ListOfOrdersViewController: CommonViewController
          */
         
         tailorListScrollView.frame = CGRect(x: 0, y: y, width: PendingViewBackDrop.frame.width, height: (50 * y))
-        // tailorListScrollView.backgroundColor = UIColor.gray
+        tailorListScrollView.backgroundColor = UIColor.gray
         PendingViewBackDrop.addSubview(tailorListScrollView)
         
         tailorListScrollView.contentSize.height = (12 * y * CGFloat(4))
@@ -345,7 +349,7 @@ class ListOfOrdersViewController: CommonViewController
     
     func DeliveredViewContents(isHidden : Bool)
     {
-        let DeliveredViewBackDrop = UIView()
+       // let DeliveredViewBackDrop = UIView()
         DeliveredViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
         DeliveredViewBackDrop.backgroundColor = UIColor.clear
         view.addSubview(DeliveredViewBackDrop)
