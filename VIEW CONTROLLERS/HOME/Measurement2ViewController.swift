@@ -1347,6 +1347,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         rulerScroll.frame = CGRect(x: (2 * x), y: (3 * y), width: (9 * x), height: backView.frame.height - (6 * y))
         rulerScroll.delegate = self
         rulerScroll.scrollsToTop = true
+        rulerScroll.alwaysBounceVertical = true
         backView.addSubview(rulerScroll)
         
         var y1:CGFloat = (30.4 * y)

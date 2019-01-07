@@ -17,6 +17,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
     let CurrencyButton = UIButton()
     var CurrencyCodes = [String]()
     
+    let PricingView = UIView()
     let deliveryDetailsView = UIView()
     let serviceCall = ServerAPI()
     
@@ -299,7 +300,6 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
         PricingViewContents(isHidden: false)
         DeliveryDetailsViewContents(isHidden: true)
-        
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -329,7 +329,6 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
             PricingViewContents(isHidden: true)
             DeliveryDetailsViewContents(isHidden: false)
             
-            
         }
         
         sender.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -348,15 +347,14 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
     
     func PricingViewContents(isHidden : Bool)
     {
-        let PricingView = UIView()
-        PricingView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: view.frame.height - (32 * y))
+        PricingView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: view.frame.height - (30 * y))
         PricingView.backgroundColor = UIColor.clear
         view.addSubview(PricingView)
         
         let backgroundImage = UIImageView()
         backgroundImage.frame = CGRect(x: 0, y: 0, width: PricingView.frame.width, height: PricingView.frame.height)
         backgroundImage.image = UIImage(named: "background")
-        PricingView.addSubview(backgroundImage)
+//        PricingView.addSubview(backgroundImage)
  
         PricingView.isHidden = isHidden
        
@@ -890,13 +888,13 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
        // let deliveryDetailsView = UIView()
         deliveryDetailsView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: view.frame.height - (32 * y))
-       deliveryDetailsView.backgroundColor = UIColor.gray
+       deliveryDetailsView.backgroundColor = UIColor.clear
         view.addSubview(deliveryDetailsView)
    
         let backgroundImage = UIImageView()
         backgroundImage.frame = CGRect(x: 0, y: 0, width: deliveryDetailsView.frame.width, height: deliveryDetailsView.frame.height)
         backgroundImage.image = UIImage(named: "background")
-        deliveryDetailsView.addSubview(backgroundImage)
+//        deliveryDetailsView.addSubview(backgroundImage)
       
         
         deliveryDetailsView.isHidden = isHidden
@@ -1045,7 +1043,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         DeliveryDateView.addSubview(DateColonLabel)
         
         // Pay Button :-
-        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY + y, width: view.frame.width , height: 40)
+        ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY, width: view.frame.width , height: (4 * y))
         ProceedToPayButton.backgroundColor = UIColor.orange
         ProceedToPayButton.setTitle("PROCEED TO PAY", for: .normal)
         ProceedToPayButton.setTitleColor(UIColor.white, for: .normal)
