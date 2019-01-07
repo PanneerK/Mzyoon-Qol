@@ -311,11 +311,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         if nameArray.count == 0
         {
-            userListAlert = UIAlertController(title: "Please enter measurement name", message: "", preferredStyle: .alert)
+            userListAlert = UIAlertController(title: "Please choose measurement name", message: "", preferredStyle: .alert)
         }
         else
         {
-            userListAlert = UIAlertController(title: "Please select your option", message: "", preferredStyle: .alert)
+            userListAlert = UIAlertController(title: "Please choose measurement name", message: "", preferredStyle: .alert)
         }
         
         for i in 0..<nameArray.count
