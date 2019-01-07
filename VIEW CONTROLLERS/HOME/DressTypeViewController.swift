@@ -25,6 +25,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     let searchTextField = UITextField()
     let searchTextTableView = UITableView()
     let filterView = UIView()
+    let dressTypeScrollView = UIScrollView()
 
     // Error PAram...
     var DeviceNum:String!
@@ -175,6 +176,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         searchTextField.clearsOnBeginEditing = true
         searchTextField.returnKeyType = .done
         searchTextField.delegate = self
+        searchTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         view.addSubview(searchTextField)
         
         let searchButton = UIButton()
@@ -226,14 +228,25 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         dressTypeCollectionView.selectItem(at: NSIndexPath(item: 0, section: 0) as IndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.top)
         //        view.addSubview(dressTypeCollectionView)*/
         
-        let dressTypeScrollView = UIScrollView()
+        dressTypeSubContents(inputTextArray: dressTypeArray, inputImageArray: dressImageArray)
+    }
+    
+    func dressTypeSubContents(inputTextArray : NSArray, inputImageArray : NSArray)
+    {
         dressTypeScrollView.frame = CGRect(x: (3 * x), y: sortButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (45 * y))
-//        dressTypeScrollView.backgroundColor = UIColor.red
+        //        dressTypeScrollView.backgroundColor = UIColor.red
         view.addSubview(dressTypeScrollView)
+        
+        print("TOTAL NUMBER", inputTextArray)
+        
+        for views in dressTypeScrollView.subviews
+        {
+            views.removeFromSuperview()
+        }
         
         var y1:CGFloat = 0
         var x1:CGFloat = 0
-        for i in 0..<dressTypeArray.count
+        for i in 0..<inputTextArray.count
         {
             let dressTypeButton = UIButton()
             if i % 2 == 0
@@ -254,19 +267,19 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             
             let dressTypeImageView = UIImageView()
             dressTypeImageView.frame = CGRect(x: 0, y: 0, width: dressTypeButton.frame.width, height: (13 * y))
-            if let imageName = dressImageArray[i] as? String
+            if let imageName = inputImageArray[i] as? String
             {
                 let api = "http://appsapi.mzyoon.com/images/DressTypes/\(imageName)"
                 let apiurl = URL(string: api)
                 dressTypeImageView.dowloadFromServer(url: apiurl!)
             }
-//            dressTypeImageView.image = convertedDressImageArray[i]
+            //            dressTypeImageView.image = convertedDressImageArray[i]
             dressTypeButton.addSubview(dressTypeImageView)
             
             let dressTypeNameLabel = UILabel()
             dressTypeNameLabel.frame = CGRect(x: 0, y: dressTypeImageView.frame.maxY, width: dressTypeButton.frame.width, height: (3 * y))
             dressTypeNameLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            dressTypeNameLabel.text = dressTypeArray[i] as? String
+            dressTypeNameLabel.text = inputTextArray[i] as? String
             dressTypeNameLabel.textColor = UIColor.white
             dressTypeNameLabel.textAlignment = .center
             dressTypeButton.addSubview(dressTypeNameLabel)
@@ -398,7 +411,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     @objc func sortFunc()
     {
         let alert = UIAlertController(title: "SORT BY", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Popularity", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Name -- Ascending A-Z", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Name -- Descending Z-A", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: sortCancelAction(action:)))
@@ -435,6 +447,105 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         view.endEditing(true)
         return true
     }
+    
+    @objc func textFieldDidChange(textField: UITextField){
+        
+        var nameArrayString = [String]()
+        var imageArrayString = [String]()
+        var nameArray = NSArray()
+        var imageArray = NSArray()
+        
+        let text = textField.text
+        
+        print("ENTERED TEXTFIELD")
+        if (text?.utf16.count)! >= 1{
+            for i in 0..<dressTypeArray.count
+            {
+                if let dress = dressTypeArray[i] as? String
+                {
+                    let count = textField.text?.count
+                    print("WELCOME OF DRESS", dress.prefix(count!))
+                    let subString = dress.prefix(count!)
+                    let convertedSubString = String(subString)
+                    if textField.text == convertedSubString
+                    {
+                        print("BOTH ARE EQUAL", dress)
+                        
+                        nameArrayString.append(dress)
+                        imageArrayString.append(dressImageArray[i] as! String)
+                    }
+                }
+            }
+            
+            nameArray = nameArrayString as NSArray
+            imageArray = imageArrayString as NSArray
+            
+            print("NAME ARRAY AFTER", nameArray)
+            
+            dressTypeSubContents(inputTextArray: nameArray, inputImageArray: imageArray)
+        }
+        else
+        {
+            dressTypeSubContents(inputTextArray: dressTypeArray, inputImageArray: dressImageArray)
+        }
+        
+    }
+    
+    /*func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+        if textField == searchTextField
+        {
+            print("YES TESTING DONE")
+        }
+        
+        return true
+    }
+    
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        var nameArray = NSArray()
+        var imageArray = NSArray()
+        
+        print("CHECKING TEXT FIELD COUNT", textField.text!.count)
+        print("ENTERED TEXT", textField.text)
+        
+        if textField == searchTextField
+        {
+            if (textField.text?.count)! > 0
+            {
+                for i in 0..<dressTypeArray.count
+                {
+                    if let dress = dressTypeArray[i] as? String
+                    {
+                        let count = textField.text?.count
+                        print("WELCOME OF DRESS", dress.prefix(count!))
+                        let subString = dress.prefix(count!)
+                        let convertedSubString = String(subString)
+                        if textField.text == convertedSubString
+                        {
+                            print("BOTH ARE EQUAL", dress)
+                            
+                            nameArray.addingObjects(from: [dress])
+                            imageArray.addingObjects(from: [dressImageArray[i]])
+                        }
+                    }
+                }
+                
+                dressTypeSubContents(inputTextArray: nameArray, inputImageArray: imageArray)
+            }
+            else
+            {
+                dressTypeSubContents(inputTextArray: dressTypeArray, inputImageArray: dressImageArray)
+            }
+        }
+        else
+        {
+            dressTypeSubContents(inputTextArray: dressTypeArray, inputImageArray: dressImageArray)
+        }
+       
+        return true
+    }*/
 
     /*
     // MARK: - Navigation

@@ -49,6 +49,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     var customButtons = [String : String]()
     var customPockets = [String : String]()
     var selectedCustom = String()
+    var subSelectedCustom = Int()
     var customDict = [String : String]()
     var customDictValuesCount = 0
 
@@ -411,9 +412,27 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customizationScrollView.frame = CGRect(x: 0, y: dropDownButton.frame.maxY + y, width: view.frame.width, height: (12 * y))
         view.addSubview(customizationScrollView)
         
+        print("CUSTOM DICT", customDict)
+        
         for views in customizationScrollView.subviews
         {
             views.removeFromSuperview()
+        }
+        
+        for (keys, values) in customDict
+        {
+            if selectedCustom == keys
+            {
+                print("VALUES FOR KEYS", values)
+                if values.isEmpty == true
+                {
+                    
+                }
+                else
+                {
+                    subSelectedCustom = Int(values)!
+                }
+            }
         }
         
         var x3:CGFloat = (2 * x)
@@ -423,8 +442,22 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             customizationButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
             customizationButton.backgroundColor = UIColor.white
             customizationButton.tag = i
-            customizationButton.addTarget(self, action: #selector(self.customizationButtonACtion(sender:)), for: .touchUpInside)
+            customizationButton.addTarget(self, action: #selector(self.customizationButtonAction), for: .touchUpInside)
             customizationScrollView.addSubview(customizationButton)
+            
+            print("SUB SELECTED ITEM", subSelectedCustom)
+            
+            if customDict[selectedCustom]?.isEmpty == true
+            {
+                
+            }
+            else
+            {
+                if i == subSelectedCustom
+                {
+                    self.customizationButtonAction(sender: customizationButton)
+                }
+            }
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: (3 * x), y: 0, width: customizationButton.frame.width - (6 * x), height: customizationButton.frame.height - (2 * y))
@@ -474,7 +507,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func customizationButtonACtion(sender : UIButton)
+    @objc func customizationButtonAction(sender : UIButton)
     {
         selectionImage1.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         selectionImage1.image = UIImage(named: "selectionImage")

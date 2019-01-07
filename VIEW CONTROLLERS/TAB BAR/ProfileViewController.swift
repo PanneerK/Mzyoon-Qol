@@ -8,23 +8,28 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITextFieldDelegate, ServerAPIDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
+class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITextFieldDelegate, ServerAPIDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate
 {
-    
     var x = CGFloat()
     var y = CGFloat()
     
     let userImage = UIImageView()
     var imagePicker = UIImagePickerController()
+    let cameraButton = UIButton()
+
 
     let userName = UITextField()
     let mobileNumber = UITextField()
     let email = UITextField()
     let dob = UITextField()
     let calendarButton = UIButton()
+    let genderButton = UIButton()
     let maleButton = UIButton()
+    let genderLabel = UILabel()
     let femaleButton = UIButton()
     let updateButton = UIButton()
+    let genderTableView = UITableView()
+    let genders = ["Male", "Female"]
     
     let cancelButton = UIButton()
     let saveButton = UIButton()
@@ -52,9 +57,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         view.backgroundColor = UIColor.red
 
-        let closeKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.closeKeyboard(gesture:)))
-        closeKeyboard.delegate = self
-        view.addGestureRecognizer(closeKeyboard)
+//        let closeKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.closeKeyboard(gesture:)))
+//        closeKeyboard.delegate = self
+//        view.addGestureRecognizer(closeKeyboard)
         screenContents()
         
 //        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -213,7 +218,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         userImage.image = FileHandler().getImageFromDocumentDirectory()
         backgroundImage.addSubview(userImage)
         
-        let cameraButton = UIButton()
+        cameraButton.isEnabled = false
         cameraButton.frame = CGRect(x: userImage.frame.maxX - (5 * x), y: userImage.frame.maxY - (5 * y), width: (5 * x), height: (5 * x))
         cameraButton.backgroundColor = UIColor.white
         cameraButton.layer.cornerRadius = cameraButton.frame.height / 2
@@ -309,15 +314,36 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         dobUnderline.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         view.addSubview(dobUnderline)
         
-        let genderLabel = UILabel()
-        genderLabel.frame = CGRect(x: (3 * x), y: dobUnderline.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (2 * y))
+        genderButton.isEnabled = false
+        genderButton.frame = CGRect(x: (3 * x), y: dobUnderline.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (4 * y))
+//        genderButton.text = "Gender"
+//        genderButton.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+//        genderButton.textAlignment = .left
+        genderButton.layer.borderWidth = 1
+        genderButton.layer.borderColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85).cgColor
+        genderButton.backgroundColor = UIColor.white
+        genderButton.tag = 1
+        genderButton.addTarget(self, action: #selector(self.genderButtonActions(sender:)), for: .touchUpInside)
+        view.addSubview(genderButton)
+        
+        let genderImageView = UIImageView()
+        genderImageView.frame = CGRect(x: x, y: y, width: (3 * x), height: (2 * y))
+        genderImageView.image = UIImage(named: "gender")
+        genderButton.addSubview(genderImageView)
+        
+        genderLabel.frame = CGRect(x: genderImageView.frame.maxX + (2 * x), y: 0, width: genderButton.frame.width - (6 * x), height: (4 * y))
         genderLabel.text = "Gender"
         genderLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         genderLabel.textAlignment = .left
-        view.addSubview(genderLabel)
+        genderButton.addSubview(genderLabel)
         
-        maleButton.isEnabled = false
-        maleButton.frame = CGRect(x: (3 * x), y: genderLabel.frame.maxY + y, width: (2 * x), height: (2 * x))
+        let dropDownImageView = UIImageView()
+        dropDownImageView.frame = CGRect(x: genderButton.frame.width - (3 * x), y: y, width: (2 * x), height: (2 * y))
+        dropDownImageView.image = UIImage(named: "downArrow")
+        genderButton.addSubview(dropDownImageView)
+        
+        /*maleButton.isEnabled = false
+        maleButton.frame = CGRect(x: (3 * x), y: genderButton.frame.maxY + y, width: (2 * x), height: (2 * x))
         maleButton.layer.cornerRadius = maleButton.frame.height / 2
         maleButton.backgroundColor = UIColor.white
         maleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
@@ -326,14 +352,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         view.addSubview(maleButton)
         
         let maleLabel = UILabel()
-        maleLabel.frame = CGRect(x: maleButton.frame.maxX + x, y: genderLabel.frame.maxY + y, width: (6 * x), height: (2 * y))
+        maleLabel.frame = CGRect(x: maleButton.frame.maxX + x, y: genderButton.frame.maxY + y, width: (6 * x), height: (2 * y))
         maleLabel.text = "Male"
         maleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         maleLabel.textAlignment = .left
         view.addSubview(maleLabel)
         
         femaleButton.isEnabled = false
-        femaleButton.frame = CGRect(x: maleLabel.frame.maxX + (3 * x), y: genderLabel.frame.maxY + y, width: (2 * x), height: (2 * x))
+        femaleButton.frame = CGRect(x: maleLabel.frame.maxX + (3 * x), y: genderButton.frame.maxY + y, width: (2 * x), height: (2 * x))
         femaleButton.layer.cornerRadius = femaleButton.frame.height / 2
         femaleButton.backgroundColor = UIColor.white
         femaleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
@@ -342,20 +368,41 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         view.addSubview(femaleButton)
         
         let femaleLabel = UILabel()
-        femaleLabel.frame = CGRect(x: femaleButton.frame.maxX + x, y: genderLabel.frame.maxY + y, width: (6 * x), height: (2 * y))
+        femaleLabel.frame = CGRect(x: femaleButton.frame.maxX + x, y: genderButton.frame.maxY + y, width: (6 * x), height: (2 * y))
         femaleLabel.text = "Female"
         femaleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         femaleLabel.textAlignment = .left
-        view.addSubview(femaleLabel)
+        view.addSubview(femaleLabel)*/
         
         updateButton.isHidden = false
-        updateButton.frame = CGRect(x: (3 * x), y: maleButton.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (4 * y))
+        updateButton.frame = CGRect(x: (3 * x), y: genderButton.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (4 * y))
         updateButton.layer.cornerRadius = 10
         updateButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         updateButton.setTitle("Update Profile", for: .normal)
         updateButton.setTitleColor(UIColor.white, for: .normal)
         updateButton.addTarget(self, action: #selector(self.updateButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(updateButton)
+    }
+    
+    @objc func genderButtonActions(sender : UIButton)
+    {
+        genderTableView.frame = CGRect(x: genderButton.frame.minX, y: genderButton.frame.maxY, width: genderButton.frame.width, height: (10 * y))
+        genderTableView.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
+        genderTableView.dataSource = self
+        genderTableView.delegate = self
+        genderTableView.allowsSelection = true
+        
+        if sender.tag == 1
+        {
+            view.addSubview(genderTableView)
+            sender.tag = 0
+        }
+        else
+        {
+            genderTableView.removeFromSuperview()
+            sender.tag = 1
+        }
+        
     }
     
     @objc func cameraButtonAction(sender : UIButton)
@@ -486,10 +533,13 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         femaleButton.isEnabled = true
         maleButton.isEnabled = true
         
+        cameraButton.isEnabled = true
+        genderButton.isEnabled = true
+        
         userName.becomeFirstResponder()
         
         cancelButton.isHidden = false
-        cancelButton.frame = CGRect(x: (2 * x), y: maleButton.frame.maxY + (3 * y), width: (15.75 * x), height: (4 * y))
+        cancelButton.frame = CGRect(x: (2 * x), y: genderButton.frame.maxY + (3 * y), width: (15.75 * x), height: (4 * y))
         cancelButton.layer.cornerRadius = 10
         cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         cancelButton.setTitle("Cancel", for: .normal)
@@ -498,7 +548,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         view.addSubview(cancelButton)
         
         saveButton.isHidden = false
-        saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * x), y: maleButton.frame.maxY + (3 * y), width: (15.75 * x), height: (4 * y))
+        saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * x), y: genderButton.frame.maxY + (3 * y), width: (15.75 * x), height: (4 * y))
         saveButton.layer.cornerRadius = 10
         saveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         saveButton.setTitle("Save", for: .normal)
@@ -516,6 +566,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         femaleButton.isEnabled = false
         maleButton.isEnabled = false
+        
+        cameraButton.isEnabled = false
+        genderButton.isEnabled = false
         
         userName.text = ""
         mobileNumber.text = ""
@@ -538,17 +591,77 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         femaleButton.isEnabled = false
         maleButton.isEnabled = false
         
+        cameraButton.isEnabled = false
+        genderButton.isEnabled = false
+        
         updateButton.isHidden = false
         
         sender.removeFromSuperview()
         cancelButton.removeFromSuperview()
         
-        let ProfId = UserDefaults.standard.value(forKey: "userId") as! String
+        
+        var userId = String()
+        
+        
+        if let ProfId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            userId = ProfId
+        }
+        else
+        {
+            
+        }
         let EmailID = email.text
         let DobStr = dob.text
         let ModifyStr = "user"
+                
+        serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr!, ModifiedBy: ModifyStr, delegate: self)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self), for: indexPath as IndexPath)
+        cell.textLabel?.text = genders[indexPath.row]
+        print("WELCOME")
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return (5 * y)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        genderLabel.text = genders[indexPath.row]
+        print("WELCOME TO DID SELECT")
+        GenderStr = genderLabel.text
+        genderTableView.removeFromSuperview()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == userName
+        {
+            userName.resignFirstResponder()
+            mobileNumber.becomeFirstResponder()
+        }
+        else if textField == mobileNumber
+        {
+            mobileNumber.resignFirstResponder()
+            email.becomeFirstResponder()
+        }
+        else if textField == email
+        {
+            email.resignFirstResponder()
+            dob.becomeFirstResponder()
+        }
+        else
+        {
+            dob.resignFirstResponder()
+        }
         
-        serviceCall.API_ProfileUpdate(Id: ProfId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr!, ModifiedBy: ModifyStr, delegate: self)
+        return true
     }
     
     

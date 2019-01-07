@@ -289,7 +289,9 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         let seasonTitleLabel = UILabel()
         seasonTitleLabel.frame = CGRect(x: ((view.frame.width - (12 * x)) / 2), y: (8 * y), width: (12 * x), height: (3 * y))
-        seasonTitleLabel.backgroundColor = UIColor.lightGray
+        seasonTitleLabel.layer.borderWidth = 1
+        seasonTitleLabel.layer.masksToBounds = true
+        seasonTitleLabel.backgroundColor = UIColor.white
         seasonTitleLabel.text = "SEASONAL"
         seasonTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         seasonTitleLabel.textAlignment = .center
@@ -348,7 +350,9 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         let industryTitleLabel = UILabel()
         industryTitleLabel.frame = CGRect(x: ((view.frame.width - (20 * x)) / 2), y: seasonalScrollView.frame.maxY + (2 * y), width: (20 * x), height: (3 * y))
-        industryTitleLabel.backgroundColor = UIColor.lightGray
+        industryTitleLabel.layer.borderWidth = 1
+        industryTitleLabel.layer.masksToBounds = true
+        industryTitleLabel.backgroundColor = UIColor.white
         industryTitleLabel.text = "PLACE OF INDUSTRY"
         industryTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         industryTitleLabel.textAlignment = .center
@@ -403,7 +407,9 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         let brandTitleLabel = UILabel()
         brandTitleLabel.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: industryScrollView.frame.maxY + (2 * y), width: (10 * x), height: (3 * y))
-        brandTitleLabel.backgroundColor = UIColor.lightGray
+        brandTitleLabel.layer.borderWidth = 1
+        brandTitleLabel.layer.masksToBounds = true
+        brandTitleLabel.backgroundColor = UIColor.white
         brandTitleLabel.text = "BRANDS"
         brandTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         brandTitleLabel.textAlignment = .center

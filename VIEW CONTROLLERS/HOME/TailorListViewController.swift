@@ -238,7 +238,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: tailorListNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "TAILOR LIST"
+        navigationTitle.text = "TAILORS LIST"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
@@ -603,6 +603,18 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
         
         if isHidden == false
+        {
+            let markerImageView = UIImageView()
+            markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
+            markerImageView.image = UIImage(named: "marker")
+            mapView.addSubview(markerImageView)
+            
+//            marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
+            marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+            marker.iconView = markerImageView
+            marker.map = mapView
+        }
+        else
         {
             let markerImageView = UIImageView()
             markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
