@@ -15,7 +15,9 @@ class ListOfOrdersViewController: CommonViewController
     let PendingButton = UIButton()
     
     let ListOfOrdersNavigationBar = UIView()
-    let tailorListScrollView = UIScrollView()
+    
+    let PendingScrollView = UIScrollView()
+    let DeliveredScrollView = UIScrollView()
     
     let DeliveredViewBackDrop = UIView()
     let PendingViewBackDrop = UIView()
@@ -195,7 +197,7 @@ class ListOfOrdersViewController: CommonViewController
     {
        // let PendingViewBackDrop = UIView()
         PendingViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
-        PendingViewBackDrop.backgroundColor = UIColor.cyan
+        PendingViewBackDrop.backgroundColor = UIColor.clear
         view.addSubview(PendingViewBackDrop)
         
         PendingViewBackDrop.isHidden = isHidden
@@ -211,13 +213,13 @@ class ListOfOrdersViewController: CommonViewController
          backDrop.addSubview(sortButton)
          */
         
-        tailorListScrollView.frame = CGRect(x: 0, y: y, width: PendingViewBackDrop.frame.width, height: (50 * y))
-        tailorListScrollView.backgroundColor = UIColor.gray
-        PendingViewBackDrop.addSubview(tailorListScrollView)
+        PendingScrollView.frame = CGRect(x: 0, y: y, width: PendingViewBackDrop.frame.width, height: (50 * y))
+       // PendingScrollView.backgroundColor = UIColor.gray
+        PendingViewBackDrop.addSubview(PendingScrollView)
         
-        tailorListScrollView.contentSize.height = (12 * y * CGFloat(4))
+        PendingScrollView.contentSize.height = (12 * y * CGFloat(4))
         
-        for views in tailorListScrollView.subviews
+        for views in PendingScrollView.subviews
         {
             views.removeFromSuperview()
         }
@@ -227,9 +229,9 @@ class ListOfOrdersViewController: CommonViewController
         for i in 0..<4
         {
             let PendingViewButton = UIButton()
-            PendingViewButton.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
+            PendingViewButton.frame = CGRect(x: 0, y: y1, width: PendingScrollView.frame.width, height: (10 * y))
             PendingViewButton.backgroundColor = UIColor.white
-            tailorListScrollView.addSubview(PendingViewButton)
+            PendingScrollView.addSubview(PendingViewButton)
             
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
@@ -367,13 +369,13 @@ class ListOfOrdersViewController: CommonViewController
          backDrop.addSubview(sortButton)
          */
         
-        tailorListScrollView.frame = CGRect(x: 0, y: y, width: DeliveredViewBackDrop.frame.width, height: (50 * y))
+        DeliveredScrollView.frame = CGRect(x: 0, y: y, width: DeliveredViewBackDrop.frame.width, height: (50 * y))
         // tailorListScrollView.backgroundColor = UIColor.gray
-        DeliveredViewBackDrop.addSubview(tailorListScrollView)
+        DeliveredViewBackDrop.addSubview(DeliveredScrollView)
         
-        tailorListScrollView.contentSize.height = (12 * y * CGFloat(4))
+        DeliveredScrollView.contentSize.height = (12 * y * CGFloat(4))
         
-        for views in tailorListScrollView.subviews
+        for views in DeliveredScrollView.subviews
         {
             views.removeFromSuperview()
         }
@@ -383,9 +385,9 @@ class ListOfOrdersViewController: CommonViewController
         for i in 0..<4
         {
             let DeliveredViewButton = UIButton()
-            DeliveredViewButton.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
+            DeliveredViewButton.frame = CGRect(x: 0, y: y1, width: DeliveredScrollView.frame.width, height: (10 * y))
             DeliveredViewButton.backgroundColor = UIColor.white
-            tailorListScrollView.addSubview(DeliveredViewButton)
+            DeliveredScrollView.addSubview(DeliveredViewButton)
             
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
