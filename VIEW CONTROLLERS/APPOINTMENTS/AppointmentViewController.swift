@@ -347,37 +347,55 @@ class AppointmentViewController: CommonViewController
     func AppointmentStatusContent()
     {
         AppointmentSelectionView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        AppointmentSelectionView.backgroundColor = UIColor.white.withAlphaComponent(0.75)
+        AppointmentSelectionView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         view.addSubview(AppointmentSelectionView)
         
         let Rescheduleview = UIView()
-        Rescheduleview.frame = CGRect(x: 0, y: (AppointmentSelectionView.frame.height / 2 ) - (5 * y) , width: view.frame.width, height: (10 * y))
+        Rescheduleview.frame = CGRect(x: 0, y: (AppointmentSelectionView.frame.height / 2 ) - (5 * y) , width: view.frame.width, height: (12 * y))
         Rescheduleview.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         AppointmentSelectionView.addSubview(Rescheduleview)
         
-        /*
-        let cancelButton = UIButton()
-        cancelButton.frame = CGRect(x: view.frame.maxX + x, y: view.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
-        cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        cancelButton.setTitle("Ok", for: .normal)
-        cancelButton.setTitleColor(UIColor.white, for: .normal)
-        cancelButton.addTarget(self, action: #selector(self.OkButtonAction(sender:)), for: .touchUpInside)
-        AppointmentSelectionView.addSubview(cancelButton)
+        let reschedule_LBL = UILabel()
+        reschedule_LBL.frame = CGRect(x: x, y: Rescheduleview.frame.minY, width: Rescheduleview.frame.width - x, height: (8 * y))
+        //reschedule_LBL.backgroundColor = UIColor.gray
+        reschedule_LBL.text = "The Appointment for your time is not available, please reschedule your date and time for your appointment"
+        reschedule_LBL.textColor = UIColor.white
+        reschedule_LBL.textAlignment = .left
+        reschedule_LBL.lineBreakMode = .byWordWrapping
+        reschedule_LBL.numberOfLines = 3
+        reschedule_LBL.font = UIFont(name: "Avenir Next", size: 1.5 * x)
+        AppointmentSelectionView.addSubview(reschedule_LBL)
+      
+        let rescheduleButton = UIButton()
+        rescheduleButton.frame = CGRect(x: x, y: reschedule_LBL.frame.maxY + y , width: (15 * x), height: (2 * y))
+        rescheduleButton.backgroundColor = UIColor.blue
+        rescheduleButton.setTitle("Click Here to Reschedule", for: .normal)
+        rescheduleButton.setTitleColor(UIColor.white, for: .normal)
+        rescheduleButton.layer.borderColor = UIColor.lightGray.cgColor
+        rescheduleButton.layer.borderWidth = 1.0
+        rescheduleButton.layer.cornerRadius = 10
+        rescheduleButton.addTarget(self, action: #selector(self.RescheduleButtonAction(sender:)), for: .touchUpInside)
+        rescheduleButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
+        AppointmentSelectionView.addSubview(rescheduleButton)
         
-        let saveButton = UIButton()
-        saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * y), y: view.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
-        saveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        saveButton.setTitle("Click Here to Re-Schedule", for: .normal)
-        saveButton.setTitleColor(UIColor.white, for: .normal)
-        saveButton.addTarget(self, action: #selector(self.RescheduleButtonAction(sender:)), for: .touchUpInside)
-        AppointmentSelectionView.addSubview(saveButton)
-        */
+        let okButton = UIButton()
+        okButton.frame = CGRect(x: rescheduleButton.frame.maxX + (8 * x), y: reschedule_LBL.frame.maxY + y, width: (10 * x), height: (2 * y))
+        okButton.backgroundColor = UIColor.blue
+        okButton.setTitle("Ok", for: .normal)
+        okButton.setTitleColor(UIColor.white, for: .normal)
+        okButton.layer.borderColor = UIColor.lightGray.cgColor
+        okButton.layer.borderWidth = 1.0
+        okButton.layer.cornerRadius = 10
+        okButton.addTarget(self, action: #selector(self.RescheduleButtonAction(sender:)), for: .touchUpInside)
+        okButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
+        AppointmentSelectionView.addSubview(okButton)
+      
     }
     
     func RejectButtonContent()
     {
         RejectButtonView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        RejectButtonView.backgroundColor = UIColor.white.withAlphaComponent(0.75)
+        RejectButtonView.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         view.addSubview(RejectButtonView)
         
         let RejectView = UIView()
@@ -385,32 +403,62 @@ class AppointmentViewController: CommonViewController
         RejectView.backgroundColor = UIColor.white
         RejectButtonView.addSubview(RejectView)
         
-        /*
-         let cancelButton = UIButton()
-         cancelButton.frame = CGRect(x: view.frame.maxX + x, y: view.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
-         cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-         cancelButton.setTitle("Ok", for: .normal)
-         cancelButton.setTitleColor(UIColor.white, for: .normal)
-         cancelButton.addTarget(self, action: #selector(self.OkButtonAction(sender:)), for: .touchUpInside)
-         AppointmentSelectionView.addSubview(cancelButton)
-         
-         let saveButton = UIButton()
-         saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * y), y: view.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
-         saveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-         saveButton.setTitle("Click Here to Re-Schedule", for: .normal)
-         saveButton.setTitleColor(UIColor.white, for: .normal)
-         saveButton.addTarget(self, action: #selector(self.RescheduleButtonAction(sender:)), for: .touchUpInside)
-         AppointmentSelectionView.addSubview(saveButton)
-         */
-    }
-    
-    @objc func OkButtonAction(sender : UIButton)
-    {
-        AppointmentSelectionView.removeFromSuperview()
+        let rejectReason_TF = UITextField()
+        rejectReason_TF.frame = CGRect(x: x, y: RejectView.frame.minY, width: RejectView.frame.width - (2 * x), height: (6 * y))
+       // rejectReason_TF.backgroundColor = UIColor.gray
+        rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+        //rejectReason_TF.text = "The Appointment for your time is not available, please reschedule your date and time for your appointment"
+       rejectReason_TF.textColor = UIColor.black
+        rejectReason_TF.textAlignment = .left
+        rejectReason_TF.contentVerticalAlignment = .top
+        rejectReason_TF.font = UIFont(name: "Avenir Next", size: 1.5 * x)
+        RejectButtonView.addSubview(rejectReason_TF)
+        
+        let CancelButton = UIButton()
+        CancelButton.frame = CGRect(x: (2 * x), y: rejectReason_TF.frame.maxY + y , width: (10 * x), height: (2 * y))
+        CancelButton.backgroundColor = UIColor.lightGray
+        CancelButton.setTitle("Cancel", for: .normal)
+        CancelButton.setTitleColor(UIColor.white, for: .normal)
+        CancelButton.layer.borderColor = UIColor.lightGray.cgColor
+        CancelButton.layer.borderWidth = 1.0
+        CancelButton.layer.cornerRadius = 10
+        CancelButton.addTarget(self, action: #selector(self.CancelButtonAction(sender:)), for: .touchUpInside)
+        CancelButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
+        RejectButtonView.addSubview(CancelButton)
+        
+        let saveButton = UIButton()
+        saveButton.frame = CGRect(x: CancelButton.frame.maxX + (12 * x), y: rejectReason_TF.frame.maxY + y, width: (10 * x), height: (2 * y))
+        saveButton.backgroundColor = UIColor.blue
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(UIColor.white, for: .normal)
+        saveButton.layer.borderColor = UIColor.lightGray.cgColor
+        saveButton.layer.borderWidth = 1.0
+        saveButton.layer.cornerRadius = 10
+        saveButton.addTarget(self, action: #selector(self.SaveRejectButtonAction(sender:)), for: .touchUpInside)
+        saveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
+        RejectButtonView.addSubview(saveButton)
+        
     }
     
     @objc func RescheduleButtonAction(sender : UIButton)
     {
         AppointmentSelectionView.removeFromSuperview()
+    }
+    
+    @objc func CancelButtonAction(sender : UIButton)
+    {
+        RejectButtonView.removeFromSuperview()
+    }
+    
+    @objc func SaveRejectButtonAction(sender : UIButton)
+    {
+        //AppointmentSelectionView.removeFromSuperview()
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let loginScreen = HomeViewController()
+        let navigationScreen = UINavigationController(rootViewController: loginScreen)
+        navigationScreen.isNavigationBarHidden = true
+        window?.rootViewController = navigationScreen
+        window?.makeKeyAndVisible()
     }
 }
