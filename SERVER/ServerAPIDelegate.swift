@@ -67,4 +67,9 @@ import Foundation
     
     // 2-1-2019
     @objc optional func API_CALLBACK_GetOrderRequest(requestList : NSDictionary)
+    
+    // 8-1-2019
+    @objc optional func API_CALLBACK_InsertAppointmentMaterial(insertAppointmentMaterial : NSDictionary)
+    @objc optional func API_CALLBACK_InsertAppointmentMeasurement(insertAppointmentMeasure : NSDictionary)
+    
 }
