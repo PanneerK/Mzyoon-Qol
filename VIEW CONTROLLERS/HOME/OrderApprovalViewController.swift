@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
+class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
 {
     
     let PricingButton = UIButton()
@@ -19,6 +19,10 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
     
     let PricingView = UIView()
     let deliveryDetailsView = UIView()
+     let QtyNumTF = UITextField()
+    var qtyNum : Int!
+    var orderID : Int!
+    
     let serviceCall = ServerAPI()
     
     // Error PAram...
@@ -58,7 +62,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
             
 //        self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
             self.selectedButton(tag: 1)
-
+            
+          self.addDoneButtonOnKeyboard()
             
         }
         
@@ -71,7 +76,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
      
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
-        print("Tailor List : ", errorMessage)
+        print("Order approval : ", errorMessage)
     }
     
     func DeviceError()
@@ -186,6 +191,34 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
         self.orderApprovalContent()
     }
+    
+    func API_CALLBACK_UpdateQtyOrderApproval(updateQtyOA: NSDictionary)
+    {
+        
+        let ResponseMsg = updateQtyOA.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = updateQtyOA.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            
+            let AppointmentScreen = AppointmentViewController()
+            self.navigationController?.pushViewController(AppointmentScreen, animated: true)
+           
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = updateQtyOA.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "UPdateQtyInOrderApproval"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
      
  
     func orderApprovalContent()
@@ -270,14 +303,19 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         DressDetView.addSubview(QtyLabel)
         
         
-        let QtyNumTF = UITextField()
         QtyNumTF.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (4 * x), height: (2 * y))
         QtyNumTF.backgroundColor = UIColor.white
-        QtyNumTF.text = "1"
+       // QtyNumTF.text = "1"
         QtyNumTF.textColor = UIColor.black
-        QtyNumTF.textAlignment = .center
+        QtyNumTF.textAlignment = .left
         QtyNumTF.font = QtyNumTF.font!.withSize(14)
+        QtyNumTF.adjustsFontSizeToFitWidth = true
+        QtyNumTF.keyboardType = .numberPad
+        QtyNumTF.clearsOnBeginEditing = true
+        QtyNumTF.returnKeyType = .done
+        QtyNumTF.delegate = self
         DressDetView.addSubview(QtyNumTF)
+        
         
         PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((view.frame.width / 2) - 1), height: 40)
         PricingButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -302,6 +340,28 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
         
         PricingViewContents(isHidden: false)
         DeliveryDetailsViewContents(isHidden: true)
+    }
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.QtyNumTF.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction()
+    {
+        self.view.endEditing(true)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -1059,6 +1119,12 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate
     
     @objc func ProccedToPayButtonAction(sender : UIButton)
     {
+        qtyNum = Int(QtyNumTF.text!)
+       
+        print("Qty:",qtyNum)
+        print("orderID:",orderID)
+        
+        self.serviceCall.API_UpdateQtyOrderApproval(OrderId: orderID, Qty: qtyNum, delegate: self)
         print("Redirect To Next Page.. !")
        
      /*

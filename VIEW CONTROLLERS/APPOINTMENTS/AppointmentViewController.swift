@@ -8,18 +8,103 @@
 
 import UIKit
 
-class AppointmentViewController: CommonViewController
+class AppointmentViewController: CommonViewController,ServerAPIDelegate
 {
+     let serviceCall = ServerAPI()
+    
       let AppointmentSelectionView = UIView()
       let RejectButtonView = UIView()
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        AppointmentContent()
+       
+         AppointmentContent()
     }
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "AppointmentViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+         print("Book an appointment : ", errorMessage)
+    }
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+        }
+    }
+    func API_CALLBACK_InsertAppointmentMaterial(insertAppointmentMaterial: NSDictionary)
+    {
+        let ResponseMsg = insertAppointmentMaterial.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = insertAppointmentMaterial.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = insertAppointmentMaterial.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "InsertAppointforMaterial"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+        
+    }
+    func API_CALLBACK_InsertAppointmentMeasurement(insertAppointmentMeasure: NSDictionary)
+    {
+        let ResponseMsg = insertAppointmentMeasure.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = insertAppointmentMeasure.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = insertAppointmentMeasure.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "InsertAppointforMeasurement"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+        
     
     func AppointmentContent()
     {
