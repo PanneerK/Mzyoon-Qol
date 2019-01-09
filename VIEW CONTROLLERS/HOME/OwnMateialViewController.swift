@@ -31,7 +31,9 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     {
         navigationBar.isHidden = true
         
-        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        selectedButton(tag: 0)
+
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
             // Your code with delay
@@ -133,8 +135,8 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     @objc func addMaterialNextButtonAction(sender : UIButton)
     {
-        let tailorListScreen = TailorListViewController()
-        self.navigationController?.pushViewController(tailorListScreen, animated: true)
+        let custom3Screen = Customization3ViewController()
+        self.navigationController?.pushViewController(custom3Screen, animated: true)
     }
     
     @objc func addMaterialButtonAction(sender : UIButton)

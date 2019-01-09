@@ -23,10 +23,22 @@ class CommonViewController: UIViewController
     let slideMenuButton = UIButton()
     let tabBar = UIView()
 
+    
     let tab1Button = UIButton()
+    let tab1ImageView = UIImageView()
+    let tab1Text = UILabel()
+    
     let tab2Button = UIButton()
+    let tab2ImageView = UIImageView()
+    let tab2Text = UILabel()
+    
     let tab3Button = UIButton()
+    let tab3ImageView = UIImageView()
+    let tab3Text = UILabel()
+    
     let tab4Button = UIButton()
+    let tab4ImageView = UIImageView()
+    let tab4Text = UILabel()
     
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
@@ -124,23 +136,70 @@ class CommonViewController: UIViewController
         tab1Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
         tabBar.addSubview(tab1Button)
         
+        tab1ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
+        tab1ImageView.image = UIImage(named: "home")
+        tab1Button.addSubview(tab1ImageView)
+        
+        let templateImage = tab1ImageView.image?.withRenderingMode(.alwaysTemplate)
+        tab1ImageView.image = templateImage
+        tab1ImageView.tintColor = UIColor.orange
+        
+        tab1Text.frame = CGRect(x: 0, y: tab1ImageView.frame.maxY, width: (9.37 * x), height: y)
+        tab1Text.text = "Home"
+        tab1Text.textColor = UIColor.orange
+        tab1Text.textAlignment = .center
+        tab1Text.font = tab1Text.font.withSize(15)
+        tab1Button.addSubview(tab1Text)
+        
         tab2Button.frame = CGRect(x: tab1Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
         tab2Button.tag = 1
         tab2Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
         tabBar.addSubview(tab2Button)
+        
+        tab2ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
+        tab2ImageView.image = UIImage(named: "request")
+        tab2Button.addSubview(tab2ImageView)
+        
+        tab2Text.frame = CGRect(x: 0, y: tab2ImageView.frame.maxY, width: (9.37 * x), height: y)
+        tab2Text.text = "Request"
+        tab2Text.textColor = UIColor.white
+        tab2Text.textAlignment = .center
+        tab2Text.font = tab2Text.font.withSize(10)
+        tab2Button.addSubview(tab2Text)
         
         tab3Button.frame = CGRect(x: tab2Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
         tab3Button.tag = 2
         tab3Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
         tabBar.addSubview(tab3Button)
         
+        tab3ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
+        tab3ImageView.image = UIImage(named: "order")
+        tab3Button.addSubview(tab3ImageView)
+        
+        tab3Text.frame = CGRect(x: 0, y: tab3ImageView.frame.maxY, width: (9.37 * x), height: y)
+        tab3Text.text = "Order"
+        tab3Text.textColor = UIColor.white
+        tab3Text.textAlignment = .center
+        tab3Text.font = tab3Text.font.withSize(10)
+        tab3Button.addSubview(tab3Text)
+        
         tab4Button.frame = CGRect(x: tab3Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
         tab4Button.tag = 3
         tab4Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
         tabBar.addSubview(tab4Button)
+
+        tab4ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
+        tab4ImageView.image = UIImage(named: "cart")
+        tab4Button.addSubview(tab4ImageView)
         
-     //   let tabTitle = ["Home", "Order", "Cart", "Contact-Us"]
-        let tabTitle = ["Home", "Request", "Order", "Cart"]
+        tab4Text.frame = CGRect(x: 0, y: tab4ImageView.frame.maxY, width: (9.37 * x), height: y)
+        tab4Text.text = "Cart"
+        tab4Text.textColor = UIColor.white
+        tab4Text.textAlignment = .center
+        tab4Text.font = tab4Text.font.withSize(10)
+        tab4Button.addSubview(tab4Text)
+        
+        /*let tabTitle = ["Home", "Request", "Order", "Cart"]
         let tabImages = ["home", "request", "order", "cart"]
         
         for i in 0..<4
@@ -176,7 +235,7 @@ class CommonViewController: UIViewController
                 tab4Button.addSubview(tabButtonImageView)
                 tab4Button.addSubview(tabButtonTitleLabel)
             }
-        }
+        }*/
     }
     
     @objc func slideMenuButtonAction(sender : UIButton)
@@ -189,7 +248,9 @@ class CommonViewController: UIViewController
     }
     
     @objc func tabBarButtonAction(sender : UIButton)
-    {        
+    {
+        selectedButton(tag: sender.tag)
+        
         var navigateScreen = UIViewController()
         let alertControls = UIAlertController(title: "Alert", message: "No Data", preferredStyle: .alert)
         alertControls.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -245,6 +306,109 @@ class CommonViewController: UIViewController
             stopActivity()
             navigateScreen = ContactUsViewController()
         }*/
+    }
+    
+    func selectedButton(tag : Int)
+    {
+        let templateImage = tab1ImageView.image?.withRenderingMode(.alwaysTemplate)
+        tab1ImageView.image = templateImage
+        
+        let templateImage2 = tab2ImageView.image?.withRenderingMode(.alwaysTemplate)
+        tab2ImageView.image = templateImage2
+        
+        let templateImage3 = tab3ImageView.image?.withRenderingMode(.alwaysTemplate)
+        tab3ImageView.image = templateImage3
+        
+         
+        
+        if tag == 0
+        {
+            tab1Text.font = tab1Text.font.withSize(15)
+            tab1Text.textColor = UIColor.orange
+            
+            tab1ImageView.tintColor = UIColor.orange
+            
+            tab2Text.font = tab2Text.font.withSize(10)
+            tab2Text.textColor = UIColor.white
+            
+            tab2ImageView.tintColor = UIColor.white
+            
+            tab3Text.font = tab3Text.font.withSize(10)
+            tab3Text.textColor = UIColor.white
+          
+            tab3ImageView.tintColor = UIColor.white
+            
+            tab4Text.font = tab4Text.font.withSize(10)
+            tab4Text.textColor = UIColor.white
+          
+            tab4ImageView.tintColor = UIColor.white
+        }
+        else if tag == 1
+        {
+            tab1Text.font = tab1Text.font.withSize(10)
+            tab1Text.textColor = UIColor.white
+
+            tab1ImageView.tintColor = UIColor.white
+            
+            tab2Text.font = tab2Text.font.withSize(15)
+            tab2Text.textColor = UIColor.orange
+
+            tab2ImageView.tintColor = UIColor.orange
+            
+            tab3Text.font = tab3Text.font.withSize(10)
+            tab3Text.textColor = UIColor.white
+            
+            tab3ImageView.tintColor = UIColor.white
+            
+            tab4Text.font = tab4Text.font.withSize(10)
+            tab4Text.textColor = UIColor.white
+
+            tab4ImageView.tintColor = UIColor.white
+        }
+        else if tag == 2
+        {
+            tab1Text.font = tab1Text.font.withSize(10)
+            tab1Text.textColor = UIColor.white
+            
+            tab1ImageView.tintColor = UIColor.white
+            
+            tab2Text.font = tab2Text.font.withSize(10)
+            tab2Text.textColor = UIColor.white
+            
+            tab2ImageView.tintColor = UIColor.white
+            
+            tab3Text.font = tab3Text.font.withSize(15)
+            tab3Text.textColor = UIColor.orange
+            
+            tab3ImageView.tintColor = UIColor.orange
+            
+            tab4Text.font = tab4Text.font.withSize(10)
+            tab4Text.textColor = UIColor.white
+            
+            tab4ImageView.tintColor = UIColor.white
+        }
+        else if tag == 3
+        {
+            tab1Text.font = tab1Text.font.withSize(10)
+            tab1Text.textColor = UIColor.white
+            
+            tab1ImageView.tintColor = UIColor.white
+
+            tab2Text.font = tab2Text.font.withSize(10)
+            tab2Text.textColor = UIColor.white
+            
+            tab2ImageView.tintColor = UIColor.white
+
+            tab3Text.font = tab3Text.font.withSize(10)
+            tab3Text.textColor = UIColor.white
+            
+            tab3ImageView.tintColor = UIColor.white
+
+            tab4Text.font = tab4Text.font.withSize(15)
+            tab4Text.textColor = UIColor.orange
+            
+            tab4ImageView.tintColor = UIColor.orange
+        }
     }
     
 

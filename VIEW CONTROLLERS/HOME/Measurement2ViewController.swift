@@ -81,7 +81,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        selectedButton(tag: 0)
+
         
         self.serviceCall.API_GetMeasurement2(Measurement2Value: 1, delegate: self)
         

@@ -38,7 +38,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     let industrySelectionImage = UIImageView()
     let brandSelectionImage = UIImageView()
 
-    var materalTagIntArray = [Int]()
+    var materialTagIntArray = [Int]()
     var colorTagIntArray = [Int]()
     var patternTagIntArray = [Int]()
     
@@ -52,18 +52,31 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+    //SCREEN CONTENTS
+    let materialScrollView = UIScrollView()
+    let colorScrollView = UIScrollView()
+    let patternScrollView = UIScrollView()
+    
+    var updatingId = Int()
+    
     override func viewDidLoad()
     {
         print("SELECTED BRANDS IN 2", brandArray)
         navigationBar.isHidden = true
         
-        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-        
-        self.serviceCall.API_Customization2(brandId: self.brandArray, materialId: [0], ColorId: [0], delegate: self)
+//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        selectedButton(tag: 0)
         
         super.viewDidLoad()
+        
+        self.serviceCall(getMaterialId: [0], getColorId: [0])
 
         // Do any additional setup after loading the view.
+    }
+    
+    func serviceCall(getMaterialId : [Int], getColorId : [Int])
+    {
+        self.serviceCall.API_Customization2(brandId: self.brandArray, materialId: getMaterialId, ColorId: getColorId, delegate: self)
     }
     
     func DeviceError()
@@ -95,7 +108,13 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
-    func API_CALLBACK_Customization2(custom2: NSDictionary) {
+    func API_CALLBACK_Customization2(custom2: NSDictionary)
+    {
+        
+        let nameArray = NSArray()
+        let idArray = NSArray()
+        let imageArray = NSArray()
+        
         print("CUSTOM 2", custom2)
         
         let ResponseMsg = custom2.object(forKey: "ResponseMsg") as! String
@@ -105,6 +124,18 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             let Result = custom2.object(forKey: "Result") as! NSDictionary
             
             let Colors = Result.object(forKey: "Colors") as! NSArray
+            
+            colorsArray = nameArray
+            colorsIdArray = idArray
+            colorsImageArray = imageArray
+            
+            materialsArray = nameArray
+            materialsIdArray = idArray
+            materialsImageArray = imageArray
+            
+            patternsArray = nameArray
+            patternsIdArray = idArray
+            patternsImageArray = imageArray
             
             colorsArray = Colors.value(forKey: "ColorInEnglish") as! NSArray
             colorsIdArray = Colors.value(forKey: "Id") as! NSArray
@@ -142,6 +173,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             materialsArray = Materials.value(forKey: "MaterialInEnglish") as! NSArray
             materialsIdArray = Materials.value(forKey: "Id") as! NSArray
             materialsImageArray = Materials.value(forKey: "Image") as! NSArray
+            
+            print("WELCOME")
             
             /*for i in 0..<materialsImageArray.count
             {
@@ -209,7 +242,18 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 }
             }*/
             
-             self.customization2Content()
+            if updatingId == 0
+            {
+                self.customization2Content()
+            }
+            else if updatingId == 1
+            {
+                
+            }
+            else if updatingId == 2
+            {
+                
+            }
         }
         else if ResponseMsg == "Failure"
         {
@@ -252,7 +296,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         customization2NavigationBar.addSubview(navigationTitle)
         
-        let custom1Title = ["MATERIAL TYPE", "COLOR", "PATTERN"]
+        /*let custom1Title = ["MATERIAL TYPE", "COLOR", "PATTERN"]
         
         var y1 = customization2NavigationBar.frame.maxY + y
         
@@ -271,28 +315,51 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             custom1Image.addSubview(titleLabel)
             
             y1 = custom1Image.frame.maxY + (14 * y)
-        }
+        }*/
         
-        let materialScrollView = UIScrollView()
-        materialScrollView.frame = CGRect(x: (3 * x), y: (10.5 * y), width: view.frame.width, height: (12 * y))
+        materialContent()
+        colorContent()
+        patternContent()
+        
+        let customization2NextButton = UIButton()
+        customization2NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))
+        customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
+        customization2NextButton.addTarget(self, action: #selector(self.customization2NextButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(customization2NextButton)
+    }
+    
+    func materialContent()
+    {
+        let materialTitleLabel = UILabel()
+        materialTitleLabel.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: (8 * y), width: (15 * x), height: (3 * y))
+        materialTitleLabel.layer.borderWidth = 1
+        materialTitleLabel.layer.masksToBounds = true
+        materialTitleLabel.text = "MATERIAL TYPE"
+        materialTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        materialTitleLabel.textAlignment = .center
+        materialTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        view.addSubview(materialTitleLabel)
+        
+        materialScrollView.frame = CGRect(x: (3 * x), y: materialTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
         view.addSubview(materialScrollView)
         
         let buttonTitleText = ["All Material Type", "Fabric", "Synthetic", "Coton"]
         let imageName = ["All Color", "Red", "Green", "Black"]
+        
         var x1:CGFloat = (2 * x)
         
         for i in 0..<materialsArray.count
         {
             let materialButton = UIButton()
             materialButton.frame = CGRect(x: x1, y: y, width: (12 * x), height: (10 * y))
-//            materialButton.setImage(UIImage(named: "genderBackground"), for: .normal)
+            //            materialButton.setImage(UIImage(named: "genderBackground"), for: .normal)
             materialButton.tag = i
             materialButton.addTarget(self, action: #selector(self.materialButtonAction), for: .touchUpInside)
             materialScrollView.addSubview(materialButton)
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: materialButton.frame.width, height: materialButton.frame.height - (2 * y))
-//            buttonImage.image = convertedMaterialsImageArray[i]
+            //            buttonImage.image = convertedMaterialsImageArray[i]
             if let imageName = materialsImageArray[i] as? String
             {
                 let api = "http://appsapi.mzyoon.com/images/Material/\(imageName)"
@@ -317,10 +384,22 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         
         materialScrollView.contentSize.width = x1 + (2 * x)
-
+    }
+    
+    func colorContent()
+    {
+        let colorTitleLabel = UILabel()
+        colorTitleLabel.frame = CGRect(x: ((view.frame.width - (8 * x)) / 2), y: materialScrollView.frame.maxY + (2 * y), width: (8 * x), height: (3 * y))
+        colorTitleLabel.layer.borderWidth = 1
+        colorTitleLabel.layer.masksToBounds = true
+        colorTitleLabel.backgroundColor = UIColor.white
+        colorTitleLabel.text = "COLOR"
+        colorTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        colorTitleLabel.textAlignment = .center
+        colorTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        view.addSubview(colorTitleLabel)
         
-        let colorScrollView = UIScrollView()
-        colorScrollView.frame = CGRect(x: (3 * x), y: materialScrollView.frame.maxY + (5 * y), width: view.frame.width - (3 * x), height: (12 * y))
+        colorScrollView.frame = CGRect(x: (3 * x), y: colorTitleLabel.frame.maxY, width: view.frame.width - (3 * x), height: (12 * y))
         view.addSubview(colorScrollView)
         
         let buttonTitleText2 = ["All Color", "Red", "Green", "Black"]
@@ -329,14 +408,14 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         {
             let colorButton = UIButton()
             colorButton.frame = CGRect(x: x2, y: y, width: (12 * x), height: (10 * y))
-//            colorButton.setImage(UIImage(named: "genderBackground"), for: .normal)
+            //            colorButton.setImage(UIImage(named: "genderBackground"), for: .normal)
             colorButton.tag = i
             colorButton.addTarget(self, action: #selector(self.colorButtonAction), for: .touchUpInside)
             colorScrollView.addSubview(colorButton)
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: colorButton.frame.width, height: colorButton.frame.height - (2 * y))
-//            buttonImage.image = convertedColorsImageArray[i]
+            //            buttonImage.image = convertedColorsImageArray[i]
             if let imageName = colorsImageArray[i] as? String
             {
                 let api = "http://appsapi.mzyoon.com/images/Color/\(imageName)"
@@ -364,26 +443,40 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         
         colorScrollView.contentSize.width = x2 + (2 * x)
+    }
+    
+    func patternContent()
+    {
+        let patternTitleLabel = UILabel()
+        patternTitleLabel.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: colorScrollView.frame.maxY + (2 * y), width: (10 * x), height: (3 * y))
+        patternTitleLabel.layer.borderWidth = 1
+        patternTitleLabel.layer.masksToBounds = true
+        patternTitleLabel.backgroundColor = UIColor.white
+        patternTitleLabel.text = "PATTERN"
+        patternTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        patternTitleLabel.textAlignment = .center
+        patternTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        view.addSubview(patternTitleLabel)
         
-        let patternScrollView = UIScrollView()
-        patternScrollView.frame = CGRect(x: (3 * x), y: colorScrollView.frame.maxY + (5 * y), width: view.frame.width, height: (12 * y))
+        patternScrollView.frame = CGRect(x: (3 * x), y: patternTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
         view.addSubview(patternScrollView)
         
         let buttonTitleText3 = ["All Pattern", "Checked", "Houndstooth", "Twill"]
+        
         var x3:CGFloat = (2 * x)
         
         for i in 0..<patternsArray.count
         {
             let patternButton = UIButton()
             patternButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
-//            patternButton.setImage(UIImage(named: "genderBackground"), for: .normal)
+            //            patternButton.setImage(UIImage(named: "genderBackground"), for: .normal)
             patternButton.tag = i
             patternButton.addTarget(self, action: #selector(self.patternButtonAction), for: .touchUpInside)
             patternScrollView.addSubview(patternButton)
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: patternButton.frame.width, height: patternButton.frame.height - (2 * y))
-//            buttonImage.image = convertedPatternsImageArray[i]
+            //            buttonImage.image = convertedPatternsImageArray[i]
             if let imageName = patternsImageArray[i] as? String
             {
                 let api = "http://appsapi.mzyoon.com/images/Pattern/\(imageName)"
@@ -408,13 +501,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         
         patternScrollView.contentSize.width = x3 + (2 * x)
-
-        
-        let customization2NextButton = UIButton()
-        customization2NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))
-        customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
-        customization2NextButton.addTarget(self, action: #selector(self.customization2NextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(customization2NextButton)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -424,22 +510,89 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func materialButtonAction(sender : UIButton)
     {
+        updatingId = 1
+
         let materialSelectionImage = UIImageView()
         materialSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         materialSelectionImage.image = UIImage(named: "selectionImage")
         materialSelectionImage.tag = sender.tag
         
-        if materalTagIntArray.isEmpty == true
+        if sender.tag != 0
         {
-            materalTagIntArray.append(sender.tag)
-            sender.addSubview(materialSelectionImage)
+            materialTagIntArray = materialTagIntArray.filter { $0 != 0 }
+            
+            for views in materialScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(0)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == 0
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
+            if materialTagIntArray.isEmpty == true
+            {
+                materialTagIntArray.append(sender.tag)
+                sender.addSubview(materialSelectionImage)
+            }
+            else
+            {
+                if materialTagIntArray.contains(sender.tag)
+                {
+                    if let index = materialTagIntArray.index(where: {$0 == sender.tag}) {
+                        materialTagIntArray.remove(at: index)
+                    }
+                    
+                    for views in sender.subviews
+                    {
+                        if let findView = views.viewWithTag(sender.tag)
+                        {
+                            if findView.tag == sender.tag
+                            {
+                                print("FIND VIEW", findView.description)
+                                findView.removeFromSuperview()
+                            }
+                            else
+                            {
+                                print("NOT SAME VIEW")
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    materialTagIntArray.append(sender.tag)
+                    sender.addSubview(seasonalSelectionImage)
+                }
+            }
+            print("SEASONAL ARRAY", materialTagIntArray)
+            self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [0])
         }
         else
         {
-            if materalTagIntArray.contains(sender.tag)
+            for views in materialScrollView.subviews
             {
-                if let index = materalTagIntArray.index(where: {$0 == sender.tag}) {
-                    materalTagIntArray.remove(at: index)
+                if let buttonView = views.viewWithTag(views.tag)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == views.tag
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
+            if materialTagIntArray.contains(sender.tag)
+            {
+                if let index = materialTagIntArray.index(where: {$0 == sender.tag}) {
+                    materialTagIntArray.remove(at: index)
                 }
                 
                 for views in sender.subviews
@@ -460,26 +613,106 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             }
             else
             {
-                materalTagIntArray.append(sender.tag)
+                materialTagIntArray.removeAll()
+                
+                materialTagIntArray.append(sender.tag)
                 sender.addSubview(materialSelectionImage)
             }
+            
+            self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [0])
         }
     }
     
     @objc func colorButtonAction(sender : UIButton)
     {
+        updatingId = 2
+
         let colorSelectionImage = UIImageView()
         colorSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         colorSelectionImage.image = UIImage(named: "selectionImage")
         colorSelectionImage.tag = sender.tag
         
-        if colorTagIntArray.isEmpty == true
+        if sender.tag != 0
         {
-            colorTagIntArray.append(sender.tag)
-            sender.addSubview(colorSelectionImage)
+            colorTagIntArray = colorTagIntArray.filter { $0 != 0 }
+            
+            for views in colorScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(0)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == 0
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
+            if colorTagIntArray.isEmpty == true
+            {
+                colorTagIntArray.append(sender.tag)
+                sender.addSubview(colorSelectionImage)
+            }
+            else
+            {
+                if colorTagIntArray.contains(sender.tag)
+                {
+                    if let index = colorTagIntArray.index(where: {$0 == sender.tag}) {
+                        colorTagIntArray.remove(at: index)
+                    }
+                    
+                    for views in sender.subviews
+                    {
+                        if let findView = views.viewWithTag(sender.tag)
+                        {
+                            if findView.tag == sender.tag
+                            {
+                                print("FIND VIEW", findView.description)
+                                findView.removeFromSuperview()
+                            }
+                            else
+                            {
+                                print("NOT SAME VIEW")
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    colorTagIntArray.append(sender.tag)
+                    sender.addSubview(colorSelectionImage)
+                }
+            }
+            print("SEASONAL ARRAY", colorTagIntArray)
+            
+            if materialTagIntArray.count == 0
+            {
+                self.serviceCall(getMaterialId: [0], getColorId: colorTagIntArray)
+            }
+            else
+            {
+                self.serviceCall(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+            }
+            
         }
         else
         {
+            for views in colorScrollView.subviews
+            {
+                if let buttonView = views.viewWithTag(views.tag)
+                {
+                    for buttonSubView in buttonView.subviews
+                    {
+                        if buttonSubView.tag == views.tag
+                        {
+                            buttonSubView.removeFromSuperview()
+                        }
+                    }
+                }
+            }
+            
             if colorTagIntArray.contains(sender.tag)
             {
                 if let index = colorTagIntArray.index(where: {$0 == sender.tag}) {
@@ -504,8 +737,19 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             }
             else
             {
+                colorTagIntArray.removeAll()
+                
                 colorTagIntArray.append(sender.tag)
                 sender.addSubview(colorSelectionImage)
+            }
+            
+            if materialTagIntArray.count == 0
+            {
+                self.serviceCall(getMaterialId: [0], getColorId: colorTagIntArray)
+            }
+            else
+            {
+                self.serviceCall(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
             }
         }
     }

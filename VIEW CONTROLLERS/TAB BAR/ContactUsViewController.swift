@@ -16,7 +16,9 @@ class ContactUsViewController: CommonViewController
         navigationTitle.text = "CONTACT-US"
         view.backgroundColor = UIColor.orange
         
-        self.tab4Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+//        self.tab4Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        selectedButton(tag: 3)
+
         screenContents()
         
         super.viewDidLoad()
