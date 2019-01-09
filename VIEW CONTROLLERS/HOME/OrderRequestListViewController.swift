@@ -37,7 +37,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     {
         super.viewDidLoad()
         
-         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+//         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        selectedButton(tag: 1)
+
        
        // let BuyerId = UserDefaults.standard.value(forKey: "userId") as! String
        //  print("Buyer ID:",BuyerId)

@@ -15,7 +15,9 @@ class CartViewController: CommonViewController
         navigationTitle.text = "CART"
         view.backgroundColor = UIColor.green
         
-        self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+//        self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        selectedButton(tag: 2)
+
         screenContents()
         
         super.viewDidLoad()

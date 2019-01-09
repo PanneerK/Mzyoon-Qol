@@ -42,7 +42,9 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
 
         // Do any additional setup after loading the view.
         
-         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+//         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        selectedButton(tag: 1)
+
         
          print("request Order ID :",OrderId)
         

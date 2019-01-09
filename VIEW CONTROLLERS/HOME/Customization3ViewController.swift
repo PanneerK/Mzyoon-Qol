@@ -57,7 +57,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     {
         navigationBar.isHidden = true
         
-        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        selectedButton(tag: 0)
         
         self.serviceCall.API_Customization3(DressTypeId: 5, delegate: self)
         
@@ -383,9 +384,15 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selectedCustom = CustomizationAttNameArray[0] as! String
         
         let dropDownImageView = UIImageView()
-        dropDownImageView.frame = CGRect(x: dropDownButton.frame.width - (3 * x), y: y, width: (2 * x), height: (2 * y))
+        dropDownImageView.frame = CGRect(x: dropDownButton.frame.width - (4 * x), y: 0, width: (4 * x), height: (4 * y))
+        dropDownImageView.layer.cornerRadius = 5
+        dropDownImageView.backgroundColor = UIColor.orange
         dropDownImageView.image = UIImage(named: "downArrow")
         dropDownButton.addSubview(dropDownImageView)
+        
+        let templateImage4 = dropDownImageView.image?.withRenderingMode(.alwaysTemplate)
+        dropDownImageView.image = templateImage4
+        dropDownImageView.tintColor = UIColor.white
         
         serviceCall.API_Customization3Attr(AttributeId: 1, delegate: self)
     }
