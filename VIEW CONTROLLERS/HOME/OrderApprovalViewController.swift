@@ -202,10 +202,11 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             let Result = updateQtyOA.object(forKey: "Result") as! String
             print("Result", Result)
             
+            let appointmentAlert = UIAlertController(title: "Info!", message: "Please Book An Appointment Before Proceed to Pay", preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
+            appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(appointmentAlert, animated: true, completion: nil)
             
-            let AppointmentScreen = AppointmentViewController()
-            self.navigationController?.pushViewController(AppointmentScreen, animated: true)
-           
         }
         else if ResponseMsg == "Failure"
         {
@@ -220,7 +221,11 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         }
     }
      
- 
+    func proceedAlertAction(action : UIAlertAction)
+    {
+        let AppointmentScreen = AppointmentViewController()
+        self.navigationController?.pushViewController(AppointmentScreen, animated: true)
+    }
     func orderApprovalContent()
     {
         self.stopActivity()
