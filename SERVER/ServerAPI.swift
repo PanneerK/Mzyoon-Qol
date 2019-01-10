@@ -1431,6 +1431,30 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Sort Descending Failed")
+    // Order Approval - Qty update..
+    func API_UpdateQtyOrderApproval(OrderId : Int, Qty : Int, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Order Approval Page")
+            
+            let parameters = ["OrderId" : OrderId, "Qty" : Qty] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/UPdateQtyInOrderApproval", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_UpdateQtyOrderApproval!(updateQtyOA: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 21, errorMessage: "Order Approval Qty Failed")
                 }
             }
         }

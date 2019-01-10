@@ -312,6 +312,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
         let orderApproveScreen = OrderApprovalViewController()
+        orderApproveScreen.orderID = OrderId
         self.navigationController?.pushViewController(orderApproveScreen, animated: true)
     }
     
