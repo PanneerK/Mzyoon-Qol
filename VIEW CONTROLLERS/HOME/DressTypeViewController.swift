@@ -50,6 +50,11 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool)
+    {
+        serviceCall.API_DressType(genderId: tag, delegate: self)
+    }
+    
     func DeviceError()
     {
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
@@ -69,7 +74,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     func API_CALLBACK_DressType(dressType: NSDictionary)
     {
-        
         let ResponseMsg = dressType.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
@@ -133,6 +137,81 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         {
             let Result = deviceError.object(forKey: "Result") as! String
             print("Result", Result)
+        }
+    }
+    
+    func API_CALLBACK_SortAscending(ascending: NSDictionary) {
+        print("ASCENDING ORDER", ascending)
+        
+        let ResponseMsg = ascending.object(forKey: "ResponseMsg") as! String
+        
+        let dummyArray = NSArray()
+        
+        dressTypeArray = dummyArray
+        dressIdArray = dummyArray
+        dressImageArray = dummyArray
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = ascending.object(forKey: "Result") as! NSArray
+            print("Result", Result)
+            
+            dressTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
+            print("DressTypeInEnglish", dressTypeArray)
+            
+            dressIdArray = Result.value(forKey: "Id") as! NSArray
+            print("Id", dressIdArray)
+            
+            dressImageArray = Result.value(forKey: "ImageURL") as! NSArray
+            print("ImageURL", dressImageArray)
+            
+            dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
+            
+        }
+        else
+        {
+            let Result = ascending.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
+    func API_CALLBACK_SortDescending(descending: NSDictionary) {
+        print("ASCENDING ORDER", descending)
+        
+        let ResponseMsg = descending.object(forKey: "ResponseMsg") as! String
+        
+        let dummyArray = NSArray()
+        
+        dressTypeArray = dummyArray
+        dressIdArray = dummyArray
+        dressImageArray = dummyArray
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = descending.object(forKey: "Result") as! NSArray
+            print("Result", Result)
+            
+            dressTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
+            print("DressTypeInEnglish", dressTypeArray)
+            
+            dressIdArray = Result.value(forKey: "Id") as! NSArray
+            print("Id", dressIdArray)
+            
+            dressImageArray = Result.value(forKey: "ImageURL") as! NSArray
+            print("ImageURL", dressImageArray)
+            
+            dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
+        }
+        else
+        {
+            let Result = descending .object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            ErrorStr = Result
+            DeviceError()
         }
     }
     
@@ -230,10 +309,10 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         dressTypeCollectionView.selectItem(at: NSIndexPath(item: 0, section: 0) as IndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.top)
         //        view.addSubview(dressTypeCollectionView)*/
         
-        dressTypeSubContents(inputTextArray: dressTypeArray, inputImageArray: dressImageArray)
+        dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
     }
     
-    func dressTypeSubContents(inputTextArray : NSArray, inputImageArray : NSArray)
+    func dressTypeSubContents(inputTextArray : NSArray, inputIdArray : NSArray, inputImageArray : NSArray)
     {
         dressTypeScrollView.frame = CGRect(x: (3 * x), y: sortButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (45 * y))
         //        dressTypeScrollView.backgroundColor = UIColor.red
@@ -261,7 +340,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                 y1 = dressTypeButton.frame.maxY + y
             }
             dressTypeButton.backgroundColor = UIColor.clear
-            dressTypeButton.tag = i + 1
+            dressTypeButton.tag = inputIdArray[i] as! Int
             dressTypeButton.addTarget(self, action: #selector(self.dressTypeButtonAction(sender:)), for: .touchUpInside)
             dressTypeScrollView.addSubview(dressTypeButton)
             
@@ -357,15 +436,16 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         {
             let filterButtons = UIButton()
             filterButtons.frame = CGRect(x: x, y: y1, width: view.frame.width - (2 * x), height: (5 * x))
-            filterButtons.setImage(UIImage(named: filterButtonImages[i]), for: .normal)
+            filterButtons.layer.borderWidth = 1
+//            filterButtons.setImage(UIImage(named: filterButtonImages[i]), for: .normal)
             filterButtons.tag = i
             filterButtons.addTarget(self, action: #selector(self.filterButtonAction(sender:)), for: .touchUpInside)
             filterView.addSubview(filterButtons)
             
             let filterImage = UIImageView()
-            filterImage.frame = CGRect(x: (2 * x), y: y, width: (3 * x), height: (3 * y))
-            filterImage.backgroundColor = UIColor.orange
-//            filterButtons.addSubview(filterImage)
+            filterImage.frame = CGRect(x: x, y: y, width: (3 * x), height: (3 * y))
+            filterImage.image = UIImage(named: filterButtonImages[i])
+            filterButtons.addSubview(filterImage)
             
             let filterButtonTitle = UILabel()
             filterButtonTitle.frame = CGRect(x: (5 * x ), y: y, width: filterButtons.frame.width, height: (1.5 * x))
@@ -413,10 +493,24 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     @objc func sortFunc()
     {
         let alert = UIAlertController(title: "SORT BY", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Name -- Ascending A-Z", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Name -- Descending Z-A", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Name -- Ascending A-Z", style: .default, handler: ascendingOrderAlertAction(action:)))
+        alert.addAction(UIAlertAction(title: "Name -- Descending Z-A", style: .default, handler: descendingOrderAlertAction(action:)))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: sortCancelAction(action:)))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func ascendingOrderAlertAction(action : UIAlertAction)
+    {
+        serviceCall.API_SortAscending(delegate: self)
+        sortButton.backgroundColor = UIColor.lightGray
+        sortButton.setTitleColor(UIColor.black, for: .normal)
+    }
+    
+    func descendingOrderAlertAction(action : UIAlertAction)
+    {
+        serviceCall.API_SortDescending(delegate: self)
+        sortButton.backgroundColor = UIColor.lightGray
+        sortButton.setTitleColor(UIColor.black, for: .normal)
     }
     
     @objc func sortCancelAction(action : UIAlertAction)
@@ -429,11 +523,11 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     {
         if sender.tag == 1
         {
-            UserDefaults.standard.set(dressTypeArray[sender.tag - 1], forKey: "DressType")
+            UserDefaults.standard.set(dressTypeArray[sender.tag], forKey: "DressType")
             print("DRESS TYPE OF SELECTED - \(sender.tag)", dressTypeArray[sender.tag])
             let dressSubScreen = DressSubTypeViewController()
             dressSubScreen.screenTag = sender.tag
-            dressSubScreen.headingTitle = dressTypeArray[sender.tag - 1] as! String
+            dressSubScreen.headingTitle = dressTypeArray[sender.tag] as! String
             self.navigationController?.pushViewController(dressSubScreen, animated: true)
         }
         else
@@ -454,8 +548,10 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         
         var nameArrayString = [String]()
         var imageArrayString = [String]()
+        var idArrayString = [Int]()
         var nameArray = NSArray()
         var imageArray = NSArray()
+        var idArray = NSArray()
         
         let text = textField.text
         
@@ -475,20 +571,22 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                         
                         nameArrayString.append(dress)
                         imageArrayString.append(dressImageArray[i] as! String)
+                        idArrayString.append(dressIdArray[i] as! Int)
                     }
                 }
             }
             
             nameArray = nameArrayString as NSArray
             imageArray = imageArrayString as NSArray
+            idArray = idArrayString as NSArray
             
             print("NAME ARRAY AFTER", nameArray)
             
-            dressTypeSubContents(inputTextArray: nameArray, inputImageArray: imageArray)
+            dressTypeSubContents(inputTextArray: nameArray, inputIdArray: idArray, inputImageArray: imageArray)
         }
         else
         {
-            dressTypeSubContents(inputTextArray: dressTypeArray, inputImageArray: dressImageArray)
+            dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
         }
         
     }

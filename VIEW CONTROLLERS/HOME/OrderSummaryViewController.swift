@@ -65,7 +65,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         let orderSummaryScrollView = UIScrollView()
         orderSummaryScrollView.frame = CGRect(x: 0, y: orderSummaryNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
         orderSummaryScrollView.backgroundColor = UIColor.clear
-        orderSummaryScrollView.contentSize.height = (1.75 * view.frame.height)
         view.addSubview(orderSummaryScrollView)
         
         let dressTypeHeadingLabel = UILabel()
@@ -81,22 +80,40 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         dressTypeView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(dressTypeView)
         
-        let dressTypeArray = ["Gender - Men", "Seasonal - All", "Place of Industry - All", "Brand - All", "Material Type - Cotton"]
+        let dressTypeArray = ["Gender - ", "Seasonal - ", "Place of Industry - ", "Brand - ", "Material Type - "]
         var y1:CGFloat = y
         
         for i in 0..<5
         {
+            let dressSubViews = UIView()
+            dressSubViews.frame = CGRect(x: x, y: y1, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
+            dressSubViews.layer.cornerRadius = 10
+            dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
+            dressSubViews.layer.masksToBounds = true
+            dressTypeView.addSubview(dressSubViews)
+            
+            let dressTypeImages = UIImageView()
+            dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
+            dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
+            dressTypeImages.backgroundColor = UIColor.white
+            dressSubViews.addSubview(dressTypeImages)
+            
             let dressTypeLabels = UILabel()
-            dressTypeLabels.frame = CGRect(x: x, y: y1, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
-            dressTypeLabels.layer.cornerRadius = 10
-            dressTypeLabels.layer.masksToBounds = true
-            dressTypeLabels.backgroundColor = UIColor.blue
+            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
+            dressTypeLabels.backgroundColor = UIColor.clear
             dressTypeLabels.text = dressTypeArray[i]
             dressTypeLabels.textColor = UIColor.white
-            dressTypeLabels.textAlignment = .center
-            dressTypeView.addSubview(dressTypeLabels)
+            dressTypeLabels.textAlignment = .left
+            dressSubViews.addSubview(dressTypeLabels)
             
-            y1 = dressTypeLabels.frame.maxY + (y / 2)
+            let getDressTypeLabels = UILabel()
+            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
+            getDressTypeLabels.backgroundColor = UIColor.clear
+            getDressTypeLabels.textColor = UIColor.white
+            getDressTypeLabels.textAlignment = .left
+            dressSubViews.addSubview(getDressTypeLabels)
+            
+            y1 = dressSubViews.frame.maxY + (y / 2)
         }
         
         
@@ -113,22 +130,40 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         customizationView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(customizationView)
         
-        let customizationArray = ["Lapels - Notch", "Buttons - Button 1", "Pockets - Pocket 1", "Vents - vent 1"]
+        let customizationArray = ["Lapels - ", "Buttons - ", "Pockets - ", "Vents - "]
         var y2:CGFloat = y
         
         for i in 0..<4
         {
-            let customizationLabels = UILabel()
-            customizationLabels.frame = CGRect(x: x, y: y2, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
-            customizationLabels.layer.cornerRadius = 10
-            customizationLabels.layer.masksToBounds = true
-            customizationLabels.backgroundColor = UIColor.blue
-            customizationLabels.text = customizationArray[i]
-            customizationLabels.textColor = UIColor.white
-            customizationLabels.textAlignment = .center
-            customizationView.addSubview(customizationLabels)
+            let dressSubViews = UIView()
+            dressSubViews.frame = CGRect(x: x, y: y2, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
+            dressSubViews.layer.cornerRadius = 10
+            dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
+            dressSubViews.layer.masksToBounds = true
+            customizationView.addSubview(dressSubViews)
             
-            y2 = customizationLabels.frame.maxY + (y / 2)
+            let dressTypeImages = UIImageView()
+            dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
+            dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
+            dressTypeImages.backgroundColor = UIColor.white
+            dressSubViews.addSubview(dressTypeImages)
+            
+            let dressTypeLabels = UILabel()
+            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
+            dressTypeLabels.backgroundColor = UIColor.clear
+            dressTypeLabels.text = customizationArray[i]
+            dressTypeLabels.textColor = UIColor.white
+            dressTypeLabels.textAlignment = .left
+            dressSubViews.addSubview(dressTypeLabels)
+            
+            let getDressTypeLabels = UILabel()
+            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
+            getDressTypeLabels.backgroundColor = UIColor.clear
+            getDressTypeLabels.textColor = UIColor.white
+            getDressTypeLabels.textAlignment = .left
+            dressSubViews.addSubview(getDressTypeLabels)
+            
+            y2 = dressSubViews.frame.maxY + (y / 2)
         }
         
         let premiumServicesHeadingLabel = UILabel()
@@ -144,27 +179,45 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         premiumServicesView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(premiumServicesView)
         
-        let premiumArray = ["Measurement + Service - 50.00 AED", "Material Delivery - 70.00 AED", "Urgent Stitches - 150.00 AED", "Additional Design - 20.00 AED", "Special Delivery - 30.00 AED"]
+        let premiumArray = ["Measurement + Service - ", "Material Delivery - ", "Urgent Stitches - ", "Additional Design - ", "Special Delivery - "]
         var y3:CGFloat = y
         
         for i in 0..<5
         {
-            let premiumServicesLabels = UILabel()
-            premiumServicesLabels.frame = CGRect(x: x, y: y3, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
-            premiumServicesLabels.layer.cornerRadius = 10
-            premiumServicesLabels.layer.masksToBounds = true
-            premiumServicesLabels.backgroundColor = UIColor.blue
-            premiumServicesLabels.text = premiumArray[i]
-            premiumServicesLabels.textColor = UIColor.white
-            premiumServicesLabels.textAlignment = .center
-            premiumServicesView.addSubview(premiumServicesLabels)
+            let dressSubViews = UIView()
+            dressSubViews.frame = CGRect(x: x, y: y3, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
+            dressSubViews.layer.cornerRadius = 10
+            dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
+            dressSubViews.layer.masksToBounds = true
+            premiumServicesView.addSubview(dressSubViews)
             
-            y3 = premiumServicesLabels.frame.maxY + (y / 2)
+            let dressTypeImages = UIImageView()
+            dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
+            dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
+            dressTypeImages.backgroundColor = UIColor.white
+            dressSubViews.addSubview(dressTypeImages)
+            
+            let dressTypeLabels = UILabel()
+            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (19 * x), height: (3 * y))
+            dressTypeLabels.backgroundColor = UIColor.clear
+            dressTypeLabels.text = premiumArray[i]
+            dressTypeLabels.textColor = UIColor.white
+            dressTypeLabels.textAlignment = .left
+            dressSubViews.addSubview(dressTypeLabels)
+            
+            let getDressTypeLabels = UILabel()
+            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (5 * x), height: (3 * y))
+            getDressTypeLabels.backgroundColor = UIColor.clear
+            getDressTypeLabels.textColor = UIColor.white
+            getDressTypeLabels.textAlignment = .left
+            dressSubViews.addSubview(getDressTypeLabels)
+            
+            y3 = dressSubViews.frame.maxY + (y / 2)
         }
         
         let noteView = UIView()
         noteView.frame = CGRect(x: (3 * x), y: premiumServicesView.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (5 * x))
-        noteView.backgroundColor = UIColor.orange
+        noteView.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         orderSummaryScrollView.addSubview(noteView)
         
         let noteLabel = UILabel()
@@ -196,27 +249,47 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         for i in 0..<2
         {
-            let tailorLabels = UILabel()
-            tailorLabels.frame = CGRect(x: x, y: y4, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
-            tailorLabels.layer.cornerRadius = 10
-            tailorLabels.layer.masksToBounds = true
-            tailorLabels.backgroundColor = UIColor.blue
-            tailorLabels.text = "Tailor - \(i) - \(tailorArray[i])"
-            tailorLabels.textColor = UIColor.white
-            tailorLabels.textAlignment = .center
-            tailorView.addSubview(tailorLabels)
+            let dressSubViews = UIView()
+            dressSubViews.frame = CGRect(x: x, y: y4, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
+            dressSubViews.layer.cornerRadius = 10
+            dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
+            dressSubViews.layer.masksToBounds = true
+            tailorView.addSubview(dressSubViews)
             
-            y4 = tailorLabels.frame.maxY + (y / 2)
+            let dressTypeImages = UIImageView()
+            dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
+            dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
+            dressTypeImages.backgroundColor = UIColor.white
+            dressSubViews.addSubview(dressTypeImages)
+            
+            let dressTypeLabels = UILabel()
+            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (10 * x), height: (3 * y))
+            dressTypeLabels.backgroundColor = UIColor.clear
+            dressTypeLabels.text = "Tailor_\(i) - "
+            dressTypeLabels.textColor = UIColor.white
+            dressTypeLabels.textAlignment = .left
+            dressSubViews.addSubview(dressTypeLabels)
+            
+            let getDressTypeLabels = UILabel()
+            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (14 * x), height: (3 * y))
+            getDressTypeLabels.backgroundColor = UIColor.clear
+            getDressTypeLabels.textColor = UIColor.white
+            getDressTypeLabels.textAlignment = .left
+            dressSubViews.addSubview(getDressTypeLabels)
+            
+            y4 = dressSubViews.frame.maxY + (y / 2)
         }
         
         
         let submitButton = UIButton()
         submitButton.frame = CGRect(x: orderSummaryScrollView.frame.width - (13 * x), y: tailorView.frame.maxY + (2 * y), width: (10 * x), height: (4 * y))
-        submitButton.backgroundColor = UIColor.blue
+        submitButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         submitButton.setTitle("SUBMIT", for: .normal)
         submitButton.setTitleColor(UIColor.white, for: .normal)
         submitButton.addTarget(self, action: #selector(self.submitButtonAction(sender:)), for: .touchUpInside)
         orderSummaryScrollView.addSubview(submitButton)
+        
+        orderSummaryScrollView.contentSize.height = submitButton.frame.maxY + (2 * y)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

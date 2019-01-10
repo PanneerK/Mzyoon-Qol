@@ -90,7 +90,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         button.backgroundColor = UIColor.red
         button.addTarget(self, action: Selector(("helpless")), for: .touchUpInside)
 //        self.view.addSubview(button)
-        deviceInformation()
 
         splashScreen()
 
@@ -112,14 +111,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     func removeSplashScreen()
     {
         splashView.removeFromSuperview()
-    }
-    
-    func deviceInformation()
-    {
-        print("MODEL", UIDevice.current.model)
-        print("SYSTEM NAME", UIDevice.current.systemName)
-        print("VERSION", UIDevice.current.systemVersion)
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
     }
     
     func addDoneButtonOnKeyboard()

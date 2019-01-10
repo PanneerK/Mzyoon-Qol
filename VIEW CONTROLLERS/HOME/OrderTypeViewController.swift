@@ -231,6 +231,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             directDeliveryButton.addSubview(dummyImageView)
         }
 //        directDeliveryButton.setImage(convertedOrderBodyImageArray[0], for: .normal)
+        directDeliveryButton.tag = orderTypeIDArray[0] as! Int
         directDeliveryButton.addTarget(self, action: #selector(self.ownMaterialButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(directDeliveryButton)
         
@@ -273,6 +274,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             courierDeliveryButton.addSubview(dummyImageView)
         }
 //        courierDeliveryButton.setImage(convertedOrderBodyImageArray[1], for: .normal)
+        courierDeliveryButton.tag = orderTypeIDArray[1] as! Int
         courierDeliveryButton.addTarget(self, action: #selector(self.ownMaterialButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(courierDeliveryButton)
         
@@ -315,6 +317,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             companyButton.addSubview(dummyImageView)
         }
 //        companyButton.setImage(convertedOrderBodyImageArray[2], for: .normal)
+        companyButton.tag = orderTypeIDArray[2] as! Int
         companyButton.addTarget(self, action: #selector(self.companyButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(companyButton)
     }
@@ -326,7 +329,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     @objc func ownMaterialButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set("OwnMaterial", forKey: "OrderType")
+        print("SENDER TAG IN ORDER TYPE", sender.tag)
+        UserDefaults.standard.set(sender.tag, forKey: "orderType")
         let ownMaterialScreen = OwnMateialViewController()
         self.navigationController?.pushViewController(ownMaterialScreen, animated: true)
     }
@@ -334,7 +338,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     @objc func companyButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set("CompanyMaterial", forKey: "OrderType")
+        print("SENDER TAG IN ORDER TYPE", sender.tag)
+        UserDefaults.standard.set(sender.tag, forKey: "orderType")
         let customizationScreen = Customization1ViewController()
         self.navigationController?.pushViewController(customizationScreen, animated: true)
     }

@@ -103,8 +103,6 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     
     override func viewDidLoad()
     {
-        print("VIEWDIDLOAD")
-        
         UserDefaults.standard.set(1, forKey: "screenAppearance")
         
         xPos = 10 / 375 * 100
@@ -182,11 +180,6 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     
     func deviceInformation()
     {
-        print("MODEL", UIDevice.current.model)
-        print("SYSTEM NAME", UIDevice.current.systemName)
-        print("VERSION", UIDevice.current.systemVersion)
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
-        
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         Os = UIDevice.current.systemName
         Manufacturer = "Apple"
@@ -208,7 +201,6 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         PageNumStr = "HomeViewController"
       //  MethodName = "do"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -283,7 +275,6 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("VIEWWILLAPPEAR")
         super.viewWillAppear(true)
         newOrderView.removeFromSuperview()
         

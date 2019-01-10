@@ -64,7 +64,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         PageNumStr = "GenderViewController"
         MethodName = "GetGenders"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -78,33 +77,25 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     
     func API_CALLBACK_Gender(gender: NSDictionary)
     {
-        print("GENDER", gender)
-        
         let ResponseMsg = gender.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
-        {
+        { 
             let result = gender.object(forKey: "Result") as! NSArray
-            print("result", result)
             
             genderArray = result.value(forKey: "gender") as! NSArray
-            print("genderResult", genderArray)
             
             genderImageArray = result.value(forKey: "ImageURL") as! NSArray
-            print("ImageURL", genderImageArray)
             
             genderIdArray = result.value(forKey: "Id") as! NSArray
-            print("Id", genderIdArray)
             
             genderInArabicArray = result.value(forKey: "GenderInArabic") as! NSArray
-            print("GenderInArabic", genderInArabicArray)
             
              self.newOrderContents()
         }
         else if ResponseMsg == "Failure"
         {
             let Result = gender.object(forKey: "Result") as! String
-            print("Result", Result)
             
             ErrorStr = Result
             DeviceError()
@@ -119,7 +110,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
                 let apiurl = URL(string: api)
                 
                 if let data = try? Data(contentsOf: apiurl!) {
-                    print("DATA OF IMAGE", data)
                     if let image = UIImage(data: data) {
                         self.convertedGenderImageArray.append(image)
                     }
@@ -147,7 +137,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             let Result = deviceError.object(forKey: "Result") as! String
-            print("Result", Result)
         }
     }
     
@@ -200,7 +189,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             genderButton.layer.borderWidth = 1
             genderButton.backgroundColor = UIColor.lightGray
 //            genderButton.setImage(UIImage(named: "genderBackground"), for: .normal)
-            genderButton.tag = i + 1
+            genderButton.tag = genderIdArray[i] as! Int
             genderButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
             view.addSubview(genderButton)
             
@@ -228,7 +217,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             genderButton.addSubview(buttonImage)
             
             let buttonTitle = UILabel()
-            buttonTitle.frame = CGRect(x: 2, y: genderButton.frame.height - (3 * y), width: genderButton.frame.width - 4, height: (3 * y))
+            buttonTitle.frame = CGRect(x: 0, y: genderButton.frame.height - (3 * y), width: genderButton.frame.width, height: (3 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             buttonTitle.text = genderArray[i] as? String
             buttonTitle.textColor = UIColor.white
@@ -254,7 +243,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            let emptyAlert = UIAlertController(title: "Alert", message: "As of now we have dresses available only for men", preferredStyle: .alert)
+            let emptyAlert = UIAlertController(title: "Alert", message: "As of now we are providing services for men alone", preferredStyle: .alert)
             emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(emptyAlert, animated: true, completion: nil)
         }
