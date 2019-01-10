@@ -72,6 +72,9 @@ import Foundation
     @objc optional func API_CALLBACK_InsertAppointmentMaterial(insertAppointmentMaterial : NSDictionary)
     @objc optional func API_CALLBACK_InsertAppointmentMeasurement(insertAppointmentMeasure : NSDictionary)
     
+    //9-1-2019
+    @objc optional func API_CALLBACK_SortAscending(ascending : NSDictionary)
+    @objc optional func API_CALLBACK_SortDescending(descending : NSDictionary)
     // 9-1-2019
     @objc optional func API_CALLBACK_UpdateQtyOrderApproval(updateQtyOA : NSDictionary)
 

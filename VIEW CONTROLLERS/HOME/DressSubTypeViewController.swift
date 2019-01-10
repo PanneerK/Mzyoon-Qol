@@ -14,6 +14,10 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     var headingTitle = String()
     let serviceCall = ServerAPI()
     
+    let dressSubTypeScrollView = UIScrollView()
+    let searchTextField = UITextField()
+    let sortButton = UIButton()
+
     //DRESS SUB TYPE PARAMETERS
     
     var dressIdArray = NSArray()
@@ -94,6 +98,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             dressSubTypeImages = Result.value(forKey: "Image") as! NSArray
             print("dressSubTypeImages", dressSubTypeImages)
             
+            screenContents()
         }
         else if ResponseMsg == "Failure"
         {
@@ -103,11 +108,9 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             ErrorStr = Result
             DeviceError()
         }
-        
-         self.subTypeContents()
     }
     
-    func subTypeContents()
+    func screenContents()
     {
         let orderSubTypeNavigationBar = UIView()
         orderSubTypeNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -129,7 +132,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         orderSubTypeNavigationBar.addSubview(navigationTitle)
         
-        let searchTextField = UITextField()
         searchTextField.frame = CGRect(x: 0, y: orderSubTypeNavigationBar.frame.maxY, width: view.frame.width - 50, height: 40)
         searchTextField.layer.borderWidth = 1
         searchTextField.layer.borderColor = UIColor.orange.cgColor
@@ -144,6 +146,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         searchTextField.clearsOnBeginEditing = true
         searchTextField.returnKeyType = .done
         searchTextField.delegate = self
+        searchTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         view.addSubview(searchTextField)
         
         let searchButton = UIButton()
@@ -153,7 +156,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         searchButton.setImage(UIImage(named: "search"), for: .normal)
         searchTextField.addSubview(searchButton)
         
-        let sortButton = UIButton()
         sortButton.frame = CGRect(x: view.frame.width - (view.frame.width / 2.75), y: searchTextField.frame.maxY + y, width: (view.frame.width / 3), height: (4 * y))
         sortButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         sortButton.setTitle("SORT", for: .normal)
@@ -162,7 +164,11 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         //        sortButton.addTarget(self, action: #selector(self.featuresButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(sortButton)
         
-        let dressSubTypeScrollView = UIScrollView()
+        self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
+    }
+    
+    func subTypeContents(getNameArray : NSArray, getIdArray : NSArray, getImageArray : NSArray)
+    {
         dressSubTypeScrollView.frame = CGRect(x: (3 * x), y: sortButton.frame.maxY + y, width: view.frame.width - (6 * x), height: (45 * y))
         //        dressSubTypeScrollView.backgroundColor = UIColor.black
         view.addSubview(dressSubTypeScrollView)
@@ -170,7 +176,12 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         var y1:CGFloat = 0
         var x1:CGFloat = 0
         
-        for i in 0..<dressSubTypeArray.count
+        for views in dressSubTypeScrollView.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
+        for i in 0..<getNameArray.count
         {
             let dressTypeButton = UIButton()
             if i % 2 == 0
@@ -184,7 +195,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             }
             dressTypeButton.layer.borderWidth =  1
             dressTypeButton.backgroundColor = UIColor.lightGray
-            dressTypeButton.tag = i + 1
+            dressTypeButton.tag = getIdArray[i] as! Int
             dressTypeButton.addTarget(self, action: #selector(self.dressTypeButtonAction(sender:)), for: .touchUpInside)
             dressSubTypeScrollView.addSubview(dressTypeButton)
             
@@ -193,7 +204,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             let dressTypeImageView = UIImageView()
             dressTypeImageView.frame = CGRect(x: 0, y: 0, width: dressTypeButton.frame.width, height: (13 * y))
             //            dressTypeImageView.image = convertedDressImageArray[i]
-            if let imageName = dressSubTypeImages[i] as? String
+            if let imageName = getImageArray[i] as? String
             {
                 let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
                 print("SUB TYPE IMAGES", api)
@@ -206,13 +217,61 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             let dressTypeNameLabel = UILabel()
             dressTypeNameLabel.frame = CGRect(x: 0, y: dressTypeImageView.frame.maxY, width: dressTypeButton.frame.width, height: (3 * y))
             dressTypeNameLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            dressTypeNameLabel.text = dressSubTypeArray[i] as? String
+            dressTypeNameLabel.text = getNameArray[i] as? String
             dressTypeNameLabel.textColor = UIColor.white
             dressTypeNameLabel.textAlignment = .center
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
         
         dressSubTypeScrollView.contentSize.height = y1 + (20 * y)
+    }
+    
+    @objc func textFieldDidChange(textField: UITextField){
+        
+        var nameArrayString = [String]()
+        var imageArrayString = [String]()
+        var idArrayString = [Int]()
+        var nameArray = NSArray()
+        var imageArray = NSArray()
+        var idArray = NSArray()
+        
+        let text = textField.text
+        
+        print("ENTERED TEXTFIELD")
+        if (text?.utf16.count)! >= 1{
+            for i in 0..<dressSubTypeArray.count
+            {
+                if let dress = dressSubTypeArray[i] as? String
+                {
+                    let count = textField.text?.count
+                    print("WELCOME OF DRESS", dress.prefix(count!))
+                    let subString = dress.prefix(count!)
+                    let convertedSubString = String(subString)
+                    if textField.text == convertedSubString
+                    {
+                        print("BOTH ARE EQUAL", dress)
+                        
+                        nameArrayString.append(dress)
+                        imageArrayString.append(dressSubTypeImages[i] as! String)
+                        idArrayString.append(dressSubTypeIdArray[i] as! Int)
+                    }
+                }
+            }
+            
+            nameArray = nameArrayString as NSArray
+            imageArray = imageArrayString as NSArray
+            idArray = idArrayString as NSArray
+            
+            print("NAME ARRAY AFTER", nameArray)
+            
+            subTypeContents(getNameArray: nameArray, getIdArray: idArray, getImageArray: imageArray)
+            
+        }
+        else
+        {
+            subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressSubTypeIdArray, getImageArray: dressSubTypeImages)
+        }
+        
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

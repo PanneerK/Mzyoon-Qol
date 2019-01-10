@@ -17,9 +17,9 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-       var baseURL:String = "http://192.168.0.21/TailorAPI"
-    //   var baseURL:String = "http://appsapi.mzyoon.com"
-    
+         var baseURL:String = "http://192.168.0.21/TailorAPI"
+//       var baseURL:String = "http://appsapi.mzyoon.com"
+ 
     let deviceId = UIDevice.current.identifierForVendor
 
     func API_LoginUser(CountryCode : String, PhoneNo : String, delegate:ServerAPIDelegate)
@@ -132,8 +132,6 @@ class ServerAPI : NSObject
             
             let urlString:String = String(format: "%@/images/flags/\(imageName)", arguments: [baseURL])
             
-            print("URL STRING", urlString)
-            
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 
                 if response.result.value != nil
@@ -167,8 +165,6 @@ class ServerAPI : NSObject
             
             let urlString:String = String(format: "%@/API/Order/GetGenders", arguments: [baseURL])
             
-            print("URL STRING FOR GENDER", urlString)
-            
             request(urlString, method: .get, parameters: nil, encoding: URLEncoding.default).responseJSON {response in
                 
                 if response.result.value != nil
@@ -201,8 +197,6 @@ class ServerAPI : NSObject
             
             
             let urlString:String = String(format: "%@/images/\(imageName)", arguments: [baseURL])
-            
-            print("URL STRING FOR GENDER", urlString)
             
             /*request(urlString, method: .get, parameters: nil, encoding: URLEncoding.default).responseJSON {response in
                 
@@ -301,10 +295,7 @@ class ServerAPI : NSObject
             let parameters = ["placeofOrginId[0][id]" : "\(origin)", "seasonId[0][id]" : "\(season)"] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetCustomization1", arguments: [baseURL])
-            
-            print("Customization 1URL STRING", urlString)
-            print("Customization 1 PARAMETERS", parameters)
-            
+                        
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
                 if response.result.value != nil
                 {
@@ -328,11 +319,38 @@ class ServerAPI : NSObject
     
     func API_Customization2(brandId : String, materialId : [Int], ColorId : [Int], delegate : ServerAPIDelegate)
     {
+        var materials = String()
+        var colors = String()
+        
+        for i in 0..<materialId.count
+        {
+            if i == 0
+            {
+                materials.append("\(materialId[i])")
+            }
+            else
+            {
+                materials.append(",\(materialId[i])")
+            }
+        }
+        
+        for i in 0..<ColorId.count
+        {
+            if i == 0
+            {
+                colors.append("\(ColorId[i])")
+            }
+            else
+            {
+                colors.append(",\(ColorId[i])")
+            }
+        }
+        
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Customization 2 Page")
             
-            let parameters = ["BrandId[0][Id]" : "\(brandId)", "MaterialTypeId[0][Id]" : "\(materialId)", "ColorId[0][Id]" : "\(ColorId)"] as [String : Any]
+            let parameters = ["BrandId[0][Id]" : "\(brandId)", "MaterialTypeId[0][Id]" : "\(materials)", "ColorId[0][Id]" : "\(colors)"] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetCustomization2", arguments: [baseURL])
             
@@ -966,17 +984,11 @@ class ServerAPI : NSObject
     {
         if (Reachability()?.isReachable)!
         {
-            print("Server Reached - home Page")
-            
             let parameters = ["DeviceId" : DeviceId, "Os" : Os, "Manufacturer" : Manufacturer, "CountryCode" : CountryCode, "PhoneNumber" : PhoneNumber, "Model" : Model, "AppVersion" : AppVersion, "Type" : Type] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Login/InsertUpdateDeviceDetails", arguments: [baseURL])
             
-            print("URL STRING", urlString)
-            print("PARAMETERS", parameters)
-            
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
-                print("REQUEST", request)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
@@ -1075,17 +1087,11 @@ class ServerAPI : NSObject
     {
         if (Reachability()?.isReachable)!
         {
-            print("Server Reached - home Page")
-            
             let parameters = ["DeviceId" : DeviceId, "PageName" : PageName, "MethodName" : MethodName, "Error" : Error, "ApiVersion" : ApiVersion, "Type" : Type] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Login/InsertError", arguments: [baseURL])
             
-            print("URL STRING", urlString)
-            print("PARAMETERS", parameters)
-            
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
-                print("REQUEST", request)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
@@ -1370,6 +1376,61 @@ class ServerAPI : NSObject
         }
     }
     
+    func API_SortAscending(delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Sort Ascending Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetAscendingDressType", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
+            request(urlString, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_SortAscending!(ascending: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Sort Ascending Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    func API_SortDescending(delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Sort Descending Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetDescendingDressType", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
+            request(urlString, method: .get, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_SortDescending!(descending: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Sort Descending Failed")
     // Order Approval - Qty update..
     func API_UpdateQtyOrderApproval(OrderId : Int, Qty : Int, delegate : ServerAPIDelegate)
     {

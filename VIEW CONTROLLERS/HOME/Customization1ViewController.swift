@@ -373,7 +373,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         {
             let industryButton = UIButton()
             industryButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
-            industryButton.tag = i
+            industryButton.tag = industryIdArray[i] as! Int
             industryButton.addTarget(self, action: #selector(self.industryButtonAction(sender:)), for: .touchUpInside)
             industryScrollView.addSubview(industryButton)
             
@@ -576,8 +576,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 sender.addSubview(seasonalSelectionImage)
             }
             
-            
-
 //            self.serviceCall(originIdArray: [0], seasonIdArray: [0])
         }
         

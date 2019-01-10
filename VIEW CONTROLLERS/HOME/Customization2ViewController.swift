@@ -174,8 +174,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             materialsIdArray = Materials.value(forKey: "Id") as! NSArray
             materialsImageArray = Materials.value(forKey: "Image") as! NSArray
             
-            print("WELCOME")
-            
             /*for i in 0..<materialsImageArray.count
             {
                 if let imageName = materialsImageArray[i] as? String
@@ -248,11 +246,11 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             }
             else if updatingId == 1
             {
-                
+                colorContent()
             }
             else if updatingId == 2
             {
-                
+                patternContent()
             }
         }
         else if ResponseMsg == "Failure"
@@ -402,6 +400,11 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         colorScrollView.frame = CGRect(x: (3 * x), y: colorTitleLabel.frame.maxY, width: view.frame.width - (3 * x), height: (12 * y))
         view.addSubview(colorScrollView)
         
+        for views in colorScrollView.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
         let buttonTitleText2 = ["All Color", "Red", "Green", "Black"]
         var x2:CGFloat = (2 * x)
         for i in 0..<colorsArray.count
@@ -460,6 +463,11 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         patternScrollView.frame = CGRect(x: (3 * x), y: patternTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
         view.addSubview(patternScrollView)
+        
+        for views in patternScrollView.subviews
+        {
+            views.removeFromSuperview()
+        }
         
         let buttonTitleText3 = ["All Pattern", "Checked", "Houndstooth", "Twill"]
         

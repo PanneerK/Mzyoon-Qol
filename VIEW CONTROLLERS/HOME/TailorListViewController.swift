@@ -602,25 +602,21 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             marker.map = mapView
         }
         
-        if isHidden == false
+        let markerImageView = UIImageView()
+        markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
+        markerImageView.image = UIImage(named: "marker")
+        
+        if mapView.isHidden  == false
         {
-            let markerImageView = UIImageView()
-            markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
-            markerImageView.image = UIImage(named: "marker")
             mapView.addSubview(markerImageView)
-            
-//            marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
+
+            marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
             marker.iconView = markerImageView
             marker.map = mapView
         }
         else
         {
-            let markerImageView = UIImageView()
-            markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
-            markerImageView.image = UIImage(named: "marker")
-            mapView.addSubview(markerImageView)
-            
 //            marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
             marker.iconView = markerImageView

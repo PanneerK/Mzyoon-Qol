@@ -30,9 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func checkLogin()
     {
         if let screen = UserDefaults.standard.value(forKey: "screenAppearance") as? Int
-        {
-            print("SCREEN VALUE", screen)
-            
+        {            
             if screen == 0
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
@@ -46,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = AppointmentViewController()
+                let loginScreen = HomeViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen

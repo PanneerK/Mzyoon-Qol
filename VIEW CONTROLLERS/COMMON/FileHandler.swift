@@ -49,11 +49,6 @@ class FileHandler {
     }
     
     func imagePath() -> String{
-        let timeStamp = Date().timeIntervalSince1970
-        
-        let timeStampInt = Int(timeStamp)
-        print("TIME STAMP", timeStampInt)
-
         return (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("mzyoon.png")
     }
 }
