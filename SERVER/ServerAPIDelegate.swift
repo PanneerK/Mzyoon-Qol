@@ -75,9 +75,10 @@ import Foundation
     //9-1-2019
     @objc optional func API_CALLBACK_SortAscending(ascending : NSDictionary)
     @objc optional func API_CALLBACK_SortDescending(descending : NSDictionary)
-    
-    // 9-1-2019
     @objc optional func API_CALLBACK_UpdateQtyOrderApproval(updateQtyOA : NSDictionary)
-
+ 
+   // 11-1-2019
+    @objc optional func API_CALLBACK_GetAppointmentMaterial(getAppointmentMaterial : NSDictionary)
+    @objc optional func API_CALLBACK_GetAppointmentMeasurement(getAppointmentMeasure : NSDictionary)
     
 }

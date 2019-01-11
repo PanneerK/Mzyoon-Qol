@@ -224,8 +224,10 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     func proceedAlertAction(action : UIAlertAction)
     {
         let AppointmentScreen = AppointmentViewController()
+        AppointmentScreen.OrderID = orderID
         self.navigationController?.pushViewController(AppointmentScreen, animated: true)
     }
+    
     func orderApprovalContent()
     {
         self.stopActivity()
