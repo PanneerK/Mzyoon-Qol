@@ -40,7 +40,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
        
          AppointmentContent()
     }
-    func DeviceError()
+    func DeviceError() 
     {
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
