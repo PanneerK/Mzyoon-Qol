@@ -23,6 +23,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+    var From_OrderType_TF = UITextField()
+    var TO_OrderType_TF = UITextField()
+    
+    var From_MaterialType_TF = UITextField()
+    var TO_MaterialType_TF = UITextField()
+    
+    var FromDatePick = UIDatePicker()
+    var ToDatePick = UIDatePicker()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -245,7 +254,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         view.addSubview(TO_OrderTypeLBL)
         
        
-        let From_OrderType_TF = UITextField()
+        //let From_OrderType_TF = UITextField()
         From_OrderType_TF.frame = CGRect(x: (3 * x), y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2 , height: (2 * y))
         From_OrderType_TF.text = "28 Dec 2018 2.00 PM"
         From_OrderType_TF.textColor = UIColor.white
@@ -255,7 +264,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         From_OrderType_TF.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(From_OrderType_TF)
         
-        let TO_OrderType_TF = UITextField()
+       // let TO_OrderType_TF = UITextField()
         TO_OrderType_TF.frame = CGRect(x: From_OrderType_TF.frame.maxX + 1, y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (2 * y))
         TO_OrderType_TF.text = "31 Dec 2018 10.00 AM"
         TO_OrderType_TF.textColor = UIColor.white
@@ -272,7 +281,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         let MaterialTypeLabel = UILabel()
         MaterialTypeLabel.frame = CGRect(x: ((view.frame.width - (12 * x)) / 2), y: From_OrderType_TF.frame.maxY + y, width: (14 * x), height: (3 * y))
         MaterialTypeLabel.backgroundColor = UIColor.white
-        MaterialTypeLabel.text = "MATERIAL TYPE"
+        MaterialTypeLabel.text = "MEASUREMENT TYPE"
         MaterialTypeLabel.layer.borderColor = UIColor.lightGray.cgColor
         MaterialTypeLabel.layer.borderWidth = 1.0
         MaterialTypeLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -347,7 +356,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
        //  TO_OrderTypeLBL.backgroundColor = UIColor.lightGray
         view.addSubview(TO_MaterialTypeLBL)
         
-        let From_MaterialType_TF = UITextField()
+       // let From_MaterialType_TF = UITextField()
         From_MaterialType_TF.frame = CGRect(x: (3 * x), y: From_MaterialTypeLBL.frame.maxY, width: courierImageView.frame.width / 2 , height: (2 * y))
         From_MaterialType_TF.text = "15 Dec 2018 2.00 PM"
         From_MaterialType_TF.textColor = UIColor.white
@@ -357,7 +366,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         From_MaterialType_TF.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(From_MaterialType_TF)
         
-        let TO_MaterialType_TF = UITextField()
+       // let TO_MaterialType_TF = UITextField()
         TO_MaterialType_TF.frame = CGRect(x: From_MaterialType_TF.frame.maxX + 1, y: From_MaterialTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (2 * y))
         TO_MaterialType_TF.text = "20 Dec 2018 10.00 AM"
         TO_MaterialType_TF.textColor = UIColor.white
@@ -545,5 +554,70 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         navigationScreen.isNavigationBarHidden = true
         window?.rootViewController = navigationScreen
         window?.makeKeyAndVisible()
+    }
+    
+    @objc func calendarButtonAction()
+    {
+        pickUpDate(From_OrderType_TF)
+     
+    }
+    
+    func pickUpDate(_ textField : UITextField)
+    {
+        
+        // FromDate DatePicker
+        self.FromDatePick = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
+        self.FromDatePick.backgroundColor = UIColor.white
+        self.FromDatePick.datePickerMode = UIDatePicker.Mode.date
+        self.FromDatePick.maximumDate = Date()
+        textField.inputView = self.FromDatePick
+        
+        // ToDate DatePicker
+        self.ToDatePick = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
+        self.ToDatePick.backgroundColor = UIColor.white
+        self.ToDatePick.datePickerMode = UIDatePicker.Mode.date
+        self.ToDatePick.maximumDate = Date()
+        textField.inputView = self.ToDatePick
+        
+        // ToolBar
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.doneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        textField.inputAccessoryView = toolBar
+        
+    }
+    
+    @objc func doneClick()
+    {
+        let From_dateFormatter = DateFormatter()
+        From_dateFormatter.dateStyle = .medium
+        From_dateFormatter.timeStyle = .none
+        From_dateFormatter.dateFormat = "dd/MM/yyyy"  //"yyyy/MM/dd"
+        From_OrderType_TF.text = From_dateFormatter.string(from: FromDatePick.date)
+        From_OrderType_TF.resignFirstResponder()
+        
+        
+        let To_dateFormatter = DateFormatter()
+        To_dateFormatter.dateStyle = .medium
+        To_dateFormatter.timeStyle = .none
+        To_dateFormatter.dateFormat = "dd/MM/yyyy"  //"yyyy/MM/dd"
+        TO_OrderType_TF.text = To_dateFormatter.string(from: FromDatePick.date)
+        TO_OrderType_TF.resignFirstResponder()
+        
+    }
+    @objc func cancelClick()
+    {
+        From_OrderType_TF.resignFirstResponder()
+        TO_OrderType_TF.resignFirstResponder()
+        
     }
 }
