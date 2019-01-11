@@ -386,7 +386,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         let dropDownImageView = UIImageView()
         dropDownImageView.frame = CGRect(x: dropDownButton.frame.width - (4 * x), y: 0, width: (4 * x), height: (4 * y))
         dropDownImageView.layer.cornerRadius = 5
-        dropDownImageView.backgroundColor = UIColor.orange
+        dropDownImageView.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         dropDownImageView.image = UIImage(named: "downArrow")
         dropDownButton.addSubview(dropDownImageView)
         

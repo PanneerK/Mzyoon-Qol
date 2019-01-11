@@ -17,8 +17,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-         var baseURL:String = "http://192.168.0.21/TailorAPI"
-//       var baseURL:String = "http://appsapi.mzyoon.com"
+//         var baseURL:String = "http://192.168.0.21/TailorAPI"
+       var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -1431,7 +1431,17 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Sort Descending Failed")
-    // Order Approval - Qty update..
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+        
+        
+        // Order Approval - Qty update..
     func API_UpdateQtyOrderApproval(OrderId : Int, Qty : Int, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!

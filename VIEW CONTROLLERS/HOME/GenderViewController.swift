@@ -236,7 +236,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     {
         if sender.tag == 1
         {
-            UserDefaults.standard.set("men", forKey: "Gender")
+            UserDefaults.standard.set("Male", forKey: "gender")
             let dressTypeScreen = DressTypeViewController()
             dressTypeScreen.tag = sender.tag
             self.navigationController?.pushViewController(dressTypeScreen, animated: true)
