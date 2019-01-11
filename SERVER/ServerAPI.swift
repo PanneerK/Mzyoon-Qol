@@ -1431,6 +1431,15 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Sort Descending Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
     // Order Approval - Qty update..
     func API_UpdateQtyOrderApproval(OrderId : Int, Qty : Int, delegate : ServerAPIDelegate)
     {
