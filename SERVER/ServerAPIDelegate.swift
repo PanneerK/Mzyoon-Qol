@@ -28,7 +28,7 @@ import Foundation
     @objc optional func API_CALLBACK_Customization3(custom3 : NSDictionary)
     @objc optional func API_CALLBACK_Customization3Attr(custom3Attr : NSDictionary)
     
-    @objc optional func API_CALLBACK_InsertAddress(insertAddr : NSDictionary) 
+    @objc optional func API_CALLBACK_InsertAddress(insertAddr : NSDictionary)
     @objc optional func API_CALLBACK_UpdateAddress(updateAddr : NSDictionary)
     @objc optional func API_CALLBACK_DeleteAddress(deleteAddr : NSDictionary)
     @objc optional func API_CALLBACK_GetBuyerAddress(getBuyerAddr : NSDictionary)
@@ -75,6 +75,8 @@ import Foundation
     //9-1-2019
     @objc optional func API_CALLBACK_SortAscending(ascending : NSDictionary)
     @objc optional func API_CALLBACK_SortDescending(descending : NSDictionary)
+    
+    // 9-1-2019
     @objc optional func API_CALLBACK_UpdateQtyOrderApproval(updateQtyOA : NSDictionary)
 
     

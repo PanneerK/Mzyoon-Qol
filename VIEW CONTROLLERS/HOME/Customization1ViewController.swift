@@ -313,7 +313,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         {
             let seasonalButton = UIButton()
             seasonalButton.frame = CGRect(x: x1, y: y, width: (12 * x), height: (10 * y))
-            seasonalButton.tag = i
+            seasonalButton.tag = seasonalIdArray[i] as! Int
             seasonalButton.addTarget(self, action: #selector(self.seasonalButtonAction(sender:)), for: .touchUpInside)
             seasonalScrollView.addSubview(seasonalButton)
             
@@ -430,7 +430,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         {
             let brandButton = UIButton()
             brandButton.frame = CGRect(x: x2, y: y, width: (12 * x), height: (10 * y))
-            brandButton.tag = i
+            brandButton.tag = brandIdArray[i] as! Int
             brandButton.addTarget(self, action: #selector(self.brandButtonAction(sender:)), for: .touchUpInside)
             brandScrollView.addSubview(brandButton)
             
@@ -441,7 +441,10 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             {
                 let api = "http://appsapi.mzyoon.com/images/Brands/\(imageName)"
                 let apiurl = URL(string: api)
-                buttonImage.dowloadFromServer(url: apiurl!)
+                
+                if apiurl != nil{
+                    buttonImage.dowloadFromServer(url: apiurl!)
+                }
             }
             buttonImage.tag = -1
             brandButton.addSubview(buttonImage)
@@ -809,6 +812,10 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func customization1NextButtonAction(sender : UIButton)
     {
+        print("SEASONAL", seasonalTagIntArray)
+        print("INDUSTRY", industryTagIntArray)
+        print("BRAND", brandTagIntArray)
+        
         let custom2Screen = Customization2ViewController()
         if brandTagIntArray.count == 0
         {

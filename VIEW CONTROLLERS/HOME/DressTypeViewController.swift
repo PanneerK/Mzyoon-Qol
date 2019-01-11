@@ -523,7 +523,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     {
         if sender.tag == 1
         {
-            UserDefaults.standard.set(dressTypeArray[sender.tag], forKey: "DressType")
+            UserDefaults.standard.set(dressTypeArray[sender.tag], forKey: "dressType")
             print("DRESS TYPE OF SELECTED - \(sender.tag)", dressTypeArray[sender.tag])
             let dressSubScreen = DressSubTypeViewController()
             dressSubScreen.screenTag = sender.tag
