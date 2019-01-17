@@ -17,7 +17,7 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-//         var baseURL:String = "http://192.168.0.21/TailorAPI"
+  //   var baseURL:String = "http://192.168.0.21/TailorAPI"
        var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
@@ -1441,7 +1441,7 @@ class ServerAPI : NSObject
     }
         
         
-        // Order Approval - Qty update..
+    // Order Approval - Qty update..
     func API_UpdateQtyOrderApproval(OrderId : Int, Qty : Int, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
@@ -1465,6 +1465,72 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 21, errorMessage: "Order Approval Qty Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    // Book an Appointment Get Material..
+    func API_GetAppointmentMaterial(OrderId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Book an Appointemnt Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetCustomerInAppoinmentMeaterial?OrderId=\(OrderId)", arguments: [baseURL])
+            
+            print("Order Request List: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("response", self.resultDict)
+                    delegate.API_CALLBACK_GetAppointmentMaterial!(getAppointmentMaterial: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 24, errorMessage: "Get Appointment Material Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    // Book an Appointment Get Measurement..
+    func API_GetAppointmentMeasurement(OrderId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached -  Book an Appointemnt Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetCustomerInAppoinmentMeasurement?OrderId=\(OrderId)", arguments: [baseURL])
+            
+            print("Order Request List: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("response", self.resultDict)
+                    delegate.API_CALLBACK_GetAppointmentMeasurement!(getAppointmentMeasure: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 25, errorMessage: "Get Appointment Measurement Failed")
                 }
             }
         }

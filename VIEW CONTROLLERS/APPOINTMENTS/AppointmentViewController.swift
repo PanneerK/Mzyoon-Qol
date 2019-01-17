@@ -12,6 +12,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
 {
      let serviceCall = ServerAPI()
     
+      let AppointmentScrollview = UIScrollView()
       let AppointmentSelectionView = UIView()
       let RejectButtonView = UIView()
     
@@ -32,6 +33,19 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
     var FromDatePick = UIDatePicker()
     var ToDatePick = UIDatePicker()
     
+    var OrderID:Int!
+    
+    var MeasureStatus:String!
+    var MeasurementInEnglish:String!
+    var MeasurementHeaderImage:UIImage!
+    var MeasurementBodyImage:UIImage!
+    
+    var MaterialStatus:String!
+    var MaterialInEnglish:String!
+    var MaterailHeaderImage:UIImage!
+    var MaterialBodyImage:UIImage!
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -39,6 +53,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         // Do any additional setup after loading the view.
        
          AppointmentContent()
+        
+        print("order ID:", OrderID)
+        
+        self.serviceCall.API_GetAppointmentMaterial(OrderId: OrderID, delegate: self)
+        self.serviceCall.API_GetAppointmentMeasurement(OrderId: OrderID, delegate: self)
+        
     }
     func DeviceError() 
     {
@@ -113,7 +133,71 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
             
         }
     }
+    
+    func API_CALLBACK_GetAppointmentMaterial(getAppointmentMaterial: NSDictionary)
+    {
+        let ResponseMsg = getAppointmentMaterial.object(forKey: "ResponseMsg") as! String
         
+        if ResponseMsg == "Success"
+        {
+            let Result = getAppointmentMaterial.object(forKey: "Result") as! NSDictionary
+            print("Result", Result)
+            
+            let AppOrderType = Result.object(forKey: "GetAppoinmentOrderType") as! NSArray
+            print("ORder Type:",AppOrderType)
+            
+            let Status = Result.object(forKey: "status") as! NSArray
+            print("Status:",Status)
+            
+            MaterialStatus = Status.value(forKey:"Status") as? String
+            print("status:",MaterialStatus)
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getAppointmentMaterial.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetCustomerInAppoinmentMeaterial"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+    
+    func API_CALLBACK_GetAppointmentMeasurement(getAppointmentMeasure: NSDictionary)
+    {
+        let ResponseMsg = getAppointmentMeasure.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = getAppointmentMeasure.object(forKey: "Result") as! NSDictionary
+            print("Result", Result)
+            
+            let AppMeasurement = Result.object(forKey: "GetAppoinmentMeasurement") as! NSArray
+            print("Measurement:",AppMeasurement)
+            
+            
+            let Status = Result.object(forKey: "status") as! NSArray
+            print("Status:",Status)
+            
+            MeasureStatus = Status.value(forKey:"Status") as? String
+            print("status:",MeasureStatus)
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getAppointmentMeasure.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetCustomerInAppoinmentMeasurement"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
     
     func AppointmentContent()
     {
@@ -179,7 +263,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         
         let StatusBtn = UIButton()
         StatusBtn.frame = CGRect(x: StatusLabel.frame.maxX, y: 0, width: (6 * x), height: (2 * y))
-       // StatusBtn.backgroundColor = UIColor.gray
+        StatusBtn.backgroundColor = UIColor.gray
+        
         StatusBtn.setTitle("Reject", for: .normal)
         StatusBtn.setTitleColor(UIColor.blue, for: .normal)
         StatusBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 12)!
@@ -255,7 +340,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         
        
         //let From_OrderType_TF = UITextField()
-        From_OrderType_TF.frame = CGRect(x: (3 * x), y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2 , height: (2 * y))
+        From_OrderType_TF.frame = CGRect(x: (3 * x), y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2 , height: (3 * y))
         From_OrderType_TF.text = "28 Dec 2018 2.00 PM"
         From_OrderType_TF.textColor = UIColor.white
         From_OrderType_TF.textAlignment = .center
@@ -265,23 +350,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         view.addSubview(From_OrderType_TF)
         
        // let TO_OrderType_TF = UITextField()
-        TO_OrderType_TF.frame = CGRect(x: From_OrderType_TF.frame.maxX + 1, y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (2 * y))
+        TO_OrderType_TF.frame = CGRect(x: From_OrderType_TF.frame.maxX + 1, y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (3 * y))
         TO_OrderType_TF.text = "31 Dec 2018 10.00 AM"
         TO_OrderType_TF.textColor = UIColor.white
         TO_OrderType_TF.textAlignment = .center
         TO_OrderType_TF.font = UIFont(name: "Avenir Next", size: 12)
         TO_OrderType_TF.adjustsFontSizeToFitWidth = true
-        TO_OrderType_TF.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        TO_OrderType_TF.backgroundColor = UIColor.blue   //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(TO_OrderType_TF)
         
         
         
-        // Material Type..
+        // MEASUREMENT_1 Type..
         
         let MaterialTypeLabel = UILabel()
         MaterialTypeLabel.frame = CGRect(x: ((view.frame.width - (12 * x)) / 2), y: From_OrderType_TF.frame.maxY + y, width: (14 * x), height: (3 * y))
         MaterialTypeLabel.backgroundColor = UIColor.white
-        MaterialTypeLabel.text = "MEASUREMENT TYPE"
+        MaterialTypeLabel.text = "MEASUREMENT_1"
         MaterialTypeLabel.layer.borderColor = UIColor.lightGray.cgColor
         MaterialTypeLabel.layer.borderWidth = 1.0
         MaterialTypeLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
