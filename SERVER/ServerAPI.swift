@@ -863,7 +863,7 @@ class ServerAPI : NSObject
             let urlString:String = String(format: "%@/API/Order/GetMeasurementParts?Id=\(MeasurementParts)", arguments: [baseURL])
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
-                // print("REQUEST", request)
+                 print("REQUEST", urlString)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate

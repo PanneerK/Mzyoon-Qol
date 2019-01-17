@@ -384,7 +384,14 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             {
                 let api = "http://appsapi.mzyoon.com/images/PlaceOfIndustry/\(imageName)"
                 let apiurl = URL(string: api)
-                buttonImage.dowloadFromServer(url: apiurl!)
+                if apiurl == nil
+                {
+                    
+                }
+                else
+                {
+                    buttonImage.dowloadFromServer(url: apiurl!)
+                }
             }
             buttonImage.tag = -1
             industryButton.addSubview(buttonImage)

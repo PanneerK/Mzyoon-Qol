@@ -362,7 +362,11 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             {
                 let api = "http://appsapi.mzyoon.com/images/Material/\(imageName)"
                 let apiurl = URL(string: api)
-                buttonImage.dowloadFromServer(url: apiurl!)
+                
+                if apiurl != nil
+                {
+                    buttonImage.dowloadFromServer(url: apiurl!)
+                }
             }
             buttonImage.tag = -1
             materialButton.addSubview(buttonImage)

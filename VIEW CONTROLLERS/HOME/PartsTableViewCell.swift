@@ -12,6 +12,7 @@ class PartsTableViewCell: UITableViewCell {
     
     var partsImage : UIImageView!
     var partsName:UILabel!
+    var partsSizeLabel:UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
@@ -27,6 +28,14 @@ class PartsTableViewCell: UITableViewCell {
         partsImage = UIImageView()
 //        partsImage.backgroundColor = UIColor.green
         contentView.addSubview(partsImage)
+        
+        partsSizeLabel = UILabel()
+//        partsSizeLabel.backgroundColor = UIColor.cyan
+        partsSizeLabel.text = "0.0"
+        partsSizeLabel.textColor = UIColor.black
+        partsSizeLabel.textAlignment = .left
+        partsSizeLabel.font = UIFont(name: "Gilroy-Regular", size: 12)
+        contentView.addSubview(partsSizeLabel)
     }
     required init(coder aDecoder: NSCoder)
     {
