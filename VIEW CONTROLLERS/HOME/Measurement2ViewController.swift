@@ -425,7 +425,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             pageNumberlabel.layer.masksToBounds = true
             if i == 0
             {
-                pageNumberlabel.backgroundColor = UIColor.orange
+                pageNumberlabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
             }
             pageNumberlabel.text = "\(i)"
             pageNumberlabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -956,7 +956,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     }
                 }*/
             }
-            else
+            /*else
             {
                 if index == 0
                 {
@@ -1059,11 +1059,26 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     fullSleeveButton.setImage(UIImage(named: "arrowMark"), for: .normal)
                     subView.addSubview(fullSleeveButton)
                 }
+            }*/
+            
+            for views in subView.subviews
+            {
+                if let button = views as? UIButton
+                {
+                    if PartsIdArray.contains(button.tag)
+                    {
+                        button.isEnabled = true
+                    }
+                    else
+                    {
+                        button.isEnabled = false
+                    }
+                }
             }
         }
         
         let page = imageScrollView.contentOffset.x / imageScrollView.frame.size.width;
-        print("PAGE NUMBER", page)
+        print("PAGE NUMBER AND", page, PartsIdArray.count)
         
         
         imageScrollView.contentSize = CGSize(width: imageScrollView.frame.size.width * 4,height: imageScrollView.frame.size.height)
@@ -1103,7 +1118,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 
                 if pageNo == no
                 {
-                    theLabel.backgroundColor = UIColor.orange
+                    theLabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
                 }
                 else
                 {
@@ -1309,7 +1324,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsMeasurementLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsNameLabel.frame.maxY + y, width: (10 * x), height: (3 * y))
         partsMeasurementLabel.layer.cornerRadius = 10
         partsMeasurementLabel.layer.masksToBounds = true
-        partsMeasurementLabel.backgroundColor = UIColor.orange
+        partsMeasurementLabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         partsMeasurementLabel.text = "0.0"
         partsMeasurementLabel.textColor = UIColor.white
         partsMeasurementLabel.textAlignment = .center
@@ -1581,7 +1596,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         cell.partsImage.frame = CGRect(x: x, y: y, width: (3 * x), height: (3 * y))
 
-        cell.partsName.frame = CGRect(x: cell.partsImage.frame.maxX + x, y: y, width: cell.frame.width - (5.5 * x), height: (3 * y))
+        cell.partsName.frame = CGRect(x: cell.partsImage.frame.maxX + x, y: y, width: cell.frame.width - (10.5 * x), height: (3 * y))
+        
+        cell.partsSizeLabel.frame = CGRect(x: cell.partsName.frame.maxX + x, y: y, width: (3 * x), height: (3 * y))
         
         cell.partsImage.image = convertedPartsImageArray[indexPath.row]
         cell.partsName.text = PartsNameArray[indexPath.row] as? String
@@ -1596,8 +1613,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
+        let selectedInt = PartsIdArray[indexPath.row] as! Int
         let partsScreen = PartsViewController()
-        partsScreen.viewTag = 2
+        partsScreen.viewTag = selectedInt + 1
         self.navigationController?.pushViewController(partsScreen, animated: true)
     }
     

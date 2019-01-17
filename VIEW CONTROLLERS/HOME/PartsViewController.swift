@@ -30,6 +30,7 @@ class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDeleg
     var PartsImagesArray = NSArray()
     var convertedPartsImageArray = [UIImage]()
     
+    let commonScreen = CommonViewController()
     
     override func viewDidLoad()
     {
@@ -41,11 +42,29 @@ class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDeleg
         
         view.backgroundColor = UIColor.white
         
+        print("VIEW TAG", viewTag)
         serviceCall.API_GetMeasurementParts(MeasurementParts: viewTag, delegate: self)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,27 +166,43 @@ class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDeleg
     
     func partsContent()
     {
+        self.title = "HEAD"
+        
         let downArrowImageView = UIImageView()
         downArrowImageView.frame = CGRect(x: (2 * x), y: (7 * y), width: view.frame.width - (4 * x), height: (36.98 * y))
-        downArrowImageView.image = UIImage(named: "men")
+        downArrowImageView.image = convertedPartsImageArray[0]
         view.addSubview(downArrowImageView)
         
         print("WIDTH", downArrowImageView.frame.width)
         
+        let cmLabel = UILabel()
+        cmLabel.frame = CGRect(x: ((view.frame.width - (13 * x)) / 2), y: downArrowImageView.frame.maxY + y, width: (3 * x), height: (2 * y))
+        cmLabel.text = "CM"
+        cmLabel.textColor = UIColor.black
+        cmLabel.textAlignment = .center
+        view.addSubview(cmLabel)
+        
         let addressSwitchButton = UISwitch()
-        addressSwitchButton.frame = CGRect(x: view.frame.width - (7 * x), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
+        addressSwitchButton.frame = CGRect(x: cmLabel.frame.maxX + (x / 2), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
         view.addSubview(addressSwitchButton)
         
+        let inchLabel = UILabel()
+        inchLabel.frame = CGRect(x: addressSwitchButton.frame.maxX + (x / 2), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
+        inchLabel.text = "Inches"
+        inchLabel.textColor = UIColor.black
+        inchLabel.textAlignment = .center
+        view.addSubview(inchLabel)
+        
         let mobileTextField = UITextField()
-        mobileTextField.frame = CGRect(x: (5 * x), y: addressSwitchButton.frame.maxY + (2 * y), width: view.frame.width - (10 * x), height: (4 * y))
+        mobileTextField.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: addressSwitchButton.frame.maxY + (2 * y), width: (10 * x), height: (4 * y))
         mobileTextField.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        mobileTextField.placeholder = "0.00"
+        mobileTextField.placeholder = "0.0"
         mobileTextField.textColor = UIColor.white
-        mobileTextField.textAlignment = .left
+        mobileTextField.textAlignment = .center
         mobileTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
         mobileTextField.leftViewMode = UITextField.ViewMode.always
         mobileTextField.adjustsFontSizeToFitWidth = true
-        mobileTextField.keyboardType = .default
+        mobileTextField.keyboardType = .decimalPad
         mobileTextField.clearsOnBeginEditing = true
         mobileTextField.returnKeyType = .done
         mobileTextField.delegate = self
@@ -178,7 +213,7 @@ class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDeleg
         cancelButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0)
         cancelButton.setTitle("CANCEL", for: .normal)
         cancelButton.setTitleColor(UIColor.white, for: .normal)
-//        cancelButton.addTarget(self, action: #selector(self.cancelButtonAction(sender:)), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(self.partsCancelButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(cancelButton)
         
         let saveButton = UIButton()
@@ -186,8 +221,18 @@ class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDeleg
         saveButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0)
         saveButton.setTitle("SAVE", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
-        //        saveButton.addTarget(self, action: #selector(self.cancelButtonAction(sender:)), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(self.partsSaveButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(saveButton)
+    }
+    
+    @objc func partsCancelButtonAction(sender : UIButton)
+    {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func partsSaveButtonAction(sender : UIButton)
+    {
+        
     }
 
     /*

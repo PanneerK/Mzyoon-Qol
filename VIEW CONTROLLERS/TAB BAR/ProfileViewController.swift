@@ -526,7 +526,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         sender.isHidden = true
         
         userName.isUserInteractionEnabled = true
-        mobileNumber.isUserInteractionEnabled = true
+        mobileNumber.isUserInteractionEnabled = false
         email.isUserInteractionEnabled = true
         dob.isUserInteractionEnabled = true
         
@@ -644,11 +644,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         if textField == userName
         {
             userName.resignFirstResponder()
-            mobileNumber.becomeFirstResponder()
-        }
-        else if textField == mobileNumber
-        {
-            mobileNumber.resignFirstResponder()
             email.becomeFirstResponder()
         }
         else if textField == email
