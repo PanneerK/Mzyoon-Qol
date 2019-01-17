@@ -49,7 +49,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
+ 
         // Do any additional setup after loading the view.
        
          AppointmentContent()
@@ -179,7 +179,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
             print("Measurement:",AppMeasurement)
             
             
-            let Status = Result.object(forKey: "status") as! NSArray
+            let Status = Result.object(forKey: "Status") as! NSArray
             print("Status:",Status)
             
             MeasureStatus = Status.value(forKey:"Status") as? String
