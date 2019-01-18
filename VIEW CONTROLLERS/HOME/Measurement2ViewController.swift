@@ -48,6 +48,18 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     let getThighLabel = UILabel()
     let getBounceLabel = UILabel()
     let getKneeLabel = UILabel()
+    let gettotalheightLabel = UILabel()
+    let getHipheightLabel = UILabel()
+    let getBottomheightLabel = UILabel()
+    let getKneeheightLabel = UILabel()
+    let getShoulderLabel = UILabel()
+    let getSleeveLabel = UILabel()
+    let getBicepLabel = UILabel()
+    let getHipLabel = UILabel()
+    let getBackLabel = UILabel()
+    let getHeightLabel = UILabel()
+    let getFullSleeveLabel = UILabel()
+    let getHandKneeLabel = UILabel()
     
     // Parts...
     var PartsIdArray = NSArray()
@@ -78,6 +90,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var selectedPartsImagesArray = NSArray()
     var selectedconvertedPartsImageArray = [UIImage]()
     
+    //SELETCTED
+    var measurerImage = String()
+    var measurerTag = Int()
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -86,11 +102,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
 
         
         self.serviceCall.API_GetMeasurement2(Measurement2Value: 1, delegate: self)
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
-//            // Your code with delay
-//            self.measurement2Contents()
-//        }        
         
         super.viewDidLoad()
 
@@ -383,14 +394,16 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             partsButton.backgroundColor = UIColor.lightGray
             partsButton.setTitleColor(UIColor.black, for: .normal)
             imageViewContents(isHidden: false)
-            partsViewContents(isHidden: true)
+//            partsViewContents(isHidden: true)
+            partsView.removeFromSuperview()
         }
         else if sender.tag == 1
         {
             imageButton.backgroundColor = UIColor.lightGray
             imageButton.setTitleColor(UIColor.black, for: .normal)
-            imageViewContents(isHidden: true)
+//            imageViewContents(isHidden: true)
             partsViewContents(isHidden: false)
+            imageView.removeFromSuperview()
         }
         
         sender.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -423,10 +436,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             pageNumberlabel.layer.borderWidth = 1
             pageNumberlabel.layer.borderColor = UIColor.black.cgColor
             pageNumberlabel.layer.masksToBounds = true
-            if i == 0
-            {
-                pageNumberlabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-            }
+//            if i == 0
+//            {
+//                pageNumberlabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+//            }
             pageNumberlabel.text = "\(i)"
             pageNumberlabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             pageNumberlabel.textAlignment = .center
@@ -462,6 +475,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         {
             measureImages = ["boyFront_1", "boyFront_2", "boyBack_1", "boyBack_2"]
         }
+        
+        var buttonTag = Int()
+
         
         for index in 0..<4 {
             
@@ -502,6 +518,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     headLabel.textColor = UIColor.black
                     headLabel.textAlignment = .center
                     headLabel.font = headLabel.font.withSize(15)
+                    headLabel.tag = ((0 * 1) + 300)
                     subView.addSubview(headLabel)
                     
                     let headButton = UIButton()
@@ -523,6 +540,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getHeadLabel.textColor = UIColor.blue
                     getHeadLabel.textAlignment = .center
                     getHeadLabel.font = headLabel.font.withSize(20)
+                    getHeadLabel.tag = ((0 * 1) + 200)
                     subView.addSubview(getHeadLabel)
                     
                     let neckLabel = UILabel()
@@ -531,6 +549,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     neckLabel.textColor = UIColor.black
                     neckLabel.textAlignment = .center
                     neckLabel.font = headLabel.font.withSize(15)
+                    neckLabel.tag = ((1 * 1) + 300)
                     subView.addSubview(neckLabel)
                     
                     let neckButton = UIButton()
@@ -545,6 +564,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getNeckLabel.textColor = UIColor.blue
                     getNeckLabel.textAlignment = .center
                     getNeckLabel.font = headLabel.font.withSize(20)
+                    getNeckLabel.tag = ((1 * 1) + 200)
                     subView.addSubview(getNeckLabel)
                     
                     let chestLabel = UILabel()
@@ -553,6 +573,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     chestLabel.textColor = UIColor.black
                     chestLabel.textAlignment = .center
                     chestLabel.font = headLabel.font.withSize(15)
+                    chestLabel.tag = ((2 * 1) + 300)
                     subView.addSubview(chestLabel)
                     
                     let chestButton = UIButton()
@@ -567,6 +588,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getChestLabel.textColor = UIColor.blue
                     getChestLabel.textAlignment = .center
                     getChestLabel.font = headLabel.font.withSize(20)
+                    getChestLabel.tag = ((2 * 1) + 200)
                     subView.addSubview(getChestLabel)
                     
                     let waistLabel = UILabel()
@@ -575,6 +597,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     waistLabel.textColor = UIColor.black
                     waistLabel.textAlignment = .center
                     waistLabel.font = headLabel.font.withSize(15)
+                    waistLabel.tag = ((3 * 1) + 300)
                     subView.addSubview(waistLabel)
                     
                     let waistButton = UIButton()
@@ -589,6 +612,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getWaistLabel.textColor = UIColor.blue
                     getWaistLabel.textAlignment = .center
                     getWaistLabel.font = headLabel.font.withSize(20)
+                    getWaistLabel.tag = ((3 * 1) + 200)
                     subView.addSubview(getWaistLabel)
                     
                     let thighLabel = UILabel()
@@ -597,6 +621,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     thighLabel.textColor = UIColor.black
                     thighLabel.textAlignment = .center
                     thighLabel.font = headLabel.font.withSize(15)
+                    thighLabel.tag = ((4 * 1) + 300)
                     subView.addSubview(thighLabel)
                     
                     let thighButton = UIButton()
@@ -611,6 +636,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getThighLabel.textColor = UIColor.blue
                     getThighLabel.textAlignment = .center
                     getThighLabel.font = headLabel.font.withSize(20)
+                    getThighLabel.tag = ((4 * 1) + 200)
                     subView.addSubview(getThighLabel)
                     
                     let bounceLabel = UILabel()
@@ -619,6 +645,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     bounceLabel.textColor = UIColor.black
                     bounceLabel.textAlignment = .center
                     bounceLabel.font = headLabel.font.withSize(15)
+                    bounceLabel.tag = ((5 * 1) + 300)
                     subView.addSubview(bounceLabel)
                     
                     let bounceButton = UIButton()
@@ -633,6 +660,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getBounceLabel.textColor = UIColor.blue
                     getBounceLabel.textAlignment = .center
                     getBounceLabel.font = headLabel.font.withSize(20)
+                    getBounceLabel.tag = ((5 * 1) + 200)
                     subView.addSubview(getBounceLabel)
                     
                     let kneeLabel = UILabel()
@@ -641,6 +669,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     kneeLabel.textColor = UIColor.black
                     kneeLabel.textAlignment = .center
                     kneeLabel.font = headLabel.font.withSize(15)
+                    kneeLabel.tag = ((6 * 1) + 300)
                     subView.addSubview(kneeLabel)
                     
                     let kneeButton = UIButton()
@@ -655,6 +684,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getKneeLabel.textColor = UIColor.blue
                     getKneeLabel.textAlignment = .center
                     getKneeLabel.font = headLabel.font.withSize(20)
+                    getKneeLabel.tag = ((6 * 1) + 200)
                     subView.addSubview(getKneeLabel)
                 }
                 else if index == 1
@@ -665,6 +695,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     totalheightLabel.textColor = UIColor.black
                     totalheightLabel.textAlignment = .center
                     totalheightLabel.font = totalheightLabel.font.withSize(15)
+                    totalheightLabel.tag = ((7 * 1) + 300)
                     subView.addSubview(totalheightLabel)
                     
                     let overAllHeightButton = UIButton()
@@ -675,12 +706,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     overAllHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(overAllHeightButton)
                     
-                    let gettotalheightLabel = UILabel()
                     gettotalheightLabel.frame = CGRect(x: overAllHeightButton.frame.maxX, y: (15 * y), width: (5 * x), height: (3 * y))
                     gettotalheightLabel.text = "0.0"
                     gettotalheightLabel.textColor = UIColor.blue
                     gettotalheightLabel.textAlignment = .center
                     gettotalheightLabel.font = gettotalheightLabel.font.withSize(20)
+                    gettotalheightLabel.tag = ((7 * 1) + 200)
                     subView.addSubview(gettotalheightLabel)
 
                     let hipHeightLabel = UILabel()
@@ -689,6 +720,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     hipHeightLabel.textColor = UIColor.black
                     hipHeightLabel.textAlignment = .center
                     hipHeightLabel.font = hipHeightLabel.font.withSize(15)
+                    hipHeightLabel.tag = ((8 * 1) + 300)
                     subView.addSubview(hipHeightLabel)
                     
                     let hipHeightButton = UIButton()
@@ -698,12 +730,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     hipHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(hipHeightButton)
                     
-                    let getHipheightLabel = UILabel()
                     getHipheightLabel.frame = CGRect(x: hipHeightButton.frame.maxX, y: (40 * y), width: (5 * x), height: (3 * y))
                     getHipheightLabel.text = "0.0"
                     getHipheightLabel.textColor = UIColor.blue
                     getHipheightLabel.textAlignment = .center
                     getHipheightLabel.font = getHipheightLabel.font.withSize(20)
+                    getHipheightLabel.tag = ((8 * 1) + 200)
                     subView.addSubview(getHipheightLabel)
                     
                     let bottomheightLabel = UILabel()
@@ -712,6 +744,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     bottomheightLabel.textColor = UIColor.black
                     bottomheightLabel.textAlignment = .center
                     bottomheightLabel.font = totalheightLabel.font.withSize(15)
+                    bottomheightLabel.tag = ((9 * 1) + 300)
                     subView.addSubview(bottomheightLabel)
                     
                     let bottomHeightButton = UIButton()
@@ -721,12 +754,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     bottomHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(bottomHeightButton)
                     
-                    let getBottomheightLabel = UILabel()
                     getBottomheightLabel.frame = CGRect(x: bottomHeightButton.frame.maxX, y: (35 * y), width: (5 * x), height: (3 * y))
                     getBottomheightLabel.text = "0.0"
                     getBottomheightLabel.textColor = UIColor.blue
                     getBottomheightLabel.textAlignment = .center
                     getBottomheightLabel.font = getBottomheightLabel.font.withSize(20)
+                    getBottomheightLabel.tag = ((9 * 1) + 200)
                     subView.addSubview(getBottomheightLabel)
                     
                     let kneeheightLabel = UILabel()
@@ -735,6 +768,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     kneeheightLabel.textColor = UIColor.black
                     kneeheightLabel.textAlignment = .center
                     kneeheightLabel.font = totalheightLabel.font.withSize(15)
+                    kneeheightLabel.tag = ((10 * 1) + 300)
                     subView.addSubview(kneeheightLabel)
                     
                     let kneeHeightButton = UIButton()
@@ -744,12 +778,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     kneeHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(kneeHeightButton)
                     
-                    let getKneeheightLabel = UILabel()
                     getKneeheightLabel.frame = CGRect(x: kneeHeightButton.frame.maxX, y: (27.8 * y), width: (5 * x), height: (3 * y))
                     getKneeheightLabel.text = "0.0"
                     getKneeheightLabel.textColor = UIColor.blue
                     getKneeheightLabel.textAlignment = .center
                     getKneeheightLabel.font = getKneeheightLabel.font.withSize(20)
+                    getKneeheightLabel.tag = ((10 * 1) + 200)
                     subView.addSubview(getKneeheightLabel)
                 }
                 else if index == 2
@@ -760,6 +794,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     shoulderLabel.textColor = UIColor.black
                     shoulderLabel.textAlignment = .center
                     shoulderLabel.font = shoulderLabel.font.withSize(15)
+                    shoulderLabel.tag = ((11 * 1) + 300)
                     subView.addSubview(shoulderLabel)
                     
                     let shoulderButton = UIButton()
@@ -769,12 +804,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     shoulderButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(shoulderButton)
                     
-                    let getShoulderLabel = UILabel()
                     getShoulderLabel.frame = CGRect(x: shoulderButton.frame.maxX, y: (7.5 * y), width: (5 * x), height: (3 * y))
                     getShoulderLabel.text = "0.0"
                     getShoulderLabel.textColor = UIColor.blue
                     getShoulderLabel.textAlignment = .center
                     getShoulderLabel.font = getShoulderLabel.font.withSize(20)
+                    getShoulderLabel.tag = ((11 * 1) + 200)
                     subView.addSubview(getShoulderLabel)
                     
                     let sleeveLabel = UILabel()
@@ -783,6 +818,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     sleeveLabel.textColor = UIColor.black
                     sleeveLabel.textAlignment = .center
                     sleeveLabel.font = sleeveLabel.font.withSize(15)
+                    sleeveLabel.tag = ((12 * 1) + 300)
                     subView.addSubview(sleeveLabel)
                     
                     let sleeveButton = UIButton()
@@ -792,12 +828,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     sleeveButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(sleeveButton)
                     
-                    let getSleeveLabel = UILabel()
                     getSleeveLabel.frame = CGRect(x: sleeveButton.frame.maxX, y: (11.5 * y), width: (5 * x), height: (3 * y))
                     getSleeveLabel.text = "0.0"
                     getSleeveLabel.textColor = UIColor.blue
                     getSleeveLabel.textAlignment = .center
                     getSleeveLabel.font = getSleeveLabel.font.withSize(20)
+                    getSleeveLabel.tag = ((12 * 1) + 200)
                     subView.addSubview(getSleeveLabel)
                     
                     let bicepLabel = UILabel()
@@ -806,6 +842,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     bicepLabel.textColor = UIColor.black
                     bicepLabel.textAlignment = .center
                     bicepLabel.font = bicepLabel.font.withSize(15)
+                    bicepLabel.tag = ((13 * 1) + 300)
                     subView.addSubview(bicepLabel)
                     
                     let bicepButton = UIButton()
@@ -815,12 +852,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     bicepButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(bicepButton)
                     
-                    let getBicepLabel = UILabel()
                     getBicepLabel.frame = CGRect(x: bicepButton.frame.maxX, y: (14.6 * y), width: (5 * x), height: (3 * y))
                     getBicepLabel.text = "0.0"
                     getBicepLabel.textColor = UIColor.blue
                     getBicepLabel.textAlignment = .center
                     getBicepLabel.font = getBicepLabel.font.withSize(20)
+                    getBicepLabel.tag = ((13 * 1) + 200)
                     subView.addSubview(getBicepLabel)
                     
                     let hipLabel = UILabel()
@@ -829,6 +866,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     hipLabel.textColor = UIColor.black
                     hipLabel.textAlignment = .center
                     hipLabel.font = hipLabel.font.withSize(15)
+                    hipLabel.tag = ((14 * 1) + 300)
                     subView.addSubview(hipLabel)
                     
                     let hipButton = UIButton()
@@ -838,12 +876,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     hipButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(hipButton)
                     
-                    let getHipLabel = UILabel()
                     getHipLabel.frame = CGRect(x: hipButton.frame.maxX, y: (17.3 * y), width: (5 * x), height: (3 * y))
                     getHipLabel.text = "0.0"
                     getHipLabel.textColor = UIColor.blue
                     getHipLabel.textAlignment = .center
                     getHipLabel.font = getHipLabel.font.withSize(20)
+                    getHipLabel.tag = ((14 * 1) + 200)
                     subView.addSubview(getHipLabel)
                     
                     let backLabel = UILabel()
@@ -852,6 +890,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     backLabel.textColor = UIColor.black
                     backLabel.textAlignment = .center
                     backLabel.font = backLabel.font.withSize(15)
+                    backLabel.tag = ((15 * 1) + 300)
                     subView.addSubview(backLabel)
                     
                     let backButton = UIButton()
@@ -861,12 +900,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     backButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(backButton)
                     
-                    let getBackLabel = UILabel()
                     getBackLabel.frame = CGRect(x: backButton.frame.maxX, y: (21 * y), width: (5 * x), height: (3 * y))
                     getBackLabel.text = "0.0"
                     getBackLabel.textColor = UIColor.blue
                     getBackLabel.textAlignment = .center
                     getBackLabel.font = getBackLabel.font.withSize(20)
+                    getBackLabel.tag = ((15 * 1) + 200)
                     subView.addSubview(getBackLabel)
                 }
                 else if index == 3
@@ -877,6 +916,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     heightLabel.textColor = UIColor.black
                     heightLabel.textAlignment = .center
                     heightLabel.font = heightLabel.font.withSize(15)
+                    heightLabel.tag = ((16 * 1) + 300)
                     subView.addSubview(heightLabel)
                     
                     let heightButton = UIButton()
@@ -886,12 +926,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     heightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(heightButton)
                     
-                    let getHeightLabel = UILabel()
                     getHeightLabel.frame = CGRect(x: heightButton.frame.maxX, y: (11.1 * y), width: (5 * x), height: (3 * y))
                     getHeightLabel.text = "0.0"
                     getHeightLabel.textColor = UIColor.blue
                     getHeightLabel.textAlignment = .center
                     getHeightLabel.font = getHeightLabel.font.withSize(20)
+                    getHeightLabel.tag = ((16 * 1) + 200)
                     subView.addSubview(getHeightLabel)
                     
                     let fullSleeveLabel = UILabel()
@@ -900,6 +940,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     fullSleeveLabel.textColor = UIColor.black
                     fullSleeveLabel.textAlignment = .center
                     fullSleeveLabel.font = heightLabel.font.withSize(15)
+                    fullSleeveLabel.tag = ((17 * 1) + 300)
                     subView.addSubview(fullSleeveLabel)
                     
                     let fullSleeveButton = UIButton()
@@ -909,12 +950,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     fullSleeveButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(fullSleeveButton)
                     
-                    let getFullSleeveLabel = UILabel()
                     getFullSleeveLabel.frame = CGRect(x: fullSleeveButton.frame.maxX, y: (15.6 * y), width: (5 * x), height: (3 * y))
                     getFullSleeveLabel.text = "0.0"
                     getFullSleeveLabel.textColor = UIColor.blue
                     getFullSleeveLabel.textAlignment = .center
                     getFullSleeveLabel.font = getFullSleeveLabel.font.withSize(20)
+                    getFullSleeveLabel.tag = ((17 * 1) + 200)
                     subView.addSubview(getFullSleeveLabel)
                     
                     let handKneeLabel = UILabel()
@@ -923,6 +964,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     handKneeLabel.textColor = UIColor.black
                     handKneeLabel.textAlignment = .center
                     handKneeLabel.font = handKneeLabel.font.withSize(15)
+                    handKneeLabel.tag = ((18 * 1) + 300)
                     subView.addSubview(handKneeLabel)
                     
                     let handKneeButton = UIButton()
@@ -932,12 +974,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     handKneeButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(handKneeButton)
                     
-                    let getHandKneeLabel = UILabel()
                     getHandKneeLabel.frame = CGRect(x: handKneeButton.frame.maxX, y: (20.3 * y), width: (5 * x), height: (3 * y))
                     getHandKneeLabel.text = "0.0"
                     getHandKneeLabel.textColor = UIColor.blue
                     getHandKneeLabel.textAlignment = .center
                     getHandKneeLabel.font = getHandKneeLabel.font.withSize(20)
+                    getHandKneeLabel.tag = ((18 * 1) + 200)
                     subView.addSubview(getHandKneeLabel)
                 }
                 
@@ -1065,6 +1107,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 if let button = views as? UIButton
                 {
+                    buttonTag = button.tag
                     if PartsIdArray.contains(button.tag)
                     {
                         button.isEnabled = true
@@ -1072,9 +1115,59 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     else
                     {
                         button.isEnabled = false
+                        button.isHidden = true
+                        
+//                        let origImage = UIImage(named: "arrowMark");
+//                        let tintedImage = origImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+//                        button.setImage(tintedImage, for: .normal)
+//                        button.tintColor = UIColor.white
                     }
                 }
+                
+                if let label = views as? UILabel
+                {
+                    if PartsIdArray.contains(buttonTag)
+                    {
+                        
+                    }
+                    else
+                    {
+                        if label.tag == ((buttonTag * 1) + 200)
+                        {
+                            label.removeFromSuperview()
+                            
+                            if let foundView = view.viewWithTag(label.tag + 100) {
+                                foundView.removeFromSuperview()
+                            }
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+                }
+                
+                /*if let labels = views as? UILabel
+                {
+                    print("WELCOME NAYASA", labels.text)
+                    if PartsIdArray.contains(buttonTag)
+                    {
+                        
+                    }
+                    else
+                    {
+                        if labels.tag == ((buttonTag * 1) + 300)
+                        {
+                            labels.isHidden = true
+                        }
+                        else
+                        {
+                            
+                        }
+                    }
+                }*/
             }
+   
         }
         
         let page = imageScrollView.contentOffset.x / imageScrollView.frame.size.width;
@@ -1115,7 +1208,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             if let theLabel = self.view.viewWithTag((i + 1) * 20) as? UILabel {
                 let pageNo = Int(pageNumber)
                 let no = Int(theLabel.text!)
-                
                 if pageNo == no
                 {
                     theLabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
@@ -1136,101 +1228,82 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
 
         if sender.tag == 0
         {
-            measureScreen.headingTitle = "Head"
-            measureScreen.viewTag = 1
+            measurerImage = "Head"
         }
         else if sender.tag == 1
         {
-            measureScreen.headingTitle = "Neck"
-            measureScreen.viewTag = 2
+            measurerImage = "Neck"
         }
         else if sender.tag == 2
         {
-            measureScreen.headingTitle = "Chest"
-            measureScreen.viewTag = 3
+            measurerImage = "Chest"
         }
         else if sender.tag == 3
         {
-            measureScreen.headingTitle = "Waist"
-            measureScreen.viewTag = 4
+            measurerImage = "Waist"
         }
         else if sender.tag == 4
         {
-            measureScreen.headingTitle = "Thigh"
-            measureScreen.viewTag = 5
+            measurerImage = "Thigh"
         }
         else if sender.tag == 5
         {
-            measureScreen.headingTitle = "Bounce"
-            measureScreen.viewTag = 6
+            measurerImage = "Bounce"
         }
         else if sender.tag == 6
         {
-            measureScreen.headingTitle = "Knee"
-            measureScreen.viewTag = 7
+            measurerImage = "Knee"
         }
         else if sender.tag == 7
         {
-            measureScreen.headingTitle = "Height"
-            measureScreen.viewTag = 8
+            measurerImage = "Height"
         }
         else if sender.tag == 8
         {
-            measureScreen.headingTitle = "Leg Height"
-            measureScreen.viewTag = 9
+            measurerImage = "Leg Height"
         }
         else if sender.tag == 9
         {
-            measureScreen.headingTitle = "3 / 4 Height"
-            measureScreen.viewTag = 10
+            measurerImage = "3 / 4 Height"
         }
         else if sender.tag == 10
         {
-            measureScreen.headingTitle = "Short Height"
-            measureScreen.viewTag = 11
+            measurerImage = "Short Height"
         }
         else if sender.tag == 11
         {
-            measureScreen.headingTitle = "Shoulder"
-            measureScreen.viewTag = 12
+            measurerImage = "Shoulder"
         }
         else if sender.tag == 12
         {
-            measureScreen.headingTitle = "Half Sleeve"
-            measureScreen.viewTag = 13
+            measurerImage = "Half Sleeve"
         }
         else if sender.tag == 13
         {
-            measureScreen.headingTitle = "Bicep"
-            measureScreen.viewTag = 14
+            measurerImage = "Bicep"
         }
         else if sender.tag == 14
         {
-            measureScreen.headingTitle = "Hip"
-            measureScreen.viewTag = 15
+            measurerImage = "Hip"
         }
         else if sender.tag == 15
         {
-            measureScreen.headingTitle = "Back"
-            measureScreen.viewTag = 16
+            measurerImage = "Back"
         }
         else if sender.tag == 16
         {
-            measureScreen.headingTitle = "Shirt Height"
-            measureScreen.viewTag = 17
+            measurerImage = "Shirt Height"
         }
         else if sender.tag == 17
         {
-            measureScreen.headingTitle = "Sleeve Height"
-            measureScreen.viewTag = 18
+            measurerImage = "Sleeve Height"
         }
         else if sender.tag == 18
         {
-            measureScreen.headingTitle = "Hand Cuf"
-            measureScreen.viewTag = 19
+            measurerImage = "Hand Cuf"
         }
         
-//        self.navigationController?.pushViewController(measureScreen, animated: true)
+        measurerTag = sender.tag
         
         serviceCall.API_GetMeasurementParts(MeasurementParts: (sender.tag + 1), delegate: self)
     }
@@ -1307,6 +1380,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         backView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubview(backView)
         
+        for views in backView.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
         rulerContents()
         
         partsImageView.frame = CGRect(x: rulerScroll.frame.maxX + (2 * y), y: (10 * y), width: (20 * x), height: (20 * y))
@@ -1316,7 +1394,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         let partsNameLabel = UILabel()
         partsNameLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsImageView.frame.maxY + y, width: (10 * x), height: (3 * y))
-        partsNameLabel.text = "NECK"
+        partsNameLabel.text = measurerImage
         partsNameLabel.textColor = UIColor.white
         partsNameLabel.textAlignment = .center
         backView.addSubview(partsNameLabel)
@@ -1356,7 +1434,14 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     @objc func saveButtonAction(sender : UIButton)
     {
+        backView.removeFromSuperview()
         
+        if let foundView = view.viewWithTag((measurerTag * 1) + 200) {
+            if let label = foundView as? UILabel
+            {
+                label.text = partsMeasurementLabel.text
+            }
+        }
     }
     
     func rulerContents()
