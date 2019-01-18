@@ -1539,4 +1539,70 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
+    // Book an Appointment IsApprove Material..
+    func API_IsApproveAppointmentMaterial(AppointmentId : Int, IsApproved : String, Reason:String, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Book an Appointemnt Page")
+            
+            let parameters = ["AppointmentId" : AppointmentId, "IsApproved" : IsApproved, "Reason" : Reason] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/BuyerOrderApprovalMaterial", arguments: [baseURL])
+            
+            print("Appointment IsApprove: ", urlString)
+            
+            request(urlString, method: .post, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("response", self.resultDict)
+                    delegate.API_CALLBACK_IsApproveAptMaterial!(IsApproveMaterial: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 26, errorMessage: "IsApprove Material Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    // Book an Appointment IsApprove Measurement..
+    func API_IsApproveAppointmentMeasurement(AppointmentId : Int, IsApproved : String, Reason:String, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached -  Book an Appointemnt Page")
+            
+            let parameters = ["AppointmentId" : AppointmentId, "IsApproved" : IsApproved, "Reason" : Reason] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/BuyerOrderApprovalMeasurement", arguments: [baseURL])
+            
+            print("Appointment IsApprove: ", urlString)
+            
+            request(urlString, method: .post, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("response", self.resultDict)
+                    delegate.API_CALLBACK_IsApproveAptMeasurement!(IsApproveMeasure: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 27, errorMessage: "IsApprove Measurement Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
 }

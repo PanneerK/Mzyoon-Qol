@@ -81,4 +81,8 @@ import Foundation
     @objc optional func API_CALLBACK_GetAppointmentMaterial(getAppointmentMaterial : NSDictionary)
     @objc optional func API_CALLBACK_GetAppointmentMeasurement(getAppointmentMeasure : NSDictionary)
     
+   // 18-1-2019
+    @objc optional func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial : NSDictionary)
+    @objc optional func API_CALLBACK_IsApproveAptMeasurement(IsApproveMeasure : NSDictionary)
+    
 }
