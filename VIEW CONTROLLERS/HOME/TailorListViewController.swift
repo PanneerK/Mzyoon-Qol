@@ -28,6 +28,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     let mapView = GMSMapView()
     let marker = GMSMarker()
     let addressLabel = UILabel()
+    let tailorDeatiledView = UIView()
+
 
     
     var IdArray = NSArray()
@@ -67,6 +69,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     override func viewDidLoad()
     {
+        
+        fetchingCurrentLocation()
+        
         navigationBar.isHidden = true
         
         self.serviceCall.API_GetTailorList(delegate: self)
@@ -74,6 +79,34 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func fetchingCurrentLocation()
+    {
+        locationManager.requestAlwaysAuthorization()
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        currentLocation = locationManager.location
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.requestAlwaysAuthorization()
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        }
+        else
+        {
+            
+        }
+        
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways)
+        {
+            
+            currentLocation = locationManager.location
+            print("Current Loc:",currentLocation.coordinate)
+        }
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -467,11 +500,20 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
             tailorView.addSubview(ratingCountLabel)
+                        
+            let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            let coordinate2 = CLLocation(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
+            
+            let distanceInMeters = coordinate1.distance(from: coordinate2)
+            
+            let distanceInKiloMeters = distanceInMeters / 1000
+            
+            let distanceInt = Int(distanceInKiloMeters)
             
             let distanceLabel = UILabel()
             distanceLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ratingLabel.frame.maxY, width: tailorView.frame.width / 2.15, height: (2 * y))
             distanceLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            distanceLabel.text = "\(i) Km. from your location"
+            distanceLabel.text = "\(distanceInt) Km. from your location"
             distanceLabel.textColor = UIColor.white
             distanceLabel.textAlignment = .center
             distanceLabel.font = ordersCountLabel.font.withSize(1.2 * x)
@@ -485,7 +527,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             locationButton.layer.borderColor = UIColor.lightGray.cgColor
             locationButton.setImage(UIImage(named: "locationMarker"), for: .normal)
             locationButton.tag = i
-//            locationButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
+            locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(locationButton)
             
             y1 = tailorView.frame.maxY + y
@@ -497,6 +539,12 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         confirmSelectionButton.setTitle("Confirm Selection", for: .normal)
         confirmSelectionButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
         backDrop.addSubview(confirmSelectionButton)
+    }
+    
+    @objc func directionButtonAction(sender : UIButton)
+    {
+        listViewContents(isHidden: true)
+        mapViewContents(isHidden: true)
     }
     
     @objc func tailorSelectionButtonAction(sender : UIButton)
@@ -555,31 +603,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func mapViewContents(isHidden : Bool)
     {
-        locationManager.requestAlwaysAuthorization()
-        locationManager.delegate = self
-        locationManager.startUpdatingLocation()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        currentLocation = locationManager.location
-
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.requestAlwaysAuthorization()
-            locationManager.delegate = self
-            locationManager.startUpdatingLocation()
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        }
-        else
-        {
-            
-        }
-        
-        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-            CLLocationManager.authorizationStatus() ==  .authorizedAlways)
-        {
-            
-            currentLocation = locationManager.location
-            print("Current Loc:",currentLocation.coordinate)
-        }
-
         mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
         mapView.delegate = self
         mapView.settings.myLocationButton = true
@@ -633,14 +656,18 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         self.mapView.animate(to: camera)
         
         //Finally stop updating location otherwise it will come again and again in this delegate
-        
+    }
+    
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition)
+    {
+        tailorDeatiledView.removeFromSuperview()
     }
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool
     {
-        let camera = GMSCameraPosition(target: marker.position, zoom: mapView.camera.zoom, bearing: 0.0, viewingAngle: 0.0)
-
-        mapView.camera = camera
+//        let camera = GMSCameraPosition(target: marker.position, zoom: mapView.camera.zoom, bearing: 0.0, viewingAngle: 0.0)
+//
+//        mapView.camera = camera
         addressOfMarker(marker: marker)
         
         return true
@@ -648,20 +675,114 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func addressOfMarker(marker : GMSMarker)
     {
+        tailorDeatiledView.frame = CGRect(x: 0, y: mapView.frame.height - (17 * y), width: mapView.frame.width, height: (17 * y))
+        tailorDeatiledView.backgroundColor = UIColor.white
+        mapView.addSubview(tailorDeatiledView)
+        
+        let shopName = UILabel()
+        shopName.frame = CGRect(x: x, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
+        shopName.text = marker.snippet
+        shopName.textColor = UIColor.blue
+        shopName.textAlignment = .left
+        shopName.font = shopName.font.withSize(1.2 * x)
+        shopName.adjustsFontSizeToFitWidth = true
+        tailorDeatiledView.addSubview(shopName)
+        
+        let ratingLabel = UILabel()
+        ratingLabel.frame = CGRect(x: x, y: shopName.frame.maxY, width: (5 * x), height: (2 * y))
+        ratingLabel.text = "Rating : "
+        ratingLabel.textColor = UIColor.blue
+        ratingLabel.textAlignment = .left
+        ratingLabel.font = ratingLabel.font.withSize(1.2 * x)
+        tailorDeatiledView.addSubview(ratingLabel)
+        
+        let ratingCountLabel = UILabel()
+        ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY, width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
+        ratingCountLabel.text = "\(ratingArray[0])"
+        ratingCountLabel.textColor = UIColor.black
+        ratingCountLabel.textAlignment = .left
+        ratingCountLabel.font = ratingLabel.font.withSize(1.2 * x)
+        ratingCountLabel.adjustsFontSizeToFitWidth = true
+        tailorDeatiledView.addSubview(ratingCountLabel)
+        
+        let nameLabel = UILabel()
+        nameLabel.frame = CGRect(x: x, y: ratingLabel.frame.maxY, width: (5 * x), height: (2 * y))
+        nameLabel.text = "Name : "
+        nameLabel.textColor = UIColor.blue
+        nameLabel.textAlignment = .left
+        nameLabel.font = nameLabel.font.withSize(1.2 * x)
+        tailorDeatiledView.addSubview(nameLabel)
+        
+        let tailorName = UILabel()
+        tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: ratingLabel.frame.maxY, width: tailorDeatiledView.frame.width / 2, height: (2 * y))
+        tailorName.text = marker.title
+        tailorName.textColor = UIColor.black
+        tailorName.textAlignment = .left
+        tailorName.font = tailorName.font.withSize(1.2 * x)
+        tailorDeatiledView.addSubview(tailorName)
+        
+        let ordersLabel = UILabel()
+        ordersLabel.frame = CGRect(x: x, y: nameLabel.frame.maxY, width: (9 * x), height: (2 * y))
+        ordersLabel.text = "No. of Orders : "
+        ordersLabel.textColor = UIColor.blue
+        ordersLabel.textAlignment = .left
+        ordersLabel.font = ordersLabel.font.withSize(1.2 * x)
+        tailorDeatiledView.addSubview(ordersLabel)
+        
+        let ordersCountLabel = UILabel()
+        ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
+        ordersCountLabel.text = "\(orderCountArray[0])"
+        ordersCountLabel.textColor = UIColor.black
+        ordersCountLabel.textAlignment = .left
+        ordersCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
+        ordersCountLabel.adjustsFontSizeToFitWidth = true
+        tailorDeatiledView.addSubview(ordersCountLabel)
+        
+        let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+        let coordinate2 = CLLocation(latitude: latitudeArray[0] as! CLLocationDegrees, longitude: longitudeArray[0] as! CLLocationDegrees)
+        
+        let distanceInMeters = coordinate1.distance(from: coordinate2)
+        
+        let distanceInKiloMeters = distanceInMeters / 1000
+        
+        let distanceInt = Int(distanceInKiloMeters)
+        
+        let distanceLabel = UILabel()
+        distanceLabel.frame = CGRect(x: x, y: ordersLabel.frame.maxY, width: tailorDeatiledView.frame.width - (2 * x), height: (2 * y))
+//        distanceLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        distanceLabel.text = "\(distanceInt) Km. from your location"
+        distanceLabel.textColor = UIColor.black
+        distanceLabel.textAlignment = .left
+        distanceLabel.font = distanceLabel.font.withSize(1.2 * x)
+        distanceLabel.adjustsFontSizeToFitWidth = true
+        tailorDeatiledView.addSubview(distanceLabel)
+        
+        let locationButton = UIButton()
+        locationButton.frame = CGRect(x: tailorDeatiledView.frame.width / 2, y: distanceLabel.frame.maxY, width: (17.25 * x), height: (4 * y))
+        locationButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        locationButton.layer.borderWidth = 1
+        locationButton.layer.borderColor = UIColor.lightGray.cgColor
+        locationButton.setTitle("DIRECTIONS", for: .normal)
+        locationButton.setTitleColor(UIColor.white, for: .normal)
+        locationButton.tag = 0
+        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
+        tailorDeatiledView.addSubview(locationButton)
+        
         addressLabel.frame = CGRect(x: (2 * x), y: ((view.frame.height - (5 * y)) / 2), width: view.frame.width - (4 * x), height: (3 * y))
         addressLabel.backgroundColor = UIColor.white
         addressLabel.text = "\(marker.title!) \(marker.snippet!)"
         addressLabel.textColor = UIColor.black
         addressLabel.textAlignment = .left
         addressLabel.numberOfLines = 2
-        mapView.addSubview(addressLabel)
+//        mapView.addSubview(addressLabel)
         
         Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
     }
     
     @objc func closeAddressLabel()
     {
-        addressLabel.removeFromSuperview()
+//        addressLabel.removeFromSuperview()
+        tailorDeatiledView.removeFromSuperview()
     }
     
     func markerView(yPos : CGFloat)
@@ -707,6 +828,44 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
         return headerView
+    }
+    
+    func getPolylineRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D)
+    {
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        
+        let url = URL(string: "http://maps.googleapis.com/maps/api/directions/json?origin=\(source.latitude),\(source.longitude)&destination=\(destination.latitude),\(destination.longitude)&sensor=false&mode=driving")!
+        
+        let task = session.dataTask(with: url, completionHandler: {
+            (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            }else{
+                do {
+                    if let json : [String:Any] = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any]{
+                        
+                        let routes = json["routes"] as? [Any]
+                        let overview_polyline = routes?[0] as?[String:Any]
+                        let polyString = overview_polyline?["points"] as?String
+                        
+                        //Call this method to draw path on map
+                        self.showPath(polyStr: polyString!)
+                    }
+                    
+                }catch{
+                    print("error in JSONSerialization")
+                }
+            }
+        })
+        task.resume()
+    }
+    
+    func showPath(polyStr :String){
+        let path = GMSPath(fromEncodedPath: polyStr)
+        let polyline = GMSPolyline(path: path)
+        polyline.strokeWidth = 3.0
+        polyline.map = mapView // Your map view
     }
 
     /*
