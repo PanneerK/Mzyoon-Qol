@@ -122,7 +122,7 @@ class SlideViewController: UIViewController
         }
         else
         {
-            let alertControls = UIAlertController(title: "Alert", message: "Under development", preferredStyle: .alert)
+            let alertControls = UIAlertController(title: "Alert", message: "No Data", preferredStyle: .alert)
             alertControls.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alertControls, animated: true, completion: nil)
         }
