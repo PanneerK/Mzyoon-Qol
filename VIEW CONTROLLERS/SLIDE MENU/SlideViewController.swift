@@ -53,7 +53,7 @@ class SlideViewController: UIViewController
         
         let userName = UILabel()
         userName.frame = CGRect(x: 0, y: userImage.frame.maxY + y, width: slideViewWidth, height: (3 * y))
-        if let name = UserDefaults.standard.value(forKey: "UserName") as? String
+        if let name = UserDefaults.standard.value(forKey: "userName") as? String
         {
             userName.text = name
         }
@@ -72,7 +72,7 @@ class SlideViewController: UIViewController
         view.addSubview(underline)
         
         let buttonTitle = ["My Account", "Address", "Book an Appointment", "Transaction" ,"Rewards", "Refer Friends", "FAQ", "Terms and Conditions", "Settings", "Log Out"]
-        let buttonImage = ["my_account", "appointment-1", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
+        let buttonImage = ["my_account", "Address", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
         
         var y1:CGFloat = userName.frame.maxY + (2 * y)
         

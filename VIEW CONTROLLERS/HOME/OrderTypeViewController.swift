@@ -207,7 +207,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         let directDeliveryLabel = UILabel()
         directDeliveryLabel.frame = CGRect(x: directDeliveryIcon.frame.maxX, y: orderTypeNavigationBar.frame.maxY + (2 * y), width: view.frame.width, height: (2 * y))
         directDeliveryLabel.text = (orderTypeNameArray[0] as! String)
-        directDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        directDeliveryLabel.textColor = UIColor.black
         directDeliveryLabel.textAlignment = .left
         directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         view.addSubview(directDeliveryLabel)
@@ -247,13 +247,24 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         view.addSubview(courierDeliveryIcon)
         
         let couriertDeliveryLabel = UILabel()
-        couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX, y: directDeliveryButton.frame.maxY + (2 * y), width: view.frame.width - (5 * x), height: (2 * y))
+        couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX, y: directDeliveryButton.frame.maxY + (2 * y), width: view.frame.width - (21 * x), height: (2 * y))
+//        couriertDeliveryLabel.backgroundColor = UIColor.red
         couriertDeliveryLabel.text = (orderTypeNameArray[1] as! String)
-        couriertDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        couriertDeliveryLabel.textColor = UIColor.black
         couriertDeliveryLabel.textAlignment = .left
         couriertDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         couriertDeliveryLabel.adjustsFontSizeToFitWidth = true
         view.addSubview(couriertDeliveryLabel)
+        
+        let extraLabel = UILabel()
+        extraLabel.frame = CGRect(x: couriertDeliveryLabel.frame.maxX, y: directDeliveryButton.frame.maxY + (2 * y), width: (20 * x), height: (2 * y))
+//        extraLabel.backgroundColor = UIColor.red
+        extraLabel.text = "(Extra charges applicable)"
+        extraLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        extraLabel.textAlignment = .left
+        extraLabel.font = UIFont(name: "AvenirNext-Regular", size: 10)
+        extraLabel.adjustsFontSizeToFitWidth = true
+        view.addSubview(extraLabel)
         
         let courierDeliveryUnderline = UILabel()
         courierDeliveryUnderline.frame = CGRect(x: (3 * x), y: couriertDeliveryLabel.frame.maxY + (y / 2), width: view.frame.width - (6 * x), height: 0.5)
@@ -292,7 +303,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         let companyLabel = UILabel()
         companyLabel.frame = CGRect(x: companyIcon.frame.maxX, y: courierDeliveryButton.frame.maxY + (2 * y), width: view.frame.width, height: (2 * y))
         companyLabel.text = (orderTypeNameArray[2] as! String)
-        companyLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        companyLabel.textColor = UIColor.black
         companyLabel.textAlignment = .left
         companyLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         view.addSubview(companyLabel)

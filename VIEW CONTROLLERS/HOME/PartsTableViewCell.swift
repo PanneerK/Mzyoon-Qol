@@ -30,11 +30,11 @@ class PartsTableViewCell: UITableViewCell {
         contentView.addSubview(partsImage)
         
         partsSizeLabel = UILabel()
-//        partsSizeLabel.backgroundColor = UIColor.cyan
+//        partsSizeLabel.backgroundColor = UIColor.white
         partsSizeLabel.text = "0.0"
         partsSizeLabel.textColor = UIColor.black
         partsSizeLabel.textAlignment = .left
-        partsSizeLabel.font = UIFont(name: "Gilroy-Regular", size: 12)
+        partsSizeLabel.font = UIFont(name: "Gilroy-Regular", size: 10)
         contentView.addSubview(partsSizeLabel)
     }
     required init(coder aDecoder: NSCoder)

@@ -18,8 +18,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-     //  var baseURL:String = "http://192.168.0.21/TailorAPI"
-         var baseURL:String = "http://appsapi.mzyoon.com"
+//       var baseURL:String = "http://192.168.0.21/TailorAPI"
+     var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -631,7 +631,7 @@ class ServerAPI : NSObject
     }
     
     // Insert Buyer Address..
-    func API_InsertAddress(BuyerId : String, FirstName : String, LastName : String, CountryId : Int, StateId : Int, Area : String, Floor : String, LandMark : String, LocationType : String, ShippingNotes : String, IsDefault : String, CountryCode : Int, PhoneNo : String, Longitude : Float, Latitude : Float, delegate : ServerAPIDelegate)
+    func API_InsertAddress(BuyerId : String, FirstName : String, LastName : String, CountryId : Int, StateId : Int, Area : String, Floor : String, LandMark : String, LocationType : String, ShippingNotes : String, IsDefault : String, CountryCode : String, PhoneNo : String, Longitude : Float, Latitude : Float, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -728,7 +728,7 @@ class ServerAPI : NSObject
     }
     
     //GEt Buyer Address..
-    func API_GetBuyerAddress(BuyerAddressId : Int, delegate : ServerAPIDelegate)
+    func API_GetBuyerAddress(BuyerAddressId : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -1112,7 +1112,7 @@ class ServerAPI : NSObject
     
     
     // Order Summary... 19/12/2018..
-    func API_InsertOrderSummary(dressType : Int, CustomerId : Int, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [UIImage], ReferenceImage : [UIImage], OrderCustomizationAttributeId : [Int], OrderCustomizationAttributeImageId : [Int], TailorId : [Int], MeasurementBy : String, CreatedBy : Int, MeasurementName : String, UserMeasurementValuesId : [Int], UserMeasurementValues : String, DeliveryTypeId : Int, delegate : ServerAPIDelegate)
+    func API_InsertOrderSummary(dressType : Int, CustomerId : String, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [UIImage], ReferenceImage : [UIImage], OrderCustomizationAttributeId : [Int], OrderCustomizationAttributeImageId : [Int], TailorId : [Int], MeasurementBy : String, CreatedBy : String, MeasurementName : String, UserMeasurementValuesId : NSArray, UserMeasurementValues : [Float], DeliveryTypeId : Int, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {

@@ -23,7 +23,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     let serviceCall = ServerAPI()
     
-    
+    var customization3 = NSDictionary()
+    var selectedTailors = [String]()
     
     override func viewDidLoad()
     {
@@ -128,16 +129,33 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         customizationHeadingLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         orderSummaryScrollView.addSubview(customizationHeadingLabel)
         
+        if let custom3 = UserDefaults.standard.value(forKey: "custom3") as? NSDictionary
+        {
+            customization3 = custom3
+        }
+        
+        
         let customizationView = UIView()
-        customizationView.frame = CGRect(x: (3 * x), y: customizationHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (19.5 * x))
+        customizationView.frame = CGRect(x: (3 * x), y: customizationHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (5 * x * CGFloat(customization3.count)))
         customizationView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(customizationView)
+        
+        print("CUSTOM 3 SELECTED", customization3)
+        
+        var customKeys = [String]()
+        var customvalues = [String]()
+        
+        for (keys, values) in customization3
+        {
+            customKeys.append(keys as! String)
+            customvalues.append(values as! String)
+        }
         
         let customizationArray = ["Lapels - ", "Buttons - ", "Pockets - ", "Vents - "]
         let customizationImageArray = ["Lapels", "Buttons", "Pockets", "Vents"]
         var y2:CGFloat = y
         
-        for i in 0..<4
+        for i in 0..<customization3.count
         {
             let dressSubViews = UIView()
             dressSubViews.frame = CGRect(x: x, y: y2, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
@@ -155,7 +173,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let dressTypeLabels = UILabel()
             dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
             dressTypeLabels.backgroundColor = UIColor.clear
-            dressTypeLabels.text = customizationArray[i]
+            dressTypeLabels.text = "\(customKeys[i]) - "
             dressTypeLabels.textColor = UIColor.white
             dressTypeLabels.textAlignment = .left
             dressSubViews.addSubview(dressTypeLabels)
@@ -163,6 +181,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let getDressTypeLabels = UILabel()
             getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
+            getDressTypeLabels.text = customvalues[i]
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             dressSubViews.addSubview(getDressTypeLabels)
@@ -245,8 +264,14 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         tailorListHeadingLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         orderSummaryScrollView.addSubview(tailorListHeadingLabel)
         
+        
+        if let tailorList = UserDefaults.standard.value(forKey: "selectedTailors")
+        {
+            selectedTailors = tailorList as! [String]
+        }
+        
         let tailorView = UIView()
-        tailorView.frame = CGRect(x: (3 * x), y: tailorListHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (10.5 * x))
+        tailorView.frame = CGRect(x: (3 * x), y: tailorListHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (6 * x * CGFloat(selectedTailors.count)))
         tailorView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(tailorView)
         
@@ -254,7 +279,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         let tailorArray = ["Noorul", "Ameen"]
         
-        for i in 0..<2
+        for i in 0..<selectedTailors.count
         {
             let dressSubViews = UIView()
             dressSubViews.frame = CGRect(x: x, y: y4, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
@@ -280,6 +305,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let getDressTypeLabels = UILabel()
             getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (14 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
+            getDressTypeLabels.text = selectedTailors[i]
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             dressSubViews.addSubview(getDressTypeLabels)
@@ -306,8 +332,100 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     @objc func submitButtonAction(sender : UIButton)
     {
+        var userId = String()
+        var dressId = Int()
+        var orderId = Int()
+        var addressId = Int()
+        var patternId = Int()
+        var measurementBy = String()
+        var measurementName = String()
+        var measurementId = NSArray()
+        var measurementValues = [Float]()
+        var tailorId = [Int]()
+        var custom3Key = [String]()
+        var custom3Values = [String]()
+        var custom3KeyInt = [Int]()
+        var custom3ValuesInt = [Int]()
         
-        self.serviceCall.API_InsertOrderSummary(dressType: 1, CustomerId: 1, AddressId: 2, PatternId: 1, Ordertype: 3, MeasurementId: -1, MaterialImage: [], ReferenceImage: [], OrderCustomizationAttributeId: [1], OrderCustomizationAttributeImageId: [1], TailorId: [2], MeasurementBy: "Tailor", CreatedBy: 1, MeasurementName: "Raghu", UserMeasurementValuesId: [19], UserMeasurementValues: "20.00", DeliveryTypeId: 1, delegate: self)
+        if let id = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            userId = id
+        }
+        
+        if let dressid = UserDefaults.standard.value(forKey: "dressType") as? Int
+        {
+            dressId = dressid
+        }
+        
+        if let orderid = UserDefaults.standard.value(forKey: "orderType") as? Int
+        {
+            orderId = orderid
+        }
+        
+        if let id = UserDefaults.standard.value(forKey: "addressId") as? Int
+        {
+            addressId = id
+        }
+        
+        if let measurementby = UserDefaults.standard.value(forKey: "measurementBy") as? String
+        {
+            measurementBy = measurementby
+        }
+        
+        if let partsId = UserDefaults.standard.value(forKey: "measurementId") as? NSArray
+        {
+            measurementId = partsId
+        }
+        
+        if measurementBy == "User"
+        {
+            if let name = UserDefaults.standard.value(forKey: "measurementName") as? String
+            {
+                measurementName = name
+            }
+        }
+        else
+        {
+            measurementName = ""
+        }
+        
+        if let patId = UserDefaults.standard.value(forKey: "patternId") as? Int
+        {
+            patternId = patId
+        }
+        else
+        {
+            patternId = 0
+        }
+        
+        if let dictValues = UserDefaults.standard.value(forKey: "measurementValues") as? [Float]
+        {
+            measurementValues = dictValues
+        }
+        
+        if let taiId = UserDefaults.standard.value(forKey: "selectedTailorsId") as? [Int]
+        {
+            tailorId = taiId
+        }
+        
+        if let custom3 = UserDefaults.standard.value(forKey: "custom3") as? [String : String]
+        {
+            for (keys, values) in custom3
+            {
+                custom3Key.append(keys)
+                custom3Values.append(values)
+            }
+        }
+        print("MEAUREMENT VALUES", custom3Key, custom3Values)
+
+        for i in 0..<custom3Key.count
+        {
+            custom3KeyInt.append(Int(custom3Key[i])!)
+            custom3ValuesInt.append(Int(custom3Values[i])!)
+        }
+        
+        print("MEAUREMENT VALUES", custom3KeyInt, custom3ValuesInt)
+        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: -1, MaterialImage: [], ReferenceImage: [], OrderCustomizationAttributeId: custom3KeyInt, OrderCustomizationAttributeImageId: custom3ValuesInt, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurementValuesId: measurementId, UserMeasurementValues: measurementValues, DeliveryTypeId: 1, delegate: self)
        
         let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(randomInt)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
@@ -339,12 +457,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let Result = insertOrder.object(forKey: "Result") as! String
             print("Result", Result)
             
-            
             let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(Result)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
             self.present(alert, animated: true, completion: nil)
-            
-            
         }
         else if ResponseMsg == "Failure"
         {

@@ -94,6 +94,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var measurerImage = String()
     var measurerTag = Int()
     
+    var measurementValues = [Int : Float]()
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -293,6 +295,16 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     self.convertedPartsImageArray.append(emptyImage!)
                 }
             }
+            
+            for i in 0..<PartsIdArray.count
+            {
+                if let customString = PartsIdArray[i] as? Int
+                {
+                    measurementValues[customString] = 0
+                }
+            }
+            
+            print("CUSTOME KEYS ALL", measurementValues)
             self.measurement2Contents()
             partsTableView.reloadData()
         }
@@ -457,6 +469,15 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             
             x1 = lineLabel.frame.maxX
         }
+        
+        let measureUnitButton = UIButton()
+        measureUnitButton.frame = CGRect(x: (2 * x), y: view.frame.height - (9 * y), width: (5 * x), height: (3 * y))
+        measureUnitButton.layer.cornerRadius = 1
+        measureUnitButton.layer.borderWidth = 1
+        
+        measureUnitButton.setTitle("Unit", for: .normal)
+        measureUnitButton.addTarget(self, action: #selector(self.nextButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(measureUnitButton)
         
         let nextButton = UIButton()
         nextButton.frame = CGRect(x: view.frame.width - (5 * x), y: view.frame.height - (9 * y), width: (3 * x), height: (3 * y))
@@ -1128,7 +1149,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 {
                     if PartsIdArray.contains(buttonTag)
                     {
-                        
+                        if label.tag == ((buttonTag * 1) + 200)
+                        {
+                            let value = measurementValues[buttonTag]
+                            print("SUCCESS OF QOL", value!)
+                            label.text = "\(value!)"
+                        }
                     }
                     else
                     {
@@ -1305,7 +1331,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         measurerTag = sender.tag
         
-        serviceCall.API_GetMeasurementParts(MeasurementParts: (sender.tag + 1), delegate: self)
+        serviceCall.API_GetMeasurementParts(MeasurementParts: sender.tag, delegate: self)
     }
     
     func API_CALLBACK_GetMeasurementParts(getParts: NSDictionary)
@@ -1440,8 +1466,14 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             if let label = foundView as? UILabel
             {
                 label.text = partsMeasurementLabel.text
+//                measurementValues[measurerTag] = Int(partsMeasurementLabel.text!)
+                let convertToInt:Float? = Float(label.text!)
+                print("TEXT", convertToInt!)
+                measurementValues.updateValue(convertToInt!, forKey: measurerTag)
             }
         }
+        
+        print("MEAUREMENT KEY AND VALUES", measurementValues)
     }
     
     func rulerContents()
@@ -1519,10 +1551,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     {
         let value = Double(scrollView.contentOffset.y / (12 * y))
         let convertedString = "\(value)"
-        print("SCROLL VIEW POSITION", convertedString)
         
         let splitted = convertedString.split(separator: ".")
-        print("SPLITTED", splitted)
         
         let wholeNumber = splitted[0]
         let decimalNumber = splitted[1].prefix(1)
@@ -1624,6 +1654,18 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     @objc func nextButtonAction(sender : UIButton)
     {
+        var values = [Float]()
+        
+        print("VALUES ALONE", measurementValues)
+        for (keys, valuess) in measurementValues
+        {
+            print("KEYS & VALUES", keys, valuess)
+            values.append(valuess)
+        }
+        
+        print("VALUES", values)
+        UserDefaults.standard.set(PartsIdArray, forKey: "measurementId")
+        UserDefaults.standard.set(values, forKey: "measurementValues")
         let referenceScreen = ReferenceImageViewController()
         self.navigationController?.pushViewController(referenceScreen, animated: true)
     }
@@ -1642,6 +1684,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsTableView.dataSource = self
         partsTableView.delegate = self
         partsView.addSubview(partsTableView)
+        
+        partsTableView.reloadData()
     }
     
     /*func numberOfSections(in tableView: UITableView) -> Int {
@@ -1681,12 +1725,15 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         cell.partsImage.frame = CGRect(x: x, y: y, width: (3 * x), height: (3 * y))
 
-        cell.partsName.frame = CGRect(x: cell.partsImage.frame.maxX + x, y: y, width: cell.frame.width - (10.5 * x), height: (3 * y))
+        cell.partsName.frame = CGRect(x: cell.partsImage.frame.maxX + x, y: y, width: cell.frame.width - (11.5 * x), height: (3 * y))
         
-        cell.partsSizeLabel.frame = CGRect(x: cell.partsName.frame.maxX + x, y: y, width: (3 * x), height: (3 * y))
+        cell.partsSizeLabel.frame = CGRect(x: cell.partsName.frame.maxX + x, y: y, width: (4 * x), height: (3 * y))
         
         cell.partsImage.image = convertedPartsImageArray[indexPath.row]
         cell.partsName.text = PartsNameArray[indexPath.row] as? String
+        let value = measurementValues[indexPath.row]
+        print("SUCCESS OF QOL", value!)
+        cell.partsSizeLabel.text = "\(value!)"
         
         return cell
     }
@@ -1699,9 +1746,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let selectedInt = PartsIdArray[indexPath.row] as! Int
-        let partsScreen = PartsViewController()
-        partsScreen.viewTag = selectedInt + 1
-        self.navigationController?.pushViewController(partsScreen, animated: true)
+        
+        self.serviceCall.API_GetMeasurementParts(MeasurementParts: selectedInt, delegate: self)
+
+        /*let partsScreen = PartsViewController()
+        partsScreen.viewTag = selectedInt
+        self.navigationController?.pushViewController(partsScreen, animated: true)*/
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

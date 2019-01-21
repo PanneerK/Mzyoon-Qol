@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import CoreData
+import CoreLocation
+import GoogleMaps
+import GooglePlaces
 
-class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDelegate, UITableViewDataSource, UITableViewDelegate
+class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, GMSMapViewDelegate
 {
 
     var x = CGFloat()
@@ -57,6 +61,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var stateNameArray = NSArray()
     var checkStateName = 1
     
+    var locationManager = CLLocationManager()
+    var currentLocation: CLLocation!
+    
+    var setDefault = "FALSE"
     
     override func viewDidLoad()
     {
@@ -65,6 +73,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
+        
+        fetchingCurrentLocation()
         
         serviceCall.API_CountryCode(delegate: self)
         
@@ -84,6 +94,34 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func fetchingCurrentLocation()
+    {
+        locationManager.requestAlwaysAuthorization()
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        currentLocation = locationManager.location
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.requestAlwaysAuthorization()
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        }
+        else
+        {
+            
+        }
+        
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways)
+        {
+            
+            currentLocation = locationManager.location
+            print("Current Loc:",currentLocation.coordinate)
+        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -136,7 +174,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     func API_CALLBACK_InsertAddress(insertAddr: NSDictionary)
     {
-        
         let ResponseMsg = insertAddr.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
@@ -147,7 +184,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             if Result == "1"
             {
                 let alert = UIAlertController(title: "Alert", message: "Saved Sucessfully", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
                 self.present(alert, animated: true, completion: nil)
             }
             else
@@ -167,6 +204,12 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             ErrorStr = Result
             DeviceError()
         }
+    }
+    
+    func apiSuccessResponseAlertOkAction(action : UIAlertAction)
+    {
+        let addressScreen = AddressViewController()
+        self.navigationController?.pushViewController(addressScreen, animated: true)
     }
     
     func API_CALLBACK_CountryCode(countryCodes: NSDictionary) {
@@ -333,6 +376,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let addressSwitchButton = UISwitch()
         addressSwitchButton.frame = CGRect(x: addressDefaultLabel.frame.maxX + (2 * x), y: locationView.frame.maxY + y, width: (5 * x), height: (2 * y))
+        addressSwitchButton.addTarget(self, action: #selector(self.addressSwitchButtonAction(action:)), for: .valueChanged)
         view.addSubview(addressSwitchButton)
         
         let addressInfoHeadingLabel = UILabel()
@@ -358,7 +402,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         firstNameEnglishTextField.frame = CGRect(x: firstNameIcon.frame.maxX + x, y: y, width: addressScrollView.frame.width - (4 * x), height: (2 * y))
         firstNameEnglishTextField.placeholder = "First Name"
-        firstNameEnglishTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        firstNameEnglishTextField.textColor = UIColor.black
         firstNameEnglishTextField.textAlignment = .left
         firstNameEnglishTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
 //        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: firstNameEnglishTextField.frame.height))
@@ -366,10 +410,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         firstNameEnglishTextField.leftViewMode = UITextField.ViewMode.always
         firstNameEnglishTextField.adjustsFontSizeToFitWidth = true
         firstNameEnglishTextField.keyboardType = .default
-        firstNameEnglishTextField.clearsOnBeginEditing = true
+//        firstNameEnglishTextField.clearsOnBeginEditing = true
         firstNameEnglishTextField.returnKeyType = .done
         firstNameEnglishTextField.delegate = self
-        firstNameEnglishTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+//        firstNameEnglishTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         addressScrollView.addSubview(firstNameEnglishTextField)
         
         let firstNameEditButton = UIButton()
@@ -389,7 +433,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         secondNameEnglishTextField.frame = CGRect(x: secondNameIcon.frame.maxX + x, y: underline1.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
         secondNameEnglishTextField.placeholder = "Second Name"
-        secondNameEnglishTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        secondNameEnglishTextField.textColor = UIColor.black
         secondNameEnglishTextField.textAlignment = .left
         secondNameEnglishTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
 //        let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
@@ -397,10 +441,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         secondNameEnglishTextField.leftViewMode = UITextField.ViewMode.always
         secondNameEnglishTextField.adjustsFontSizeToFitWidth = true
         secondNameEnglishTextField.keyboardType = .default
-        secondNameEnglishTextField.clearsOnBeginEditing = true
+//        secondNameEnglishTextField.clearsOnBeginEditing = true
         secondNameEnglishTextField.returnKeyType = .done
         secondNameEnglishTextField.delegate = self
-        secondNameEnglishTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+//        secondNameEnglishTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         addressScrollView.addSubview(secondNameEnglishTextField)
         
         let secondNameEditButton = UIButton()
@@ -472,10 +516,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         areaNameTextField.leftViewMode = UITextField.ViewMode.always
         areaNameTextField.adjustsFontSizeToFitWidth = true
         areaNameTextField.keyboardType = .default
-        areaNameTextField.clearsOnBeginEditing = true
+//        areaNameTextField.clearsOnBeginEditing = true
         areaNameTextField.returnKeyType = .done
         areaNameTextField.delegate = self
-        areaNameTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+//        areaNameTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         addressScrollView.addSubview(areaNameTextField)
         
         let areaEditButton = UIButton()
@@ -495,7 +539,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         floorTextField.frame = CGRect(x: floorIcon.frame.maxX + x, y: underline5.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
         floorTextField.placeholder = "Floor"
-        floorTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        floorTextField.textColor = UIColor.black
         floorTextField.textAlignment = .left
         floorTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
@@ -503,10 +547,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         floorTextField.leftViewMode = UITextField.ViewMode.always
         floorTextField.adjustsFontSizeToFitWidth = true
         floorTextField.keyboardType = .default
-        floorTextField.clearsOnBeginEditing = true
+//        floorTextField.clearsOnBeginEditing = true
         floorTextField.returnKeyType = .done
         floorTextField.delegate = self
-        floorTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+//        floorTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         addressScrollView.addSubview(floorTextField)
         
         let floorEditButton = UIButton()
@@ -526,7 +570,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         landMarkTextField.frame = CGRect(x: landMarkIcon.frame.maxX + x, y: underline6.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
         landMarkTextField.placeholder = "Land Mark"
-        landMarkTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        landMarkTextField.textColor = UIColor.black
         landMarkTextField.textAlignment = .left
         landMarkTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
@@ -534,10 +578,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         landMarkTextField.leftViewMode = UITextField.ViewMode.always
         landMarkTextField.adjustsFontSizeToFitWidth = true
         landMarkTextField.keyboardType = .default
-        landMarkTextField.clearsOnBeginEditing = true
+//        landMarkTextField.clearsOnBeginEditing = true
         landMarkTextField.returnKeyType = .done
         landMarkTextField.delegate = self
-        landMarkTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+//        landMarkTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         addressScrollView.addSubview(landMarkTextField)
         
         let landMarkEditButton = UIButton()
@@ -557,7 +601,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         locationTypeTextField.frame = CGRect(x: locationTypeIcon.frame.maxX + x, y: underline7.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
         locationTypeTextField.placeholder = "Location Type"
-        locationTypeTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        locationTypeTextField.textColor = UIColor.black
         locationTypeTextField.textAlignment = .left
         locationTypeTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
@@ -565,10 +609,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         locationTypeTextField.leftViewMode = UITextField.ViewMode.always
         locationTypeTextField.adjustsFontSizeToFitWidth = true
         locationTypeTextField.keyboardType = .default
-        locationTypeTextField.clearsOnBeginEditing = true
+//        locationTypeTextField.clearsOnBeginEditing = true
         locationTypeTextField.returnKeyType = .done
         locationTypeTextField.delegate = self
-        locationTypeTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+//        locationTypeTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         addressScrollView.addSubview(locationTypeTextField)
         
         let locationTypeEditButton = UIButton()
@@ -623,7 +667,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: underline8.frame.maxY + (3 * y), width: addressScrollView.frame.width - (13 * x), height: (2 * y))
         mobileTextField.placeholder = "Mobile Number"
-        mobileTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        mobileTextField.textColor = UIColor.black
         mobileTextField.textAlignment = .left
         mobileTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
 //        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.mobileTextField.frame.height))
@@ -631,10 +675,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         mobileTextField.leftViewMode = UITextField.ViewMode.always
         mobileTextField.adjustsFontSizeToFitWidth = true
         mobileTextField.keyboardType = .default
-        mobileTextField.clearsOnBeginEditing = true
+//        mobileTextField.clearsOnBeginEditing = true
         mobileTextField.returnKeyType = .done
         mobileTextField.delegate = self
-        mobileTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+//        mobileTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         addressScrollView.addSubview(mobileTextField)
         
         let underline9 = UILabel()
@@ -649,7 +693,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         shippingNotesTextField.frame = CGRect(x: shippingNotesIcon.frame.maxX + x, y: underline9.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
         shippingNotesTextField.placeholder = "Shipping Notes"
-        shippingNotesTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        shippingNotesTextField.textColor = UIColor.black
         shippingNotesTextField.textAlignment = .left
         shippingNotesTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
@@ -657,10 +701,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         shippingNotesTextField.leftViewMode = UITextField.ViewMode.always
         shippingNotesTextField.adjustsFontSizeToFitWidth = true
         shippingNotesTextField.keyboardType = .default
-        shippingNotesTextField.clearsOnBeginEditing = true
+//        shippingNotesTextField.clearsOnBeginEditing = true
         shippingNotesTextField.returnKeyType = .done
         shippingNotesTextField.delegate = self
-        shippingNotesTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+//        shippingNotesTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         addressScrollView.addSubview(shippingNotesTextField)
         
         let shippingNotesEditButton = UIButton()
@@ -687,6 +731,17 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc func addressSwitchButtonAction(action : UISwitch)
+    {
+        if action.isOn == true
+        {
+            setDefault = "TRUE"
+        }
+        else
+        {
+            setDefault = "FALSE"
+        }
+    }
     @objc func textFieldDidChange(textField: UITextField){
         
         let text = textField.text
@@ -781,6 +836,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     @objc func countryButtonAction(sender : UIButton)
     {
+        view.endEditing(true)
         let countryAlert = UIAlertController(title: "Country", message: "Please choose your country", preferredStyle: .alert)
 
         for i in 0..<countryNameArray.count
@@ -869,13 +925,12 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let LandmarkStr = landMarkTextField.text
         let locationTypeStr = locationTypeTextField.text
         let shippingStr = shippingNotesTextField.text
-        let SetDefaultStr = "True"
-        let CountryCode = 91
+        let CountryCode = mobileCountryCodeLabel.text
         let PhoneNum = mobileTextField.text
-        let latitude = 1.2345
-        let longitude = 2.2345
+        let latitude = currentLocation.coordinate.latitude
+        let longitude = currentLocation.coordinate.longitude
         
-        serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr!, LastName: lastNameStr!, CountryId: CountryId, StateId: stateId, Area: AreaStr!, Floor: floorStr!, LandMark: LandmarkStr!, LocationType: locationTypeStr!, ShippingNotes: shippingStr!, IsDefault: SetDefaultStr, CountryCode: CountryCode, PhoneNo: PhoneNum!, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+        serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr!, LastName: lastNameStr!, CountryId: CountryId, StateId: stateId, Area: AreaStr!, Floor: floorStr!, LandMark: LandmarkStr!, LocationType: locationTypeStr!, ShippingNotes: shippingStr!, IsDefault: setDefault, CountryCode: CountryCode!, PhoneNo: PhoneNum!, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

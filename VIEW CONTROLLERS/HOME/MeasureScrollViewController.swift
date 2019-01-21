@@ -301,10 +301,8 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
     {
         let value = Double(scrollView.contentOffset.y / (12 * y))
         let convertedString = "\(value)"
-        print("SCROLL VIEW POSITION", convertedString)
         
         let splitted = convertedString.split(separator: ".")
-        print("SPLITTED", splitted)
         
         let wholeNumber = splitted[0]
         let decimalNumber = splitted[1].prefix(1)

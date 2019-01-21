@@ -132,7 +132,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     
     @objc func addMaterialNextButtonAction(sender : UIButton)
     {
-        let tailorListScreen = TailorListViewController()
+        let tailorListScreen = AddressViewController()
         self.navigationController?.pushViewController(tailorListScreen, animated: true)
     }
     

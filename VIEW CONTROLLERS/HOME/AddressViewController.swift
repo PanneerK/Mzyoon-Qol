@@ -46,6 +46,9 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+    var activeView = UIView()
+    var activityView = UIActivityIndicatorView()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -54,13 +57,40 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
-        self.serviceCall.API_GetBuyerAddress(BuyerAddressId: 50, delegate: self)
+        view.backgroundColor = UIColor.white
         
-        addressContent()
+        activityContents()
         
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            self.serviceCall.API_GetBuyerAddress(BuyerAddressId: userId, delegate: self)
+        }
+    }
+    
+    func activityContents()
+    {
+        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
+        view.addSubview(activeView)
+        
+        activityView.frame = CGRect(x: ((activeView.frame.width - 50) / 2), y: ((activeView.frame.height - 50) / 2), width: 50, height: 50)
+        activityView.style = .whiteLarge
+        activityView.color = UIColor.white
+        activityView.startAnimating()
+        activeView.addSubview(activityView)
+    }
+    
+    func stopActivity()
+    {
+        activeView.removeFromSuperview()
+        activityView.stopAnimating()
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -97,6 +127,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     {
         let ResponseMsg = getBuyerAddr.object(forKey: "ResponseMsg") as! String
         
+        stopActivity()
+        
         if ResponseMsg == "Success"
         {
             let Result = getBuyerAddr.object(forKey: "Result") as! NSArray
@@ -125,7 +157,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             isDefault = Result.value(forKey: "IsDefault") as! NSArray
             print("IsDefault", isDefault)
             
-            addressContent()
+            Id = Result.value(forKey: "Id") as! NSArray
+            print("ADDRESS ID ARRAY", Id)
         }
         else if ResponseMsg == "Failure"
         {
@@ -137,6 +170,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             DeviceError()
         }
        
+        addressContent()
     }
     
     func API_CALLBACK_UpdateAddress(updateAddr: NSDictionary)
@@ -240,37 +274,39 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             
             for i in 0..<FirstName.count
             {
-                let addressView = UIView()
-                addressView.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
-                addressView.backgroundColor = UIColor.white
-                addressScrollView.addSubview(addressView)
+                let addressSelectButton = UIButton()
+                addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
+                addressSelectButton.backgroundColor = UIColor.white
+                addressSelectButton.tag = Id[i] as! Int
+                addressSelectButton.addTarget(self, action: #selector(self.addressSelectButtonAction(sender:)), for: .touchUpInside)
+                addressScrollView.addSubview(addressSelectButton)
                 
-                y1 = addressView.frame.maxY + (2 * y)
+                y1 = addressSelectButton.frame.maxY + (2 * y)
                 
                 let addressIcon = UIImageView()
                 addressIcon.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
                 addressIcon.image = UIImage(named: "locationMarker")
-                addressView.addSubview(addressIcon)
+                addressSelectButton.addSubview(addressIcon)
                 
                 let addressTitle = UILabel()
                 addressTitle.frame = CGRect(x: addressIcon.frame.maxX + x, y: y, width: (10 * x), height: (2 * y))
                 addressTitle.text = "Location"
                 addressTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressTitle.textAlignment = .left
-                addressView.addSubview(addressTitle)
+                addressSelectButton.addSubview(addressTitle)
                 
                 let addressEditButton = UIButton()
-                addressEditButton.frame = CGRect(x: addressView.frame.width - (12.1 * x), y: y, width: (5 * x), height: (2 * y))
+                addressEditButton.frame = CGRect(x: addressSelectButton.frame.width - (12.1 * x), y: y, width: (5 * x), height: (2 * y))
                 addressEditButton.setTitle("Edit", for: .normal)
                 addressEditButton.setTitleColor(UIColor.black, for: .normal)
                 addressEditButton.tag = i
                 addressEditButton.addTarget(self, action: #selector(self.editButtonAction(sender:)), for: .touchUpInside)
-                addressView.addSubview(addressEditButton)
+                addressSelectButton.addSubview(addressEditButton)
                 
                 let linelabel = UILabel()
                 linelabel.frame = CGRect(x: addressEditButton.frame.maxX, y: y +  y / 2, width: 1, height: y)
                 linelabel.backgroundColor = UIColor.lightGray
-                addressView.addSubview(linelabel)
+                addressSelectButton.addSubview(linelabel)
                 
                 let addressDeleteButton = UIButton()
                 addressDeleteButton.frame = CGRect(x: linelabel.frame.maxX, y: y, width: (6 * x), height: (2 * y))
@@ -278,33 +314,33 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 addressDeleteButton.setTitleColor(UIColor.black, for: .normal)
                 addressDeleteButton.tag = i
                 addressDeleteButton.addTarget(self, action: #selector(self.deleteButtonAction(sender:)), for: .touchUpInside)
-                addressView.addSubview(addressDeleteButton)
+                addressSelectButton.addSubview(addressDeleteButton)
                 
                 let underLine = UILabel()
-                underLine.frame = CGRect(x: x, y: addressEditButton.frame.maxY, width: addressView.frame.width - (2 * x), height: 1)
+                underLine.frame = CGRect(x: x, y: addressEditButton.frame.maxY, width: addressSelectButton.frame.width - (2 * x), height: 1)
                 underLine.backgroundColor = UIColor.lightGray
-                addressView.addSubview(underLine)
+                addressSelectButton.addSubview(underLine)
                 
                 let nameLabel = UILabel()
                 nameLabel.frame = CGRect(x: x, y: underLine.frame.maxY + y, width: (5 * x), height: (2 * x))
                 nameLabel.text = "Name"
                 nameLabel.textColor = UIColor.black
                 nameLabel.textAlignment = .left
-                addressView.addSubview(nameLabel)
+                addressSelectButton.addSubview(nameLabel)
                 
                 let getNameLabel = UILabel()
                 getNameLabel.frame = CGRect(x: nameLabel.frame.maxX + (10 * x), y: underLine.frame.maxY + y, width: (18.5 * x), height: (2 * x))
                 getNameLabel.text = FirstName[i] as? String
                 getNameLabel.textColor = UIColor.black
                 getNameLabel.textAlignment = .left
-                addressView.addSubview(getNameLabel)
+                addressSelectButton.addSubview(getNameLabel)
                 
                 let addressLabel = UILabel()
                 addressLabel.frame = CGRect(x: x, y: nameLabel.frame.maxY + y, width: (6 * x), height: (2 * x))
                 addressLabel.text = "Address"
                 addressLabel.textColor = UIColor.black
                 addressLabel.textAlignment = .left
-                addressView.addSubview(addressLabel)
+                addressSelectButton.addSubview(addressLabel)
                 
                 let getAddressLabel = UILabel()
                 getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (6 * x))
@@ -312,32 +348,35 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 getAddressLabel.textColor = UIColor.black
                 getAddressLabel.textAlignment = .left
                 getAddressLabel.numberOfLines = 3
-                addressView.addSubview(getAddressLabel)
+                addressSelectButton.addSubview(getAddressLabel)
                 
                 let mobileLabel = UILabel()
                 mobileLabel.frame = CGRect(x: x, y: getAddressLabel.frame.maxY + y, width: (12 * x), height: (2 * x))
                 mobileLabel.text = "Phone Number"
                 mobileLabel.textColor = UIColor.black
                 mobileLabel.textAlignment = .left
-                addressView.addSubview(mobileLabel)
+                addressSelectButton.addSubview(mobileLabel)
                 
                 let getMobileLabel = UILabel()
                 getMobileLabel.frame = CGRect(x: getNameLabel.frame.minX, y: getAddressLabel.frame.maxY + y, width: (18.5 * x), height: (2 * x))
                 getMobileLabel.text = PhoneNo[i] as? String
                 getMobileLabel.textColor = UIColor.black
                 getMobileLabel.textAlignment = .left
-                addressView.addSubview(getMobileLabel)
+                addressSelectButton.addSubview(getMobileLabel)
                 
                 if let defaultString = isDefault[i] as? Int
                 {
+                    let defaultAddressImage = UIImageView()
+                    defaultAddressImage.frame = CGRect(x: addressSelectButton.frame.width - (15 * x), y: mobileLabel.frame.maxY + y, width: (2 * x), height: (2 * y))
+                    defaultAddressImage.image = UIImage(named: "defaultAddress")
+                    
                     let defaultAddressLabel = UILabel()
-                    defaultAddressLabel.frame = CGRect(x: addressView.frame.width - (20 * x), y: mobileLabel.frame.maxY + y, width: (12 * x), height: (2 * y))
+                    defaultAddressLabel.frame = CGRect(x: defaultAddressImage.frame.maxX, y: mobileLabel.frame.maxY + y, width: (12 * x), height: (2 * y))
 //                    defaultAddressLabel.backgroundColor = UIColor.orange
                     defaultAddressLabel.text = "Default Address"
                     defaultAddressLabel.textColor = UIColor.black
                     defaultAddressLabel.textAlignment = .left
                     defaultAddressLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-                    addressView.addSubview(defaultAddressLabel)
                     
                     let defaultSwitch = UISwitch()
                     defaultSwitch.frame = CGRect(x: defaultAddressLabel.frame.maxX + x, y: mobileLabel.frame.maxY + y, width: (3 * x), height: (2 * y))
@@ -345,13 +384,17 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                     if defaultString == 1
                     {
                         defaultSwitch.isOn = true
+                        addressSelectButton.addSubview(defaultAddressImage)
+                        addressSelectButton.addSubview(defaultAddressLabel)
+                        addressSelectButton.layer.borderWidth = 2
+                        addressSelectButton.layer.borderColor = UIColor.orange.cgColor
                     }
                     else
                     {
                         defaultSwitch.isOn = false
                     }
                     defaultSwitch.isUserInteractionEnabled = false
-                    addressView.addSubview(defaultSwitch)
+//                    addressSelectButton.addSubview(defaultSwitch)
                 }
             }
             
@@ -371,6 +414,13 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func addressSelectButtonAction(sender : UIButton)
+    {
+        UserDefaults.standard.set(sender.tag, forKey: "addressId")
+        let tailorScreen = TailorListViewController()
+        self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     
     @objc func editButtonAction(sender : UIButton)

@@ -58,6 +58,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var currentLocation: CLLocation!
     
     var selectedTailorListArray = [Int]()
+    var selectedTailorListNameArray = [String]()
     
     // Error PAram...
     var DeviceNum:String!
@@ -430,7 +431,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                 tailorImageButton.addSubview(dummyImageView)
             }
             
-            tailorImageButton.tag = i
+            tailorImageButton.tag = IdArray[i] as! Int
             tailorImageButton.addTarget(self, action: #selector(self.tailorSelectionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(tailorImageButton)
             
@@ -590,15 +591,33 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
         }
         
-        print("SEASONAL ARRAY", selectedTailorListArray)
+        print("TAILOR LIST ARRAY", selectedTailorListArray)
         
         totalTailersSelectedCountLabel.text = "\(selectedTailorListArray.count)"
     }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
-        let orderSummaryScreen = OrderSummaryViewController()
-        self.navigationController?.pushViewController(orderSummaryScreen, animated: true)
+        if selectedTailorListArray.count == 0
+        {
+            let alert = UIAlertController(title: "Alert", message: "Please select atleast anyone tailor to proceed", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            selectedTailorListNameArray.removeAll()
+            
+            for i in 0..<selectedTailorListArray.count
+            {
+                selectedTailorListNameArray.append(TailorNameArray[selectedTailorListArray[i]] as! String)
+            }
+            
+            UserDefaults.standard.set(selectedTailorListNameArray, forKey: "selectedTailors")
+            UserDefaults.standard.set(selectedTailorListArray, forKey: "selectedTailorsId")
+            let orderSummaryScreen = OrderSummaryViewController()
+            self.navigationController?.pushViewController(orderSummaryScreen, animated: true)
+        }
     }
     
     func mapViewContents(isHidden : Bool)
@@ -608,6 +627,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
+        
+        let camera = GMSCameraPosition.camera(withLatitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, zoom: 17.0)
+        self.mapView.animate(to: camera)
         
         mapView.isHidden = isHidden
         

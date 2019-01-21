@@ -47,6 +47,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     var datePick = UIDatePicker()
     
+    var getEmail = String()
+    var getDOB = String()
+    var getGender = String()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -55,12 +59,20 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
-        view.backgroundColor = UIColor.red
+        view.backgroundColor = UIColor.white
+        
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
+        }
+        else
+        {
+            
+        }
 
 //        let closeKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.closeKeyboard(gesture:)))
 //        closeKeyboard.delegate = self
 //        view.addGestureRecognizer(closeKeyboard)
-        screenContents()
         
 //        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: UIResponder.keyboardWillShowNotification, object: nil)
 //        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillHide:")), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -128,6 +140,74 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+    }
+    
+    func API_CALLBACK_ExistingUserProfile(userProfile: NSDictionary)
+    {
+        print("SELF OF EXISTING USER", userProfile)
+        
+        let responseMsg = userProfile.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = userProfile.object(forKey: "Result") as! NSArray
+            print("RESULT IN EXISTING", result)
+            
+            let name = result.value(forKey: "Name") as! NSArray
+            print("NAME", name)
+            
+            if let getName = name[0] as? String
+            {
+                UserDefaults.standard.set(getName, forKey: "userName")
+            }
+            
+            
+            let dob = result.value(forKey: "Dob") as! NSArray
+            print("DOB", dob)
+            
+            if dob.count != 0
+            {
+                if let date = dob[0] as? String
+                {
+                    getDOB = String(date.prefix(10))
+                }
+            }
+            
+            
+            //            UserDefaults.standard.set(dob[0], forKey: "dob")
+            
+            let mobileNumber = result.value(forKey: "PhoneNumber") as! NSArray
+            print("MOBILE NUMBER", mobileNumber)
+            
+            UserDefaults.standard.set(mobileNumber[0], forKey: "mobileNumber")
+            
+            let email = result.value(forKey: "Email") as! NSArray
+            print("EMAIL", email)
+            
+            if email.count != 0
+            {
+                if let mail = email[0] as? String
+                {
+                    getEmail = mail
+                }
+            }
+            
+            let gender = result.value(forKey: "Gender") as! NSArray
+            print("Gender", gender)
+            
+            if gender.count != 0
+            {
+                if let gen = gender[0] as? String
+                {
+                    getGender = gen
+                    GenderStr = getGender
+                }
+            }
+            
+            //            UserDefaults.standard.set(email[0], forKey: "email")
+        }
+        
+        screenContents()
     }
     
     
@@ -233,7 +313,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         userName.isUserInteractionEnabled = false
         userName.frame = CGRect(x: nameIcon.frame.maxX + x, y: userImage.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
-        if let getUserName = UserDefaults.standard.value(forKey: "Name") as? String
+        if let getUserName = UserDefaults.standard.value(forKey: "userName") as? String
         {
             userName.text = getUserName
         }
@@ -281,7 +361,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         email.isUserInteractionEnabled = false
         email.frame = CGRect(x: nameIcon.frame.maxX + x, y: mobileIcon.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
-        email.placeholder = "Please enter your email"
+        if getEmail.isEmpty == true
+        {
+            email.placeholder = "Please enter your email"
+        }
+        else
+        {
+            email.text = getEmail
+        }
         email.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         email.delegate = self
         view.addSubview(email)
@@ -298,7 +385,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         dob.isUserInteractionEnabled = false
         dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (4 * y), width: view.frame.width - (12 * x), height: (2 * y))
-        dob.placeholder = "yyyy/mm/dd"
+        if getDOB.isEmpty == true
+        {
+            dob.placeholder = "yyyy/mm/dd"
+        }
+        else
+        {
+            dob.text = getDOB
+        }
         dob.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         dob.addTarget(self, action: #selector(self.calendarButtonAction), for: .allEditingEvents)
         dob.delegate = self
@@ -332,7 +426,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         genderButton.addSubview(genderImageView)
         
         genderLabel.frame = CGRect(x: genderImageView.frame.maxX + (2 * x), y: 0, width: genderButton.frame.width - (6 * x), height: (4 * y))
-        genderLabel.text = "Gender"
+        if getGender.isEmpty == true
+        {
+            genderLabel.text = "Gender"
+        }
+        else
+        {
+            genderLabel.text = getGender
+        }
         genderLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         genderLabel.textAlignment = .left
         genderButton.addSubview(genderLabel)
@@ -615,6 +716,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         let EmailID = email.text
         let DobStr = dob.text
         let ModifyStr = "user"
+        
+        print("MMMMM", GenderStr!)
                 
         serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr!, ModifiedBy: ModifyStr, delegate: self)
     }
