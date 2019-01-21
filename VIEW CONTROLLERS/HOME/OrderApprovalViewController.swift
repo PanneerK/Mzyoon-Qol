@@ -170,11 +170,11 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             
             let DeliveryTypes = Result.object(forKey: "DeliveryTypes") as! NSArray
             DeliveryTypeArray = DeliveryTypes.value(forKey: "DeliveryType") as! NSArray
-            print("DeliveryTypes", DeliveryTypes)
+            print("DeliveryTypeArray", DeliveryTypeArray)
             
             let StichingTime = Result.object(forKey: "StichingTime") as! NSArray
             StichingTimesArray = StichingTime.value(forKey: "StichingTimes") as! NSArray
-            print("StichingTime", StichingTime)
+            print("StichingTimesArray", StichingTimesArray)
             
         }
         else if ResponseMsg == "Failure"
@@ -995,8 +995,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // DeliveryColonLabel :-
         let AppointColonLabel = UILabel()
-        AppointColonLabel.frame = CGRect(x: AppointmentsLabels.frame.maxX , y: AppointmentsView.frame.minY , width: 2 * x, height: (6 * y))
-        //AppointColonLabel.backgroundColor = UIColor.gray
+        AppointColonLabel.frame = CGRect(x: AppointmentsLabels.frame.maxX , y: AppointmentsView.frame.minY , width: (2 * x), height: (6 * y))
+       // AppointColonLabel.backgroundColor = UIColor.gray
         AppointColonLabel.text = "-"
         AppointColonLabel.textColor = UIColor.white
         AppointColonLabel.textAlignment = .center
@@ -1032,8 +1032,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
        
         // Label :-
         let DeliveryTypeLabel = UILabel()
-        DeliveryTypeLabel.frame = CGRect(x: x, y: DeliveryTypeView.frame.minY , width: DeliveryTypeView.frame.width - (20 * x), height: (2 * y))
-        DeliveryTypeLabel.backgroundColor = UIColor.gray
+        DeliveryTypeLabel.frame = CGRect(x: x, y: AppointmentsView.frame.minY, width: DeliveryTypeView.frame.width - (20 * x), height: (2.5 * y))
+        //DeliveryTypeLabel.backgroundColor = UIColor.gray
         DeliveryTypeLabel.text = "Delivery Type"
         DeliveryTypeLabel.textColor = UIColor.white
         DeliveryTypeLabel.textAlignment = .left
@@ -1042,20 +1042,28 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // DeliveryColonLabel :-
         let DeliveryColonLabel = UILabel()
-        DeliveryColonLabel.frame = CGRect(x: DeliveryTypeLabel.frame.minX, y: DeliveryTypeView.frame.minY , width: 2 * x, height: (2 * y))
+        DeliveryColonLabel.frame = CGRect(x: DeliveryTypeLabel.frame.maxX, y: AppointmentsView.frame.minY, width: (2 * x), height: (2.5 * y))
        // DeliveryColonLabel.backgroundColor = UIColor.gray
         DeliveryColonLabel.text = "-"
         DeliveryColonLabel.textColor = UIColor.white
         DeliveryColonLabel.textAlignment = .center
         DeliveryColonLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
-       // DeliveryTypeView.addSubview(DeliveryColonLabel)
+        DeliveryTypeView.addSubview(DeliveryColonLabel)
         
-        
+        // DeliveryValueLabel :-
+        let DeliveryValueLabel = UILabel()
+        DeliveryValueLabel.frame = CGRect(x: DeliveryColonLabel.frame.maxX + x, y: AppointmentsView.frame.minY, width: (15 * x), height: (2.5 * y))
+        // DeliveryValueLabel.backgroundColor = UIColor.gray
+        DeliveryValueLabel.text = DeliveryTypeArray[0] as? String
+        DeliveryValueLabel.textColor = UIColor.white
+        DeliveryValueLabel.textAlignment = .left
+        DeliveryValueLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        DeliveryTypeView.addSubview(DeliveryValueLabel)
         
     
         // StichTimeView :-
         let StichTimeView = UIView()
-        StichTimeView.frame = CGRect(x: x, y: 105 + (6 * y), width: DeliveryTypeView.frame.width , height: (6 * y))
+        StichTimeView.frame = CGRect(x: x, y: DeliveryTypeView.frame.maxY + y, width: deliveryDetailsView.frame.width - (2 * x) , height: (6 * y))
         StichTimeView.layer.cornerRadius = 10
         StichTimeView.layer.masksToBounds = true
         StichTimeView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -1064,8 +1072,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Label :-
         let StichTimeLabel = UILabel()
-        StichTimeLabel.frame = CGRect(x: 5, y: 8 , width: 15 * x, height: (3 * y))
-       // StichTimeLabel.backgroundColor = UIColor.gray
+        StichTimeLabel.frame = CGRect(x: x, y: 0 , width: StichTimeView.frame.width - (20 * x), height: (5 * y))
+        //StichTimeLabel.backgroundColor = UIColor.gray
         StichTimeLabel.text = "Stiching time required for stiches"
         StichTimeLabel.lineBreakMode = .byWordWrapping
         StichTimeLabel.numberOfLines = 2
@@ -1077,7 +1085,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // StichColon Label :-
         let StichColonLabel = UILabel()
-        StichColonLabel.frame = CGRect(x: StichTimeLabel.frame.maxX, y: StichTimeView.frame.minY , width: 2 * x, height: (2 * y))
+        StichColonLabel.frame = CGRect(x: StichTimeLabel.frame.maxX, y: 0 , width: 2 * x, height: (5 * y))
        // StichColonLabel.backgroundColor = UIColor.gray
         StichColonLabel.text = "-"
         StichColonLabel.textColor = UIColor.white
@@ -1086,9 +1094,20 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         StichTimeView.addSubview(StichColonLabel)
        
         
+        // StichValueLabel :-
+        let StichValueLabel = UILabel()
+        StichValueLabel.frame = CGRect(x: StichColonLabel.frame.maxX + x, y: 0, width: (15 * x), height: (5 * y))
+        // StichValueLabel.backgroundColor = UIColor.gray
+        StichValueLabel.text = StichingTimesArray[0] as? String
+        StichValueLabel.textColor = UIColor.white
+        StichValueLabel.textAlignment = .left
+        StichValueLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        StichTimeView.addSubview(StichValueLabel)
+        
+        
         // DeliveryDateView :-
         let DeliveryDateView = UIView()
-        DeliveryDateView.frame = CGRect(x: x, y: 195 + (6 * y), width: StichTimeView.frame.width , height: (10 * y))
+        DeliveryDateView.frame = CGRect(x: x, y: StichTimeView.frame.maxY + y, width: deliveryDetailsView.frame.width - (2 * x) , height: (6 * y))
         DeliveryDateView.layer.cornerRadius = 10
         DeliveryDateView.layer.masksToBounds = true
         DeliveryDateView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -1096,7 +1115,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
  
         // Label :-
         let DeliveryDateLabel = UILabel()
-        DeliveryDateLabel.frame = CGRect(x: 5, y: 25 , width: 15 * x, height: (3 * y))
+        DeliveryDateLabel.frame = CGRect(x: x, y: 0 , width: DeliveryDateView.frame.width - (20 * x), height: (5 * y))
        // DeliveryDateLabel.backgroundColor = UIColor.gray
         DeliveryDateLabel.text = "Approximate delivery date"
         DeliveryDateLabel.lineBreakMode = .byWordWrapping
@@ -1108,13 +1127,26 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // DateColon Label :-
         let DateColonLabel = UILabel()
-        DateColonLabel.frame = CGRect(x: DeliveryDateLabel.frame.maxX, y: DeliveryDateView.frame.minY , width: 2 * x, height: (2 * y))
+        DateColonLabel.frame = CGRect(x: DeliveryDateLabel.frame.maxX, y: 0, width: 2 * x, height: (5 * y))
         //DateColonLabel.backgroundColor = UIColor.gray
         DateColonLabel.text = "-"
         DateColonLabel.textColor = UIColor.white
         DateColonLabel.textAlignment = .center
         DateColonLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         DeliveryDateView.addSubview(DateColonLabel)
+        
+        // Label :-
+        let DateValueLabel = UILabel()
+        DateValueLabel.frame = CGRect(x: DateColonLabel.frame.maxX + x, y: 0 , width: (15 * x), height: (5 * y))
+        // DateValueLabel.backgroundColor = UIColor.gray
+        DateValueLabel.text = DeliveryDateArray[0] as? String
+        DateValueLabel.lineBreakMode = .byWordWrapping
+        DateValueLabel.numberOfLines = 2
+        DateValueLabel.textColor = UIColor.white
+        DateValueLabel.textAlignment = .left
+        DateValueLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        DeliveryDateView.addSubview(DateValueLabel)
+        
         
         // Pay Button :-
         ProceedToPayButton.frame = CGRect(x: 0, y: deliveryDetailsView.frame.maxY, width: view.frame.width , height: (4 * y))

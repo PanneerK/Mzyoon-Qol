@@ -17,8 +17,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-   //    var baseURL:String = "http://192.168.0.21/TailorAPI"
-     var baseURL:String = "http://appsapi.mzyoon.com"
+     //  var baseURL:String = "http://192.168.0.21/TailorAPI"
+         var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -1311,13 +1311,13 @@ class ServerAPI : NSObject
     }
     
     //Book an Appointment Material..
-    func API_InsertAppoinmentMaterial(OrderId : Int, AppointmentType : Int, AppointmentTime : Int, From : String, To : String, CreatedBy : String, delegate : ServerAPIDelegate)
+    func API_InsertAppoinmentMaterial(OrderId : Int, AppointmentType : Int, AppointmentTime : Int, From : String, To : String, Type : String, CreatedBy : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Book an Appointment Page")
             
-            let parameters = ["OrderId" : OrderId, "AppointmentType" : AppointmentType, "AppointmentTime" : AppointmentTime, "From" : From, "To" : To, "CreatedBy" : CreatedBy] as [String : Any]
+            let parameters = ["OrderId" : OrderId, "AppointmentType" : AppointmentType, "AppointmentTime" : AppointmentTime, "From" : From, "To" : To, "Type" : Type, "CreatedBy" : CreatedBy] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertAppointforMaterial", arguments: [baseURL])
             
@@ -1344,13 +1344,13 @@ class ServerAPI : NSObject
     }
     
     //Book an Appointment Measurement..
-    func API_InsertAppoinmentMeasurement(OrderId : Int, AppointmentType : Int, AppointmentTime : Int, From : String, To : String, CreatedBy : String, delegate : ServerAPIDelegate)
+    func API_InsertAppoinmentMeasurement(OrderId : Int, AppointmentType : Int, AppointmentTime : Int, From : String, To : String, Type : String, CreatedBy : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Book an Appointment Page")
             
-            let parameters = ["OrderId" : OrderId, "AppointmentType" : AppointmentType, "AppointmentTime" : AppointmentTime, "From" : From, "To" : To, "CreatedBy" : CreatedBy] as [String : Any]
+            let parameters = ["OrderId" : OrderId, "AppointmentType" : AppointmentType, "AppointmentTime" : AppointmentTime, "From" : From, "To" : To, "Type" : Type, "CreatedBy" : CreatedBy] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertAppointforMeasurement", arguments: [baseURL])
             
@@ -1492,7 +1492,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("response", self.resultDict)
+                   // print("response", self.resultDict)
                     delegate.API_CALLBACK_GetAppointmentMaterial!(getAppointmentMaterial: self.resultDict)
                 }
                 else
@@ -1525,7 +1525,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("response", self.resultDict)
+                   // print("resultDict", self.resultDict)
                     delegate.API_CALLBACK_GetAppointmentMeasurement!(getAppointmentMeasure: self.resultDict)
                 }
                 else
@@ -1541,7 +1541,7 @@ class ServerAPI : NSObject
     }
     
     // Book an Appointment IsApprove Material..
-    func API_IsApproveAppointmentMaterial(AppointmentId : Int, IsApproved : String, Reason:String, delegate : ServerAPIDelegate)
+    func API_IsApproveAppointmentMaterial(AppointmentId : Int, IsApproved : Int, Reason:String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -1574,7 +1574,7 @@ class ServerAPI : NSObject
     }
     
     // Book an Appointment IsApprove Measurement..
-    func API_IsApproveAppointmentMeasurement(AppointmentId : Int, IsApproved : String, Reason:String, delegate : ServerAPIDelegate)
+    func API_IsApproveAppointmentMeasurement(AppointmentId : Int, IsApproved : Int, Reason:String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
