@@ -71,7 +71,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         selectedButton(tag: 0)
 
         
-        self.serviceCall(originIdArray: [0], seasonIdArray: [0])
+        self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
         updateId = 0
         
         super.viewDidLoad()
@@ -79,7 +79,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
-    func serviceCall(originIdArray : [Int], seasonIdArray : [Int])
+    func serviceCallFunction(originIdArray : [Int], seasonIdArray : [Int])
     {
         print("SERVICE CALL", originIdArray, seasonIdArray)
         self.serviceCall.API_Customization1(originId: originIdArray, seasonId: seasonIdArray , delegate: self)
@@ -484,17 +484,17 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         seasonalSelectionImage.image = UIImage(named: "selectionImage")
         seasonalSelectionImage.tag = sender.tag
         
-        if sender.tag != 0
+        if sender.tag != 1
         {
-            seasonalTagIntArray = seasonalTagIntArray.filter { $0 != 0 }
+            seasonalTagIntArray = seasonalTagIntArray.filter { $0 != 1 }
             
             for views in seasonalScrollView.subviews
             {
-                if let buttonView = views.viewWithTag(0)
+                if let buttonView = views.viewWithTag(1)
                 {
                     for buttonSubView in buttonView.subviews
                     {
-                        if buttonSubView.tag == 0
+                        if buttonSubView.tag == 1
                         {
                             buttonSubView.removeFromSuperview()
                         }
@@ -599,17 +599,17 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         industrySelectionImage.image = UIImage(named: "selectionImage")
         industrySelectionImage.tag = sender.tag
         
-        if sender.tag != 0
+        if sender.tag != 1
         {
-            industryTagIntArray = industryTagIntArray.filter { $0 != 0 }
+            industryTagIntArray = industryTagIntArray.filter { $0 != 1 }
             
             for views in industryScrollView.subviews
             {
-                if let buttonView = views.viewWithTag(0)
+                if let buttonView = views.viewWithTag(1)
                 {
                     for buttonSubView in buttonView.subviews
                     {
-                        if buttonSubView.tag == 0
+                        if buttonSubView.tag == 1
                         {
                             buttonSubView.removeFromSuperview()
                         }
@@ -653,7 +653,15 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 }
             }
             print("INDUSTRY ARRAY", industryTagIntArray)
-            self.serviceCall(originIdArray: industryTagIntArray, seasonIdArray: [0])
+            
+            if industryTagIntArray.count != 0
+            {
+                self.serviceCallFunction(originIdArray: industryTagIntArray, seasonIdArray: [1])
+            }
+            else
+            {
+                self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
+            }
         }
         else
         {
@@ -701,7 +709,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 sender.addSubview(industrySelectionImage)
             }
             
-            self.serviceCall(originIdArray: [0], seasonIdArray: [0])
+            self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
         }
         
         updateId = 2
@@ -714,17 +722,17 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         brandSelectionImage.image = UIImage(named: "selectionImage")
         brandSelectionImage.tag = sender.tag
         
-        if sender.tag != 0
+        if sender.tag != 1
         {
-            brandTagIntArray = brandTagIntArray.filter { $0 != 0 }
+            brandTagIntArray = brandTagIntArray.filter { $0 != 1 }
             
             for views in brandScrollView.subviews
             {
-                if let buttonView = views.viewWithTag(0)
+                if let buttonView = views.viewWithTag(1)
                 {
                     for buttonSubView in buttonView.subviews
                     {
-                        if buttonSubView.tag == 0
+                        if buttonSubView.tag == 1
                         {
                             buttonSubView.removeFromSuperview()
                         }

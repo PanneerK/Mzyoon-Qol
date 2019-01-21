@@ -51,6 +51,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     var selectedCustom = String()
     var subSelectedCustom = Int()
     var customDict = [String : String]()
+    var customDictString = [String : String]()
     var customDictValuesCount = 0
 
     override func viewDidLoad()
@@ -153,6 +154,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 if let customString = CustomizationAttNameArray[i] as? String
                 {
                     customDict[customString] = ""
+                    customDictString[customString] = ""
                 }
             }
             
@@ -530,6 +532,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 if selectionCustom == selectedCustom
                 {
                     customDict[selectedCustom] = "\(sender.tag)"
+                    customDictString[selectedCustom] = attributeNameEnglishArray[sender.tag] as? String
                 }
             }
         }
@@ -598,11 +601,13 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                     customDictValuesCount = customDictValuesCount + 1
                 }
             }
-        }
+        } 
         
         print("EQUAL COUNT", CustomizationAttNameArray.count, customDictValuesCount)
+        print("STRING VALUES", customDictString)
         if CustomizationAttNameArray.count == customDictValuesCount
         {
+            UserDefaults.standard.set(customDictString, forKey: "custom3")
             let measurement1Screen = Measurement1ViewController()
             self.navigationController?.pushViewController(measurement1Screen, animated: true)
         }

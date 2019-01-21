@@ -287,14 +287,12 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
             
             if userImage.image != nil
             {
-                UserDefaults.standard.set(userNameTextField.text!, forKey: "UserName")
-                print("WELCOME", UserDefaults.standard.value(forKey: "userId"))
-//                if let profId = UserDefaults.standard.value(forKey: "userId") as? String
-//                {
-//                    print("ENTERED NAME", userNameTextField.text!)
-//                    serviceCall.API_IntroProfile(Id: profId, Name: userNameTextField.text!, profilePic: userImage.image!, delegate: self)
-//                }
-                UserDefaults.standard.set(userNameTextField.text!, forKey: "Name")
+                UserDefaults.standard.set(userNameTextField.text!, forKey: "userName")
+                if let profId = UserDefaults.standard.value(forKey: "userId") as? String
+                {
+                    print("ENTERED NAME", userNameTextField.text!)
+                    serviceCall.API_IntroProfile(Id: profId, Name: userNameTextField.text!, profilePic: userImage.image!, delegate: self)
+                }
                 
                 activeStop()
                 let homeScreen = HomeViewController()

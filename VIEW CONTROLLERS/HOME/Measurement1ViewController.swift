@@ -50,6 +50,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        nameArray.removeAll()
+    }
+    
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
         print("MEASUREMENT 1", errorMessage)
     }
@@ -309,6 +313,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func forWhomButtonAction(sender : UIButton)
     {
+        UserDefaults.standard.set("User", forKey: "measurementBy")
         var userListAlert : UIAlertController!
         
         if nameArray.count == 0
@@ -346,6 +351,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         nameArray.append(addNameAlert.textFields![0].text!)
         
+        UserDefaults.standard.set(addNameAlert.textFields![0].text!, forKey: "measurementName")
+        
         let measurement2Screen = Measurement2ViewController()
         self.navigationController?.pushViewController(measurement2Screen, animated: true)
     }
@@ -366,6 +373,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func measurement1NextButtonAction(sender : UIButton)
     {
+        UserDefaults.standard.set("Tailor", forKey: "measurementBy")
         let referencImageScreen = ReferenceImageViewController()
         self.navigationController?.pushViewController(referencImageScreen, animated: true)
     }

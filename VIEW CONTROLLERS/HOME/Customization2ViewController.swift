@@ -529,17 +529,17 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         materialSelectionImage.image = UIImage(named: "selectionImage")
         materialSelectionImage.tag = sender.tag
         
-        if sender.tag != 0
+        if sender.tag != 1
         {
-            materialTagIntArray = materialTagIntArray.filter { $0 != 0 }
+            materialTagIntArray = materialTagIntArray.filter { $0 != 1 }
             
             for views in materialScrollView.subviews
             {
-                if let buttonView = views.viewWithTag(0)
+                if let buttonView = views.viewWithTag(1)
                 {
                     for buttonSubView in buttonView.subviews
                     {
-                        if buttonSubView.tag == 0
+                        if buttonSubView.tag == 1
                         {
                             buttonSubView.removeFromSuperview()
                         }
@@ -644,17 +644,17 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         colorSelectionImage.image = UIImage(named: "selectionImage")
         colorSelectionImage.tag = sender.tag
         
-        if sender.tag != 0
+        if sender.tag != 1
         {
-            colorTagIntArray = colorTagIntArray.filter { $0 != 0 }
+            colorTagIntArray = colorTagIntArray.filter { $0 != 1 }
             
             for views in colorScrollView.subviews
             {
-                if let buttonView = views.viewWithTag(0)
+                if let buttonView = views.viewWithTag(1)
                 {
                     for buttonSubView in buttonView.subviews
                     {
-                        if buttonSubView.tag == 0
+                        if buttonSubView.tag == 1
                         {
                             buttonSubView.removeFromSuperview()
                         }
@@ -772,6 +772,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         patternSelectionImage.image = UIImage(named: "selectionImage")
         patternSelectionImage.tag = sender.tag
         sender.addSubview(patternSelectionImage)
+        
+        UserDefaults.standard.set(sender.tag, forKey: "patternId")
 
         
         /*if patternTagIntArray.isEmpty == true

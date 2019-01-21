@@ -43,7 +43,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         selectedButton(tag: 0)
 
         
-        serviceCall.API_DressType(genderId: tag, delegate: self)
+//        serviceCall.API_DressType(genderId: tag, delegate: self)
         
         super.viewDidLoad()
 

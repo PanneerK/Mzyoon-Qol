@@ -126,15 +126,6 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
          deviceInformation()
         // DeviceError()
         
-        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
-        {
-            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
-        }
-        else
-        {
-            
-        }
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
             // Your code with delay
             self.checkContent()
@@ -143,39 +134,6 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-    
-    func API_CALLBACK_ExistingUserProfile(userProfile: NSDictionary)
-    {
-        print("SELF OF EXISTING USER", userProfile)
-        
-        let responseMsg = userProfile.object(forKey: "ResponseMsg") as! String
-        
-        if responseMsg == "Success"
-        {
-            let result = userProfile.object(forKey: "Result") as! NSArray
-            print("RESULT IN EXISTING", result)
-            
-            let name = result.value(forKey: "Name") as! NSArray
-            print("NAME", name)
-            
-//            UserDefaults.standard.set(name[0], forKey: "userName")
-            
-            let dob = result.value(forKey: "Dob") as! NSArray
-            print("DOB", dob)
-            
-//            UserDefaults.standard.set(dob[0], forKey: "dob")
-            
-            let mobileNumber = result.value(forKey: "PhoneNumber") as! NSArray
-            print("MOBILE NUMBER", mobileNumber)
-            
-            UserDefaults.standard.set(mobileNumber[0], forKey: "mobileNumber")
-            
-            let email = result.value(forKey: "Email") as! NSArray
-            print("EMAIL", email)
-            
-//            UserDefaults.standard.set(email[0], forKey: "email")
-        }
     }
     
     func deviceInformation()
