@@ -15,7 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
+    {
         // Override point for customization after application launch.
         
         GMSServices.provideAPIKey("AIzaSyDzbSJiihL4mPGX4J23kHxm-1swwYWIStA")
@@ -39,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen
                 window?.makeKeyAndVisible()
-
+ 
             }
             else
             {

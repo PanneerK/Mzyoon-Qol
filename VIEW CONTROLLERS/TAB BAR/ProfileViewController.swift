@@ -574,7 +574,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
     }
     
-    @objc func doneClick() {
+    @objc func doneClick()
+    {
         let dateFormatter1 = DateFormatter()
         dateFormatter1.dateStyle = .medium
         dateFormatter1.timeStyle = .none

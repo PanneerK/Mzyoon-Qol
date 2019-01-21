@@ -95,14 +95,16 @@ class AppointmentListViewController: CommonViewController
         {
             //
             let AppointmentViewButton = UIButton()
-            AppointmentViewButton.frame = CGRect(x: 0, y: y1, width: AppointmentListScrollView.frame.width, height: (12 * y))
+            AppointmentViewButton.frame = CGRect(x: 0, y: y1, width: AppointmentListScrollView.frame.width, height: (10 * y))
             AppointmentViewButton.backgroundColor = UIColor.white
             AppointmentListScrollView.addSubview(AppointmentViewButton)
             
             //
             let DressImageView = UIImageView()
-            DressImageView.frame = CGRect(x: 0, y: 0, width: (10 * x), height: AppointmentViewButton.frame.height)
-            DressImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            DressImageView.frame = CGRect(x: 0, y: 0, width: (8 * x), height: AppointmentViewButton.frame.height)
+            DressImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            DressImageView.layer.borderWidth = 1.0
+            DressImageView.layer.borderColor = UIColor.lightGray.cgColor
             // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
           /*
@@ -124,8 +126,14 @@ class AppointmentListViewController: CommonViewController
             AppointmentViewButton.addSubview(DressImageView)
             
             //
+            
+            let orderDate_Icon = UIImageView()
+            orderDate_Icon.frame = CGRect(x: DressImageView.frame.maxX + x, y: y/2, width: x, height: y)
+            orderDate_Icon.image = UIImage(named: "OrderDate")
+            AppointmentViewButton.addSubview(orderDate_Icon)
+            
             let O_DateLabel = UILabel()
-            O_DateLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: y, width: (10 * x), height: (2 * y))
+            O_DateLabel.frame = CGRect(x: orderDate_Icon.frame.maxX + x, y: 0, width: (10 * x), height: (2 * y))
             O_DateLabel.text = "Order Date :"
             O_DateLabel.textColor = UIColor.blue
             O_DateLabel.textAlignment = .left
@@ -133,7 +141,7 @@ class AppointmentListViewController: CommonViewController
             AppointmentViewButton.addSubview(O_DateLabel)
             
             let OR_DateLabel = UILabel()
-            OR_DateLabel.frame = CGRect(x: O_DateLabel.frame.maxX - x, y: y, width: AppointmentViewButton.frame.width / 2, height: (2 * y))
+            OR_DateLabel.frame = CGRect(x: O_DateLabel.frame.maxX - x, y: 0, width: AppointmentViewButton.frame.width / 2, height: (2 * y))
             OR_DateLabel.text = "17 Dec 2018"
             OR_DateLabel.textColor = UIColor.black
             OR_DateLabel.textAlignment = .left
@@ -141,8 +149,13 @@ class AppointmentListViewController: CommonViewController
             AppointmentViewButton.addSubview(OR_DateLabel)
             
             //
+            let orderId_Icon = UIImageView()
+            orderId_Icon.frame = CGRect(x: DressImageView.frame.maxX + x, y: orderDate_Icon.frame.maxY + y, width: x, height: y)
+            orderId_Icon.image = UIImage(named: "OrderID")
+            AppointmentViewButton.addSubview(orderId_Icon)
+            
             let O_IdLabel = UILabel()
-            O_IdLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: O_DateLabel.frame.maxY, width: (10 * x), height: (2 * y))
+            O_IdLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: O_DateLabel.frame.maxY, width: (10 * x), height: (2 * y))
             O_IdLabel.text = "Order ID :"
             O_IdLabel.textColor = UIColor.blue
             O_IdLabel.textAlignment = .left
@@ -164,8 +177,13 @@ class AppointmentListViewController: CommonViewController
             AppointmentViewButton.addSubview(OR_IdLabel)
             
             //
+            let TailorName_Icon = UIImageView()
+            TailorName_Icon.frame = CGRect(x: DressImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            TailorName_Icon.image = UIImage(named: "TailorName")
+            AppointmentViewButton.addSubview(TailorName_Icon)
+            
             let T_NameLabel = UILabel()
-            T_NameLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: O_IdLabel.frame.maxY, width: (10 * x), height: (2 * y))
+            T_NameLabel.frame = CGRect(x: TailorName_Icon.frame.maxX + x, y: O_IdLabel.frame.maxY, width: (10 * x), height: (2 * y))
             T_NameLabel.text = "Tailor Name :"
             T_NameLabel.textColor = UIColor.blue
             T_NameLabel.textAlignment = .left
@@ -182,8 +200,13 @@ class AppointmentListViewController: CommonViewController
             AppointmentViewButton.addSubview(TR_NameLabel)
             
             //
+            let ShopName_Icon = UIImageView()
+            ShopName_Icon.frame = CGRect(x: DressImageView.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
+            ShopName_Icon.image = UIImage(named: "ShopName")
+            AppointmentViewButton.addSubview(ShopName_Icon)
+            
             let S_NameLabel = UILabel()
-            S_NameLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: T_NameLabel.frame.maxY, width: (10 * x), height: (2 * y))
+            S_NameLabel.frame = CGRect(x: ShopName_Icon.frame.maxX + x, y: T_NameLabel.frame.maxY, width: (10 * x), height: (2 * y))
             S_NameLabel.text = "Shop Name :"
             S_NameLabel.textColor = UIColor.blue
             S_NameLabel.textAlignment = .left
@@ -200,8 +223,13 @@ class AppointmentListViewController: CommonViewController
             AppointmentViewButton.addSubview(SH_NameLabel)
             
             //
+            let ProductName_Icon = UIImageView()
+            ProductName_Icon.frame = CGRect(x: DressImageView.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
+            ProductName_Icon.image = UIImage(named: "ProductName")
+            AppointmentViewButton.addSubview(ProductName_Icon)
+            
             let P_NameLabel = UILabel()
-            P_NameLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: S_NameLabel.frame.maxY, width: (10 * x), height: (2 * y))
+            P_NameLabel.frame = CGRect(x: ProductName_Icon.frame.maxX + x, y: S_NameLabel.frame.maxY, width: (10 * x), height: (2 * y))
             P_NameLabel.text = "Product Name :"
             P_NameLabel.textColor = UIColor.blue
             P_NameLabel.textAlignment = .left
