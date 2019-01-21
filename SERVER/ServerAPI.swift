@@ -13,6 +13,7 @@ import Reachability
 
 class ServerAPI : NSObject
 {
+
     var delegate: ServerAPIDelegate?
     
     var resultDict:NSDictionary = NSDictionary()
