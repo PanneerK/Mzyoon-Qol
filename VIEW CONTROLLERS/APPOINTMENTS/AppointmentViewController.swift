@@ -217,6 +217,55 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         }
     }
     
+    func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial: NSDictionary)
+    {
+        let ResponseMsg = IsApproveMaterial.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = IsApproveMaterial.object(forKey: "Result") as! NSDictionary
+            print("Result", Result)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = IsApproveMaterial.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "BuyerOrderApprovalMaterial"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+    
+    func API_CALLBACK_IsApproveAptMeasurement(IsApproveMeasure: NSDictionary)
+    {
+        let ResponseMsg = IsApproveMeasure.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = IsApproveMeasure.object(forKey: "Result") as! NSDictionary
+            print("Result", Result)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = IsApproveMeasure.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "BuyerOrderApprovalMeasurement"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+    
+    
     func AppointmentContent()
     {
         self.stopActivity()

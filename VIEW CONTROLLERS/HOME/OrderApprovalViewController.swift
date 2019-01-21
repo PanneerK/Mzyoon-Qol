@@ -1052,7 +1052,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         
         
-        
+    
         // StichTimeView :-
         let StichTimeView = UIView()
         StichTimeView.frame = CGRect(x: x, y: 105 + (6 * y), width: DeliveryTypeView.frame.width , height: (6 * y))
