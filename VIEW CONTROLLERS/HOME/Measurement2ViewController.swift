@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Measurement2ViewController: CommonViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ServerAPIDelegate, UIPickerViewDataSource, UIPickerViewDelegate
+class Measurement2ViewController: CommonViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ServerAPIDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate
 {
     let serviceCall = ServerAPI()
 
@@ -25,6 +25,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     let imageView = UIView()
     let partsView = UIView()
     var gender = String()
+    let unitView = UIView()
+    let cmButton = UIButton()
+    let inButton = UIButton()
     
     // Measurements2Image...
     var Measurement2ImgIdArray = NSArray()
@@ -46,8 +49,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     let getChestLabel = UILabel()
     let getWaistLabel = UILabel()
     let getThighLabel = UILabel()
-    let getBounceLabel = UILabel()
     let getKneeLabel = UILabel()
+    let getAnkleLabel = UILabel()
     let gettotalheightLabel = UILabel()
     let getHipheightLabel = UILabel()
     let getBottomheightLabel = UILabel()
@@ -73,8 +76,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     let partsMeasurementLabel = UILabel()
     let rulerScroll = UIScrollView()
-    let backView = UIView()
+    let imageBackView = UIView()
     let partsImageView = UIImageView()
+    let partsBackView = UIView()
+    let selectedPartsImageView = UIImageView()
+    let partsInputTextField = UITextField()
 
     
     // Error PAram...
@@ -96,6 +102,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     var measurementValues = [Int : Float]()
     
+    var type = "table"
+    var unitTag = "cm"
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -104,7 +113,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
 
         
         self.serviceCall.API_GetMeasurement2(Measurement2Value: 1, delegate: self)
-        
+        addDoneButtonOnKeyboard()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -343,7 +354,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func measurement2Contents()
     {
         self.stopActivity()
-        backView.removeFromSuperview()
+        imageBackView.removeFromSuperview()
         
         let measurement1NavigationBar = UIView()
         measurement1NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -428,6 +439,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         imageView.backgroundColor = UIColor.clear
         view.addSubview(imageView)
         
+        imageView.isHidden = isHidden
+        
         imageScrollView.frame = CGRect(x: 0, y: 0, width: imageView.frame.width, height: imageView.frame.height - 30)
         imageScrollView.isPagingEnabled = true
         imageScrollView.showsHorizontalScrollIndicator = false
@@ -436,15 +449,14 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         imageScrollView.contentSize.width = (4 * imageScrollView.frame.width)
         
-        imageView.isHidden = isHidden
         
         var x1:CGFloat = ((imageView.frame.width - (14 * x)) / 2)
         
         for i in 0..<4
         {
             let pageNumberlabel = UILabel()
-            pageNumberlabel.frame = CGRect(x: x1, y: imageView.frame.height - (3 * y), width: (2 * x), height: (2 * y))
-            pageNumberlabel.layer.cornerRadius = pageNumberlabel.frame.height / 2
+            pageNumberlabel.frame = CGRect(x: x1, y: imageView.frame.height - (3 * y), width: (2 * x), height: (2 * x))
+            pageNumberlabel.layer.cornerRadius = pageNumberlabel.frame.width / 2
             pageNumberlabel.layer.borderWidth = 1
             pageNumberlabel.layer.borderColor = UIColor.black.cgColor
             pageNumberlabel.layer.masksToBounds = true
@@ -470,14 +482,35 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             x1 = lineLabel.frame.maxX
         }
         
-        let measureUnitButton = UIButton()
-        measureUnitButton.frame = CGRect(x: (2 * x), y: view.frame.height - (9 * y), width: (5 * x), height: (3 * y))
-        measureUnitButton.layer.cornerRadius = 1
-        measureUnitButton.layer.borderWidth = 1
+        unitView.frame = CGRect(x: (2 * x), y: view.frame.height - (9 * y), width: (6 * x), height: (2.5 * y))
+        unitView.layer.cornerRadius = unitView.frame.height / 2
+        unitView.layer.borderWidth = 1
+        view.addSubview(unitView)
         
-        measureUnitButton.setTitle("Unit", for: .normal)
-        measureUnitButton.addTarget(self, action: #selector(self.nextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(measureUnitButton)
+        cmButton.frame = CGRect(x: 0, y: 0, width: (3 * x), height: unitView.frame.height)
+        cmButton.setTitle("CM", for: .normal)
+        cmButton.tag = 1
+        cmButton.addTarget(self, action: #selector(self.unitButtonAction(sender:)), for: .touchUpInside)
+        unitView.addSubview(cmButton)
+        
+        inButton.frame = CGRect(x: cmButton.frame.maxX, y: 0, width: (3 * x), height: unitView.frame.height)
+        inButton.setTitle("IN", for: .normal)
+        inButton.tag = 2
+        inButton.addTarget(self, action: #selector(self.unitButtonAction(sender:)), for: .touchUpInside)
+        unitView.addSubview(inButton)
+        
+        if unitTag == "cm"
+        {
+            cmButton.layer.cornerRadius = cmButton.frame.height / 2
+            cmButton.layer.borderWidth = 1
+            cmButton.backgroundColor = UIColor.orange
+        }
+        else
+        {
+            inButton.layer.cornerRadius = inButton.frame.height / 2
+            inButton.layer.borderWidth = 1
+            inButton.backgroundColor = UIColor.orange
+        }
         
         let nextButton = UIButton()
         nextButton.frame = CGRect(x: view.frame.width - (5 * x), y: view.frame.height - (9 * y), width: (3 * x), height: (3 * y))
@@ -660,53 +693,53 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getThighLabel.tag = ((4 * 1) + 200)
                     subView.addSubview(getThighLabel)
                     
-                    let bounceLabel = UILabel()
-                    bounceLabel.frame = CGRect(x: (11.8 * x), y: (30.6 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
-                    bounceLabel.text = "Bounce"
-                    bounceLabel.textColor = UIColor.black
-                    bounceLabel.textAlignment = .center
-                    bounceLabel.font = headLabel.font.withSize(15)
-                    bounceLabel.tag = ((5 * 1) + 300)
-                    subView.addSubview(bounceLabel)
-                    
-                    let bounceButton = UIButton()
-                    bounceButton.frame = CGRect(x: (11.8 * x), y: (31.1 * y), width: subView.frame.width - (17.8 * x), height: (3 * y))
-                    bounceButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    bounceButton.tag = 5
-                    bounceButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
-                    subView.addSubview(bounceButton)
-
-                    getBounceLabel.frame = CGRect(x: bounceButton.frame.maxX, y: (31.1 * y), width: (5 * x), height: (3 * y))
-                    getBounceLabel.text = "0.0"
-                    getBounceLabel.textColor = UIColor.blue
-                    getBounceLabel.textAlignment = .center
-                    getBounceLabel.font = headLabel.font.withSize(20)
-                    getBounceLabel.tag = ((5 * 1) + 200)
-                    subView.addSubview(getBounceLabel)
-                    
                     let kneeLabel = UILabel()
-                    kneeLabel.frame = CGRect(x: (11.2 * x), y: (39.9 * y), width: subView.frame.width - (17.2 * x), height: (2 * y))
+                    kneeLabel.frame = CGRect(x: (11.8 * x), y: (30.6 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
                     kneeLabel.text = "Knee"
                     kneeLabel.textColor = UIColor.black
                     kneeLabel.textAlignment = .center
                     kneeLabel.font = headLabel.font.withSize(15)
-                    kneeLabel.tag = ((6 * 1) + 300)
+                    kneeLabel.tag = ((5 * 1) + 300)
                     subView.addSubview(kneeLabel)
                     
                     let kneeButton = UIButton()
-                    kneeButton.frame = CGRect(x: (11.2 * x), y: (40.4 * y), width: subView.frame.width - (17.2 * x), height: (3 * y))
+                    kneeButton.frame = CGRect(x: (11.8 * x), y: (31.1 * y), width: subView.frame.width - (17.8 * x), height: (3 * y))
                     kneeButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    kneeButton.tag = 6
+                    kneeButton.tag = 5
                     kneeButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(kneeButton)
-                    
-                    getKneeLabel.frame = CGRect(x: kneeButton.frame.maxX, y: (40.4 * y), width: (5 * x), height: (3 * y))
+
+                    getKneeLabel.frame = CGRect(x: kneeButton.frame.maxX, y: (31.1 * y), width: (5 * x), height: (3 * y))
                     getKneeLabel.text = "0.0"
                     getKneeLabel.textColor = UIColor.blue
                     getKneeLabel.textAlignment = .center
                     getKneeLabel.font = headLabel.font.withSize(20)
-                    getKneeLabel.tag = ((6 * 1) + 200)
+                    getKneeLabel.tag = ((5 * 1) + 200)
                     subView.addSubview(getKneeLabel)
+                    
+                    let ankleLabel = UILabel()
+                    ankleLabel.frame = CGRect(x: (11.2 * x), y: (39.9 * y), width: subView.frame.width - (17.2 * x), height: (2 * y))
+                    ankleLabel.text = "Ankle"
+                    ankleLabel.textColor = UIColor.black
+                    ankleLabel.textAlignment = .center
+                    ankleLabel.font = headLabel.font.withSize(15)
+                    ankleLabel.tag = ((6 * 1) + 300)
+                    subView.addSubview(ankleLabel)
+                    
+                    let ankleButton = UIButton()
+                    ankleButton.frame = CGRect(x: (11.2 * x), y: (40.4 * y), width: subView.frame.width - (17.2 * x), height: (3 * y))
+                    ankleButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    ankleButton.tag = 6
+                    ankleButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(ankleButton)
+                    
+                    getAnkleLabel.frame = CGRect(x: ankleButton.frame.maxX, y: (40.4 * y), width: (5 * x), height: (3 * y))
+                    getAnkleLabel.text = "0.0"
+                    getAnkleLabel.textColor = UIColor.blue
+                    getAnkleLabel.textAlignment = .center
+                    getAnkleLabel.font = headLabel.font.withSize(20)
+                    getAnkleLabel.tag = ((6 * 1) + 200)
+                    subView.addSubview(getAnkleLabel)
                 }
                 else if index == 1
                 {
@@ -1204,6 +1237,46 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
     }
     
+    @objc func unitButtonAction(sender : UIButton)
+    {
+        if sender.tag == 1
+        {
+            unitTag = "cm"
+            inButton.backgroundColor = UIColor.clear
+            inButton.layer.borderWidth = 0
+            inButton.layer.cornerRadius = 0
+            inButton.isEnabled = true
+            
+            for (keys, values) in measurementValues
+            {
+                let inchValue = values * 2.54
+                print("ROUNDED VALUE OF IN", inchValue.rounded())
+                measurementValues[keys] = inchValue
+            }
+        }
+        else
+        {
+            unitTag = "in"
+            cmButton.backgroundColor = UIColor.clear
+            cmButton.layer.borderWidth = 0
+            cmButton.layer.cornerRadius = 0
+            cmButton.isEnabled = true
+            
+            for (keys, values) in measurementValues
+            {
+                let cmValue = values / 2.54
+                print("ROUNDED VALUE OF CM", cmValue.rounded())
+                measurementValues[keys] = cmValue
+            }
+        }
+        
+        sender.layer.borderWidth = 1
+        sender.layer.cornerRadius = sender.frame.height / 2
+        sender.backgroundColor = UIColor.orange
+        sender.isEnabled = false
+        partsTableView.reloadData()
+    }
+    
     func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
         self.pageControl.numberOfPages = colors.count
@@ -1226,11 +1299,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         let pageNumber = round(imageScrollView .contentOffset.x / imageScrollView.frame.size.width)
         pageControl.currentPage = Int(pageNumber)
         
-        print("PAGE NUMBER", pageNumber)
-        
         for i in 0..<4
         {
-            print("I VALUE", i, self.view.viewWithTag((i + 1) * 20))
             if let theLabel = self.view.viewWithTag((i + 1) * 20) as? UILabel {
                 let pageNo = Int(pageNumber)
                 let no = Int(theLabel.text!)
@@ -1242,8 +1312,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 {
                     theLabel.backgroundColor = UIColor.clear
                 }
-                
-                print("THE LABEL TEXT", theLabel.text!)
             }
         }
     }
@@ -1331,6 +1399,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         measurerTag = sender.tag
         
+        type = "button"
+        
         serviceCall.API_GetMeasurementParts(MeasurementParts: sender.tag, delegate: self)
     }
     
@@ -1387,7 +1457,15 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 }
             }
             
-            measureScrollContents()
+            if type == "table"
+            {
+                partsContent()
+            }
+            else
+            {
+                self.measureScrollContents()
+            }
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -1402,11 +1480,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func measureScrollContents()
     {
-        backView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
-        backView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
-        view.addSubview(backView)
+        imageBackView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
+        imageBackView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+        view.addSubview(imageBackView)
         
-        for views in backView.subviews
+        for views in imageBackView.subviews
         {
             views.removeFromSuperview()
         }
@@ -1416,14 +1494,14 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsImageView.frame = CGRect(x: rulerScroll.frame.maxX + (2 * y), y: (10 * y), width: (20 * x), height: (20 * y))
         partsImageView.backgroundColor = UIColor.white
         partsImageView.image = selectedconvertedPartsImageArray[0]
-        backView.addSubview(partsImageView)
+        imageBackView.addSubview(partsImageView)
         
         let partsNameLabel = UILabel()
         partsNameLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsImageView.frame.maxY + y, width: (10 * x), height: (3 * y))
         partsNameLabel.text = measurerImage
         partsNameLabel.textColor = UIColor.white
         partsNameLabel.textAlignment = .center
-        backView.addSubview(partsNameLabel)
+        imageBackView.addSubview(partsNameLabel)
         
         partsMeasurementLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsNameLabel.frame.maxY + y, width: (10 * x), height: (3 * y))
         partsMeasurementLabel.layer.cornerRadius = 10
@@ -1432,7 +1510,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsMeasurementLabel.text = "0.0"
         partsMeasurementLabel.textColor = UIColor.white
         partsMeasurementLabel.textAlignment = .center
-        backView.addSubview(partsMeasurementLabel)
+        imageBackView.addSubview(partsMeasurementLabel)
         
         let cancelButton = UIButton()
         cancelButton.frame = CGRect(x: rulerScroll.frame.maxX + x, y: partsMeasurementLabel.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
@@ -1441,7 +1519,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(self.measureScrollCancelButtonAction(sender:)), for: .touchUpInside)
         cancelButton.tag = 3
-        backView.addSubview(cancelButton)
+        imageBackView.addSubview(cancelButton)
         
         let saveButton = UIButton()
         saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * y), y: partsMeasurementLabel.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
@@ -1450,17 +1528,17 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.addTarget(self, action: #selector(self.saveButtonAction(sender:)), for: .touchUpInside)
         saveButton.tag = 3
-        backView.addSubview(saveButton)
+        imageBackView.addSubview(saveButton)
     }
     
     @objc func measureScrollCancelButtonAction(sender : UIButton)
     {
-        backView.removeFromSuperview()
+        imageBackView.removeFromSuperview()
     }
     
     @objc func saveButtonAction(sender : UIButton)
     {
-        backView.removeFromSuperview()
+        imageBackView.removeFromSuperview()
         
         if let foundView = view.viewWithTag((measurerTag * 1) + 200) {
             if let label = foundView as? UILabel
@@ -1478,16 +1556,16 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func rulerContents()
     {
-        rulerScroll.frame = CGRect(x: (2 * x), y: (3 * y), width: (9 * x), height: backView.frame.height - (6 * y))
+        rulerScroll.frame = CGRect(x: (2 * x), y: (3 * y), width: (9 * x), height: imageBackView.frame.height - (6 * y))
         rulerScroll.delegate = self
         rulerScroll.scrollsToTop = true
         rulerScroll.alwaysBounceVertical = true
-        backView.addSubview(rulerScroll)
+        imageBackView.addSubview(rulerScroll)
         
         var y1:CGFloat = (30.4 * y)
         var y2:CGFloat = (29.4 * y)
         
-        for i in 0..<1039
+        for i in 0..<1029
         {
             let measureLabel = UILabel()
             
@@ -1544,32 +1622,15 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         let selectedMeasureImage = UIImageView()
         selectedMeasureImage.frame = CGRect(x: 0, y: ((view.frame.height - (4 * y)) / 2), width: (4 * x), height: (4 * y))
         selectedMeasureImage.image = UIImage(named: "arrowPointer")
-        backView.addSubview(selectedMeasureImage)
+        imageBackView.addSubview(selectedMeasureImage)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView)
     {
         let value = Double(scrollView.contentOffset.y / (12 * y))
-        let convertedString = "\(value)"
+        let doubleStr = String(format: "%.1f", value)
         
-        let splitted = convertedString.split(separator: ".")
-        
-        let wholeNumber = splitted[0]
-        let decimalNumber = splitted[1].prefix(1)
-        
-        if wholeNumber == "100"
-        {
-            scrollView.contentOffset.y = scrollView.contentOffset.y
-        }
-        
-        if decimalNumber == "0"
-        {
-            partsMeasurementLabel.text = "\(wholeNumber)"
-        }
-        else
-        {
-            partsMeasurementLabel.text = "\(wholeNumber).\(decimalNumber)"
-        }
+        partsMeasurementLabel.text = doubleStr
     }
     
     func popBackValue(value : String, viewTag : Int)
@@ -1596,11 +1657,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         else if viewTag == 6
         {
-            getBounceLabel.text = value
+            getKneeLabel.text = value
         }
         else if viewTag == 7
         {
-            getKneeLabel.text = value
+            getAnkleLabel.text = value
         }
         else if viewTag == 8
         {
@@ -1673,19 +1734,107 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func partsViewContents(isHidden : Bool)
     {
-        partsView.frame = CGRect(x: (4 * x), y: imageButton.frame.maxY + y, width: view.frame.width - (8 * x), height: view.frame.height - (24 * y))
+        partsView.frame = CGRect(x: (4 * x), y: imageButton.frame.maxY + y, width: view.frame.width - (8 * x), height: (44 * y))
         partsView.backgroundColor = UIColor.clear
         view.addSubview(partsView)
         
         partsView.isHidden = isHidden
         
-        partsTableView.frame = CGRect(x: 0, y: 0, width: partsView.frame.width, height: partsView.frame.height)
+        partsTableView.frame = CGRect(x: 0, y: 0, width: partsView.frame.width, height: (6 * y * CGFloat(PartsNameArray.count)))
+        partsTableView.backgroundColor = UIColor.clear
         partsTableView.register(PartsTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(PartsTableViewCell.self))
         partsTableView.dataSource = self
         partsTableView.delegate = self
+        if PartsNameArray.count > 7
+        {
+            partsTableView.bounces = true
+        }
+        else
+        {
+            partsTableView.bounces = false
+        }
         partsView.addSubview(partsTableView)
         
         partsTableView.reloadData()
+    }
+    
+    func partsContent()
+    {
+        partsBackView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
+        partsBackView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+        view.addSubview(partsBackView)
+        
+        selectedPartsImageView.frame = CGRect(x: (2 * x), y: y, width: view.frame.width - (4 * x), height: (36.98 * y))
+        selectedPartsImageView.image = selectedconvertedPartsImageArray[0]
+        partsBackView.addSubview(selectedPartsImageView)
+        
+        print("WIDTH", selectedPartsImageView.frame.width)
+        
+        /*let cmLabel = UILabel()
+        cmLabel.frame = CGRect(x: ((view.frame.width - (13 * x)) / 2), y: downArrowImageView.frame.maxY + y, width: (3 * x), height: (2 * y))
+        cmLabel.text = "CM"
+        cmLabel.textColor = UIColor.white
+        cmLabel.textAlignment = .center
+        partsBackView.addSubview(cmLabel)
+        
+        let addressSwitchButton = UISwitch()
+        addressSwitchButton.frame = CGRect(x: cmLabel.frame.maxX + (x / 2), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
+        partsBackView.addSubview(addressSwitchButton)
+        
+        let inchLabel = UILabel()
+        inchLabel.frame = CGRect(x: addressSwitchButton.frame.maxX + (x / 2), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
+        inchLabel.text = "Inches"
+        inchLabel.textColor = UIColor.white
+        inchLabel.textAlignment = .center
+        partsBackView.addSubview(inchLabel)*/
+        
+        partsInputTextField.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: selectedPartsImageView.frame.maxY + (2 * y), width: (10 * x), height: (4 * y))
+        partsInputTextField.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        partsInputTextField.placeholder = "0.0"
+        partsInputTextField.textColor = UIColor.white
+        partsInputTextField.textAlignment = .center
+        partsInputTextField.font = UIFont(name: "Avenir-Heavy", size: 18)
+        partsInputTextField.leftViewMode = UITextField.ViewMode.always
+        partsInputTextField.adjustsFontSizeToFitWidth = true
+        partsInputTextField.keyboardType = .decimalPad
+        partsInputTextField.clearsOnBeginEditing = true
+        partsInputTextField.returnKeyType = .done
+        partsInputTextField.delegate = self
+        partsBackView.addSubview(partsInputTextField)
+        
+        let cancelButton = UIButton()
+        cancelButton.frame = CGRect(x: x, y: partsInputTextField.frame.maxY + (3 * y), width: ((view.frame.width / 2) - (2 * x)), height: (4 * y))
+        cancelButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0)
+        cancelButton.setTitle("CANCEL", for: .normal)
+        cancelButton.setTitleColor(UIColor.white, for: .normal)
+        cancelButton.addTarget(self, action: #selector(self.partsCancelButtonAction(sender:)), for: .touchUpInside)
+        partsBackView.addSubview(cancelButton)
+        
+        let saveButton = UIButton()
+        saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * x), y: partsInputTextField.frame.maxY + (3 * y), width: ((view.frame.width / 2) - (2 * x)), height: (4 * y))
+        saveButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0)
+        saveButton.setTitle("SAVE", for: .normal)
+        saveButton.setTitleColor(UIColor.white, for: .normal)
+        saveButton.addTarget(self, action: #selector(self.partsSaveButtonAction(sender:)), for: .touchUpInside)
+        partsBackView.addSubview(saveButton)
+    }
+    
+    @objc func partsCancelButtonAction(sender : UIButton)
+    {
+        partsBackView.removeFromSuperview()
+    }
+    
+    @objc func partsSaveButtonAction(sender : UIButton)
+    {
+        
+        let convertToInt:Float? = Float(partsInputTextField.text!)
+        print("TEXT", convertToInt!, measurerTag)
+        measurementValues.updateValue(convertToInt!, forKey: measurerTag)
+        
+        partsBackView.removeFromSuperview()
+        
+        partsTableView.reloadData()
+        print("MEAUREMENT KEY AND VALUES", measurementValues)
     }
     
     /*func numberOfSections(in tableView: UITableView) -> Int {
@@ -1721,13 +1870,17 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(PartsTableViewCell.self), for: indexPath as IndexPath) as! PartsTableViewCell
         
-        cell.backgroundColor = UIColor.lightGray
+        cell.backgroundColor = UIColor.clear
+        
+        cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (5 * y))
         
         cell.partsImage.frame = CGRect(x: x, y: y, width: (3 * x), height: (3 * y))
 
-        cell.partsName.frame = CGRect(x: cell.partsImage.frame.maxX + x, y: y, width: cell.frame.width - (11.5 * x), height: (3 * y))
+        cell.partsName.frame = CGRect(x: cell.partsImage.frame.maxX + x, y: y, width: cell.frame.width - (13.5 * x), height: (3 * y))
         
-        cell.partsSizeLabel.frame = CGRect(x: cell.partsName.frame.maxX + x, y: y, width: (4 * x), height: (3 * y))
+        cell.partsSizeLabel.frame = CGRect(x: cell.partsName.frame.maxX + x, y: y, width: (6 * x), height: (3 * y))
+        
+        cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
         
         cell.partsImage.image = convertedPartsImageArray[indexPath.row]
         cell.partsName.text = PartsNameArray[indexPath.row] as? String
@@ -1740,12 +1893,18 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return (5 * y)
+        return (6 * y)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let selectedInt = PartsIdArray[indexPath.row] as! Int
+        
+        print("SELECTED INT", selectedInt)
+        
+        type = "table"
+        
+        measurerTag = selectedInt
         
         self.serviceCall.API_GetMeasurementParts(MeasurementParts: selectedInt, delegate: self)
 
@@ -1771,7 +1930,44 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsMeasurementLabel.text = "\(row + 1)"
 //        UserDefaults.standard.set(row + 1, forKey: "Measure-\(headingTitle)")
     }
+    
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.partsInputTextField.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction()
+    {
+        view.endEditing(true)
+    }
 
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

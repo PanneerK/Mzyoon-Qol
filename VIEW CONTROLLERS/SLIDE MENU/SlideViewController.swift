@@ -120,6 +120,10 @@ class SlideViewController: UIViewController
             let addressScreen = AddressViewController()
             self.navigationController?.pushViewController(addressScreen, animated: true)
         }
+        else if sender.tag == 9
+        {
+            self.navigationController?.popViewController(animated: true)
+        }
         else
         {
             let alertControls = UIAlertController(title: "Alert", message: "No Data", preferredStyle: .alert)

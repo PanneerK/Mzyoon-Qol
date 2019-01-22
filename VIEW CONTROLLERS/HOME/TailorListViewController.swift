@@ -500,8 +500,13 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
-            tailorView.addSubview(ratingCountLabel)
-                        
+//            tailorView.addSubview(ratingCountLabel)
+            
+            let ratingImageView = UIImageView()
+            ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)
+            ratingImageView.image = UIImage(named: "\(ratingArray[i])")
+            tailorView.addSubview(ratingImageView)
+            
             let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
             let coordinate2 = CLLocation(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             
@@ -725,7 +730,12 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         ratingCountLabel.textAlignment = .left
         ratingCountLabel.font = ratingLabel.font.withSize(1.2 * x)
         ratingCountLabel.adjustsFontSizeToFitWidth = true
-        tailorDeatiledView.addSubview(ratingCountLabel)
+//        tailorDeatiledView.addSubview(ratingCountLabel)
+        
+        let ratingImageView = UIImageView()
+        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY, width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
+        ratingImageView.image = UIImage(named: "4")
+        tailorDeatiledView.addSubview(ratingImageView)
         
         let nameLabel = UILabel()
         nameLabel.frame = CGRect(x: x, y: ratingLabel.frame.maxY, width: (5 * x), height: (2 * y))

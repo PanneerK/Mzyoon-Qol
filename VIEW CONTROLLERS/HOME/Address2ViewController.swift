@@ -297,8 +297,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressNavigationBar.addSubview(navigationTitle)
         
         let locationIcon = UIImageView()
-        locationIcon.frame = CGRect(x: x, y: addressNavigationBar.frame.maxY + y, width: (3 * x), height: (3 * y))
-        locationIcon.backgroundColor = UIColor.cyan
+        locationIcon.frame = CGRect(x: x, y: addressNavigationBar.frame.maxY + y, width: (1.5 * x), height: (3 * y))
+        locationIcon.image = UIImage(named: "Location_address")
         view.addSubview(locationIcon)
         
         let locationAddressLabel = UILabel()
@@ -346,11 +346,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
 //        locationView.addSubview(address3Label)
         
         let editLocationButton = UIButton()
-        editLocationButton.frame = CGRect(x: locationView.frame.width - (8.1 * x), y: 0.1 * y, width: (7.8 * x), height: (7.8 * y))
-        editLocationButton.layer.cornerRadius = 5
-        editLocationButton.layer.borderWidth = 1
-        editLocationButton.layer.borderColor = UIColor.orange.cgColor
-        editLocationButton.setImage(UIImage(named: "men"), for: .normal)
+        editLocationButton.frame = CGRect(x: locationView.frame.width - (8 * x), y: 0, width: (8 * x), height: (8 * y))
+//        editLocationButton.layer.cornerRadius = 5
+//        editLocationButton.layer.borderWidth = 1
+//        editLocationButton.layer.borderColor = UIColor.orange.cgColor
+        editLocationButton.setImage(UIImage(named: "locationEdit"), for: .normal)
         editLocationButton.tag = 1
         editLocationButton.addTarget(self, action: #selector(self.locationEditButtonAction(sender:)), for: .touchUpInside)
         locationView.addSubview(editLocationButton)
@@ -381,7 +381,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let addressInfoHeadingLabel = UILabel()
         addressInfoHeadingLabel.frame = CGRect(x: (3 * x), y: addressDefaultLabel.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (3 * y))
-        addressInfoHeadingLabel.backgroundColor = UIColor.lightGray
+        addressInfoHeadingLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.25)
         addressInfoHeadingLabel.text = "Address Info"
         addressInfoHeadingLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addressInfoHeadingLabel.textAlignment = .center
@@ -397,7 +397,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let firstNameIcon = UIImageView()
         firstNameIcon.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
-        firstNameIcon.image = UIImage(named: "men")
+        firstNameIcon.image = UIImage(named: "first_last_name")
         addressScrollView.addSubview(firstNameIcon)
         
         firstNameEnglishTextField.frame = CGRect(x: firstNameIcon.frame.maxX + x, y: y, width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -418,7 +418,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let firstNameEditButton = UIButton()
         firstNameEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: y, width: (2 * x), height: (2 * y))
-        firstNameEditButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        firstNameEditButton.setImage(UIImage(named: "edit"), for: .normal)
         addressScrollView.addSubview(firstNameEditButton)
         
         let underline1 = UILabel()
@@ -428,7 +428,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let secondNameIcon = UIImageView()
         secondNameIcon.frame = CGRect(x: x, y: underline1.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        secondNameIcon.image = UIImage(named: "men")
+        secondNameIcon.image = UIImage(named: "first_last_name")
         addressScrollView.addSubview(secondNameIcon)
         
         secondNameEnglishTextField.frame = CGRect(x: secondNameIcon.frame.maxX + x, y: underline1.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -449,7 +449,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let secondNameEditButton = UIButton()
         secondNameEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline1.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        secondNameEditButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        secondNameEditButton.setImage(UIImage(named: "edit"), for: .normal)
         addressScrollView.addSubview(secondNameEditButton)
         
         let underline2 = UILabel()
@@ -459,7 +459,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let countryIcon = UIImageView()
         countryIcon.frame = CGRect(x: x, y: underline2.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        countryIcon.image = UIImage(named: "men")
+        countryIcon.image = UIImage(named: "Country")
         addressScrollView.addSubview(countryIcon)
 
         countryButton.frame = CGRect(x: countryIcon.frame.maxX + x, y: underline2.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -471,7 +471,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let countryDropDownIcon = UIImageView()
         countryDropDownIcon.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline2.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        countryDropDownIcon.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        countryDropDownIcon.image = UIImage(named: "edit")
         addressScrollView.addSubview(countryDropDownIcon)
         
         let underline3 = UILabel()
@@ -481,7 +481,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let stateIcon = UIImageView()
         stateIcon.frame = CGRect(x: x, y: underline3.frame.maxY + (3 * y), width: (2 * y), height: (2 * y))
-        stateIcon.image = UIImage(named: "men")
+        stateIcon.image = UIImage(named: "Country")
         addressScrollView.addSubview(stateIcon)
         
         stateButton.frame = CGRect(x: stateIcon.frame.maxX + x, y: underline3.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -493,7 +493,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let stateDropDownIcon = UIImageView()
         stateDropDownIcon.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline3.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        stateDropDownIcon.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        stateDropDownIcon.image = UIImage(named: "edit")
         addressScrollView.addSubview(stateDropDownIcon)
         
         let underline4 = UILabel()
@@ -503,7 +503,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
 
         let areaIcon = UIImageView()
         areaIcon.frame = CGRect(x: x, y: underline4.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        areaIcon.image = UIImage(named: "men")
+        areaIcon.image = UIImage(named: "Area")
         addressScrollView.addSubview(areaIcon)
         
         areaNameTextField.frame = CGRect(x: areaIcon.frame.maxX + x, y: underline4.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -524,7 +524,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let areaEditButton = UIButton()
         areaEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline4.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        areaEditButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        areaEditButton.setImage(UIImage(named: "edit"), for: .normal)
         addressScrollView.addSubview(areaEditButton)
         
         let underline5 = UILabel()
@@ -534,7 +534,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let floorIcon = UIImageView()
         floorIcon.frame = CGRect(x: x, y: underline5.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        floorIcon.image = UIImage(named: "men")
+        floorIcon.image = UIImage(named: "Floor")
         addressScrollView.addSubview(floorIcon)
         
         floorTextField.frame = CGRect(x: floorIcon.frame.maxX + x, y: underline5.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -555,7 +555,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let floorEditButton = UIButton()
         floorEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline5.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        floorEditButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        floorEditButton.setImage(UIImage(named: "edit"), for: .normal)
         addressScrollView.addSubview(floorEditButton)
         
         let underline6 = UILabel()
@@ -565,7 +565,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let landMarkIcon = UIImageView()
         landMarkIcon.frame = CGRect(x: x, y: underline6.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        landMarkIcon.image = UIImage(named: "men")
+        landMarkIcon.image = UIImage(named: "landmark")
         addressScrollView.addSubview(landMarkIcon)
         
         landMarkTextField.frame = CGRect(x: landMarkIcon.frame.maxX + x, y: underline6.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -586,7 +586,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let landMarkEditButton = UIButton()
         landMarkEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline6.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        landMarkEditButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        landMarkEditButton.setImage(UIImage(named: "edit"), for: .normal)
         addressScrollView.addSubview(landMarkEditButton)
         
         let underline7 = UILabel()
@@ -596,7 +596,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let locationTypeIcon = UIImageView()
         locationTypeIcon.frame = CGRect(x: x, y: underline7.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        locationTypeIcon.image = UIImage(named: "men")
+        locationTypeIcon.image = UIImage(named: "location_type")
         addressScrollView.addSubview(locationTypeIcon)
         
         locationTypeTextField.frame = CGRect(x: locationTypeIcon.frame.maxX + x, y: underline7.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -617,7 +617,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let locationTypeEditButton = UIButton()
         locationTypeEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline7.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        locationTypeEditButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        locationTypeEditButton.setImage(UIImage(named: "edit"), for: .normal)
         addressScrollView.addSubview(locationTypeEditButton)
         
         let underline8 = UILabel()
@@ -688,7 +688,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let shippingNotesIcon = UIImageView()
         shippingNotesIcon.frame = CGRect(x: x, y: underline9.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        shippingNotesIcon.image = UIImage(named: "men")
+        shippingNotesIcon.image = UIImage(named: "Shipping_notes")
         addressScrollView.addSubview(shippingNotesIcon)
         
         shippingNotesTextField.frame = CGRect(x: shippingNotesIcon.frame.maxX + x, y: underline9.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -709,7 +709,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let shippingNotesEditButton = UIButton()
         shippingNotesEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline9.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        shippingNotesEditButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+//        shippingNotesEditButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        shippingNotesEditButton.setImage(UIImage(named: "edit"), for: .normal)
         addressScrollView.addSubview(shippingNotesEditButton)
         
         let underline10 = UILabel()

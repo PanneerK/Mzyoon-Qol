@@ -167,8 +167,6 @@ class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDeleg
     
     func partsContent()
     {
-        self.title = "HEAD"
-        
         let downArrowImageView = UIImageView()
         downArrowImageView.frame = CGRect(x: (2 * x), y: (7 * y), width: view.frame.width - (4 * x), height: (36.98 * y))
         downArrowImageView.image = convertedPartsImageArray[0]
