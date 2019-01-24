@@ -314,7 +314,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         QtyNumTF.backgroundColor = UIColor.white
         QtyNumTF.placeholder = "Qty"
         QtyNumTF.textColor = UIColor.black
-        QtyNumTF.textAlignment = .left
+        QtyNumTF.textAlignment = .center
         QtyNumTF.font = QtyNumTF.font!.withSize(14)
         QtyNumTF.adjustsFontSizeToFitWidth = true
         QtyNumTF.keyboardType = .numberPad
@@ -1168,8 +1168,18 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         print("Qty:",qtyNum)
         print("orderID:",orderID)
         
-        self.serviceCall.API_UpdateQtyOrderApproval(OrderId: orderID, Qty: qtyNum, delegate: self)
-        print("Redirect To Next Page.. !")
+      if qtyNum != nil
+      {
+         self.serviceCall.API_UpdateQtyOrderApproval(OrderId: orderID, Qty: qtyNum, delegate: self)
+         print("Redirect To Next Page.. !")
+      }
+      else
+      {
+        let appointmentAlert = UIAlertController(title: "Alert!", message: "Please Enter Quantity..!", preferredStyle: .alert)
+        appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(appointmentAlert, animated: true, completion: nil)
+      }
+        
        
      /*
         let OrderDetailsScreen = OrderDetailsViewController()

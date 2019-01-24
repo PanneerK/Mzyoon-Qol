@@ -1329,7 +1329,7 @@ class ServerAPI : NSObject
     }
     
     //Book an Appointment Material..
-    func API_InsertAppoinmentMaterial(OrderId : Int, AppointmentType : Int, AppointmentTime : Int, From : String, To : String, Type : String, CreatedBy : String, delegate : ServerAPIDelegate)
+    func API_InsertAppoinmentMaterial(OrderId : Int, AppointmentType : Int, AppointmentTime : String, From : String, To : String, Type : String, CreatedBy : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -1362,7 +1362,7 @@ class ServerAPI : NSObject
     }
     
     //Book an Appointment Measurement..
-    func API_InsertAppoinmentMeasurement(OrderId : Int, AppointmentType : Int, AppointmentTime : Int, From : String, To : String, Type : String, CreatedBy : String, delegate : ServerAPIDelegate)
+    func API_InsertAppoinmentMeasurement(OrderId : Int, AppointmentType : Int, AppointmentTime : String, From : String, To : String, Type : String, CreatedBy : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {

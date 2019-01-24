@@ -8,16 +8,22 @@
 
 import UIKit
 
-class AppointmentViewController: CommonViewController,ServerAPIDelegate
+class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPickerViewDelegate,UIPickerViewDataSource
 {
      let serviceCall = ServerAPI()
     
       let AppointmentNavigationBar = UIView()
       let AppointmentScrollview = UIScrollView()
+    
+       let OrderTypeView = UIView()
+       let MeasurementTypeView = UIView()
+    
       let AppointmentSelectionView = UIView()
     
       let MaterialRejectButtonView = UIView()
       let MeasureRejectButtonView = UIView()
+    
+    var TimeSlotArray = NSArray()
     
     // Error PAram...
     var DeviceNum:String!
@@ -33,9 +39,11 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
     // Material...
     var Material_FromDatePick = UIDatePicker()
     var Material_ToDatePick = UIDatePicker()
+    var Material_TimeSlotPick : UIPickerView!
     
     var From_MaterialType_TF = UITextField()
     var TO_MaterialType_TF = UITextField()
+    var SLOT_MaterialType_TF = UITextField()
     var Material_ApproveButton = UIButton()
     var Material_RejectButton = UIButton()
     
@@ -50,9 +58,11 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
     // Measurement...
     var Measure_FromDatePick = UIDatePicker()
     var Measure_ToDatePick = UIDatePicker()
+    var Measure_TimeSlotPick : UIPickerView!
     
     var From_MeasurementType_TF = UITextField()
     var TO_MeasurementType_TF = UITextField()
+    var SLOT_MeasurementType_TF = UITextField()
     var Measure_ApproveButton = UIButton()
     var Measure_RejectButton = UIButton()
     
@@ -87,9 +97,11 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
       {
          print("Order ID Empty/nil..")
         
-         self.serviceCall.API_GetAppointmentMaterial(OrderId: 1, delegate: self)
-         self.serviceCall.API_GetAppointmentMeasurement(OrderId: 4, delegate: self)
+          // self.serviceCall.API_GetAppointmentMaterial(OrderId: 1, delegate: self)
+          // self.serviceCall.API_GetAppointmentMeasurement(OrderId: 4, delegate: self)
       }
+        
+       TimeSlotArray = ["8.00 A.M  to  9.00 A.M","9.00 A.M  to  10.00 A.M","10.00 A.M  to  11.00 A.M","11.00 A.M  to  12.00 P.M","12.00 P.M  to  1.00 P.M","2.00 P.M  to  3.00 P.M","3.00 P.M  to  4.00 P.M","4.00 P.M  to  5.00 P.M","5.00 P.M  to  6.00 P.M","6.00 P.M  to  7.00 P.M","7.00 P.M  to  8.00 P.M"]
         
     }
     func DeviceError() 
@@ -129,6 +141,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
             let Result = insertAppointmentMaterial.object(forKey: "Result") as! String
             print("Result", Result)
             
+            
+            let appointmentAlert = UIAlertController(title: "Message..!", message: Result, preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+            appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(appointmentAlert, animated: true, completion: nil)
+            
+            /*
+             window = UIWindow(frame: UIScreen.main.bounds)
+             let loginScreen = HomeViewController()
+             let navigationScreen = UINavigationController(rootViewController: loginScreen)
+             navigationScreen.isNavigationBarHidden = true
+             window?.rootViewController = navigationScreen
+             window?.makeKeyAndVisible()
+             */
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -151,6 +178,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         {
             let Result = insertAppointmentMeasure.object(forKey: "Result") as! String
             print("Result", Result)
+            
+            
+            let appointmentAlert = UIAlertController(title: "Message..!", message: Result, preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+            appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(appointmentAlert, animated: true, completion: nil)
+            
+            /*
+             window = UIWindow(frame: UIScreen.main.bounds)
+             let loginScreen = HomeViewController()
+             let navigationScreen = UINavigationController(rootViewController: loginScreen)
+             navigationScreen.isNavigationBarHidden = true
+             window?.rootViewController = navigationScreen
+             window?.makeKeyAndVisible()
+           */
             
         }
         else if ResponseMsg == "Failure"
@@ -316,6 +358,11 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         }
     }
     
+    func proceedAlertAction(action : UIAlertAction)
+    {
+        let HomeScreen = HomeViewController()
+        self.navigationController?.pushViewController(HomeScreen, animated: true)
+    }
     
     func AppointmentContent()
     {
@@ -349,14 +396,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         //ScrollView..
         
         //let AppointmentScrollview = UIScrollView()
-        AppointmentScrollview.frame = CGRect(x: 0, y: AppointmentNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
+        AppointmentScrollview.frame = CGRect(x: 0, y: AppointmentNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (12 * y))
         AppointmentScrollview.backgroundColor = UIColor.clear
         view.addSubview(AppointmentScrollview)
         
-        // Order Type..
         
+  //----------------------------------------OrderType View---------------------------------------------------------------
+        
+        // OrderType View..
+        OrderTypeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (40 * y))
+       // OrderTypeView.backgroundColor = UIColor.lightGray
+        AppointmentScrollview.addSubview(OrderTypeView)
+        
+        // Order Type..
         let orderTypeLabel = UILabel()
-        orderTypeLabel.frame = CGRect(x: ((view.frame.width - (14 * x)) / 2), y: y, width: (16 * x), height: (3 * y))
+        orderTypeLabel.frame = CGRect(x: ((OrderTypeView.frame.width - (14 * x)) / 2), y: y, width: (16 * x), height: (3 * y))
         orderTypeLabel.backgroundColor = UIColor.white
         orderTypeLabel.text = "ORDER TYPE"
         orderTypeLabel.layer.borderColor = UIColor.lightGray.cgColor
@@ -364,17 +418,18 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         orderTypeLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         orderTypeLabel.textAlignment = .center
         orderTypeLabel.font = UIFont(name: "Avenir Next", size: 1.5 * x)
-        AppointmentScrollview.addSubview(orderTypeLabel)
+        OrderTypeView.addSubview(orderTypeLabel)
+      
         
+      //-------------------------------AppointmentStatusView---------------------
         
-       let Material_AppointmentStatusView = UIView()
+        let Material_AppointmentStatusView = UIView()
         Material_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (2 * x)) / 2), y: orderTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
         Material_AppointmentStatusView.backgroundColor = UIColor.white
         Material_AppointmentStatusView.layer.borderColor = UIColor.lightGray.cgColor
         Material_AppointmentStatusView.layer.borderWidth = 1.0
         Material_AppointmentStatusView.layer.cornerRadius = 5
-        AppointmentScrollview.addSubview(Material_AppointmentStatusView)
-        
+        OrderTypeView.addSubview(Material_AppointmentStatusView)
         
         let Material_StatusLabel = UILabel()
         Material_StatusLabel.frame = CGRect(x: x, y: 0, width: (12 * x), height: (2 * y))
@@ -400,38 +455,50 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         Material_StatusBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         Material_StatusBtn.addTarget(self, action: #selector(self.MaterialStatusButtonAction(sender:)), for: .touchUpInside)
         Material_AppointmentStatusView.addSubview(Material_StatusBtn)
+      
         
-        // orderType View...
+    // orderType imageView...
         let courierDeliveryIcon = UIImageView()
         courierDeliveryIcon.frame = CGRect(x: (3 * x), y: Material_AppointmentStatusView.frame.maxY +  y, width: (2 * x), height: (2 * y))
-        
+       
+      if(MaterailHeaderImage.count > 0)
+      {
         if let imageName = MaterailHeaderImage[0] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
             courierDeliveryIcon.dowloadFromServer(url: apiurl!)
         }
-       
-        AppointmentScrollview.addSubview(courierDeliveryIcon)
+      }
+       OrderTypeView.addSubview(courierDeliveryIcon)
         
         let couriertDeliveryLabel = UILabel()
         couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: Material_AppointmentStatusView.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
-        couriertDeliveryLabel.text = MaterialInEnglish[0] as? String
+        if(MaterialInEnglish.count > 0)
+        {
+            couriertDeliveryLabel.text = MaterialInEnglish[0] as? String
+        }
+        else
+        {
+            couriertDeliveryLabel.text = ""
+        }
         couriertDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         couriertDeliveryLabel.textAlignment = .left
         couriertDeliveryLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         couriertDeliveryLabel.adjustsFontSizeToFitWidth = true
-        AppointmentScrollview.addSubview(couriertDeliveryLabel)
+        OrderTypeView.addSubview(couriertDeliveryLabel)
         
         let courierDeliveryUnderline = UILabel()
         courierDeliveryUnderline.frame = CGRect(x: (3 * x), y: couriertDeliveryLabel.frame.maxY + (y / 2), width: view.frame.width - (6 * x), height: 0.5)
         courierDeliveryUnderline.backgroundColor = UIColor.lightGray
-        AppointmentScrollview.addSubview(courierDeliveryUnderline)
+        OrderTypeView.addSubview(courierDeliveryUnderline)
         
         let courierImageView = UIImageView()
         courierImageView.frame = CGRect(x: (3 * x), y: courierDeliveryUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (10 * y))
        // courierImageView.backgroundColor = UIColor.lightGray
-        
+      
+      if(MaterialBodyImage.count > 0)
+      {
         if let imageName = MaterialBodyImage[0] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
@@ -443,9 +510,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
             dummyImageView.dowloadFromServer(url: apiurl!)
             courierImageView.addSubview(dummyImageView)
         }
+      }
+        OrderTypeView.addSubview(courierImageView)
         
-        AppointmentScrollview.addSubview(courierImageView)
-        
+    //---------------OrderType FromDate Label---------------------
         
         let From_OrderTypeLBL = UILabel()
         From_OrderTypeLBL.frame = CGRect(x: (3 * x), y: courierImageView.frame.maxY + y , width: courierImageView.frame.width / 2 , height: (2 * y))
@@ -455,7 +523,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         From_OrderTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         From_OrderTypeLBL.adjustsFontSizeToFitWidth = true
        // From_OrderTypeLBL.backgroundColor = UIColor.lightGray
-        AppointmentScrollview.addSubview(From_OrderTypeLBL)
+        OrderTypeView.addSubview(From_OrderTypeLBL)
+   
+     //---------------OrderType ToDate Label---------------------
         
         let TO_OrderTypeLBL = UILabel()
         TO_OrderTypeLBL.frame = CGRect(x: From_OrderTypeLBL.frame.maxX + 1, y: courierImageView.frame.maxY + y , width: courierImageView.frame.width / 2, height: (2 * y))
@@ -464,57 +534,121 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         TO_OrderTypeLBL.textAlignment = .left
         TO_OrderTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         TO_OrderTypeLBL.adjustsFontSizeToFitWidth = true
-       // TO_OrderTypeLBL.backgroundColor = UIColor.lightGray
-        AppointmentScrollview.addSubview(TO_OrderTypeLBL)
+        // TO_OrderTypeLBL.backgroundColor = UIColor.lightGray
+        OrderTypeView.addSubview(TO_OrderTypeLBL)
         
-       // FromDate Icon..
+    //-----------------OrderType FromDate View----------------------------
+        
+        //FromDateView
+        let FromDateView = UIView()
+        FromDateView.frame = CGRect(x: (3 * x), y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (2.5 * y))
+        FromDateView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        OrderTypeView.addSubview(FromDateView)
+        
+        // FromDate Icon..
         let FromDateMatrl_Icon = UIImageView()
-        FromDateMatrl_Icon.frame = CGRect(x: (3 * x), y: From_OrderTypeLBL.frame.maxY, width:(2 * x), height: (2 * y))
+        FromDateMatrl_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
         FromDateMatrl_Icon.backgroundColor = UIColor.white
         FromDateMatrl_Icon.image = UIImage(named: "OrderDate")
-       // AppointmentScrollview.addSubview(FromDateMatrl_Icon)
+        FromDateView.addSubview(FromDateMatrl_Icon)
         
         //let From_MaterialType_TF = UITextField()
-        From_MaterialType_TF.frame = CGRect(x: (3 * x), y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2 , height: (2.5 * y))
+        From_MaterialType_TF.frame = CGRect(x: FromDateMatrl_Icon.frame.maxX, y: (y/2) - 4, width: (10 * x) , height: (2 * y))
         From_MaterialType_TF.placeholder = "dd/mm/yyyy"
         From_MaterialType_TF.textColor = UIColor.white
         From_MaterialType_TF.textAlignment = .center
-        From_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        From_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         From_MaterialType_TF.adjustsFontSizeToFitWidth = true
-        From_MaterialType_TF.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        //From_MaterialType_TF.backgroundColor = UIColor.gray
         From_MaterialType_TF.addTarget(self, action: #selector(self.FMaterial_calendarAction), for: .allEditingEvents)
         From_MaterialType_TF.delegate = self as? UITextFieldDelegate
-        AppointmentScrollview.addSubview(From_MaterialType_TF)
+        FromDateView.addSubview(From_MaterialType_TF)
         
-      
         // Edit icon..
         let FromDateEditMatrl_Icon = UIImageView()
-        FromDateEditMatrl_Icon.frame = CGRect(x: From_MaterialType_TF.frame.minX, y: 0, width:(2 * x), height: (2 * y))
-        // FromDateEditMatrl_Icon.backgroundColor = UIColor.gray
+        FromDateEditMatrl_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
+        FromDateEditMatrl_Icon.backgroundColor = UIColor.white
         FromDateEditMatrl_Icon.image = UIImage(named: "OrderDate")
-       // From_MaterialType_TF.addSubview(FromDateEditMatrl_Icon)
+        //FromDateView.addSubview(FromDateEditMatrl_Icon)
  
+        
+     //-----------------OrderType ToDate View----------------------------
+        
+        //ToDateView
+        let ToDateView = UIView()
+        ToDateView.frame = CGRect(x: FromDateView.frame.maxX + 1, y: TO_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (2.5 * y))
+        ToDateView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        OrderTypeView.addSubview(ToDateView)
+        
         // ToDAteIcon..
         let ToDateMatrl_Icon = UIImageView()
-        ToDateMatrl_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX + 1, y: From_OrderTypeLBL.frame.maxY, width:(2 * x), height: (2 * y))
+        ToDateMatrl_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
         ToDateMatrl_Icon.backgroundColor = UIColor.white
         ToDateMatrl_Icon.image = UIImage(named: "OrderDate")
-        // AppointmentScrollview.addSubview(ToDateMatrl_Icon)
+         ToDateView.addSubview(ToDateMatrl_Icon)
         
        // let TO_MaterialType_TF = UITextField()
-        TO_MaterialType_TF.frame = CGRect(x: From_MaterialType_TF.frame.maxX + 1, y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (2.5 * y))
+        TO_MaterialType_TF.frame = CGRect(x: ToDateMatrl_Icon.frame.maxX , y: (y/2) - 4, width: (10 * x), height: (2 * y))
         TO_MaterialType_TF.placeholder = "dd/mm/yyyy"
         TO_MaterialType_TF.textColor = UIColor.white
         TO_MaterialType_TF.textAlignment = .center
-        TO_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        TO_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         TO_MaterialType_TF.adjustsFontSizeToFitWidth = true
-        TO_MaterialType_TF.backgroundColor = UIColor.blue   //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+       // TO_MaterialType_TF.backgroundColor = UIColor.gray  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         TO_MaterialType_TF.addTarget(self, action: #selector(self.TMaterial_calendarAction), for: .allEditingEvents)
         TO_MaterialType_TF.delegate = self as? UITextFieldDelegate
-        AppointmentScrollview.addSubview(TO_MaterialType_TF)
+        ToDateView.addSubview(TO_MaterialType_TF)
+        
+        // Edit icon..
+        let ToDateEditMatrl_Icon = UIImageView()
+        ToDateEditMatrl_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
+        ToDateEditMatrl_Icon.backgroundColor = UIColor.white
+        ToDateEditMatrl_Icon.image = UIImage(named: "OrderDate")
+        // ToDateView.addSubview(ToDateEditMatrl_Icon)
+        
+        
+    //-----------------OrderType TimeSlot View----------------------------
+        
+        let Slot_MaterialTypeLBL = UILabel()
+        Slot_MaterialTypeLBL.frame = CGRect(x: (3 * x), y: FromDateView.frame.maxY + y, width: (8 * x), height: (2.5 * y))
+        Slot_MaterialTypeLBL.text = "TIME SLOT"
+        Slot_MaterialTypeLBL.textColor = UIColor.black
+        Slot_MaterialTypeLBL.textAlignment = .left
+        Slot_MaterialTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        Slot_MaterialTypeLBL.adjustsFontSizeToFitWidth = true
+        // Slot_MaterialTypeLBL.backgroundColor = UIColor.lightGray
+        OrderTypeView.addSubview(Slot_MaterialTypeLBL)
+        
+        
+        //TimeSlotView
+        let Material_TimeSlotView = UIView()
+        Material_TimeSlotView.frame = CGRect(x: Slot_MaterialTypeLBL.frame.maxX, y: FromDateView.frame.maxY + y, width: (23.5 * x), height: (2.5 * y))
+        Material_TimeSlotView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        OrderTypeView.addSubview(Material_TimeSlotView)
+        
+        // TimeMatrl_Icon..
+        let TimeMatrl_Icon = UIImageView()
+        TimeMatrl_Icon.frame = CGRect(x: 2, y: (y/2) - 4, width:(2 * x), height: (2 * y))
+        TimeMatrl_Icon.backgroundColor = UIColor.white
+        TimeMatrl_Icon.image = UIImage(named: "OrderDate")
+        Material_TimeSlotView.addSubview(TimeMatrl_Icon)
+        
+        // let SLOT_MaterialType_TF.frame = UITextField()
+        SLOT_MaterialType_TF.frame = CGRect(x: TimeMatrl_Icon.frame.maxX, y: (y/2) - 4, width: (20 * x), height: (2 * y))
+        SLOT_MaterialType_TF.placeholder = "Select Time Slot"
+        SLOT_MaterialType_TF.textColor = UIColor.white
+        SLOT_MaterialType_TF.textAlignment = .center
+        SLOT_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        SLOT_MaterialType_TF.adjustsFontSizeToFitWidth = true
+        // SLOT_MaterialType_TF.frame.backgroundColor = UIColor.lightGray //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        SLOT_MaterialType_TF.addTarget(self, action: #selector(self.SlotMaterial_calendarAction), for: .allEditingEvents)
+        SLOT_MaterialType_TF.delegate = self as? UITextFieldDelegate
+        Material_TimeSlotView.addSubview(SLOT_MaterialType_TF)
+        
+    //---------------Material Approve Button----------------
         
         //let Material_ApproveButton = UIButton()
-        Material_ApproveButton.frame = CGRect(x: (8 * x), y: From_MaterialType_TF.frame.maxY + y, width: (10 * x), height: (2 * y))
+        Material_ApproveButton.frame = CGRect(x: (8 * x), y: Material_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
         Material_ApproveButton.backgroundColor = UIColor.black
         Material_ApproveButton.setTitle("Approve", for: .normal)
         Material_ApproveButton.setTitleColor(UIColor.white, for: .normal)
@@ -523,10 +657,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         Material_ApproveButton.layer.borderWidth = 1.0
         Material_ApproveButton.layer.cornerRadius = 10
         Material_ApproveButton.addTarget(self, action: #selector(self.MaterialApproveButtonAction(sender:)), for: .touchUpInside)
-        AppointmentScrollview.addSubview(Material_ApproveButton)
+        OrderTypeView.addSubview(Material_ApproveButton)
+  
+    //-----------------MAterial Reject button-----------------
         
        // let Material_RejectButton = UIButton()
-        Material_RejectButton.frame = CGRect(x: Material_ApproveButton.frame.maxX + (2 * x), y: From_MaterialType_TF.frame.maxY + y, width: (10 * x), height: (2 * y))
+        Material_RejectButton.frame = CGRect(x: Material_ApproveButton.frame.maxX + (2 * x), y: Material_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
         Material_RejectButton.backgroundColor = UIColor.black
         Material_RejectButton.setTitle("Reject", for: .normal)
         Material_RejectButton.setTitleColor(UIColor.white, for: .normal)
@@ -535,13 +671,32 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         Material_RejectButton.layer.borderWidth = 1.0
         Material_RejectButton.layer.cornerRadius = 10
         Material_RejectButton.addTarget(self, action: #selector(self.MaterialRejectButtonAction(sender:)), for: .touchUpInside)
-        AppointmentScrollview.addSubview(Material_RejectButton)
+        OrderTypeView.addSubview(Material_RejectButton)
+        
+    //-----------------Material Save Button------------------------
+        
+        let Material_SaveButton = UIButton()
+        Material_SaveButton.frame = CGRect(x: courierImageView.frame.width - (5 * x), y: Material_RejectButton.frame.minY + (4 * y) , width: (8 * x), height: (2 * y))
+        Material_SaveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        Material_SaveButton.setTitle("Save", for: .normal)
+        Material_SaveButton.setTitleColor(UIColor.white, for: .normal)
+        Material_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
+        
+        Material_SaveButton.addTarget(self, action: #selector(self.Material_SaveButtonAction(sender:)), for: .touchUpInside)
+        OrderTypeView.addSubview(Material_SaveButton)
+     
+        
+    //------------------------------------------MeasurementType View--------------------------------------------------------
+        
+        // MEASUREMENT_1 Type View..
+        MeasurementTypeView.frame = CGRect(x: 0, y: OrderTypeView.frame.maxY + y, width: view.frame.width, height: (40 * y))
+        //MeasurementTypeView.backgroundColor = UIColor.darkGray
+        AppointmentScrollview.addSubview(MeasurementTypeView)
         
         
         // MEASUREMENT_1 Type..
-        
         let MaterialTypeLabel = UILabel()
-        MaterialTypeLabel.frame = CGRect(x: ((view.frame.width - (14 * x)) / 2), y: Material_ApproveButton.frame.maxY + (2 * y), width: (16 * x), height: (3 * y))
+        MaterialTypeLabel.frame = CGRect(x: ((MeasurementTypeView.frame.width - (14 * x)) / 2), y: y, width: (16 * x), height: (3 * y))  // Y:Material_ApproveButton.frame.maxY + (2 * y)
         MaterialTypeLabel.backgroundColor = UIColor.white
         MaterialTypeLabel.text = "MEASUREMENT_1"
         MaterialTypeLabel.layer.borderColor = UIColor.lightGray.cgColor
@@ -549,7 +704,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         MaterialTypeLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         MaterialTypeLabel.textAlignment = .center
         MaterialTypeLabel.font = UIFont(name: "Avenir Next", size: 1.5 * x)
-        AppointmentScrollview.addSubview(MaterialTypeLabel)
+        MeasurementTypeView.addSubview(MaterialTypeLabel)
         
       
         let Measurement_AppointmentStatusView = UIView()
@@ -558,7 +713,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         Measurement_AppointmentStatusView.layer.borderColor = UIColor.lightGray.cgColor
         Measurement_AppointmentStatusView.layer.borderWidth = 1.0
         Measurement_AppointmentStatusView.layer.cornerRadius = 5
-        AppointmentScrollview.addSubview(Measurement_AppointmentStatusView)
+        MeasurementTypeView.addSubview(Measurement_AppointmentStatusView)
         
         
         let Measure_StatusLabel = UILabel()
@@ -600,7 +755,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
          courierDeliveryIcon.dowloadFromServer(url: apiurl!)
          }
          */
-        AppointmentScrollview.addSubview(TailorShopIcon)
+        MeasurementTypeView.addSubview(TailorShopIcon)
         
         let TailorTypeLabel = UILabel()
         TailorTypeLabel.frame = CGRect(x: TailorShopIcon.frame.maxX, y: Measurement_AppointmentStatusView.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
@@ -616,12 +771,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         TailorTypeLabel.textAlignment = .left
         TailorTypeLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         TailorTypeLabel.adjustsFontSizeToFitWidth = true
-        AppointmentScrollview.addSubview(TailorTypeLabel)
+        MeasurementTypeView.addSubview(TailorTypeLabel)
         
         let TailorUnderline = UILabel()
         TailorUnderline.frame = CGRect(x: (3 * x), y: TailorTypeLabel.frame.maxY + (y / 2), width: view.frame.width - (6 * x), height: 0.5)
         TailorUnderline.backgroundColor = UIColor.lightGray
-        AppointmentScrollview.addSubview(TailorUnderline)
+        MeasurementTypeView.addSubview(TailorUnderline)
         
         let TailorImageView = UIImageView()
         TailorImageView.frame = CGRect(x: (3 * x), y: TailorUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (10 * y))
@@ -636,21 +791,13 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
                 let apiurl = URL(string: api)
                 
                 let dummyImageView = UIImageView()
-                dummyImageView.frame = CGRect(x: 0, y: 0, width: courierImageView.frame.width, height: courierImageView.frame.height)
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: courierImageView.frame.width, height: TailorImageView.frame.height)
                 dummyImageView.dowloadFromServer(url: apiurl!)
                 courierImageView.addSubview(dummyImageView)
             }
-            
         }
-        else
-        {
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: courierImageView.frame.width, height: courierImageView.frame.height)
-            dummyImageView.image = UIImage(named: "empty")
-            courierImageView.addSubview(dummyImageView)
-        }
-        
-         AppointmentScrollview.addSubview(TailorImageView)
+       
+         MeasurementTypeView.addSubview(TailorImageView)
         
         let From_MaterialTypeLBL = UILabel()
         From_MaterialTypeLBL.frame = CGRect(x: (3 * x), y: TailorImageView.frame.maxY + y, width: TailorImageView.frame.width / 2 , height: (2 * y))
@@ -660,7 +807,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         From_MaterialTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         From_MaterialTypeLBL.adjustsFontSizeToFitWidth = true
        // From_MaterialTypeLBL.backgroundColor = UIColor.lightGray
-        AppointmentScrollview.addSubview(From_MaterialTypeLBL)
+        MeasurementTypeView.addSubview(From_MaterialTypeLBL)
         
         let TO_MaterialTypeLBL = UILabel()
         TO_MaterialTypeLBL.frame = CGRect(x: From_MaterialTypeLBL.frame.maxX + 1, y: TailorImageView.frame.maxY + y, width: TailorImageView.frame.width / 2, height: (2 * y))
@@ -670,34 +817,124 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         TO_MaterialTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         TO_MaterialTypeLBL.adjustsFontSizeToFitWidth = true
        //  TO_OrderTypeLBL.backgroundColor = UIColor.lightGray
-        AppointmentScrollview.addSubview(TO_MaterialTypeLBL)
+        MeasurementTypeView.addSubview(TO_MaterialTypeLBL)
         
-       // let From_MeasurementType_TF = UITextField()
-        From_MeasurementType_TF.frame = CGRect(x: (3 * x), y: From_MaterialTypeLBL.frame.maxY, width: courierImageView.frame.width / 2 , height: (2.5 * y))
+   //--------------------Measure FromDate View----------------------
+        
+        //FromDateView
+        let Measure_FromDateView = UIView()
+        Measure_FromDateView.frame = CGRect(x: (3 * x), y: From_MaterialTypeLBL.frame.maxY, width: TailorImageView.frame.width / 2, height: (2.5 * y))
+        Measure_FromDateView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        MeasurementTypeView.addSubview(Measure_FromDateView)
+        
+        // FromDate Icon..
+        let FromDateMeasure_Icon = UIImageView()
+        FromDateMeasure_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
+        FromDateMeasure_Icon.backgroundColor = UIColor.white
+        FromDateMeasure_Icon.image = UIImage(named: "OrderDate")
+        Measure_FromDateView.addSubview(FromDateMeasure_Icon)
+        
+        //let From_MeasurementType_TF = UITextField()
+        From_MeasurementType_TF.frame = CGRect(x: FromDateMeasure_Icon.frame.maxX, y: (y/2) - 4, width: (10 * x) , height: (2 * y))
         From_MeasurementType_TF.placeholder = "dd/mm/yyyy"
         From_MeasurementType_TF.textColor = UIColor.white
         From_MeasurementType_TF.textAlignment = .center
-        From_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        From_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         From_MeasurementType_TF.adjustsFontSizeToFitWidth = true
-        From_MeasurementType_TF.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        //From_MeasurementType_TF.backgroundColor = UIColor.gray
         From_MeasurementType_TF.addTarget(self, action: #selector(self.FMeasurement_calendarAction), for: .allEditingEvents)
         From_MeasurementType_TF.delegate = self as? UITextFieldDelegate
-        AppointmentScrollview.addSubview(From_MeasurementType_TF)
+        Measure_FromDateView.addSubview(From_MeasurementType_TF)
         
-       // let TO_MaterialType_TF = UITextField()
-        TO_MeasurementType_TF.frame = CGRect(x: From_MeasurementType_TF.frame.maxX + 1, y: From_MaterialTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (2.5 * y))
+        // Edit icon..
+        let FromDateEditMeasure_Icon = UIImageView()
+        FromDateEditMeasure_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
+        FromDateEditMeasure_Icon.backgroundColor = UIColor.white
+        FromDateEditMeasure_Icon.image = UIImage(named: "OrderDate")
+        //Measure_FromDateView.addSubview(FromDateEditMeasure_Icon)
+        
+        
+   //--------------------Measure ToDate View----------------------
+        
+        //ToDateView
+        let Measure_ToDateView = UIView()
+        Measure_ToDateView.frame = CGRect(x: Measure_FromDateView.frame.maxX + 1, y: TO_MaterialTypeLBL.frame.maxY, width: TailorImageView.frame.width / 2, height: (2.5 * y))
+        Measure_ToDateView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        MeasurementTypeView.addSubview(Measure_ToDateView)
+        
+        // ToDAteIcon..
+        let ToDateMeasure_Icon = UIImageView()
+        ToDateMeasure_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
+        ToDateMeasure_Icon.backgroundColor = UIColor.white
+        ToDateMeasure_Icon.image = UIImage(named: "OrderDate")
+        Measure_ToDateView.addSubview(ToDateMeasure_Icon)
+        
+        // let TO_MeasurementType_TF = UITextField()
+        TO_MeasurementType_TF.frame = CGRect(x: ToDateMeasure_Icon.frame.maxX , y: (y/2) - 4, width: (10 * x), height: (2 * y))
         TO_MeasurementType_TF.placeholder = "dd/mm/yyyy"
         TO_MeasurementType_TF.textColor = UIColor.white
         TO_MeasurementType_TF.textAlignment = .center
-        TO_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        TO_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         TO_MeasurementType_TF.adjustsFontSizeToFitWidth = true
-        TO_MeasurementType_TF.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        // TO_MeasurementType_TF.backgroundColor = UIColor.gray  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         TO_MeasurementType_TF.addTarget(self, action: #selector(self.TMeasurement_calendarAction), for: .allEditingEvents)
         TO_MeasurementType_TF.delegate = self as? UITextFieldDelegate
-        AppointmentScrollview.addSubview(TO_MeasurementType_TF)
+        Measure_ToDateView.addSubview(TO_MeasurementType_TF)
+        
+        // Edit icon..
+        let ToDateEditMeasure_Icon = UIImageView()
+        ToDateEditMeasure_Icon.frame = CGRect(x: TO_MeasurementType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
+        ToDateEditMeasure_Icon.backgroundColor = UIColor.white
+        ToDateEditMeasure_Icon.image = UIImage(named: "OrderDate")
+        // Measure_ToDateView.addSubview(ToDateEditMeasure_Icon)
+        
+        
+         
+    //----------------Time Slot View------------------------------------
+         
+        let Slot_MeasureTypeLBL = UILabel()
+        Slot_MeasureTypeLBL.frame = CGRect(x: (3 * x), y: Measure_FromDateView.frame.maxY + y, width: (7 * x), height: (2.5 * y))
+        Slot_MeasureTypeLBL.text = "TIME SLOT"
+        Slot_MeasureTypeLBL.textColor = UIColor.black
+        Slot_MeasureTypeLBL.textAlignment = .left
+        Slot_MeasureTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        Slot_MeasureTypeLBL.adjustsFontSizeToFitWidth = true
+        // Slot_MeasureTypeLBL.backgroundColor = UIColor.lightGray
+        MeasurementTypeView.addSubview(Slot_MeasureTypeLBL)
+        
+        
+        //TimeSlotView
+        let Measure_TimeSlotView = UIView()
+        Measure_TimeSlotView.frame = CGRect(x: Slot_MeasureTypeLBL.frame.maxX, y: Measure_FromDateView.frame.maxY + y, width: (24.5 * x), height: (2.5 * y))
+        Measure_TimeSlotView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        MeasurementTypeView.addSubview(Measure_TimeSlotView)
+        print("width value :",TailorImageView.frame.width / 2)
+        
+        // TimeMatrl_Icon..
+        let TimeMeasure_Icon = UIImageView()
+        TimeMeasure_Icon.frame = CGRect(x: 2, y: (y/2) - 4, width:(2 * x), height: (2 * y))
+        TimeMeasure_Icon.backgroundColor = UIColor.white
+        TimeMeasure_Icon.image = UIImage(named: "OrderDate")
+         Measure_TimeSlotView.addSubview(TimeMeasure_Icon)
+        
+        // let SLOT_MeasurementType_TF = UITextField()
+        SLOT_MeasurementType_TF.frame = CGRect(x: TimeMeasure_Icon.frame.maxX + x, y: (y/2) - 4, width: (20 * x), height: (2 * y))
+        SLOT_MeasurementType_TF.placeholder = "Select Time Slot"
+        SLOT_MeasurementType_TF.textColor = UIColor.white
+        SLOT_MeasurementType_TF.textAlignment = .center
+        SLOT_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        SLOT_MeasurementType_TF.adjustsFontSizeToFitWidth = true
+       // SLOT_MeasurementType_TF.backgroundColor = UIColor.lightGray //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        SLOT_MeasurementType_TF.addTarget(self, action: #selector(self.SlotMeasure_calendarAction), for: .allEditingEvents)
+        SLOT_MeasurementType_TF.delegate = self as? UITextFieldDelegate
+        Measure_TimeSlotView.addSubview(SLOT_MeasurementType_TF)
+ 
+
+    //----------------------------------------------------
+        
         
        // let ApproveButton = UIButton()
-       Measure_ApproveButton.frame = CGRect(x: (8 * x), y: From_MeasurementType_TF.frame.maxY + y, width: (10 * x), height: (2 * y))
+       Measure_ApproveButton.frame = CGRect(x: (8 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
          Measure_ApproveButton.backgroundColor = UIColor.black
         Measure_ApproveButton.setTitle("Approve", for: .normal)
         Measure_ApproveButton.setTitleColor(UIColor.white, for: .normal)
@@ -706,10 +943,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         Measure_ApproveButton.layer.borderWidth = 1.0
         Measure_ApproveButton.layer.cornerRadius = 10
         Measure_ApproveButton.addTarget(self, action: #selector(self.MeasureApproveButtonAction(sender:)), for: .touchUpInside)
-        AppointmentScrollview.addSubview(Measure_ApproveButton)
+        MeasurementTypeView.addSubview(Measure_ApproveButton)
         
        // let RejectButton = UIButton()
-       Measure_RejectButton.frame = CGRect(x: Measure_ApproveButton.frame.maxX + (2 * x), y: From_MeasurementType_TF.frame.maxY + y, width: (10 * x), height: (2 * y))
+       Measure_RejectButton.frame = CGRect(x: Measure_ApproveButton.frame.maxX + (2 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
          Measure_RejectButton.backgroundColor = UIColor.black
         Measure_RejectButton.setTitle("Reject", for: .normal)
         Measure_RejectButton.setTitleColor(UIColor.white, for: .normal)
@@ -718,20 +955,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         Measure_RejectButton.layer.borderWidth = 1.0
         Measure_RejectButton.layer.cornerRadius = 10
         Measure_RejectButton.addTarget(self, action: #selector(self.MeasureRejectButtonAction(sender:)), for: .touchUpInside)
-        AppointmentScrollview.addSubview(Measure_RejectButton)
+        MeasurementTypeView.addSubview(Measure_RejectButton)
         
-        
-        let SaveButton = UIButton()
-        SaveButton.frame = CGRect(x: TailorImageView.frame.width - (5 * x), y: Measure_RejectButton.frame.minY + (4 * y) , width: (8 * x), height: (2 * y))
-        SaveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        SaveButton.setTitle("Save", for: .normal)
-        SaveButton.setTitleColor(UIColor.white, for: .normal)
-        SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
+ 
+        let Measure_SaveButton = UIButton()
+        Measure_SaveButton.frame = CGRect(x: TailorImageView.frame.width - (5 * x), y: Measure_RejectButton.frame.minY + (4 * y) , width: (8 * x), height: (2 * y))
+        Measure_SaveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        Measure_SaveButton.setTitle("Save", for: .normal)
+        Measure_SaveButton.setTitleColor(UIColor.white, for: .normal)
+        Measure_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
   
-        SaveButton.addTarget(self, action: #selector(self.SaveButtonAction(sender:)), for: .touchUpInside)
-        AppointmentScrollview.addSubview(SaveButton)
+        Measure_SaveButton.addTarget(self, action: #selector(self.Measure_SaveButtonAction(sender:)), for: .touchUpInside)
+        MeasurementTypeView.addSubview(Measure_SaveButton)
+   
         
-        AppointmentScrollview.contentSize.height = SaveButton.frame.maxY + (2 * y)
+        AppointmentScrollview.contentSize.height = MeasurementTypeView.frame.maxY + (2 * y)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -982,6 +1220,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
     {
         TMaterial_pickUpDate(TO_MaterialType_TF)
     }
+    @objc func SlotMaterial_calendarAction()
+    {
+        SlotMaterial_pickUpDate(SLOT_MaterialType_TF)
+    }
+    @objc func SlotMeasure_calendarAction()
+    {
+        SlotMeasure_pickUpDate(SLOT_MeasurementType_TF)
+    }
     @objc func FMeasurement_calendarAction()
     {
         FMeasurement_pickUpDate(From_MeasurementType_TF)
@@ -1038,6 +1284,62 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelClick))
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
+        textField.inputAccessoryView = toolBar
+    }
+    func SlotMaterial_pickUpDate(_ textField : UITextField)
+    {
+        // Slot Picker Material..
+        self.Material_TimeSlotPick = UIPickerView(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
+        self.Material_TimeSlotPick.backgroundColor = UIColor.white
+       
+        textField.inputView = self.Material_TimeSlotPick
+        
+        Material_TimeSlotPick.showsSelectionIndicator = true
+        Material_TimeSlotPick.delegate = self
+        Material_TimeSlotPick.dataSource = self
+        
+        // ToolBar
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.SlotMaterial_DoneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        
+        textField.inputAccessoryView = toolBar
+    }
+    func SlotMeasure_pickUpDate(_ textField : UITextField)
+    {
+        // Slot Picker Measure..
+        self.Measure_TimeSlotPick = UIPickerView(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
+        self.Measure_TimeSlotPick.backgroundColor = UIColor.white
+        
+        textField.inputView = self.Measure_TimeSlotPick
+        
+        Measure_TimeSlotPick.showsSelectionIndicator = true
+        Measure_TimeSlotPick.delegate = self
+        Measure_TimeSlotPick.dataSource = self
+        
+        // ToolBar
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 92/255, green: 216/255, blue: 255/255, alpha: 1)
+        toolBar.sizeToFit()
+        
+        // Adding Button ToolBar
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(self.SlotMeasure_DoneClick))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(self.cancelClick))
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
+        toolBar.isUserInteractionEnabled = true
+        
         textField.inputAccessoryView = toolBar
     }
     func FMeasurement_pickUpDate(_ textField : UITextField)
@@ -1111,6 +1413,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
         TO_MaterialType_TF.resignFirstResponder()
         
     }
+    @objc func SlotMaterial_DoneClick()
+    {
+        SLOT_MaterialType_TF.resignFirstResponder()
+    }
+    @objc func SlotMeasure_DoneClick()
+    {
+        SLOT_MeasurementType_TF.resignFirstResponder()
+    }
     @objc func FMeasurement_DoneClick()
     {
         let FromMeasure_dateFormatter = DateFormatter()
@@ -1138,34 +1448,91 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate
     {
         From_MaterialType_TF.resignFirstResponder()
         TO_MaterialType_TF.resignFirstResponder()
+        SLOT_MaterialType_TF.resignFirstResponder()
         
         From_MeasurementType_TF.resignFirstResponder()
         TO_MeasurementType_TF.resignFirstResponder()
+        SLOT_MeasurementType_TF.resignFirstResponder()
     }
     
-    @objc func SaveButtonAction(sender : UIButton)
+    // PickerView Delegate Methods..
+   
+    func numberOfComponents(in pickerView: UIPickerView) -> Int
     {
-        print("Save Action..")
-        
-        let Mat_OrderID = MaterialOrderID[0] as! Int
-        let Msr_OrderID = MeasurementOrderID[0] as! Int
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    {
+        return TimeSlotArray.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+    {
+        return TimeSlotArray[row] as? String
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        if pickerView == Material_TimeSlotPick
+        {
+          SLOT_MaterialType_TF.text = TimeSlotArray[row] as? String
+        }
+        else if pickerView == Measure_TimeSlotPick
+        {
+          SLOT_MeasurementType_TF.text = TimeSlotArray[row] as? String
+        }
+    }
+
+    @objc func Material_SaveButtonAction(sender : UIButton)
+    {
+        print("Material Save Action..")
+        var Mat_OrderID : Int!
+        let SlotStr : String = self.SLOT_MaterialType_TF.text!
+       // var Slot : Int! =  "\(SlotStr)" as Int!
+       
+        if(MaterialOrderID.count > 0)
+        {
+            Mat_OrderID = MaterialOrderID[0] as? Int
+        }
         
         let FMaterial : String = self.From_MaterialType_TF.text!
         let TMaterial : String = self.TO_MaterialType_TF.text!
+        
+        
+        if (FMaterial.isEmpty || TMaterial.isEmpty)
+        {
+            print("Dates are Empty")
+        }
+        else
+        {
+            self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, Type: "Customer", CreatedBy:"Customer", delegate: self)
+        }
+    }
+    
+    @objc func Measure_SaveButtonAction(sender : UIButton)
+    {
+        print("Measure Save Action..")
+        var Msr_OrderID : Int!
+        let SlotStr : String = self.SLOT_MeasurementType_TF.text!
+        
+        if(MeasurementOrderID.count > 0)
+        {
+           Msr_OrderID = MeasurementOrderID[0] as? Int
+        }
+       
         let FMeasure : String = self.From_MeasurementType_TF.text!
         let TMeasure : String = self.TO_MeasurementType_TF.text!
         
-           self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime:15, From: FMaterial, To: TMaterial, Type: "Customer", CreatedBy:"Customer", delegate: self)
         
-            self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime: 15, From: FMeasure, To: TMeasure, Type: "Customer", CreatedBy: "Customer", delegate: self)
-       
-       /*
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let loginScreen = HomeViewController()
-        let navigationScreen = UINavigationController(rootViewController: loginScreen)
-        navigationScreen.isNavigationBarHidden = true
-        window?.rootViewController = navigationScreen
-        window?.makeKeyAndVisible()
-       */
+        if (FMeasure.isEmpty || TMeasure.isEmpty)
+        {
+            print("Dates are Empty")
+        }
+        else
+        {
+          self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime:  SlotStr, From: FMeasure, To: TMeasure, Type: "Customer", CreatedBy: "Customer", delegate: self)
+        }
     }
+    
 }
