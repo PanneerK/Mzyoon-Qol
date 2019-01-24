@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-               let loginScreen = HomeViewController()
+               let loginScreen = PaymentViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen

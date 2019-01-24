@@ -11,6 +11,14 @@
 		DA06108721E4C4D1005BB29D /* ServiceTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06108621E4C4D1005BB29D /* ServiceTypeViewController.swift */; };
 		DA077FC021D62A5400D9E565 /* ListOfOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */; };
 		DA077FC221D6608000D9E565 /* OrderRequestListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */; };
+		DA0DB13A21F98D9C00C20299 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */; };
+		DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */; };
+		DA0DB14221FA0FF100C20299 /* TelrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB13B21F9928200C20299 /* TelrSDK.framework */; };
+		DA0DB14321FA0FF100C20299 /* TelrSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB13B21F9928200C20299 /* TelrSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA0DB14621FA116C00C20299 /* SwiftyXMLParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14521FA116C00C20299 /* SwiftyXMLParser.framework */; };
+		DA0DB14C21FA120D00C20299 /* AEXML.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14921FA117900C20299 /* AEXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA0DB14E21FA122E00C20299 /* SwiftyXMLParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14521FA116C00C20299 /* SwiftyXMLParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA0DB15021FA123300C20299 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14721FA117400C20299 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */; };
@@ -83,12 +91,35 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		DA0DB14421FA0FF100C20299 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				DA0DB14C21FA120D00C20299 /* AEXML.framework in Embed Frameworks */,
+				DA0DB14E21FA122E00C20299 /* SwiftyXMLParser.framework in Embed Frameworks */,
+				DA0DB14321FA0FF100C20299 /* TelrSDK.framework in Embed Frameworks */,
+				DA0DB15021FA123300C20299 /* Alamofire.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mzyoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5457EC0C6335A24A15B04CE /* Pods-Mzyoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mzyoon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon.release.xcconfig"; sourceTree = "<group>"; };
 		DA06108621E4C4D1005BB29D /* ServiceTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTypeViewController.swift; sourceTree = "<group>"; };
 		DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfOrdersViewController.swift; sourceTree = "<group>"; };
 		DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestListViewController.swift; sourceTree = "<group>"; };
+		DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		DA0DB13B21F9928200C20299 /* TelrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TelrSDK.framework; sourceTree = "<group>"; };
+		DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelrGateWayViewController.swift; sourceTree = "<group>"; };
+		DA0DB14521FA116C00C20299 /* SwiftyXMLParser.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SwiftyXMLParser.framework; sourceTree = "<group>"; };
+		DA0DB14721FA117400C20299 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
+		DA0DB14921FA117900C20299 /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AEXML.framework; sourceTree = "<group>"; };
 		DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotationListViewController.swift; sourceTree = "<group>"; };
 		DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +187,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA0DB14221FA0FF100C20299 /* TelrSDK.framework in Frameworks */,
+				DA0DB14621FA116C00C20299 /* SwiftyXMLParser.framework in Frameworks */,
 				7867C36215F8BE32510B3549 /* Pods_Mzyoon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -191,6 +224,8 @@
 			children = (
 				DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */,
 				DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */,
+				DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */,
+				DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */,
 			);
 			path = APPOINTMENTS;
 			sourceTree = "<group>";
@@ -198,6 +233,10 @@
 		F1E738CD7CDE0ADB4E968820 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DA0DB14921FA117900C20299 /* AEXML.framework */,
+				DA0DB14721FA117400C20299 /* Alamofire.framework */,
+				DA0DB14521FA116C00C20299 /* SwiftyXMLParser.framework */,
+				DA0DB13B21F9928200C20299 /* TelrSDK.framework */,
 				84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */,
 			);
 			name = Frameworks;
@@ -381,6 +420,7 @@
 				FD2ADFB22175A5480033025B /* Resources */,
 				58CDD0CE8F6FC333A2F3C656 /* [CP] Embed Pods Frameworks */,
 				3301460C5BDF78E1B9CE255D /* [CP] Copy Pods Resources */,
+				DA0DB14421FA0FF100C20299 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -589,6 +629,7 @@
 				FD71D262219F055300FFC067 /* Customization1ViewController.swift in Sources */,
 				FD71D268219F29AD00FFC067 /* Measurement1ViewController.swift in Sources */,
 				FD462DDA21AD0E9A0073B53B /* Measurement2ViewController.swift in Sources */,
+				DA0DB13A21F98D9C00C20299 /* PaymentViewController.swift in Sources */,
 				DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */,
 				DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */,
 				FD71D26A219F2EFE00FFC067 /* ReferenceImageViewController.swift in Sources */,
@@ -607,6 +648,7 @@
 				FD5774AE219AA2950026DBF8 /* FilterTableViewCell.swift in Sources */,
 				FD60980021A2812B00DCCF58 /* OrderSummaryViewController.swift in Sources */,
 				FD2ADFE62175A5AB0033025B /* LoginViewController.swift in Sources */,
+				DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */,
 				FD71D257219E994100FFC067 /* CommonViewController.swift in Sources */,
 				FDC9BB902186F6E1003BA5C9 /* OrdersViewController.swift in Sources */,
 				FD71D264219F1F2200FFC067 /* Customization2ViewController.swift in Sources */,
@@ -799,6 +841,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V4W4WB96C8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Mzyoon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -819,6 +865,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V4W4WB96C8;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Mzyoon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = (
