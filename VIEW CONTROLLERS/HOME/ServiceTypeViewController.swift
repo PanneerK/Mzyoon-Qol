@@ -201,17 +201,23 @@ class ServiceTypeViewController: CommonViewController
     
     @objc func UrgentButtonAction(sender : UIButton)
     {
-        print("Action..")
+        UserDefaults.standard.set(0, forKey: "serviceType")
+        let tailorScreen = TailorListViewController()
+        self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     
     @objc func AppointmentButtonAction(sender : UIButton)
     {
-       print("Action..")
+        UserDefaults.standard.set(1, forKey: "serviceType")
+        let tailorScreen = TailorListViewController()
+        self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     
     @objc func NormalButtonAction(sender : UIButton)
     {
-        print("Action..")
+        UserDefaults.standard.set(2, forKey: "serviceType")
+        let tailorScreen = TailorListViewController()
+        self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     /*
     // MARK: - Navigation

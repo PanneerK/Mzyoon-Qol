@@ -217,8 +217,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     func dressTypeContent()
     {
-        self.stopActivity()
-        
         dressTypeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         dressTypeView.backgroundColor = UIColor.white
 //        view.addSubview(dressTypeView)
@@ -366,6 +364,8 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
         dressTypeScrollView.contentSize.height = y1 + (20 * y)
+        
+        self.stopActivity()
     }
     
     

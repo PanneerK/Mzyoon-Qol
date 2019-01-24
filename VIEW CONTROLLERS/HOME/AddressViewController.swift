@@ -419,8 +419,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     @objc func addressSelectButtonAction(sender : UIButton)
     {
         UserDefaults.standard.set(sender.tag, forKey: "addressId")
-        let tailorScreen = TailorListViewController()
-        self.navigationController?.pushViewController(tailorScreen, animated: true)
+        let serviceScreen = ServiceTypeViewController()
+        self.navigationController?.pushViewController(serviceScreen, animated: true)
     }
     
     @objc func editButtonAction(sender : UIButton)

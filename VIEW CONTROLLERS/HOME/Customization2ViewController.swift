@@ -58,6 +58,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     let patternScrollView = UIScrollView()
     
     var updatingId = Int()
+    var selectedPatternId = Int()
     
     override func viewDidLoad()
     {
@@ -69,7 +70,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         super.viewDidLoad()
         
-        self.serviceCall(getMaterialId: [0], getColorId: [0])
+        self.serviceCall(getMaterialId: [1], getColorId: [1])
 
         // Do any additional setup after loading the view.
     }
@@ -351,7 +352,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             let materialButton = UIButton()
             materialButton.frame = CGRect(x: x1, y: y, width: (12 * x), height: (10 * y))
             //            materialButton.setImage(UIImage(named: "genderBackground"), for: .normal)
-            materialButton.tag = i
+            materialButton.tag = materialsIdArray[i] as! Int
             materialButton.addTarget(self, action: #selector(self.materialButtonAction), for: .touchUpInside)
             materialScrollView.addSubview(materialButton)
             
@@ -416,7 +417,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             let colorButton = UIButton()
             colorButton.frame = CGRect(x: x2, y: y, width: (12 * x), height: (10 * y))
             //            colorButton.setImage(UIImage(named: "genderBackground"), for: .normal)
-            colorButton.tag = i
+            colorButton.tag = colorsIdArray[i] as! Int
             colorButton.addTarget(self, action: #selector(self.colorButtonAction), for: .touchUpInside)
             colorScrollView.addSubview(colorButton)
             
@@ -482,7 +483,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             let patternButton = UIButton()
             patternButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
             //            patternButton.setImage(UIImage(named: "genderBackground"), for: .normal)
-            patternButton.tag = i
+            patternButton.tag = patternsIdArray[i] as! Int
             patternButton.addTarget(self, action: #selector(self.patternButtonAction), for: .touchUpInside)
             patternScrollView.addSubview(patternButton)
             
@@ -583,7 +584,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 }
             }
             print("SEASONAL ARRAY", materialTagIntArray)
-            self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [0])
+            self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [1])
         }
         else
         {
@@ -631,7 +632,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 sender.addSubview(materialSelectionImage)
             }
             
-            self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [0])
+            self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [1])
         }
     }
     
@@ -701,11 +702,25 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             
             if materialTagIntArray.count == 0
             {
-                self.serviceCall(getMaterialId: [0], getColorId: colorTagIntArray)
+                if colorTagIntArray.count == 0
+                {
+                    self.serviceCall(getMaterialId: [1], getColorId: [1])
+                }
+                else
+                {
+                    self.serviceCall(getMaterialId: [1], getColorId: colorTagIntArray)
+                }
             }
             else
             {
-                self.serviceCall(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+                if colorTagIntArray.count == 0
+                {
+                    self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [1])
+                }
+                else
+                {
+                    self.serviceCall(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+                }
             }
             
         }
@@ -757,11 +772,25 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             
             if materialTagIntArray.count == 0
             {
-                self.serviceCall(getMaterialId: [0], getColorId: colorTagIntArray)
+                if colorTagIntArray.count == 0
+                {
+                    self.serviceCall(getMaterialId: [1], getColorId: [1])
+                }
+                else
+                {
+                    self.serviceCall(getMaterialId: [1], getColorId: colorTagIntArray)
+                }
             }
             else
             {
-                self.serviceCall(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+                if colorTagIntArray.count == 0
+                {
+                    self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [1])
+                }
+                else
+                {
+                    self.serviceCall(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+                }
             }
         }
     }
@@ -773,8 +802,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         patternSelectionImage.tag = sender.tag
         sender.addSubview(patternSelectionImage)
         
-        UserDefaults.standard.set(sender.tag, forKey: "patternId")
-
+        selectedPatternId = sender.tag
         
         /*if patternTagIntArray.isEmpty == true
         {
@@ -815,8 +843,21 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func customization2NextButtonAction(sender : UIButton)
     {
-        let custom3Screen = Customization3ViewController()
-        self.navigationController?.pushViewController(custom3Screen, animated: true)
+        print("SELECTED PATTERN ID", selectedPatternId)
+        
+        if selectedPatternId != 0
+        {
+            UserDefaults.standard.set(selectedPatternId, forKey: "patternId")
+
+            let custom3Screen = Customization3ViewController()
+            self.navigationController?.pushViewController(custom3Screen, animated: true)
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Alert", message: "Please select atleast one pattern to proceed", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     /*
