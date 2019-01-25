@@ -107,7 +107,6 @@ class PaymentViewController: CommonViewController
         PayButton.addTarget(self, action: #selector(self.PayButtonAction(sender:)), for: .touchUpInside)
         PaymentView.addSubview(PayButton)
         
-        
     }
     
     

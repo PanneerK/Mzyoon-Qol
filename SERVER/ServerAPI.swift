@@ -1571,7 +1571,7 @@ class ServerAPI : NSObject
             
             print("Appointment IsApprove: ", urlString)
             
-            request(urlString, method: .post, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
                 // print("REQUEST", request)
                 if response.result.value != nil
                 {
@@ -1604,7 +1604,7 @@ class ServerAPI : NSObject
             
             print("Appointment IsApprove: ", urlString)
             
-            request(urlString, method: .post, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
                 // print("REQUEST", request)
                 if response.result.value != nil
                 {
@@ -1623,4 +1623,138 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
+    
+    // Payment Status....
+    func API_updatePaymentStatus(PaymentStatus : Int, OrderId : Int, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached -  Payment Page")
+            
+            let parameters = ["PaymentStatus" : PaymentStatus, "OrderId" : OrderId] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/UpatePaymentStatus", arguments: [baseURL])
+            
+            print("Update Payment Status: ", urlString)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("response", self.resultDict)
+                    delegate.API_CALLBACK_UpdatePaymentStatus!(updatePaymentStatus: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 28, errorMessage: "Payment Status Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    // Buyer Order Approval....
+    func API_BuyerOrderApproval(OrderId : Int, ApprovedTailorId : Int, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached -  Payment Page")
+            
+            let parameters = ["OrderId" : OrderId, "ApprovedTailorId" : ApprovedTailorId] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/BuyerOrderApproval", arguments: [baseURL])
+            
+            print("Buyer Order Approval: ", urlString)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("response", self.resultDict)
+                    delegate.API_CALLBACK_BuyerOrderApproval!(buyerOrderApproval: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 29, errorMessage: "Payment Status Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    // Get Appointments List..
+    func API_GetAppointmentList(BuyerId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Appointment List Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetAppoinmentList?BuyerId=\(BuyerId)", arguments: [baseURL])
+            
+            print("Order Request List: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                     print("resultDict", self.resultDict)
+                    delegate.API_CALLBACK_GetAppointmentList!(getAppointmentList: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 30, errorMessage: "Appointment List Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    // Total Appointment List.. Approve and reject List..
+    func API_ApproveRejectAppointmentList(BuyerId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Appointment List Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetTotelAppoinmentList?BuyerId=\(BuyerId)", arguments: [baseURL])
+            
+            print("Order Request List: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("resultDict", self.resultDict)
+                    delegate.API_CALLBACK_ApproveRejectAppointmentList!(getTotalAppointmentList: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 31, errorMessage: "Appointment List Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
 }
