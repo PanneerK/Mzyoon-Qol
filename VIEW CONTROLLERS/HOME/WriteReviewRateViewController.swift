@@ -103,7 +103,11 @@ class WriteReviewRateViewController: CommonViewController,UITextFieldDelegate
     RatingTypeView.addSubview(ColonLabel)
     
     // Ratings Buttons
-    //let button
+    
+    let CustomerRatingImageView = UIImageView()
+    CustomerRatingImageView.frame = CGRect(x: ColonLabel.frame.maxX, y: 0, width: (12 * x), height:(1.5 * y))
+    CustomerRatingImageView.image = UIImage(named: "5")
+    RatingTypeView.addSubview(CustomerRatingImageView)
     
       y1 = RatingTypeView.frame.maxY + y
     }
@@ -151,7 +155,7 @@ class WriteReviewRateViewController: CommonViewController,UITextFieldDelegate
     SubmitButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     SubmitButton.setTitle("Submit", for: .normal)
     SubmitButton.setTitleColor(UIColor.white, for: .normal)
-    SubmitButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 2108 * x)!
+    SubmitButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: 1.3 * x)
     SubmitButton.layer.borderWidth = 1.0
     SubmitButton.layer.cornerRadius = 15
     SubmitButton.addTarget(self, action: #selector(self.SubmitButtonAction(sender:)), for: .touchUpInside)
