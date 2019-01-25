@@ -85,4 +85,10 @@ import Foundation
     @objc optional func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial : NSDictionary)
     @objc optional func API_CALLBACK_IsApproveAptMeasurement(IsApproveMeasure : NSDictionary)
     
+  // 25-1-2019
+    @objc optional func API_CALLBACK_UpdatePaymentStatus(updatePaymentStatus : NSDictionary)
+    @objc optional func API_CALLBACK_BuyerOrderApproval(buyerOrderApproval : NSDictionary)
+    @objc optional func API_CALLBACK_GetAppointmentList(getAppointmentList : NSDictionary)
+    @objc optional func API_CALLBACK_ApproveRejectAppointmentList(getTotalAppointmentList : NSDictionary)
+    
 }
