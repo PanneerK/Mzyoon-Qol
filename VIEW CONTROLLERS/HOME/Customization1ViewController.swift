@@ -326,8 +326,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 let apiurl = URL(string: api)
                 print("SEASONAL API", apiurl!)
                 buttonImage.dowloadFromServer(url: apiurl!)
-                
-                self.stopActivity()
             }
             buttonImage.tag = -1
             seasonalButton.addSubview(buttonImage)
@@ -346,6 +344,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         seasonalScrollView.contentSize.width = x1 + (3 * x)
+        self.stopActivity()
     }
     
     func industryContents()

@@ -268,8 +268,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     func customization2Content()
     {
-        self.stopActivity()
-        
         let customization2View = UIView()
         customization2View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         customization2View.backgroundColor = UIColor.white
@@ -325,6 +323,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization2NextButton.addTarget(self, action: #selector(self.customization2NextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(customization2NextButton)
+        
+        self.stopActivity()
     }
     
     func materialContent()

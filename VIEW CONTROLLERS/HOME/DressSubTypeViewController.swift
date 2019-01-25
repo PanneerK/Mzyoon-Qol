@@ -126,7 +126,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         
         let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderSubTypeNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "SUB TYPE OF : \(headingTitle.uppercased())"
+        navigationTitle.text = "\(headingTitle.uppercased())"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
@@ -210,7 +210,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                 print("SUB TYPE IMAGES", api)
                 let apiurl = URL(string: api)
                 dressTypeImageView.dowloadFromServer(url: apiurl!)
-                self.stopActivity()
             }
             dressTypeButton.addSubview(dressTypeImageView)
             
@@ -224,6 +223,8 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         }
         
         dressSubTypeScrollView.contentSize.height = y1 + (20 * y)
+        
+        self.stopActivity()
     }
     
     @objc func textFieldDidChange(textField: UITextField){

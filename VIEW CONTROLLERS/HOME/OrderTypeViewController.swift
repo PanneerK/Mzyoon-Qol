@@ -168,7 +168,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     func orderTypeContent()
     {
-        self.stopActivity()
         orderTypeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         orderTypeView.backgroundColor = UIColor.white
 //        view.addSubview(orderTypeView)
@@ -331,6 +330,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         companyButton.tag = orderTypeIDArray[2] as! Int
         companyButton.addTarget(self, action: #selector(self.companyButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(companyButton)
+        
+        self.stopActivity()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

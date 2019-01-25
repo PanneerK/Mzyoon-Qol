@@ -70,16 +70,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     override func viewDidLoad()
     {
-        
-        fetchingCurrentLocation()
-        
         navigationBar.isHidden = true
-        
-        self.serviceCall.API_GetTailorList(delegate: self)
-        
+                
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        fetchingCurrentLocation()
     }
     
     func fetchingCurrentLocation()
@@ -107,6 +106,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             currentLocation = locationManager.location
             print("Current Loc:",currentLocation.coordinate)
+            self.serviceCall.API_GetTailorList(delegate: self)
         }
     }
     

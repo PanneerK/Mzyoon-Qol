@@ -18,8 +18,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-       var baseURL:String = "http://192.168.0.21/TailorAPI"
-//     var baseURL:String = "http://appsapi.mzyoon.com"
+//       var baseURL:String = "http://192.168.0.21/TailorAPI"
+     var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -738,7 +738,7 @@ class ServerAPI : NSObject
             
             let parameters = [:] as [String : Any]
             
-            let urlString:String = String(format: "%@/API/Shop/GetBuyerAddressById?Id=\(5)", arguments: [baseURL])
+            let urlString:String = String(format: "%@/API/Shop/GetBuyerAddressByBuyerId?BuyerId=\(BuyerAddressId)", arguments: [baseURL])
             
             print("URL STRING", urlString)
             

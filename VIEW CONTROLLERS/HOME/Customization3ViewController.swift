@@ -167,8 +167,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     func customization3Content()
     {
-        self.stopActivity()
-        
         let customization3NavigationBar = UIView()
         customization3NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         customization3NavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -356,6 +354,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customization3NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization3NextButton.addTarget(self, action: #selector(self.customization3NextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(customization3NextButton)
+        
+        self.stopActivity()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -408,6 +408,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if let attId = customAttIdArray[i] as? Int
                     {
+                        self.activityContents()
                         self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
                         selectedCustomInt = attId
                     }

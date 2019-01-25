@@ -280,13 +280,13 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//            self.userImage.image = pickedImage
-//            FileHandler().saveImageDocumentDirectory(image: userImage.image!)
+            self.userImage.image = pickedImage
+            FileHandler().saveImageDocumentDirectory(image: userImage.image!)
             print("IMAGE NAME", FileHandler().imagePath())
             
             print("FILE PATH", getDirectoryPath())
             
-            saveImageDocumentDirectory(image: pickedImage, imageName: "profile")
+//            saveImageDocumentDirectory(image: pickedImage, imageName: "profile")
             getImageFromDocumentDirectory()
         }
         self.dismiss(animated: true, completion: nil)

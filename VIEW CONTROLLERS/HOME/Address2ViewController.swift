@@ -507,7 +507,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(areaIcon)
         
         areaNameTextField.frame = CGRect(x: areaIcon.frame.maxX + x, y: underline4.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        areaNameTextField.text = "Area"
+        areaNameTextField.placeholder = "Area"
         areaNameTextField.textColor = UIColor.black
         areaNameTextField.textAlignment = .left
         areaNameTextField.font = UIFont(name: "Avenir-Regular", size: 18)
