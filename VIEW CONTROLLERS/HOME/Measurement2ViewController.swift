@@ -25,6 +25,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     let imageView = UIView()
     let partsView = UIView()
     var gender = String()
+    let numberView = UIView()
     let unitView = UIView()
     let cmButton = UIButton()
     let inButton = UIButton()
@@ -104,6 +105,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     var type = "table"
     var unitTag = "cm"
+    var pageNumber = 0
     
     override func viewDidLoad()
     {
@@ -433,6 +435,54 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         sender.setTitleColor(UIColor.white, for: .normal)
     }
     
+    func pageNumberContents()
+    {
+        numberView.frame = CGRect(x: ((imageView.frame.width - (14 * x)) / 2), y: imageView.frame.height - (3 * y), width: (14 * x), height: (2 * y))
+        numberView.backgroundColor = UIColor.clear
+        imageView.addSubview(numberView)
+        
+        for views in numberView.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
+        var x1:CGFloat = 0
+
+        for i in 0..<4
+        {
+            let pageNumberlabel = UILabel()
+            pageNumberlabel.frame = CGRect(x: x1, y: 0, width: (2 * x), height: (2 * x))
+            pageNumberlabel.layer.cornerRadius = pageNumberlabel.frame.width / 2
+            pageNumberlabel.layer.borderWidth = 1
+            pageNumberlabel.layer.borderColor = UIColor.black.cgColor
+            pageNumberlabel.layer.masksToBounds = true
+            if i == pageNumber
+            {
+                pageNumberlabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+            }
+            else
+            {
+                pageNumberlabel.backgroundColor = UIColor.clear
+            }
+            pageNumberlabel.text = "\(i + 1)"
+            pageNumberlabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            pageNumberlabel.textAlignment = .center
+            pageNumberlabel.tag = (i + 1) * 20
+            numberView.addSubview(pageNumberlabel)
+            
+            let lineLabel = UILabel()
+            lineLabel.frame = CGRect(x: pageNumberlabel.frame.maxX, y: ((pageNumberlabel.frame.height - 1) / 2), width: (2 * x), height: 1)
+            lineLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            
+            if i != 3
+            {
+                numberView.addSubview(lineLabel)
+            }
+            
+            x1 = lineLabel.frame.maxX
+        }
+    }
+    
     func imageViewContents(isHidden : Bool)
     {
         imageView.frame = CGRect(x: (3 * x), y: imageButton.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (18 * y))
@@ -449,51 +499,20 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         imageScrollView.contentSize.width = (4 * imageScrollView.frame.width)
         
+        pageNumberContents()
         
-        var x1:CGFloat = ((imageView.frame.width - (14 * x)) / 2)
-        
-        for i in 0..<4
-        {
-            let pageNumberlabel = UILabel()
-            pageNumberlabel.frame = CGRect(x: x1, y: imageView.frame.height - (3 * y), width: (2 * x), height: (2 * x))
-            pageNumberlabel.layer.cornerRadius = pageNumberlabel.frame.width / 2
-            pageNumberlabel.layer.borderWidth = 1
-            pageNumberlabel.layer.borderColor = UIColor.black.cgColor
-            pageNumberlabel.layer.masksToBounds = true
-//            if i == 0
-//            {
-//                pageNumberlabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-//            }
-            pageNumberlabel.text = "\(i)"
-            pageNumberlabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            pageNumberlabel.textAlignment = .center
-            pageNumberlabel.tag = (i + 1) * 20
-            imageView.addSubview(pageNumberlabel)
-            
-            let lineLabel = UILabel()
-            lineLabel.frame = CGRect(x: pageNumberlabel.frame.maxX, y: imageView.frame.height - (3 * y) + ((pageNumberlabel.frame.height - 1) / 2), width: (2 * x), height: 1)
-            lineLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            
-            if i != 3
-            {
-                imageView.addSubview(lineLabel)
-            }
-            
-            x1 = lineLabel.frame.maxX
-        }
-        
-        unitView.frame = CGRect(x: (2 * x), y: view.frame.height - (9 * y), width: (6 * x), height: (2.5 * y))
+        unitView.frame = CGRect(x: (2 * x), y: view.frame.height - (9 * y), width: (7 * x), height: (2.5 * y))
         unitView.layer.cornerRadius = unitView.frame.height / 2
         unitView.layer.borderWidth = 1
         view.addSubview(unitView)
         
-        cmButton.frame = CGRect(x: 0, y: 0, width: (3 * x), height: unitView.frame.height)
+        cmButton.frame = CGRect(x: 0, y: 0, width: unitView.frame.width / 2, height: unitView.frame.height)
         cmButton.setTitle("CM", for: .normal)
         cmButton.tag = 1
         cmButton.addTarget(self, action: #selector(self.unitButtonAction(sender:)), for: .touchUpInside)
         unitView.addSubview(cmButton)
         
-        inButton.frame = CGRect(x: cmButton.frame.maxX, y: 0, width: (3 * x), height: unitView.frame.height)
+        inButton.frame = CGRect(x: cmButton.frame.maxX, y: 0, width:  unitView.frame.width / 2, height: unitView.frame.height)
         inButton.setTitle("IN", for: .normal)
         inButton.tag = 2
         inButton.addTarget(self, action: #selector(self.unitButtonAction(sender:)), for: .touchUpInside)
@@ -1251,7 +1270,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 let inchValue = values * 2.54
                 print("ROUNDED VALUE OF IN", inchValue.rounded())
-                measurementValues[keys] = inchValue
+                measurementValues[keys] = inchValue.rounded()
             }
         }
         else
@@ -1265,7 +1284,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             for (keys, values) in measurementValues
             {
                 let cmValue = values / 2.54
-                print("ROUNDED VALUE OF CM", cmValue.rounded())
+                print("ROUNDED VALUE OF CM", cmValue)
                 measurementValues[keys] = cmValue
             }
         }
@@ -1275,6 +1294,16 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         sender.backgroundColor = UIColor.orange
         sender.isEnabled = false
         partsTableView.reloadData()
+        
+        for (keys, values) in measurementValues
+        {
+            if let foundView = view.viewWithTag((keys * 1) + 200) {
+                if let label = foundView as? UILabel
+                {
+                    label.text = "\(values)"
+                }
+            }
+        }
     }
     
     func configurePageControl() {
@@ -1296,16 +1325,19 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        let pageNumber = round(imageScrollView .contentOffset.x / imageScrollView.frame.size.width)
-        pageControl.currentPage = Int(pageNumber)
+        let pageNumbers = round(imageScrollView .contentOffset.x / imageScrollView.frame.size.width)
+        pageControl.currentPage = Int(pageNumbers)
         
-        for i in 0..<4
+        print("PAGE NUMBER OF CURRENT", pageNumbers)
+        /*for i in 0..<4
         {
             if let theLabel = self.view.viewWithTag((i + 1) * 20) as? UILabel {
-                let pageNo = Int(pageNumber)
-                let no = Int(theLabel.text!)
+                let pageNo = Int(pageNumbers)
+                let no = Int(theLabel.text!)! + 1
+                print("THE LABEL TEXT", theLabel.text!, pageNo)
                 if pageNo == no
                 {
+                    pageNumber = pageNo
                     theLabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
                 }
                 else
@@ -1313,7 +1345,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     theLabel.backgroundColor = UIColor.clear
                 }
             }
-        }
+        }*/
+        
+        pageNumber = Int(pageNumbers)
+        pageNumberContents()
     }
     
     @objc func measurementButtonAction(sender : UIButton)

@@ -834,7 +834,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         let custom2Screen = Customization2ViewController()
         if brandTagIntArray.count == 0
         {
-            custom2Screen.brandArray = "0"
+            custom2Screen.brandArray = "1"
         }
         else
         {

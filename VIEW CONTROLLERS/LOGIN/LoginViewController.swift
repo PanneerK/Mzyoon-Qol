@@ -978,6 +978,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
         resendButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0).withAlphaComponent(0.5)
         resendButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
+        
+        server.API_LoginUser(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, delegate: self)
     }
     
     @objc func cancelButtonAction(sender : UIButton)
@@ -1076,7 +1078,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        print("TEXTFIELD AND STRING", textField, string)
         let  char = string.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
         

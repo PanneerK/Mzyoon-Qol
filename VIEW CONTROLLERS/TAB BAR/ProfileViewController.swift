@@ -51,6 +51,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     var getDOB = String()
     var getGender = String()
     
+    var imageName = NSArray()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -204,6 +206,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 }
             }
             
+            imageName = result.value(forKey: "ProfilePicture") as! NSArray
+            
             //            UserDefaults.standard.set(email[0], forKey: "email")
         }
         
@@ -291,11 +295,21 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         navigationBar.addSubview(navigationTitle)
         
-        userImage.frame = CGRect(x: ((view.frame.width - 150) / 2), y: navigationBar.frame.maxY + y, width: 150, height: 150)
+        userImage.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: navigationBar.frame.maxY + y, width: (15 * x), height: (15 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.backgroundColor = UIColor.red
         userImage.layer.masksToBounds = true
-        userImage.image = FileHandler().getImageFromDocumentDirectory()
+        if let imageName = imageName[0] as? String
+        {
+            let api = "http://192.168.0.21/TailorAPI/Images/BuyerImages/\(imageName)"
+            print("SMALL ICON", api)
+            let apiurl = URL(string: api)
+            
+            if apiurl != nil
+            {
+                userImage.dowloadFromServer(url: apiurl!)
+            }
+        }
         backgroundImage.addSubview(userImage)
         
         cameraButton.isEnabled = false

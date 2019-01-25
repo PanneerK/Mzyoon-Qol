@@ -18,8 +18,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-//       var baseURL:String = "http://192.168.0.21/TailorAPI"
-       var baseURL:String = "http://appsapi.mzyoon.com"
+       var baseURL:String = "http://192.168.0.21/TailorAPI"
+//     var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -98,6 +98,8 @@ class ServerAPI : NSObject
             
             
             let urlString:String = String(format: "%@/API/login/getallcountries", arguments: [baseURL])
+            
+            print("URL COUNRTY", urlString)
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                                 
@@ -535,7 +537,7 @@ class ServerAPI : NSObject
         }
     }
     
-    func API_IntroProfile(Id : String, Name : String, profilePic : UIImage, delegate : ServerAPIDelegate)
+    func API_IntroProfile(Id : String, Name : String, profilePic : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -736,7 +738,9 @@ class ServerAPI : NSObject
             
             let parameters = [:] as [String : Any]
             
-            let urlString:String = String(format: "%@/API/Shop/GetBuyerAddressById?Id=\(BuyerAddressId)", arguments: [baseURL])
+            let urlString:String = String(format: "%@/API/Shop/GetBuyerAddressById?Id=\(5)", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 
@@ -1008,41 +1012,54 @@ class ServerAPI : NSObject
     }
     
     // Image Upload.. profile
-    func API_ProfileImageUpload(delegate : ServerAPIDelegate)
+    func API_ProfileImageUpload(buyerImages : UIImage, buyerImagepath : NSURL, delegate : ServerAPIDelegate)
     {
+        let date = Date().timeIntervalSince1970
+        print("DATE", date)
+        
+        let dateInt = Int(date)
         
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Image Upload Page")
             
-            let parameters = [:] as [String : Any]
+            let parameters = ["BuyerImages" : buyerImages] as [String : UIImage]
             
             let urlString:String = String(format: "%@/API/FileUpload/UploadFile", arguments: [baseURL])
             
             print("URL STRING FOR OrderType", urlString)
             
-            let fileName = urlString
+            let headers: HTTPHeaders = [
+                /* "Authorization": "your_access_token",  in case you need authorization header */
+                "Content-type": "multipart/form-data",
+                "Accept":"*/*"
+            ]
             
             upload(multipartFormData: {(multipartFormData:MultipartFormData) in
                 for (key,value) in parameters
                 {
-                    multipartFormData.append((value as! String).data(using: .utf8)!, withName: key)
-                    multipartFormData.append(value as! Data, withName: "Profile", fileName: fileName,mimeType: "image/jpeg")
+                     multipartFormData.append(value.jpegData(compressionQuality: 0.5)!, withName: key, fileName: "Profile_\(dateInt).png", mimeType: "image/jpeg")
                 };
                 
-            },usingThreshold: UInt64.init(),to: urlString,method: .post, encodingCompletion: { encodingResult in
+            }, usingThreshold: UInt64.init(), to:  urlString, method: .post, headers: headers, encodingCompletion: { encodingResult in
                 switch encodingResult
                 {
                 case .success(let upload, _, _):
                     upload.responseJSON { response in
                         debugPrint(response)
+                        print("SUCCESS IMAGE", response)
+                        
+                        if response.result.value != nil{
+                            self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                            delegate.API_CALLBACK_ProfileImageUpload!(ImageUpload: self.resultDict)
+                        }
                     }
                 case .failure(let encodingError):
                     print(encodingError)
+                    print("FAILURE IMAGE", encodingError)
+                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "Image Upload Page Failed")
                 }
             })
-            
-            
         }
         else
         {

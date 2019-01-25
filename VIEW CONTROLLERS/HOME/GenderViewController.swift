@@ -142,8 +142,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     
     func newOrderContents()
     {
-        self.stopActivity()
-        
         newOrderView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         newOrderView.backgroundColor = UIColor.white
         //        view.addSubview(newOrderView)
@@ -225,6 +223,8 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
             genderButton.addSubview(buttonTitle)
         }
+        
+        self.stopActivity()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

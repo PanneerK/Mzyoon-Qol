@@ -10,29 +10,28 @@ import UIKit
 
 class Customization3ViewController: CommonViewController, ServerAPIDelegate
 {
-    
+    //SERVICE PARAMETERS
     let serviceCall = ServerAPI()
 
-    var CustomizationImgIdArray = NSArray()
-    var CustomizationImagesArray = NSArray()
-    var convertedCustomizationImageArray = [UIImage]()
-    
-    var CustomizationAttIdArray = NSArray()
-    var CustomizationAttNameArray = NSArray()
-    
-    var AttributeImagesIdArray = NSArray()
-    var attributeNameEnglishArray = NSArray()
-    var AttributeImagesArray = NSArray()
-    var convertedAttributeImageArray = [UIImage]()
-    
-    let dropDownButton = UIButton()
-    let customizationScrollView = UIScrollView()
-
+    //SCREEN PARAMETERS
     let customedImageView = UIImageView()
     let customedFrontButton = UIButton()
     let customedBackButton = UIButton()
     let selectionImage = UIImageView()
+    let dropDownButton = UIButton()
+    let customizationScrollView = UIScrollView()
 
+    let selectionImage1 = UIImageView()
+    
+    //API PARAMETERS
+    var customImagesArray = NSArray()
+    
+    var customAttEnglishNameArray = NSArray()
+    var customAttIdArray = NSArray()
+    
+    var subCustomAttEnglishNameArray = NSArray()
+    var subCustomAttIdArray = NSArray()
+    var subCustomAttImageArray = NSArray()
     
     // Error PAram...
     var DeviceNum:String!
@@ -42,62 +41,30 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
-    var customizationArray = Int()
-    let selectionImage1 = UIImageView()
-    
-    var customLapels = [String : String]()
-    var customButtons = [String : String]()
-    var customPockets = [String : String]()
-    var selectedCustom = String()
-    var subSelectedCustom = Int()
-    var customDict = [String : String]()
-    var customDictString = [String : String]()
+    var selectedCustomStringArray = [String : String]()
+    var selectedCustomString = String()
+    var selectedCustomIntArray = [String : String]()
+    var selectedCustomInt = Int()
     var customDictValuesCount = 0
 
-    override func viewDidLoad()
-    {
+    var selectedSubCustomInt = Int()
+
+    override func viewDidLoad() {
         navigationBar.isHidden = true
-        
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
         self.serviceCall.API_Customization3(DressTypeId: 5, delegate: self)
-        
-        super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-  
-    func DeviceError()
-    {
-        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
-        AppVersion = UIDevice.current.systemVersion
-        UserType = "customer"
-       // ErrorStr = "Default Error"
-        PageNumStr = "Customization3ViewController"
-       // MethodName = "do"
+        super.viewDidLoad()
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
-        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        // Do any additional setup after loading the view.
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
-        print("CUSTOM 3", errorMessage)
+        print("ERROR MESSAGE", errorMessage)
     }
     
-    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
-    {
-        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
-        
-        if ResponseMsg == "Success"
-        {
-            let Result = deviceError.object(forKey: "Result") as! String
-            print("Result", Result)
-        }
-    }
-    
-    func API_CALLBACK_Customization3(custom3: NSDictionary)
-    {
+    func API_CALLBACK_Customization3(custom3: NSDictionary) {
         print("CUSTOM 3", custom3)
         
         let ResponseMsg = custom3.object(forKey: "ResponseMsg") as! String
@@ -106,101 +73,44 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             let Result = custom3.object(forKey: "Result") as! NSDictionary
             
-            // CustomizationImages:
             let CustomizationImages = Result.object(forKey: "CustomizationImages") as! NSArray
-            CustomizationImgIdArray = CustomizationImages.value(forKey: "Id") as! NSArray
-            CustomizationImagesArray = CustomizationImages.value(forKey: "Image") as! NSArray
             
-            /*for i in 0..<CustomizationImagesArray.count
-            {
-                if let imageName = CustomizationImagesArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
-                    let apiurl = URL(string: api)
-                    print("CUSTOM ALL OF", api)
-
-                    if apiurl != nil
-                    {
-                        if let data = try? Data(contentsOf: apiurl!)
-                        {
-                            print("DATA OF IMAGE", data)
-                            if let image = UIImage(data: data)
-                            {
-                                self.convertedCustomizationImageArray.append(image)
-                            }
-                        }
-                        else
-                        {
-                            let emptyImage = UIImage(named: "empty")
-                            self.convertedCustomizationImageArray.append(emptyImage!)
-                        }
-                    }
-                }
-                else if let imgName = CustomizationImagesArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedCustomizationImageArray.append(emptyImage!)
-                }
-            }*/
+            customImagesArray = CustomizationImages.value(forKey: "Image") as! NSArray
             
-            // CustomizationAttributes:
             let CustomizationAttributes = Result.object(forKey: "CustomizationAttributes") as! NSArray
             
-            CustomizationAttIdArray = CustomizationAttributes.value(forKey: "Id") as! NSArray
-            CustomizationAttNameArray = CustomizationAttributes.value(forKey: "AttributeNameInEnglish") as! NSArray
+            customAttEnglishNameArray = CustomizationAttributes.value(forKey: "AttributeNameInEnglish") as! NSArray
             
-            for i in 0..<CustomizationAttNameArray.count
+            customAttIdArray = CustomizationAttributes.value(forKey: "Id") as! NSArray
+            
+            let AttributeImages = Result.object(forKey: "AttributeImages") as! NSArray
+            print("AttributeImages", AttributeImages)
+            
+            subCustomAttEnglishNameArray = AttributeImages.value(forKey: "AttributeNameInEnglish") as! NSArray
+            
+            subCustomAttIdArray = AttributeImages.value(forKey: "Id") as! NSArray
+            
+            subCustomAttImageArray = AttributeImages.value(forKey: "Images") as! NSArray
+            
+            for i in 0..<customAttEnglishNameArray.count
             {
-                if let customString = CustomizationAttNameArray[i] as? String
+                if let textString = customAttEnglishNameArray[i] as? String
                 {
-                    customDict[customString] = ""
-                    customDictString[customString] = ""
+                    selectedCustomStringArray[textString] = ""
+                }
+                
+                if let idString = customAttIdArray[i] as? Int
+                {
+                    selectedCustomIntArray["\(idString)"] = ""
                 }
             }
             
+            selectedCustomString = customAttEnglishNameArray[0] as! String
+            selectedCustomInt = customAttIdArray[0] as! Int
             
-            /*// AttributeImages:
-            let AttributeImages = Result.object(forKey: "AttributeImages") as! NSArray
-            AttributeImagesIdArray = AttributeImages.value(forKey: "Id") as! NSArray
-            attributeNameEnglishArray = AttributeImages.value(forKey: "AttributeNameInEnglish") as! NSArray
-            AttributeImagesArray = AttributeImages.value(forKey: "Images") as! NSArray
-            
-            print("IMAGE NAME IN CALL BACK", AttributeImagesArray)*/
-            
-            /*for i in 0..<AttributeImagesArray.count
-            {
-                if let imageName = AttributeImagesArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
-                    print("CUSTOM ALL", api)
-                    let apiurl = URL(string: api)
-                    
-                    if apiurl != nil
-                    {
-                        if let data = try? Data(contentsOf: apiurl!)
-                        {
-                            print("DATA OF IMAGE", data)
-                            if let image = UIImage(data: data) {
-                                self.convertedAttributeImageArray.append(image)
-                            }
-                        }
-                        else
-                        {
-                            let emptyImage = UIImage(named: "empty")
-                            self.convertedAttributeImageArray.append(emptyImage!)
-                        }
-                    }
-                }
-                else if let imgName = AttributeImagesArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedAttributeImageArray.append(emptyImage!)
-                }
-            }*/
-             self.customization3Content()
-            
+            customization3Content()
         }
-        else if ResponseMsg == "Failure"
+        else
         {
             let Result = custom3.object(forKey: "Result") as! String
             print("Result", Result)
@@ -210,6 +120,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             DeviceError()
         }
         
+        customization3Content()
     }
     
     func API_CALLBACK_Customization3Attr(custom3Attr: NSDictionary)
@@ -222,45 +133,15 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             let Result = custom3Attr.object(forKey: "Result") as! NSArray
             
-            // AttributeImages:
-            AttributeImagesIdArray = Result.value(forKey: "Id") as! NSArray
-            attributeNameEnglishArray = Result.value(forKey: "AttributeNameInEnglish") as! NSArray
-            AttributeImagesArray = Result.value(forKey: "Images") as! NSArray
+            subCustomAttEnglishNameArray = Result.value(forKey: "AttributeNameInEnglish") as! NSArray
             
-            print("AttributeImagesNameArray", AttributeImagesArray)
-            /*for i in 0..<AttributeImagesArray.count
-            {
-                if let imageName = AttributeImagesArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
-                    print("CUSTOM ALL", api)
-                    let apiurl = URL(string: api)
-                    
-                    if apiurl != nil
-                    {
-                        if let data = try? Data(contentsOf: apiurl!)
-                        {
-                            print("DATA OF IMAGE", data)
-                            if let image = UIImage(data: data) {
-                                self.convertedAttributeImageArray.append(image)
-                            }
-                        }
-                        else
-                        {
-                            let emptyImage = UIImage(named: "empty")
-                            self.convertedAttributeImageArray.append(emptyImage!)
-                        }
-                    }
-                }
-                else if let imgName = AttributeImagesArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedAttributeImageArray.append(emptyImage!)
-                }
-            }*/
+            subCustomAttIdArray = Result.value(forKey: "Id") as! NSArray
+            
+            subCustomAttImageArray = Result.value(forKey: "Images") as! NSArray
+            
             subcCustomization3Content()
         }
-        else if ResponseMsg == "Failure"
+        else
         {
             let Result = custom3Attr.object(forKey: "Result") as! String
             print("Result", Result)
@@ -269,17 +150,24 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             ErrorStr = Result
             DeviceError()
         }
+    }
+    
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "Customization3ViewController"
+        // MethodName = "do"
         
-        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
     func customization3Content()
     {
         self.stopActivity()
-        let customization3View = UIView()
-        customization3View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        customization3View.backgroundColor = UIColor.white
-//        view.addSubview(customization3View)
         
         let customization3NavigationBar = UIView()
         customization3NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -316,22 +204,24 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedImageView.layer.borderWidth = 1
         customedImageView.layer.borderColor = UIColor.lightGray.cgColor
         customedImageView.backgroundColor = UIColor.white
-        if let imageName = CustomizationImagesArray[1] as? String
+        if let imageName = customImagesArray[1] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
-            customedImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                customedImageView.dowloadFromServer(url: apiurl!)
+            }
         }
         view.addSubview(customedImageView)
-
+        
         customedFrontButton.frame = CGRect(x: customedImageView.frame.maxX + x, y: customedImageView.frame.minY + (9 * y), width: (7.5 * x), height: (7.5 * y))
         customedFrontButton.layer.borderWidth = 1
         customedFrontButton.layer.borderColor = UIColor.lightGray.cgColor
         customedFrontButton.backgroundColor = UIColor.white
-//        customedFrontButton.setImage(convertedCustomizationImageArray[1], for: .normal)
-        if let imageName = CustomizationImagesArray[1] as? String
+        if let imageName = customImagesArray[1] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
             print("SMALL ICON", api)
@@ -354,8 +244,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedBackButton.layer.borderWidth = 1
         customedBackButton.layer.borderColor = UIColor.lightGray.cgColor
         customedBackButton.backgroundColor = UIColor.white
-//        customedBackButton.setImage(convertedCustomizationImageArray[0], for: .normal)
-        if let imageName = CustomizationImagesArray[0] as? String
+        if let imageName = customImagesArray[0] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
             print("SMALL ICON", api)
@@ -370,20 +259,17 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedBackButton.addTarget(self, action: #selector(self.dressSelectionButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(customedBackButton)
         
-        
         dropDownButton.frame = CGRect(x: (3 * x), y: customedImageView.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (4 * y))
         dropDownButton.layer.cornerRadius = 5
         dropDownButton.layer.masksToBounds = true
         dropDownButton.backgroundColor = UIColor.lightGray
-        if let alertString = CustomizationAttNameArray[0] as? String
+        if let textString = customAttEnglishNameArray[0] as? String
         {
-            dropDownButton.setTitle(alertString.uppercased(), for: .normal)
+            dropDownButton.setTitle(textString.uppercased(), for: .normal)
         }
         dropDownButton.setTitleColor(UIColor.black, for: .normal)
         dropDownButton.addTarget(self, action: #selector(self.dropDownButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(dropDownButton)
-        
-        selectedCustom = CustomizationAttNameArray[0] as! String
         
         let dropDownImageView = UIImageView()
         dropDownImageView.frame = CGRect(x: dropDownButton.frame.width - (4 * x), y: 0, width: (4 * x), height: (4 * y))
@@ -396,85 +282,49 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownImageView.image = templateImage4
         dropDownImageView.tintColor = UIColor.white
         
-        serviceCall.API_Customization3Attr(AttributeId: 1, delegate: self)
+        subcCustomization3Content()
     }
-    
-    @objc func dressSelectionButtonAction(sender : UIButton)
-    {
-        selectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
-        selectionImage.image = UIImage(named: "selectionImage")
-        sender.addSubview(selectionImage)
-        
-        if let imageName = CustomizationImagesArray[sender.tag] as? String
-        {
-            let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
-            print("SMALL ICON", api)
-            let apiurl = URL(string: api)
-            
-            customedImageView.dowloadFromServer(url: apiurl!)
-        }
-    }
-
     
     func subcCustomization3Content()
     {
         customizationScrollView.frame = CGRect(x: 0, y: dropDownButton.frame.maxY + y, width: view.frame.width, height: (12 * y))
         view.addSubview(customizationScrollView)
         
-        print("CUSTOM DICT", customDict)
-        
         for views in customizationScrollView.subviews
         {
             views.removeFromSuperview()
         }
         
-        for (keys, values) in customDict
-        {
-            if selectedCustom == keys
-            {
-                print("VALUES FOR KEYS", values)
-                if values.isEmpty == true
-                {
-                    
-                }
-                else
-                {
-                    subSelectedCustom = Int(values)!
-                }
-            }
-        }
-        
         var x3:CGFloat = (2 * x)
-        for i in 0..<AttributeImagesArray.count
+        for i in 0..<subCustomAttEnglishNameArray.count
         {
             let customizationButton = UIButton()
             customizationButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
             customizationButton.backgroundColor = UIColor.white
-            customizationButton.tag = i
-            customizationButton.addTarget(self, action: #selector(self.customizationButtonAction), for: .touchUpInside)
+            customizationButton.tag = subCustomAttIdArray[i] as! Int
+            customizationButton.addTarget(self, action: #selector(self.customizationButtonAction(sender:)), for: .touchUpInside)
             customizationScrollView.addSubview(customizationButton)
             
-            print("SUB SELECTED ITEM", subSelectedCustom)
-            
-            if customDict[selectedCustom]?.isEmpty == true
+            if selectedCustomIntArray["\(selectedCustomInt)"]!.isEmpty == true
             {
                 
             }
             else
             {
-                if i == subSelectedCustom
+                if let id = selectedCustomIntArray["\(selectedCustomInt)"]
                 {
-                    self.customizationButtonAction(sender: customizationButton)
+                    if id == "\(customizationButton.tag)"
+                    {
+                        self.customizationButtonAction(sender: customizationButton)
+                    }
                 }
             }
+            
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: (3 * x), y: 0, width: customizationButton.frame.width - (6 * x), height: customizationButton.frame.height - (2 * y))
             buttonImage.backgroundColor = UIColor.white
-//            buttonImage.image = convertedAttributeImageArray[i]
-            
-            print("IMAGES NAME", AttributeImagesArray[i])
-            if let imageName = AttributeImagesArray[i] as? String
+            if let imageName = subCustomAttImageArray[i] as? String
             {
                 let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
                 let apiurl = URL(string: api)
@@ -487,7 +337,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: customizationButton.frame.height - (2 * y), width: customizationButton.frame.width, height: (2 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = attributeNameEnglishArray[i] as! String
+            buttonTitle.text = (subCustomAttEnglishNameArray[i] as! String)
             buttonTitle.adjustsFontSizeToFitWidth = true
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
@@ -496,17 +346,14 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             customizationButton.addSubview(buttonTitle)
             
             x3 = customizationButton.frame.maxX + (2 * x)
-        }                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        }
         
-        customizationScrollView.contentSize.width = x3 
+        customizationScrollView.contentSize.width = x3
         
         let customization3NextButton = UIButton()
         customization3NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * y))
         customization3NextButton.layer.masksToBounds = true
         customization3NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
-//        customization3NextButton.backgroundColor = UIColor.orange
-//        customization3NextButton.setTitle("NEXT", for: .normal)
-//        customization3NextButton.setTitleColor(UIColor.white, for: .normal)
         customization3NextButton.addTarget(self, action: #selector(self.customization3NextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(customization3NextButton)
     }
@@ -516,39 +363,29 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func customizationButtonAction(sender : UIButton)
+    @objc func dressSelectionButtonAction(sender : UIButton)
     {
-        selectionImage1.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
-        selectionImage1.image = UIImage(named: "selectionImage")
-        selectionImage1.tag = sender.tag
-        sender.addSubview(selectionImage1)
+        selectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+        selectionImage.image = UIImage(named: "selectionImage")
+        sender.addSubview(selectionImage)
         
-        for i in 0..<CustomizationAttNameArray.count
+        if let imageName = customImagesArray[sender.tag] as? String
         {
-            if let selectionCustom = CustomizationAttNameArray[i] as? String
-            {
-                print("EQUATING", selectionCustom, selectedCustom)
-
-                if selectionCustom == selectedCustom
-                {
-                    customDict[selectedCustom] = "\(sender.tag)"
-                    customDictString[selectedCustom] = attributeNameEnglishArray[sender.tag] as? String
-                }
-            }
+            let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
+            print("SMALL ICON", api)
+            let apiurl = URL(string: api)
+            
+            customedImageView.dowloadFromServer(url: apiurl!)
         }
-        
-        print("CUSTOM DICT", customDict)
-        
-        customizationArray = sender.tag
     }
     
     @objc func dropDownButtonAction(sender : UIButton)
     {
         let customizationAlert = UIAlertController(title: "Customize", message: "Customize your material", preferredStyle: .alert)
         
-        for i in 0..<CustomizationAttNameArray.count
+        for i in 0..<customAttEnglishNameArray.count
         {
-            if let alertString = CustomizationAttNameArray[i] as? String
+            if let alertString = customAttEnglishNameArray[i] as? String
             {
                 customizationAlert.addAction(UIAlertAction(title: alertString.uppercased(), style: .default, handler: customizaionAlertAction(action:)))
             }
@@ -559,32 +396,53 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     func customizaionAlertAction(action : UIAlertAction)
     {
-        print("ALERT ADD ACTION", action.title!.uppercased())
+        dropDownButton.setTitle(action.title!, for: .normal)
         
-        selectedCustom = action.title!.lowercased()
+        selectedCustomString = (action.title?.lowercased())!
         
-        dropDownButton.setTitle(action.title!.uppercased(), for: .normal)
-        
-        for i in 0..<CustomizationAttNameArray.count
+        for i in 0..<customAttEnglishNameArray.count
         {
-            if let checkName = CustomizationAttNameArray[i] as? String
+            if let checkAtt = customAttEnglishNameArray[i] as? String
             {
-                if checkName.uppercased() == action.title!
+                if selectedCustomString == checkAtt
                 {
-                    print("WELCOME TO SAME", action.title!)
-                    serviceCall.API_Customization3Attr(AttributeId: i + 1, delegate: self)
+                    if let attId = customAttIdArray[i] as? Int
+                    {
+                        self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
+                        selectedCustomInt = attId
+                    }
                 }
             }
         }
     }
     
+    @objc func customizationButtonAction(sender : UIButton)
+    {
+        selectionImage1.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+        selectionImage1.image = UIImage(named: "selectionImage")
+        selectionImage1.tag = sender.tag
+        sender.addSubview(selectionImage1)
+        
+        selectedCustomIntArray["\(selectedCustomInt)"] = "\(sender.tag)"
+        
+        for i in 0..<subCustomAttEnglishNameArray.count
+        {
+            if let idInt = subCustomAttIdArray[i] as? Int
+            {
+                if selectedCustomIntArray["\(selectedCustomInt)"] == "\(idInt)"
+                {
+                    selectedCustomStringArray[selectedCustomString] = subCustomAttEnglishNameArray[i] as? String
+                }
+            }
+        }
+        
+        print("SELECTED OF ALL IN ID", selectedCustomIntArray)
+        print("SELECTED OF ALL IN STRING", selectedCustomStringArray)
+    }
+    
     @objc func customization3NextButtonAction(sender : UIButton)
     {
-        print("NEXT ACTION", CustomizationAttNameArray.count, customDict.count)
-        
-        print("SELECTED CUSTOM", customDict, selectedCustom, customDictValuesCount)
-        
-        for (keys, values) in customDict
+        for (keys, values) in selectedCustomStringArray
         {
             print("KEYS - \(keys), VALUES - \(values)")
             
@@ -596,18 +454,17 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             }
             else
             {
-                if CustomizationAttNameArray.count != customDictValuesCount
+                if customAttEnglishNameArray.count != customDictValuesCount
                 {
                     customDictValuesCount = customDictValuesCount + 1
                 }
             }
-        } 
+        }
         
-        print("EQUAL COUNT", CustomizationAttNameArray.count, customDictValuesCount)
-        print("STRING VALUES", customDictString)
-        if CustomizationAttNameArray.count == customDictValuesCount
+        if customAttEnglishNameArray.count == customDictValuesCount
         {
-            UserDefaults.standard.set(customDictString, forKey: "custom3")
+            UserDefaults.standard.set(selectedCustomStringArray, forKey: "custom3")
+            UserDefaults.standard.set(selectedCustomIntArray, forKey: "custom3Id")
             let measurement1Screen = Measurement1ViewController()
             self.navigationController?.pushViewController(measurement1Screen, animated: true)
         }
@@ -618,13 +475,13 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     }
 
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
