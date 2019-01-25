@@ -74,6 +74,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     let activeView = UIView()
     let activityIndicator = UIActivityIndicatorView()
+    
+    var otpId = 1
 
     override func viewDidLoad()
     {
@@ -310,7 +312,14 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         if responseMsg == "Success"
         {
             activeStop()
-            otpContents()
+            if otpId == 1
+            {
+                otpContents()
+            }
+            else
+            {
+                
+            }
             secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
         }
         else if responseMsg == "Failure"
@@ -628,6 +637,10 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         var alert = UIAlertController()
         
+//        otpContents()
+//        secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
+
+        
 //        server.API_LoginUser(CountryCode: "971", PhoneNo: "521346851", delegate: self)
         
         if mobileTextField.text == "1234567"
@@ -902,61 +915,16 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otpView.addSubview(cancelButton)
     }
     
-    @objc func textFieldDidChange(textField: UITextField){
-        
-        let text = textField.text
-        
-        print("ENTERED TEXTFIELD")
-        if (text?.utf16.count)! >= 1{
-            switch textField{
-            case otp1Letter:
-                otp2Letter.becomeFirstResponder()
-            case otp2Letter:
-                otp3Letter.becomeFirstResponder()
-            case otp3Letter:
-                otp4Letter.becomeFirstResponder()
-            case otp4Letter:
-                otp5Letter.becomeFirstResponder()
-            case otp5Letter:
-                otp6Letter.becomeFirstResponder()
-            case otp6Letter:
-                if otp6Letter.text?.count == 1
-                {
-                    doneButtonAction()
-                }
-                else
-                {
-                    
-                }
-            default:
-                break
-            }
-        }
-        else if (text?.utf16.count)! == 0
-        {
-            switch textField{
-            case otp6Letter:
-                otp5Letter.becomeFirstResponder()
-            case otp5Letter:
-                otp4Letter.becomeFirstResponder()
-            case otp4Letter:
-                otp3Letter.becomeFirstResponder()
-            case otp3Letter:
-                otp2Letter.becomeFirstResponder()
-            case otp2Letter:
-                otp1Letter.becomeFirstResponder()
-            default:
-                break
-            }
-        }
-    }
-    
     @objc func timerCall(timer : Timer)
     {
         secs = secs - 1
-        secButton.setTitle("\(secs) s", for: .normal)
         
-        if secs == 0
+        if secs >= 0
+        {
+            resendButton.isEnabled = false
+            secButton.setTitle("\(secs) s", for: .normal)
+        }
+        else
         {
             act.stopAnimating()
             secTimer.invalidate()
@@ -965,14 +933,11 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             resendButton.setTitleColor(UIColor.white, for: .normal)
             secButton.isEnabled = true
         }
-        else
-        {
-            resendButton.isEnabled = false
-        }
     }
     
     @objc func resendButtonAction(sender : UIButton)
     {
+        otpId = 2
         secs = 30
         act.startAnimating()
         secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
@@ -1051,15 +1016,57 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         blurView.removeFromSuperview()
     }
     
+    @objc func textFieldDidChange(textField: UITextField)
+    {
+        let text = textField.text
+        if (text?.utf16.count)! >= 1{
+            switch textField{
+            case otp1Letter:
+                otp2Letter.becomeFirstResponder()
+            case otp2Letter:
+                otp3Letter.becomeFirstResponder()
+            case otp3Letter:
+                otp4Letter.becomeFirstResponder()
+            case otp4Letter:
+                otp5Letter.becomeFirstResponder()
+            case otp5Letter:
+                otp6Letter.becomeFirstResponder()
+            case otp6Letter:
+                if otp6Letter.text?.count == 1
+                {
+                    doneButtonAction()
+                }
+                else
+                {
+                    
+                }
+            default:
+                break
+            }
+        }
+        else if (text?.utf16.count)! == 0
+        {
+            switch textField{
+            case otp6Letter:
+                otp5Letter.becomeFirstResponder()
+            case otp5Letter:
+                otp4Letter.becomeFirstResponder()
+            case otp4Letter:
+                otp3Letter.becomeFirstResponder()
+            case otp3Letter:
+                otp2Letter.becomeFirstResponder()
+            case otp2Letter:
+                otp1Letter.becomeFirstResponder()
+            default:
+                break
+            }
+        }
+
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
-        if textField == otp6Letter
-        {
-            
-        }
-        
-        disableKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.closeKeyboard(gesture:)))
-        self.view.addGestureRecognizer(disableKeyboard)
+
     }
     
     func textFieldShouldReturn(_ scoreText: UITextField) -> Bool
@@ -1080,9 +1087,58 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let  char = string.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
+        print("BUTTON OF PRESSED", isBackSpace)
+        
+        let text = textField.text
+        
+        if (text?.utf16.count)! >= 1{
+            switch textField{
+            case otp1Letter:
+                otp2Letter.becomeFirstResponder()
+            case otp2Letter:
+                otp3Letter.becomeFirstResponder()
+            case otp3Letter:
+                otp4Letter.becomeFirstResponder()
+            case otp4Letter:
+                otp5Letter.becomeFirstResponder()
+            case otp5Letter:
+                otp6Letter.becomeFirstResponder()
+            case otp6Letter:
+                if otp6Letter.text?.count == 1
+                {
+                    doneButtonAction()
+                }
+                else
+                {
+                    
+                }
+            default:
+                break
+            }
+        }
+
         
         if (isBackSpace == -92) {
             print("Backspace was pressed")
+            if (text?.utf16.count)! >= 1
+            {
+                switch textField{
+                case otp6Letter:
+                    otp6Letter.becomeFirstResponder()
+                case otp5Letter:
+                    otp5Letter.becomeFirstResponder()
+                case otp4Letter:
+                    otp4Letter.becomeFirstResponder()
+                case otp3Letter:
+                    otp3Letter.becomeFirstResponder()
+                case otp2Letter:
+                    otp2Letter.becomeFirstResponder()
+                case otp1Letter:
+                    otp1Letter.becomeFirstResponder()
+                default:
+                    break
+                }
+            }
         }
         return true
     }

@@ -135,8 +135,17 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     @objc func addMaterialNextButtonAction(sender : UIButton)
     {
-        let custom3Screen = Customization3ViewController()
-        self.navigationController?.pushViewController(custom3Screen, animated: true)
+        if imageArray.count == 0
+        {
+            let alert = UIAlertController(title: "Alert", message: "Please add a material image for tailor reference", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            let custom3Screen = Customization3ViewController()
+            self.navigationController?.pushViewController(custom3Screen, animated: true)
+        }
     }
     
     @objc func addMaterialButtonAction(sender : UIButton)

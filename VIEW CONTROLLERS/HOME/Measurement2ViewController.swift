@@ -355,7 +355,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func measurement2Contents()
     {
-        self.stopActivity()
         imageBackView.removeFromSuperview()
         
         let measurement1NavigationBar = UIView()
@@ -612,7 +611,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     }
                     getHeadLabel.textColor = UIColor.blue
                     getHeadLabel.textAlignment = .center
-                    getHeadLabel.font = headLabel.font.withSize(20)
+                    getHeadLabel.font = headLabel.font.withSize(15)
                     getHeadLabel.tag = ((0 * 1) + 200)
                     subView.addSubview(getHeadLabel)
                     
@@ -636,7 +635,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getNeckLabel.text = "0.0"
                     getNeckLabel.textColor = UIColor.blue
                     getNeckLabel.textAlignment = .center
-                    getNeckLabel.font = headLabel.font.withSize(20)
+                    getNeckLabel.font = headLabel.font.withSize(15)
                     getNeckLabel.tag = ((1 * 1) + 200)
                     subView.addSubview(getNeckLabel)
                     
@@ -660,7 +659,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getChestLabel.text = "0.0"
                     getChestLabel.textColor = UIColor.blue
                     getChestLabel.textAlignment = .center
-                    getChestLabel.font = headLabel.font.withSize(20)
+                    getChestLabel.font = headLabel.font.withSize(15)
                     getChestLabel.tag = ((2 * 1) + 200)
                     subView.addSubview(getChestLabel)
                     
@@ -684,7 +683,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getWaistLabel.text = "0.0"
                     getWaistLabel.textColor = UIColor.blue
                     getWaistLabel.textAlignment = .center
-                    getWaistLabel.font = headLabel.font.withSize(20)
+                    getWaistLabel.font = headLabel.font.withSize(15)
                     getWaistLabel.tag = ((3 * 1) + 200)
                     subView.addSubview(getWaistLabel)
                     
@@ -708,7 +707,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getThighLabel.text = "0.0"
                     getThighLabel.textColor = UIColor.blue
                     getThighLabel.textAlignment = .center
-                    getThighLabel.font = headLabel.font.withSize(20)
+                    getThighLabel.font = headLabel.font.withSize(15)
                     getThighLabel.tag = ((4 * 1) + 200)
                     subView.addSubview(getThighLabel)
                     
@@ -732,7 +731,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getKneeLabel.text = "0.0"
                     getKneeLabel.textColor = UIColor.blue
                     getKneeLabel.textAlignment = .center
-                    getKneeLabel.font = headLabel.font.withSize(20)
+                    getKneeLabel.font = headLabel.font.withSize(15)
                     getKneeLabel.tag = ((5 * 1) + 200)
                     subView.addSubview(getKneeLabel)
                     
@@ -756,7 +755,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getAnkleLabel.text = "0.0"
                     getAnkleLabel.textColor = UIColor.blue
                     getAnkleLabel.textAlignment = .center
-                    getAnkleLabel.font = headLabel.font.withSize(20)
+                    getAnkleLabel.font = headLabel.font.withSize(15)
                     getAnkleLabel.tag = ((6 * 1) + 200)
                     subView.addSubview(getAnkleLabel)
                 }
@@ -783,7 +782,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     gettotalheightLabel.text = "0.0"
                     gettotalheightLabel.textColor = UIColor.blue
                     gettotalheightLabel.textAlignment = .center
-                    gettotalheightLabel.font = gettotalheightLabel.font.withSize(20)
+                    gettotalheightLabel.font = gettotalheightLabel.font.withSize(15)
                     gettotalheightLabel.tag = ((7 * 1) + 200)
                     subView.addSubview(gettotalheightLabel)
 
@@ -807,7 +806,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getHipheightLabel.text = "0.0"
                     getHipheightLabel.textColor = UIColor.blue
                     getHipheightLabel.textAlignment = .center
-                    getHipheightLabel.font = getHipheightLabel.font.withSize(20)
+                    getHipheightLabel.font = getHipheightLabel.font.withSize(15)
                     getHipheightLabel.tag = ((8 * 1) + 200)
                     subView.addSubview(getHipheightLabel)
                     
@@ -831,7 +830,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getBottomheightLabel.text = "0.0"
                     getBottomheightLabel.textColor = UIColor.blue
                     getBottomheightLabel.textAlignment = .center
-                    getBottomheightLabel.font = getBottomheightLabel.font.withSize(20)
+                    getBottomheightLabel.font = getBottomheightLabel.font.withSize(15)
                     getBottomheightLabel.tag = ((9 * 1) + 200)
                     subView.addSubview(getBottomheightLabel)
                     
@@ -855,7 +854,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getKneeheightLabel.text = "0.0"
                     getKneeheightLabel.textColor = UIColor.blue
                     getKneeheightLabel.textAlignment = .center
-                    getKneeheightLabel.font = getKneeheightLabel.font.withSize(20)
+                    getKneeheightLabel.font = getKneeheightLabel.font.withSize(15)
                     getKneeheightLabel.tag = ((10 * 1) + 200)
                     subView.addSubview(getKneeheightLabel)
                 }
@@ -881,7 +880,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getShoulderLabel.text = "0.0"
                     getShoulderLabel.textColor = UIColor.blue
                     getShoulderLabel.textAlignment = .center
-                    getShoulderLabel.font = getShoulderLabel.font.withSize(20)
+                    getShoulderLabel.font = getShoulderLabel.font.withSize(15)
                     getShoulderLabel.tag = ((11 * 1) + 200)
                     subView.addSubview(getShoulderLabel)
                     
@@ -905,7 +904,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getSleeveLabel.text = "0.0"
                     getSleeveLabel.textColor = UIColor.blue
                     getSleeveLabel.textAlignment = .center
-                    getSleeveLabel.font = getSleeveLabel.font.withSize(20)
+                    getSleeveLabel.font = getSleeveLabel.font.withSize(15)
                     getSleeveLabel.tag = ((12 * 1) + 200)
                     subView.addSubview(getSleeveLabel)
                     
@@ -929,7 +928,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getBicepLabel.text = "0.0"
                     getBicepLabel.textColor = UIColor.blue
                     getBicepLabel.textAlignment = .center
-                    getBicepLabel.font = getBicepLabel.font.withSize(20)
+                    getBicepLabel.font = getBicepLabel.font.withSize(15)
                     getBicepLabel.tag = ((13 * 1) + 200)
                     subView.addSubview(getBicepLabel)
                     
@@ -953,7 +952,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getHipLabel.text = "0.0"
                     getHipLabel.textColor = UIColor.blue
                     getHipLabel.textAlignment = .center
-                    getHipLabel.font = getHipLabel.font.withSize(20)
+                    getHipLabel.font = getHipLabel.font.withSize(15)
                     getHipLabel.tag = ((14 * 1) + 200)
                     subView.addSubview(getHipLabel)
                     
@@ -977,7 +976,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getBackLabel.text = "0.0"
                     getBackLabel.textColor = UIColor.blue
                     getBackLabel.textAlignment = .center
-                    getBackLabel.font = getBackLabel.font.withSize(20)
+                    getBackLabel.font = getBackLabel.font.withSize(15)
                     getBackLabel.tag = ((15 * 1) + 200)
                     subView.addSubview(getBackLabel)
                 }
@@ -1003,7 +1002,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getHeightLabel.text = "0.0"
                     getHeightLabel.textColor = UIColor.blue
                     getHeightLabel.textAlignment = .center
-                    getHeightLabel.font = getHeightLabel.font.withSize(20)
+                    getHeightLabel.font = getHeightLabel.font.withSize(15)
                     getHeightLabel.tag = ((16 * 1) + 200)
                     subView.addSubview(getHeightLabel)
                     
@@ -1027,7 +1026,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getFullSleeveLabel.text = "0.0"
                     getFullSleeveLabel.textColor = UIColor.blue
                     getFullSleeveLabel.textAlignment = .center
-                    getFullSleeveLabel.font = getFullSleeveLabel.font.withSize(20)
+                    getFullSleeveLabel.font = getFullSleeveLabel.font.withSize(15)
                     getFullSleeveLabel.tag = ((17 * 1) + 200)
                     subView.addSubview(getFullSleeveLabel)
                     
@@ -1051,7 +1050,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getHandKneeLabel.text = "0.0"
                     getHandKneeLabel.textColor = UIColor.blue
                     getHandKneeLabel.textAlignment = .center
-                    getHandKneeLabel.font = getHandKneeLabel.font.withSize(20)
+                    getHandKneeLabel.font = getHandKneeLabel.font.withSize(15)
                     getHandKneeLabel.tag = ((18 * 1) + 200)
                     subView.addSubview(getHandKneeLabel)
                 }
@@ -1254,6 +1253,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         imageScrollView.contentSize = CGSize(width: imageScrollView.frame.size.width * 4,height: imageScrollView.frame.size.height)
         pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
+        self.stopActivity()
     }
     
     @objc func unitButtonAction(sender : UIButton)
@@ -1826,6 +1826,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsInputTextField.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: selectedPartsImageView.frame.maxY + (2 * y), width: (10 * x), height: (4 * y))
         partsInputTextField.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         partsInputTextField.placeholder = "0.0"
+        partsInputTextField.text = "0.0"
         partsInputTextField.textColor = UIColor.white
         partsInputTextField.textAlignment = .center
         partsInputTextField.font = UIFont(name: "Avenir-Heavy", size: 18)

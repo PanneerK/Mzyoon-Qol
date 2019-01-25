@@ -456,12 +456,12 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             tailorId = taiId
         }
         
-        if let custom3 = UserDefaults.standard.value(forKey: "custom3") as? [Int : Int]
+        if let custom3 = UserDefaults.standard.value(forKey: "custom3Id") as? [String : String]
         {
             for (keys, values) in custom3
             {
-                custom3KeyInt.append(keys)
-                custom3ValuesInt.append(values)
+                custom3KeyInt.append(Int(keys)!)
+                custom3ValuesInt.append(Int(values)!)
             }
         }
         print("MEAUREMENT VALUES", custom3KeyInt, custom3ValuesInt)

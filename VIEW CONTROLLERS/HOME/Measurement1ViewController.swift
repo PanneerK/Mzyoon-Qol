@@ -173,8 +173,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func measurement1Content()
     {
-        self.stopActivity()
-        
         let measurement1View = UIView()
         measurement1View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         measurement1View.backgroundColor = UIColor.white
@@ -293,6 +291,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             dummyImageView.frame = CGRect(x: 0, y: 0, width: comeButton.frame.width, height: comeButton.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
             comeButton.addSubview(dummyImageView)
+            
+            self.stopActivity()
         }
         
         let measurement1NextButton = UIButton()
