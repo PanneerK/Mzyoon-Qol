@@ -18,6 +18,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     
     let serviceCall = ServerAPI()
     
+    var viewController = String()
+    
     var FirstName = NSArray()
     var LastName = NSArray()
     var Id = NSArray()
@@ -278,8 +280,16 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
                 addressSelectButton.backgroundColor = UIColor.white
                 addressSelectButton.tag = Id[i] as! Int
-                addressSelectButton.addTarget(self, action: #selector(self.addressSelectButtonAction(sender:)), for: .touchUpInside)
                 addressScrollView.addSubview(addressSelectButton)
+                
+                if viewController == "reference"
+                {
+                    addressSelectButton.addTarget(self, action: #selector(self.addressSelectButtonAction(sender:)), for: .touchUpInside)
+                }
+                else
+                {
+                    
+                }
                 
                 y1 = addressSelectButton.frame.maxY + (2 * y)
                 
@@ -367,11 +377,11 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 if let defaultString = isDefault[i] as? Int
                 {
                     let defaultAddressImage = UIImageView()
-                    defaultAddressImage.frame = CGRect(x: addressSelectButton.frame.width - (15 * x), y: mobileLabel.frame.maxY + y, width: (2 * x), height: (2 * y))
+                    defaultAddressImage.frame = CGRect(x: addressSelectButton.frame.width - (15 * x), y: addressSelectButton.frame.height - (3 * y), width: (2 * x), height: (2 * y))
                     defaultAddressImage.image = UIImage(named: "defaultAddress")
                     
                     let defaultAddressLabel = UILabel()
-                    defaultAddressLabel.frame = CGRect(x: defaultAddressImage.frame.maxX, y: mobileLabel.frame.maxY + y, width: (12 * x), height: (2 * y))
+                    defaultAddressLabel.frame = CGRect(x: defaultAddressImage.frame.maxX, y: addressSelectButton.frame.height - (3 * y), width: (12 * x), height: (2 * y))
 //                    defaultAddressLabel.backgroundColor = UIColor.orange
                     defaultAddressLabel.text = "Default Address"
                     defaultAddressLabel.textColor = UIColor.black
@@ -379,7 +389,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                     defaultAddressLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
                     
                     let defaultSwitch = UISwitch()
-                    defaultSwitch.frame = CGRect(x: defaultAddressLabel.frame.maxX + x, y: mobileLabel.frame.maxY + y, width: (3 * x), height: (2 * y))
+                    defaultSwitch.frame = CGRect(x: defaultAddressLabel.frame.maxX + x, y: addressSelectButton.frame.height - (3 * y), width: (3 * x), height: (2 * y))
                     
                     if defaultString == 1
                     {
@@ -429,10 +439,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         let address2Screen = Address2ViewController()
         address2Screen.firstNameEnglishTextField.text = FirstName[sender.tag] as! String
         address2Screen.secondNameEnglishTextField.text = "L"
-//        address2Screen.areaNameTextField.text = LocationType[sender.tag] as! String
-//        address2Screen.floorTextField.text = Floor[sender.tag] as! String
-//        address2Screen.landMarkTextField.text = LandMark[sender.tag] as! String
-//        address2Screen.locationTypeTextField.text = LocationType[sender.tag] as! String
+        address2Screen.areaNameTextField.text = LocationType[sender.tag] as! String
+        address2Screen.floorTextField.text = Floor[sender.tag] as! String
+        address2Screen.landMarkTextField.text = LandMark[sender.tag] as! String
+        address2Screen.locationTypeTextField.text = LocationType[sender.tag] as! String
         address2Screen.mobileTextField.text = PhoneNo[sender.tag] as! String
         self.navigationController?.pushViewController(address2Screen, animated: true)
     }

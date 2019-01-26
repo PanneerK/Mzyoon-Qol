@@ -478,7 +478,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
-            courierDeliveryIcon.dowloadFromServer(url: apiurl!)
+            if apiurl != nil{
+                courierDeliveryIcon.dowloadFromServer(url: apiurl!)
+            }
         }
       }
        OrderTypeView.addSubview(courierDeliveryIcon)
@@ -518,7 +520,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: courierImageView.frame.width, height: courierImageView.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil{
+                dummyImageView.dowloadFromServer(url: apiurl!)
+            }
             courierImageView.addSubview(dummyImageView)
         }
       }
@@ -804,7 +808,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 
                 let dummyImageView = UIImageView()
                 dummyImageView.frame = CGRect(x: 0, y: 0, width: courierImageView.frame.width, height: TailorImageView.frame.height)
-                dummyImageView.dowloadFromServer(url: apiurl!)
+                if apiurl != nil{
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
                 courierImageView.addSubview(dummyImageView)
             }
         }

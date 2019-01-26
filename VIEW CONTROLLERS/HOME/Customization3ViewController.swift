@@ -227,7 +227,10 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: customedFrontButton.frame.width, height: customedFrontButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                dummyImageView.dowloadFromServer(url: apiurl!)
+            }
             customedFrontButton.addSubview(dummyImageView)
         }
         customedFrontButton.tag = 1
@@ -250,7 +253,10 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: customedBackButton.frame.width, height: customedBackButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                dummyImageView.dowloadFromServer(url: apiurl!)
+            }
             customedBackButton.addSubview(dummyImageView)
         }
         customedBackButton.tag = 0
@@ -327,7 +333,10 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
                 let apiurl = URL(string: api)
                 print("IMAGE OF DOWN", apiurl!)
-                buttonImage.dowloadFromServer(url: apiurl!)
+                if apiurl != nil
+                {
+                    buttonImage.dowloadFromServer(url: apiurl!)
+                }
             }
             buttonImage.tag = -1
             customizationButton.addSubview(buttonImage)
@@ -374,8 +383,10 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
-            
-            customedImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                customedImageView.dowloadFromServer(url: apiurl!)
+            }
         }
     }
     
@@ -404,7 +415,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             if let checkAtt = customAttEnglishNameArray[i] as? String
             {
-                if selectedCustomString == checkAtt
+                print("CHECK ATT", checkAtt, selectedCustomString, customAttIdArray[i])
+                if selectedCustomString == checkAtt.lowercased()
                 {
                     if let attId = customAttIdArray[i] as? Int
                     {

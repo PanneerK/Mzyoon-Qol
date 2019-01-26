@@ -270,7 +270,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         filterButton.setTitle("FILTER", for: .normal)
         filterButton.setTitleColor(UIColor.black, for: .normal)
         filterButton.tag = 1
-        filterButton.addTarget(self, action: #selector(self.featuresButtonAction(sender:)), for: .touchUpInside)
+//        filterButton.addTarget(self, action: #selector(self.featuresButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(filterButton)
         
         let downArrow1 = UIImageView()
@@ -349,8 +349,21 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             if let imageName = inputImageArray[i] as? String
             {
                 let api = "http://appsapi.mzyoon.com/images/DressTypes/\(imageName)"
+                print("API OF DRESS TYPE IMAGES", api)
                 let apiurl = URL(string: api)
-                dressTypeImageView.dowloadFromServer(url: apiurl!)
+                if apiurl != nil
+                {
+                    dressTypeImageView.dowloadFromServer(url: apiurl!)
+                }
+                
+                if i == inputImageArray.count - 1
+                {
+                    self.stopActivity()
+                }
+                else
+                {
+                    
+                }
             }
             //            dressTypeImageView.image = convertedDressImageArray[i]
             dressTypeButton.addSubview(dressTypeImageView)
@@ -364,8 +377,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
         dressTypeScrollView.contentSize.height = y1 + (20 * y)
-        
-        self.stopActivity()
     }
     
     
@@ -527,8 +538,19 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             print("DRESS TYPE OF SELECTED - \(sender.tag)", dressTypeArray[sender.tag])
             let dressSubScreen = DressSubTypeViewController()
             dressSubScreen.screenTag = sender.tag
-            dressSubScreen.headingTitle = dressTypeArray[sender.tag] as! String
+            
+            for i in 0..<dressIdArray.count
+            {
+                if let id = dressIdArray[i] as? Int
+                {
+                    if sender.tag == id
+                    {
+                        dressSubScreen.headingTitle = dressTypeArray[i] as! String
+                    }
+                }
+            }
             self.navigationController?.pushViewController(dressSubScreen, animated: true)
+
         }
         else
         {

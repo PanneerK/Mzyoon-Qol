@@ -68,6 +68,10 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var PageNumStr:String!
     var MethodName:String!
     
+    var destinationLocation = CLLocationCoordinate2D()
+    var rectanglePolyline = GMSPolyline()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -249,8 +253,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ErrorStr = Result
             DeviceError()
         }
-        
-       
     }
     
     
@@ -426,7 +428,10 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                 
                 let dummyImageView = UIImageView()
                 dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageButton.frame.width, height: tailorImageButton.frame.height)
-                dummyImageView.dowloadFromServer(url: apiurl!)
+                if apiurl != nil
+                {
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
                 dummyImageView.tag = -1
                 tailorImageButton.addSubview(dummyImageView)
             }
@@ -532,7 +537,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             locationButton.layer.borderWidth = 1
             locationButton.layer.borderColor = UIColor.lightGray.cgColor
             locationButton.setImage(UIImage(named: "locationMarker"), for: .normal)
-            locationButton.tag = i
+            locationButton.tag = IdArray[i] as! Int
             locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(locationButton)
             
@@ -551,6 +556,45 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     {
         listViewContents(isHidden: true)
         mapViewContents(isHidden: true)
+        
+        for i in 0..<IdArray.count
+        {
+            if let id = IdArray[i] as? Int
+            {
+                if sender.tag == id
+                {
+                    destinationLocation = CLLocationCoordinate2D(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
+                    directionViewContents(isHidden: false)
+                }
+            }
+        }
+    }
+    
+    func directionViewContents(isHidden : Bool)
+    {
+        mapView.clear()
+        mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
+        mapView.delegate = self
+        mapView.settings.myLocationButton = true
+        mapView.isMyLocationEnabled = true
+        view.addSubview(mapView)
+        
+        mapView.isHidden = isHidden
+        
+        let camera = GMSCameraPosition.camera(withLatitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, zoom: 17.0)
+        self.mapView.animate(to: camera)
+        
+        if isHidden != true
+        {
+            let marker = GMSMarker()
+            marker.position = destinationLocation
+            marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+            marker.tracksInfoWindowChanges = true
+            marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
+            marker.map = mapView
+            
+            drawPath(start: CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude), end: destinationLocation)
+        }
     }
     
     @objc func tailorSelectionButtonAction(sender : UIButton)
@@ -627,6 +671,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func mapViewContents(isHidden : Bool)
     {
+        mapView.clear()
         mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
         mapView.delegate = self
         mapView.settings.myLocationButton = true
@@ -862,6 +907,27 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         return headerView
     }
     
+    func drawPath(start : CLLocationCoordinate2D, end : CLLocationCoordinate2D)
+    {
+        let rectanglePath = GMSMutablePath()
+        
+        if (start.latitude != 0.0 || end.latitude != 0.0){
+            rectanglePath.add(start)
+            rectanglePath.add(end)
+            
+            /* show what you have drawn */
+            rectanglePolyline = GMSPolyline(path: rectanglePath)
+            rectanglePolyline.strokeColor = UIColor.blue
+            rectanglePolyline.strokeWidth = CGFloat(2)
+            rectanglePolyline.map = mapView
+            print("rectanglePath start ==>",start,end)
+        }
+        else
+        {
+            print("rectanglePath ENDS ==>",start,end)
+        }
+    }
+    
     func getPolylineRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D)
     {
         let config = URLSessionConfiguration.default
@@ -878,6 +944,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     if let json : [String:Any] = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any]{
                         
                         let routes = json["routes"] as? [Any]
+                        print("ROUTES", routes, json["routes"])
                         let overview_polyline = routes?[0] as?[String:Any]
                         let polyString = overview_polyline?["points"] as?String
                         

@@ -495,7 +495,10 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 let api = "http://appsapi.mzyoon.com/images/Pattern/\(imageName)"
                 let apiurl = URL(string: api)
                 print("PATTERN IMAGE API", apiurl!)
-                buttonImage.dowloadFromServer(url: apiurl!)
+                if apiurl != nil
+                {
+                    buttonImage.dowloadFromServer(url: apiurl!)
+                }
             }
             buttonImage.tag = -1
             patternButton.addSubview(buttonImage)

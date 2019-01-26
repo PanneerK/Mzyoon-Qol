@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     let email = UITextField()
     let dob = UITextField()
     let calendarButton = UIButton()
+    let genderHeadingLabel = UILabel()
     let genderButton = UIButton()
     let maleButton = UIButton()
     let genderLabel = UILabel()
@@ -33,7 +34,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     let cancelButton = UIButton()
     let saveButton = UIButton()
-    var GenderStr : String!
+    var GenderStr = String()
     
     // Error PAram...
     var DeviceNum:String!
@@ -310,6 +311,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 userImage.dowloadFromServer(url: apiurl!)
             }
         }
+        userImage.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleBottomMargin.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue | UIView.AutoresizingMask.flexibleRightMargin.rawValue | UIView.AutoresizingMask.flexibleLeftMargin.rawValue | UIView.AutoresizingMask.flexibleTopMargin.rawValue | UIView.AutoresizingMask.flexibleWidth.rawValue)
+        userImage.contentMode = .scaleToFill
         backgroundImage.addSubview(userImage)
         
         cameraButton.isEnabled = false
@@ -401,7 +404,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (4 * y), width: view.frame.width - (12 * x), height: (2 * y))
         if getDOB.isEmpty == true
         {
-            dob.placeholder = "yyyy/mm/dd"
+            dob.placeholder = "mm/dd/yyyy"
         }
         else
         {
@@ -422,8 +425,23 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         dobUnderline.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         view.addSubview(dobUnderline)
         
+        genderHeadingLabel.frame = CGRect(x: (3 * x), y: dobUnderline.frame.maxY + (2 * y), width: (7 * x), height: (2 * y))
+        genderHeadingLabel.text = "Gender : "
+        genderHeadingLabel.textColor = UIColor.black
+        genderHeadingLabel.textAlignment = .left
+        view.addSubview(genderHeadingLabel)
+        
+        if getGender.isEmpty == true || getGender == ""
+        {
+            genderHeadingLabel.isHidden = true
+        }
+        else
+        {
+            genderHeadingLabel.isHidden = false
+        }
+        
         genderButton.isEnabled = false
-        genderButton.frame = CGRect(x: (3 * x), y: dobUnderline.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (4 * y))
+        genderButton.frame = CGRect(x: (3 * x), y: genderHeadingLabel.frame.maxY + y, width: view.frame.width - (6 * x), height: (4 * y))
 //        genderButton.text = "Gender"
 //        genderButton.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
 //        genderButton.textAlignment = .left
@@ -563,7 +581,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     }
     
     func pickUpDate(_ textField : UITextField){
-        
         // DatePicker
         self.datePick = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 216))
         self.datePick.backgroundColor = UIColor.white
@@ -593,10 +610,11 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         let dateFormatter1 = DateFormatter()
         dateFormatter1.dateStyle = .medium
         dateFormatter1.timeStyle = .none
-        dateFormatter1.dateFormat = "yyyy/MM/dd"
+        dateFormatter1.dateFormat = "MM/dd/yyyy"
         dob.text = dateFormatter1.string(from: datePick.date)
         dob.resignFirstResponder()
     }
+    
     @objc func cancelClick() {
         dob.resignFirstResponder()
     }
@@ -699,23 +717,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     @objc func saveButtonAction(sender : UIButton)
     {
-        userName.isUserInteractionEnabled = false
-        mobileNumber.isUserInteractionEnabled = false
-        email.isUserInteractionEnabled = false
-        dob.isUserInteractionEnabled = false
-        
-        femaleButton.isEnabled = false
-        maleButton.isEnabled = false
-        
-        cameraButton.isEnabled = false
-        genderButton.isEnabled = false
-        
-        updateButton.isHidden = false
-        
-        sender.removeFromSuperview()
-        cancelButton.removeFromSuperview()
-        
-        
         var userId = String()
         
         
@@ -731,9 +732,46 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         let DobStr = dob.text
         let ModifyStr = "user"
         
-        print("MMMMM", GenderStr!)
+        if GenderStr.isEmpty != true || GenderStr != ""
+        {
+            if (EmailID?.contains("@"))! && (EmailID?.contains("."))!
+            {
+                userName.isUserInteractionEnabled = false
+                mobileNumber.isUserInteractionEnabled = false
+                email.isUserInteractionEnabled = false
+                dob.isUserInteractionEnabled = false
                 
-        serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr!, ModifiedBy: ModifyStr, delegate: self)
+                femaleButton.isEnabled = false
+                maleButton.isEnabled = false
+                
+                cameraButton.isEnabled = false
+                genderButton.isEnabled = false
+                
+                updateButton.isHidden = false
+                
+                sender.removeFromSuperview()
+                cancelButton.removeFromSuperview()
+                
+                
+                serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
+                
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Invalid email id", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Alert", message: "Please choose the gender", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        
+                
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -754,8 +792,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         genderLabel.text = genders[indexPath.row]
         print("WELCOME TO DID SELECT")
-        GenderStr = genderLabel.text
+        GenderStr = genderLabel.text!
         genderTableView.removeFromSuperview()
+        genderHeadingLabel.isHidden = false
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -775,6 +814,25 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         }
         
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        var returnParameter = Bool()
+        
+        if textField == userName
+        {
+            let cs = NSCharacterSet(charactersIn: ACCEPTABLE_CHARACTERS).inverted
+            let filtered = string.components(separatedBy: cs).joined(separator: "")
+            
+            returnParameter = (string == filtered)
+        }
+        else
+        {
+            returnParameter = true  
+        }
+        print("return parameter", returnParameter)
+        return returnParameter
     }
     
     

@@ -221,7 +221,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: manualButton.frame.width, height: manualButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                dummyImageView.dowloadFromServer(url: apiurl!)
+            }
             manualButton.addSubview(dummyImageView)
         }
         
@@ -262,7 +265,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: goButton.frame.width, height: goButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                dummyImageView.dowloadFromServer(url: apiurl!)
+            }
             goButton.addSubview(dummyImageView)
         }
         
@@ -289,7 +295,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: comeButton.frame.width, height: comeButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                dummyImageView.dowloadFromServer(url: apiurl!)
+            }
             comeButton.addSubview(dummyImageView)
             
             self.stopActivity()

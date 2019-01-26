@@ -269,7 +269,10 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
           //  let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
             let apiurl = URL(string: api)
             print("Image Of Dress", apiurl!)
-            DressImageView.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                DressImageView.dowloadFromServer(url: apiurl!)
+            }
         }
         DressDetView.addSubview(DressImageView)
         

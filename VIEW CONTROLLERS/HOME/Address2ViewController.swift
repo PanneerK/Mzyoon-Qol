@@ -33,6 +33,9 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     let mobileTextField = UITextField()
     let shippingNotesTextField = UITextField()
     
+    var latitude = CLLocationDegrees()
+    var longitude = CLLocationDegrees()
+    
     let flagImageView = UIImageView()
     let mobileCountryCodeLabel = UILabel()
     
@@ -53,6 +56,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     //COUNTRY CODE API PARAMETER
     var countryCodeArray = NSArray()
     var countryNameArray = NSArray()
+    var countryIdArray = NSArray()
     var countryFlagArray = NSArray()
     var individualCountryFlagArray = [UIImage]()
     
@@ -76,17 +80,13 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         fetchingCurrentLocation()
         
+        let coords = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        reverseGeocodeCoordinate(coords)
+        
         serviceCall.API_CountryCode(delegate: self)
         
         view.backgroundColor = UIColor.white
-        
-        let split1 = addressString.split(separator: ",")
-        
-        for i in 0..<split1.count
-        {
-            splittedAddress.append(String(split1[i]))
-        }
-        print("SPLIT", splittedAddress)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -121,6 +121,33 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             
             currentLocation = locationManager.location
             print("Current Loc:",currentLocation.coordinate)
+        }
+    }
+    
+    private func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D)
+    {
+        
+        // 1
+        let geocoder = GMSGeocoder()
+        
+        // 2
+        geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
+            guard let address = response?.firstResult(), let lines = address.lines else {
+                return
+            }
+            
+            // 3
+            print("GET CURRENT ADDRESS", lines.joined(separator: "\n"))
+            
+            self.addressString = lines.joined(separator: "\n")
+            
+            //  self.addressLabel.text = lines.joined(separator: "\n")
+            
+            // 4
+            UIView.animate(withDuration: 0.25)
+            {
+                self.view.layoutIfNeeded()
+            }
         }
     }
     
@@ -209,6 +236,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     func apiSuccessResponseAlertOkAction(action : UIAlertAction)
     {
         let addressScreen = AddressViewController()
+        addressScreen.viewController = "address2"
         self.navigationController?.pushViewController(addressScreen, animated: true)
     }
     
@@ -220,7 +248,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         {
             let result = countryCodes.object(forKey: "Result") as! NSArray
             
+            print("COUNTRY LIST IN ADDRESS", result)
+            
             countryNameArray = result.value(forKey: "CountryName") as! NSArray
+            
+            countryIdArray = result.value(forKey: "Id") as! NSArray
             
             countryCodeArray = result.value(forKey: "PhoneCode") as! NSArray
             
@@ -463,11 +495,18 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(countryIcon)
 
         countryButton.frame = CGRect(x: countryIcon.frame.maxX + x, y: underline2.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        countryButton.setTitle("Country", for: .normal)
         countryButton.setTitleColor(UIColor.black, for: .normal)
         countryButton.contentHorizontalAlignment = .left
         countryButton.addTarget(self, action: #selector(self.countryButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(countryButton)
+        
+        if let country = countryNameArray[0] as? String
+        {
+            let convertedString = country.split(separator: "(")
+            countryButton.setTitle("\(convertedString[0])", for: .normal)
+
+            serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[0])", delegate: self)
+        }
         
         let countryDropDownIcon = UIImageView()
         countryDropDownIcon.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline2.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
@@ -481,7 +520,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let stateIcon = UIImageView()
         stateIcon.frame = CGRect(x: x, y: underline3.frame.maxY + (3 * y), width: (2 * y), height: (2 * y))
-        stateIcon.image = UIImage(named: "Country")
+        stateIcon.image = UIImage(named: "state")
         addressScrollView.addSubview(stateIcon)
         
         stateButton.frame = CGRect(x: stateIcon.frame.maxX + x, y: underline3.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
@@ -632,7 +671,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(mobileCountryCodeButton)
 
         flagImageView.frame = CGRect(x: (x / 2), y: (y / 2), width: (2.5 * x), height: (mobileCountryCodeButton.frame.height - y))
-        if let imageName = countryFlagArray[0] as? String
+        
+        /*if let imageName = countryFlagArray[0] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
             let apiurl = URL(string: api)
@@ -645,15 +685,48 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             {
                 flagImageView.image = UIImage(named: "empty")
             }
-        }
+        }*/
+        
         mobileCountryCodeButton.addSubview(flagImageView)
         
         mobileCountryCodeLabel.frame = CGRect(x: flagImageView.frame.maxX + (x / 2), y: 0, width: (4 * x), height: mobileCountryCodeButton.frame.height)
-        mobileCountryCodeLabel.text = countryCodeArray[0] as! String
         mobileCountryCodeLabel.textColor = UIColor.black
         mobileCountryCodeLabel.textAlignment = .left
         mobileCountryCodeLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
         mobileCountryCodeButton.addSubview(mobileCountryCodeLabel)
+        
+        if let countryCode = UserDefaults.standard.value(forKey: "countryCode") as? String
+        {
+            print("COUNTRY CODE IN ADDRESS FIELD", countryCode)
+            
+            for i in 0..<countryCodeArray.count
+            {
+                if let id = countryCodeArray[i] as? String
+                {
+                    if id == countryCode
+                    {
+                        print("ID OF DE", id, countryCode)
+                        
+                        if let imageName = countryFlagArray[i] as? String
+                        {
+                            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+                            let apiurl = URL(string: api)
+                            
+                            if apiurl != nil
+                            {
+                                flagImageView.dowloadFromServer(url: apiurl!)
+                            }
+                            else
+                            {
+                                flagImageView.image = UIImage(named: "empty")
+                            }
+                        }
+                        
+                        mobileCountryCodeLabel.text = (countryCodeArray[i] as! String)
+                    }
+                }
+            }
+        }
         
         let downArrowImageView = UIImageView()
         downArrowImageView.frame = CGRect(x: mobileCountryCodeButton.frame.width - 20, y: ((mobileCountryCodeButton.frame.height - 15) / 2), width: 15, height: 15)
@@ -865,7 +938,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 
                 if action.title == "\(convertedString[0])"
                 {
-                    let int = i + 1
+                    let int = countryCodeArray[i] as! Int
                     serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
                 }
             }

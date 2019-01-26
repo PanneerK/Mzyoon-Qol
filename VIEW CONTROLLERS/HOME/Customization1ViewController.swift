@@ -325,7 +325,10 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 let api = "http://appsapi.mzyoon.com/images/Seasons/\(imageName)"
                 let apiurl = URL(string: api)
                 print("SEASONAL API", apiurl!)
-                buttonImage.dowloadFromServer(url: apiurl!)
+                if apiurl != nil
+                {
+                    buttonImage.dowloadFromServer(url: apiurl!)
+                }
             }
             buttonImage.tag = -1
             seasonalButton.addSubview(buttonImage)
@@ -383,11 +386,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             {
                 let api = "http://appsapi.mzyoon.com/images/PlaceOfIndustry/\(imageName)"
                 let apiurl = URL(string: api)
-                if apiurl == nil
-                {
-                    
-                }
-                else
+                if apiurl != nil
                 {
                     buttonImage.dowloadFromServer(url: apiurl!)
                 }

@@ -101,8 +101,16 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         view.addSubview(addMaterialLabel)
         
-        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width, height: (8.25 * y))
+        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width - (8 * x), height: (8.25 * y))
         view.addSubview(addReferenceScrolView)
+        
+        addMaterialButton.frame = CGRect(x: view.frame.width - (7.25 * x), y: addMaterialLabel.frame.maxY + y, width: (6.25 * x), height: (6.25 * y))
+        addMaterialButton.backgroundColor = UIColor.blue
+        addMaterialButton.setTitle("+", for: .normal)
+        addMaterialButton.setTitleColor(UIColor.white, for: .normal)
+        addMaterialButton.tag = -1
+        addMaterialButton.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(addMaterialButton)
         
         let addMaterialNextButton = UIButton()
         addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
@@ -114,12 +122,11 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialNextButton.addTarget(self, action: #selector(self.addMaterialNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addMaterialNextButton)
         
-        addMaterial(xPosition: x)
+//        addMaterial(xPosition: x)
     }
     
     func addMaterial(xPosition : CGFloat)
     {
-        addMaterialButton.frame = CGRect(x: xPosition, y: y, width: (6.25 * x), height: (6.25 * y))
         addMaterialButton.backgroundColor = UIColor.blue
         addMaterialButton.setTitle("+", for: .normal)
         addMaterialButton.setTitleColor(UIColor.white, for: .normal)
@@ -251,8 +258,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
                 x1 = selectMaterialImageButton.frame.maxX + x
             }
             
-            addMaterialButton.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
-            addReferenceScrolView.contentSize.width = addMaterialButton.frame.maxX + (3 * x)
+            addReferenceScrolView.contentSize.width = x1
             self.addReferenceImage.image = imageArray[imageArray.count - 1]
         }
         else
@@ -260,11 +266,10 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             notifyLabel.isHidden = false
             
             self.addReferenceImage.image = nil
-            addMaterialButton.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
-            addReferenceScrolView.contentSize.width = addMaterialButton.frame.maxX + (3 * x)
+            addReferenceScrolView.contentSize.width = x1
         }
         
-        addMaterial(xPosition: x1)
+//        addMaterial(xPosition: x1)
     }
     
     @objc func selectedMaterialButtonAction(sender : UIButton)

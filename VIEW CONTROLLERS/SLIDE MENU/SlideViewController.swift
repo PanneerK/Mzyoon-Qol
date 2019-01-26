@@ -16,6 +16,8 @@ class SlideViewController: UIViewController
     
     var slideViewWidth = CGFloat()
     
+    var window: UIWindow?
+
     override func viewDidLoad()
     {
         print("MENU WIDTH", self.view.frame.width)
@@ -83,7 +85,7 @@ class SlideViewController: UIViewController
             slideMenusButton.frame = CGRect(x: 0, y: y1, width: slideViewWidth, height: (4 * y))
             slideMenusButton.tag = i
             
-            if i == 0 || i == 1
+            if i == 0 || i == 1 || i == 9
             {
                 slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
             }
@@ -118,11 +120,17 @@ class SlideViewController: UIViewController
         else if sender.tag == 1
         {
             let addressScreen = AddressViewController()
+            addressScreen.viewController = "slide"
             self.navigationController?.pushViewController(addressScreen, animated: true)
         }
         else if sender.tag == 9
         {
-            self.navigationController?.popViewController(animated: true)
+            let navigateScreen = LoginViewController()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let navigationScreen = UINavigationController(rootViewController: navigateScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
         }
         else
         {

@@ -209,7 +209,19 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                 let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
                 print("SUB TYPE IMAGES", api)
                 let apiurl = URL(string: api)
-                dressTypeImageView.dowloadFromServer(url: apiurl!)
+                if apiurl != nil
+                {
+                    dressTypeImageView.dowloadFromServer(url: apiurl!)
+                }
+                
+                if i == getImageArray.count - 1
+                {
+                    self.stopActivity()
+                }
+                else
+                {
+                    
+                }
             }
             dressTypeButton.addSubview(dressTypeImageView)
             
@@ -221,10 +233,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             dressTypeNameLabel.textAlignment = .center
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
-        
         dressSubTypeScrollView.contentSize.height = y1 + (20 * y)
-        
-        self.stopActivity()
     }
     
     @objc func textFieldDidChange(textField: UITextField){

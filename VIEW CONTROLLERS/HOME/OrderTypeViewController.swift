@@ -199,7 +199,10 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         {
             let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
-            directDeliveryIcon.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                directDeliveryIcon.dowloadFromServer(url: apiurl!)
+            }
         }
         view.addSubview(directDeliveryIcon)
         
@@ -227,7 +230,10 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: directDeliveryButton.frame.width, height: directDeliveryButton.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
-            directDeliveryButton.addSubview(dummyImageView)
+            if apiurl != nil
+            {
+                directDeliveryButton.addSubview(dummyImageView)
+            }
         }
 //        directDeliveryButton.setImage(convertedOrderBodyImageArray[0], for: .normal)
         directDeliveryButton.tag = orderTypeIDArray[0] as! Int
@@ -241,7 +247,10 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         {
             let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
-            courierDeliveryIcon.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                courierDeliveryIcon.dowloadFromServer(url: apiurl!)
+            }
         }
         view.addSubview(courierDeliveryIcon)
         
@@ -281,7 +290,10 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: courierDeliveryButton.frame.width, height: courierDeliveryButton.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
-            courierDeliveryButton.addSubview(dummyImageView)
+            if apiurl != nil
+            {
+                courierDeliveryButton.addSubview(dummyImageView)
+            }
         }
 //        courierDeliveryButton.setImage(convertedOrderBodyImageArray[1], for: .normal)
         courierDeliveryButton.tag = orderTypeIDArray[1] as! Int
@@ -295,7 +307,10 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         {
             let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
-            companyIcon.dowloadFromServer(url: apiurl!)
+            if apiurl != nil
+            {
+                companyIcon.dowloadFromServer(url: apiurl!)
+            }
         }
         view.addSubview(companyIcon)
         
@@ -324,14 +339,17 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: companyButton.frame.width, height: companyButton.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
-            companyButton.addSubview(dummyImageView)
+            if apiurl != nil
+            {
+                companyButton.addSubview(dummyImageView)
+            }
+            
+            self.stopActivity()
         }
 //        companyButton.setImage(convertedOrderBodyImageArray[2], for: .normal)
         companyButton.tag = orderTypeIDArray[2] as! Int
         companyButton.addTarget(self, action: #selector(self.companyButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(companyButton)
-        
-        self.stopActivity()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

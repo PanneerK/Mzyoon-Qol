@@ -217,7 +217,10 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
                 
                 let dummyImageView = UIImageView()
                 dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
-                dummyImageView.dowloadFromServer(url: apiurl!)
+                if apiurl != nil
+                {
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
                 dummyImageView.tag = -1
                 tailorImageView.addSubview(dummyImageView)
             }

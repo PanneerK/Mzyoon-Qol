@@ -210,7 +210,19 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             {
                 let api = "http://appsapi.mzyoon.com/images/\(imageName)"
                 let apiurl = URL(string: api)
-                buttonImage.dowloadFromServer(url: apiurl!)
+                if apiurl != nil
+                {
+                    buttonImage.dowloadFromServer(url: apiurl!)
+                }
+                
+                if i == genderImageArray.count - 1
+                {
+                    self.stopActivity()
+                }
+                else
+                {
+                    
+                }
             }
             genderButton.addSubview(buttonImage)
             
@@ -223,8 +235,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
             genderButton.addSubview(buttonTitle)
         }
-        
-        self.stopActivity()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -237,6 +247,13 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         if sender.tag == 1
         {
             UserDefaults.standard.set("Male", forKey: "gender")
+            let dressTypeScreen = DressTypeViewController()
+            dressTypeScreen.tag = sender.tag
+            self.navigationController?.pushViewController(dressTypeScreen, animated: true)
+        }
+        else if sender.tag == 2
+        {
+            UserDefaults.standard.set("Female", forKey: "gender")
             let dressTypeScreen = DressTypeViewController()
             dressTypeScreen.tag = sender.tag
             self.navigationController?.pushViewController(dressTypeScreen, animated: true)

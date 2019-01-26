@@ -394,6 +394,10 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             let result = userType.object(forKey: "Result") as! String
             print("Result", result)
             
+            UserDefaults.standard.set(mobileCountryCodeLabel.text!, forKey: "countryCode")
+            
+            print("WELCOME OF CODE", UserDefaults.standard.value(forKey: "countryCode")!)
+            
             if result == "Existing User"
             {
                 let homeScreen = HomeViewController()
