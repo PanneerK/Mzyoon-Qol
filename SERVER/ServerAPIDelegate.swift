@@ -91,4 +91,9 @@ import Foundation
     @objc optional func API_CALLBACK_GetAppointmentList(getAppointmentList : NSDictionary)
     @objc optional func API_CALLBACK_ApproveRejectAppointmentList(getTotalAppointmentList : NSDictionary)
     
+  // 29-1-2019
+    @objc optional func API_CALLBACK_GetRatings(getRatings : NSDictionary)
+    @objc optional func API_CALLBACK_InsertRating(insertRating : NSDictionary)
+    @objc optional func API_CALLBACK_ListOfPendOrders(PendingOrdersList : NSDictionary)
+    
 }

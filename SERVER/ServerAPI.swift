@@ -1757,4 +1757,104 @@ class ServerAPI : NSObject
         }
     }
     
+    
+    // Get Ratings..
+    func API_GetRatings(TailorId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Reviews and Ratings Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetRating?TailorId=\(TailorId)", arguments: [baseURL])
+            
+            print("Get Ratings List: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("resultDict", self.resultDict)
+                    delegate.API_CALLBACK_GetRatings!(getRatings: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 32, errorMessage: "Get Ratings Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    // Insert Ratings...
+    func API_InsertRatings(OrderId : Int, CategoryId : Int, Review : String, Rating : Int, TailorId : Int, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Reviews And Ratings Page")
+            
+            let parameters = ["OrderId" : OrderId, "CategoryId" : CategoryId, "Review" : Review, "Rating" : Rating, "TailorId" : TailorId] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/InsertRating", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_InsertRating!(insertRating: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 33, errorMessage: "Insert Ratings Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    //  List Of Orders(Pending)..
+    func API_ListOfOrdersPending(BuyerId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - List Of Orders Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/ListOfOrderPending?BuyerId=\(BuyerId)", arguments: [baseURL])
+            
+            print("List of Orders(Pending): ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("resultDict", self.resultDict)
+                    
+                    delegate.API_CALLBACK_ListOfPendOrders!(PendingOrdersList: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 34, errorMessage: "List Of Orders Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
 }
