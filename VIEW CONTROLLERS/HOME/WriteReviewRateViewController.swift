@@ -83,7 +83,7 @@ class WriteReviewRateViewController: CommonViewController,UITextFieldDelegate
    
      //RatingsTypeLabel
     let RatingsTypeLabel = UILabel()
-    RatingsTypeLabel.frame = CGRect(x: 0, y: 0, width: RatingTypeView.frame.width / 2, height: (2.5 * y))
+    RatingsTypeLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (2.5 * y))
     RatingsTypeLabel.textColor = UIColor.black
     // RatingsTypeLabel.backgroundColor = UIColor.lightGray
     RatingsTypeLabel.text = RatingTypeArray[i] as? String
@@ -105,7 +105,7 @@ class WriteReviewRateViewController: CommonViewController,UITextFieldDelegate
     // Ratings Buttons
     
     let CustomerRatingImageView = UIImageView()
-    CustomerRatingImageView.frame = CGRect(x: ColonLabel.frame.maxX, y: 0, width: (12 * x), height:(1.5 * y))
+    CustomerRatingImageView.frame = CGRect(x: ColonLabel.frame.maxX, y: 0, width: (12 * x), height:(2 * y))
     CustomerRatingImageView.image = UIImage(named: "5")
     RatingTypeView.addSubview(CustomerRatingImageView)
     

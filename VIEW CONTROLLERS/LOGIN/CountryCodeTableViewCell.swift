@@ -13,7 +13,6 @@ class CountryCodeTableViewCell: UITableViewCell
     var flagImage : UIImageView!
     var countryName:UILabel!
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

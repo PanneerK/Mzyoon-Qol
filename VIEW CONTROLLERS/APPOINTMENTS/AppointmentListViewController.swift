@@ -8,12 +8,17 @@
 
 import UIKit
 
-class AppointmentListViewController: CommonViewController
+class AppointmentListViewController: CommonViewController,ServerAPIDelegate
 {
+   
+     let serviceCall = ServerAPI()
     
     let AppointmentListNavigationBar = UIView()
     let AppointmentListScrollView = UIScrollView()
-
+    
+   //  let AppointmentViewButton = UIButton()
+     let OR_IdLabel = UILabel()
+    
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -22,15 +27,97 @@ class AppointmentListViewController: CommonViewController
     var PageNumStr:String!
     var MethodName:String!
     
+    var BuyerId:Int!
+    var SelectedOrderID:Int!
+    
+    var ApprovedTailorIdArray = NSArray()
+    var CreatedOnArray = NSArray()
+    var IdArray = NSArray()
+    var NameInEnglishArray = NSArray()
+    var ShopNameInEnglishArray = NSArray()
+    var TailorNameInEnglishArray = NSArray()
+    var ImageArray = NSArray()
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        AppointmentListContent()
+     
+    if(BuyerId != nil)
+    {
+        UserDefaults.standard.set(BuyerId, forKey: "userId")
+        print("Buyer ID:",BuyerId)
+        self.serviceCall.API_GetAppointmentList(BuyerId:BuyerId, delegate:self)
+    }
+    else
+    {
+        self.serviceCall.API_GetAppointmentList(BuyerId:1, delegate:self)
+    }
+       // AppointmentListContent()
     }
     
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("ERROR IN Appointment List Page:", errorMessage)
+        
+    }
+    func API_CALLBACK_GetAppointmentList(getAppointmentList: NSDictionary)
+    {
+        let ResponseMsg = getAppointmentList.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let result = getAppointmentList.object(forKey: "Result") as! NSArray
+            print(result)
+     
+          if(result.count>0)
+          {
+            ApprovedTailorIdArray = result.value(forKey: "ApprovedTailorId") as! NSArray
+            print("ApprovedTailorId:",ApprovedTailorIdArray)
+            
+            CreatedOnArray = result.value(forKey: "CreatedOn") as! NSArray
+            print("CreatedOn:",CreatedOnArray)
+            
+            IdArray = result.value(forKey: "Id") as! NSArray
+            print("Id:",IdArray)
+            
+            ImageArray = result.value(forKey: "Image") as! NSArray
+            print("Image:",ImageArray)
+            
+            NameInEnglishArray = result.value(forKey: "NameInEnglish") as! NSArray
+            print("NameInEnglish:",NameInEnglishArray)
+            
+            ShopNameInEnglishArray = result.value(forKey: "ShopNameInEnglish") as! NSArray
+            print("ShopNameInEnglish:",ShopNameInEnglishArray)
+            
+            TailorNameInEnglishArray = result.value(forKey: "TailorNameInEnglish") as! NSArray
+            print("TailorNameInEnglish:",TailorNameInEnglishArray)
+            
+            self.AppointmentListContent()
+         }
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getAppointmentList.object(forKey: "Result") as! String
+            
+            ErrorStr = Result
+            DeviceError()
+        }
+        
+    }
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "Customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "AppointmentListViewController"
+        MethodName = "GetAppoinmentList"
+        
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+    }
     func AppointmentListContent()
     {
         self.stopActivity()
@@ -82,7 +169,7 @@ class AppointmentListViewController: CommonViewController
         // RequestListScrollView.backgroundColor = UIColor.gray
         backDrop.addSubview(AppointmentListScrollView)
         
-        AppointmentListScrollView.contentSize.height = (12 * y * CGFloat(5))
+        AppointmentListScrollView.contentSize.height = (12 * y * CGFloat(IdArray.count))
         
         for views in AppointmentListScrollView.subviews
         {
@@ -91,10 +178,10 @@ class AppointmentListViewController: CommonViewController
         
         var y1:CGFloat = 0
         
-        for i in 0..<5
+        for i in 0..<IdArray.count
         {
             //
-            let AppointmentViewButton = UIButton()
+             let AppointmentViewButton = UIButton()
             AppointmentViewButton.frame = CGRect(x: 0, y: y1, width: AppointmentListScrollView.frame.width, height: (10 * y))
             AppointmentViewButton.backgroundColor = UIColor.white
             AppointmentListScrollView.addSubview(AppointmentViewButton)
@@ -105,10 +192,10 @@ class AppointmentListViewController: CommonViewController
             DressImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             DressImageView.layer.borderWidth = 1.0
             DressImageView.layer.borderColor = UIColor.lightGray.cgColor
-            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
+            // DressImageView.setImage(UIImage(named: "men"), for: .normal)
             
-          /*
-            if let imageName = ProductImageArray[i] as? String
+          
+            if let imageName = ImageArray[i] as? String
             {
                 // let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
                 let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
@@ -116,13 +203,12 @@ class AppointmentListViewController: CommonViewController
                 let apiurl = URL(string: api)
                 
                 let dummyImageView = UIImageView()
-                dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
                 dummyImageView.dowloadFromServer(url: apiurl!)
                 dummyImageView.tag = -1
                 DressImageView.addSubview(dummyImageView)
             }
-            */
-            
+        
             AppointmentViewButton.addSubview(DressImageView)
             
             //
@@ -142,7 +228,7 @@ class AppointmentListViewController: CommonViewController
             
             let OR_DateLabel = UILabel()
             OR_DateLabel.frame = CGRect(x: O_DateLabel.frame.maxX - x, y: 0, width: AppointmentViewButton.frame.width / 2, height: (2 * y))
-            OR_DateLabel.text = "17 Dec 2018"
+            OR_DateLabel.text = CreatedOnArray[i] as? String
             OR_DateLabel.textColor = UIColor.black
             OR_DateLabel.textAlignment = .left
             OR_DateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -164,12 +250,9 @@ class AppointmentListViewController: CommonViewController
             
             let OR_IdLabel = UILabel()
             OR_IdLabel.frame = CGRect(x: O_IdLabel.frame.maxX - x, y: O_DateLabel.frame.maxY, width: AppointmentViewButton.frame.width / 2.5, height: (2 * y))
-            /*
-             let orderNum : Int = OrderIdArray[i] as! Int
-             orderIdNumLabel.text =  "\(orderNum)"
-             orderIdNumLabel.tag = OrderIdArray[i] as! Int
-             */
-            OR_IdLabel.text =  "002564789"
+            let orderNum : Int = IdArray[i] as! Int
+            OR_IdLabel.text = "\(orderNum)"
+            OR_IdLabel.tag = IdArray[i] as! Int
             OR_IdLabel.textColor = UIColor.black
             OR_IdLabel.textAlignment = .left
             OR_IdLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -192,7 +275,7 @@ class AppointmentListViewController: CommonViewController
             
             let TR_NameLabel = UILabel()
             TR_NameLabel.frame = CGRect(x: T_NameLabel.frame.maxX - x, y: OR_IdLabel.frame.maxY, width: AppointmentViewButton.frame.width / 2.5, height: (2 * y))
-            TR_NameLabel.text =  "Abdullah"
+            TR_NameLabel.text =  TailorNameInEnglishArray[i] as? String
             TR_NameLabel.textColor = UIColor.black
             TR_NameLabel.textAlignment = .left
             TR_NameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -215,7 +298,7 @@ class AppointmentListViewController: CommonViewController
             
              let SH_NameLabel = UILabel()
             SH_NameLabel.frame = CGRect(x: S_NameLabel.frame.maxX - x, y: T_NameLabel.frame.maxY, width: AppointmentViewButton.frame.width / 2.5, height: (2 * y))
-            SH_NameLabel.text =  "Golden Stiching"
+            SH_NameLabel.text =  ShopNameInEnglishArray[i] as? String
             SH_NameLabel.textColor = UIColor.black
             SH_NameLabel.textAlignment = .left
             SH_NameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -238,7 +321,7 @@ class AppointmentListViewController: CommonViewController
             
             let PR_NameLabel = UILabel()
             PR_NameLabel.frame = CGRect(x: P_NameLabel.frame.maxX - x, y: S_NameLabel.frame.maxY, width: AppointmentViewButton.frame.width / 2.5, height: (2 * y))
-            PR_NameLabel.text =  "One Button Slim Fit"
+            PR_NameLabel.text =  NameInEnglishArray[i] as? String
             PR_NameLabel.textColor = UIColor.black
             PR_NameLabel.textAlignment = .left
             PR_NameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -256,10 +339,10 @@ class AppointmentListViewController: CommonViewController
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
-        //print("Appointment Page..")
+        print("Tag Id:",OR_IdLabel.tag)
         
         let AppointmentScreen = AppointmentViewController()
-       // QuotationListScreen.OrderId = orderIdNumLabel.tag
+        AppointmentScreen.OrderID = OR_IdLabel.tag
         self.navigationController?.pushViewController(AppointmentScreen, animated: true)
         
     }

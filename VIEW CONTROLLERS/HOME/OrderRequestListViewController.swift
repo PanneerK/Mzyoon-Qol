@@ -16,6 +16,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     let RequestListNavigationBar = UIView()
     let RequestListScrollView = UIScrollView()
     
+    // let RequestViewButton = UIButton()
+    
     let orderIdNumLabel = UILabel()
     
     // Error PAram...
@@ -177,7 +179,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         
         for i in 0..<OrderIdArray.count
         {
-            let RequestViewButton = UIButton()
+             let RequestViewButton = UIButton()
             RequestViewButton.frame = CGRect(x: 0, y: y1, width: RequestListScrollView.frame.width, height: (8 * y))
             RequestViewButton.backgroundColor = UIColor.white
             RequestListScrollView.addSubview(RequestViewButton)

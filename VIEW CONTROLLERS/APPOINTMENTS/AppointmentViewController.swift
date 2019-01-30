@@ -101,7 +101,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
           // self.serviceCall.API_GetAppointmentMeasurement(OrderId: 4, delegate: self)
       }
         
-       TimeSlotArray = ["8.00 A.M  to  9.00 A.M","9.00 A.M  to  10.00 A.M","10.00 A.M  to  11.00 A.M","11.00 A.M  to  12.00 P.M","12.00 P.M  to  1.00 P.M","2.00 P.M  to  3.00 P.M","3.00 P.M  to  4.00 P.M","4.00 P.M  to  5.00 P.M","5.00 P.M  to  6.00 P.M","6.00 P.M  to  7.00 P.M","7.00 P.M  to  8.00 P.M"]
+       TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
         
     }
     func DeviceError() 

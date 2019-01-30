@@ -353,13 +353,13 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             
             let result = loginResult.object(forKey: "Result") as! Int
-            let UserId = loginResult.object(forKey: "UserId") as! String
+            let UserId = loginResult.object(forKey: "UserId") as! Int
             
             UserDefaults.standard.set(UserId, forKey: "userId")
                 
             if result != 2 || result != 1
             {
-                serviceCall.API_IsProfileUserType(UserType: "Customer", UserId: Int(UserId)!, delegate: self)
+                serviceCall.API_IsProfileUserType(UserType: "Customer", UserId: Int(UserId), delegate: self)
             }
             else
             {
