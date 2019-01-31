@@ -8,11 +8,22 @@
 
 import UIKit
 
-class WriteReviewRateViewController: CommonViewController,UITextFieldDelegate
+class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
 {
-   let ReviewNavigationBar = UIView()
-   var RatingTypeArray = NSArray()
+    let serviceCall = ServerAPI()
+    
+    let ReviewNavigationBar = UIView()
+    var RatingTypeArray = NSArray()
     var Review_TF = UITextField()
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
     
     override func viewDidLoad()
     {
@@ -21,7 +32,62 @@ class WriteReviewRateViewController: CommonViewController,UITextFieldDelegate
         // Do any additional setup after loading the view.
         RatingTypeArray = ["ON TIME SERVICE","STICHING QUALITY","CUSTOMER SERVICE"]
         
+       
         writeReviewContent()
+    }
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("Write Reviews Error:",errorMessage)
+    }
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            
+            
+        }
+    }
+    func API_CALLBACK_InsertRating(insertRating: NSDictionary)
+    {
+        let ResponseMsg = insertRating.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = insertRating.object(forKey: "Result") as! NSDictionary
+            
+            print("RAting Result :",Result)
+            
+          //  let HomeScreen = HomeViewController()
+          //  self.navigationController?.pushViewController(HomeScreen, animated: true)
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = insertRating.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "InsertRating"
+            ErrorStr = Result
+            DeviceError()
+        }
+        
+        
+    }
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "WriteReviewsViewController"
+        // MethodName = "GetRating"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
    func writeReviewContent()
@@ -175,7 +241,8 @@ class WriteReviewRateViewController: CommonViewController,UITextFieldDelegate
     
   @objc func SubmitButtonAction(sender : UIButton)
   {
-      let HomeScreen = HomeViewController()
-      self.navigationController?.pushViewController(HomeScreen, animated: true)
+    let reviewStr : String = self.Review_TF.text!
+     self.serviceCall.API_InsertRatings(OrderId: 1, CategoryId: 1, Review: reviewStr, Rating: 3, TailorId: 1, delegate: self)
+    
   }
 }
