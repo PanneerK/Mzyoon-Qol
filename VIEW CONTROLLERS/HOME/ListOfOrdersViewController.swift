@@ -31,12 +31,21 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+    // Pending Arrays..
     var PendImageArray = NSArray()
     var PendOrderDateArray = NSArray()
     var PendOrderIdArray = NSArray()
     var PendProdNameArray = NSArray()
     var PendShopNameEngArray = NSArray()
     var PendTailorNameEngArray = NSArray()
+    
+    // Delivered Arrays..
+    var DelivImageArray = NSArray()
+    var DelivOrderDateArray = NSArray()
+    var DelivOrderIdArray = NSArray()
+    var DelivProdNameArray = NSArray()
+    var DelivShopNameEngArray = NSArray()
+    var DelivTailorNameEngArray = NSArray()
     
     override func viewDidLoad()
     {
@@ -238,6 +247,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         
         var y1:CGFloat = 0
         
+    if(PendOrderIdArray.count > 0)
+     {
         for i in 0..<PendOrderIdArray.count
         {
             let PendingViewButton = UIButton()
@@ -387,7 +398,15 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
            PendingViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
             y1 = PendingViewButton.frame.maxY + y
+         }
         }
+      else
+      {
+        let alert = UIAlertController(title: "Alert", message: "No Orders Placed", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+
+      }
     }
     
     func DeliveredViewContents(isHidden : Bool)
@@ -414,7 +433,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         // tailorListScrollView.backgroundColor = UIColor.gray
         DeliveredViewBackDrop.addSubview(DeliveredScrollView)
         
-        DeliveredScrollView.contentSize.height = (12 * y * CGFloat(0))
+        DeliveredScrollView.contentSize.height = (12 * y * CGFloat(DelivOrderIdArray.count))
         
         for views in DeliveredScrollView.subviews
         {
@@ -423,7 +442,9 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         
         var y2:CGFloat = 0
         
-        for i in 0..<0
+    if(DelivOrderIdArray.count > 0)
+    {
+        for i in 0..<DelivOrderIdArray.count
         {
             let DeliveredViewButton = UIButton()
             DeliveredViewButton.frame = CGRect(x: 0, y: y2, width: DeliveredScrollView.frame.width, height: (10 * y))
@@ -573,8 +594,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             y2 = DeliveredViewButton.frame.maxY + y
         }
-      
+      }
+    else
+    {
+        let alert = UIAlertController(title: "Alert", message: "No Orders Delivered", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
+  }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
