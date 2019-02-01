@@ -7,4 +7,5 @@ target 'Mzyoon' do
   pod 'SideMenu'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'Cosmos', '~> 18.0'
 end

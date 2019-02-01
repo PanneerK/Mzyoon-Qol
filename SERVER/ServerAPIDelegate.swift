@@ -96,4 +96,8 @@ import Foundation
     @objc optional func API_CALLBACK_InsertRating(insertRating : NSDictionary)
     @objc optional func API_CALLBACK_ListOfPendOrders(PendingOrdersList : NSDictionary)
     
+  //31-1-2019
+    @objc optional func API_CALLBACK_GetOrderDetails(getOrderDetails : NSDictionary)
+    @objc optional func API_CALLBACK_GetTrackingDetails(getTrackingDetails : NSDictionary)
+    
 }

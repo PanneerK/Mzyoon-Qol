@@ -1857,4 +1857,72 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
+    //  ORder Details..
+    func API_GetOrderDetails(OrderId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - List Of Orders Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetOrderDetails?OrderId=\(OrderId)", arguments: [baseURL])
+            
+            print("Order Details: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("resultDict", self.resultDict)
+                    
+                    delegate.API_CALLBACK_GetOrderDetails!(getOrderDetails: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 35, errorMessage: "Order Details Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    //  Tracking Details..
+    func API_GetTrackingDetails(OrderId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - List Of Orders Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetTrackingDetails?OrderId=\(OrderId)", arguments: [baseURL])
+            
+            print("Tracking Details: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("resultDict", self.resultDict)
+                    
+                    delegate.API_CALLBACK_GetTrackingDetails!(getTrackingDetails: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 36, errorMessage: "Tracking Details Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
 }

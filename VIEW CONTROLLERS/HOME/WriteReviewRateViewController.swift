@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Cosmos
 
 class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
 {
@@ -14,7 +15,14 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     let ReviewNavigationBar = UIView()
     var RatingTypeArray = NSArray()
-    var Review_TF = UITextField()
+    let Review_TF = UITextField()
+    
+    var reviewStr:String!
+    var RatingNum:Int!
+    var OrderID:Int!
+    var CategoryID:Int!
+    var TailorID:Int!
+    
     
     // Error PAram...
     var DeviceNum:String!
@@ -32,8 +40,10 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
         // Do any additional setup after loading the view.
         RatingTypeArray = ["ON TIME SERVICE","STICHING QUALITY","CUSTOMER SERVICE"]
         
-       
         writeReviewContent()
+        
+        
+        
     }
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
@@ -153,6 +163,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     RatingsTypeLabel.textColor = UIColor.black
     // RatingsTypeLabel.backgroundColor = UIColor.lightGray
     RatingsTypeLabel.text = RatingTypeArray[i] as? String
+    
     RatingsTypeLabel.textAlignment = .center
     RatingsTypeLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
     RatingsTypeLabel.adjustsFontSizeToFitWidth = true
@@ -169,11 +180,36 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     RatingTypeView.addSubview(ColonLabel)
     
     // Ratings Buttons
-    
+   
+    /*
     let CustomerRatingImageView = UIImageView()
     CustomerRatingImageView.frame = CGRect(x: ColonLabel.frame.maxX, y: 0, width: (12 * x), height:(2 * y))
     CustomerRatingImageView.image = UIImage(named: "5")
     RatingTypeView.addSubview(CustomerRatingImageView)
+   */
+    
+   // Ratings....
+    
+     let customerRatingView = CosmosView()
+    customerRatingView.frame = CGRect(x: ColonLabel.frame.maxX, y: y/2, width: (12 * x), height:(2.5 * y))
+    //customerRatingView.settings.updateOnTouch = false
+    customerRatingView.settings.fillMode = .half
+    customerRatingView.settings.starSize = 20
+   // customerRatingView.settings.starMargin = 5
+    customerRatingView.settings.filledColor = UIColor.orange
+    customerRatingView.settings.emptyBorderColor = UIColor.orange
+    customerRatingView.settings.filledBorderColor = UIColor.orange
+    customerRatingView.settings.filledImage = UIImage(named: "GoldStarFull")?.withRenderingMode(.alwaysOriginal)
+     customerRatingView.settings.emptyImage = UIImage(named: "GoldStarEmpty")?.withRenderingMode(.alwaysOriginal)
+    
+    RatingTypeView.addSubview(customerRatingView)
+    
+    
+    customerRatingView.didTouchCosmos = { rating in
+        print("rated :", "\(rating)")
+        
+        self.RatingNum = Int(rating)
+    }
     
       y1 = RatingTypeView.frame.maxY + y
     }
@@ -194,7 +230,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     view.addSubview(ReviewUnderline)
     
     // REviewsTF..
-     //let Review_TF = UITextField()
+     let Review_TF = UITextField()
     Review_TF.frame = CGRect(x: (3 * x), y: ReviewUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (10 * y))
     Review_TF.backgroundColor = UIColor.white
     Review_TF.placeholder = "      Write a review..   "
@@ -212,7 +248,6 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     Review_TF.returnKeyType = .done
     Review_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
     Review_TF.delegate = self
-    
     view.addSubview(Review_TF)
     
     
@@ -226,7 +261,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     SubmitButton.layer.cornerRadius = 15
     SubmitButton.addTarget(self, action: #selector(self.SubmitButtonAction(sender:)), for: .touchUpInside)
     
-    view.addSubview(SubmitButton)
+  view.addSubview(SubmitButton)
    }
     
   @objc func otpBackButtonAction(sender : UIButton)
@@ -241,8 +276,11 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
   @objc func SubmitButtonAction(sender : UIButton)
   {
-    let reviewStr : String = self.Review_TF.text!
-     self.serviceCall.API_InsertRatings(OrderId: 1, CategoryId: 1, Review: reviewStr, Rating: 3, TailorId: 1, delegate: self)
+    
+    print("Review:",reviewStr)
+    print("Rating:",RatingNum)
+    
+    self.serviceCall.API_InsertRatings(OrderId:1, CategoryId:1, Review:reviewStr, Rating:RatingNum, TailorId:1, delegate: self)
     
   }
 }

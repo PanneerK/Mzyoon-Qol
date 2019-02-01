@@ -389,24 +389,25 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         userImageView.layer.borderColor = UIColor.black.cgColor
         userImageView.layer.cornerRadius = userImageView.frame.height/2
         userImageView.clipsToBounds = true
-        userImageView.image = UIImage(named: "TailorName")
+       // userImageView.image = UIImage(named: "TailorName")
         userImageView.layer.borderColor = UIColor.lightGray.cgColor
         
       /*
         if let imageName = ImageArray[i] as? String
         {
             // let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
-            let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
+            let api = "http://192.168.0.21/TailorAPI/Images/BuyerImages/buyer.jpg"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
+            dummyImageView.frame = CGRect(x: 0, y: 0, width: userImageView.frame.width, height: userImageView.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
             dummyImageView.tag = -1
-            DressImageView.addSubview(dummyImageView)
+            userImageView.addSubview(dummyImageView)
         }
       */
+        
         ReviewsView.addSubview(userImageView)
         
       
@@ -462,7 +463,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         let Review_LBL = UILabel()
         Review_LBL.frame = CGRect(x: userImageView.frame.maxX + x, y: RatingDate_LBL.frame.maxY, width: ReviewsView.frame.width - (8 * x), height: (7 * y))
         Review_LBL.text = CustomerReviewArray[i] as? String
-        Review_LBL.backgroundColor = UIColor.lightGray
+       // Review_LBL.backgroundColor = UIColor.lightGray
         Review_LBL.textColor = UIColor.black
         Review_LBL.textAlignment = .left
         Review_LBL.lineBreakMode = .byWordWrapping

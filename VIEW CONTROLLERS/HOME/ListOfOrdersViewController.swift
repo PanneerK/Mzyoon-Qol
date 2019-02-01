@@ -8,9 +8,10 @@
 
 import UIKit
 
-class ListOfOrdersViewController: CommonViewController
+class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
 {
-
+    let serviceCall = ServerAPI()
+    
     let DeliveredButton = UIButton()
     let PendingButton = UIButton()
     
@@ -22,6 +23,20 @@ class ListOfOrdersViewController: CommonViewController
     let DeliveredViewBackDrop = UIView()
     let PendingViewBackDrop = UIView()
     
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
+    var PendImageArray = NSArray()
+    var PendOrderDateArray = NSArray()
+    var PendOrderIdArray = NSArray()
+    var PendProdNameArray = NSArray()
+    var PendShopNameEngArray = NSArray()
+    var PendTailorNameEngArray = NSArray()
     
     override func viewDidLoad()
     {
@@ -29,26 +44,27 @@ class ListOfOrdersViewController: CommonViewController
 
         // Do any additional setup after loading the view.
         
-//         self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+      //  self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 2)
-
+ 
+      //  ListOfOrdersContent()
         
-        ListOfOrdersContent()
+        self.serviceCall.API_ListOfOrdersPending(BuyerId: 1, delegate: self)
     }
     
 
- /*
+ 
     func DeviceError()
     {
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
         // ErrorStr = "Default Error"
-        PageNumStr = "QuotationListViewController"
+        PageNumStr = "ListOfOrdersViewController"
         //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
-        self.ServiceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
@@ -67,53 +83,47 @@ class ListOfOrdersViewController: CommonViewController
         print("Quotation List : ", errorMessage)
     }
     
-    func API_CALLBACK_GetQuotationList(quotationList: NSDictionary)
+    func API_CALLBACK_ListOfPendOrders(PendingOrdersList: NSDictionary)
     {
-        let ResponseMsg = quotationList.object(forKey: "ResponseMsg") as! String
+        let ResponseMsg = PendingOrdersList.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
-            let Result = quotationList.object(forKey: "Result") as! NSDictionary
+            let Result = PendingOrdersList.object(forKey: "Result") as! NSArray
             print("Result:", Result)
             
-            let QuotationList = Result.object(forKey: "QuotationList") as! NSArray
-            // print("QuotationList:",QuotationList)
+            PendImageArray = Result.value(forKey: "Image") as! NSArray
+             print("PendImageArray:",PendImageArray)
             
-            OrderIdArray = QuotationList.value(forKey: "OrderId") as! NSArray
-            //  print("OrderIdArray", OrderIdArray)
+            PendOrderDateArray = Result.value(forKey: "OrderDate") as! NSArray
+            print("PendOrderDateArray", PendOrderDateArray)
             
-            IdArray = QuotationList.value(forKey: "Id") as! NSArray
-            // print("IdArray", IdArray)
+            PendOrderIdArray = Result.value(forKey: "OrderId") as! NSArray
+            print("PendOrderIdArray", PendOrderIdArray)
             
-            TailorNameArray = QuotationList.value(forKey: "TailorNameInEnglish") as! NSArray
-            // print("TailorNameArray", TailorNameArray)
+            PendProdNameArray = Result.value(forKey: "Product_Name") as! NSArray
+            print("PendProdNameArray", PendProdNameArray)
             
-            ShopImageArray = QuotationList.value(forKey: "ShopOwnerImageURL") as! NSArray
-            //  print("ShopImageArray ", ShopImageArray)
+            PendShopNameEngArray = Result.value(forKey: "ShopNameInEnglish") as! NSArray
+            print("PendShopNameEngArray ", PendShopNameEngArray)
             
-            ShopNameArray = QuotationList.value(forKey: "ShopNameInEnglish") as! NSArray
-            // print("ShopNameArray", ShopNameArray)
-            
-            StichTimeArray = QuotationList.value(forKey: "StichingTime") as! NSArray
-            //print("StichTimeArray", StichTimeArray)
-            
-            TotalAmountArray = QuotationList.value(forKey: "TotalAmount") as! NSArray
-            // print("TotalAmountArray", TotalAmountArray)
-            
-            self.quotationListContent()
+            PendTailorNameEngArray = Result.value(forKey: "TailorNameInEnglish") as! NSArray
+            print("PendTailorNameEngArray", PendTailorNameEngArray)
+           
+             ListOfOrdersContent()
             
         }
         else if ResponseMsg == "Failure"
         {
-            let Result = quotationList.object(forKey: "Result") as! String
+            let Result = PendingOrdersList.object(forKey: "Result") as! String
             print("Result", Result)
             
-            MethodName = "GetQuotationList"
+            MethodName = "ListOfOrderPending"
             ErrorStr = Result
             DeviceError()
         }
       }
-   */
+   
     
     
     func ListOfOrdersContent()
@@ -219,7 +229,7 @@ class ListOfOrdersViewController: CommonViewController
        // PendingScrollView.backgroundColor = UIColor.gray
         PendingViewBackDrop.addSubview(PendingScrollView)
         
-        PendingScrollView.contentSize.height = (12 * y * CGFloat(3))
+        PendingScrollView.contentSize.height = (12 * y * CGFloat(PendOrderIdArray.count))
         
         for views in PendingScrollView.subviews
         {
@@ -228,7 +238,7 @@ class ListOfOrdersViewController: CommonViewController
         
         var y1:CGFloat = 0
         
-        for i in 0..<3
+        for i in 0..<PendOrderIdArray.count
         {
             let PendingViewButton = UIButton()
             PendingViewButton.frame = CGRect(x: 0, y: y1, width: PendingScrollView.frame.width, height: (10 * y))
@@ -242,11 +252,11 @@ class ListOfOrdersViewController: CommonViewController
             tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
-            /*
-             if let imageName = ShopImageArray[i] as? String
+            
+             if let imageName = PendImageArray[i] as? String
              {
              // let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
-             let api = "http://192.168.0.21/TailorAPI/Images/TailorImages/\(imageName)"
+             let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
              print("SMALL ICON", api)
              let apiurl = URL(string: api)
              
@@ -256,7 +266,6 @@ class ListOfOrdersViewController: CommonViewController
              dummyImageView.tag = -1
              tailorImageView.addSubview(dummyImageView)
              }
-             */
             
             PendingViewButton.addSubview(tailorImageView)
             
@@ -276,7 +285,8 @@ class ListOfOrdersViewController: CommonViewController
             
             let tailorName = UILabel()
             tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: 0, width: PendingViewButton.frame.width / 2, height: (2 * y))
-            tailorName.text = "00000"
+            let orderNum:Int = PendOrderIdArray[i] as! Int
+            tailorName.text = "\(orderNum)"
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -298,7 +308,7 @@ class ListOfOrdersViewController: CommonViewController
             
             let shopName = UILabel()
             shopName.frame = CGRect(x: shopLabel.frame.maxX - x, y: nameLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
-            shopName.text =  "Sha"
+            shopName.text =  PendTailorNameEngArray[i] as? String
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -321,7 +331,7 @@ class ListOfOrdersViewController: CommonViewController
             
             let ordersCountLabel = UILabel()
             ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX - x, y: shopLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
-            ordersCountLabel.text =  "Golden Works"
+            ordersCountLabel.text =  PendShopNameEngArray[i] as? String
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -344,7 +354,7 @@ class ListOfOrdersViewController: CommonViewController
             
             let ProductNameLabel = UILabel()
             ProductNameLabel.frame = CGRect(x: ProductLabel.frame.maxX - x, y: ordersLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
-            ProductNameLabel.text =  "Slim Fit"
+            ProductNameLabel.text = PendProdNameArray[i] as? String
             ProductNameLabel.textColor = UIColor.black
             ProductNameLabel.textAlignment = .left
             ProductNameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -367,14 +377,14 @@ class ListOfOrdersViewController: CommonViewController
             
             let OrderDatesLabel = UILabel()
             OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX - x, y: ProductLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
-            OrderDatesLabel.text =  "28-10-2018"
+            OrderDatesLabel.text =  PendOrderDateArray[i] as? String
             OrderDatesLabel.textColor = UIColor.black
             OrderDatesLabel.textAlignment = .left
             OrderDatesLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             OrderDatesLabel.adjustsFontSizeToFitWidth = true
             PendingViewButton.addSubview(OrderDatesLabel)
             
-          //  RequestViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
+           PendingViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
             y1 = PendingViewButton.frame.maxY + y
         }
@@ -404,7 +414,7 @@ class ListOfOrdersViewController: CommonViewController
         // tailorListScrollView.backgroundColor = UIColor.gray
         DeliveredViewBackDrop.addSubview(DeliveredScrollView)
         
-        DeliveredScrollView.contentSize.height = (12 * y * CGFloat(6))
+        DeliveredScrollView.contentSize.height = (12 * y * CGFloat(0))
         
         for views in DeliveredScrollView.subviews
         {
@@ -413,7 +423,7 @@ class ListOfOrdersViewController: CommonViewController
         
         var y2:CGFloat = 0
         
-        for i in 0..<6
+        for i in 0..<0
         {
             let DeliveredViewButton = UIButton()
             DeliveredViewButton.frame = CGRect(x: 0, y: y2, width: DeliveredScrollView.frame.width, height: (10 * y))
@@ -559,10 +569,11 @@ class ListOfOrdersViewController: CommonViewController
             OrderDatesLabel.adjustsFontSizeToFitWidth = true
             DeliveredViewButton.addSubview(OrderDatesLabel)
             
-            DeliveredViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
+          //  DeliveredViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
             y2 = DeliveredViewButton.frame.maxY + y
         }
+      
     }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
