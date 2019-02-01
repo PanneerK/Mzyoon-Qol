@@ -8,9 +8,38 @@
 
 import UIKit
 
-class OrderDetailsViewController: CommonViewController
+class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
 {
+    let ServiceCall = ServerAPI()
 
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
+    //BuyerAddress Array..
+    var Area = NSArray()
+    var Country_Name = NSArray()
+    var FirstName = NSArray()
+    var Floor = NSArray()
+    var PhoneNo = NSArray()
+    var StateName = NSArray()
+    
+    //OrderDetails Array..
+    var Image = NSArray()
+    var OrderId = NSArray()
+    var Product_Name = NSArray()
+    var qty = NSArray()
+    
+    // ProductPrice Array..
+     var Appoinment = NSArray()
+     var Price = NSArray()
+     var Tax = NSArray()
+     var Total = NSArray()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -19,10 +48,114 @@ class OrderDetailsViewController: CommonViewController
 //        self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 2)
   
+        self.ServiceCall.API_GetOrderDetails(OrderId: 1, delegate: self)
         
-        orderDetailsContent()
+        //orderDetailsContent()
     }
-    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("Order Details :", errorNumber)
+    }
+    func API_CALLBACK_GetOrderDetails(getOrderDetails: NSDictionary)
+    {
+        let ResponseMsg = getOrderDetails.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = getOrderDetails.object(forKey: "Result") as! NSDictionary
+           //print("Result", Result)
+            
+            let BuyerAddress = Result.value(forKey: "BuyerAddress") as! NSArray
+            // print("BuyerAddress:", BuyerAddress)
+            
+            Area = BuyerAddress.value(forKey: "Area") as! NSArray
+            print("Area:",Area)
+            
+            Country_Name = BuyerAddress.value(forKey: "Country_Name") as! NSArray
+            print("Country_Name:",Country_Name)
+            
+            FirstName = BuyerAddress.value(forKey: "FirstName") as! NSArray
+            print("FirstName:",FirstName)
+            
+            Floor = BuyerAddress.value(forKey: "Floor") as! NSArray
+            print("Floor:",Floor)
+            
+            PhoneNo = BuyerAddress.value(forKey: "PhoneNo") as! NSArray
+            print("PhoneNo:",PhoneNo)
+            
+            StateName = BuyerAddress.value(forKey: "StateName") as! NSArray
+            print("StateName:",StateName)
+            
+            
+            let OrderDetail = Result.value(forKey: "OrderDetail") as! NSArray
+            // print("OrderDetail:", OrderDetail)
+            
+            Image = OrderDetail.value(forKey: "Image") as! NSArray
+            print("Image:",Image)
+            
+            OrderId = OrderDetail.value(forKey: "OrderId") as! NSArray
+            print("OrderId:",OrderId)
+            
+            Product_Name = OrderDetail.value(forKey: "Product_Name") as! NSArray
+            print("Product_Name:",Product_Name)
+            
+            qty = OrderDetail.value(forKey: "qty") as! NSArray
+            print("qty:",qty)
+            
+            
+            let ProductPrice = Result.value(forKey: "ProductPrice") as! NSArray
+            //print("ProductPrice:", ProductPrice)
+            
+            Appoinment = ProductPrice.value(forKey: "Appoinment") as! NSArray
+            print("Appoinment:", Appoinment)
+            
+            Price = ProductPrice.value(forKey: "Price") as! NSArray
+            print("Price:", Price)
+            
+            Tax = ProductPrice.value(forKey: "Tax") as! NSArray
+            print("Tax:", Tax)
+            
+            Total = ProductPrice.value(forKey: "Total") as! NSArray
+            print("Total:", Total)
+            
+            
+            orderDetailsContent()
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getOrderDetails.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetOrderDetails"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "OrderDetailsViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.ServiceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        
+    }
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+        }
+    }
     func orderDetailsContent()
     {
         self.stopActivity()
@@ -74,7 +207,8 @@ class OrderDetailsViewController: CommonViewController
         orderIdNumLabel.frame = CGRect(x: orderIdLabel.frame.maxX, y: orderIdView.frame.minY, width: (15 * x), height: (2 * x))
        // orderIdNumLabel.backgroundColor = UIColor.gray
         orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        orderIdNumLabel.text = "#60123456"
+        let orderIdNum : Int = OrderId[0] as! Int
+        orderIdNumLabel.text =  "\(orderIdNum)"
         orderIdNumLabel.font = UIFont(name: "Avenir Next", size: 16)
          orderIdNumLabel.textColor = UIColor.black
         orderIdView.addSubview(orderIdNumLabel)
@@ -100,7 +234,7 @@ class OrderDetailsViewController: CommonViewController
         // PaymentInfo View..
         let PaymentInfoView = UIView()
         PaymentInfoView.frame = CGRect(x: (3 * x), y: orderIdView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (42 * y))
-        PaymentInfoView.backgroundColor = UIColor.lightGray
+        PaymentInfoView.backgroundColor = UIColor.groupTableViewBackground
         OrderDetailsScrollView.addSubview(PaymentInfoView)
         
         
@@ -117,8 +251,8 @@ class OrderDetailsViewController: CommonViewController
         let DressImageView = UIImageView()
         DressImageView.frame = CGRect(x: x, y: PaymentInfoLabel.frame.maxY + (2 * y), width: (10 * x), height:(13 * y))
         DressImageView.backgroundColor = UIColor.white
-       /*
-        if let imageName = DressImageArray[0] as? String
+       
+        if let imageName = Image[0] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
             //  let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
@@ -126,13 +260,13 @@ class OrderDetailsViewController: CommonViewController
             print("Image Of Dress", apiurl!)
             DressImageView.dowloadFromServer(url: apiurl!)
         }
-        */
+        
         PaymentInfoView.addSubview(DressImageView)
         
         // DressType Label..
         let DressTypeLabel = UILabel()
         DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: PaymentInfoLabel.frame.maxY + (3 * y) , width: (20 * x), height: (2 * y))
-        DressTypeLabel.text = "Men's Mandarin Suits"
+        DressTypeLabel.text = Product_Name[0] as? String
         DressTypeLabel.textColor = UIColor.black
         //  DressTypeLabel.backgroundColor = UIColor.gray
         DressTypeLabel.textAlignment = .left
@@ -150,7 +284,8 @@ class OrderDetailsViewController: CommonViewController
         
         let QtyNumLabel = UILabel()
         QtyNumLabel.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (4 * x), height: (2 * y))
-        QtyNumLabel.text = "1"
+        let QtyNum : Int = qty[0] as! Int
+        QtyNumLabel.text =  "\(QtyNum)"
         QtyNumLabel.textColor = UIColor.black
         QtyNumLabel.textAlignment = .left
         QtyNumLabel.font = UIFont(name: "Avenir Next", size: 14)
@@ -167,7 +302,8 @@ class OrderDetailsViewController: CommonViewController
         
         let PriceNumLabel = UILabel()
         PriceNumLabel.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: QtyLabel.frame.minY + (3 * y), width: (8 * x), height: (2 * y))
-        PriceNumLabel.text = "2312 AED"
+        let PriceNum : Int = Price[0] as! Int
+        PriceNumLabel.text = "\(PriceNum)"
         PriceNumLabel.textColor = UIColor.black
         PriceNumLabel.textAlignment = .left
         PriceNumLabel.font = UIFont(name: "Avenir Next", size: 14)
@@ -187,7 +323,8 @@ class OrderDetailsViewController: CommonViewController
         
         let SubTotalPriceLabel = UILabel()
         SubTotalPriceLabel.frame = CGRect(x:SubTotalLabel.frame.maxX + (12 * x), y: DressImageView.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
-        SubTotalPriceLabel.text = "2312.00 AED"
+         let SubPriceNum : Int = Price[0] as! Int
+        SubTotalPriceLabel.text = "\(SubPriceNum)"
         SubTotalPriceLabel.textColor = UIColor.black
         SubTotalPriceLabel.textAlignment = .right
         SubTotalPriceLabel.font = UIFont(name: "Avenir Next", size: 14)
@@ -203,22 +340,22 @@ class OrderDetailsViewController: CommonViewController
         ShippingLabel.textAlignment = .left
         ShippingLabel.font = UIFont(name: "Avenir Next", size: 14)
         ShippingLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        PaymentInfoView.addSubview(ShippingLabel)
+        //PaymentInfoView.addSubview(ShippingLabel)
         
         
         let ShippingPriceLabel = UILabel()
         ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
-        ShippingPriceLabel.text = "50.00 AED"
+        ShippingPriceLabel.text = ""
         ShippingPriceLabel.textColor = UIColor.black
         ShippingPriceLabel.textAlignment = .right
         ShippingPriceLabel.font = UIFont(name: "Avenir Next", size: 14)
         ShippingPriceLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        PaymentInfoView.addSubview(ShippingPriceLabel)
+        //PaymentInfoView.addSubview(ShippingPriceLabel)
         
         
         // Tax Label
         let TaxLabel = UILabel()
-        TaxLabel.frame = CGRect(x:x, y: ShippingLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        TaxLabel.frame = CGRect(x:x, y: SubTotalLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         TaxLabel.text = "Tax"
         TaxLabel.textColor = UIColor.black
         TaxLabel.textAlignment = .left
@@ -228,8 +365,9 @@ class OrderDetailsViewController: CommonViewController
         
     
         let TaxPriceLabel = UILabel()
-        TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
-        TaxPriceLabel.text = "60.00 AED"
+        TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        let TaxNum : Int = Tax[0] as! Int
+        TaxPriceLabel.text = "\(TaxNum)"
         TaxPriceLabel.textColor = UIColor.black
         TaxPriceLabel.textAlignment = .right
         TaxPriceLabel.font = UIFont(name: "Avenir Next", size: 14)
@@ -250,7 +388,8 @@ class OrderDetailsViewController: CommonViewController
        
         let AppointmentPriceLabel = UILabel()
         AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
-        AppointmentPriceLabel.text = "300.00 AED"
+        let AppointNum : Int = Appoinment[0] as! Int
+        AppointmentPriceLabel.text = "\(AppointNum)"
         AppointmentPriceLabel.textColor = UIColor.black
         AppointmentPriceLabel.textAlignment = .right
         AppointmentPriceLabel.font = UIFont(name: "Avenir Next", size: 14)
@@ -271,7 +410,8 @@ class OrderDetailsViewController: CommonViewController
        
         let TotalPriceLabel = UILabel()
         TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
-        TotalPriceLabel.text = "50.00 AED"
+        let TotalNum : Int = Total[0] as! Int
+        TotalPriceLabel.text = "\(TotalNum)"
         TotalPriceLabel.textColor = UIColor.black
         TotalPriceLabel.textAlignment = .right
         TotalPriceLabel.font = UIFont(name: "Avenir Next", size: 14)
@@ -292,7 +432,7 @@ class OrderDetailsViewController: CommonViewController
         
         let PaymentTypeLabel = UILabel()
         PaymentTypeLabel.frame = CGRect(x:PaymentLabel.frame.maxX - (2 * x), y: TotalPriceLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
-        PaymentTypeLabel.text = "(Cash On Delivery)"
+        PaymentTypeLabel.text = "(Card)"
         PaymentTypeLabel.textColor = UIColor.blue
         PaymentTypeLabel.textAlignment = .right
         PaymentTypeLabel.font = UIFont(name: "Avenir Next", size: 14)
@@ -397,7 +537,7 @@ class OrderDetailsViewController: CommonViewController
         // Name Label..
         let NameLabel = UILabel()
         NameLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: DeliveryInfoLabel.frame.maxY + (2 * y) , width: (20 * x), height: (2 * y))
-        NameLabel.text = "Noorul Huq"
+        NameLabel.text = FirstName[0] as? String
         NameLabel.textColor = UIColor.black
         //NameLabel.backgroundColor = UIColor.gray
         NameLabel.textAlignment = .left

@@ -18,8 +18,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-   //    var baseURL:String = "http://192.168.0.21/TailorAPI"
-         var baseURL:String = "http://appsapi.mzyoon.com"
+          var baseURL:String = "http://192.168.0.21/TailorAPI"
+    //     var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
 
@@ -1842,7 +1842,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("resultDict", self.resultDict)
+                    //print("resultDict", self.resultDict)
                     
                     delegate.API_CALLBACK_ListOfPendOrders!(PendingOrdersList: self.resultDict)
                 }
@@ -1876,7 +1876,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("resultDict", self.resultDict)
+                   // print("resultDict", self.resultDict)
                     
                     delegate.API_CALLBACK_GetOrderDetails!(getOrderDetails: self.resultDict)
                 }
