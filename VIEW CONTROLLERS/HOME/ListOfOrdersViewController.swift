@@ -266,8 +266,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
              if let imageName = PendImageArray[i] as? String
              {
-             // let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
-             let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
+              let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
+            // let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
              print("SMALL ICON", api)
              let apiurl = URL(string: api)
              
@@ -402,23 +402,23 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
       else
       {
-        let alert = UIAlertController(title: "Alert", message: "No Orders Placed", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+          // let alert = UIAlertController(title: "Alert", message: "No Orders Placed", preferredStyle: .alert)
+          // alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+          // self.present(alert, animated: true, completion: nil)
 
       }
     }
     
     func DeliveredViewContents(isHidden : Bool)
     {
-       // let DeliveredViewBackDrop = UIView()
+        // let DeliveredViewBackDrop = UIView()
         DeliveredViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (4 * x), height: view.frame.height - (16 * y))
         DeliveredViewBackDrop.backgroundColor = UIColor.clear
         view.addSubview(DeliveredViewBackDrop)
         
         DeliveredViewBackDrop.isHidden = isHidden
         
-        /*
+       /*
          let sortButton = UIButton()
          sortButton.frame = CGRect(x: backDrop.frame.width - (10 * x), y: y, width: (10 * x), height: (2 * y))
          sortButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -427,7 +427,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
          sortButton.tag = 0
          //        sortButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
          backDrop.addSubview(sortButton)
-         */
+       */
         
         DeliveredScrollView.frame = CGRect(x: 0, y: y, width: DeliveredViewBackDrop.frame.width, height: (50 * y))
         // tailorListScrollView.backgroundColor = UIColor.gray
@@ -441,6 +441,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
         
         var y2:CGFloat = 0
+    
         
     if(DelivOrderIdArray.count > 0)
     {
@@ -458,11 +459,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
             // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
-            /*
-             if let imageName = ShopImageArray[i] as? String
+            
+             if let imageName = DelivImageArray[i] as? String
              {
-             // let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
-             let api = "http://192.168.0.21/TailorAPI/Images/TailorImages/\(imageName)"
+             let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
+            // let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
              print("SMALL ICON", api)
              let apiurl = URL(string: api)
              
@@ -472,7 +473,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
              dummyImageView.tag = -1
              tailorImageView.addSubview(dummyImageView)
              }
-             */
+            
             
             DeliveredViewButton.addSubview(tailorImageView)
             
@@ -492,7 +493,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let tailorName = UILabel()
             tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: 0, width: DeliveredViewButton.frame.width / 2, height: (2 * y))
-            tailorName.text = "00000"
+            let orderNum:Int = DelivOrderIdArray[i] as! Int
+            tailorName.text = "\(orderNum)"
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -514,7 +516,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let shopName = UILabel()
             shopName.frame = CGRect(x: shopLabel.frame.maxX - x, y: nameLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
-            shopName.text =  "Sha"
+            shopName.text = DelivTailorNameEngArray[i] as? String
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -537,7 +539,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let ordersCountLabel = UILabel()
             ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX - x, y: shopLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
-            ordersCountLabel.text =  "Golden Works"
+            ordersCountLabel.text = DelivShopNameEngArray[i] as? String
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -560,7 +562,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let ProductNameLabel = UILabel()
             ProductNameLabel.frame = CGRect(x: ProductLabel.frame.maxX - x, y: ordersLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
-            ProductNameLabel.text =  "Slim Fit"
+            ProductNameLabel.text = DelivProdNameArray[i] as? String
             ProductNameLabel.textColor = UIColor.black
             ProductNameLabel.textAlignment = .left
             ProductNameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -583,7 +585,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let OrderDatesLabel = UILabel()
             OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX - x, y: ProductLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
-            OrderDatesLabel.text =  "28-10-2018"
+            OrderDatesLabel.text = DelivOrderDateArray[i] as? String
             OrderDatesLabel.textColor = UIColor.black
             OrderDatesLabel.textAlignment = .left
             OrderDatesLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -597,9 +599,9 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
       }
     else
     {
-        let alert = UIAlertController(title: "Alert", message: "No Orders Delivered", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+       // let alert = UIAlertController(title: "Alert", message: "No Orders Delivered", preferredStyle: .alert)
+       // alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+       // self.present(alert, animated: true, completion: nil)
     }
   }
     
