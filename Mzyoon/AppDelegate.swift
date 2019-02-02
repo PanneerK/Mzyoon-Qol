@@ -34,7 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     func checkLogin()
     {
         if let screen = UserDefaults.standard.value(forKey: "screenAppearance") as? Int
-        {            
+        {
+            print("PRINT")
             if screen == 0
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
