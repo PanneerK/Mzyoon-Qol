@@ -19,14 +19,18 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation!
-
+    
     let mapView = GMSMapView()
     let marker = GMSMarker()
     
     let markerImageView = UIImageView()
     
     let addressLabel = UILabel()
-
+    
+    var activeView = UIView()
+    var activityView = UIActivityIndicatorView()
+    
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -38,11 +42,30 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         locationManager.requestAlwaysAuthorization()
         
         locationContents()
-
+        
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func activityContents()
+    {
+        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
+        mapView.addSubview(activeView)
+        
+        activityView.frame = CGRect(x: ((activeView.frame.width - 50) / 2), y: ((activeView.frame.height - 50) / 2), width: 50, height: 50)
+        activityView.style = .whiteLarge
+        activityView.color = UIColor.white
+        activityView.startAnimating()
+        activeView.addSubview(activityView)
+    }
+    
+    func stopActivity()
+    {
+        activeView.removeFromSuperview()
+        activityView.stopAnimating()
     }
     
     func locationContents()
@@ -72,7 +95,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         locationNavigationBar.addSubview(navigationTitle)
         
-
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestAlwaysAuthorization()
             locationManager.delegate = self
@@ -92,10 +115,10 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             print("Current Loc:",currentLocation.coordinate)
         }
         
-//        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
-
+        //        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
+        
         mapView.frame = CGRect(x: 0, y: locationNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (11.4 * y))
-//        mapView.camera = camera
+        //        mapView.camera = camera
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
@@ -113,7 +136,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         let addAddressButton = UIButton()
         addAddressButton.frame = CGRect(x: 0, y: mapView.frame.maxY, width: view.frame.width, height: (5 * y))
         addAddressButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        addAddressButton.setTitle("Add Address", for: .normal)
+        addAddressButton.setTitle("Confirm Location", for: .normal)
         addAddressButton.setTitleColor(UIColor.white, for: .normal)
         addAddressButton.addTarget(self, action: #selector(self.addAddressButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addAddressButton)
@@ -122,9 +145,11 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         markerImageView.image = UIImage(named: "marker")
         view.addSubview(markerImageView)
         
-//        marker.position = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-//        marker.iconView = markerImageView
-//        marker.map = mapView
+        //        marker.position = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+        //        marker.iconView = markerImageView
+        //        marker.map = mapView
+        
+        activityContents()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -151,7 +176,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         label.text = "\(locValue.latitude) \(locValue.longitude)"
         label.textColor = UIColor.black
         label.textAlignment = .center
-//        mapView.addSubview(label)
+        //        mapView.addSubview(label)
         
         guard let location = locations.first else
         {
@@ -163,25 +188,25 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         let camera = GMSCameraPosition(target:location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
         mapView.camera = camera
         
-//        marker.position = CLLocationCoordinate2D(latitude: camera.target.latitude, longitude: camera.target.longitude)
-//        marker.iconView = markerImageView
-//        marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
-//        marker.map = mapView
+        //        marker.position = CLLocationCoordinate2D(latitude: camera.target.latitude, longitude: camera.target.longitude)
+        //        marker.iconView = markerImageView
+        //        marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+        //        marker.map = mapView
         
         locationManager.stopUpdatingLocation()
-
+        
     }
     
-//    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-//        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
-//        marker.map = mapView
-//
-//        print("LAT OF - \(position.target.latitude), LONG OF - \(position.target.longitude)")
-//    }
+    //    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+    //        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
+    //        marker.map = mapView
+    //
+    //        print("LAT OF - \(position.target.latitude), LONG OF - \(position.target.longitude)")
+    //    }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition)
     {
-//        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
+        //        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
         print("LAT OF - \(position.target.latitude), LONG OF - \(position.target.longitude)")
         reverseGeocodeCoordinate(position.target)
     }
@@ -210,18 +235,20 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             {
                 self.view.layoutIfNeeded()
             }
+            
+            self.stopActivity()
         }
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

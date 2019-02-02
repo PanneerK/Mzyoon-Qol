@@ -22,7 +22,7 @@ class CommonViewController: UIViewController
     
     let slideMenuButton = UIButton()
     let tabBar = UIView()
-
+    
     
     let tab1Button = UIButton()
     let tab1ImageView = UIImageView()
@@ -42,7 +42,7 @@ class CommonViewController: UIViewController
     
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
-        
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -52,11 +52,12 @@ class CommonViewController: UIViewController
         y = y * view.frame.height / 100
         
         navigationContents()
+        //        navigationContentsInArabic()
         tabContents()
         self.activityContents()
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -89,7 +90,7 @@ class CommonViewController: UIViewController
         let testImage = UIImageView()
         testImage.frame = CGRect(x: 50, y: 100, width: view.frame.width - 100, height: 200)
         testImage.image = UIImage(named: "go-to-tailor-shop")
-//        view.addSubview(testImage)
+        //        view.addSubview(testImage)
         
         navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
@@ -103,7 +104,7 @@ class CommonViewController: UIViewController
         
         let userImage = UIImageView()
         userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: (4 * y), height: (4 * y))
-//        userImage.image = UIImage(named: "women")
+        //        userImage.image = UIImage(named: "women")
         userImage.image = FileHandler().getImageFromDocumentDirectory()
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.borderWidth = 1
@@ -112,6 +113,37 @@ class CommonViewController: UIViewController
         
         let notificationButton = UIButton()
         notificationButton.frame = CGRect(x: navigationBar.frame.width - 50, y: navigationTitle.frame.minY, width: 30, height: 30)
+        notificationButton.setImage(UIImage(named: "notification"), for: .normal)
+        //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
+        navigationBar.addSubview(notificationButton)
+    }
+    
+    func navigationContentsInArabic()
+    {
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        backgroundImage.image = UIImage(named: "background")
+        view.addSubview(backgroundImage)
+        
+        navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        view.addSubview(navigationBar)
+        
+        navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
+        navigationTitle.textColor = UIColor.white
+        navigationTitle.textAlignment = .center
+        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        navigationBar.addSubview(navigationTitle)
+        
+        let userImage = UIImageView()
+        userImage.frame = CGRect(x: navigationBar.frame.width - (6 * x), y: (2 * y), width: (4 * y), height: (4 * y))
+        userImage.image = FileHandler().getImageFromDocumentDirectory()
+        userImage.layer.cornerRadius = userImage.frame.height / 2
+        userImage.layer.borderWidth = 1
+        userImage.layer.masksToBounds = true
+        navigationBar.addSubview(userImage)
+        
+        let notificationButton = UIButton()
+        notificationButton.frame = CGRect(x: (2 * x), y: navigationTitle.frame.minY, width: (4 * x), height: (4 * y))
         notificationButton.setImage(UIImage(named: "notification"), for: .normal)
         //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
         navigationBar.addSubview(notificationButton)
@@ -126,11 +158,11 @@ class CommonViewController: UIViewController
         slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(slideMenuButton)
         
-       // let tabBar = UIView()
+        // let tabBar = UIView()
         tabBar.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
         tabBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         view.addSubview(tabBar)
-
+        
         tab1Button.frame = CGRect(x: 0, y: 0, width: (9.37 * x), height: (5 * y))
         tab1Button.tag = 0
         tab1Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
@@ -187,7 +219,7 @@ class CommonViewController: UIViewController
         tab4Button.tag = 3
         tab4Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
         tabBar.addSubview(tab4Button)
-
+        
         tab4ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
         tab4ImageView.image = UIImage(named: "cart")
         tab4Button.addSubview(tab4ImageView)
@@ -200,42 +232,42 @@ class CommonViewController: UIViewController
         tab4Button.addSubview(tab4Text)
         
         /*let tabTitle = ["Home", "Request", "Order", "Cart"]
-        let tabImages = ["home", "request", "order", "cart"]
-        
-        for i in 0..<4
-        {
-            let tabButtonImageView = UIImageView()
-            tabButtonImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 2), width: (3 * x), height: (3 * y))
-            tabButtonImageView.image = UIImage(named: tabImages[i])
-            
-            let tabButtonTitleLabel = UILabel()
-            tabButtonTitleLabel.frame = CGRect(x: 0, y: (3.5 * y), width: (9.37 * x), height: y)
-            tabButtonTitleLabel.text = tabTitle[i]
-            tabButtonTitleLabel.textColor = UIColor.white
-            tabButtonTitleLabel.textAlignment = .center
-            tabButtonTitleLabel.font = tabButtonTitleLabel.font.withSize(10)
-            
-            if i == 0
-            {
-                tab1Button.addSubview(tabButtonImageView)
-                tab1Button.addSubview(tabButtonTitleLabel)
-            }
-            else if i == 1
-            {
-                tab2Button.addSubview(tabButtonImageView)
-                tab2Button.addSubview(tabButtonTitleLabel)
-            }
-            else if i == 2
-            {
-                tab3Button.addSubview(tabButtonImageView)
-                tab3Button.addSubview(tabButtonTitleLabel)
-            }
-            else if i == 3
-            {
-                tab4Button.addSubview(tabButtonImageView)
-                tab4Button.addSubview(tabButtonTitleLabel)
-            }
-        }*/
+         let tabImages = ["home", "request", "order", "cart"]
+         
+         for i in 0..<4
+         {
+         let tabButtonImageView = UIImageView()
+         tabButtonImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 2), width: (3 * x), height: (3 * y))
+         tabButtonImageView.image = UIImage(named: tabImages[i])
+         
+         let tabButtonTitleLabel = UILabel()
+         tabButtonTitleLabel.frame = CGRect(x: 0, y: (3.5 * y), width: (9.37 * x), height: y)
+         tabButtonTitleLabel.text = tabTitle[i]
+         tabButtonTitleLabel.textColor = UIColor.white
+         tabButtonTitleLabel.textAlignment = .center
+         tabButtonTitleLabel.font = tabButtonTitleLabel.font.withSize(10)
+         
+         if i == 0
+         {
+         tab1Button.addSubview(tabButtonImageView)
+         tab1Button.addSubview(tabButtonTitleLabel)
+         }
+         else if i == 1
+         {
+         tab2Button.addSubview(tabButtonImageView)
+         tab2Button.addSubview(tabButtonTitleLabel)
+         }
+         else if i == 2
+         {
+         tab3Button.addSubview(tabButtonImageView)
+         tab3Button.addSubview(tabButtonTitleLabel)
+         }
+         else if i == 3
+         {
+         tab4Button.addSubview(tabButtonImageView)
+         tab4Button.addSubview(tabButtonTitleLabel)
+         }
+         }*/
     }
     
     @objc func slideMenuButtonAction(sender : UIButton)
@@ -264,7 +296,7 @@ class CommonViewController: UIViewController
             window?.rootViewController = navigationScreen
             window?.makeKeyAndVisible()
         }
-        // Request..
+            // Request..
         else if sender.tag == 1
         {
             navigateScreen = OrderRequestListViewController()
@@ -274,13 +306,13 @@ class CommonViewController: UIViewController
             window?.rootViewController = navigationScreen
             window?.makeKeyAndVisible()
             
-           /*
+            /*
              stopActivity()
-            navigateScreen = OrdersViewController()
-            self.present(alertControls, animated: true, completion: nil)
-           */
+             navigateScreen = OrdersViewController()
+             self.present(alertControls, animated: true, completion: nil)
+             */
         }
-         // Orders...
+            // Orders...
         else if sender.tag == 2
         {
             navigateScreen = ListOfOrdersViewController()
@@ -291,9 +323,9 @@ class CommonViewController: UIViewController
             window?.makeKeyAndVisible()
             
             /*
-            stopActivity()
-            navigateScreen = CartViewController()
-            */
+             stopActivity()
+             navigateScreen = CartViewController()
+             */
         }
         else
         {
@@ -301,11 +333,11 @@ class CommonViewController: UIViewController
             self.present(alertControls, animated: true, completion: nil)
         }
         /*  // Cart..
-        else if sender.tag == 3
-        {
-            stopActivity()
-            navigateScreen = ContactUsViewController()
-        }*/
+         else if sender.tag == 3
+         {
+         stopActivity()
+         navigateScreen = ContactUsViewController()
+         }*/
     }
     
     func selectedButton(tag : Int)
@@ -319,7 +351,7 @@ class CommonViewController: UIViewController
         let templateImage3 = tab3ImageView.image?.withRenderingMode(.alwaysTemplate)
         tab3ImageView.image = templateImage3
         
-         
+        
         
         if tag == 0
         {
@@ -335,24 +367,24 @@ class CommonViewController: UIViewController
             
             tab3Text.font = tab3Text.font.withSize(10)
             tab3Text.textColor = UIColor.white
-          
+            
             tab3ImageView.tintColor = UIColor.white
             
             tab4Text.font = tab4Text.font.withSize(10)
             tab4Text.textColor = UIColor.white
-          
+            
             tab4ImageView.tintColor = UIColor.white
         }
         else if tag == 1
         {
             tab1Text.font = tab1Text.font.withSize(10)
             tab1Text.textColor = UIColor.white
-
+            
             tab1ImageView.tintColor = UIColor.white
             
             tab2Text.font = tab2Text.font.withSize(15)
             tab2Text.textColor = UIColor.orange
-
+            
             tab2ImageView.tintColor = UIColor.orange
             
             tab3Text.font = tab3Text.font.withSize(10)
@@ -362,7 +394,7 @@ class CommonViewController: UIViewController
             
             tab4Text.font = tab4Text.font.withSize(10)
             tab4Text.textColor = UIColor.white
-
+            
             tab4ImageView.tintColor = UIColor.white
         }
         else if tag == 2
@@ -393,17 +425,17 @@ class CommonViewController: UIViewController
             tab1Text.textColor = UIColor.white
             
             tab1ImageView.tintColor = UIColor.white
-
+            
             tab2Text.font = tab2Text.font.withSize(10)
             tab2Text.textColor = UIColor.white
             
             tab2ImageView.tintColor = UIColor.white
-
+            
             tab3Text.font = tab3Text.font.withSize(10)
             tab3Text.textColor = UIColor.white
             
             tab3ImageView.tintColor = UIColor.white
-
+            
             tab4Text.font = tab4Text.font.withSize(15)
             tab4Text.textColor = UIColor.orange
             
@@ -411,17 +443,17 @@ class CommonViewController: UIViewController
         }
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 extension UIImageView

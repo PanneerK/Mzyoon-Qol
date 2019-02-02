@@ -12,7 +12,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
 {
     //SERVICE PARAMETERS
     let serviceCall = ServerAPI()
-
+    
     //SCREEN PARAMETERS
     let customedImageView = UIImageView()
     let customedFrontButton = UIButton()
@@ -20,7 +20,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     let selectionImage = UIImageView()
     let dropDownButton = UIButton()
     let customizationScrollView = UIScrollView()
-
+    
     let selectionImage1 = UIImageView()
     
     //API PARAMETERS
@@ -46,15 +46,15 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     var selectedCustomIntArray = [String : String]()
     var selectedCustomInt = Int()
     var customDictValuesCount = 0
-
+    
     var selectedSubCustomInt = Int()
-
+    
     override func viewDidLoad() {
         navigationBar.isHidden = true
         selectedButton(tag: 0)
         
         self.serviceCall.API_Customization3(DressTypeId: 5, delegate: self)
-
+        
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -359,6 +359,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         
         let customization3NextButton = UIButton()
         customization3NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * y))
+        customization3NextButton.layer.cornerRadius = customization3NextButton.frame.height / 2
+        customization3NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization3NextButton.layer.masksToBounds = true
         customization3NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization3NextButton.addTarget(self, action: #selector(self.customization3NextButtonAction(sender:)), for: .touchUpInside)
@@ -486,7 +488,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
         }
     }
-
+    
     /*
      // MARK: - Navigation
      

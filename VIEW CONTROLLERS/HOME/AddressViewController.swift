@@ -10,7 +10,7 @@ import UIKit
 
 class AddressViewController: UIViewController, ServerAPIDelegate
 {
-
+    
     var x = CGFloat()
     var y = CGFloat()
     
@@ -64,7 +64,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         activityContents()
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -73,6 +73,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
             self.serviceCall.API_GetBuyerAddress(BuyerAddressId: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            self.serviceCall.API_GetBuyerAddress(BuyerAddressId: "\(userId)", delegate: self)
         }
     }
     
@@ -105,9 +109,9 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-      //  ErrorStr = "Default Error"
+        //  ErrorStr = "Default Error"
         PageNumStr = "AddressViewController"
-       // MethodName = "do"
+        // MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
@@ -156,11 +160,27 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             Longitude = Result.value(forKey: "Longitude") as! NSArray
             print("Longitude", Longitude)
             
-            isDefault = Result.value(forKey: "IsDefault") as! NSArray
+            isDefault = Result.value(forKey: "IsDefault") as! NSArray
             print("IsDefault", isDefault)
             
             Id = Result.value(forKey: "Id") as! NSArray
             print("ADDRESS ID ARRAY", Id)
+            
+            LocationType = Result.value(forKey: "LocationType") as! NSArray
+            print("LocationType", LocationType)
+            
+            Floor = Result.value(forKey: "Floor") as! NSArray
+            print("Floor", Floor)
+            
+            LandMark = Result.value(forKey: "LandMark") as! NSArray
+            print("LandMark", LandMark)
+            
+            CountryCode = Result.value(forKey: "CountryCode") as! NSArray
+            print("CountryCode", CountryCode)
+            
+            ShippingNotes = Result.value(forKey: "ShippingNotes") as! NSArray
+            print("ShippingNotes", ShippingNotes)
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -171,7 +191,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             ErrorStr = Result
             DeviceError()
         }
-       
+        
         addressContent()
     }
     
@@ -382,7 +402,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                     
                     let defaultAddressLabel = UILabel()
                     defaultAddressLabel.frame = CGRect(x: defaultAddressImage.frame.maxX, y: addressSelectButton.frame.height - (3 * y), width: (12 * x), height: (2 * y))
-//                    defaultAddressLabel.backgroundColor = UIColor.orange
+                    //                    defaultAddressLabel.backgroundColor = UIColor.orange
                     defaultAddressLabel.text = "Default Address"
                     defaultAddressLabel.textColor = UIColor.black
                     defaultAddressLabel.textAlignment = .left
@@ -404,12 +424,12 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                         defaultSwitch.isOn = false
                     }
                     defaultSwitch.isUserInteractionEnabled = false
-//                    addressSelectButton.addSubview(defaultSwitch)
+                    //                    addressSelectButton.addSubview(defaultSwitch)
                 }
             }
             
             addressScrollView.contentSize.height = y1
-
+            
         }
         
         let addNewAddressButton = UIButton()
@@ -437,13 +457,17 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     {
         print("PRINT SELECTION", FirstName[sender.tag])
         let address2Screen = Address2ViewController()
-        address2Screen.firstNameEnglishTextField.text = FirstName[sender.tag] as! String
-        address2Screen.secondNameEnglishTextField.text = "L"
-        address2Screen.areaNameTextField.text = LocationType[sender.tag] as! String
-        address2Screen.floorTextField.text = Floor[sender.tag] as! String
-        address2Screen.landMarkTextField.text = LandMark[sender.tag] as! String
-        address2Screen.locationTypeTextField.text = LocationType[sender.tag] as! String
-        address2Screen.mobileTextField.text = PhoneNo[sender.tag] as! String
+        
+        address2Screen.firstNameEnglishTextField.text = FirstName[sender.tag] as? String
+        address2Screen.secondNameEnglishTextField.text = ""
+        address2Screen.locationTypeTextField.text = LocationType[sender.tag] as? String
+        address2Screen.areaNameTextField.text = areaArray[sender.tag] as? String
+        address2Screen.floorTextField.text = Floor[sender.tag] as? String
+        address2Screen.landMarkTextField.text = LandMark[sender.tag] as? String
+        address2Screen.mobileTextField.text = PhoneNo[sender.tag] as? String
+        address2Screen.mobileCountryCodeLabel.text = CountryCode[sender.tag] as? String
+        address2Screen.shippingNotesTextField.text = ShippingNotes[sender.tag] as? String
+        
         self.navigationController?.pushViewController(address2Screen, animated: true)
     }
     
@@ -457,15 +481,15 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         let locationScreen = LocationViewController()
         self.navigationController?.pushViewController(locationScreen, animated: true)
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

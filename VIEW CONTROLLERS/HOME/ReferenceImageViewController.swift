@@ -28,11 +28,11 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     {
         navigationBar.isHidden = true
         
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
-
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
             // Your code with delay
             self.addMaterialContent()
         }
@@ -98,10 +98,10 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         view.addSubview(addMaterialLabel)
         
-        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width - (8 * x), height: (8.25 * y))
+        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width - (12 * x), height: (12 * y))
         view.addSubview(addReferenceScrolView)
         
-        addMaterialButton.frame = CGRect(x: view.frame.width - (7.25 * x), y: addMaterialLabel.frame.maxY + y, width: (6.25 * x), height: (6.25 * y))
+        addMaterialButton.frame = CGRect(x: addReferenceScrolView.frame.maxX + x, y: addMaterialLabel.frame.maxY + y, width: (10 * x), height: (10 * y))
         addMaterialButton.backgroundColor = UIColor.blue
         addMaterialButton.setTitle("+", for: .normal)
         addMaterialButton.setTitleColor(UIColor.white, for: .normal)
@@ -111,15 +111,16 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         
         let addMaterialNextButton = UIButton()
         addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
-        addMaterialNextButton.layer.cornerRadius = 10
+        addMaterialNextButton.layer.cornerRadius = addMaterialNextButton.frame.height / 2
+        addMaterialNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         addMaterialNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
-//        addMaterialNextButton.backgroundColor = UIColor.blue
-//        addMaterialNextButton.setTitle("Next", for: .normal)
-//        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
+        //        addMaterialNextButton.backgroundColor = UIColor.blue
+        //        addMaterialNextButton.setTitle("Next", for: .normal)
+        //        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialNextButton.addTarget(self, action: #selector(self.addMaterialNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addMaterialNextButton)
         
-//        addMaterial(xPosition: x)
+        //        addMaterial(xPosition: x)
     }
     
     func addMaterial(xPosition : CGFloat)
@@ -231,7 +232,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
             for i in 0..<imageArray.count
             {
                 let selectMaterialImageButton = UIButton()
-                selectMaterialImageButton.frame = CGRect(x: x1, y: y, width: (6.25 * x), height: (6.25 * y))
+                selectMaterialImageButton.frame = CGRect(x: x1, y: y, width: (10 * x), height: (10 * y))
                 selectMaterialImageButton.backgroundColor = UIColor.blue
                 selectMaterialImageButton.setImage(imageArray[i], for: .normal)
                 selectMaterialImageButton.tag = (i + 200)
@@ -259,7 +260,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
             addReferenceScrolView.contentSize.width = x1
         }
         
-//        addMaterial(xPosition: x1)
+        //        addMaterial(xPosition: x1)
     }
     
     @objc func selectedMaterialButtonAction(sender : UIButton)

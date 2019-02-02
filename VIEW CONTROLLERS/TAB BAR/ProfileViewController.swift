@@ -16,8 +16,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     let userImage = UIImageView()
     var imagePicker = UIImagePickerController()
     let cameraButton = UIButton()
-
-
+    
+    
     let userName = UITextField()
     let mobileNumber = UITextField()
     let email = UITextField()
@@ -43,7 +43,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     var ErrorStr:String!
     var PageNumStr:String!
     var MethodName:String!
-
+    
     let serviceCall = ServerAPI()
     
     var datePick = UIDatePicker()
@@ -72,13 +72,13 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         {
             
         }
-
-//        let closeKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.closeKeyboard(gesture:)))
-//        closeKeyboard.delegate = self
-//        view.addGestureRecognizer(closeKeyboard)
         
-//        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillHide:")), name: UIResponder.keyboardWillHideNotification, object: nil)
+        //        let closeKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.closeKeyboard(gesture:)))
+        //        closeKeyboard.delegate = self
+        //        view.addGestureRecognizer(closeKeyboard)
+        
+        //        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillShow:")), name: UIResponder.keyboardWillShowNotification, object: nil)
+        //        NotificationCenter.default.addObserver(self, selector: Selector(("keyboardWillHide:")), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         super.viewDidLoad()
         
@@ -137,9 +137,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-      //  ErrorStr = "Default Error"
+        //  ErrorStr = "Default Error"
         PageNumStr = "ProfileViewController"
-      //  MethodName = "do"
+        //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
@@ -239,7 +239,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             if Result == "1"
             {
                 let alert = UIAlertController(title: "", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: savedAlertAction(action:)))
                 self.present(alert, animated: true, completion: nil)
             }
             
@@ -255,19 +255,59 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         }
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
-//        // Show the Navigation Bar
-//        self.navigationController?.isNavigationBarHidden = false
-//        self.navigationController?.navigationBar.topItem?.title = "PROFILE"
-//    }
+    func API_CALLBACK_ProfileImageUpload(ImageUpload: NSDictionary)
+    {
+        let ResponseMsg = ImageUpload.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = ImageUpload.object(forKey: "Result") as! NSArray
+            print("Result", Result[0])
+            
+            if let file1 = Result[0] as? String
+            {
+                let splitted = file1.split(separator: "\\")
+                print("SPLITTED", splitted)
+                
+                let imageName = splitted.last
+                print("IMAGE NAME", imageName!)
+                
+                if let profId = UserDefaults.standard.value(forKey: "userId") as? String
+                {
+                    serviceCall.API_IntroProfile(Id: profId, Name: userName.text!, profilePic: String(imageName!), delegate: self)
+                }
+            }
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = ImageUpload.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "ImageUpload"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(true)
-//        // Hide the Navigation Bar
-//        self.navigationController?.isNavigationBarHidden = true
-//    }
-
+    func savedAlertAction(action : UIAlertAction)
+    {
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true)
+    }
+    
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(true)
+    //        // Show the Navigation Bar
+    //        self.navigationController?.isNavigationBarHidden = false
+    //        self.navigationController?.navigationBar.topItem?.title = "PROFILE"
+    //    }
+    
+    //    override func viewWillDisappear(_ animated: Bool) {
+    //        super.viewWillDisappear(true)
+    //        // Hide the Navigation Bar
+    //        self.navigationController?.isNavigationBarHidden = true
+    //    }
+    
     
     func screenContents()
     {
@@ -298,11 +338,11 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         userImage.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: navigationBar.frame.maxY + y, width: (15 * x), height: (15 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
-        userImage.backgroundColor = UIColor.red
+        userImage.backgroundColor = UIColor.white
         userImage.layer.masksToBounds = true
         if let imageName = imageName[0] as? String
         {
-            let api = "http://192.168.0.21/TailorAPI/Images/BuyerImages/\(imageName)"
+            let api = "http://appsapi.mzyoon.com/images/BuyerImages/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -311,6 +351,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 userImage.dowloadFromServer(url: apiurl!)
             }
         }
+        userImage.image = FileHandler().getImageFromDocumentDirectory()
         userImage.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleBottomMargin.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue | UIView.AutoresizingMask.flexibleRightMargin.rawValue | UIView.AutoresizingMask.flexibleLeftMargin.rawValue | UIView.AutoresizingMask.flexibleTopMargin.rawValue | UIView.AutoresizingMask.flexibleWidth.rawValue)
         userImage.contentMode = .scaleToFill
         backgroundImage.addSubview(userImage)
@@ -442,9 +483,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         genderButton.isEnabled = false
         genderButton.frame = CGRect(x: (3 * x), y: genderHeadingLabel.frame.maxY + y, width: view.frame.width - (6 * x), height: (4 * y))
-//        genderButton.text = "Gender"
-//        genderButton.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-//        genderButton.textAlignment = .left
+        //        genderButton.text = "Gender"
+        //        genderButton.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        //        genderButton.textAlignment = .left
         genderButton.layer.borderWidth = 1
         genderButton.layer.borderColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85).cgColor
         genderButton.backgroundColor = UIColor.white
@@ -476,36 +517,36 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         genderButton.addSubview(dropDownImageView)
         
         /*maleButton.isEnabled = false
-        maleButton.frame = CGRect(x: (3 * x), y: genderButton.frame.maxY + y, width: (2 * x), height: (2 * x))
-        maleButton.layer.cornerRadius = maleButton.frame.height / 2
-        maleButton.backgroundColor = UIColor.white
-        maleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
-        maleButton.tag = 1
-        maleButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(maleButton)
-        
-        let maleLabel = UILabel()
-        maleLabel.frame = CGRect(x: maleButton.frame.maxX + x, y: genderButton.frame.maxY + y, width: (6 * x), height: (2 * y))
-        maleLabel.text = "Male"
-        maleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-        maleLabel.textAlignment = .left
-        view.addSubview(maleLabel)
-        
-        femaleButton.isEnabled = false
-        femaleButton.frame = CGRect(x: maleLabel.frame.maxX + (3 * x), y: genderButton.frame.maxY + y, width: (2 * x), height: (2 * x))
-        femaleButton.layer.cornerRadius = femaleButton.frame.height / 2
-        femaleButton.backgroundColor = UIColor.white
-        femaleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
-        femaleButton.tag = 2
-        femaleButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(femaleButton)
-        
-        let femaleLabel = UILabel()
-        femaleLabel.frame = CGRect(x: femaleButton.frame.maxX + x, y: genderButton.frame.maxY + y, width: (6 * x), height: (2 * y))
-        femaleLabel.text = "Female"
-        femaleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-        femaleLabel.textAlignment = .left
-        view.addSubview(femaleLabel)*/
+         maleButton.frame = CGRect(x: (3 * x), y: genderButton.frame.maxY + y, width: (2 * x), height: (2 * x))
+         maleButton.layer.cornerRadius = maleButton.frame.height / 2
+         maleButton.backgroundColor = UIColor.white
+         maleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
+         maleButton.tag = 1
+         maleButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
+         view.addSubview(maleButton)
+         
+         let maleLabel = UILabel()
+         maleLabel.frame = CGRect(x: maleButton.frame.maxX + x, y: genderButton.frame.maxY + y, width: (6 * x), height: (2 * y))
+         maleLabel.text = "Male"
+         maleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+         maleLabel.textAlignment = .left
+         view.addSubview(maleLabel)
+         
+         femaleButton.isEnabled = false
+         femaleButton.frame = CGRect(x: maleLabel.frame.maxX + (3 * x), y: genderButton.frame.maxY + y, width: (2 * x), height: (2 * x))
+         femaleButton.layer.cornerRadius = femaleButton.frame.height / 2
+         femaleButton.backgroundColor = UIColor.white
+         femaleButton.setImage(UIImage(named: "unCheckMark"), for: .normal)
+         femaleButton.tag = 2
+         femaleButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
+         view.addSubview(femaleButton)
+         
+         let femaleLabel = UILabel()
+         femaleLabel.frame = CGRect(x: femaleButton.frame.maxX + x, y: genderButton.frame.maxY + y, width: (6 * x), height: (2 * y))
+         femaleLabel.text = "Female"
+         femaleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+         femaleLabel.textAlignment = .left
+         view.addSubview(femaleLabel)*/
         
         updateButton.isHidden = false
         updateButton.frame = CGRect(x: (3 * x), y: genderButton.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (4 * y))
@@ -643,16 +684,16 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     @objc func calendarButtonAction()
     {
         pickUpDate(dob)
-
-//        datePick.frame = CGRect(x: 0, y: dob.frame.maxY + (5 * y), width: view.frame.width, height: (20 * y))
-//        datePick.backgroundColor = UIColor.white
-//        datePick.datePickerMode = .date
-//        datePick.locale = Locale.current
-//        datePick.maximumDate = Date()
-//        datePick.timeZone = TimeZone.current
-//        view.addSubview(datePick)
-//
-//        dob.inputView = datePick
+        
+        //        datePick.frame = CGRect(x: 0, y: dob.frame.maxY + (5 * y), width: view.frame.width, height: (20 * y))
+        //        datePick.backgroundColor = UIColor.white
+        //        datePick.datePickerMode = .date
+        //        datePick.locale = Locale.current
+        //        datePick.maximumDate = Date()
+        //        datePick.timeZone = TimeZone.current
+        //        view.addSubview(datePick)
+        //
+        //        dob.inputView = datePick
     }
     
     @objc func updateButtonAction(sender : UIButton)
@@ -669,8 +710,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         cameraButton.isEnabled = true
         genderButton.isEnabled = true
-        
-        userName.becomeFirstResponder()
         
         cancelButton.isHidden = false
         cancelButton.frame = CGRect(x: (2 * x), y: genderButton.frame.maxY + (3 * y), width: (15.75 * x), height: (4 * y))
@@ -704,10 +743,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         cameraButton.isEnabled = false
         genderButton.isEnabled = false
         
-        userName.text = ""
-        mobileNumber.text = ""
-        email.text = ""
-        dob.text = ""
+        //        userName.text = ""
+        //        mobileNumber.text = ""
+        //        email.text = ""
+        //        dob.text = ""
         
         updateButton.isHidden = false
         
@@ -732,29 +771,42 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         let DobStr = dob.text
         let ModifyStr = "user"
         
+        let validateEMail = isValidEmail(testStr: EmailID!)
+        
+        print("VALIDATE EMAIL", validateEMail)
+        
         if GenderStr.isEmpty != true || GenderStr != ""
         {
             if (EmailID?.contains("@"))! && (EmailID?.contains("."))!
             {
-                userName.isUserInteractionEnabled = false
-                mobileNumber.isUserInteractionEnabled = false
-                email.isUserInteractionEnabled = false
-                dob.isUserInteractionEnabled = false
-                
-                femaleButton.isEnabled = false
-                maleButton.isEnabled = false
-                
-                cameraButton.isEnabled = false
-                genderButton.isEnabled = false
-                
-                updateButton.isHidden = false
-                
-                sender.removeFromSuperview()
-                cancelButton.removeFromSuperview()
-                
-                
-                serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
-                
+                if validateEMail == true
+                {
+                    userName.isUserInteractionEnabled = false
+                    mobileNumber.isUserInteractionEnabled = false
+                    email.isUserInteractionEnabled = false
+                    dob.isUserInteractionEnabled = false
+                    
+                    femaleButton.isEnabled = false
+                    maleButton.isEnabled = false
+                    
+                    cameraButton.isEnabled = false
+                    genderButton.isEnabled = false
+                    
+                    updateButton.isHidden = false
+                    
+                    sender.removeFromSuperview()
+                    cancelButton.removeFromSuperview()
+                    
+                    serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                    
+                    serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
+                }
+                else
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Invalid email id", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
             else
             {
@@ -769,9 +821,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func isValidEmail(testStr:String) -> Bool {
+        // print("validate calendar: \(testStr)")
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         
-        
-                
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -829,7 +886,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         }
         else
         {
-            returnParameter = true  
+            returnParameter = true
         }
         print("return parameter", returnParameter)
         return returnParameter

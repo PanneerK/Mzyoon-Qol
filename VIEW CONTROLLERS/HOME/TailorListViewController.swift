@@ -15,9 +15,9 @@ import GooglePlaces
 
 class TailorListViewController: CommonViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate
 {
-
+    
     let serviceCall = ServerAPI()
-
+    
     let listViewButton = UIButton()
     let mapViewButton = UIButton()
     
@@ -29,8 +29,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     let marker = GMSMarker()
     let addressLabel = UILabel()
     let tailorDeatiledView = UIView()
-
-
+    
+    
     
     var IdArray = NSArray()
     var TailorNameArray = NSArray()
@@ -70,14 +70,14 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     var destinationLocation = CLLocationCoordinate2D()
     var rectanglePolyline = GMSPolyline()
-
+    
     
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-                
+        
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -124,9 +124,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-       // ErrorStr = "Default Error"
+        // ErrorStr = "Default Error"
         PageNumStr = "TailorListViewController"
-      //  MethodName = "do"
+        //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
@@ -209,40 +209,40 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             
             /*for i in 0..<ShopOwnerImageArray.count
-            {
-                if let imageName = ShopOwnerImageArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Measurement2/\(imageName)"
-                    // let api = "http://192.168.0.21/TailorAPI/images/Measurement2/\(imageName)"
-                    
-                    let apiurl = URL(string: api)
-                    print("CUSTOM ALL OF", api)
-                    
-                    if apiurl != nil
-                    {
-                        if let data = try? Data(contentsOf: apiurl!)
-                        {
-                            print("DATA OF IMAGE", data)
-                            if let image = UIImage(data: data)
-                            {
-                                self.ConvertedShopOwnerImageArray.append(image)
-                            }
-                        }
-                        else
-                        {
-                            let emptyImage = UIImage(named: "empty")
-                            self.ConvertedShopOwnerImageArray.append(emptyImage!)
-                        }
-                    }
-                }
-                else if ShopOwnerImageArray[i] is NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.ConvertedShopOwnerImageArray.append(emptyImage!)
-                }
-            }*/
+             {
+             if let imageName = ShopOwnerImageArray[i] as? String
+             {
+             let api = "http://appsapi.mzyoon.com/images/Measurement2/\(imageName)"
+             // let api = "http://192.168.0.21/TailorAPI/images/Measurement2/\(imageName)"
+             
+             let apiurl = URL(string: api)
+             print("CUSTOM ALL OF", api)
+             
+             if apiurl != nil
+             {
+             if let data = try? Data(contentsOf: apiurl!)
+             {
+             print("DATA OF IMAGE", data)
+             if let image = UIImage(data: data)
+             {
+             self.ConvertedShopOwnerImageArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.ConvertedShopOwnerImageArray.append(emptyImage!)
+             }
+             }
+             }
+             else if ShopOwnerImageArray[i] is NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.ConvertedShopOwnerImageArray.append(emptyImage!)
+             }
+             }*/
             
-             self.orderSummaryContent()
+            self.orderSummaryContent()
         }
         else if ResponseMsg == "Failure"
         {
@@ -255,6 +255,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
     }
     
+    func API_CALLBACK_DirectionRequest(direction: NSDictionary) {
+        print("SELF OF DIRECTION REQUEST", direction)
+    }
     
     func orderSummaryContent()
     {
@@ -379,20 +382,20 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         backDrop.addSubview(totalSelectedTailersLabel)
         
         let sortButton = UIButton()
-            sortButton.frame = CGRect(x: backDrop.frame.width - (10 * x), y: totalTailersSelectedCountLabel.frame.maxY, width: (10 * x), height: (3 * y))
-            sortButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            sortButton.setTitle("SORT", for: .normal)
-            sortButton.setTitleColor(UIColor.white, for: .normal)
-            sortButton.tag = 0
-    //        sortButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-            backDrop.addSubview(sortButton)
+        sortButton.frame = CGRect(x: backDrop.frame.width - (10 * x), y: totalTailersSelectedCountLabel.frame.maxY, width: (10 * x), height: (3 * y))
+        sortButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        sortButton.setTitle("SORT", for: .normal)
+        sortButton.setTitleColor(UIColor.white, for: .normal)
+        sortButton.tag = 0
+        //        sortButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
+        backDrop.addSubview(sortButton)
         
         tailorListTableView.frame = CGRect(x: 0, y: sortButton.frame.maxY, width: backDrop.frame.width, height: (30 * y))
         tailorListTableView.backgroundColor = UIColor.black
         tailorListTableView.register(TailorListTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(TailorListTableViewCell.self))
         tailorListTableView.dataSource = self
         tailorListTableView.delegate = self
-//        backDrop.addSubview(tailorListTableView)
+        //        backDrop.addSubview(tailorListTableView)
         
         tailorListTableView.reloadData()
         
@@ -418,7 +421,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             let tailorImageButton = UIButton()
             tailorImageButton.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
             tailorImageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-//            tailorImageButton.setImage(UIImage(named: "men"), for: .normal)
+            //            tailorImageButton.setImage(UIImage(named: "men"), for: .normal)
             
             if let imageName = ShopOwnerImageArray[i] as? String
             {
@@ -505,7 +508,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
-//            tailorView.addSubview(ratingCountLabel)
+            //            tailorView.addSubview(ratingCountLabel)
             
             let ratingImageView = UIImageView()
             ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)
@@ -533,7 +536,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             let locationButton = UIButton()
             locationButton.frame = CGRect(x: tailorView.frame.width - (5 * x), y: tailorView.frame.height - (5 * y), width: (5 * x), height: (5 * y))
-//            locationButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            //            locationButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             locationButton.layer.borderWidth = 1
             locationButton.layer.borderColor = UIColor.lightGray.cgColor
             locationButton.setImage(UIImage(named: "locationMarker"), for: .normal)
@@ -568,6 +571,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                 }
             }
         }
+        
+        //        serviceCall.API_DirectionRequest(origin: "\(currentLocation.coordinate.latitude)", destination: "\(currentLocation.coordinate.longitude)", delegate: self)
     }
     
     func directionViewContents(isHidden : Bool)
@@ -576,6 +581,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
         mapView.delegate = self
         mapView.settings.myLocationButton = true
+        mapView.settings.compassButton = true
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
         
@@ -675,6 +681,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
         mapView.delegate = self
         mapView.settings.myLocationButton = true
+        mapView.settings.compassButton = true
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
         
@@ -704,7 +711,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         if mapView.isHidden  == false
         {
             mapView.addSubview(markerImageView)
-
+            
             marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
             marker.iconView = markerImageView
@@ -712,7 +719,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
         else
         {
-//            marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
+            //            marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
             marker.iconView = markerImageView
             marker.map = mapView
@@ -737,9 +744,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool
     {
-//        let camera = GMSCameraPosition(target: marker.position, zoom: mapView.camera.zoom, bearing: 0.0, viewingAngle: 0.0)
-//
-//        mapView.camera = camera
+        //        let camera = GMSCameraPosition(target: marker.position, zoom: mapView.camera.zoom, bearing: 0.0, viewingAngle: 0.0)
+        //
+        //        mapView.camera = camera
         addressOfMarker(marker: marker)
         
         return true
@@ -775,7 +782,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         ratingCountLabel.textAlignment = .left
         ratingCountLabel.font = ratingLabel.font.withSize(1.2 * x)
         ratingCountLabel.adjustsFontSizeToFitWidth = true
-//        tailorDeatiledView.addSubview(ratingCountLabel)
+        //        tailorDeatiledView.addSubview(ratingCountLabel)
         
         let ratingImageView = UIImageView()
         ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY, width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
@@ -826,7 +833,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         let distanceLabel = UILabel()
         distanceLabel.frame = CGRect(x: x, y: ordersLabel.frame.maxY, width: tailorDeatiledView.frame.width - (2 * x), height: (2 * y))
-//        distanceLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        //        distanceLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         distanceLabel.text = "\(distanceInt) Km. from your location"
         distanceLabel.textColor = UIColor.black
         distanceLabel.textAlignment = .left
@@ -851,14 +858,14 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         addressLabel.textColor = UIColor.black
         addressLabel.textAlignment = .left
         addressLabel.numberOfLines = 2
-//        mapView.addSubview(addressLabel)
+        //        mapView.addSubview(addressLabel)
         
         Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
     }
     
     @objc func closeAddressLabel()
     {
-//        addressLabel.removeFromSuperview()
+        //        addressLabel.removeFromSuperview()
         tailorDeatiledView.removeFromSuperview()
     }
     
@@ -889,9 +896,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 100
-//    }
+    //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return 100
+    //    }
     
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
         return 200
@@ -966,15 +973,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         polyline.strokeWidth = 3.0
         polyline.map = mapView // Your map view
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

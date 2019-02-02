@@ -26,18 +26,18 @@ class PartsTableViewCell: UITableViewCell
         contentView.addSubview(contentSpace)
         
         partsName = UILabel()
-//        partsName.backgroundColor = UIColor.cyan
+        //        partsName.backgroundColor = UIColor.cyan
         partsName.textColor = UIColor.black
         partsName.textAlignment = .left
         partsName.font = UIFont(name: "Gilroy-Regular", size: 12)
         contentSpace.addSubview(partsName)
         
         partsImage = UIImageView()
-//        partsImage.backgroundColor = UIColor.green
+        //        partsImage.backgroundColor = UIColor.green
         contentSpace.addSubview(partsImage)
         
         partsSizeLabel = UILabel()
-//        partsSizeLabel.backgroundColor = UIColor.white
+        //        partsSizeLabel.backgroundColor = UIColor.white
         partsSizeLabel.text = "0.0"
         partsSizeLabel.textColor = UIColor.black
         partsSizeLabel.textAlignment = .left

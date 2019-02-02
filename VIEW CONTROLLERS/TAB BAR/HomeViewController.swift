@@ -12,7 +12,7 @@ import SideMenu
 class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, ServerAPIDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate
 {
     let newOrderView = UIView()
-   // let slideMenuButton = UIButton()
+    // let slideMenuButton = UIButton()
     let slideMB = UIButton()
     var slideView = UIView()
     
@@ -21,7 +21,7 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     let sortButton = UIButton()
     let searchTextField = UITextField()
     let searchTextTableView = UITableView()
-
+    
     let serviceCall = ServerAPI()
     
     //GENDER API PARAMETERS
@@ -39,7 +39,7 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     var imagePicker = UIImagePickerController()
     let addMaterialScrolView = UIScrollView()
     let addMaterialImageCollection = UIButton()
-
+    
     //DRESS TYPE PARAMETERS
     var dressTypeArray = NSArray()
     var dressIdArray = NSArray()
@@ -59,7 +59,7 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     
     //ORDER TYPE PARAMETERS
     let orderTypeView = UIView()
-
+    
     //CUSTOMIZATION 1 PAREMETERS
     let customization1View = UIView()
     
@@ -81,7 +81,7 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     //ADD MATERIAL PARAMETERS
     let addMaterialView = UIView()
     let addMaterialImage = UIImageView()
-
+    
     
     //POSITION
     var xPos:CGFloat!
@@ -113,26 +113,29 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         
         navigationTitle.text = "HOME"
         
+        //        navigationTitle.text =  NSLocalizedString("HOME", comment: "") //"HOME"
+        
+        
         slideMenu()
-
-//        screenContents()
-//        basicAPICall()
-//        allGestureRecogniser()
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        
+        //        screenContents()
+        //        basicAPICall()
+        //        allGestureRecogniser()
+        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
         
-
-         deviceInformation()
+        
+        deviceInformation()
         // DeviceError()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
             // Your code with delay
             self.checkContent()
         }
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -155,9 +158,9 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-       // ErrorStr = "Default Error"
+        // ErrorStr = "Default Error"
         PageNumStr = "HomeViewController"
-      //  MethodName = "do"
+        //  MethodName = "do"
         
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
@@ -175,7 +178,45 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
             let selectionButton = UIButton()
             selectionButton.frame = CGRect(x: (3 * xPos), y: y1, width: view.frame.width - (6 * xPos), height: (11.175 * yPos))
             selectionButton.layer.cornerRadius = 15
-//            selectionButton.setImage(UIImage(named: "dashboardButton"), for: .normal)
+            //            selectionButton.setImage(UIImage(named: "dashboardButton"), for: .normal)
+            selectionButton.layer.borderWidth = 1
+            selectionButton.layer.borderColor = UIColor.lightGray.cgColor
+            selectionButton.backgroundColor = UIColor.white
+            selectionButton.tag = i
+            selectionButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
+            selectionButton.isUserInteractionEnabled = true
+            view.addSubview(selectionButton)
+            
+            y1 = selectionButton.frame.maxY + yPos
+            
+            let buttonImage = UIImageView()
+            buttonImage.frame = CGRect(x: ((selectionButton.frame.width - (8 * xPos)) / 2), y: yPos, width: (8 * xPos), height: (7 * yPos))
+            buttonImage.image = UIImage(named: imageName[i])
+            selectionButton.addSubview(buttonImage)
+            
+            let buttonTitle = UILabel()
+            buttonTitle.frame = CGRect(x: 0, y: buttonImage.frame.maxY, width: selectionButton.frame.width, height: (2 * yPos))
+            buttonTitle.text = buttonTitleText[i]
+            buttonTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            buttonTitle.textAlignment = .center
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: 5)
+            selectionButton.addSubview(buttonTitle)
+        }
+    }
+    
+    func checkContentInArabic()
+    {
+        let buttonTitleText = ["طلب جديد", "حجز موعد", "متجر", "اشير واكسب"]
+        let imageName = ["new_order", "appointment", "store", "refer-&-earn"]
+        var y1:CGFloat = (10 * yPos)
+        
+        self.stopActivity()
+        for i in 0..<4
+        {
+            let selectionButton = UIButton()
+            selectionButton.frame = CGRect(x: (3 * xPos), y: y1, width: view.frame.width - (6 * xPos), height: (11.175 * yPos))
+            selectionButton.layer.cornerRadius = 15
+            //            selectionButton.setImage(UIImage(named: "dashboardButton"), for: .normal)
             selectionButton.layer.borderWidth = 1
             selectionButton.layer.borderColor = UIColor.lightGray.cgColor
             selectionButton.backgroundColor = UIColor.white
@@ -212,7 +253,7 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     {
         let closeSlideViewGesture = UITapGestureRecognizer(target: self, action: #selector(self.closeSlideView(gesture:)))
         closeSlideViewGesture.delegate = self
-//        view.addGestureRecognizer(closeSlideViewGesture)
+        //        view.addGestureRecognizer(closeSlideViewGesture)
         
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.slideViewOpenGesture))
         leftSwipe.direction = .right
@@ -228,7 +269,7 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
     @objc func closeSlideView(gesture : UITapGestureRecognizer)
     {
         slideView.removeFromSuperview()
-       // slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
+        // slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
         slideMB.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
     }
     
@@ -236,24 +277,24 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         super.viewWillAppear(true)
         newOrderView.removeFromSuperview()
         
-//        if let screen = UserDefaults.standard.value(forKey: "screenValue") as? Int{
-//            if screen == 1
-//            {
-//                addMaterialContent()
-//            }
-//            else
-//            {
-//                
-//            }
-//        }
+        //        if let screen = UserDefaults.standard.value(forKey: "screenValue") as? Int{
+        //            if screen == 1
+        //            {
+        //                addMaterialContent()
+        //            }
+        //            else
+        //            {
+        //
+        //            }
+        //        }
     }
     
-  //    override func viewWillDisappear(_ animated: Bool)
-  //    {
-  //        super.viewWillDisappear(true)
-  //        // Hide the Navigation Bar
-  //        self.navigationController?.isNavigationBarHidden = true
-  //    }
+    //    override func viewWillDisappear(_ animated: Bool)
+    //    {
+    //        super.viewWillDisappear(true)
+    //        // Hide the Navigation Bar
+    //        self.navigationController?.isNavigationBarHidden = true
+    //    }
     
     func basicAPICall()
     {
@@ -289,69 +330,69 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         
     }
     
-func API_CALLBACK_Gender(gender: NSDictionary)
-{
-        print("GENDER", gender)
-    let ResponseMsg = gender.object(forKey: "ResponseMsg") as! String
-        
-    if ResponseMsg == "Success"
+    func API_CALLBACK_Gender(gender: NSDictionary)
     {
+        print("GENDER", gender)
+        let ResponseMsg = gender.object(forKey: "ResponseMsg") as! String
         
-        let result = gender.object(forKey: "Result") as! NSArray
-        print("result", result)
-        
-        genderArray = result.value(forKey: "gender") as! NSArray
-        print("genderResult", genderArray)
-        
-        genderImageArray = result.value(forKey: "ImageURL") as! NSArray
-        print("ImageURL", genderImageArray)
-        
-        genderIdArray = result.value(forKey: "Id") as! NSArray
-        print("Id", genderIdArray)
-        
-        genderInArabicArray = result.value(forKey: "GenderInArabic") as! NSArray
-        print("GenderInArabic", genderInArabicArray)
-        
-        
-        for i in 0..<genderImageArray.count
+        if ResponseMsg == "Success"
         {
-            if let imageName = genderImageArray[i] as? String
+            
+            let result = gender.object(forKey: "Result") as! NSArray
+            print("result", result)
+            
+            genderArray = result.value(forKey: "gender") as! NSArray
+            print("genderResult", genderArray)
+            
+            genderImageArray = result.value(forKey: "ImageURL") as! NSArray
+            print("ImageURL", genderImageArray)
+            
+            genderIdArray = result.value(forKey: "Id") as! NSArray
+            print("Id", genderIdArray)
+            
+            genderInArabicArray = result.value(forKey: "GenderInArabic") as! NSArray
+            print("GenderInArabic", genderInArabicArray)
+            
+            
+            for i in 0..<genderImageArray.count
             {
-                let api = "http://appsapi.mzyoon.com/images/\(imageName)"
-                let apiurl = URL(string: api)
-                
-                if let data = try? Data(contentsOf: apiurl!) {
-                    print("DATA OF IMAGE", data)
-                    if let image = UIImage(data: data) {
-                        self.convertedGenderImageArray.append(image)
+                if let imageName = genderImageArray[i] as? String
+                {
+                    let api = "http://appsapi.mzyoon.com/images/\(imageName)"
+                    let apiurl = URL(string: api)
+                    
+                    if let data = try? Data(contentsOf: apiurl!) {
+                        print("DATA OF IMAGE", data)
+                        if let image = UIImage(data: data) {
+                            self.convertedGenderImageArray.append(image)
+                        }
+                    }
+                    else
+                    {
+                        let emptyImage = UIImage(named: "empty")
+                        self.convertedGenderImageArray.append(emptyImage!)
                     }
                 }
-                else
+                else if let imgName = genderImageArray[i] as? NSNull
                 {
                     let emptyImage = UIImage(named: "empty")
                     self.convertedGenderImageArray.append(emptyImage!)
                 }
             }
-            else if let imgName = genderImageArray[i] as? NSNull
-            {
-                let emptyImage = UIImage(named: "empty")
-                self.convertedGenderImageArray.append(emptyImage!)
-            }
-         }
-   }
-  else if ResponseMsg == "Failure"
-  {
-        let Result = gender.object(forKey: "Result") as! String
-        print("Result", Result)
-        
-        MethodName = "GetGenders"
-        ErrorStr = Result
-        DeviceError()
-  }
- }
- 
- func API_CALLBACK_DressType(dressType: NSDictionary)
- {
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = gender.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetGenders"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
+    func API_CALLBACK_DressType(dressType: NSDictionary)
+    {
         
         let ResponseMsg = dressType.object(forKey: "ResponseMsg") as! String
         
@@ -394,7 +435,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
                     self.convertedDressImageArray.append(emptyImage!)
                 }
             }
-             dressTypeContent()
+            dressTypeContent()
         }
         else if ResponseMsg == "Failure"
         {
@@ -404,9 +445,9 @@ func API_CALLBACK_Gender(gender: NSDictionary)
             MethodName = "GetDressTypeByGender"
             ErrorStr = Result
             DeviceError()
+        }
+        
     }
-    
-}
     
     func API_CALLBACK_Customization1(custom1: NSDictionary)
     {
@@ -535,7 +576,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
     func toGetImage(sendArray : NSArray, pathExtension : String) -> [UIImage]
     {
         var imageArray = [UIImage]()
-    
+        
         for i in 0..<sendArray.count
         {
             if let imageName = sendArray[i] as? String
@@ -562,55 +603,55 @@ func API_CALLBACK_Gender(gender: NSDictionary)
                 imageArray.append(emptyImage!)
             }
         }
-    
+        
         return imageArray
     }
     
     func screenContents()
     {
         /*let backgroundImage = UIImageView()
-        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        backgroundImage.image = UIImage(named: "background")
-        view.addSubview(backgroundImage)
-        
-        let navigationBar = UIView()
-        navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-        view.addSubview(navigationBar)
-        
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "HOME"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        navigationBar.addSubview(navigationTitle)
-        
-        let userImage = UIImageView()
-        userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: 40, height: 40)
-        userImage.image = UIImage(named: "women")
-        userImage.layer.cornerRadius = userImage.frame.height / 2
-        userImage.layer.masksToBounds = true
-        navigationBar.addSubview(userImage)
-        
-        let userName = UILabel()
-        userName.frame = CGRect(x: userImage.frame.maxX + x, y: navigationTitle.frame.maxY + y, width: navigationBar.frame.width - 200, height: (2 * y))
-        userName.text = "Hi, Noorul"
-        userName.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        userName.textAlignment = .left
-        userName.textColor = UIColor.white
-//        navigationBar.addSubview(userName)
-        
-        let notificationButton = UIButton()
-        notificationButton.frame = CGRect(x: navigationBar.frame.width - 50, y: navigationTitle.frame.minY, width: 30, height: 30)
-        notificationButton.setImage(UIImage(named: "notification"), for: .normal)
-//        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
-        navigationBar.addSubview(notificationButton)
-        
-        slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
-        slideMenuButton.setImage(UIImage(named: "sidemenu"), for: .normal)
-        slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
-//        view.addSubview(slideMenuButton)*/
+         backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+         backgroundImage.image = UIImage(named: "background")
+         view.addSubview(backgroundImage)
+         
+         let navigationBar = UIView()
+         navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+         navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+         view.addSubview(navigationBar)
+         
+         let navigationTitle = UILabel()
+         navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
+         navigationTitle.text = "HOME"
+         navigationTitle.textColor = UIColor.white
+         navigationTitle.textAlignment = .center
+         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+         navigationBar.addSubview(navigationTitle)
+         
+         let userImage = UIImageView()
+         userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: 40, height: 40)
+         userImage.image = UIImage(named: "women")
+         userImage.layer.cornerRadius = userImage.frame.height / 2
+         userImage.layer.masksToBounds = true
+         navigationBar.addSubview(userImage)
+         
+         let userName = UILabel()
+         userName.frame = CGRect(x: userImage.frame.maxX + x, y: navigationTitle.frame.maxY + y, width: navigationBar.frame.width - 200, height: (2 * y))
+         userName.text = "Hi, Noorul"
+         userName.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+         userName.textAlignment = .left
+         userName.textColor = UIColor.white
+         //        navigationBar.addSubview(userName)
+         
+         let notificationButton = UIButton()
+         notificationButton.frame = CGRect(x: navigationBar.frame.width - 50, y: navigationTitle.frame.minY, width: 30, height: 30)
+         notificationButton.setImage(UIImage(named: "notification"), for: .normal)
+         //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
+         navigationBar.addSubview(notificationButton)
+         
+         slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
+         slideMenuButton.setImage(UIImage(named: "sidemenu"), for: .normal)
+         slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
+         //        view.addSubview(slideMenuButton)*/
         
         let buttonTitleText = ["NEW ORDER", "BOOK AN APPOINTMENT", "STORE", "REFER AND EARN"]
         let imageName = ["new_order", "appointment", "store", "refer-&-earn"]
@@ -644,16 +685,16 @@ func API_CALLBACK_Gender(gender: NSDictionary)
     }
     
     /*@objc func slideMenuButtonAction(sender : UIButton)
-    {
-        slideView = SlideMenuView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-//        self.view.addSubview(slideView)
-        
-        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
-    }*/
+     {
+     slideView = SlideMenuView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+     //        self.view.addSubview(slideView)
+     
+     present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+     }*/
     
     @objc func slideViewOpenGesture(gesture : UISwipeGestureRecognizer)
     {
-     }
+    }
     
     @objc func slideViewCloseGesture(gesture : UISwipeGestureRecognizer)
     {
@@ -665,7 +706,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         if sender.tag == 0
         {
             print("NEW ORDER")
-//            newOrderContents()
+            //            newOrderContents()
             let newOrderScreen = GenderViewController()
             self.navigationController?.pushViewController(newOrderScreen, animated: true)
         }
@@ -732,7 +773,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
                 y1 = genderButton.frame.maxY + (2 * y)
                 x1 = (3 * x)
             }
-//            genderButton.backgroundColor = UIColor.lightGray
+            //            genderButton.backgroundColor = UIColor.lightGray
             genderButton.setImage(UIImage(named: "genderBackground"), for: .normal)
             genderButton.tag = i + 1
             genderButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
@@ -773,7 +814,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         if sender.tag == 1
         {
             print("MEN")
-//            dressTypeContent()
+            //            dressTypeContent()
         }
         else if sender.tag == 2
         {
@@ -843,7 +884,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         searchButton.layer.borderColor = UIColor.orange.cgColor
         searchButton.setImage(UIImage(named: "search"), for: .normal)
         searchTextField.addSubview(searchButton)
-
+        
         filterButton.frame = CGRect(x: 0, y: searchTextField.frame.maxY, width: (view.frame.width / 2) - 1, height: 40)
         filterButton.backgroundColor = UIColor.lightGray
         filterButton.setTitle("FILTER", for: .normal)
@@ -875,7 +916,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         layout.itemSize = CGSize(width: view.frame.width / 2.70, height: view.frame.width / 2.25)
         
         let dressTypeCollectionView = UICollectionView(frame: CGRect(x: (3 * x), y: filterButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: view.frame.height - (18 * y)), collectionViewLayout: layout)
-//        dressTypeCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
+        //        dressTypeCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
         dressTypeCollectionView.register(DressTypeCollectionViewCell.self, forCellWithReuseIdentifier: NSStringFromClass(DressTypeCollectionViewCell.self))
         dressTypeCollectionView.dataSource = self
         dressTypeCollectionView.delegate = self
@@ -884,7 +925,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         dressTypeCollectionView.allowsMultipleSelection = false
         dressTypeCollectionView.allowsSelection = true
         dressTypeCollectionView.selectItem(at: NSIndexPath(item: 0, section: 0) as IndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.top)
-//        dressTypeView.addSubview(dressTypeCollectionView)
+        //        dressTypeView.addSubview(dressTypeCollectionView)
         
         let dressTypeScrollView = UIScrollView()
         dressTypeScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + (2 * y), width: view.frame.width, height: (45 * y))
@@ -928,7 +969,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
     
     @objc func dressTypeButtonAction(sender : UIButton)
     {
-        dressTypeView.removeFromSuperview() 
+        dressTypeView.removeFromSuperview()
         orderTypeContent()
     }
     
@@ -984,8 +1025,8 @@ func API_CALLBACK_Gender(gender: NSDictionary)
                 sender.setTitleColor(UIColor.white, for: .normal)
                 filterContents()
                 
-//                let filterScreen = FilterViewController()
-//                self.navigationController?.pushViewController(filterScreen, animated: true)
+                //                let filterScreen = FilterViewController()
+                //                self.navigationController?.pushViewController(filterScreen, animated: true)
             }
         }
         else
@@ -1029,7 +1070,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         filterNavigationBar.addSubview(navigationTitle)
-
+        
         filterTableView.frame = CGRect(x: 0, y: filterNavigationBar.frame.maxY, width: filterView.frame.width, height: (20 * y))
         filterTableView.register(FilterTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(FilterTableViewCell.self))
         filterTableView.dataSource = self
@@ -1549,9 +1590,9 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         customization3NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * y))
         customization3NextButton.layer.masksToBounds = true
         customization3NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
-//        customization3NextButton.backgroundColor = UIColor.orange
-//        customization3NextButton.setTitle("NEXT", for: .normal)
-//        customization3NextButton.setTitleColor(UIColor.white, for: .normal)
+        //        customization3NextButton.backgroundColor = UIColor.orange
+        //        customization3NextButton.setTitle("NEXT", for: .normal)
+        //        customization3NextButton.setTitleColor(UIColor.white, for: .normal)
         customization3View.addSubview(customization3NextButton)
     }
     
@@ -1799,16 +1840,16 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addMaterialScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = 10
         addMaterialNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
-//        addMaterialNextButton.backgroundColor = UIColor.blue
-//        addMaterialNextButton.setTitle("Next", for: .normal)
-//        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
+        //        addMaterialNextButton.backgroundColor = UIColor.blue
+        //        addMaterialNextButton.setTitle("Next", for: .normal)
+        //        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialView.addSubview(addMaterialNextButton)
     }
     
     func addReferenceImage()
     {
         print("materialCount", self.materialCount)
-
+        
         materialCount += 1
         
         referenceMaterialCount = materialCount
@@ -1833,7 +1874,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
             cancelMaterialImageCollection.backgroundColor = UIColor.white
             cancelMaterialImageCollection.setTitle("\(i)", for: .normal)
             cancelMaterialImageCollection.setTitleColor(UIColor.black, for: .normal)
-//            cancelMaterialImageCollection.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
+            //            cancelMaterialImageCollection.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
             addMaterialImageCollection.addSubview(cancelMaterialImageCollection)
         }
         
@@ -1882,16 +1923,16 @@ func API_CALLBACK_Gender(gender: NSDictionary)
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: NSStringFromClass(DressTypeCollectionViewCell.self), for: indexPath) as! DressTypeCollectionViewCell
-//        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath)
+        //        let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath)
         
         myCell.dressTypeImage.frame = CGRect(x: 0, y: 0, width: (13.88 * x), height: (10 * y))
         myCell.dressTypeImage.image = convertedDressImageArray[indexPath.row]
         myCell.dressTypeImage.contentMode = .scaleAspectFit
-
+        
         
         myCell.dressTypeName.frame = CGRect(x: 0, y: myCell.dressTypeImage.frame.maxY, width: myCell.frame.width, height: (4 * y))
         myCell.dressTypeName.text = dressTypeArray[indexPath.row] as? String
-
+        
         myCell.backgroundColor = UIColor.clear
         
         print("MY CELL WIDTH - \(myCell.frame.width), MY CELL HEIGHT - \(myCell.frame.height)")
@@ -2067,7 +2108,7 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         {
             searchTextTableView.removeFromSuperview()
         }
-      
+        
         return true
     }
     
@@ -2078,15 +2119,15 @@ func API_CALLBACK_Gender(gender: NSDictionary)
         return false
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

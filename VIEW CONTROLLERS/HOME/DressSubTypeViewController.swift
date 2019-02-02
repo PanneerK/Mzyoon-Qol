@@ -17,7 +17,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     let dressSubTypeScrollView = UIScrollView()
     let searchTextField = UITextField()
     let sortButton = UIButton()
-
+    
     //DRESS SUB TYPE PARAMETERS
     
     var dressIdArray = NSArray()
@@ -39,9 +39,9 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         
         self.serviceCall.API_DressSubType(DressSubTypeId: screenTag, delegate: self)
         
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
-
+        
         
         super.viewDidLoad()
         
@@ -293,9 +293,22 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     {
         if sender.tag == 1
         {
-            UserDefaults.standard.set(dressSubTypeArray[sender.tag], forKey: "DressSubType")
-            let orderTypeScreen = OrderTypeViewController()
-            self.navigationController?.pushViewController(orderTypeScreen, animated: true)
+            let dressSubScreen = OrderTypeViewController()
+            
+            for i in 0..<dressSubTypeArray.count
+            {
+                if let id = dressIdArray[i] as? Int
+                {
+                    if sender.tag == id
+                    {
+                        UserDefaults.standard.set(dressSubTypeArray[i], forKey: "dressSubType")
+                        UserDefaults.standard.set(id, forKey: "dressSubTypeId")
+                        print("DRESS SUB TYPE OF SELECTED - \(sender.tag)", dressSubTypeArray[i])
+                    }
+                }
+            }
+            self.navigationController?.pushViewController(dressSubScreen, animated: true)
+            
         }
         else
         {
