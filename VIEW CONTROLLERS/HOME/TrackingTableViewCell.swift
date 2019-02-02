@@ -17,16 +17,18 @@ class TrackingTableViewCell: UITableViewCell
     let TrackingTime = UILabel()
     */
     
+    var contentSpace : UIView!
     var TrackerImg : UIImageView!
     var TrackingDetails : UILabel!
     var TrackingDate : UILabel!
     var TrackingTime : UILabel!
+    var spaceView : UIView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-      //  TrackerImg.backgroundColor = UIColor.blue
+       //  TrackerImg.backgroundColor = UIColor.blue
         
       
     
@@ -47,6 +49,7 @@ class TrackingTableViewCell: UITableViewCell
         super.layoutSubviews()
         
     }
+    
  /*
     override func awakeFromNib()
     {
@@ -61,4 +64,5 @@ class TrackingTableViewCell: UITableViewCell
         // Configure the view for the selected state
     }
  */
+    
 }
