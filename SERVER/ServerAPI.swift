@@ -18,8 +18,8 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-          var baseURL:String = "http://192.168.0.21/TailorAPI"
-    //     var baseURL:String = "http://appsapi.mzyoon.com"
+     //     var baseURL:String = "http://192.168.0.21/TailorAPI"
+            var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
 
