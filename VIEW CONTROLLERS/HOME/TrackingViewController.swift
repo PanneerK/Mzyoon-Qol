@@ -25,8 +25,8 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     var StatusArray = NSArray()
     var TrackingStatusIdArray = NSArray()
     
-   // let TrackingTableview = UITableView()
-    private var TrackingTableview: UITableView!
+    let TrackingTableview = UITableView()
+   // private var TrackingTableview: UITableView!
     
     // private let fruit: NSArray = ["apple", "orange", "banana", "strawberry", "lemon"]
     
@@ -36,12 +36,14 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
 
         // Do any additional setup after loading the view.
         
-       // TrackingView()
+        TrackingView()
         
         slideMenuButton.isHidden = true
         tabBar.isHidden = true
         
         self.ServiceCall.API_GetTrackingDetails(OrderId: 1, delegate: self)
+        
+        
         
     }
     
@@ -92,7 +94,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
             TrackingStatusIdArray = Result.value(forKey: "TrackingStatusId") as! NSArray
             print("TrackingStatusIdArray:",TrackingStatusIdArray)
             
-           TrackingView()
+             TrackingTableview.reloadData()
         }
         else if ResponseMsg == "Failure"
         {
@@ -135,20 +137,27 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         // let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         //  let navigationBarHeight: CGFloat = self.navigationController!.navigationBar.frame.size.height
         // let displayWidth: CGFloat = self.view.frame.width
+        
         let displayHeight: CGFloat = self.view.frame.height
         
-        TrackingTableview = UITableView(frame: CGRect(x: 0, y: TrackingDetailsNavigationBar.frame.maxY, width: TrackingDetailsNavigationBar.frame.width, height: displayHeight - (TrackingDetailsNavigationBar.frame.height)))
-        TrackingTableview.register(TrackingTableViewCell.self, forCellReuseIdentifier: "cell")         // register cell name
+      //  TrackingTableview = UITableView(frame: CGRect(x: 0, y: TrackingDetailsNavigationBar.frame.maxY, width: TrackingDetailsNavigationBar.frame.width, height: displayHeight - (TrackingDetailsNavigationBar.frame.height)))
+        
+        TrackingTableview.frame = CGRect(x: 0, y: TrackingDetailsNavigationBar.frame.maxY, width: TrackingDetailsNavigationBar.frame.width, height: displayHeight - (TrackingDetailsNavigationBar.frame.height))
+        TrackingTableview.backgroundColor = UIColor.white
+        TrackingTableview.register(TrackingTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(TrackingTableViewCell.self))
+        
+        // register cell name
         
         //Tableview..
         TrackingTableview.delegate = self
         TrackingTableview.dataSource = self
         
         //Auto-set the UITableViewCells height (requires iOS8+)
-        TrackingTableview.rowHeight = UITableView.automaticDimension
-        TrackingTableview.estimatedRowHeight = 44
+       // TrackingTableview.rowHeight = UITableView.automaticDimension
+        //TrackingTableview.estimatedRowHeight = 44
         
-        self.view.addSubview(TrackingTableview)
+        
+        view.addSubview(TrackingTableview)
         
     }
     
@@ -157,31 +166,54 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         self.navigationController?.popViewController(animated: true)
     }
     
-    
+   /*
     // return the number of sections
     func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
     }
-    
+    */
     
     // return the number of cells each section.
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 5
+        
+        return StatusArray.count
     }
     
     // return cells
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TrackingTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(TrackingTableViewCell.self), for: indexPath as IndexPath) as! TrackingTableViewCell
+       
+        cell.backgroundColor = UIColor.white
         
-       // cell.TrackingDetails.text = "Hello"
-       // cell.TrackingDate.text = "Message \(indexPath.row)"
+        cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (6 * y))
+        
+        cell.TrackingDate.frame = CGRect(x: x, y: y, width: (10 * x), height: (2 * y))
+        
+         cell.TrackerImg.frame = CGRect(x: cell.TrackingDate.frame.maxX + x, y: y, width: x, height: (5 * y))
+        
+        cell.TrackingDetails.frame = CGRect(x: cell.TrackerImg.frame.maxX + x, y: y, width: cell.frame.width - (15 * x), height: (2 * y))
+        
+        cell.TrackingTime.frame = CGRect(x: x, y: cell.TrackingDate.frame.maxY, width: (6 * x), height: (3 * y))
+        
+        cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
+        
+        
+        cell.TrackingDetails.text = StatusArray[indexPath.row] as? String
+        cell.TrackingDate.text = DateArray[indexPath.row] as? String
+        cell.TrackerImg.image = UIImage(named: "TrackingStatus")
+        
       //  cell.TrackingTime.text = DateFormatter.localizedString(from: NSDate() as Date, dateStyle: .short, timeStyle: .short)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return (6 * y)
     }
 
 }

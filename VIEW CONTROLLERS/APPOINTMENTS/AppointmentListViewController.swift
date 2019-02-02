@@ -6,7 +6,7 @@
 //  Copyright © 2019 QOL. All rights reserved.
 //
 
-import UIKit
+import UIKit 
 
 class AppointmentListViewController: CommonViewController,ServerAPIDelegate
 {
@@ -353,7 +353,5 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         self.navigationController?.popViewController(animated: true)
     }
    */
-    
-    
    
 }
