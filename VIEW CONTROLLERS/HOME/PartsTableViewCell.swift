@@ -8,7 +8,8 @@
 
 import UIKit
 
-class PartsTableViewCell: UITableViewCell {
+class PartsTableViewCell: UITableViewCell
+{
     
     var contentSpace:UIView!
     var partsImage : UIImageView!

@@ -13,7 +13,7 @@ class PaymentViewController: CommonViewController
 {
     
     let KEY:String = "qTTvw#d4mg@d5k3j"
-    let STOREID:String = "21550"
+    let STOREID:String = "21552"
     let EMAIL:String = "rohith.qol@gmail.com"
     
     var Amount_TF = UITextField()
@@ -122,7 +122,8 @@ class PaymentViewController: CommonViewController
     }
    
     /*
-    private func preparePaymentRequest() -> PaymentRequest{
+    private func preparePaymentRequest() -> PaymentRequest
+     {
         
         let paymentReq = PaymentRequest()
         paymentReq.key = KEY

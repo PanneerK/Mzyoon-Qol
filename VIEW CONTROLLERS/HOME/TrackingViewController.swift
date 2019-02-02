@@ -8,12 +8,27 @@
 
 import UIKit
 
-class TrackingViewController: CommonViewController,UITableViewDelegate,UITableViewDataSource
+class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableViewDelegate,UITableViewDataSource
 {
-  // let TrackingTableview = UITableView()
+    let ServiceCall = ServerAPI()
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
+    //Tracking array..
+    var DateArray = NSArray()
+    var StatusArray = NSArray()
+    var TrackingStatusIdArray = NSArray()
+    
+   // let TrackingTableview = UITableView()
     private var TrackingTableview: UITableView!
     
-     private let fruit: NSArray = ["apple", "orange", "banana", "strawberry", "lemon"]
+    // private let fruit: NSArray = ["apple", "orange", "banana", "strawberry", "lemon"]
     
     override func viewDidLoad()
     {
@@ -21,23 +36,77 @@ class TrackingViewController: CommonViewController,UITableViewDelegate,UITableVi
 
         // Do any additional setup after loading the view.
         
-        TrackingView()
+       // TrackingView()
         
         slideMenuButton.isHidden = true
         tabBar.isHidden = true
         
+        self.ServiceCall.API_GetTrackingDetails(OrderId: 1, delegate: self)
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("Tracking Details :", errorNumber)
     }
-    */
+    
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "TrackingViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.ServiceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        
+    }
+    
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+        }
+    }
+    func API_CALLBACK_GetTrackingDetails(getTrackingDetails: NSDictionary)
+    {
+        let ResponseMsg = getTrackingDetails.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = getTrackingDetails.object(forKey: "Result") as! NSArray
+           // print("Result", Result)
+            
+            DateArray = Result.value(forKey: "Date") as! NSArray
+            print("DateArray:",DateArray)
+            
+            StatusArray = Result.value(forKey: "Status") as! NSArray
+            print("StatusArray:",StatusArray)
+            
+            TrackingStatusIdArray = Result.value(forKey: "TrackingStatusId") as! NSArray
+            print("TrackingStatusIdArray:",TrackingStatusIdArray)
+            
+           TrackingView()
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getTrackingDetails.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetTrackingDetails"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+    
     func TrackingView()
     {
         self.stopActivity()
@@ -99,7 +168,7 @@ class TrackingViewController: CommonViewController,UITableViewDelegate,UITableVi
     // return the number of cells each section.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return fruit.count
+        return 5
     }
     
     // return cells
@@ -108,8 +177,8 @@ class TrackingViewController: CommonViewController,UITableViewDelegate,UITableVi
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TrackingTableViewCell
         
-        cell.TrackingDetails.text = "\(fruit[indexPath.row])"
-        cell.TrackingDate.text = "Message \(indexPath.row)"
+       // cell.TrackingDetails.text = "Hello"
+       // cell.TrackingDate.text = "Message \(indexPath.row)"
       //  cell.TrackingTime.text = DateFormatter.localizedString(from: NSDate() as Date, dateStyle: .short, timeStyle: .short)
         
         return cell
