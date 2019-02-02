@@ -12,7 +12,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
 {
     
     let randomInt = Int.random(in: 10265..<10365)
-
+    
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -26,6 +26,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     var customization3 = NSDictionary()
     var selectedTailors = [String]()
     
+    let orderSummaryScrollView = UIScrollView()
+    
+    var yPos = CGFloat()
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -36,7 +40,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -63,7 +67,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         orderSummaryNavigationBar.addSubview(navigationTitle)
         
-        let orderSummaryScrollView = UIScrollView()
         orderSummaryScrollView.frame = CGRect(x: 0, y: orderSummaryNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
         orderSummaryScrollView.backgroundColor = UIColor.clear
         view.addSubview(orderSummaryScrollView)
@@ -83,7 +86,18 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         let dressTypeArray = ["Gender - ", "Dress Type - ", "Dress Sub Type - "]
         let dressTypeImageArray = ["Gender-3", "", ""]
-        let getDressTypeArray = ["Men", "", "", "", ""]
+        var getDressTypeArray = ["Men"]
+        
+        if let dressType = UserDefaults.standard.value(forKey: "dressType") as? String
+        {
+            getDressTypeArray.append(dressType)
+        }
+        
+        if let dressSubType = UserDefaults.standard.value(forKey: "dressSubType") as? String
+        {
+            getDressTypeArray.append(dressSubType)
+        }
+        
         var y1:CGFloat = y
         
         for i in 0..<dressTypeArray.count
@@ -107,6 +121,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.text = dressTypeArray[i]
             dressTypeLabels.textColor = UIColor.white
             dressTypeLabels.textAlignment = .left
+            dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
             let getDressTypeLabels = UILabel()
@@ -115,64 +131,41 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.text = getDressTypeArray[i]
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
+            getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+            getDressTypeLabels.adjustsFontSizeToFitWidth = true
             dressSubViews.addSubview(getDressTypeLabels)
             
             y1 = dressSubViews.frame.maxY + (y / 2)
         }
         
-        let customization1HeadingLabel = UILabel()
-        customization1HeadingLabel.frame = CGRect(x: (3 * x), y: dressTypeView.frame.maxY + y, width: view.frame.width, height: (3 * y))
-        customization1HeadingLabel.text = "CUSTOMIZATION 1 AND CUSTOMIZATION 2"
-        customization1HeadingLabel.textColor = UIColor.black
-        customization1HeadingLabel.textAlignment = .left
-        customization1HeadingLabel.font = UIFont(name: "Avenir-Regular", size: 10)
-        orderSummaryScrollView.addSubview(customization1HeadingLabel)
+        yPos = dressTypeView.frame.maxY + y
         
-        let customization1View = UIView()
-        customization1View.frame = CGRect(x: (3 * x), y: customization1HeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (28.5 * y))
-        customization1View.backgroundColor = UIColor.white
-        orderSummaryScrollView.addSubview(customization1View)
-        
-        let customization1Array = ["Seasonal", "Place of Industry", "Brands", "Color", "Material Type", "Pattern"]
-        let customizationImage1Array = ["Seasonal", "Place_of_industry", "Brand", "", "Material_type", ""]
-        var y6:CGFloat = y
-        
-        for i in 0..<customization1Array.count
+        if let orderType = UserDefaults.standard.value(forKey: "orderType") as? Int
         {
-            let dressSubViews = UIView()
-            dressSubViews.frame = CGRect(x: x, y: y6, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
-            dressSubViews.layer.cornerRadius = 10
-            dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
-            dressSubViews.layer.masksToBounds = true
-            customization1View.addSubview(dressSubViews)
-            
-            let dressTypeImages = UIImageView()
-            dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
-            dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
-            dressTypeImages.image = UIImage(named: customizationImage1Array[i])
-            dressSubViews.addSubview(dressTypeImages)
-            
-            let dressTypeLabels = UILabel()
-            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
-            dressTypeLabels.backgroundColor = UIColor.clear
-            dressTypeLabels.text = customization1Array[i]
-            dressTypeLabels.textColor = UIColor.white
-            dressTypeLabels.textAlignment = .left
-            dressSubViews.addSubview(dressTypeLabels)
-            
-            let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
-            getDressTypeLabels.backgroundColor = UIColor.clear
-            getDressTypeLabels.text = customization1Array[i]
-            getDressTypeLabels.textColor = UIColor.white
-            getDressTypeLabels.textAlignment = .left
-            dressSubViews.addSubview(getDressTypeLabels)
-            
-            y6 = dressSubViews.frame.maxY + (y / 2)
+            if orderType != 3
+            {
+                
+            }
+            else
+            {
+                custom1AndCustom2Content()
+            }
+        }
+        else if let orderType = UserDefaults.standard.value(forKey: "orderType") as? String
+        {
+            if orderType == "3"
+            {
+                custom1AndCustom2Content()
+            }
+            else
+            {
+                
+            }
         }
         
         let customizationHeadingLabel = UILabel()
-        customizationHeadingLabel.frame = CGRect(x: (3 * x), y: customization1View.frame.maxY + y, width: view.frame.width, height: (3 * y))
+        customizationHeadingLabel.frame = CGRect(x: (3 * x), y: yPos, width: view.frame.width, height: (3 * y))
         customizationHeadingLabel.text = "CUSTOMIZATION 3"
         customizationHeadingLabel.textColor = UIColor.black
         customizationHeadingLabel.textAlignment = .left
@@ -208,7 +201,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         for i in 0..<customization3.count
         {
             let dressSubViews = UIView()
-            dressSubViews.frame = CGRect(x: x, y: y2, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
+            dressSubViews.frame = CGRect(x: x, y: y2, width: customizationView.frame.width - (2 * x), height: (4 * y))
             dressSubViews.layer.cornerRadius = 10
             dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
             dressSubViews.layer.masksToBounds = true
@@ -226,6 +219,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.text = "\(customKeys[i]) - "
             dressTypeLabels.textColor = UIColor.white
             dressTypeLabels.textAlignment = .left
+            dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
             let getDressTypeLabels = UILabel()
@@ -234,6 +229,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.text = customvalues[i]
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
+            getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+            getDressTypeLabels.adjustsFontSizeToFitWidth = true
             dressSubViews.addSubview(getDressTypeLabels)
             
             y2 = dressSubViews.frame.maxY + (y / 2)
@@ -273,19 +271,24 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressSubViews.addSubview(dressTypeImages)
             
             let dressTypeLabels = UILabel()
-            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (19 * x), height: (3 * y))
+            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (18 * x), height: (3 * y))
             dressTypeLabels.backgroundColor = UIColor.clear
             dressTypeLabels.text = premiumArray[i]
             dressTypeLabels.textColor = UIColor.white
             dressTypeLabels.textAlignment = .left
+            dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
             let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX, y: (y / 2), width: (9 * x), height: (3 * y))
+            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX, y: (y / 2), width: (7.5 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             getDressTypeLabels.text = getPremiumArray[i]
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
+            getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+            getDressTypeLabels.adjustsFontSizeToFitWidth = true
             dressSubViews.addSubview(getDressTypeLabels)
             
             y3 = dressSubViews.frame.maxY + (y / 2)
@@ -350,6 +353,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.text = "Tailor_\(i) - "
             dressTypeLabels.textColor = UIColor.white
             dressTypeLabels.textAlignment = .left
+            dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
             let getDressTypeLabels = UILabel()
@@ -358,6 +363,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.text = selectedTailors[i]
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
+            getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+            getDressTypeLabels.adjustsFontSizeToFitWidth = true
             dressSubViews.addSubview(getDressTypeLabels)
             
             y4 = dressSubViews.frame.maxY + (y / 2)
@@ -375,6 +383,139 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         orderSummaryScrollView.contentSize.height = submitButton.frame.maxY + (2 * y)
     }
     
+    func custom1AndCustom2Content()
+    {
+        let customization1HeadingLabel = UILabel()
+        customization1HeadingLabel.frame = CGRect(x: (3 * x), y: yPos, width: view.frame.width, height: (3 * y))
+        customization1HeadingLabel.text = "CUSTOMIZATION 1 AND CUSTOMIZATION 2"
+        customization1HeadingLabel.textColor = UIColor.black
+        customization1HeadingLabel.textAlignment = .left
+        customization1HeadingLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        orderSummaryScrollView.addSubview(customization1HeadingLabel)
+        
+        let customization1View = UIView()
+        customization1View.frame = CGRect(x: (3 * x), y: customization1HeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (28.5 * y))
+        customization1View.backgroundColor = UIColor.white
+        orderSummaryScrollView.addSubview(customization1View)
+        
+        let customization1Array = ["Seasonal - ", "Place of Industry - ", "Brands - ", "Color - ", "Material Type - ", "Pattern - "]
+        let customizationImage1Array = ["Seasonal", "Place_of_industry", "Brand", "", "Material_type", ""]
+        var getSeason = String()
+        var getIndustry = String()
+        var getBrand = String()
+        var getMaterial = String()
+        var getColor = String()
+        var getPattern = String()
+        
+        var getCustomizationOfAll = [String]()
+        
+        if let season = UserDefaults.standard.value(forKey: "season") as? [String]
+        {
+            for i in 0..<season.count
+            {
+                getSeason.append(contentsOf: season[i])
+            }
+            
+            getCustomizationOfAll.append(getSeason)
+        }
+        
+        if let industry = UserDefaults.standard.value(forKey: "industry") as? [String]
+        {
+            for i in 0..<industry.count
+            {
+                getIndustry.append(contentsOf: industry[i])
+            }
+            
+            getCustomizationOfAll.append(getIndustry)
+        }
+        
+        if let brand = UserDefaults.standard.value(forKey: "brand") as? [String]
+        {
+            for i in 0..<brand.count
+            {
+                getBrand.append(contentsOf: brand[i])
+            }
+            
+            getCustomizationOfAll.append(getBrand)
+        }
+        
+        if let material = UserDefaults.standard.value(forKey: "material") as? [String]
+        {
+            for i in 0..<material.count
+            {
+                getMaterial.append(contentsOf: material[i])
+            }
+            
+            getCustomizationOfAll.append(getMaterial)
+        }
+        
+        if let color = UserDefaults.standard.value(forKey: "color") as? [String]
+        {
+            for i in 0..<color.count
+            {
+                getColor.append(contentsOf: color[i])
+            }
+            
+            getCustomizationOfAll.append(getColor)
+        }
+        
+        print("WELCOME TO WORLD", UserDefaults.standard.value(forKey: "pattern"))
+        
+        if let pattern = UserDefaults.standard.value(forKey: "pattern") as? String
+        {
+            getCustomizationOfAll.append("\(pattern)")
+        }
+        else if let pattern = UserDefaults.standard.value(forKey: "pattern") as? Int
+        {
+            getCustomizationOfAll.append("\(pattern)")
+        }
+        
+        print("SUPER OF ALL", getCustomizationOfAll)
+        
+        var y6:CGFloat = y
+        
+        for i in 0..<customization1Array.count
+        {
+            let dressSubViews = UIView()
+            dressSubViews.frame = CGRect(x: x, y: y6, width: customization1View.frame.width - (2 * x), height: (4 * y))
+            dressSubViews.layer.cornerRadius = 10
+            dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
+            dressSubViews.layer.masksToBounds = true
+            customization1View.addSubview(dressSubViews)
+            
+            let dressTypeImages = UIImageView()
+            dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
+            dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
+            dressTypeImages.image = UIImage(named: customizationImage1Array[i])
+            dressSubViews.addSubview(dressTypeImages)
+            
+            let dressTypeLabels = UILabel()
+            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
+            dressTypeLabels.backgroundColor = UIColor.clear
+            dressTypeLabels.text = customization1Array[i]
+            dressTypeLabels.textColor = UIColor.white
+            dressTypeLabels.textAlignment = .left
+            dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
+            dressSubViews.addSubview(dressTypeLabels)
+            
+            let getDressTypeLabels = UILabel()
+            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
+            getDressTypeLabels.backgroundColor = UIColor.clear
+            getDressTypeLabels.text = getCustomizationOfAll[i]
+            getDressTypeLabels.textColor = UIColor.white
+            getDressTypeLabels.textAlignment = .left
+            getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+            getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+            getDressTypeLabels.adjustsFontSizeToFitWidth = true
+            dressSubViews.addSubview(getDressTypeLabels)
+            
+            y6 = dressSubViews.frame.maxY + (y / 2)
+        }
+        
+        yPos = customization1View.frame.maxY + y
+    }
+    
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
@@ -382,7 +523,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     @objc func submitButtonAction(sender : UIButton)
     {
-        var userId = String()
+        var userId = Int()
         var dressId = Int()
         var orderId = Int()
         var addressId = Int()
@@ -394,15 +535,28 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         var tailorId = [Int]()
         var custom3KeyInt = [Int]()
         var custom3ValuesInt = [Int]()
+        var measurementType = Int()
+        var deliveryTypeId = Int()
+        
+        if let delId = UserDefaults.standard.value(forKey: "serviceType") as? Int
+        {
+            deliveryTypeId = delId
+        }
         
         if let id = UserDefaults.standard.value(forKey: "userId") as? String
         {
-            userId = id
+            userId = Int(id)!
         }
         
-        if let dressid = UserDefaults.standard.value(forKey: "dressType") as? Int
+        if let dressid = UserDefaults.standard.value(forKey: "dressSubType") as? Int
         {
             dressId = dressid
+        }
+        else if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
+        {
+            let converted = Int(dressid)
+            print("CONVERTED", converted, dressid)
+            dressId = converted!
         }
         
         if let orderid = UserDefaults.standard.value(forKey: "orderType") as? Int
@@ -464,15 +618,25 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 custom3ValuesInt.append(Int(values)!)
             }
         }
-        print("MEAUREMENT VALUES", custom3KeyInt, custom3ValuesInt)
         
+        if let type = UserDefaults.standard.value(forKey: "measurementType") as? Int
+        {
+            measurementType = type
+        }
         print("MEAUREMENT VALUES", custom3KeyInt, custom3ValuesInt)
-        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: -1, MaterialImage: [], ReferenceImage: [], OrderCustomizationAttributeId: custom3KeyInt, OrderCustomizationAttributeImageId: custom3ValuesInt, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurementValuesId: measurementId, UserMeasurementValues: measurementValues, DeliveryTypeId: 1, delegate: self)
-       
+        print("USER ID", userId)
+        print("DRESS TYPE ID", dressId)
+        print("PATTERN ID", patternId)
+        print("ADDRESS ID", addressId)
+        print("MEASUREMENT NAME", measurementName)
+        
+        
+        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: 1, MaterialImage: [], ReferenceImage: [], OrderCustomizationAttributeId: custom3KeyInt, OrderCustomizationAttributeImageId: custom3ValuesInt, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurementValuesId: measurementId, UserMeasurementValues: measurementValues, DeliveryTypeId: deliveryTypeId, units: "cm", measurementType: measurementType, delegate: self)
+        
         let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(randomInt)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
-        self.present(alert, animated: true, completion: nil)
- 
+        //        self.present(alert, animated: true, completion: nil)
+        
     }
     
     func navigateToHomeScreen(action : UIAlertAction)
@@ -484,10 +648,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         window?.rootViewController = navigationScreen
         window?.makeKeyAndVisible()
     }
-
+    
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
-         print("Order Summary", errorMessage)
+        print("Order Summary", errorMessage)
     }
     
     func API_CALLBACK_InsertOrderSummary(insertOrder: NSDictionary)
@@ -497,7 +661,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             let Result = insertOrder.object(forKey: "Result") as! String
-            print("Result", Result)
+            print("Result in SUCCESS", Result)
+            
+            UserDefaults.standard.set(Result, forKey: "requestId")
             
             let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(Result)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
@@ -506,7 +672,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         else if ResponseMsg == "Failure"
         {
             let Result = insertOrder.object(forKey: "Result") as! String
-            print("Result", Result)
+            print("Result IN FAILURE", Result)
             
             MethodName = "InsertOrder"
             ErrorStr = Result
@@ -539,13 +705,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

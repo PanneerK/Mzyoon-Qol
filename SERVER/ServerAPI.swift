@@ -13,16 +13,16 @@ import Reachability
 
 class ServerAPI : NSObject
 {
-
+    
     var delegate: ServerAPIDelegate?
     
     var resultDict:NSDictionary = NSDictionary()
     
-//          var baseURL:String = "http://192.168.0.21/TailorAPI"
+//    var baseURL:String = "http://192.168.0.21/TailorAPI"
          var baseURL:String = "http://appsapi.mzyoon.com"
- 
+    
     let deviceId = UIDevice.current.identifierForVendor
-
+    
     func API_LoginUser(CountryCode : String, PhoneNo : String, delegate:ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
@@ -102,7 +102,7 @@ class ServerAPI : NSObject
             print("URL COUNRTY", urlString)
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
-                                
+                
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
@@ -202,27 +202,27 @@ class ServerAPI : NSObject
             let urlString:String = String(format: "%@/images/\(imageName)", arguments: [baseURL])
             
             /*request(urlString, method: .get, parameters: nil, encoding: URLEncoding.default).responseJSON {response in
-                
-                if response.result.value != nil
-                {
-                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    delegate.API_CALLBACK_GenderImage!(genderImage: self.resultDict)
-                }
-                else
-                {
-                    delegate.API_CALLBACK_Error(errorNumber: 4, errorMessage: "Genders Image Failed")
-                }
-            }*/
+             
+             if response.result.value != nil
+             {
+             self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+             delegate.API_CALLBACK_GenderImage!(genderImage: self.resultDict)
+             }
+             else
+             {
+             delegate.API_CALLBACK_Error(errorNumber: 4, errorMessage: "Genders Image Failed")
+             }
+             }*/
             
-                    request(urlString).responseData { (response) in
-                        if response.data != nil {
-                            print(response.result)
-                            // Show the downloaded image:
-                            if let data = response.data {
-                                delegate.API_CALLBACK_GenderImage!(genderImage: data)
-                                }
-                        }
+            request(urlString).responseData { (response) in
+                if response.data != nil {
+                    print(response.result)
+                    // Show the downloaded image:
+                    if let data = response.data {
+                        delegate.API_CALLBACK_GenderImage!(genderImage: data)
                     }
+                }
+            }
         }
         else
         {
@@ -260,10 +260,34 @@ class ServerAPI : NSObject
         }
     }
     
+    class Customization: NSObject {
+        
+        var Id: Int?
+        
+        init(Id: Int) {
+            
+            self.Id = Id
+            
+        }
+        
+        
+        
+        func getDictFormat() -> [String: Int]{
+            
+            
+            return ["Id" : Id!]
+            
+        }
+    }
+    
+    
     func API_Customization1(originId : [Int], seasonId : [Int], delegate : ServerAPIDelegate)
     {
         var season = String()
         var origin = String()
+        
+        var convertedSeason = String()
+        var convertedOrigin = String()
         
         for i in 0..<originId.count
         {
@@ -289,16 +313,41 @@ class ServerAPI : NSObject
             }
         }
         
-        print("SEASAON", origin)
         
+        var array = [Customization]()
+        
+        array.append(Customization(Id: 1))
+        
+        array.append(Customization(Id: 2))
+        
+        var List = [[String: Int]]()
+        
+        
+        for item in array {
+            
+            List.append(item.getDictFormat())
+            
+        }
+        
+        
+        for i in 0..<originId.count
+        {
+            convertedOrigin.append(contentsOf: "placeofOrginId")
+        }
+        
+        print("DICT NEW")
+                
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Customization 1 Page")
             
-            let parameters = ["placeofOrginId[0][id]" : "\(origin)", "seasonId[0][id]" : "\(season)"] as [String : Any]
+            let parameters = ["placeofOrginId[0][id]" : origin, "seasonId[0][id]" : season] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetCustomization1", arguments: [baseURL])
-                        
+            
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
                 if response.result.value != nil
                 {
@@ -487,7 +536,7 @@ class ServerAPI : NSObject
             let urlString:String = String(format: "%@/API/Order/GetCustomization3", arguments: [baseURL])
             
             print("Custom 3", urlString)
-                        
+            
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
                 if response.result.value != nil
                 {
@@ -824,7 +873,7 @@ class ServerAPI : NSObject
         }
     }
     
-     // Measurement-1 Manually list show of existing user..
+    // Measurement-1 Manually list show of existing user..
     func API_ExistingUserMeasurement(DressTypeId : String, UserId : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
@@ -868,7 +917,7 @@ class ServerAPI : NSObject
             let urlString:String = String(format: "%@/API/Order/GetMeasurementParts?Id=\(MeasurementParts)", arguments: [baseURL])
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
-                 print("REQUEST", urlString)
+                print("REQUEST", urlString)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
@@ -1012,7 +1061,7 @@ class ServerAPI : NSObject
     }
     
     // Image Upload.. profile
-    func API_ProfileImageUpload(buyerImages : UIImage, buyerImagepath : NSURL, delegate : ServerAPIDelegate)
+    func API_ProfileImageUpload(buyerImages : UIImage, delegate : ServerAPIDelegate)
     {
         let date = Date().timeIntervalSince1970
         print("DATE", date)
@@ -1038,7 +1087,7 @@ class ServerAPI : NSObject
             upload(multipartFormData: {(multipartFormData:MultipartFormData) in
                 for (key,value) in parameters
                 {
-                     multipartFormData.append(value.jpegData(compressionQuality: 0.5)!, withName: key, fileName: "Profile_\(dateInt).png", mimeType: "image/jpeg")
+                    multipartFormData.append(value.jpegData(compressionQuality: 0.5)!, withName: key, fileName: "Profile_\(dateInt).png", mimeType: "image/jpeg")
                 };
                 
             }, usingThreshold: UInt64.init(), to:  urlString, method: .post, headers: headers, encodingCompletion: { encodingResult in
@@ -1129,13 +1178,13 @@ class ServerAPI : NSObject
     
     
     // Order Summary... 19/12/2018..
-    func API_InsertOrderSummary(dressType : Int, CustomerId : String, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [UIImage], ReferenceImage : [UIImage], OrderCustomizationAttributeId : [Int], OrderCustomizationAttributeImageId : [Int], TailorId : [Int], MeasurementBy : String, CreatedBy : String, MeasurementName : String, UserMeasurementValuesId : NSArray, UserMeasurementValues : [Float], DeliveryTypeId : Int, delegate : ServerAPIDelegate)
+    func API_InsertOrderSummary(dressType : Int, CustomerId : Int, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [UIImage], ReferenceImage : [UIImage], OrderCustomizationAttributeId : [Int], OrderCustomizationAttributeImageId : [Int], TailorId : [Int], MeasurementBy : String, CreatedBy : Int, MeasurementName : String, UserMeasurementValuesId : NSArray, UserMeasurementValues : [Float], DeliveryTypeId : Int, units : String, measurementType : Int, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Order Summary Page")
             
-            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage[0][Image]" : "\(MaterialImage)", "ReferenceImage[0][Image]" : "\(ReferenceImage)" , "OrderCustomization[0][CustomizationAttributeId]" : "\(OrderCustomizationAttributeId)", "OrderCustomization[0][AttributeImageId]" : "\(OrderCustomizationAttributeImageId)", "TailorId[0][Id]" : "\(TailorId)", "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurementValues[0][UserMeasurementId]" : "\(UserMeasurementValuesId)", "UserMeasurementValues[0][Value]" : "\(UserMeasurementValues)", "DeliveryTypeId" : DeliveryTypeId ] as [String : Any]
+            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage[0][Image]" : "\(MaterialImage)", "ReferenceImage[0][Image]" : "\(ReferenceImage)" , "OrderCustomization[0][CustomizationAttributeId]" : "\(OrderCustomizationAttributeId)", "OrderCustomization[0][AttributeImageId]" : "\(OrderCustomizationAttributeImageId)", "TailorId[0][Id]" : "\(TailorId)", "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurementValues[0][UserMeasurementId]" : "\(UserMeasurementValuesId)", "UserMeasurementValues[0][Value]" : "\(UserMeasurementValues)", "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurementType" : measurementType] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertOrder", arguments: [baseURL])
             
@@ -1166,7 +1215,7 @@ class ServerAPI : NSObject
         
         if (Reachability()?.isReachable)!
         {
-          
+            
             print("Server Reached - State List Page")
             
             let parameters = ["Id" : countryId] as [String : Any]
@@ -1177,7 +1226,7 @@ class ServerAPI : NSObject
             print("PARAMETERS", parameters)
             
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
-            
+                
                 print("REQUEST", request)
                 if response.result.value != nil
                 {
@@ -1189,7 +1238,7 @@ class ServerAPI : NSObject
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "State List Failed")
                 }
-          }
+            }
         }
         else
         {
@@ -1215,7 +1264,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                   // print("response", self.resultDict)
+                    // print("response", self.resultDict)
                     delegate.API_CALLBACK_OrderApprovalPrice!(orderApprovalPrice: self.resultDict)
                 }
                 else
@@ -1309,11 +1358,11 @@ class ServerAPI : NSObject
             print("Order Request List: ", urlString)
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
-               // print("REQUEST", request)
+                // print("REQUEST", request)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                     print("response", self.resultDict)
+                    print("response", self.resultDict)
                     delegate.API_CALLBACK_GetOrderRequest!(requestList: self.resultDict)
                 }
                 else
@@ -1457,8 +1506,8 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
-        
-        
+    
+    
     // Order Approval - Qty update..
     func API_UpdateQtyOrderApproval(OrderId : Int, Qty : Int, delegate : ServerAPIDelegate)
     {
@@ -1510,7 +1559,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                   // print("response", self.resultDict)
+                    // print("response", self.resultDict)
                     delegate.API_CALLBACK_GetAppointmentMaterial!(getAppointmentMaterial: self.resultDict)
                 }
                 else
@@ -1543,7 +1592,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                   // print("resultDict", self.resultDict)
+                    // print("resultDict", self.resultDict)
                     delegate.API_CALLBACK_GetAppointmentMeasurement!(getAppointmentMeasure: self.resultDict)
                 }
                 else
@@ -1709,7 +1758,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                     print("resultDict", self.resultDict)
+                    print("resultDict", self.resultDict)
                     delegate.API_CALLBACK_GetAppointmentList!(getAppointmentList: self.resultDict)
                 }
                 else
@@ -1757,6 +1806,32 @@ class ServerAPI : NSObject
         }
     }
     
+    func API_ServiceRequest(delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Service Request Page")
+            
+            let urlString:String = String(format: "%@/API/Shop/GetServiceType", arguments: [baseURL])
+            
+            print("URL STRING FOR Service Request", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: URLEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    
+                    delegate.API_CALLBACK_ServiceRequest!(service: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 10, errorMessage: "Service Request Failed")
+                }
+            }
+        }
+        
+    }
     
     // Get Ratings..
     func API_GetRatings(TailorId : Int , delegate : ServerAPIDelegate)
@@ -1782,6 +1857,44 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 32, errorMessage: "Get Ratings Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    
+    
+    func API_DirectionRequest(origin : String, destination : String, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Direction Page")
+            
+            let urlString:String = String(format: "%@https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving", arguments: [])
+            
+            print("URL STRING", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: URLEncoding.default).responseJSON {response in
+                
+                print("REQUEST", request)
+                //                let json = JSON(data: response.data!)
+                //                let routes = json["routes"].arrayValue
+                
+                print("ROUTES", response.data)
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_DirectionRequest!(direction: self.resultDict)
+                    print("response", self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Direction Failed")
                 }
             }
         }
@@ -1849,6 +1962,7 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 34, errorMessage: "List Of Orders Failed")
+                    
                 }
             }
         }
@@ -1857,6 +1971,7 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
     
     //  ORder Details..
     func API_GetOrderDetails(OrderId : Int , delegate : ServerAPIDelegate)
@@ -1876,7 +1991,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                   // print("resultDict", self.resultDict)
+                    // print("resultDict", self.resultDict)
                     
                     delegate.API_CALLBACK_GetOrderDetails!(getOrderDetails: self.resultDict)
                 }
@@ -1925,4 +2040,5 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
 }

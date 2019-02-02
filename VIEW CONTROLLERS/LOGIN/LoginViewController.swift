@@ -11,7 +11,7 @@ import NVActivityIndicatorView
 
 class LoginViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate, UITextFieldDelegate
 {
-    
+    var findString = "appDelegate"
     let commonScreen = CommonViewController()
     
     var x = CGFloat()
@@ -26,7 +26,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     let flagImageView = UIImageView()
     var countryCodeAlert = UIAlertController(title: "", message: "Please select your country code", preferredStyle: .alert)
     let blurView = UIView()
-
+    let languageButton = UIButton()
+    
     
     //OTP CONTENTS
     let otpView = UIView()
@@ -41,7 +42,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     var act = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     var secs = 30
     var secTimer = Timer()
-
+    
     //SERVER PARAMETERS
     let server = ServerAPI()
     
@@ -50,7 +51,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     var countryNameArray = NSArray()
     var countryFlagArray = NSArray()
     var individualCountryFlagArray = [UIImage]()
-
+    
     //SET PARAMETERS
     var selectedCountryCode = String()
     var selectedIndex = Int()
@@ -76,7 +77,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     let activityIndicator = UIActivityIndicatorView()
     
     var otpId = 1
-
+    
     override func viewDidLoad()
     {
         UserDefaults.standard.set(0, forKey: "screenAppearance")
@@ -91,14 +92,23 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         button.frame = CGRect(x: 50, y: 150, width: 100, height: 50)
         button.backgroundColor = UIColor.red
         button.addTarget(self, action: Selector(("helpless")), for: .touchUpInside)
-//        self.view.addSubview(button)
-
-        splashScreen()
-
+        //        self.view.addSubview(button)
+        
+        print("FIND STRING", findString)
+        
+        if findString == "appDelegate"
+        {
+            splashScreen()
+        }
+        else
+        {
+            active()
+        }
+        
         self.addDoneButtonOnKeyboard()
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -156,7 +166,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     @objc func doneButtonAction()
     {
         self.view.endEditing(true)
-
+        
         if let string1 = otp1Letter.text, let string2 = otp2Letter.text, let string3 = otp3Letter.text, let string4 = otp4Letter.text, let string5 = otp5Letter.text, let string6 = otp6Letter.text
         {
             if string1 == "0" && string2 == "0" && string3 == "0" && string4 == "0" && string5 == "0" && string6 == "0"
@@ -195,9 +205,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-      //  ErrorStr = "Default Error"
+        //  ErrorStr = "Default Error"
         PageNumStr = "Login ViewController"
-       // MethodName = "do"
+        // MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
@@ -233,50 +243,50 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             countryCodeArray = result.value(forKey: "PhoneCode") as! NSArray
             
             countryFlagArray = result.value(forKey: "Flag") as! NSArray
-       // }
+            // }
             
-            screenContents()
-        
-        print("COUNT OF", countryFlagArray.count)
-        
-        /*for i in 0..<countryFlagArray.count
-        {
-            print("IMAGE NAME -\(i)", countryFlagArray[i])
-            if let imageName = countryFlagArray[i] as? String
+            screenContentsInEnglish()
+            
+            print("COUNT OF", countryFlagArray.count)
+            
+            /*for i in 0..<countryFlagArray.count
+             {
+             print("IMAGE NAME -\(i)", countryFlagArray[i])
+             if let imageName = countryFlagArray[i] as? String
+             {
+             //                server.API_FlagImages(imageName: imageName, delegate: self)
+             let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+             let apiurl = URL(string: api)
+             //                load(url: apiurl!)
+             
+             print("API URL", apiurl)
+             
+             if apiurl != nil
+             {
+             if let data = try? Data(contentsOf: apiurl!) {
+             print("DATA OF IMAGE", data)
+             if let image = UIImage(data: data) {
+             self.individualCountryFlagArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             individualCountryFlagArray.append(emptyImage!)
+             }
+             }
+             }
+             else if let imgName = countryFlagArray[i] as? NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             individualCountryFlagArray.append(emptyImage!)
+             }
+             }*/
+            
+            for i in 0..<countryCodeArray.count
             {
-                //                server.API_FlagImages(imageName: imageName, delegate: self)
-                let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
-                let apiurl = URL(string: api)
-//                load(url: apiurl!)
-                
-                print("API URL", apiurl)
-                
-                if apiurl != nil
-                {
-                    if let data = try? Data(contentsOf: apiurl!) {
-                        print("DATA OF IMAGE", data)
-                        if let image = UIImage(data: data) {
-                            self.individualCountryFlagArray.append(image)
-                        }
-                    }
-                    else
-                    {
-                        let emptyImage = UIImage(named: "empty")
-                        individualCountryFlagArray.append(emptyImage!)
-                    }
-                }             
+                countryCodeAlert.addAction(UIAlertAction(title: "\(countryNameArray[i])", style: .default, handler: countryCodeAlertAction(action:)))
             }
-            else if let imgName = countryFlagArray[i] as? NSNull
-            {
-                let emptyImage = UIImage(named: "empty")
-                individualCountryFlagArray.append(emptyImage!)
-            }
-        }*/
-        
-        for i in 0..<countryCodeArray.count
-        {
-            countryCodeAlert.addAction(UIAlertAction(title: "\(countryNameArray[i])", style: .default, handler: countryCodeAlertAction(action:)))
-        }
             
             countryCodeTableView.reloadData()
             removeSplashScreen()
@@ -285,7 +295,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             let Result = countryCodes.object(forKey: "Result") as! String
             print("Result", Result)
-    
+            
             MethodName = "getallcountries"
             ErrorStr = Result
             DeviceError()
@@ -356,7 +366,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             let UserId = loginResult.object(forKey: "UserId") as! Int
             
             UserDefaults.standard.set(UserId, forKey: "userId")
-                
+            
             if result != 2 || result != 1
             {
                 serviceCall.API_IsProfileUserType(UserType: "Customer", UserId: Int(UserId), delegate: self)
@@ -372,7 +382,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             let Result = loginResult.object(forKey: "Result") as! String
             print("Result", Result)
-        
+            
             MethodName = "ValidateOTP"
             ErrorStr = Result
             DeviceError()
@@ -411,133 +421,269 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    func screenContents()
+    func screenContentsInEnglish()
     {
+        activeStop()
         
-                let backgroundImage = UIImageView()
-                backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-                backgroundImage.image = UIImage(named: "background")
-                view.addSubview(backgroundImage)
-                
-                let logoImageView = UIImageView()
-                logoImageView.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: (10 * y), width: (15 * x), height: (6 * y))
-                logoImageView.image = UIImage(named: "logo")
-                view.addSubview(logoImageView)
-                
-                let numberView = UIView()
-                numberView.frame = CGRect(x: (2 * x), y: logoImageView.frame.maxY + (5 * y), width: view.frame.width - (4 * x), height: (5 * y))
-                numberView.layer.cornerRadius = 5
-                numberView.layer.borderWidth = 2
-                numberView.layer.borderColor = UIColor.blue.cgColor
-                //        view.addSubview(numberView)
-                
-                mobileCountryCodeButton.frame = CGRect(x: (2 * x), y: logoImageView.frame.maxY + (10 * y), width: (10 * x), height: (3 * y))
-                mobileCountryCodeButton.backgroundColor = UIColor(red: 0.7647, green: 0.7882, blue: 0.7765, alpha: 1.0)
-                mobileCountryCodeButton.addTarget(self, action: #selector(self.countryCodeButtonAction(sender:)), for: .touchUpInside)
-                view.addSubview(mobileCountryCodeButton)
-                
-                flagImageView.frame = CGRect(x: (x / 2), y: (y / 2), width: (2.5 * x), height: (mobileCountryCodeButton.frame.height - y))
-                if let imageName = countryFlagArray[0] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
-                    let apiurl = URL(string: api)
-                    
-                    if apiurl != nil
-                    {
-                        flagImageView.dowloadFromServer(url: apiurl!)
-                    }
-                    else
-                    {
-                        flagImageView.image = UIImage(named: "empty")
-                    }
-                }
-                mobileCountryCodeButton.addSubview(flagImageView)
-                
-                mobileCountryCodeLabel.frame = CGRect(x: flagImageView.frame.maxX + (x / 2), y: 0, width: (4 * x), height: mobileCountryCodeButton.frame.height)
-                mobileCountryCodeLabel.text = countryCodeArray[0] as? String
-                mobileCountryCodeLabel.textColor = UIColor.black
-                mobileCountryCodeLabel.textAlignment = .left
-                mobileCountryCodeLabel.font = UIFont(name: "Avenir-Heavy", size: (1.8 * x))
-                mobileCountryCodeButton.addSubview(mobileCountryCodeLabel)
-                
-                let downArrowImageView = UIImageView()
-                downArrowImageView.frame = CGRect(x: mobileCountryCodeButton.frame.width - (2 * y), y: ((mobileCountryCodeButton.frame.height - (1.5 * x)) / 2), width: (1.5 * x), height: (1.5 * y))
-                downArrowImageView.image = UIImage(named: "downArrow")
-                mobileCountryCodeButton.addSubview(downArrowImageView)
-                
-                let mobileImageView = UIImageView()
-                mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: logoImageView.frame.maxY + (10 * y), width: (1.8 * x), height: (2.8 * y))
-                mobileImageView.image = UIImage(named: "mobile")
-                view.addSubview(mobileImageView)
-                
-                mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: logoImageView.frame.maxY + (10 * y), width: numberView.frame.width - (12 * x), height: (3 * y))
-                mobileTextField.placeholder = "Mobile Number"
-                mobileTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
-                mobileTextField.textAlignment = .left
-                mobileTextField.font = UIFont(name: "Avenir-Heavy", size: (1.8 * x))
-                let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.mobileTextField.frame.height))
-                mobileTextField.leftView = paddingView
-                mobileTextField.leftViewMode = UITextField.ViewMode.always
-                mobileTextField.adjustsFontSizeToFitWidth = true
-                mobileTextField.keyboardType = .numberPad
-                mobileTextField.clearsOnBeginEditing = true
-                mobileTextField.returnKeyType = .done
-                mobileTextField.delegate = self
-                mobileTextField.addTarget(self, action: #selector(self.mobileTextField(textField:)), for: .editingChanged)
-                view.addSubview(mobileTextField)
-                
-                let underline = UILabel()
-                underline.frame = CGRect(x: mobileImageView.frame.minX, y: mobileTextField.frame.maxY, width: mobileTextField.frame.width, height: 1)
-                underline.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
-                view.addSubview(underline)
-                
-                continueButton.frame = CGRect(x: (2 * x), y: mobileTextField.frame.maxY + (5 * y), width: view.frame.width - (4 * x), height: (4 * y))
-                continueButton.layer.cornerRadius = 5
-                continueButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-                continueButton.setTitle("CONTINUE", for: .normal)
-                continueButton.setTitleColor(UIColor.white, for: .normal)
-                continueButton.titleLabel?.font = continueButton.titleLabel?.font.withSize(1.5 * x)
-                continueButton.addTarget(self, action: #selector(self.continueButtonAction(sender:)), for: .touchUpInside)
-                view.addSubview(continueButton)
-                
-                let languageHeadingLabel = UILabel()
-                languageHeadingLabel.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: continueButton.frame.maxY + (7 * y), width: (15 * x), height: (3 * y))
-                languageHeadingLabel.text = "CHOOSE LANGUAGE"
-                languageHeadingLabel.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
-                languageHeadingLabel.textAlignment = .center
-                languageHeadingLabel.font = UIFont(name: "Avenir-Heavy", size: (1.2 * x))
-                view.addSubview(languageHeadingLabel)
-                
-                let languageButton = UIButton()
-                languageButton.frame = CGRect(x: (2 * x), y: languageHeadingLabel.frame.maxY + y, width: view.frame.width - (4 * x), height: (4 * y))
-                languageButton.layer.borderWidth = 1
-                languageButton.layer.borderColor = UIColor.lightGray.cgColor
-                languageButton.backgroundColor = UIColor.white
-                languageButton.setTitle("English", for: .normal)
-                languageButton.setTitleColor(UIColor.black, for: .normal)
-                languageButton.titleLabel?.font = languageButton.titleLabel?.font.withSize(1.5 * x)
-                //        languageButton.setImage(UIImage(named: "languageBackground"), for: .normal)
-                //        languageButton.addTarget(self, action: #selector(self.continueButtonAction(sender:)), for: .touchUpInside)
-                view.addSubview(languageButton)
-                
-                let languageFlagImageView = UIImageView()
-                languageFlagImageView.frame = CGRect(x: x, y: ((languageButton.frame.height - (2 * y)) / 2), width: (2.5 * x), height: (2 * y))
-                languageFlagImageView.image = UIImage(named: "english")
-                languageButton.addSubview(languageFlagImageView)
-                
-                let languageLabel = UILabel()
-                languageLabel.frame = CGRect(x: languageFlagImageView.frame.maxX + x, y: ((languageButton.frame.height - (2 * y)) / 2), width: languageButton.frame.width, height: (2 * y))
-                languageLabel.text = "English"
-                languageLabel.textColor = UIColor.black
-                languageLabel.textAlignment = .left
-                languageLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
-                //        languageButton.addSubview(languageLabel)
+        let backgroundImage = UIImageView()
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        backgroundImage.image = UIImage(named: "background")
+        view.addSubview(backgroundImage)
         
+        let logoImageView = UIImageView()
+        logoImageView.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: (10 * y), width: (15 * x), height: (6 * y))
+        logoImageView.image = UIImage(named: "logo")
+        view.addSubview(logoImageView)
         
+        let numberView = UIView()
+        numberView.frame = CGRect(x: (2 * x), y: logoImageView.frame.maxY + (5 * y), width: view.frame.width - (4 * x), height: (5 * y))
+        numberView.layer.cornerRadius = 5
+        numberView.layer.borderWidth = 2
+        numberView.layer.borderColor = UIColor.blue.cgColor
+        //        view.addSubview(numberView)
         
-     
+        mobileCountryCodeButton.frame = CGRect(x: (2 * x), y: logoImageView.frame.maxY + (10 * y), width: (10 * x), height: (3 * y))
+        mobileCountryCodeButton.backgroundColor = UIColor(red: 0.7647, green: 0.7882, blue: 0.7765, alpha: 1.0)
+        mobileCountryCodeButton.addTarget(self, action: #selector(self.countryCodeButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(mobileCountryCodeButton)
+        
+        flagImageView.frame = CGRect(x: (x / 2), y: (y / 2), width: (2.5 * x), height: (mobileCountryCodeButton.frame.height - y))
+        if let imageName = countryFlagArray[0] as? String
+        {
+            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+            let apiurl = URL(string: api)
+            
+            if apiurl != nil
+            {
+                flagImageView.dowloadFromServer(url: apiurl!)
+            }
+            else
+            {
+                flagImageView.image = UIImage(named: "empty")
+            }
+        }
+        mobileCountryCodeButton.addSubview(flagImageView)
+        
+        mobileCountryCodeLabel.frame = CGRect(x: flagImageView.frame.maxX + (x / 2), y: 0, width: (4 * x), height: mobileCountryCodeButton.frame.height)
+        mobileCountryCodeLabel.text = countryCodeArray[0] as! String
+        mobileCountryCodeLabel.textColor = UIColor.black
+        mobileCountryCodeLabel.textAlignment = .left
+        mobileCountryCodeLabel.adjustsFontSizeToFitWidth = true
+        mobileCountryCodeLabel.font = UIFont(name: "Avenir-Heavy", size: (1.8 * x))
+        
+        mobileCountryCodeButton.addSubview(mobileCountryCodeLabel)
+        
+        let downArrowImageView = UIImageView()
+        downArrowImageView.frame = CGRect(x: mobileCountryCodeButton.frame.width - (2 * y), y: ((mobileCountryCodeButton.frame.height - (1.5 * x)) / 2), width: (1.5 * x), height: (1.5 * y))
+        downArrowImageView.image = UIImage(named: "downArrow")
+        mobileCountryCodeButton.addSubview(downArrowImageView)
+        
+        let mobileImageView = UIImageView()
+        mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: logoImageView.frame.maxY + (10 * y), width: (1.8 * x), height: (2.8 * y))
+        mobileImageView.image = UIImage(named: "mobile")
+        view.addSubview(mobileImageView)
+        
+        mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: logoImageView.frame.maxY + (10 * y), width: numberView.frame.width - (12 * x), height: (3 * y))
+        mobileTextField.placeholder = "Mobile Number"
+        mobileTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        mobileTextField.textAlignment = .left
+        mobileTextField.font = UIFont(name: "Avenir-Heavy", size: (1.8 * x))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.mobileTextField.frame.height))
+        mobileTextField.leftView = paddingView
+        mobileTextField.leftViewMode = UITextField.ViewMode.always
+        mobileTextField.adjustsFontSizeToFitWidth = true
+        mobileTextField.keyboardType = .numberPad
+        mobileTextField.clearsOnBeginEditing = true
+        mobileTextField.returnKeyType = .done
+        mobileTextField.delegate = self
+        mobileTextField.addTarget(self, action: #selector(self.mobileTextField(textField:)), for: .editingChanged)
+        view.addSubview(mobileTextField)
+        
+        let underline = UILabel()
+        underline.frame = CGRect(x: mobileImageView.frame.minX, y: mobileTextField.frame.maxY, width: mobileTextField.frame.width, height: 1)
+        underline.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        view.addSubview(underline)
+        
+        continueButton.frame = CGRect(x: (2 * x), y: mobileTextField.frame.maxY + (5 * y), width: view.frame.width - (4 * x), height: (4 * y))
+        continueButton.layer.cornerRadius = 5
+        continueButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        continueButton.setTitle("CONTINUE", for: .normal)
+        continueButton.setTitleColor(UIColor.white, for: .normal)
+        continueButton.titleLabel?.font = continueButton.titleLabel?.font.withSize(1.5 * x)
+        continueButton.addTarget(self, action: #selector(self.continueButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(continueButton)
+        
+        let languageHeadingLabel = UILabel()
+        languageHeadingLabel.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: continueButton.frame.maxY + (7 * y), width: (15 * x), height: (3 * y))
+        languageHeadingLabel.text = "CHOOSE LANGUAGE"
+        languageHeadingLabel.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        languageHeadingLabel.textAlignment = .center
+        languageHeadingLabel.font = UIFont(name: "Avenir-Heavy", size: (1.2 * x))
+        view.addSubview(languageHeadingLabel)
+        
+        languageButton.frame = CGRect(x: (2 * x), y: languageHeadingLabel.frame.maxY + y, width: view.frame.width - (4 * x), height: (4 * y))
+        languageButton.layer.borderWidth = 1
+        languageButton.layer.borderColor = UIColor.lightGray.cgColor
+        languageButton.backgroundColor = UIColor.white
+        languageButton.setTitle("English", for: .normal)
+        languageButton.setTitleColor(UIColor.black, for: .normal)
+        languageButton.titleLabel?.font = languageButton.titleLabel?.font.withSize(1.5 * x)
+        //        languageButton.setImage(UIImage(named: "languageBackground"), for: .normal)
+        languageButton.addTarget(self, action: #selector(self.languageButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(languageButton)
+        
+        let languageFlagImageView = UIImageView()
+        languageFlagImageView.frame = CGRect(x: languageButton.frame.width - (5 * x), y: ((languageButton.frame.height - (2 * y)) / 2), width: (2.5 * x), height: (2 * y))
+        languageFlagImageView.image = UIImage(named: "downArrow")
+        languageButton.addSubview(languageFlagImageView)
+        
+        let languageLabel = UILabel()
+        languageLabel.frame = CGRect(x: languageFlagImageView.frame.maxX + x, y: ((languageButton.frame.height - (2 * y)) / 2), width: languageButton.frame.width, height: (2 * y))
+        languageLabel.text = "English"
+        languageLabel.textColor = UIColor.black
+        languageLabel.textAlignment = .left
+        languageLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
+        //        languageButton.addSubview(languageLabel)
+        
     }
     
+    func screenContentsInArabic()
+    {
+        let backgroundImage = UIImageView()
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        backgroundImage.image = UIImage(named: "background")
+        view.addSubview(backgroundImage)
+        
+        let logoImageView = UIImageView()
+        logoImageView.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: (10 * y), width: (15 * x), height: (6 * y))
+        logoImageView.image = UIImage(named: "logo")
+        view.addSubview(logoImageView)
+        
+        let numberView = UIView()
+        numberView.frame = CGRect(x: (2 * x), y: logoImageView.frame.maxY + (5 * y), width: view.frame.width - (4 * x), height: (5 * y))
+        numberView.layer.cornerRadius = 5
+        numberView.layer.borderWidth = 2
+        numberView.layer.borderColor = UIColor.blue.cgColor
+        //        view.addSubview(numberView)
+        
+        mobileCountryCodeButton.frame = CGRect(x: (2 * x), y: logoImageView.frame.maxY + (10 * y), width: (10 * x), height: (3 * y))
+        mobileCountryCodeButton.backgroundColor = UIColor(red: 0.7647, green: 0.7882, blue: 0.7765, alpha: 1.0)
+        mobileCountryCodeButton.addTarget(self, action: #selector(self.countryCodeButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(mobileCountryCodeButton)
+        
+        flagImageView.frame = CGRect(x: (x / 2), y: (y / 2), width: (2.5 * x), height: (mobileCountryCodeButton.frame.height - y))
+        if let imageName = countryFlagArray[0] as? String
+        {
+            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+            let apiurl = URL(string: api)
+            
+            if apiurl != nil
+            {
+                flagImageView.dowloadFromServer(url: apiurl!)
+            }
+            else
+            {
+                flagImageView.image = UIImage(named: "empty")
+            }
+        }
+        mobileCountryCodeButton.addSubview(flagImageView)
+        
+        mobileCountryCodeLabel.frame = CGRect(x: flagImageView.frame.maxX + (x / 2), y: 0, width: (4 * x), height: mobileCountryCodeButton.frame.height)
+        mobileCountryCodeLabel.text = countryCodeArray[0] as? String
+        mobileCountryCodeLabel.textColor = UIColor.black
+        mobileCountryCodeLabel.textAlignment = .left
+        mobileCountryCodeLabel.font = UIFont(name: "Avenir-Heavy", size: (1.8 * x))
+        mobileCountryCodeButton.addSubview(mobileCountryCodeLabel)
+        
+        let downArrowImageView = UIImageView()
+        downArrowImageView.frame = CGRect(x: mobileCountryCodeButton.frame.width - (2 * y), y: ((mobileCountryCodeButton.frame.height - (1.5 * x)) / 2), width: (1.5 * x), height: (1.5 * y))
+        downArrowImageView.image = UIImage(named: "downArrow")
+        mobileCountryCodeButton.addSubview(downArrowImageView)
+        
+        let mobileImageView = UIImageView()
+        mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: logoImageView.frame.maxY + (10 * y), width: (1.8 * x), height: (2.8 * y))
+        mobileImageView.image = UIImage(named: "mobile")
+        view.addSubview(mobileImageView)
+        
+        mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: logoImageView.frame.maxY + (10 * y), width: numberView.frame.width - (12 * x), height: (3 * y))
+        mobileTextField.placeholder = "Mobile Number"
+        mobileTextField.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        mobileTextField.textAlignment = .left
+        mobileTextField.font = UIFont(name: "Avenir-Heavy", size: (1.8 * x))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.mobileTextField.frame.height))
+        mobileTextField.leftView = paddingView
+        mobileTextField.leftViewMode = UITextField.ViewMode.always
+        mobileTextField.adjustsFontSizeToFitWidth = true
+        mobileTextField.keyboardType = .numberPad
+        mobileTextField.clearsOnBeginEditing = true
+        mobileTextField.returnKeyType = .done
+        mobileTextField.delegate = self
+        mobileTextField.addTarget(self, action: #selector(self.mobileTextField(textField:)), for: .editingChanged)
+        view.addSubview(mobileTextField)
+        
+        let underline = UILabel()
+        underline.frame = CGRect(x: mobileImageView.frame.minX, y: mobileTextField.frame.maxY, width: mobileTextField.frame.width, height: 1)
+        underline.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        view.addSubview(underline)
+        
+        continueButton.frame = CGRect(x: (2 * x), y: mobileTextField.frame.maxY + (5 * y), width: view.frame.width - (4 * x), height: (4 * y))
+        continueButton.layer.cornerRadius = 5
+        continueButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        continueButton.setTitle("CONTINUE", for: .normal)
+        continueButton.setTitleColor(UIColor.white, for: .normal)
+        continueButton.titleLabel?.font = continueButton.titleLabel?.font.withSize(1.5 * x)
+        continueButton.addTarget(self, action: #selector(self.continueButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(continueButton)
+        
+        let languageHeadingLabel = UILabel()
+        languageHeadingLabel.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: continueButton.frame.maxY + (7 * y), width: (15 * x), height: (3 * y))
+        languageHeadingLabel.text = "CHOOSE LANGUAGE"
+        languageHeadingLabel.textColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
+        languageHeadingLabel.textAlignment = .center
+        languageHeadingLabel.font = UIFont(name: "Avenir-Heavy", size: (1.2 * x))
+        view.addSubview(languageHeadingLabel)
+        
+        let languageButton = UIButton()
+        languageButton.frame = CGRect(x: (2 * x), y: languageHeadingLabel.frame.maxY + y, width: view.frame.width - (4 * x), height: (4 * y))
+        languageButton.layer.borderWidth = 1
+        languageButton.layer.borderColor = UIColor.lightGray.cgColor
+        languageButton.backgroundColor = UIColor.white
+        languageButton.setTitle("English", for: .normal)
+        languageButton.setTitleColor(UIColor.black, for: .normal)
+        languageButton.titleLabel?.font = languageButton.titleLabel?.font.withSize(1.5 * x)
+        //        languageButton.setImage(UIImage(named: "languageBackground"), for: .normal)
+        //        languageButton.addTarget(self, action: #selector(self.continueButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(languageButton)
+        
+        let languageFlagImageView = UIImageView()
+        languageFlagImageView.frame = CGRect(x: x, y: ((languageButton.frame.height - (2 * y)) / 2), width: (2.5 * x), height: (2 * y))
+        languageFlagImageView.image = UIImage(named: "english")
+        languageButton.addSubview(languageFlagImageView)
+        
+        let languageLabel = UILabel()
+        languageLabel.frame = CGRect(x: languageFlagImageView.frame.maxX + x, y: ((languageButton.frame.height - (2 * y)) / 2), width: languageButton.frame.width, height: (2 * y))
+        languageLabel.text = "English"
+        languageLabel.textColor = UIColor.black
+        languageLabel.textAlignment = .left
+        languageLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
+        //        languageButton.addSubview(languageLabel)
+    }
+    
+    
+    
+    @objc func languageButtonAction(sender : UIButton)
+    {
+        let alert = UIAlertController(title: "Alert", message: "Please choose your language", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
+        alert.addAction(UIAlertAction(title: "Arabic", style: .default, handler: languageAlertAction(action:)))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func languageAlertAction(action : UIAlertAction)
+    {
+        languageButton.setTitle(action.title, for: .normal)
+    }
     
     @objc func countryCodeButtonAction(sender : UIButton)
     {
@@ -549,10 +695,10 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         //        view.addSubview(countryCodeTableView)
         
         
-//        countryCodeAlert.addAction(UIAlertAction(title: "CANCEL", style: .default, handler: nil))
-//        self.navigationController?.present(countryCodeAlert, animated: true, completion: nil)
+        //        countryCodeAlert.addAction(UIAlertAction(title: "CANCEL", style: .default, handler: nil))
+        //        self.navigationController?.present(countryCodeAlert, animated: true, completion: nil)
         
-        countryAlertView()
+        countryAlertViewInEnglish()
     }
     
     @objc func countryCodeAlertAction(action : UIAlertAction)
@@ -570,7 +716,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    func countryAlertView()
+    func countryAlertViewInEnglish()
     {
         view.removeGestureRecognizer(disableKeyboard)
         
@@ -586,7 +732,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         blurView.addSubview(alertView)
         
         let titleLabel = UILabel()
-        titleLabel.frame = CGRect(x: 0, y: y, width: alertView.frame.width, height: 20)
+        titleLabel.frame = CGRect(x: 0, y: y, width: alertView.frame.width, height: (2 * y))
         titleLabel.text = "Please select your country code"
         titleLabel.textAlignment = .center
         titleLabel.textColor = UIColor.black
@@ -600,7 +746,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         print("LEFT CHANGE", individualCountryFlagArray.count)
         
-        countryCodeTableView.frame = CGRect(x: 0, y: underLine1.frame.maxY + y, width: alertView.frame.width, height: alertView.frame.height - 102)
+        countryCodeTableView.frame = CGRect(x: 0, y: underLine1.frame.maxY, width: alertView.frame.width, height: alertView.frame.height - (8.1 * y))
         countryCodeTableView.register(CountryCodeTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(CountryCodeTableViewCell.self))
         countryCodeTableView.dataSource = self
         countryCodeTableView.delegate = self
@@ -608,15 +754,11 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         countryCodeTableView.reloadData()
         
-        let underLine2 = UILabel()
-        underLine2.frame = CGRect(x: 0, y: countryCodeTableView.frame.maxY + y, width: alertView.frame.width, height: 1)
-        underLine2.backgroundColor = UIColor.blue
-        alertView.addSubview(underLine2)
-        
         let cancelButton = UIButton()
-        cancelButton.frame = CGRect(x: 0, y: underLine2.frame.maxY, width: alertView.frame.width, height: 30)
+        cancelButton.frame = CGRect(x: 0, y: countryCodeTableView.frame.maxY, width: alertView.frame.width, height: (4 * y))
+        cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.setTitleColor(UIColor.black, for: .normal)
+        cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(self.countryCodeCancelAction(sender:)), for: .touchUpInside)
         alertView.addSubview(cancelButton)
     }
@@ -636,7 +778,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     {
         blurView.removeFromSuperview()
     }
-        
+    
     @objc func continueButtonAction(sender : UIButton)
     {
         let deviceId = UIDevice.current.identifierForVendor
@@ -646,11 +788,11 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         var alert = UIAlertController()
         
-//        otpContents()
-//        secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
-
+        //        otpContents()
+        //        secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
         
-//        server.API_LoginUser(CountryCode: "971", PhoneNo: "521346851", delegate: self)
+        
+        //        server.API_LoginUser(CountryCode: "971", PhoneNo: "521346851", delegate: self)
         
         if mobileTextField.text == "1234567"
         {
@@ -669,7 +811,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             else
             {
                 UserDefaults.standard.set(mobileTextField.text!, forKey: "Phone")
-
+                
                 alert = UIAlertController(title: "Alert", message: "OTP has sent to your \(mobileTextField.text!) mobile number", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: otpSendAlertAction(action:)))
                 self.navigationController?.present(alert, animated: true, completion: nil)
@@ -726,7 +868,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         let otpBackButton = UIButton()
         otpBackButton.frame = CGRect(x: (2 * x), y: (5 * y), width: (4 * x), height: (2 * y))
         otpBackButton.backgroundColor = UIColor.white
-//        otpNavigationBar.addSubview(otpBackButton)
+        //        otpNavigationBar.addSubview(otpBackButton)
         
         let otpImageView = UIImageView()
         otpImageView.frame = CGRect(x: ((otpNavigationBar.frame.width - (10 * x)) / 2), y: otpNavigationBar.frame.height - (5 * x), width: (10 * x), height: (10 * x))
@@ -740,7 +882,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         titleLabel.textColor = UIColor.black
         titleLabel.textAlignment = .left
         titleLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
-//        otpView.addSubview(titleLabel)
+        //        otpView.addSubview(titleLabel)
         
         let otpEnterLabel = UILabel()
         otpEnterLabel.frame = CGRect(x: 0, y: otpImageView.frame.maxY + y, width: otpView.frame.width, height: (2 * y))
@@ -894,7 +1036,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         whiteCircle.layer.cornerRadius = whiteCircle.frame.height / 2
         whiteCircle.layer.masksToBounds = true
         whiteCircle.backgroundColor = UIColor.white
-//        otpView.addSubview(whiteCircle)
+        //        otpView.addSubview(whiteCircle)
         
         secButton.isEnabled = false
         secButton.frame = CGRect(x: ((view.frame.width - (7.5 * x)) / 2), y: act.frame.minY + ((act.frame.height - (7.5 * x)) / 2), width: (7.5 * x), height: (7.5 * x))
@@ -979,7 +1121,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(CountryCodeTableViewCell.self), for: indexPath as IndexPath) as! CountryCodeTableViewCell
         
         cell.flagImage.frame = CGRect(x: x, y: y, width: (2.5 * x), height: (2 * y))
-//        cell.flagImage.image = individualCountryFlagArray[indexPath.row]
+        //        cell.flagImage.image = individualCountryFlagArray[indexPath.row]
         
         if let imageName = countryFlagArray[indexPath.row] as? String
         {
@@ -995,7 +1137,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 cell.flagImage.image = UIImage(named: "empty")
             }
         }
-
+        
         cell.countryName.frame = CGRect(x: cell.flagImage.frame.maxX + (2 * x), y: y, width: cell.frame.width - (4 * x), height: (2 * y))
         cell.countryName.text = countryNameArray[indexPath.row] as! String
         return cell
@@ -1004,7 +1146,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         flagImageView.image = nil
-
+        
         if let imageName = countryFlagArray[indexPath.row] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
@@ -1019,9 +1161,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 flagImageView.image = UIImage(named: "empty")
             }
         }
-
+        
         mobileCountryCodeLabel.text = countryCodeArray[indexPath.row] as? String
-
+        
         blurView.removeFromSuperview()
     }
     
@@ -1070,18 +1212,18 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 break
             }
         }
-
+        
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
-
+        
     }
     
     func textFieldShouldReturn(_ scoreText: UITextField) -> Bool
     {
         if scoreText == otp6Letter
-        {            
+        {
             if let string1 = otp1Letter.text, let string2 = otp2Letter.text, let string3 = otp3Letter.text, let string4 = otp4Letter.text, let string5 = otp5Letter.text, let string6 = otp6Letter.text
             {
                 server.API_ValidateOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, otp: "\(string1)\(string2)\(string3)\(string4)\(string5)\(string6)", type: "customer", delegate: self)
@@ -1125,7 +1267,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 break
             }
         }
-
+        
         
         if (isBackSpace == -92) {
             print("Backspace was pressed")
@@ -1151,17 +1293,17 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         return true
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 

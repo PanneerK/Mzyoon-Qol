@@ -17,7 +17,7 @@ class SlideViewController: UIViewController
     var slideViewWidth = CGFloat()
     
     var window: UIWindow?
-
+    
     override func viewDidLoad()
     {
         print("MENU WIDTH", self.view.frame.width)
@@ -29,12 +29,12 @@ class SlideViewController: UIViewController
         
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
-
+        
         view.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         
         screenContents()
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -126,6 +126,7 @@ class SlideViewController: UIViewController
         else if sender.tag == 9
         {
             let navigateScreen = LoginViewController()
+            navigateScreen.findString = "logout"
             window = UIWindow(frame: UIScreen.main.bounds)
             let navigationScreen = UINavigationController(rootViewController: navigateScreen)
             navigationScreen.isNavigationBarHidden = true
@@ -146,13 +147,13 @@ class SlideViewController: UIViewController
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

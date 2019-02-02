@@ -14,7 +14,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     var addNameAlert = UIAlertController()
     
     let serviceCall = ServerAPI()
-
+    
     
     var Measure1IdArray = NSArray()
     var Measure1NameEngArray = NSArray()
@@ -34,9 +34,9 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
-
+        
         
         self.serviceCall.API_Measurement1(delegate: self)
         
@@ -46,7 +46,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -63,9 +63,9 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-       // ErrorStr = "Default Error"
+        // ErrorStr = "Default Error"
         PageNumStr = "Measurement1ViewController"
-       // MethodName = "do"
+        // MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
@@ -102,33 +102,33 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             print("Measure1BodyImageURL",Measure1BodyImage)
             
             /*for i in 0..<Measure1BodyImage.count
-            {
-                if let imageName = Measure1BodyImage[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Measurement1/\(imageName)"
-                    let apiurl = URL(string: api)
-                    
-                    print("IMAGE API", api)
-                    
-                    if let data = try? Data(contentsOf: apiurl!) {
-                        print("DATA OF IMAGE", data)
-                        if let image = UIImage(data: data) {
-                            self.convertedMeasure1BodyImageArray.append(image)
-                        }
-                    }
-                    else
-                    {
-                        let emptyImage = UIImage(named: "empty")
-                        self.convertedMeasure1BodyImageArray.append(emptyImage!)
-                    }
-                }
-                else if Measure1BodyImage[i] is NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedMeasure1BodyImageArray.append(emptyImage!)
-                }
-            }*/
-             self.measurement1Content()
+             {
+             if let imageName = Measure1BodyImage[i] as? String
+             {
+             let api = "http://appsapi.mzyoon.com/images/Measurement1/\(imageName)"
+             let apiurl = URL(string: api)
+             
+             print("IMAGE API", api)
+             
+             if let data = try? Data(contentsOf: apiurl!) {
+             print("DATA OF IMAGE", data)
+             if let image = UIImage(data: data) {
+             self.convertedMeasure1BodyImageArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedMeasure1BodyImageArray.append(emptyImage!)
+             }
+             }
+             else if Measure1BodyImage[i] is NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedMeasure1BodyImageArray.append(emptyImage!)
+             }
+             }*/
+            self.measurement1Content()
         }
         else if ResponseMsg == "Failure"
         {
@@ -176,7 +176,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         let measurement1View = UIView()
         measurement1View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         measurement1View.backgroundColor = UIColor.white
-//        view.addSubview(measurement1View)
+        //        view.addSubview(measurement1View)
         
         let measurement1NavigationBar = UIView()
         measurement1NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -207,9 +207,9 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         let manualButton = UIButton()
         manualButton.frame = CGRect(x: (4 * x), y: manualTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
-//        manualButton.backgroundColor = UIColor.red
-//        manualButton.setImage(convertedMeasure1BodyImageArray[0], for: .normal)
-        manualButton.tag = 0
+        //        manualButton.backgroundColor = UIColor.red
+        //        manualButton.setImage(convertedMeasure1BodyImageArray[0], for: .normal)
+        manualButton.tag = Measure1IdArray[0] as! Int
         manualButton.addTarget(self, action: #selector(self.forWhomButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(manualButton)
         
@@ -235,7 +235,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         forWhomButton.setTitleColor(UIColor.black, for: .normal)
         forWhomButton.contentHorizontalAlignment = .left
         forWhomButton.addTarget(self, action: #selector(self.forWhomButtonAction(sender:)), for: .touchUpInside)
-//        view.addSubview(forWhomButton)
+        //        view.addSubview(forWhomButton)
         
         let downArrowImageView = UIImageView()
         downArrowImageView.frame = CGRect(x: forWhomButton.frame.width - (3 * x), y: (y / 2), width: (2 * x), height: (2 * y))
@@ -251,9 +251,9 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         let goButton = UIButton()
         goButton.frame = CGRect(x: (4 * x), y: goTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
-//        goButton.backgroundColor = UIColor.red
-//        goButton.setImage(convertedMeasure1BodyImageArray[1], for: .normal)
-        goButton.tag = 1
+        //        goButton.backgroundColor = UIColor.red
+        //        goButton.setImage(convertedMeasure1BodyImageArray[1], for: .normal)
+        goButton.tag = Measure1IdArray[1] as! Int
         goButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(goButton)
         
@@ -281,9 +281,9 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         let comeButton = UIButton()
         comeButton.frame = CGRect(x: (4 * x), y: comeTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
-//        comeButton.backgroundColor = UIColor.red
-//        comeButton.setImage(convertedMeasure1BodyImageArray[2], for: .normal)
-        comeButton.tag = 2
+        //        comeButton.backgroundColor = UIColor.red
+        //        comeButton.setImage(convertedMeasure1BodyImageArray[2], for: .normal)
+        comeButton.tag = Measure1IdArray[2] as! Int
         comeButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(comeButton)
         
@@ -307,12 +307,12 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         let measurement1NextButton = UIButton()
         measurement1NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: comeButton.frame.maxY + y, width: (4 * x), height: (4 * y))
         measurement1NextButton.layer.masksToBounds = true
-//        measurement1NextButton.backgroundColor = UIColor.orange
-//        measurement1NextButton.setTitle("NEXT", for: .normal)
-//        measurement1NextButton.setTitleColor(UIColor.white, for: .normal)
+        //        measurement1NextButton.backgroundColor = UIColor.orange
+        //        measurement1NextButton.setTitle("NEXT", for: .normal)
+        //        measurement1NextButton.setTitleColor(UIColor.white, for: .normal)
         measurement1NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         measurement1NextButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
-//        view.addSubview(measurement1NextButton)
+        //        view.addSubview(measurement1NextButton)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -323,6 +323,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     @objc func forWhomButtonAction(sender : UIButton)
     {
         UserDefaults.standard.set("User", forKey: "measurementBy")
+        UserDefaults.standard.set(sender.tag, forKey: "measurementType")
         var userListAlert : UIAlertController!
         
         if nameArray.count == 0
@@ -383,18 +384,19 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     @objc func measurement1NextButtonAction(sender : UIButton)
     {
         UserDefaults.standard.set("Tailor", forKey: "measurementBy")
+        UserDefaults.standard.set(sender.tag, forKey: "measurementType")
         let referencImageScreen = ReferenceImageViewController()
         self.navigationController?.pushViewController(referencImageScreen, animated: true)
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

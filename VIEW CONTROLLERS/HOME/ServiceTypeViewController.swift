@@ -8,20 +8,29 @@
 
 import UIKit
 
-class ServiceTypeViewController: CommonViewController
+class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
 {
-
+    
+    let serviceCall = ServerAPI()
+    
     let serviceTypeView = UIView()
     
     override func viewDidLoad()
     {
+        serviceCall.API_ServiceRequest(delegate: self)
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         serviceTypeContent()
     }
     
-
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+        print("ERROR", errorMessage)
+    }
+    
+    func API_CALLBACK_ServiceRequest(service: NSDictionary) {
+        print("SERVICE REQUEST", service)
+    }
     
     func serviceTypeContent()
     {
@@ -55,19 +64,19 @@ class ServiceTypeViewController: CommonViewController
         directDeliveryIcon.frame = CGRect(x: (3 * x), y: orderTypeNavigationBar.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
         //        directDeliveryIcon.image = convertedOrderHeaderImageArray[0]
         /*
-        if let imageName = orderTypeHeaderImage[0] as? String
-        {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            directDeliveryIcon.dowloadFromServer(url: apiurl!)
-        }
-        */
+         if let imageName = orderTypeHeaderImage[0] as? String
+         {
+         let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+         let apiurl = URL(string: api)
+         directDeliveryIcon.dowloadFromServer(url: apiurl!)
+         }
+         */
         view.addSubview(directDeliveryIcon)
         
         let directDeliveryLabel = UILabel()
         directDeliveryLabel.frame = CGRect(x: directDeliveryIcon.frame.maxX, y: orderTypeNavigationBar.frame.maxY + (2 * y), width: view.frame.width, height: (2 * y))
-       // directDeliveryLabel.text = (orderTypeNameArray[0] as! String)
-          directDeliveryLabel.text = "URGENT"
+        // directDeliveryLabel.text = (orderTypeNameArray[0] as! String)
+        directDeliveryLabel.text = "URGENT"
         directDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         directDeliveryLabel.textAlignment = .left
         directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
@@ -81,41 +90,41 @@ class ServiceTypeViewController: CommonViewController
         let directDeliveryButton = UIButton()
         directDeliveryButton.frame = CGRect(x: (3 * x), y: directDeliveryUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
         directDeliveryButton.backgroundColor = UIColor.lightGray
-       /*
-        if let imageName = orderTypeBodyImage[0] as? String
-        {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
-            print("SMALL ICON", api)
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: directDeliveryButton.frame.width, height: directDeliveryButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
-            directDeliveryButton.addSubview(dummyImageView)
-        }
-        */
+        /*
+         if let imageName = orderTypeBodyImage[0] as? String
+         {
+         let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+         print("SMALL ICON", api)
+         let apiurl = URL(string: api)
+         
+         let dummyImageView = UIImageView()
+         dummyImageView.frame = CGRect(x: 0, y: 0, width: directDeliveryButton.frame.width, height: directDeliveryButton.frame.height)
+         dummyImageView.dowloadFromServer(url: apiurl!)
+         directDeliveryButton.addSubview(dummyImageView)
+         }
+         */
         //        directDeliveryButton.setImage(convertedOrderBodyImageArray[0], for: .normal)
         directDeliveryButton.addTarget(self, action: #selector(self.UrgentButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(directDeliveryButton)
-       
+        
         // Appointment..
         let courierDeliveryIcon = UIImageView()
         courierDeliveryIcon.frame = CGRect(x: (3 * x), y: directDeliveryButton.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
         // courierDeliveryIcon.image = convertedOrderHeaderImageArray[1]
         /*
-        if let imageName = orderTypeHeaderImage[1] as? String
-        {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            courierDeliveryIcon.dowloadFromServer(url: apiurl!)
-        }
-        */
+         if let imageName = orderTypeHeaderImage[1] as? String
+         {
+         let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+         let apiurl = URL(string: api)
+         courierDeliveryIcon.dowloadFromServer(url: apiurl!)
+         }
+         */
         view.addSubview(courierDeliveryIcon)
         
         let couriertDeliveryLabel = UILabel()
         couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX, y: directDeliveryButton.frame.maxY + (2 * y), width: view.frame.width - (5 * x), height: (2 * y))
-       // couriertDeliveryLabel.text = (orderTypeNameArray[1] as! String)
-          couriertDeliveryLabel.text = "APPOINTMENT"
+        // couriertDeliveryLabel.text = (orderTypeNameArray[1] as! String)
+        couriertDeliveryLabel.text = "APPOINTMENT"
         couriertDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         couriertDeliveryLabel.textAlignment = .left
         couriertDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
@@ -131,37 +140,37 @@ class ServiceTypeViewController: CommonViewController
         courierDeliveryButton.frame = CGRect(x: (3 * x), y: courierDeliveryUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
         courierDeliveryButton.backgroundColor = UIColor.lightGray
         /*
-        if let imageName = orderTypeBodyImage[1] as? String
-        {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
-            print("SMALL ICON", api)
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: courierDeliveryButton.frame.width, height: courierDeliveryButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
-            courierDeliveryButton.addSubview(dummyImageView)
-        }
-        */
-      courierDeliveryButton.addTarget(self, action: #selector(self.AppointmentButtonAction(sender:)), for: .touchUpInside)
+         if let imageName = orderTypeBodyImage[1] as? String
+         {
+         let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+         print("SMALL ICON", api)
+         let apiurl = URL(string: api)
+         
+         let dummyImageView = UIImageView()
+         dummyImageView.frame = CGRect(x: 0, y: 0, width: courierDeliveryButton.frame.width, height: courierDeliveryButton.frame.height)
+         dummyImageView.dowloadFromServer(url: apiurl!)
+         courierDeliveryButton.addSubview(dummyImageView)
+         }
+         */
+        courierDeliveryButton.addTarget(self, action: #selector(self.AppointmentButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(courierDeliveryButton)
         
-      // Normal...
+        // Normal...
         let companyIcon = UIImageView()
         companyIcon.frame = CGRect(x: (3 * x), y: courierDeliveryButton.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
         /*
-        if let imageName = orderTypeHeaderImage[2] as? String
-        {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            companyIcon.dowloadFromServer(url: apiurl!)
-        }
-        */
+         if let imageName = orderTypeHeaderImage[2] as? String
+         {
+         let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+         let apiurl = URL(string: api)
+         companyIcon.dowloadFromServer(url: apiurl!)
+         }
+         */
         view.addSubview(companyIcon)
         
         let companyLabel = UILabel()
         companyLabel.frame = CGRect(x: companyIcon.frame.maxX, y: courierDeliveryButton.frame.maxY + (2 * y), width: view.frame.width, height: (2 * y))
-      //  companyLabel.text = (orderTypeNameArray[2] as! String)
+        //  companyLabel.text = (orderTypeNameArray[2] as! String)
         companyLabel.text = "NORMAL"
         companyLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         companyLabel.textAlignment = .left
@@ -177,19 +186,19 @@ class ServiceTypeViewController: CommonViewController
         companyButton.frame = CGRect(x: (3 * x), y: companyUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
         companyButton.backgroundColor = UIColor.lightGray
         
-       /*
-        if let imageName = orderTypeBodyImage[2] as? String
-        {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
-            print("SMALL ICON", api)
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: companyButton.frame.width, height: companyButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
-            companyButton.addSubview(dummyImageView)
-        }
-       */
+        /*
+         if let imageName = orderTypeBodyImage[2] as? String
+         {
+         let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+         print("SMALL ICON", api)
+         let apiurl = URL(string: api)
+         
+         let dummyImageView = UIImageView()
+         dummyImageView.frame = CGRect(x: 0, y: 0, width: companyButton.frame.width, height: companyButton.frame.height)
+         dummyImageView.dowloadFromServer(url: apiurl!)
+         companyButton.addSubview(dummyImageView)
+         }
+         */
         companyButton.addTarget(self, action: #selector(self.NormalButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(companyButton)
     }
@@ -220,13 +229,13 @@ class ServiceTypeViewController: CommonViewController
         self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

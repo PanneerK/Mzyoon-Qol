@@ -76,28 +76,37 @@ import Foundation
     @objc optional func API_CALLBACK_SortAscending(ascending : NSDictionary)
     @objc optional func API_CALLBACK_SortDescending(descending : NSDictionary)
     @objc optional func API_CALLBACK_UpdateQtyOrderApproval(updateQtyOA : NSDictionary)
- 
-   // 11-1-2019
+    
+    // 11-1-2019
     @objc optional func API_CALLBACK_GetAppointmentMaterial(getAppointmentMaterial : NSDictionary)
     @objc optional func API_CALLBACK_GetAppointmentMeasurement(getAppointmentMeasure : NSDictionary)
     
-   // 18-1-2019
+    // 18-1-2019
     @objc optional func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial : NSDictionary)
     @objc optional func API_CALLBACK_IsApproveAptMeasurement(IsApproveMeasure : NSDictionary)
     
-  // 25-1-2019
+    // 25-1-2019
     @objc optional func API_CALLBACK_UpdatePaymentStatus(updatePaymentStatus : NSDictionary)
     @objc optional func API_CALLBACK_BuyerOrderApproval(buyerOrderApproval : NSDictionary)
     @objc optional func API_CALLBACK_GetAppointmentList(getAppointmentList : NSDictionary)
     @objc optional func API_CALLBACK_ApproveRejectAppointmentList(getTotalAppointmentList : NSDictionary)
     
-  // 29-1-2019
+    
+    //29.01.2019
+    @objc optional func API_CALLBACK_ServiceRequest(service : NSDictionary)
+    
+    
+    //01.02.2019
+    @objc optional func API_CALLBACK_DirectionRequest(direction : NSDictionary)
+    
+    // 29-1-2019
     @objc optional func API_CALLBACK_GetRatings(getRatings : NSDictionary)
     @objc optional func API_CALLBACK_InsertRating(insertRating : NSDictionary)
     @objc optional func API_CALLBACK_ListOfPendOrders(PendingOrdersList : NSDictionary)
     
-  //31-1-2019
+    //31-1-2019
     @objc optional func API_CALLBACK_GetOrderDetails(getOrderDetails : NSDictionary)
     @objc optional func API_CALLBACK_GetTrackingDetails(getTrackingDetails : NSDictionary)
+    
     
 }

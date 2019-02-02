@@ -23,21 +23,12 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     var materialsIdArray = NSArray()
     var materialsImageArray = NSArray()
     var convertedMaterialsImageArray = [UIImage]()
-
+    
     var patternsArray = NSArray()
     var patternsIdArray = NSArray()
     var patternsImageArray = NSArray()
     var convertedPatternsImageArray = [UIImage]()
     
-    var seasonalTag = true
-    var industryTag = true
-    var brandTag = true
-    
-    var seasonalTagArray = [Int]()
-    let seasonalSelectionImage = UIImageView()
-    let industrySelectionImage = UIImageView()
-    let brandSelectionImage = UIImageView()
-
     var materialTagIntArray = [Int]()
     var colorTagIntArray = [Int]()
     var patternTagIntArray = [Int]()
@@ -62,20 +53,24 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
+        print("1111", UserDefaults.standard.value(forKey: "season"))
+        print("2222", UserDefaults.standard.value(forKey: "industry"))
+        print("3333", UserDefaults.standard.value(forKey: "brand"))
+        
         print("SELECTED BRANDS IN 2", brandArray)
         navigationBar.isHidden = true
         
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
         super.viewDidLoad()
         
-        self.serviceCall(getMaterialId: [1], getColorId: [1])
-
+        self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+        
         // Do any additional setup after loading the view.
     }
     
-    func serviceCall(getMaterialId : [Int], getColorId : [Int])
+    func serviceCallFunction(getMaterialId : [Int], getColorId : [Int])
     {
         self.serviceCall.API_Customization2(brandId: self.brandArray, materialId: getMaterialId, ColorId: getColorId, delegate: self)
     }
@@ -143,31 +138,31 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             colorsImageArray = Colors.value(forKey: "Image") as! NSArray
             
             /*for i in 0..<colorsImageArray.count
-            {
-                if let imageName = colorsImageArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Color/\(imageName)"
-                    print("CUSTOM ALL", api)
-                    let apiurl = URL(string: api)
-                    
-                    if let data = try? Data(contentsOf: apiurl!) {
-                        print("DATA OF IMAGE", data)
-                        if let image = UIImage(data: data) {
-                            self.convertedColorsImageArray.append(image)
-                        }
-                    }
-                    else
-                    {
-                        let emptyImage = UIImage(named: "empty")
-                        self.convertedColorsImageArray.append(emptyImage!)
-                    }
-                }
-                else if let imgName = colorsImageArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedColorsImageArray.append(emptyImage!)
-                }
-            }*/
+             {
+             if let imageName = colorsImageArray[i] as? String
+             {
+             let api = "http://appsapi.mzyoon.com/images/Color/\(imageName)"
+             print("CUSTOM ALL", api)
+             let apiurl = URL(string: api)
+             
+             if let data = try? Data(contentsOf: apiurl!) {
+             print("DATA OF IMAGE", data)
+             if let image = UIImage(data: data) {
+             self.convertedColorsImageArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedColorsImageArray.append(emptyImage!)
+             }
+             }
+             else if let imgName = colorsImageArray[i] as? NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedColorsImageArray.append(emptyImage!)
+             }
+             }*/
             
             let Materials = Result.object(forKey: "Materials") as! NSArray
             
@@ -176,37 +171,37 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             materialsImageArray = Materials.value(forKey: "Image") as! NSArray
             
             /*for i in 0..<materialsImageArray.count
-            {
-                if let imageName = materialsImageArray[i] as? String
-                {
-                    print("IMAGE NAME", imageName)
-                    let api = "http://appsapi.mzyoon.com/images/Material/\(imageName)"
-                    print("CUSTOM ALL", api)
-                    let apiurl = URL(string: api)
-                    print("IMAGE URL", apiurl)
-                    
-                    if apiurl != nil
-                    {
-                        if let data = try? Data(contentsOf: apiurl!) {
-                            print("DATA OF IMAGE", data)
-                            if let image = UIImage(data: data) {
-                                self.convertedMaterialsImageArray.append(image)
-                            }
-                        }
-                        else
-                        {
-                            let emptyImage = UIImage(named: "empty")
-                            self.convertedMaterialsImageArray.append(emptyImage!)
-                        }
-                    }
-                   
-                }
-                else if let imgName = materialsImageArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedMaterialsImageArray.append(emptyImage!)
-                }
-            }*/
+             {
+             if let imageName = materialsImageArray[i] as? String
+             {
+             print("IMAGE NAME", imageName)
+             let api = "http://appsapi.mzyoon.com/images/Material/\(imageName)"
+             print("CUSTOM ALL", api)
+             let apiurl = URL(string: api)
+             print("IMAGE URL", apiurl)
+             
+             if apiurl != nil
+             {
+             if let data = try? Data(contentsOf: apiurl!) {
+             print("DATA OF IMAGE", data)
+             if let image = UIImage(data: data) {
+             self.convertedMaterialsImageArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedMaterialsImageArray.append(emptyImage!)
+             }
+             }
+             
+             }
+             else if let imgName = materialsImageArray[i] as? NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedMaterialsImageArray.append(emptyImage!)
+             }
+             }*/
             
             let Patterns = Result.object(forKey: "Patterns") as! NSArray
             
@@ -215,31 +210,31 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             patternsImageArray = Patterns.value(forKey: "Image") as! NSArray
             
             /*for i in 0..<patternsImageArray.count
-            {
-                if let imageName = patternsImageArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Pattern/\(imageName)"
-                    print("CUSTOM ALL", api)
-                    let apiurl = URL(string: api)
-                    
-                    if let data = try? Data(contentsOf: apiurl!) {
-                        print("DATA OF IMAGE", data)
-                        if let image = UIImage(data: data) {
-                            self.convertedPatternsImageArray.append(image)
-                        }
-                    }
-                    else
-                    {
-                        let emptyImage = UIImage(named: "empty")
-                        self.convertedPatternsImageArray.append(emptyImage!)
-                    }
-                }
-                else if let imgName = patternsImageArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedPatternsImageArray.append(emptyImage!)
-                }
-            }*/
+             {
+             if let imageName = patternsImageArray[i] as? String
+             {
+             let api = "http://appsapi.mzyoon.com/images/Pattern/\(imageName)"
+             print("CUSTOM ALL", api)
+             let apiurl = URL(string: api)
+             
+             if let data = try? Data(contentsOf: apiurl!) {
+             print("DATA OF IMAGE", data)
+             if let image = UIImage(data: data) {
+             self.convertedPatternsImageArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedPatternsImageArray.append(emptyImage!)
+             }
+             }
+             else if let imgName = patternsImageArray[i] as? NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedPatternsImageArray.append(emptyImage!)
+             }
+             }*/
             
             if updatingId == 0
             {
@@ -264,14 +259,14 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         
     }
-
+    
     
     func customization2Content()
     {
         let customization2View = UIView()
         customization2View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         customization2View.backgroundColor = UIColor.white
-//        view.addSubview(customization2View)
+        //        view.addSubview(customization2View)
         
         let customization2NavigationBar = UIView()
         customization2NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -294,25 +289,25 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         customization2NavigationBar.addSubview(navigationTitle)
         
         /*let custom1Title = ["MATERIAL TYPE", "COLOR", "PATTERN"]
-        
-        var y1 = customization2NavigationBar.frame.maxY + y
-        
-        for i in 0..<custom1Title.count
-        {
-            let custom1Image = UIImageView()
-            custom1Image.frame = CGRect(x: (4 * x), y: y1, width: view.frame.width - (8 * x), height: (3 * y))
-            custom1Image.image = UIImage(named: "dashboardButton")
-            view.addSubview(custom1Image)
-            
-            let titleLabel = UILabel()
-            titleLabel.frame = CGRect(x: 2, y: 2, width: custom1Image.frame.width - 4, height: custom1Image.frame.height - 4)
-            titleLabel.text = custom1Title[i]
-            titleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            titleLabel.textAlignment = .center
-            custom1Image.addSubview(titleLabel)
-            
-            y1 = custom1Image.frame.maxY + (14 * y)
-        }*/
+         
+         var y1 = customization2NavigationBar.frame.maxY + y
+         
+         for i in 0..<custom1Title.count
+         {
+         let custom1Image = UIImageView()
+         custom1Image.frame = CGRect(x: (4 * x), y: y1, width: view.frame.width - (8 * x), height: (3 * y))
+         custom1Image.image = UIImage(named: "dashboardButton")
+         view.addSubview(custom1Image)
+         
+         let titleLabel = UILabel()
+         titleLabel.frame = CGRect(x: 2, y: 2, width: custom1Image.frame.width - 4, height: custom1Image.frame.height - 4)
+         titleLabel.text = custom1Title[i]
+         titleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+         titleLabel.textAlignment = .center
+         custom1Image.addSubview(titleLabel)
+         
+         y1 = custom1Image.frame.maxY + (14 * y)
+         }*/
         
         materialContent()
         colorContent()
@@ -320,6 +315,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         let customization2NextButton = UIButton()
         customization2NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))
+        customization2NextButton.layer.cornerRadius = customization2NextButton.frame.height / 2
+        customization2NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization2NextButton.addTarget(self, action: #selector(self.customization2NextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(customization2NextButton)
@@ -527,7 +524,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     @objc func materialButtonAction(sender : UIButton)
     {
         updatingId = 1
-
+        
         let materialSelectionImage = UIImageView()
         materialSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         materialSelectionImage.image = UIImage(named: "selectionImage")
@@ -583,11 +580,33 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 else
                 {
                     materialTagIntArray.append(sender.tag)
-                    sender.addSubview(seasonalSelectionImage)
+                    sender.addSubview(materialSelectionImage)
                 }
             }
             print("SEASONAL ARRAY", materialTagIntArray)
-            self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [1])
+            
+            if materialTagIntArray.count != 0
+            {
+                if colorTagIntArray.count != 0
+                {
+                    self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+                }
+                else
+                {
+                    self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: [1])
+                }
+            }
+            else
+            {
+                if colorTagIntArray.count != 0
+                {
+                    self.serviceCallFunction(getMaterialId: [1], getColorId: colorTagIntArray)
+                }
+                else
+                {
+                    self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+                }
+            }
         }
         else
         {
@@ -635,14 +654,21 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 sender.addSubview(materialSelectionImage)
             }
             
-            self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [1])
+            if colorTagIntArray.count != 0
+            {
+                self.serviceCallFunction(getMaterialId: [1], getColorId: colorTagIntArray)
+            }
+            else
+            {
+                self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+            }
         }
     }
     
     @objc func colorButtonAction(sender : UIButton)
     {
         updatingId = 2
-
+        
         let colorSelectionImage = UIImageView()
         colorSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         colorSelectionImage.image = UIImage(named: "selectionImage")
@@ -707,22 +733,22 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             {
                 if colorTagIntArray.count == 0
                 {
-                    self.serviceCall(getMaterialId: [1], getColorId: [1])
+                    self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
                 }
                 else
                 {
-                    self.serviceCall(getMaterialId: [1], getColorId: colorTagIntArray)
+                    self.serviceCallFunction(getMaterialId: [1], getColorId: colorTagIntArray)
                 }
             }
             else
             {
                 if colorTagIntArray.count == 0
                 {
-                    self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [1])
+                    self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: [1])
                 }
                 else
                 {
-                    self.serviceCall(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+                    self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
                 }
             }
             
@@ -775,25 +801,11 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             
             if materialTagIntArray.count == 0
             {
-                if colorTagIntArray.count == 0
-                {
-                    self.serviceCall(getMaterialId: [1], getColorId: [1])
-                }
-                else
-                {
-                    self.serviceCall(getMaterialId: [1], getColorId: colorTagIntArray)
-                }
+                self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
             }
             else
             {
-                if colorTagIntArray.count == 0
-                {
-                    self.serviceCall(getMaterialId: materialTagIntArray, getColorId: [1])
-                }
-                else
-                {
-                    self.serviceCall(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
-                }
+                self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: [1])
             }
         }
     }
@@ -808,50 +820,123 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         selectedPatternId = sender.tag
         
         /*if patternTagIntArray.isEmpty == true
-        {
-            patternTagIntArray.append(sender.tag)
-            sender.addSubview(patternSelectionImage)
-        }
-        else
-        {
-            if patternTagIntArray.contains(sender.tag)
-            {
-                if let index = patternTagIntArray.index(where: {$0 == sender.tag}) {
-                    patternTagIntArray.remove(at: index)
-                }
-                
-                for views in sender.subviews
-                {
-                    if let findView = views.viewWithTag(sender.tag)
-                    {
-                        if findView.tag == sender.tag
-                        {
-                            print("FIND VIEW", findView.description)
-                            findView.removeFromSuperview()
-                        }
-                        else
-                        {
-                            print("NOT SAME VIEW")
-                        }
-                    }
-                }
-            }
-            else
-            {
-                patternTagIntArray.append(sender.tag)
-                sender.addSubview(patternSelectionImage)
-            }
-        }*/
+         {
+         patternTagIntArray.append(sender.tag)
+         sender.addSubview(patternSelectionImage)
+         }
+         else
+         {
+         if patternTagIntArray.contains(sender.tag)
+         {
+         if let index = patternTagIntArray.index(where: {$0 == sender.tag}) {
+         patternTagIntArray.remove(at: index)
+         }
+         
+         for views in sender.subviews
+         {
+         if let findView = views.viewWithTag(sender.tag)
+         {
+         if findView.tag == sender.tag
+         {
+         print("FIND VIEW", findView.description)
+         findView.removeFromSuperview()
+         }
+         else
+         {
+         print("NOT SAME VIEW")
+         }
+         }
+         }
+         }
+         else
+         {
+         patternTagIntArray.append(sender.tag)
+         sender.addSubview(patternSelectionImage)
+         }
+         }*/
     }
     
     @objc func customization2NextButtonAction(sender : UIButton)
     {
         print("SELECTED PATTERN ID", selectedPatternId)
         
+        var selectedMaterialNameArray = [String]()
+        var selectedColorNameArray = [String]()
+        var selectedPatternNameArray = String()
+        
+        if materialTagIntArray.count != 0
+        {
+            for i in 0..<materialsIdArray.count
+            {
+                for j in 0..<materialTagIntArray.count
+                {
+                    if let id = materialsIdArray[i] as? Int
+                    {
+                        if id == materialTagIntArray[j]
+                        {
+                            print("SELECTED OF MATERIAL", materialsIdArray[i], materialsArray[i])
+                            selectedMaterialNameArray.append(materialsArray[i] as! String)
+                        }
+                    }
+                }
+            }
+            
+            UserDefaults.standard.set(selectedMaterialNameArray, forKey: "material")
+        }
+        else
+        {
+            UserDefaults.standard.set("All Material", forKey: "material")
+        }
+        
+        if colorTagIntArray.count != 0
+        {
+            for i in 0..<colorsIdArray.count
+            {
+                for j in 0..<colorTagIntArray.count
+                {
+                    if let id = colorsIdArray[i] as? Int
+                    {
+                        if id == colorTagIntArray[j]
+                        {
+                            print("SELECTED OF COLOR", colorsIdArray[i], colorsArray[i])
+                            selectedColorNameArray.append(colorsArray[i] as! String)
+                        }
+                    }
+                }
+            }
+            
+            UserDefaults.standard.set(selectedColorNameArray, forKey: "color")
+        }
+        else
+        {
+            UserDefaults.standard.set("All Colors", forKey: "color")
+        }
+        
         if selectedPatternId != 0
         {
+            for i in 0..<patternsIdArray.count
+            {
+                if let id = patternsIdArray[i] as? Int
+                {
+                    if id == selectedPatternId
+                    {
+                        print("SELECTED OF PATTERN", patternsIdArray[i], patternsArray[i])
+                        selectedPatternNameArray.append(patternsArray[i] as! String)
+                    }
+                }
+            }
+            
+            UserDefaults.standard.set(selectedPatternNameArray, forKey: "pattern")
+        }
+        else
+        {
+            UserDefaults.standard.set(patternsArray[0], forKey: "pattern")
+        }
+        
+        if selectedPatternId != nil
+        {
             UserDefaults.standard.set(selectedPatternId, forKey: "patternId")
-
+            
             let custom3Screen = Customization3ViewController()
             self.navigationController?.pushViewController(custom3Screen, animated: true)
         }
@@ -864,13 +949,13 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

@@ -11,7 +11,7 @@ import UIKit
 class Measurement2ViewController: CommonViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, ServerAPIDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate
 {
     let serviceCall = ServerAPI()
-
+    
     let imageButton = UIButton()
     let partsButton = UIButton()
     
@@ -21,7 +21,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var pageControl : UIPageControl = UIPageControl(frame: CGRect(x:50,y: 300, width:200, height:50))
     var colors:[UIColor] = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
     let imageScrollView = UIScrollView()
-
+    
     let imageView = UIView()
     let partsView = UIView()
     var gender = String()
@@ -82,7 +82,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     let partsBackView = UIView()
     let selectedPartsImageView = UIImageView()
     let partsInputTextField = UITextField()
-
+    
     
     // Error PAram...
     var DeviceNum:String!
@@ -110,16 +110,16 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
-
+        
         
         self.serviceCall.API_GetMeasurement2(Measurement2Value: 1, delegate: self)
         addDoneButtonOnKeyboard()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -132,9 +132,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-      //  ErrorStr = "Default Error"
+        //  ErrorStr = "Default Error"
         PageNumStr = "Measurement2ViewController"
-       // MethodName = "do"
+        // MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
@@ -256,7 +256,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             DeviceError()
         }
         
-       
+        
     }
     
     func API_CALLBACK_GetMeasurement2Value(GetMeasurement2val: NSDictionary)
@@ -376,7 +376,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         measurement1NavigationBar.addSubview(navigationTitle)
-
+        
         imageButton.frame = CGRect(x: 0, y: measurement1NavigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: (5 * y))
         imageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         imageButton.setTitle("IMAGE", for: .normal)
@@ -418,14 +418,14 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             partsButton.backgroundColor = UIColor.lightGray
             partsButton.setTitleColor(UIColor.black, for: .normal)
             imageViewContents(isHidden: false)
-//            partsViewContents(isHidden: true)
+            //            partsViewContents(isHidden: true)
             partsView.removeFromSuperview()
         }
         else if sender.tag == 1
         {
             imageButton.backgroundColor = UIColor.lightGray
             imageButton.setTitleColor(UIColor.black, for: .normal)
-//            imageViewContents(isHidden: true)
+            //            imageViewContents(isHidden: true)
             partsViewContents(isHidden: false)
             imageView.removeFromSuperview()
         }
@@ -446,7 +446,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         
         var x1:CGFloat = 0
-
+        
         for i in 0..<4
         {
             let pageNumberlabel = UILabel()
@@ -532,6 +532,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         let nextButton = UIButton()
         nextButton.frame = CGRect(x: view.frame.width - (5 * x), y: view.frame.height - (9 * y), width: (3 * x), height: (3 * y))
+        nextButton.layer.cornerRadius = nextButton.frame.height / 2
+        nextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         nextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         nextButton.addTarget(self, action: #selector(self.nextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(nextButton)
@@ -549,7 +551,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         
         var buttonTag = Int()
-
+        
         
         for index in 0..<4 {
             
@@ -557,27 +559,27 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             frame.size = imageScrollView.frame.size
             
             let subView = UIView(frame: frame)
-//            let subView = UIView()
-//            subView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height - 30)
-//            subView.backgroundColor = colors[index]
+            //            let subView = UIView()
+            //            subView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: frame.height - 30)
+            //            subView.backgroundColor = colors[index]
             imageScrollView.addSubview(subView)
             
             print("X-\(subView.frame.minX), Y-\(subView.frame.minY), WIDTH-\(subView.frame.width), HEIGHT-\(subView.frame.height)")
             
             let measurementImageView = UIImageView()
             measurementImageView.frame = CGRect(x: x, y: y, width: subView.frame.width / 2, height: subView.frame.height - (2 * y))
-//            measurementImageView.backgroundColor = UIColor.cyan
+            //            measurementImageView.backgroundColor = UIColor.cyan
             measurementImageView.image = UIImage(named: measureImages[index])
             subView.addSubview(measurementImageView)
             
             let verticalLine = UILabel()
             verticalLine.frame = CGRect(x: subView.frame.width - x, y: y, width: 1, height: subView.frame.height - (2 * y))
-//            verticalLine.backgroundColor = UIColor.red
+            //            verticalLine.backgroundColor = UIColor.red
             subView.addSubview(verticalLine)
             
             let verticalLine2 = UILabel()
             verticalLine2.frame = CGRect(x: subView.frame.width - (6 * x), y: y, width: 1, height: subView.frame.height - (2 * y))
-//            verticalLine2.backgroundColor = UIColor.red
+            //            verticalLine2.backgroundColor = UIColor.red
             subView.addSubview(verticalLine2)
             
             if gender == "men"
@@ -726,7 +728,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     kneeButton.tag = 5
                     kneeButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(kneeButton)
-
+                    
                     getKneeLabel.frame = CGRect(x: kneeButton.frame.maxX, y: (31.1 * y), width: (5 * x), height: (3 * y))
                     getKneeLabel.text = "0.0"
                     getKneeLabel.textColor = UIColor.blue
@@ -773,7 +775,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     let overAllHeightButton = UIButton()
                     overAllHeightButton.frame = CGRect(x: 0, y: (15 * y), width: subView.frame.width - (6 * x), height: (3 * y))
                     overAllHeightButton.setImage(UIImage(named: "lengthArrowMark"), for: .normal)
-//                    overAllHeightButton.backgroundColor = UIColor.red
+                    //                    overAllHeightButton.backgroundColor = UIColor.red
                     overAllHeightButton.tag = 7
                     overAllHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(overAllHeightButton)
@@ -785,7 +787,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     gettotalheightLabel.font = gettotalheightLabel.font.withSize(15)
                     gettotalheightLabel.tag = ((7 * 1) + 200)
                     subView.addSubview(gettotalheightLabel)
-
+                    
                     let hipHeightLabel = UILabel()
                     hipHeightLabel.frame = CGRect(x: (4.3 * x), y: (39.5 * y), width: subView.frame.width - (10.3 * x), height: (2 * y))
                     hipHeightLabel.text = "Hip height"
@@ -1056,124 +1058,124 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 }
                 
                 /*for view in subView.subviews
-                {
-                    for i in 0..<PartsIdArray.count
-                    {
-                        if let button = view.viewWithTag(PartsIdArray[i] as! Int) as? UIButton
-                        {
-                            button.backgroundColor = UIColor.green
-                        }
-                        else
-                        {
-                            
-                        }
-                    }
-                }*/
+                 {
+                 for i in 0..<PartsIdArray.count
+                 {
+                 if let button = view.viewWithTag(PartsIdArray[i] as! Int) as? UIButton
+                 {
+                 button.backgroundColor = UIColor.green
+                 }
+                 else
+                 {
+                 
+                 }
+                 }
+                 }*/
             }
             /*else
-            {
-                if index == 0
-                {
-                    let headButton = UIButton()
-                    headButton.frame = CGRect(x: (10.8 * x), y: (1.3 * y), width: (10 * x), height: (3 * y))
-                    headButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(headButton)
-                    
-                    let neckButton = UIButton()
-                    neckButton.frame = CGRect(x: (11.9 * x), y: (7.1 * y), width: (10 * x), height: (3 * y))
-                    neckButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    neckButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
-                    subView.addSubview(neckButton)
-                    
-                    let chestButton = UIButton()
-                    chestButton.frame = CGRect(x: (13.4 * x), y: (12.2 * y), width: (10 * x), height: (3 * y))
-                    chestButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(chestButton)
-                    
-                    let waistButton = UIButton()
-                    waistButton.frame = CGRect(x: (12.5 * x), y: (15.6 * y), width: (10 * x), height: (3 * y))
-                    waistButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(waistButton)
-                    
-                    let hipButton = UIButton()
-                    hipButton.frame = CGRect(x: (12.6 * x), y: (18.8 * y), width: (10 * x), height: (3 * y))
-                    hipButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(hipButton)
-                    
-                    let handKneeButton = UIButton()
-                    handKneeButton.frame = CGRect(x: (15.7 * x), y: (21.5 * y), width: (8 * x), height: (3 * y))
-                    handKneeButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(handKneeButton)
-                    
-                    let thighButton = UIButton()
-                    thighButton.frame = CGRect(x: (13 * x), y: (27.8 * y), width: (10 * x), height: (3 * y))
-                    thighButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(thighButton)
-                    
-                    let bounceButton = UIButton()
-                    bounceButton.frame = CGRect(x: (11.8 * x), y: (33 * y), width: (10 * x), height: (3 * y))
-                    bounceButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(bounceButton)
-                    
-                    let kneeButton = UIButton()
-                    kneeButton.frame = CGRect(x: (11.2 * x), y: (42.9 * y), width: (10 * x), height: (3 * y))
-                    kneeButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(kneeButton)
-                }
-                else if index == 1
-                {
-                    let overAllHeightButton = UIButton()
-                    overAllHeightButton.frame = CGRect(x: 0, y: (15 * y), width: (25 * x), height: (3 * y))
-                    overAllHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(overAllHeightButton)
-                    
-                    print("33333", overAllHeightButton.frame.minX)
-                    
-                    let hipHeightButton = UIButton()
-                    hipHeightButton.frame = CGRect(x: (4.3 * x), y: (40 * y), width: (17 * x), height: (3 * y))
-                    hipHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(hipHeightButton)
-                    
-                    let bottomHeightButton = UIButton()
-                    bottomHeightButton.frame = CGRect(x: (8.2 * x), y: (35 * y), width: (14 * x), height: (3 * y))
-                    bottomHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(bottomHeightButton)
-                    
-                    let kneeHeightButton = UIButton()
-                    kneeHeightButton.frame = CGRect(x: (11.6 * x), y: (27.8 * y), width: (10 * x), height: (3 * y))
-                    kneeHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(kneeHeightButton)
-                }
-                else if index == 2
-                {
-                    let shoulderButton = UIButton()
-                    shoulderButton.frame = CGRect(x: (13.6 * x), y: (8 * y), width: (10 * x), height: (3 * y))
-                    shoulderButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(shoulderButton)
-                    
-                    let bicepButton = UIButton()
-                    bicepButton.frame = CGRect(x: (15.2 * x), y: (13.3 * y), width: (10 * x), height: (3 * y))
-                    bicepButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(bicepButton)
-                    
-                    let backButton = UIButton()
-                    backButton.frame = CGRect(x: (12.9 * x), y: (22.3 * y), width: (10 * x), height: (3 * y))
-                    backButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(backButton)
-                }
-                else if index == 3
-                {
-                    let heightButton = UIButton()
-                    heightButton.frame = CGRect(x: (9.6 * x), y: (12.1 * y), width: (10 * x), height: (3 * y))
-                    heightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(heightButton)
-                    
-                    let fullSleeveButton = UIButton()
-                    fullSleeveButton.frame = CGRect(x: (14.6 * x), y: (15.6 * y), width: (10 * x), height: (3 * y))
-                    fullSleeveButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    subView.addSubview(fullSleeveButton)
-                }
-            }*/
+             {
+             if index == 0
+             {
+             let headButton = UIButton()
+             headButton.frame = CGRect(x: (10.8 * x), y: (1.3 * y), width: (10 * x), height: (3 * y))
+             headButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(headButton)
+             
+             let neckButton = UIButton()
+             neckButton.frame = CGRect(x: (11.9 * x), y: (7.1 * y), width: (10 * x), height: (3 * y))
+             neckButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             neckButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+             subView.addSubview(neckButton)
+             
+             let chestButton = UIButton()
+             chestButton.frame = CGRect(x: (13.4 * x), y: (12.2 * y), width: (10 * x), height: (3 * y))
+             chestButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(chestButton)
+             
+             let waistButton = UIButton()
+             waistButton.frame = CGRect(x: (12.5 * x), y: (15.6 * y), width: (10 * x), height: (3 * y))
+             waistButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(waistButton)
+             
+             let hipButton = UIButton()
+             hipButton.frame = CGRect(x: (12.6 * x), y: (18.8 * y), width: (10 * x), height: (3 * y))
+             hipButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(hipButton)
+             
+             let handKneeButton = UIButton()
+             handKneeButton.frame = CGRect(x: (15.7 * x), y: (21.5 * y), width: (8 * x), height: (3 * y))
+             handKneeButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(handKneeButton)
+             
+             let thighButton = UIButton()
+             thighButton.frame = CGRect(x: (13 * x), y: (27.8 * y), width: (10 * x), height: (3 * y))
+             thighButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(thighButton)
+             
+             let bounceButton = UIButton()
+             bounceButton.frame = CGRect(x: (11.8 * x), y: (33 * y), width: (10 * x), height: (3 * y))
+             bounceButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(bounceButton)
+             
+             let kneeButton = UIButton()
+             kneeButton.frame = CGRect(x: (11.2 * x), y: (42.9 * y), width: (10 * x), height: (3 * y))
+             kneeButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(kneeButton)
+             }
+             else if index == 1
+             {
+             let overAllHeightButton = UIButton()
+             overAllHeightButton.frame = CGRect(x: 0, y: (15 * y), width: (25 * x), height: (3 * y))
+             overAllHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(overAllHeightButton)
+             
+             print("33333", overAllHeightButton.frame.minX)
+             
+             let hipHeightButton = UIButton()
+             hipHeightButton.frame = CGRect(x: (4.3 * x), y: (40 * y), width: (17 * x), height: (3 * y))
+             hipHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(hipHeightButton)
+             
+             let bottomHeightButton = UIButton()
+             bottomHeightButton.frame = CGRect(x: (8.2 * x), y: (35 * y), width: (14 * x), height: (3 * y))
+             bottomHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(bottomHeightButton)
+             
+             let kneeHeightButton = UIButton()
+             kneeHeightButton.frame = CGRect(x: (11.6 * x), y: (27.8 * y), width: (10 * x), height: (3 * y))
+             kneeHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(kneeHeightButton)
+             }
+             else if index == 2
+             {
+             let shoulderButton = UIButton()
+             shoulderButton.frame = CGRect(x: (13.6 * x), y: (8 * y), width: (10 * x), height: (3 * y))
+             shoulderButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(shoulderButton)
+             
+             let bicepButton = UIButton()
+             bicepButton.frame = CGRect(x: (15.2 * x), y: (13.3 * y), width: (10 * x), height: (3 * y))
+             bicepButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(bicepButton)
+             
+             let backButton = UIButton()
+             backButton.frame = CGRect(x: (12.9 * x), y: (22.3 * y), width: (10 * x), height: (3 * y))
+             backButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(backButton)
+             }
+             else if index == 3
+             {
+             let heightButton = UIButton()
+             heightButton.frame = CGRect(x: (9.6 * x), y: (12.1 * y), width: (10 * x), height: (3 * y))
+             heightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(heightButton)
+             
+             let fullSleeveButton = UIButton()
+             fullSleeveButton.frame = CGRect(x: (14.6 * x), y: (15.6 * y), width: (10 * x), height: (3 * y))
+             fullSleeveButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+             subView.addSubview(fullSleeveButton)
+             }
+             }*/
             
             for views in subView.subviews
             {
@@ -1189,10 +1191,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                         button.isEnabled = false
                         button.isHidden = true
                         
-//                        let origImage = UIImage(named: "arrowMark");
-//                        let tintedImage = origImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
-//                        button.setImage(tintedImage, for: .normal)
-//                        button.tintColor = UIColor.white
+                        //                        let origImage = UIImage(named: "arrowMark");
+                        //                        let tintedImage = origImage?.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+                        //                        button.setImage(tintedImage, for: .normal)
+                        //                        button.tintColor = UIColor.white
                     }
                 }
                 
@@ -1225,26 +1227,26 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 }
                 
                 /*if let labels = views as? UILabel
-                {
-                    print("WELCOME NAYASA", labels.text)
-                    if PartsIdArray.contains(buttonTag)
-                    {
-                        
-                    }
-                    else
-                    {
-                        if labels.tag == ((buttonTag * 1) + 300)
-                        {
-                            labels.isHidden = true
-                        }
-                        else
-                        {
-                            
-                        }
-                    }
-                }*/
+                 {
+                 print("WELCOME NAYASA", labels.text)
+                 if PartsIdArray.contains(buttonTag)
+                 {
+                 
+                 }
+                 else
+                 {
+                 if labels.tag == ((buttonTag * 1) + 300)
+                 {
+                 labels.isHidden = true
+                 }
+                 else
+                 {
+                 
+                 }
+                 }
+                 }*/
             }
-   
+            
         }
         
         let page = imageScrollView.contentOffset.x / imageScrollView.frame.size.width;
@@ -1330,22 +1332,22 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         print("PAGE NUMBER OF CURRENT", pageNumbers)
         /*for i in 0..<4
-        {
-            if let theLabel = self.view.viewWithTag((i + 1) * 20) as? UILabel {
-                let pageNo = Int(pageNumbers)
-                let no = Int(theLabel.text!)! + 1
-                print("THE LABEL TEXT", theLabel.text!, pageNo)
-                if pageNo == no
-                {
-                    pageNumber = pageNo
-                    theLabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-                }
-                else
-                {
-                    theLabel.backgroundColor = UIColor.clear
-                }
-            }
-        }*/
+         {
+         if let theLabel = self.view.viewWithTag((i + 1) * 20) as? UILabel {
+         let pageNo = Int(pageNumbers)
+         let no = Int(theLabel.text!)! + 1
+         print("THE LABEL TEXT", theLabel.text!, pageNo)
+         if pageNo == no
+         {
+         pageNumber = pageNo
+         theLabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+         }
+         else
+         {
+         theLabel.backgroundColor = UIColor.clear
+         }
+         }
+         }*/
         
         pageNumber = Int(pageNumbers)
         pageNumberContents()
@@ -1354,7 +1356,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     @objc func measurementButtonAction(sender : UIButton)
     {
         let measureScreen = MeasureScrollViewController()
-
+        
         if sender.tag == 0
         {
             measurerImage = "Head"
@@ -1579,7 +1581,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             if let label = foundView as? UILabel
             {
                 label.text = partsMeasurementLabel.text
-//                measurementValues[measurerTag] = Int(partsMeasurementLabel.text!)
+                //                measurementValues[measurerTag] = Int(partsMeasurementLabel.text!)
                 let convertToInt:Float? = Float(label.text!)
                 print("TEXT", convertToInt!)
                 measurementValues.updateValue(convertToInt!, forKey: measurerTag)
@@ -1806,22 +1808,22 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         print("WIDTH", selectedPartsImageView.frame.width)
         
         /*let cmLabel = UILabel()
-        cmLabel.frame = CGRect(x: ((view.frame.width - (13 * x)) / 2), y: downArrowImageView.frame.maxY + y, width: (3 * x), height: (2 * y))
-        cmLabel.text = "CM"
-        cmLabel.textColor = UIColor.white
-        cmLabel.textAlignment = .center
-        partsBackView.addSubview(cmLabel)
-        
-        let addressSwitchButton = UISwitch()
-        addressSwitchButton.frame = CGRect(x: cmLabel.frame.maxX + (x / 2), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
-        partsBackView.addSubview(addressSwitchButton)
-        
-        let inchLabel = UILabel()
-        inchLabel.frame = CGRect(x: addressSwitchButton.frame.maxX + (x / 2), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
-        inchLabel.text = "Inches"
-        inchLabel.textColor = UIColor.white
-        inchLabel.textAlignment = .center
-        partsBackView.addSubview(inchLabel)*/
+         cmLabel.frame = CGRect(x: ((view.frame.width - (13 * x)) / 2), y: downArrowImageView.frame.maxY + y, width: (3 * x), height: (2 * y))
+         cmLabel.text = "CM"
+         cmLabel.textColor = UIColor.white
+         cmLabel.textAlignment = .center
+         partsBackView.addSubview(cmLabel)
+         
+         let addressSwitchButton = UISwitch()
+         addressSwitchButton.frame = CGRect(x: cmLabel.frame.maxX + (x / 2), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
+         partsBackView.addSubview(addressSwitchButton)
+         
+         let inchLabel = UILabel()
+         inchLabel.frame = CGRect(x: addressSwitchButton.frame.maxX + (x / 2), y: downArrowImageView.frame.maxY + y, width: (5 * x), height: (2 * y))
+         inchLabel.text = "Inches"
+         inchLabel.textColor = UIColor.white
+         inchLabel.textAlignment = .center
+         partsBackView.addSubview(inchLabel)*/
         
         partsInputTextField.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: selectedPartsImageView.frame.maxY + (2 * y), width: (10 * x), height: (4 * y))
         partsInputTextField.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -1874,30 +1876,30 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     }
     
     /*func numberOfSections(in tableView: UITableView) -> Int {
-        return 26
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        
-        let alphabetsLabel = UILabel()
-        alphabetsLabel.frame = CGRect(x: x, y: 2, width: x, height: y)
-        alphabetsLabel.text = alphabets[section]
-        alphabetsLabel.textColor = UIColor.white
-        alphabetsLabel.textAlignment = .center
-        headerView.addSubview(alphabetsLabel)
-        
-        return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
-    }*/
+     return 26
+     }
+     
+     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+     let headerView = UIView()
+     headerView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+     
+     let alphabetsLabel = UILabel()
+     alphabetsLabel.frame = CGRect(x: x, y: 2, width: x, height: y)
+     alphabetsLabel.text = alphabets[section]
+     alphabetsLabel.textColor = UIColor.white
+     alphabetsLabel.textAlignment = .center
+     headerView.addSubview(alphabetsLabel)
+     
+     return headerView
+     }
+     
+     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+     return 20
+     }
+     
+     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+     return 10
+     }*/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return PartsNameArray.count
@@ -1911,7 +1913,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (5 * y))
         
         cell.partsImage.frame = CGRect(x: x, y: y, width: (3 * x), height: (3 * y))
-
+        
         cell.partsName.frame = CGRect(x: cell.partsImage.frame.maxX + x, y: y, width: cell.frame.width - (13.5 * x), height: (3 * y))
         
         cell.partsSizeLabel.frame = CGRect(x: cell.partsName.frame.maxX + x, y: y, width: (6 * x), height: (3 * y))
@@ -1943,10 +1945,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         measurerTag = selectedInt
         
         self.serviceCall.API_GetMeasurementParts(MeasurementParts: selectedInt, delegate: self)
-
+        
         /*let partsScreen = PartsViewController()
-        partsScreen.viewTag = selectedInt
-        self.navigationController?.pushViewController(partsScreen, animated: true)*/
+         partsScreen.viewTag = selectedInt
+         self.navigationController?.pushViewController(partsScreen, animated: true)*/
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -1964,7 +1966,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print("SELECTED ROW", row + 1)
         partsMeasurementLabel.text = "\(row + 1)"
-//        UserDefaults.standard.set(row + 1, forKey: "Measure-\(headingTitle)")
+        //        UserDefaults.standard.set(row + 1, forKey: "Measure-\(headingTitle)")
     }
     
     func addDoneButtonOnKeyboard()
@@ -1989,7 +1991,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     {
         view.endEditing(true)
     }
-
+    
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
@@ -2004,14 +2006,42 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
+        var boolVar = Bool()
+        
+        if textField == partsInputTextField
+        {
+            if let textString = partsInputTextField.text
+            {
+                if textString.contains(".")
+                {
+                    let maxLength = 6
+                    let currentString: NSString = partsInputTextField.text! as NSString
+                    let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+                    boolVar = newString.length <= maxLength
+                }
+                else
+                {
+                    let maxLength = 4
+                    let currentString: NSString = partsInputTextField.text! as NSString
+                    let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+                    boolVar = newString.length <= maxLength
+                }
+            }
+        }
+        
+        return boolVar
     }
-    */
-
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

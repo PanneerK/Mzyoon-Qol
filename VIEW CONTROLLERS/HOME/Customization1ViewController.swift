@@ -67,15 +67,15 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
-
+        
         
         self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
         updateId = 0
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -90,7 +90,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-       // ErrorStr = "Default Error"
+        // ErrorStr = "Default Error"
         PageNumStr = "Customization1ViewController"
         MethodName = "GetCustomization1"
         
@@ -103,7 +103,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         print("CUSTOMIZATION 1", errorMessage)
     }
-   
+    
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
     {
@@ -138,29 +138,29 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             brandImageArray = materialBrand.value(forKey: "Image") as! NSArray
             
             /*for i in 0..<brandImageArray.count
-            {
-                if let imageName = brandImageArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Brands/\(imageName)"
-                    let apiurl = URL(string: api)
-                    
-                    if let data = try? Data(contentsOf: apiurl!) {
-                        if let image = UIImage(data: data) {
-                            self.convertedBrandImageArray.append(image)
-                        }
-                    }
-                    else
-                    {
-                        let emptyImage = UIImage(named: "empty")
-                        self.convertedBrandImageArray.append(emptyImage!)
-                    }
-                }
-                else if let imgName = brandImageArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedBrandImageArray.append(emptyImage!)
-                }
-            }*/
+             {
+             if let imageName = brandImageArray[i] as? String
+             {
+             let api = "http://appsapi.mzyoon.com/images/Brands/\(imageName)"
+             let apiurl = URL(string: api)
+             
+             if let data = try? Data(contentsOf: apiurl!) {
+             if let image = UIImage(data: data) {
+             self.convertedBrandImageArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedBrandImageArray.append(emptyImage!)
+             }
+             }
+             else if let imgName = brandImageArray[i] as? NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedBrandImageArray.append(emptyImage!)
+             }
+             }*/
             
             let placeofIndustrys = Result.object(forKey: "placeofIndustrys") as! NSArray
             let PlaceInArabic = placeofIndustrys.value(forKey: "PlaceInArabic") as! NSArray
@@ -169,29 +169,29 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             industryImageArray = placeofIndustrys.value(forKey: "Image") as! NSArray
             
             /*for i in 0..<industryImageArray.count
-            {
-                if let imageName = industryImageArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/PlaceOfIndustry/\(imageName)"
-                    let apiurl = URL(string: api)
-                    
-                    if let data = try? Data(contentsOf: apiurl!) {
-                        if let image = UIImage(data: data) {
-                            self.convertedIndustryImageArray.append(image)
-                        }
-                    }
-                    else
-                    {
-                        let emptyImage = UIImage(named: "empty")
-                        self.convertedIndustryImageArray.append(emptyImage!)
-                    }
-                }
-                else if let imgName = industryImageArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedIndustryImageArray.append(emptyImage!)
-                }
-            }*/
+             {
+             if let imageName = industryImageArray[i] as? String
+             {
+             let api = "http://appsapi.mzyoon.com/images/PlaceOfIndustry/\(imageName)"
+             let apiurl = URL(string: api)
+             
+             if let data = try? Data(contentsOf: apiurl!) {
+             if let image = UIImage(data: data) {
+             self.convertedIndustryImageArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedIndustryImageArray.append(emptyImage!)
+             }
+             }
+             else if let imgName = industryImageArray[i] as? NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedIndustryImageArray.append(emptyImage!)
+             }
+             }*/
             
             
             let seasons = Result.object(forKey: "seasons") as! NSArray
@@ -201,29 +201,29 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             seasonalImageArray = seasons.value(forKey: "Image") as! NSArray
             
             /*for i in 0..<seasonalImageArray.count
-            {
-                if let imageName = seasonalImageArray[i] as? String
-                {
-                    let api = "http://appsapi.mzyoon.com/images/Seasons/\(imageName)"
-                    let apiurl = URL(string: api)
-                    
-                    if let data = try? Data(contentsOf: apiurl!) {
-                        if let image = UIImage(data: data) {
-                            self.convertedSeasonalImageArray.append(image)
-                        }
-                    }
-                    else
-                    {
-                        let emptyImage = UIImage(named: "empty")
-                        self.convertedSeasonalImageArray.append(emptyImage!)
-                    }
-                }
-                else if let imgName = seasonalImageArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedSeasonalImageArray.append(emptyImage!)
-                }
-            }*/
+             {
+             if let imageName = seasonalImageArray[i] as? String
+             {
+             let api = "http://appsapi.mzyoon.com/images/Seasons/\(imageName)"
+             let apiurl = URL(string: api)
+             
+             if let data = try? Data(contentsOf: apiurl!) {
+             if let image = UIImage(data: data) {
+             self.convertedSeasonalImageArray.append(image)
+             }
+             }
+             else
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedSeasonalImageArray.append(emptyImage!)
+             }
+             }
+             else if let imgName = seasonalImageArray[i] as? NSNull
+             {
+             let emptyImage = UIImage(named: "empty")
+             self.convertedSeasonalImageArray.append(emptyImage!)
+             }
+             }*/
             
             print("FINAL BRAND NAME ARRAY", brandNameArray)
             
@@ -254,7 +254,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         customization1View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         customization1View.backgroundColor = UIColor.white
-//        view.addSubview(customization1View)
+        //        view.addSubview(customization1View)
         
         let customization1NavigationBar = UIView()
         customization1NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -282,6 +282,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         let customization1NextButton = UIButton()
         customization1NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: brandScrollView.frame.maxY, width: (4 * x), height: (4 * y))
+        customization1NextButton.layer.cornerRadius = customization1NextButton.frame.height / 2
+        customization1NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization1NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization1NextButton.addTarget(self, action: #selector(self.customization1NextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(customization1NextButton)
@@ -499,7 +501,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     }
                 }
             }
-
+            
             if seasonalTagIntArray.isEmpty == true
             {
                 seasonalTagIntArray.append(sender.tag)
@@ -536,7 +538,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 }
             }
             print("SEASONAL ARRAY", seasonalTagIntArray)
-//            self.serviceCall(originIdArray: [0], seasonIdArray: seasonalTagIntArray)
+            //            self.serviceCall(originIdArray: [0], seasonIdArray: seasonalTagIntArray)
         }
         else
         {
@@ -579,12 +581,12 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             else
             {
                 seasonalTagIntArray.removeAll()
-
+                
                 seasonalTagIntArray.append(sender.tag)
                 sender.addSubview(seasonalSelectionImage)
             }
             
-//            self.serviceCall(originIdArray: [0], seasonIdArray: [0])
+            //            self.serviceCall(originIdArray: [0], seasonIdArray: [0])
         }
         
         updateId = 1
@@ -829,7 +831,84 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         print("INDUSTRY", industryTagIntArray)
         print("BRAND", brandTagIntArray)
         
+        var selectedSeasonNameArray = [String]()
+        var selectedIndustryNameArray = [String]()
+        var selectedBrandNameArray = [String]()
+        
         let custom2Screen = Customization2ViewController()
+        
+        if seasonalTagIntArray.count != 0
+        {
+            for i in 0..<seasonalIdArray.count
+            {
+                for j in 0..<seasonalTagIntArray.count
+                {
+                    if let id = seasonalIdArray[i] as? Int
+                    {
+                        if id == seasonalTagIntArray[j]
+                        {
+                            print("SELECTED OF SEASON", seasonalIdArray[i], seasonalNameArray[i])
+                            selectedSeasonNameArray.append(seasonalNameArray[i] as! String)
+                        }
+                    }
+                }
+            }
+            
+            UserDefaults.standard.set(selectedSeasonNameArray, forKey: "season")
+        }
+        else
+        {
+            UserDefaults.standard.set("All Season", forKey: "season")
+        }
+        
+        if industryTagIntArray.count != 0
+        {
+            for i in 0..<industryIdArray.count
+            {
+                for j in 0..<industryTagIntArray.count
+                {
+                    if let id = industryIdArray[i] as? Int
+                    {
+                        if id == industryTagIntArray[j]
+                        {
+                            print("SELECTED OF SEASON", industryIdArray[i], industryNameArray[i])
+                            selectedIndustryNameArray.append(industryNameArray[i] as! String)
+                        }
+                    }
+                }
+            }
+            
+            UserDefaults.standard.set(selectedIndustryNameArray, forKey: "industry")
+        }
+        else
+        {
+            UserDefaults.standard.set("All Industry", forKey: "industry")
+        }
+        
+        if brandTagIntArray.count != 0
+        {
+            for i in 0..<brandIdArray.count
+            {
+                for j in 0..<brandTagIntArray.count
+                {
+                    if let id = brandIdArray[i] as? Int
+                    {
+                        if id == brandTagIntArray[j]
+                        {
+                            print("SELECTED OF SEASON", brandIdArray[i], brandNameArray[i])
+                            selectedBrandNameArray.append(brandNameArray[i] as! String)
+                        }
+                    }
+                }
+            }
+            
+            UserDefaults.standard.set(selectedBrandNameArray, forKey: "brand")
+        }
+        else
+        {
+            UserDefaults.standard.set("All Brand", forKey: "brand")
+        }
+        
         if brandTagIntArray.count == 0
         {
             custom2Screen.brandArray = "1"
@@ -852,15 +931,15 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         self.navigationController?.pushViewController(custom2Screen, animated: true)
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

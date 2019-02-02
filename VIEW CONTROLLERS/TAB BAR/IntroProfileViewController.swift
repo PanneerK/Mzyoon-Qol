@@ -10,13 +10,13 @@ import UIKit
 
 class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ServerAPIDelegate
 {
-
+    
     //POSITION
     var x:CGFloat!
     var y:CGFloat!
     
     var userImage = UIImageView()
-
+    
     var imagePicker = UIImagePickerController()
     
     var userNameTextField = UITextField()
@@ -48,7 +48,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         self.view.addGestureRecognizer(disableKeyboard)
         
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -66,9 +66,9 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
-     //   ErrorStr = "Default Error"
+        //   ErrorStr = "Default Error"
         PageNumStr = "IntroProfileViewcontroller"
-      //  MethodName = "do"
+        //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
@@ -204,7 +204,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         userNameTextField.leftViewMode = UITextField.ViewMode.always
         userNameTextField.adjustsFontSizeToFitWidth = true
         userNameTextField.keyboardType = .default
-        userNameTextField.clearsOnBeginEditing = true
+        userNameTextField.clearsOnBeginEditing = false
         userNameTextField.returnKeyType = .done
         userNameTextField.delegate = self
         view.addSubview(userNameTextField)
@@ -216,10 +216,11 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         
         let introProfileNextButton = UIButton()
         introProfileNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: underLine.frame.maxY + (5 * y), width: (4 * x), height: (4 * y))
+        introProfileNextButton.layer.cornerRadius = introProfileNextButton.frame.height / 2
         introProfileNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
-//        introProfileNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-//        introProfileNextButton.setTitle("NEXT", for: .normal)
-//        introProfileNextButton.setTitleColor(UIColor.white, for: .normal)
+        introProfileNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        //        introProfileNextButton.setTitle("NEXT", for: .normal)
+        //        introProfileNextButton.setTitleColor(UIColor.white, for: .normal)
         introProfileNextButton.addTarget(self, action: #selector(self.introProfileNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(introProfileNextButton)
     }
@@ -245,6 +246,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     @objc func cameraButtonAction(sender : UIButton)
     {
+        view.endEditing(true)
         let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
         cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
         cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
@@ -286,7 +288,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
             
             print("FILE PATH", getDirectoryPath())
             
-//            saveImageDocumentDirectory(image: pickedImage, imageName: "profile")
+            //            saveImageDocumentDirectory(image: pickedImage, imageName: "profile")
             getImageFromDocumentDirectory()
         }
         self.dismiss(animated: true, completion: nil)
@@ -294,7 +296,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func getDirectoryPath() -> NSURL {
         let path1 = configureDirectory()
-
+        
         let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("Mzyoon")
         let url = NSURL(string: path1)
         return url!
@@ -302,7 +304,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func saveImageDocumentDirectory(image: UIImage, imageName: String) {
         let path1 = configureDirectory()
-
+        
         let fileManager = FileManager.default
         let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("profile")
         if !fileManager.fileExists(atPath: path) {
@@ -333,7 +335,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func configureDirectory() -> String {
         let fileManager = FileManager.default
-
+        
         let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("Mzyoon")
         if !fileManager.fileExists(atPath: path) {
             try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
@@ -361,12 +363,12 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
                 if let profId = UserDefaults.standard.value(forKey: "userId") as? String
                 {
                     print("ENTERED NAME", userNameTextField.text!)
-                    serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, buyerImagepath: path, delegate: self)
+                    serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
                 }
                 
-//                activeStop()
-//                let homeScreen = HomeViewController()
-//                self.navigationController?.pushViewController(homeScreen, animated: true)
+                //                activeStop()
+                //                let homeScreen = HomeViewController()
+                //                self.navigationController?.pushViewController(homeScreen, animated: true)
             }
             else
             {
@@ -387,15 +389,34 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         view.endEditing(true)
         return true
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        var returnParameter = Bool()
+        
+        if textField == userNameTextField
+        {
+            let cs = NSCharacterSet(charactersIn: ACCEPTABLE_CHARACTERS).inverted
+            let filtered = string.components(separatedBy: cs).joined(separator: "")
+            
+            returnParameter = (string == filtered)
+        }
+        else
+        {
+            returnParameter = true
+        }
+        print("return parameter", returnParameter)
+        return returnParameter
     }
-    */
-
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
