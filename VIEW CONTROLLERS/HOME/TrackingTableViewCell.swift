@@ -18,19 +18,52 @@ class TrackingTableViewCell: UITableViewCell
     */
     
     var contentSpace : UIView!
+    var spaceView : UIView!
+    
     var TrackerImg : UIImageView!
     var TrackingDetails : UILabel!
     var TrackingDate : UILabel!
     var TrackingTime : UILabel!
-    var spaceView : UIView!
     
+   
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
        //  TrackerImg.backgroundColor = UIColor.blue
         
-      
+        contentSpace = UIView()
+        contentSpace.backgroundColor =  UIColor.white //UIColor(red: 0.9451, green: 0.9373, blue: 0.9373, alpha: 1.0)
+        contentView.addSubview(contentSpace)
+        
+        TrackingDate = UILabel()
+        //TrackingDate.backgroundColor = UIColor.cyan
+        TrackingDate.textColor = UIColor.black
+        TrackingDate.textAlignment = .left
+        TrackingDate.font = UIFont(name: "Avenir Next", size: 15)
+        contentSpace.addSubview(TrackingDate)
+        
+        TrackerImg = UIImageView()
+        //TrackerImg.backgroundColor = UIColor.green
+        contentSpace.addSubview(TrackerImg)
+        
+        TrackingTime = UILabel()
+        //TrackingTime.backgroundColor = UIColor.white
+        TrackingTime.textColor = UIColor.black
+        TrackingTime.textAlignment = .left
+        TrackingTime.font = UIFont(name: "Avenir Next", size: 15)
+        contentSpace.addSubview(TrackingTime)
+        
+        TrackingDetails = UILabel()
+        //TrackingDetails.backgroundColor = UIColor.white
+        TrackingDetails.textColor = UIColor.black
+        TrackingDetails.textAlignment = .left
+        TrackingDetails.font = UIFont(name: "Avenir Next", size: 15)
+        contentSpace.addSubview(TrackingDetails)
+        
+        spaceView = UIView()
+        spaceView.backgroundColor = UIColor.clear
+        contentView.addSubview(spaceView)
     
     }
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Cosmos
 
 class ReviewsViewController:CommonViewController,ServerAPIDelegate
 {
@@ -197,7 +198,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
    
     let RatingNumLabel = UILabel()
     RatingNumLabel.frame = CGRect(x: (3 * x), y: (2 * y), width: (3 * x), height: (2 * y))
-    let rateNum : Int = FullStatusArr[0] as! Int
+    let rateNum : Int = Int(FullStatusArr[0] as! Double)
     RatingNumLabel.text = "\(rateNum)/5"
     RatingNumLabel.textColor = UIColor.white
    // RatingNumLabel.backgroundColor = UIColor.gray
@@ -303,7 +304,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         
        
         // Ratings Buttons
-        let ratingNum : Int = RatingArray[i] as! Int
+        let ratingNum : Int = Int(RatingArray[i] as! Double)
         let CustomerRatingImageView = UIImageView()
         CustomerRatingImageView.frame = CGRect(x: RatingCountLBL.frame.maxX, y: 0, width: (12 * x), height:(2 * y))
        // CustomerRatingImageView.backgroundColor = UIColor.lightGray
@@ -334,7 +335,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         RatingValLBL.frame = CGRect(x:CustomerRatingImageView.frame.maxX, y: 0, width: (2 * x), height: (2 * y))
         RatingValLBL.textColor = UIColor.black
         //RatingValLBL.backgroundColor = UIColor.lightGray
-        let ratVal : Int = RatingArray[i] as! Int
+        let ratVal : Int = Int(RatingArray[i] as! Double)
         RatingValLBL.text = "\(ratVal)"
         RatingValLBL.textAlignment = .center
         RatingValLBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -420,9 +421,9 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         UserNameLabel.font =  UIFont(name: "Avenir Next", size: 1.3 * x)  //nameLabel.font.withSize(1.2 * x)
         ReviewsView.addSubview(UserNameLabel)
         
-       
+        
         // Ratings Buttons
-        let CusRatingNum : Int = CustomerRatingArray[i] as! Int
+        let CusRatingNum : Int = Int(CustomerRatingArray[i] as! Double)
         let CustomerRatingImageView = UIImageView()
         CustomerRatingImageView.frame = CGRect(x: userImageView.frame.maxX + x, y: UserNameLabel.frame.maxY, width: (8 * x), height: (1.5 * y))
         //CustomerRatingImageView.backgroundColor = UIColor.lightGray
