@@ -52,8 +52,9 @@ class CommonViewController: UIViewController
         y = y * view.frame.height / 100
         
         navigationContents()
-        //        navigationContentsInArabic()
+//        navigationContentsInArabic()
         tabContents()
+//        tabContentsInArabic()
         self.activityContents()
         
         super.viewDidLoad()
@@ -270,13 +271,97 @@ class CommonViewController: UIViewController
          }*/
     }
     
+    func tabContentsInArabic()
+    {
+        //let slideMenuButton = UIButton()
+        slideMenuButton.frame = CGRect(x: view.frame.width - (2.5 * x), y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
+        slideMenuButton.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
+        slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonActionArabic(sender:)), for: .touchUpInside)
+        view.addSubview(slideMenuButton)
+        
+        // let tabBar = UIView()
+        tabBar.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
+        tabBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        view.addSubview(tabBar)
+        
+        tab1Button.frame = CGRect(x: 0, y: 0, width: (9.37 * x), height: (5 * y))
+        tab1Button.tag = 3
+        tab1Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
+        tabBar.addSubview(tab1Button)
+        
+        tab1ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
+        tab1ImageView.image = UIImage(named: "cart")
+        tab1Button.addSubview(tab1ImageView)
+        
+        tab1Text.frame = CGRect(x: 0, y: tab1ImageView.frame.maxY, width: (9.37 * x), height: y)
+        tab1Text.text = "عربة التسوق"
+        tab1Text.textColor = UIColor.white
+        tab1Text.textAlignment = .center
+        tab1Text.font = tab1Text.font.withSize(15)
+        tab1Button.addSubview(tab1Text)
+        
+        tab2Button.frame = CGRect(x: tab1Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
+        tab2Button.tag = 2
+        tab2Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
+        tabBar.addSubview(tab2Button)
+        
+        tab2ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
+        tab2ImageView.image = UIImage(named: "order")
+        tab2Button.addSubview(tab2ImageView)
+        
+        tab2Text.frame = CGRect(x: 0, y: tab2ImageView.frame.maxY, width: (9.37 * x), height: y)
+        tab2Text.text = "طلب"
+        tab2Text.textColor = UIColor.white
+        tab2Text.textAlignment = .center
+        tab2Text.font = tab2Text.font.withSize(10)
+        tab2Button.addSubview(tab2Text)
+        
+        tab3Button.frame = CGRect(x: tab2Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
+        tab3Button.tag = 1
+        tab3Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
+        tabBar.addSubview(tab3Button)
+        
+        tab3ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
+        tab3ImageView.image = UIImage(named: "request")
+        tab3Button.addSubview(tab3ImageView)
+        
+        tab3Text.frame = CGRect(x: 0, y: tab3ImageView.frame.maxY, width: (9.37 * x), height: y)
+        tab3Text.text = "طلب"
+        tab3Text.textColor = UIColor.white
+        tab3Text.textAlignment = .center
+        tab3Text.font = tab3Text.font.withSize(10)
+        tab3Button.addSubview(tab3Text)
+        
+        tab4Button.frame = CGRect(x: tab3Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
+        tab4Button.tag = 0
+        tab4Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
+        tabBar.addSubview(tab4Button)
+        
+        tab4ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
+        tab4ImageView.image = UIImage(named: "home")
+        tab4Button.addSubview(tab4ImageView)
+        
+        let templateImage = tab4ImageView.image?.withRenderingMode(.alwaysTemplate)
+        tab4ImageView.image = templateImage
+        tab4ImageView.tintColor = UIColor.orange
+        
+        tab4Text.frame = CGRect(x: 0, y: tab4ImageView.frame.maxY, width: (9.37 * x), height: y)
+        tab4Text.text = "الصفحة الرئيسية"
+        tab4Text.textColor = UIColor.orange
+        tab4Text.textAlignment = .center
+        tab4Text.font = tab4Text.font.withSize(10)
+        tab4Button.addSubview(tab4Text)
+    }
+    
     @objc func slideMenuButtonAction(sender : UIButton)
     {
-        sender.setImage(UIImage(named: "closeMenu"), for: .normal)
-        
-        print("WIDTH OF SLIDE", SideMenuManager.default.menuWidth)
-        
-        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+        self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+    }
+    
+    @objc func slideMenuButtonActionArabic(sender : UIButton)
+    {
+        self.present(SideMenuManager.default.menuRightNavigationController!, animated: true, completion: nil)
     }
     
     @objc func tabBarButtonAction(sender : UIButton)
