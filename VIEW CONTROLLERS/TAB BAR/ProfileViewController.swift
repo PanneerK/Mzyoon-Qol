@@ -276,6 +276,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 {
                     serviceCall.API_IntroProfile(Id: profId, Name: userName.text!, profilePic: String(imageName!), delegate: self)
                 }
+                else if let profId = UserDefaults.standard.value(forKey: "userId") as? Int
+                {
+                    serviceCall.API_IntroProfile(Id: "\(profId)", Name: userName.text!, profilePic: String(imageName!), delegate: self)
+                }
             }
         }
         else if ResponseMsg == "Failure"
@@ -287,6 +291,49 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             ErrorStr = Result
             DeviceError()
         }
+    }
+    
+    func API_CALLBACK_IntroProfile(introProf: NSDictionary)
+    {
+        print("introProf", introProf)
+        let ResponseMsg = introProf.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = introProf.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            if Result == "1"
+            {
+                var userId = String()
+                
+                
+                if let ProfId = UserDefaults.standard.value(forKey: "userId") as? String
+                {
+                    userId = ProfId
+                }
+                else
+                {
+                    
+                }
+                let EmailID = email.text
+                let DobStr = dob.text
+                let ModifyStr = "user"
+                
+                serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
+            }
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = introProf.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "InsertBuyerName"
+            ErrorStr = Result
+            DeviceError()
+        }
+        
     }
     
     func savedAlertAction(action : UIAlertAction)
@@ -342,7 +389,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         userImage.layer.masksToBounds = true
         if let imageName = imageName[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/BuyerImages/\(imageName)"
+            let api = "http://appsapi.mzyoon.com/Images/BuyerImages/\(imageName)"
+
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -781,25 +829,32 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             {
                 if validateEMail == true
                 {
-                    userName.isUserInteractionEnabled = false
-                    mobileNumber.isUserInteractionEnabled = false
-                    email.isUserInteractionEnabled = false
-                    dob.isUserInteractionEnabled = false
-                    
-                    femaleButton.isEnabled = false
-                    maleButton.isEnabled = false
-                    
-                    cameraButton.isEnabled = false
-                    genderButton.isEnabled = false
-                    
-                    updateButton.isHidden = false
-                    
-                    sender.removeFromSuperview()
-                    cancelButton.removeFromSuperview()
-                    
-                    serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
-                    
-                    serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
+                    if userImage.image != nil
+                    {
+                        userName.isUserInteractionEnabled = false
+                        mobileNumber.isUserInteractionEnabled = false
+                        email.isUserInteractionEnabled = false
+                        dob.isUserInteractionEnabled = false
+                        
+                        femaleButton.isEnabled = false
+                        maleButton.isEnabled = false
+                        
+                        cameraButton.isEnabled = false
+                        genderButton.isEnabled = false
+                        
+                        updateButton.isHidden = false
+                        
+                        sender.removeFromSuperview()
+                        cancelButton.removeFromSuperview()
+                        
+                        serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                    }
+                    else
+                    {
+                        let alert = UIAlertController(title: "Alert", message: "Please choose image", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
                 }
                 else
                 {
