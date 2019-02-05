@@ -68,9 +68,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         {
             serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
         }
-        else
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
-            
+            serviceCall.API_ExistingUserProfile(Id: "\(userId)", delegate: self)
         }
         
         //        let closeKeyboard = UITapGestureRecognizer(target: self, action: #selector(self.closeKeyboard(gesture:)))
@@ -904,3 +904,4 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
      */
     
 }
+

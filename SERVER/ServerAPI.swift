@@ -265,21 +265,66 @@ class ServerAPI : NSObject
         var Id: Int?
         
         init(Id: Int) {
-            
             self.Id = Id
-            
         }
         
-        
-        
         func getDictFormat() -> [String: Int]{
-            
-            
             return ["Id" : Id!]
-            
         }
     }
     
+    func MakeRequest(season : [Int], origin : [Int]) -> ([String : Any])
+    {
+        var array = [Customization]()
+        
+        for i in 0..<origin.count
+        {
+            array.append(Customization(Id: origin[i]))
+        }
+        
+//        array.append(Customization(Id: 1))
+//
+//        array.append(Customization(Id: 2))
+        
+        var List = [[String: Int]]()
+        
+        for item in array {
+            
+            List.append(item.getDictFormat())
+            
+        }
+    
+        var array1 = [Customization]()
+        
+//        array1.append(Customization(Id: 0))
+        
+        for i in 0..<season.count
+        {
+            array1.append(Customization(Id: season[i]))
+        }
+        
+        
+        var List1 = [[String: Int]]()
+        
+        for item in array1 {
+            
+            List1.append(item.getDictFormat())
+            
+        }
+        
+        let parameters = [
+            
+            "SeasonId": List1,
+            
+            "PlaceofOrginId": List
+            
+            ] as [String : Any]
+        
+        
+        print("PARAMETERS OF SUPER", parameters)
+        
+        return parameters
+    }
     
     func API_Customization1(originId : [Int], seasonId : [Int], delegate : ServerAPIDelegate)
     {
@@ -313,29 +358,11 @@ class ServerAPI : NSObject
             }
         }
         
-        
-        var array = [Customization]()
-        
-        array.append(Customization(Id: 1))
-        
-        array.append(Customization(Id: 2))
-        
-        var List = [[String: Int]]()
-        
-        
-        for item in array {
-            
-            List.append(item.getDictFormat())
-            
-        }
-        
-        
-        for i in 0..<originId.count
-        {
-            convertedOrigin.append(contentsOf: "placeofOrginId")
-        }
-        
-        print("DICT NEW")
+        let parameters1 = MakeRequest(season: seasonId, origin: originId)
+
+        print("DICT NEW", origin)
+        print("DICT NEW SEASON", season)
+
                 
         if (Reachability()?.isReachable)!
         {
@@ -346,9 +373,9 @@ class ServerAPI : NSObject
             let urlString:String = String(format: "%@/API/Order/GetCustomization1", arguments: [baseURL])
             
             print("URL STRING", urlString)
-            print("PARAMETERS", parameters)
+            print("PARAMETERS", parameters1)
             
-            request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+            request(urlString, method: .post, parameters: parameters1, encoding: JSONEncoding.default).responseJSON {response in
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate

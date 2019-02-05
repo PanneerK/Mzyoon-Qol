@@ -18,6 +18,8 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     let newOrderView = UIView()
     
     let serviceCall = ServerAPI()
+    
+    let newOrderNavigationBar = UIView()
 
     //GENDER API PARAMETERS
     var genderArray = NSArray()
@@ -140,13 +142,30 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
-    func newOrderContents()
+    func newOrderTabArabicContents()
     {
-        newOrderView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        newOrderView.backgroundColor = UIColor.white
-        //        view.addSubview(newOrderView)
+        newOrderNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        newOrderNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(newOrderNavigationBar)
         
-        let newOrderNavigationBar = UIView()
+        let backButton = UIButton()
+        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
+        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
+        backButton.tag = 1
+        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
+        newOrderNavigationBar.addSubview(backButton)
+        
+        let navigationTitle = UILabel()
+        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: newOrderNavigationBar.frame.width, height: (3 * y))
+        navigationTitle.text = "جنس"
+        navigationTitle.textColor = UIColor.white
+        navigationTitle.textAlignment = .center
+        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        newOrderNavigationBar.addSubview(navigationTitle)
+    }
+    
+    func newOrderTabEnglishContents()
+    {
         newOrderNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         newOrderNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(newOrderNavigationBar)
@@ -165,7 +184,15 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         newOrderNavigationBar.addSubview(navigationTitle)
+    }
+    
+    func newOrderContents()
+    {
+        newOrderView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        newOrderView.backgroundColor = UIColor.white
+        //        view.addSubview(newOrderView)
         
+        newOrderTabEnglishContents()
         
         var x1:CGFloat = (3 * x)
         var y1:CGFloat = newOrderNavigationBar.frame.maxY + (10.65 * y)

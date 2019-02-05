@@ -112,6 +112,8 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         yPos = yPos * view.frame.height / 100
         
         navigationTitle.text = "HOME"
+//        navigationTitle.text = "الصفحة الرئيسية"
+
         
         //        navigationTitle.text =  NSLocalizedString("HOME", comment: "") //"HOME"
         
@@ -132,6 +134,7 @@ class HomeViewController: CommonViewController, UIGestureRecognizerDelegate, Ser
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
             // Your code with delay
             self.checkContent()
+//            self.checkContentInArabic()
         }
         
         super.viewDidLoad()

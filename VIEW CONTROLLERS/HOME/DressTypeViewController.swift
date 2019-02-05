@@ -342,6 +342,8 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeButton.addTarget(self, action: #selector(self.dressTypeButtonAction(sender:)), for: .touchUpInside)
             dressTypeScrollView.addSubview(dressTypeButton)
             
+            print("COUNT OF EQUATING", inputTextArray.count, inputIdArray.count)
+            
             x1 = dressTypeButton.frame.maxX + x
             
             let dressTypeImageView = UIImageView()
@@ -532,10 +534,10 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     @objc func dressTypeButtonAction(sender : UIButton)
     {
-        if sender.tag == 1
+        if sender.tag == 1 || sender.tag == 5
         {
-            UserDefaults.standard.set(dressTypeArray[sender.tag], forKey: "dressType")
-            print("DRESS TYPE OF SELECTED - \(sender.tag)", dressTypeArray[sender.tag])
+        print("DRESS TYPE OF SELECTED - \(sender.tag)")
+
             let dressSubScreen = DressSubTypeViewController()
             dressSubScreen.screenTag = sender.tag
             
@@ -546,6 +548,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                     if sender.tag == id
                     {
                         dressSubScreen.headingTitle = dressTypeArray[i] as! String
+                        UserDefaults.standard.set(dressTypeArray[i], forKey: "dressType")
                     }
                 }
             }
