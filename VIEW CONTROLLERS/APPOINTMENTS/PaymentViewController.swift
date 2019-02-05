@@ -12,7 +12,7 @@ import TelrSDK
 class PaymentViewController: CommonViewController
 {
     
-    let KEY:String = "qTTvw#d4mg@d5k3j"
+    let KEY:String = "XZCQ~9wRvD^prrJx"
     let STOREID:String = "21552"
     let EMAIL:String = "rohith.qol@gmail.com"
     

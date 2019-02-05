@@ -15,10 +15,10 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     
     let RequestListNavigationBar = UIView()
     let RequestListScrollView = UIScrollView()
+    // var RequestViewButton = UIButton()
+    //let orderIdNumLabel = UILabel()
     
-    // let RequestViewButton = UIButton()
-    
-    let orderIdNumLabel = UILabel()
+    var BuyerId : Int!
     
     // Error PAram...
     var DeviceNum:String!
@@ -42,13 +42,17 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
 //         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 1)
 
-       
-       // let BuyerId = UserDefaults.standard.value(forKey: "userId") as! String
-       //  print("Buyer ID:",BuyerId)
-       // self.serviceCall.API_GetOrderRequest(RequestId: BuyerId, delegate: self)
-       
-        self.serviceCall.API_GetOrderRequest(RequestId: 1, delegate: self)
-        
+      if(BuyerId != nil)
+      {
+        let BuyerId = UserDefaults.standard.value(forKey: "userId") as! String
+         print("Buyer ID:",BuyerId)
+        self.serviceCall.API_GetOrderRequest(RequestId: Int(BuyerId)!, delegate: self)
+      }
+      else
+      {
+        // let BuyerID = UserDefaults.standard.value(forKey: "userId") as? String
+        self.serviceCall.API_GetOrderRequest(RequestId: 1055, delegate: self)
+      }
         // Do any additional setup after loading the view.
     }
     
@@ -289,11 +293,11 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             orderIDLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             RequestViewButton.addSubview(orderIDLabel)
             
-           // let orderIdNumLabel = UILabel()
+            let orderIdNumLabel = UILabel()
             orderIdNumLabel.frame = CGRect(x: orderIDLabel.frame.maxX - x, y: ordersLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
             let orderNum : Int = OrderIdArray[i] as! Int
             orderIdNumLabel.text =  "\(orderNum)"
-            orderIdNumLabel.tag = OrderIdArray[i] as! Int
+            RequestViewButton.tag = OrderIdArray[i] as! Int
             orderIdNumLabel.textColor = UIColor.black
             orderIdNumLabel.textAlignment = .left
             orderIdNumLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -313,8 +317,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
+        
         let QuotationListScreen = QuotationListViewController()
-        QuotationListScreen.OrderId = orderIdNumLabel.tag
+        QuotationListScreen.OrderId = sender.tag
         self.navigationController?.pushViewController(QuotationListScreen, animated: true)
     }
     

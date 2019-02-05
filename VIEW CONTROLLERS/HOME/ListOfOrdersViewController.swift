@@ -15,6 +15,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     let DeliveredButton = UIButton()
     let PendingButton = UIButton()
     
+    var BuyerId : Int!
+    
     let ListOfOrdersNavigationBar = UIView()
     
     let PendingScrollView = UIScrollView()
@@ -58,7 +60,18 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
  
       //  ListOfOrdersContent()
         
-        self.serviceCall.API_ListOfOrdersPending(BuyerId: 1, delegate: self)
+        if(BuyerId != nil)
+        {
+            let BuyerId = UserDefaults.standard.value(forKey: "userId") as! String
+            print("Buyer ID:",BuyerId)
+            self.serviceCall.API_GetOrderRequest(RequestId: Int(BuyerId)!, delegate: self)
+        }
+        else
+        {
+            // let BuyerID = UserDefaults.standard.value(forKey: "userId") as? String
+            self.serviceCall.API_GetOrderRequest(RequestId: 1055, delegate: self)
+        }
+        
     }
     
 
