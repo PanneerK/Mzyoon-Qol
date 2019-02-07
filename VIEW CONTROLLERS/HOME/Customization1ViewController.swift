@@ -85,15 +85,15 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         print("SERVICE CALL", originIdArray, seasonIdArray)
         
-        let getConversion = ConversionToJson()
+       // let getConversion = ConversionToJson()
         
-        let id1 = getConversion.MakeRequest(id: originIdArray)
+      //  let id1 = getConversion.MakeRequest(id: originIdArray)
         
-        let id2 = getConversion.MakeRequest(id: seasonIdArray)
+      //  let id2 = getConversion.MakeRequest(id: seasonIdArray)
         
-        print("WELCOME OF ALL TO CUSTOM 1", id1)
+      //  print("WELCOME OF ALL TO CUSTOM 1", id1)
         
-        self.serviceCall.API_Customization1(originId: id1, seasonId: id2 , delegate: self)
+      //  self.serviceCall.API_Customization1(originId: id1, seasonId: id2 , delegate: self)
     }
     
     func DeviceError()

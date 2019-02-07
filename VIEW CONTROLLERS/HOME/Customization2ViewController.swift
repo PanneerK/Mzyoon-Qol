@@ -70,13 +70,13 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     func serviceCallFunction(getMaterialId : [Int], getColorId : [Int])
     {
-        let getConversion = ConversionToJson()
+      //  let getConversion = ConversionToJson()
         
-        let id1 = getConversion.MakeRequest(id: getMaterialId)
-        let id2 = getConversion.MakeRequest(id: getColorId)
-        let id3 = getConversion.MakeRequest(id: brandArray)
+      //  let id1 = getConversion.MakeRequest(id: getMaterialId)
+     //   let id2 = getConversion.MakeRequest(id: getColorId)
+     //   let id3 = getConversion.MakeRequest(id: brandArray)
         
-        self.serviceCall.API_Customization2(brandId: id3, materialId: id1, ColorId: id2, delegate: self)
+      //  self.serviceCall.API_Customization2(brandId: id3, materialId: id1, ColorId: id2, delegate: self)
     }
     
     func DeviceError()

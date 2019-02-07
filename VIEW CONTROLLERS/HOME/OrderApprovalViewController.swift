@@ -54,7 +54,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             // Your code with delay
             
        
-        self.serviceCall.API_OrderApprovalPrice(TailorResponseId: 27, delegate: self)
+            self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.orderID, delegate: self)
             
       //  self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
         
@@ -265,7 +265,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         DressImageView.backgroundColor = UIColor.white
         if let imageName = DressImageArray[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
+              let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
           //  let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
             let apiurl = URL(string: api)
             print("Image Of Dress", apiurl!)

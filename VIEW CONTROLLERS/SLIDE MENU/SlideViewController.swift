@@ -224,8 +224,8 @@ class SlideViewController: UIViewController
         }
         else if sender.tag == 8
         {
-            let settingsScreen = SettingsViewController()
-            self.navigationController?.pushViewController(settingsScreen, animated: true)
+           // let settingsScreen = SettingsViewController()
+          //  self.navigationController?.pushViewController(settingsScreen, animated: true)
         }
         else if sender.tag == 9
         {
