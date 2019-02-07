@@ -46,15 +46,17 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
 //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
+        serviceCall.API_DressType(genderId: tag, delegate: self)
+
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool)
+    /*override func viewWillAppear(_ animated: Bool)
     {
         serviceCall.API_DressType(genderId: tag, delegate: self)
-    }
+    }*/
     
     func DeviceError()
     {

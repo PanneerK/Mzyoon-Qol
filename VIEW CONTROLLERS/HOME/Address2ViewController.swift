@@ -21,6 +21,9 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var addressString = String()
     var splittedAddress = [String]()
     
+    var getEditId = Int()
+    var checkDefault = Int()
+    
     let serviceCall = ServerAPI()
     
     let addressScrollView = UIScrollView()
@@ -69,6 +72,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var currentLocation: CLLocation!
     
     var setDefault = "FALSE"
+    
+    var getStateId = Int()
+    var getCountryId = Int()
+
+    var insertOrUpdate = 1
     
     override func viewDidLoad()
     {
@@ -333,6 +341,15 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     func addressContents()
     {
+        if getEditId != 0
+        {
+            insertOrUpdate = 2
+        }
+        else
+        {
+            insertOrUpdate = 1
+        }
+        
         let addressNavigationBar = UIView()
         addressNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         addressNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -433,6 +450,14 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let addressSwitchButton = UISwitch()
         addressSwitchButton.frame = CGRect(x: addressDefaultLabel.frame.maxX + (2 * x), y: locationView.frame.maxY + y, width: (5 * x), height: (2 * y))
+        if checkDefault == 1
+        {
+            addressSwitchButton.isOn = true
+        }
+        else
+        {
+            addressSwitchButton.isOn = false
+        }
         addressSwitchButton.addTarget(self, action: #selector(self.addressSwitchButtonAction(action:)), for: .valueChanged)
         view.addSubview(addressSwitchButton)
         
@@ -535,7 +560,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let countryDropDownIcon = UIImageView()
         countryDropDownIcon.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline2.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        countryDropDownIcon.image = UIImage(named: "edit")
+        countryDropDownIcon.image = UIImage(named: "downArrow")
         addressScrollView.addSubview(countryDropDownIcon)
         
         let underline3 = UILabel()
@@ -557,7 +582,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let stateDropDownIcon = UIImageView()
         stateDropDownIcon.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline3.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        stateDropDownIcon.image = UIImage(named: "edit")
+        stateDropDownIcon.image = UIImage(named: "downArrow")
         addressScrollView.addSubview(stateDropDownIcon)
         
         let underline4 = UILabel()
@@ -681,7 +706,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let locationTypeEditButton = UIButton()
         locationTypeEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline7.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        locationTypeEditButton.setImage(UIImage(named: "edit"), for: .normal)
+        locationTypeEditButton.setImage(UIImage(named: "downArrow"), for: .normal)
         addressScrollView.addSubview(locationTypeEditButton)
         
         let underline8 = UILabel()
@@ -1007,6 +1032,17 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     func stateAlertAction(action : UIAlertAction)
     {
         stateButton.setTitle(action.title, for: .normal)
+        
+        for i in 0..<stateNameArray.count
+        {
+            if let state = stateNameArray[i] as? String
+            {
+                if state == action.title
+                {
+                    getStateId = stateCodeArray[i] as! Int
+                }
+            }
+        }
     }
     
     @objc func saveAndNextButtonAction(sender : UIButton)
@@ -1018,11 +1054,14 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         {
             buyerId = getBuyerId
         }
+        else if let getBuyerId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            buyerId = "\(getBuyerId)"
+        }
         
         let FirstNameStr = firstNameEnglishTextField.text!
         let lastNameStr = secondNameEnglishTextField.text!
         let CountryId = 1
-        let stateId = 4
         let AreaStr = areaNameTextField.text!
         let floorStr = floorTextField.text!
         let LandmarkStr = landMarkTextField.text!
@@ -1043,7 +1082,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         print(CountryCode)
         print(PhoneNum)
         
-        
         if FirstNameStr.isEmpty != true || FirstNameStr != ""
         {
             if lastNameStr.isEmpty != true || lastNameStr != ""
@@ -1062,7 +1100,14 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                                     {
                                         if locationTypeStr.isEmpty != true || locationTypeStr != ""
                                         {
-                                            serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: stateId, Area: AreaStr, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                            if insertOrUpdate == 1
+                                            {
+                                                serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                            }
+                                            else
+                                            {
+                                                serviceCall.API_UpdateAddress(Id: getEditId, BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                            }
                                         }
                                         else
                                         {

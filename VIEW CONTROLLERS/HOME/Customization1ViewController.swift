@@ -70,13 +70,15 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
-        
-        self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
         updateId = 0
         
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
     }
     
     func serviceCallFunction(originIdArray : [Int], seasonIdArray : [Int])

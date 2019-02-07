@@ -54,6 +54,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     var imageName = NSArray()
     
+    var profileImage = UIImage()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -399,7 +401,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 userImage.dowloadFromServer(url: apiurl!)
             }
         }
-        userImage.image = FileHandler().getImageFromDocumentDirectory()
+
         userImage.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleBottomMargin.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue | UIView.AutoresizingMask.flexibleRightMargin.rawValue | UIView.AutoresizingMask.flexibleLeftMargin.rawValue | UIView.AutoresizingMask.flexibleTopMargin.rawValue | UIView.AutoresizingMask.flexibleWidth.rawValue)
         userImage.contentMode = .scaleToFill
         backgroundImage.addSubview(userImage)

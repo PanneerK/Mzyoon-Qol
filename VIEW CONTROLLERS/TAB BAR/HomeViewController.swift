@@ -9,14 +9,20 @@
 import UIKit
 import SideMenu
 
-class HomeViewController: CommonViewController
+class HomeViewController: CommonViewController, ServerAPIDelegate
 {
+    let serviceCall = ServerAPI()
+
     let slideMB = UIButton()
     var slideView = UIView()
     
     //POSITION
     var xPos:CGFloat!
     var yPos:CGFloat!
+    
+    var imageName = NSArray()
+    
+    let slideScreen = SlideViewController()
     
     override func viewDidLoad()
     {
@@ -27,12 +33,19 @@ class HomeViewController: CommonViewController
         
         yPos = 10 / 667 * 100
         yPos = yPos * view.frame.height / 100
-        
-        
-        
+                
         selectedButton(tag: 0)
         
 //        sideMenuFunctions()
+        
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            serviceCall.API_ExistingUserProfile(Id: "\(userId)", delegate: self)
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
             // Your code with delay
@@ -60,6 +73,57 @@ class HomeViewController: CommonViewController
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+        print("ERROR MESSAGE IN HOME PAGE", errorMessage)
+    }
+    
+    func API_CALLBACK_ExistingUserProfile(userProfile: NSDictionary)
+    {
+        print("SELF OF EXISTING USER", userProfile)
+        
+        let responseMsg = userProfile.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = userProfile.object(forKey: "Result") as! NSArray
+            print("RESULT IN EXISTING", result)
+            
+            imageName = result.value(forKey: "ProfilePicture") as! NSArray
+            
+            if let imageName = imageName[0] as? String
+            {
+                let api = "http://appsapi.mzyoon.com/Images/BuyerImages/\(imageName)"
+                
+                print("SMALL ICON", api)
+                let apiurl = URL(string: api)
+                
+                if apiurl != nil
+                {
+//                    userImage.dowloadFromServer(url: apiurl!)
+                    
+                    downloadImage(from: apiurl!)
+                }
+            }
+        }
+    }
+    
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
+    func downloadImage(from url: URL) {
+        print("Download Started")
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            DispatchQueue.main.async() {
+//                self.userImage.image = UIImage(data: data)
+                FileHandler().saveImageDocumentDirectory(image: UIImage(data: data)!)
+            }
+        }
     }
     
     func sideMenuFunctions()

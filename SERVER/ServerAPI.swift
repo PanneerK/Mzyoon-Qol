@@ -743,7 +743,7 @@ class ServerAPI : NSObject
     }
     
     // Update Buyer Address..
-    func API_UpdateAddress(Id : Int ,BuyerId : Int, FirstName : String, LastName : String, CountryId : Int, StateId : Int, Area : String, Floor : String, LandMark : String, LocationType : String, ShippingNotes : String, IsDefault : String, CountryCode : Int, PhoneNo : String, Longitude : Float, Latitude : Float, delegate : ServerAPIDelegate)
+    func API_UpdateAddress(Id : Int ,BuyerId : String, FirstName : String, LastName : String, CountryId : Int, StateId : Int, Area : String, Floor : String, LandMark : String, LocationType : String, ShippingNotes : String, IsDefault : String, CountryCode : String, PhoneNo : String, Longitude : Float, Latitude : Float, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -776,15 +776,15 @@ class ServerAPI : NSObject
     }
     
     //Delete Buyer Address..
-    func API_DeleteAddress(AddressId : Int, delegate : ServerAPIDelegate)
+    func API_DeleteAddress(AddressId : Int, userId : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Address Page")
             
             let parameters = [:] as [String : Any]
-            
-            let urlString:String = String(format: "%@/API/Shop/DeleteBuyerAddressByAddressId?Id=\(AddressId)", arguments: [baseURL])
+
+            let urlString:String = String(format: "%@/API/Shop/DeleteBuyerAddress?BuyerId=\(userId)&Id=\(AddressId)", arguments: [baseURL])
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 
@@ -1373,7 +1373,7 @@ class ServerAPI : NSObject
         }
     }
     
-    func API_GetOrderRequest(RequestId : Int , delegate : ServerAPIDelegate)
+    func API_GetOrderRequest(RequestId : String , delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -1966,7 +1966,7 @@ class ServerAPI : NSObject
     }
     
     //  List Of Orders(Pending)..
-    func API_ListOfOrdersPending(BuyerId : Int , delegate : ServerAPIDelegate)
+    func API_ListOfOrdersPending(BuyerId : String , delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -2045,6 +2045,39 @@ class ServerAPI : NSObject
             let parameters = [:] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetTrackingDetails?OrderId=\(OrderId)", arguments: [baseURL])
+            
+            print("Tracking Details: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("resultDict", self.resultDict)
+                    
+                    delegate.API_CALLBACK_GetTrackingDetails!(getTrackingDetails: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 36, errorMessage: "Tracking Details Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    func API_DownoadImage(api : String , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - List Of Orders Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@\(api)", arguments: [baseURL])
             
             print("Tracking Details: ", urlString)
             

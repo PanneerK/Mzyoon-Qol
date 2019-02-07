@@ -61,9 +61,11 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         super.viewDidLoad()
         
-        self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
-        
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
     }
     
     func serviceCallFunction(getMaterialId : [Int], getColorId : [Int])
@@ -935,7 +937,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             UserDefaults.standard.set(patternsArray[0], forKey: "pattern")
         }
         
-        if selectedPatternId != nil
+        if selectedPatternId != 0
         {
             UserDefaults.standard.set(selectedPatternId, forKey: "patternId")
             
@@ -944,7 +946,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            let alert = UIAlertController(title: "Alert", message: "Please select atleast one pattern to proceed", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Alert", message: "Please select any one pattern to proceed", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }

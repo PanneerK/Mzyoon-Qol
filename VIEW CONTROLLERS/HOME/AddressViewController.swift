@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import CoreData
+import CoreLocation
+import GoogleMaps
+import GooglePlaces
+
 
 class AddressViewController: UIViewController, ServerAPIDelegate
 {
@@ -50,6 +55,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
+    
+    var selectedAddressString = String()
     
     override func viewDidLoad()
     {
@@ -225,6 +232,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     
     func API_CALLBACK_DeleteAddress(deleteAddr: NSDictionary)
     {
+        print("RESPONSE MSG FOR DELETE", deleteAddr)
         let ResponseMsg = deleteAddr.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
@@ -239,9 +247,21 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 self.present(alert, animated: true, completion: nil)
             }
             
+            if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+            {
+                self.serviceCall.API_GetBuyerAddress(BuyerAddressId: userId, delegate: self)
+            }
+            else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+            {
+                self.serviceCall.API_GetBuyerAddress(BuyerAddressId: "\(userId)", delegate: self)
+            }
         }
         else if ResponseMsg == "Failure"
         {
+            let alert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
             let Result = deleteAddr.object(forKey: "Result") as! String
             print("Result", Result)
             
@@ -320,31 +340,43 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 
                 let addressTitle = UILabel()
                 addressTitle.frame = CGRect(x: addressIcon.frame.maxX + x, y: y, width: (10 * x), height: (2 * y))
-                addressTitle.text = "Location"
+                addressTitle.text = (LocationType[i] as! String)
                 addressTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressTitle.textAlignment = .left
                 addressSelectButton.addSubview(addressTitle)
                 
                 let addressEditButton = UIButton()
-                addressEditButton.frame = CGRect(x: addressSelectButton.frame.width - (12.1 * x), y: y, width: (5 * x), height: (2 * y))
+                addressEditButton.frame = CGRect(x: addressTitle.frame.maxX + x, y: y, width: (10 * x), height: (2 * y))
+//                addressEditButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressEditButton.setTitle("Edit", for: .normal)
                 addressEditButton.setTitleColor(UIColor.black, for: .normal)
                 addressEditButton.tag = i
                 addressEditButton.addTarget(self, action: #selector(self.editButtonAction(sender:)), for: .touchUpInside)
                 addressSelectButton.addSubview(addressEditButton)
                 
+                let addressEditIcon = UIImageView()
+                addressEditIcon.frame = CGRect(x: 0, y: 0, width: (2 * x), height: (2 * y))
+                addressEditIcon.image = UIImage(named: "edit")
+                addressEditButton.addSubview(addressEditIcon)
+                
                 let linelabel = UILabel()
                 linelabel.frame = CGRect(x: addressEditButton.frame.maxX, y: y +  y / 2, width: 1, height: y)
                 linelabel.backgroundColor = UIColor.lightGray
-                addressSelectButton.addSubview(linelabel)
+//                addressSelectButton.addSubview(linelabel)
                 
                 let addressDeleteButton = UIButton()
-                addressDeleteButton.frame = CGRect(x: linelabel.frame.maxX, y: y, width: (6 * x), height: (2 * y))
+                addressDeleteButton.frame = CGRect(x: addressEditButton.frame.maxX, y: y, width: (10 * x), height: (2 * y))
+//                addressDeleteButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressDeleteButton.setTitle("Delete", for: .normal)
                 addressDeleteButton.setTitleColor(UIColor.black, for: .normal)
                 addressDeleteButton.tag = i
                 addressDeleteButton.addTarget(self, action: #selector(self.deleteButtonAction(sender:)), for: .touchUpInside)
                 addressSelectButton.addSubview(addressDeleteButton)
+                
+                let addressDeleteIcon = UIImageView()
+                addressDeleteIcon.frame = CGRect(x: 0, y: 0, width: (2 * x), height: (2 * y))
+                addressDeleteIcon.image = UIImage(named: "delete")
+                addressDeleteButton.addSubview(addressDeleteIcon)
                 
                 let underLine = UILabel()
                 underLine.frame = CGRect(x: x, y: addressEditButton.frame.maxY, width: addressSelectButton.frame.width - (2 * x), height: 1)
@@ -455,7 +487,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     
     @objc func editButtonAction(sender : UIButton)
     {
-        print("PRINT SELECTION", FirstName[sender.tag])
+        let selectedCoordinate = CLLocationCoordinate2D(latitude: Lattitude[sender.tag] as! CLLocationDegrees, longitude: Longitude[sender.tag] as! CLLocationDegrees)
+        reverseGeocodeCoordinate(selectedCoordinate)
+        
+        print("PRINT SELECTION", FirstName[sender.tag], selectedCoordinate)
         let address2Screen = Address2ViewController()
         
         address2Screen.firstNameEnglishTextField.text = FirstName[sender.tag] as? String
@@ -467,19 +502,62 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         address2Screen.mobileTextField.text = PhoneNo[sender.tag] as? String
         address2Screen.mobileCountryCodeLabel.text = CountryCode[sender.tag] as? String
         address2Screen.shippingNotesTextField.text = ShippingNotes[sender.tag] as? String
+        address2Screen.getEditId = Id[sender.tag] as! Int
+        address2Screen.checkDefault = isDefault[sender.tag] as! Int
+        address2Screen.addressString = selectedAddressString
         
-        self.navigationController?.pushViewController(address2Screen, animated: true)
+//        self.navigationController?.pushViewController(address2Screen, animated: true)
     }
     
     @objc func deleteButtonAction(sender : UIButton)
     {
-        
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            serviceCall.API_DeleteAddress(AddressId: Id[sender.tag] as! Int, userId: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            serviceCall.API_DeleteAddress(AddressId: Id[sender.tag] as! Int, userId: "\(userId)", delegate: self)
+        }
     }
     
     @objc func addNewAddressButtonAction(sender : UIButton)
     {
         let locationScreen = LocationViewController()
         self.navigationController?.pushViewController(locationScreen, animated: true)
+    }
+    
+    private func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D)
+    {
+        
+        // 1
+        let geocoder = GMSGeocoder()
+        
+        // 2
+        geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
+            
+            print("RESPONSE IN ADDRESS", response)
+            guard let address = response?.firstResult(), let lines = address.lines else {
+                print("FAILED TO RTURN ADDRESS")
+                return
+            }
+            print("FAILED TO RTURN ADDRESS", address)
+
+            // 3
+            print("GET CURRENT ADDRESS", lines.joined(separator: "\n"))
+            
+            self.selectedAddressString = lines.joined(separator: "\n")
+            
+            //  self.addressLabel.text = lines.joined(separator: "\n")
+            
+            // 4
+            UIView.animate(withDuration: 0.25)
+            {
+                self.view.layoutIfNeeded()
+            }
+            
+            self.stopActivity()
+        }
     }
     
     /*

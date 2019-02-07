@@ -19,6 +19,8 @@ class SlideViewController: UIViewController
     
     var window: UIWindow?
     
+    let userImage = UIImageView()
+    
     override func viewDidLoad()
     {
         print("MENU WIDTH", self.view.frame.width)
@@ -75,7 +77,6 @@ class SlideViewController: UIViewController
     
     func screenContents()
     {
-        let userImage = UIImageView()
         userImage.frame = CGRect(x: ((slideViewWidth - (10 * x)) / 2), y: (2.5 * y), width: (10 * x), height: (10 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.borderWidth = 0.50

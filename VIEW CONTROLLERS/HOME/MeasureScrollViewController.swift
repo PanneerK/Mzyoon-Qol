@@ -234,6 +234,13 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
         rulerScroll.scrollsToTop = true
         view.addSubview(rulerScroll)
         
+        for views in rulerScroll.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
+        rulerScroll.scrollsToTop = true
+        
         var y1:CGFloat = (30.4 * y)
         var y2:CGFloat = (29.4 * y)
         

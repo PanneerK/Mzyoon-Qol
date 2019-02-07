@@ -40,19 +40,18 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         super.viewDidLoad()
         
 //         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        navigationBar.isHidden = true
         selectedButton(tag: 1)
 
-      if(BuyerId != nil)
-      {
-        let BuyerId = UserDefaults.standard.value(forKey: "userId") as! String
-         print("Buyer ID:",BuyerId)
-        self.serviceCall.API_GetOrderRequest(RequestId: Int(BuyerId)!, delegate: self)
-      }
-      else
-      {
-        // let BuyerID = UserDefaults.standard.value(forKey: "userId") as? String
-        self.serviceCall.API_GetOrderRequest(RequestId: 1055, delegate: self)
-      }
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            self.serviceCall.API_GetOrderRequest(RequestId: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            self.serviceCall.API_GetOrderRequest(RequestId: "\(userId)", delegate: self)
+        }
+      
         // Do any additional setup after loading the view.
     }
     
@@ -137,7 +136,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         RequestListNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(RequestListNavigationBar)
         
-       let navigationTitle = UILabel()
+        let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: RequestListNavigationBar.frame.width, height: (3 * y))
         navigationTitle.text = "ORDER REQUEST LIST"
         navigationTitle.textColor = UIColor.white

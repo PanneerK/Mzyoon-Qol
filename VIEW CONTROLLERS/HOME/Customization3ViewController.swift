@@ -15,6 +15,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
+    
+    let selfScreenContents = UIView()
+
     let viewDesignLabel = UILabel()
 
     //SCREEN PARAMETERS
@@ -57,11 +60,14 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         navigationBar.isHidden = true
         selectedButton(tag: 0)
         
-        self.serviceCall.API_Customization3(DressTypeId: 5, delegate: self)
         
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.serviceCall.API_Customization3(DressTypeId: 5, delegate: self)
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
@@ -123,8 +129,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             ErrorStr = Result
             DeviceError()
         }
-        
-        customization3Content()
     }
     
     func API_CALLBACK_Customization3Attr(custom3Attr: NSDictionary)
@@ -173,8 +177,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         viewDesignLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        
+        selectionImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.text = "التخصيص - 3"
         viewDesignLabel.text = "عرض التصميم الخاص بك هنا"
     }
@@ -183,7 +188,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         viewDesignLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selectionImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
 
         selfScreenNavigationTitle.text = "CUSTOMIZATION-3"
         viewDesignLabel.text = "VIEW YOUR DESIGN HERE"
@@ -209,7 +216,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        viewDesignLabel.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: (25 * x), height: (4 * y))
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        viewDesignLabel.frame = CGRect(x: (3 * x), y: y, width: (25 * x), height: (4 * y))
         viewDesignLabel.layer.cornerRadius = 10
         viewDesignLabel.layer.masksToBounds = true
         viewDesignLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -217,7 +228,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         viewDesignLabel.textColor = UIColor.white
         viewDesignLabel.textAlignment = .center
         viewDesignLabel.font = UIFont(name: "Avenir-Regular", size: 10)
-        view.addSubview(viewDesignLabel)
+        selfScreenContents.addSubview(viewDesignLabel)
         
         customedImageView.frame = CGRect(x: (3 * x), y: viewDesignLabel.frame.maxY + y, width: (25 * x), height: (25 * y))
         customedImageView.layer.borderWidth = 1
@@ -234,7 +245,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 customedImageView.dowloadFromServer(url: apiurl!)
             }
         }
-        view.addSubview(customedImageView)
+        selfScreenContents.addSubview(customedImageView)
         
         customedFrontButton.frame = CGRect(x: customedImageView.frame.maxX + x, y: customedImageView.frame.minY + (9 * y), width: (7.5 * x), height: (7.5 * y))
         customedFrontButton.layer.borderWidth = 1
@@ -256,7 +267,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         }
         customedFrontButton.tag = 1
         customedFrontButton.addTarget(self, action: #selector(self.dressSelectionButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(customedFrontButton)
+        selfScreenContents.addSubview(customedFrontButton)
         
         selectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         selectionImage.image = UIImage(named: "selectionImage")
@@ -282,7 +293,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         }
         customedBackButton.tag = 0
         customedBackButton.addTarget(self, action: #selector(self.dressSelectionButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(customedBackButton)
+        selfScreenContents.addSubview(customedBackButton)
         
         dropDownButton.frame = CGRect(x: (3 * x), y: customedImageView.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (4 * y))
         dropDownButton.layer.cornerRadius = 5
@@ -294,7 +305,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         }
         dropDownButton.setTitleColor(UIColor.black, for: .normal)
         dropDownButton.addTarget(self, action: #selector(self.dropDownButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(dropDownButton)
+        selfScreenContents.addSubview(dropDownButton)
         
         let dropDownImageView = UIImageView()
         dropDownImageView.frame = CGRect(x: dropDownButton.frame.width - (4 * x), y: 0, width: (4 * x), height: (4 * y))
@@ -329,7 +340,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     func subcCustomization3Content()
     {
         customizationScrollView.frame = CGRect(x: 0, y: dropDownButton.frame.maxY + y, width: view.frame.width, height: (12 * y))
-        view.addSubview(customizationScrollView)
+        selfScreenContents.addSubview(customizationScrollView)
         
         for views in customizationScrollView.subviews
         {
@@ -401,7 +412,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customization3NextButton.layer.masksToBounds = true
         customization3NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization3NextButton.addTarget(self, action: #selector(self.customization3NextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(customization3NextButton)
+        selfScreenContents.addSubview(customization3NextButton)
         
         self.stopActivity()
         
