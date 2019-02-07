@@ -41,17 +41,20 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         
 //         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 1)
-
+      BuyerId = 1056
+      print("Buyer ID:",BuyerId)
+        
       if(BuyerId != nil)
       {
-        let BuyerId = UserDefaults.standard.value(forKey: "userId") as! String
-         print("Buyer ID:",BuyerId)
-        self.serviceCall.API_GetOrderRequest(RequestId: Int(BuyerId)!, delegate: self)
+        //let BuyerId = UserDefaults.standard.value(forKey: "userId") as! String
+        // print("Buyer ID:",BuyerId)
+        self.serviceCall.API_GetOrderRequest(RequestId: BuyerId, delegate: self)
       }
       else
       {
         // let BuyerID = UserDefaults.standard.value(forKey: "userId") as? String
-        self.serviceCall.API_GetOrderRequest(RequestId: 1055, delegate: self)
+         self.serviceCall.API_GetOrderRequest(RequestId: BuyerId, delegate: self)
+        
       }
         // Do any additional setup after loading the view.
     }
