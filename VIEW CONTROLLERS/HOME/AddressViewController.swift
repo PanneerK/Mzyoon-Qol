@@ -506,7 +506,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         address2Screen.checkDefault = isDefault[sender.tag] as! Int
         address2Screen.addressString = selectedAddressString
         
-//        self.navigationController?.pushViewController(address2Screen, animated: true)
+        self.navigationController?.pushViewController(address2Screen, animated: true)
     }
     
     @objc func deleteButtonAction(sender : UIButton)
