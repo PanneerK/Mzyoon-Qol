@@ -37,14 +37,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
-        
-        self.serviceCall.API_Measurement1(delegate: self)
-        
-        if let userId = UserDefaults.standard.value(forKey: "UserId") as? String, let dressId = UserDefaults.standard.value(forKey: "DressType") as? String
-        {
-            self.serviceCall.API_ExistingUserMeasurement(DressTypeId: dressId, UserId: userId, delegate: self)
-        }
-        
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -52,6 +44,17 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         nameArray.removeAll()
+        
+        self.serviceCall.API_Measurement1(delegate: self)
+
+        if let userId = UserDefaults.standard.value(forKey: "UserId") as? String, let dressId = UserDefaults.standard.value(forKey: "DressType") as? String
+        {
+            self.serviceCall.API_ExistingUserMeasurement(DressTypeId: dressId, UserId: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "UserId") as? Int, let dressId = UserDefaults.standard.value(forKey: "DressType") as? String
+        {
+            self.serviceCall.API_ExistingUserMeasurement(DressTypeId: dressId, UserId: "\(userId)", delegate: self)
+        }
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {

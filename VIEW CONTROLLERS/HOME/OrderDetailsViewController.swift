@@ -36,10 +36,12 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     var qty = NSArray()
     
     // ProductPrice Array..
-     var Appoinment = NSArray()
-     var Price = NSArray()
-     var Tax = NSArray()
-     var Total = NSArray()
+    var Appoinment = NSArray()
+    var Price = NSArray()
+    var Tax = NSArray()
+    var Total = NSArray()
+    
+     var OrderID:Int!
     
     override func viewDidLoad()
     {
@@ -49,7 +51,11 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
 //        self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 2)
   
-        self.ServiceCall.API_GetOrderDetails(OrderId: 1, delegate: self)
+        if(OrderID != nil)
+        {
+        self.ServiceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
+            
+        }
         
         //orderDetailsContent()
     }

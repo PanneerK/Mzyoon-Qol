@@ -83,7 +83,7 @@ class CommonViewController: UIViewController
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    /*override func viewWillAppear(_ animated: Bool) {
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -105,7 +105,7 @@ class CommonViewController: UIViewController
             navigationContents()
             tabContents()
         }
-    }
+    }*/
     
     func slideMenu()
     {
@@ -377,10 +377,6 @@ class CommonViewController: UIViewController
         tab4ImageView.image = UIImage(named: "home")
         tab4Button.addSubview(tab4ImageView)
         
-        let templateImage = tab4ImageView.image?.withRenderingMode(.alwaysTemplate)
-        tab4ImageView.image = templateImage
-        tab4ImageView.tintColor = UIColor.orange
-        
         tab4Text.frame = CGRect(x: 0, y: tab4ImageView.frame.maxY, width: (9.37 * x), height: y)
         tab4Text.text = "الصفحة الرئيسية"
         tab4Text.textColor = UIColor.orange
@@ -458,6 +454,7 @@ class CommonViewController: UIViewController
         }
         else
         {
+            stopActivity()
             self.present(alertControls, animated: true, completion: nil)
         }
         /*  // Cart..
@@ -478,14 +475,15 @@ class CommonViewController: UIViewController
         let templateImage3 = tab3ImageView.image?.withRenderingMode(.alwaysTemplate)
         tab3ImageView.image = templateImage3
         
-        
+        let templateImage4 = tab4ImageView.image?.withRenderingMode(.alwaysTemplate)
+        tab4ImageView.image = templateImage4
         
         if tag == 0
         {
             tab1Text.font = tab1Text.font.withSize(15)
-            tab1Text.textColor = UIColor.orange
+            tab1Text.textColor = UIColor.white
             
-            tab1ImageView.tintColor = UIColor.orange
+            tab1ImageView.tintColor = UIColor.white
             
             tab2Text.font = tab2Text.font.withSize(10)
             tab2Text.textColor = UIColor.white

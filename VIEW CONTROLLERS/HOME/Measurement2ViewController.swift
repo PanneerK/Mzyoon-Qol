@@ -1602,6 +1602,17 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         var y1:CGFloat = (30.4 * y)
         var y2:CGFloat = (29.4 * y)
         
+        for views in rulerScroll.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
+        let scrollPoint = CGPoint(x: 0.0, y: 0.0)
+        
+
+        rulerScroll.scrollsToTop = true
+        rulerScroll.setContentOffset(scrollPoint, animated: true)
+        
         for i in 0..<1029
         {
             let measureLabel = UILabel()
