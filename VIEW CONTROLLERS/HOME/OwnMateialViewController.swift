@@ -13,11 +13,17 @@ import CoreImage
 
 class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
+    
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+
     //ADD MATERIAL PARAMETERS
     let addReferenceView = UIView()
     let addReferenceImage = UIImageView()
     let notifyLabel = UILabel()
-    
+    let addMaterialLabel = UILabel()
+    let addMaterialNextButton = UIButton()
+
     //ADD MATERIAL PAGE PARAMETERS
     var imagePicker = UIImagePickerController()
     let addReferenceScrolView = UIScrollView()
@@ -48,36 +54,67 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         print("OWN MATERIAL", errorMessage)
     }
     
+    func changeViewToArabicInSelf()
+    {
+        print("BEFORE X", addMaterialNextButton.frame.minX)
+
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.text = "إضافة صورة المواد"
+        notifyLabel.text = "يرجى إضافة صورة مادية لتكون مرجعا"
+        addMaterialLabel.text = "إضافة صورة مادية لتوصية الطلب"
+        
+        /*addReferenceScrolView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addMaterialButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        addMaterialNextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)*/
+        
+        print("AFTER X", addMaterialNextButton.frame.minX)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.text = "ADD MATERIAL IMAGE"
+        notifyLabel.text = "Please add material image for reference"
+        addMaterialLabel.text = "Add material image for tailor refrence"
+        
+        addReferenceScrolView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addMaterialButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        addMaterialNextButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
     func addMaterialContent()
     {
         self.stopActivity()
-        
         
         addReferenceView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         addReferenceView.backgroundColor = UIColor.white
         //        view.addSubview(addMaterialView)
         
-        let addMaterialNavigationBar = UIView()
-        addMaterialNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        addMaterialNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(addMaterialNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        addMaterialNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: addMaterialNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ADD MATERIAL IMAGE"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-        addMaterialNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "ADD MATERIAL IMAGE"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        addReferenceImage.frame = CGRect(x: (3 * x), y: addMaterialNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
+        addReferenceImage.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
         addReferenceImage.layer.borderWidth = 1
         addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
         addReferenceImage.backgroundColor = UIColor.white
@@ -86,14 +123,13 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         if imageArray.count == 0 || imageArray.isEmpty == true
         {
             notifyLabel.frame = CGRect(x: x, y: ((addReferenceImage.frame.height - (3 * y)) / 2), width: addReferenceImage.frame.width - (2 * x), height: (5 * y))
-            notifyLabel.text = "Please add Image for material"
+            notifyLabel.text = "Please add material image for reference"
             notifyLabel.textColor = UIColor.black
             notifyLabel.textAlignment = .center
             notifyLabel.font = notifyLabel.font.withSize((1.5 * x))
             addReferenceImage.addSubview(notifyLabel)
         }
         
-        let addMaterialLabel = UILabel()
         addMaterialLabel.frame = CGRect(x: (2 * x), y: addReferenceImage.frame.maxY + (2 * x), width: view.frame.width, height: (2 * y))
         addMaterialLabel.text = "Add material image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
@@ -101,7 +137,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         view.addSubview(addMaterialLabel)
         
-        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width - (12 * x), height: (12 * y))
+        addReferenceScrolView.frame = CGRect(x: x, y: addMaterialLabel.frame.maxY, width: view.frame.width - (13 * x), height: (12 * y))
         addReferenceScrolView.backgroundColor = UIColor.clear
         view.addSubview(addReferenceScrolView)
         
@@ -113,7 +149,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialButton.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addMaterialButton)
         
-        let addMaterialNextButton = UIButton()
         addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = addMaterialNextButton.frame.height / 2
         addMaterialNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
@@ -125,6 +160,22 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         view.addSubview(addMaterialNextButton)
         
         //        addMaterial(xPosition: x)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     func addMaterial(xPosition : CGFloat)
@@ -336,5 +387,4 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
      // Pass the selected object to the new view controller.
      }
      */
-    
 }

@@ -91,9 +91,34 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        self.addDoneButtonOnKeyboard()
+        
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.mobileTextField.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction()
+    {
+        self.view.endEditing(true)
     }
     
     func fetchingCurrentLocation()

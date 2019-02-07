@@ -15,11 +15,12 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     var xPos:CGFloat!
     var yPos:CGFloat!
     
-    let newOrderView = UIView()
-    
     let serviceCall = ServerAPI()
     
-    let newOrderNavigationBar = UIView()
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+
+    let selfScreenContents = UIView()
 
     //GENDER API PARAMETERS
     var genderArray = NSArray()
@@ -49,11 +50,13 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
 //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
-        serviceCall.API_Gender(delegate: self)
-        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        serviceCall.API_Gender(delegate: self)
     }
     
     
@@ -82,7 +85,9 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         let ResponseMsg = gender.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
-        { 
+        {
+            print("RESPONSE GENDER PAGE")
+
             let result = gender.object(forKey: "Result") as! NSArray
             
             genderArray = result.value(forKey: "gender") as! NSArray
@@ -93,7 +98,21 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             
             genderInArabicArray = result.value(forKey: "GenderInArabic") as! NSArray
             
-             self.newOrderContents()
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    self.newOrderContents(getInputArray: genderArray)
+                }
+                else if language == "ar"
+                {
+                    self.newOrderContents(getInputArray: genderInArabicArray)
+                }
+            }
+            else
+            {
+                self.newOrderContents(getInputArray: genderArray)
+            }
         }
         else if ResponseMsg == "Failure"
         {
@@ -142,62 +161,41 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
-    func newOrderTabArabicContents()
+    func selfScreenNavigationContents()
     {
-        newOrderNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        newOrderNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(newOrderNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 1
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        newOrderNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: newOrderNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "جنس"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        newOrderNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "GENDER"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
     }
     
-    func newOrderTabEnglishContents()
+    func newOrderContents(getInputArray : NSArray)
     {
-        newOrderNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        newOrderNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(newOrderNavigationBar)
+        selfScreenNavigationContents()
         
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.tag = 1
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        newOrderNavigationBar.addSubview(backButton)
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: newOrderNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "GENDER"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        newOrderNavigationBar.addSubview(navigationTitle)
-    }
-    
-    func newOrderContents()
-    {
-        newOrderView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        newOrderView.backgroundColor = UIColor.white
-        //        view.addSubview(newOrderView)
-        
-        newOrderTabEnglishContents()
+        self.view.bringSubviewToFront(slideMenuButton)
         
         var x1:CGFloat = (3 * x)
-        var y1:CGFloat = newOrderNavigationBar.frame.maxY + (10.65 * y)
+        var y1:CGFloat =  (10.65 * y)
         
-        for i in 0..<genderArray.count
+        for i in 0..<getInputArray.count
         {
             let genderButton = UIButton()
             if i % 2 == 0
@@ -216,7 +214,23 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
 //            genderButton.setImage(UIImage(named: "genderBackground"), for: .normal)
             genderButton.tag = genderIdArray[i] as! Int
             genderButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
-            view.addSubview(genderButton)
+            selfScreenContents.addSubview(genderButton)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    genderButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    genderButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                genderButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             let buttonImage = UIImageView()
             if i == 0
@@ -256,12 +270,46 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: genderButton.frame.height - (3 * y), width: genderButton.frame.width, height: (3 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = genderArray[i] as? String
+            buttonTitle.text = getInputArray[i] as? String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
             genderButton.addSubview(buttonTitle)
         }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicISelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "GENDER"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
+    func changeViewToArabicISelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "جنس"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

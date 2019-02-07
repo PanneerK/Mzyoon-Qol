@@ -14,6 +14,9 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     var headingTitle = String()
     let serviceCall = ServerAPI()
     
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    
     let dressSubTypeScrollView = UIScrollView()
     let searchTextField = UITextField()
     let sortButton = UIButton()
@@ -22,6 +25,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     var dressIdArray = NSArray()
     var dressSubTypeArray = NSArray()
+    var dressSubTypeArrayInArabic = NSArray()
     var dressSubTypeIdArray = NSArray()
     var dressSubTypeImages = NSArray()
     
@@ -37,15 +41,16 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     {
         navigationBar.isHidden = true
         
-        self.serviceCall.API_DressSubType(DressSubTypeId: screenTag, delegate: self)
-        
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
-        
         
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.serviceCall.API_DressSubType(DressSubTypeId: screenTag, delegate: self)
     }
     
     func DeviceError()
@@ -95,6 +100,9 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             dressSubTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
             print("dressSubTypeArray", dressSubTypeArray)
             
+            dressSubTypeArrayInArabic = Result.value(forKey: "NameInArabic") as! NSArray
+            print("NameInArabic", dressSubTypeArrayInArabic)
+            
             dressSubTypeImages = Result.value(forKey: "Image") as! NSArray
             print("dressSubTypeImages", dressSubTypeImages)
             
@@ -112,27 +120,25 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     func screenContents()
     {
-        let orderSubTypeNavigationBar = UIView()
-        orderSubTypeNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        orderSubTypeNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(orderSubTypeNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 3
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        orderSubTypeNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderSubTypeNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "\(headingTitle.uppercased())"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        orderSubTypeNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "\(headingTitle.uppercased())"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        searchTextField.frame = CGRect(x: 0, y: orderSubTypeNavigationBar.frame.maxY, width: view.frame.width - 50, height: 40)
+        searchTextField.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: (4 * y))
         searchTextField.layer.borderWidth = 1
         searchTextField.layer.borderColor = UIColor.orange.cgColor
         searchTextField.placeholder = "Search"
@@ -150,7 +156,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         view.addSubview(searchTextField)
         
         let searchButton = UIButton()
-        searchButton.frame = CGRect(x: view.frame.width - 51, y: 0, width: 50, height: 40)
+        searchButton.frame = CGRect(x: view.frame.width - (5 * x), y: 0, width: (5 * x), height: (4 * y))
         searchButton.layer.borderWidth = 1
         searchButton.layer.borderColor = UIColor.orange.cgColor
         searchButton.setImage(UIImage(named: "search"), for: .normal)
@@ -162,14 +168,31 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         sortButton.setTitleColor(UIColor.white, for: .normal)
         sortButton.tag = 2
         //        sortButton.addTarget(self, action: #selector(self.featuresButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(sortButton)
+//        view.addSubview(sortButton)
         
-        self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+                self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+                self.subTypeContents(getNameArray: dressSubTypeArrayInArabic, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+            self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
+        }
     }
     
     func subTypeContents(getNameArray : NSArray, getIdArray : NSArray, getImageArray : NSArray)
     {
-        dressSubTypeScrollView.frame = CGRect(x: (3 * x), y: sortButton.frame.maxY + y, width: view.frame.width - (6 * x), height: (45 * y))
+        dressSubTypeScrollView.frame = CGRect(x: (3 * x), y: searchTextField.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (45 * y))
         //        dressSubTypeScrollView.backgroundColor = UIColor.black
         view.addSubview(dressSubTypeScrollView)
         
@@ -198,6 +221,22 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             dressTypeButton.tag = getIdArray[i] as! Int
             dressTypeButton.addTarget(self, action: #selector(self.dressTypeButtonAction(sender:)), for: .touchUpInside)
             dressSubTypeScrollView.addSubview(dressTypeButton)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    dressTypeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    dressTypeButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                dressTypeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             x1 = dressTypeButton.frame.maxX + x
             
@@ -233,7 +272,29 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             dressTypeNameLabel.textAlignment = .center
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
-        dressSubTypeScrollView.contentSize.height = y1 + (20 * y)
+        dressSubTypeScrollView.contentSize.height = y1 + (2 * y)
+    }
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        dressSubTypeScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        searchTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        searchTextField.textAlignment = .left
+        searchTextField.placeholder = "بحث"
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        dressSubTypeScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        searchTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        searchTextField.textAlignment = .left
+        searchTextField.placeholder = "Search"
     }
     
     @objc func textFieldDidChange(textField: UITextField){
