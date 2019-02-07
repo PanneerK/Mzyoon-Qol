@@ -255,7 +255,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         let getPremiumArray = ["50.00 AED", "70.00 AED", "150.00 AED", "20.00 AED", "30.00 AED"]
         var y3:CGFloat = y
         
-        for i in 0..<5
+        for i in 0..<premiumArray.count
         {
             let dressSubViews = UIView()
             dressSubViews.frame = CGRect(x: x, y: y3, width: dressTypeView.frame.width - (2 * x), height: (4 * y))
@@ -665,7 +665,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             let Result = insertOrder.object(forKey: "Result") as! String
-            print("Result in SUCCESS", Result)
+            print("Result in SUCCESS in ORDER SUMMARY", Result)
             
             UserDefaults.standard.set(Result, forKey: "requestId")
             

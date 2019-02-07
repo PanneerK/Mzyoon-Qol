@@ -655,7 +655,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     {
         if selectedTailorListArray.count == 0
         {
-            let alert = UIAlertController(title: "Alert", message: "Please select atleast anyone tailor to proceed", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Alert", message: "Please select atleast any one tailor to proceed", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -663,10 +663,30 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         {
             selectedTailorListNameArray.removeAll()
             
-            for i in 0..<selectedTailorListArray.count
+            for i in 0..<IdArray.count
+            {
+                if let id1 = IdArray[i] as? Int
+                {
+                    for j in 0..<selectedTailorListArray.count
+                    {
+                        if let id2 = selectedTailorListArray[j] as? Int
+                        {
+                            if id1 == id2
+                            {
+                                selectedTailorListNameArray.append(TailorNameArray[i] as! String)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            print("SELECTED TAILOR LIST", selectedTailorListNameArray)
+            print("SELECTED TAILOR NAME", selectedTailorListArray)
+            
+            /*for i in 0..<selectedTailorListArray.count
             {
                 selectedTailorListNameArray.append(TailorNameArray[selectedTailorListArray[i]] as! String)
-            }
+            }*/
             
             UserDefaults.standard.set(selectedTailorListNameArray, forKey: "selectedTailors")
             UserDefaults.standard.set(selectedTailorListArray, forKey: "selectedTailorsId")
