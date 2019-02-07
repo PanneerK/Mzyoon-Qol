@@ -339,10 +339,10 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
-        print("Tag Id:",OR_IdLabel.tag)
+       // print("Tag Id:",OR_IdLabel.tag)
         
         let AppointmentScreen = AppointmentViewController()
-        AppointmentScreen.OrderID = OR_IdLabel.tag
+        AppointmentScreen.OrderID = sender.tag
         self.navigationController?.pushViewController(AppointmentScreen, animated: true)
         
     }

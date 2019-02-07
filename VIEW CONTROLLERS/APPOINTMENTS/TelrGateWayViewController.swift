@@ -9,14 +9,16 @@
 import UIKit
 import TelrSDK
 
-class TelrGateWayViewController:UIViewController
+class TelrGateWayViewController: UIViewController
 {
-
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
     }
     
 
