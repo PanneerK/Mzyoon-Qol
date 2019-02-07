@@ -19,6 +19,9 @@ class CommonViewController: UIViewController
     let backgroundImage = UIImageView()
     let navigationBar = UIView()
     let navigationTitle = UILabel()
+    let userImage = UIImageView()
+    let notificationButton = UIButton()
+
     
     let slideMenuButton = UIButton()
     let tabBar = UIView()
@@ -51,15 +54,71 @@ class CommonViewController: UIViewController
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
-        navigationContents()
-//        navigationContentsInArabic()
-        tabContents()
-//        tabContentsInArabic()
         self.activityContents()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                navigationContents()
+                tabContents()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                navigationContentsInArabic()
+                tabContentsInArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            navigationContents()
+            tabContents()
+        }
         
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                navigationContents()
+                tabContents()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                navigationContentsInArabic()
+                tabContentsInArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            navigationContents()
+            tabContents()
+        }
+    }
+    
+    func slideMenu()
+    {
+        let slideScreen = SlideViewController()
+        let leftSlideScreen = UISideMenuNavigationController(rootViewController: slideScreen)
+        SideMenuManager.default.menuLeftNavigationController = leftSlideScreen
+    }
+    
+    func slideMenuRight()
+    {
+        let slideScreen = SlideViewController()
+        let leftSlideScreen = UISideMenuNavigationController(rootViewController: slideScreen)
+        SideMenuManager.default.menuRightNavigationController = leftSlideScreen
     }
     
     func activityContents()
@@ -103,7 +162,6 @@ class CommonViewController: UIViewController
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         navigationBar.addSubview(navigationTitle)
         
-        let userImage = UIImageView()
         userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: (4 * y), height: (4 * y))
         //        userImage.image = UIImage(named: "women")
         userImage.image = FileHandler().getImageFromDocumentDirectory()
@@ -112,11 +170,29 @@ class CommonViewController: UIViewController
         userImage.layer.masksToBounds = true
         navigationBar.addSubview(userImage)
         
-        let notificationButton = UIButton()
         notificationButton.frame = CGRect(x: navigationBar.frame.width - 50, y: navigationTitle.frame.minY, width: 30, height: 30)
         notificationButton.setImage(UIImage(named: "notification"), for: .normal)
         //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
         navigationBar.addSubview(notificationButton)
+    }
+    
+    func changeViewToEnglish()
+    {
+        self.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        navigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        tabBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
+    func changeViewToArabic()
+    {
+        self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        navigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        tabBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+
     }
     
     func navigationContentsInArabic()
@@ -135,7 +211,6 @@ class CommonViewController: UIViewController
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         navigationBar.addSubview(navigationTitle)
         
-        let userImage = UIImageView()
         userImage.frame = CGRect(x: navigationBar.frame.width - (6 * x), y: (2 * y), width: (4 * y), height: (4 * y))
         userImage.image = FileHandler().getImageFromDocumentDirectory()
         userImage.layer.cornerRadius = userImage.frame.height / 2
@@ -143,7 +218,6 @@ class CommonViewController: UIViewController
         userImage.layer.masksToBounds = true
         navigationBar.addSubview(userImage)
         
-        let notificationButton = UIButton()
         notificationButton.frame = CGRect(x: (2 * x), y: navigationTitle.frame.minY, width: (4 * x), height: (4 * y))
         notificationButton.setImage(UIImage(named: "notification"), for: .normal)
         //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
@@ -231,53 +305,14 @@ class CommonViewController: UIViewController
         tab4Text.textAlignment = .center
         tab4Text.font = tab4Text.font.withSize(10)
         tab4Button.addSubview(tab4Text)
-        
-        /*let tabTitle = ["Home", "Request", "Order", "Cart"]
-         let tabImages = ["home", "request", "order", "cart"]
-         
-         for i in 0..<4
-         {
-         let tabButtonImageView = UIImageView()
-         tabButtonImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 2), width: (3 * x), height: (3 * y))
-         tabButtonImageView.image = UIImage(named: tabImages[i])
-         
-         let tabButtonTitleLabel = UILabel()
-         tabButtonTitleLabel.frame = CGRect(x: 0, y: (3.5 * y), width: (9.37 * x), height: y)
-         tabButtonTitleLabel.text = tabTitle[i]
-         tabButtonTitleLabel.textColor = UIColor.white
-         tabButtonTitleLabel.textAlignment = .center
-         tabButtonTitleLabel.font = tabButtonTitleLabel.font.withSize(10)
-         
-         if i == 0
-         {
-         tab1Button.addSubview(tabButtonImageView)
-         tab1Button.addSubview(tabButtonTitleLabel)
-         }
-         else if i == 1
-         {
-         tab2Button.addSubview(tabButtonImageView)
-         tab2Button.addSubview(tabButtonTitleLabel)
-         }
-         else if i == 2
-         {
-         tab3Button.addSubview(tabButtonImageView)
-         tab3Button.addSubview(tabButtonTitleLabel)
-         }
-         else if i == 3
-         {
-         tab4Button.addSubview(tabButtonImageView)
-         tab4Button.addSubview(tabButtonTitleLabel)
-         }
-         }*/
     }
     
     func tabContentsInArabic()
     {
-        //let slideMenuButton = UIButton()
         slideMenuButton.frame = CGRect(x: view.frame.width - (2.5 * x), y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
         slideMenuButton.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
-        slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonActionArabic(sender:)), for: .touchUpInside)
+        slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(slideMenuButton)
         
         // let tabBar = UIView()
@@ -356,12 +391,23 @@ class CommonViewController: UIViewController
     
     @objc func slideMenuButtonAction(sender : UIButton)
     {
-        self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
-    }
-    
-    @objc func slideMenuButtonActionArabic(sender : UIButton)
-    {
-        self.present(SideMenuManager.default.menuRightNavigationController!, animated: true, completion: nil)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                self.present(SideMenuManager.default.menuRightNavigationController!, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+        }
+        
+        self.viewDidLoad()
     }
     
     @objc func tabBarButtonAction(sender : UIButton)
@@ -392,7 +438,6 @@ class CommonViewController: UIViewController
             window?.makeKeyAndVisible()
             
             /*
-             stopActivity()
              navigateScreen = OrdersViewController()
              self.present(alertControls, animated: true, completion: nil)
              */
@@ -408,19 +453,16 @@ class CommonViewController: UIViewController
             window?.makeKeyAndVisible()
             
             /*
-             stopActivity()
              navigateScreen = CartViewController()
              */
         }
         else
         {
-            stopActivity()
             self.present(alertControls, animated: true, completion: nil)
         }
         /*  // Cart..
          else if sender.tag == 3
          {
-         stopActivity()
          navigateScreen = ContactUsViewController()
          }*/
     }

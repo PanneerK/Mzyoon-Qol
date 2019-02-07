@@ -326,8 +326,11 @@ class ServerAPI : NSObject
         return parameters
     }
     
-    func API_Customization1(originId : [Int], seasonId : [Int], delegate : ServerAPIDelegate)
+    func API_Customization1(originId : [[String: Int]], seasonId : [[String: Int]], delegate : ServerAPIDelegate)
     {
+        print("IN FIRST STEP", originId)
+        print("IN SECOND STEP", seasonId)
+
         var season = String()
         var origin = String()
         
@@ -358,8 +361,6 @@ class ServerAPI : NSObject
             }
         }
         
-        let parameters1 = MakeRequest(season: seasonId, origin: originId)
-
         print("DICT NEW", origin)
         print("DICT NEW SEASON", season)
 
@@ -368,14 +369,14 @@ class ServerAPI : NSObject
         {
             print("Server Reached - Customization 1 Page")
             
-            let parameters = ["placeofOrginId[0][id]" : origin, "seasonId[0][id]" : season] as [String : Any]
+            let parameters = ["PlaceofOrginId" : originId, "seasonId" : seasonId] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetCustomization1", arguments: [baseURL])
             
             print("URL STRING", urlString)
-            print("PARAMETERS", parameters1)
+            print("PARAMETERS", parameters)
             
-            request(urlString, method: .post, parameters: parameters1, encoding: JSONEncoding.default).responseJSON {response in
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
@@ -396,7 +397,7 @@ class ServerAPI : NSObject
         }
     }
     
-    func API_Customization2(brandId : String, materialId : [Int], ColorId : [Int], delegate : ServerAPIDelegate)
+    func API_Customization2(brandId : [[String: Int]], materialId : [[String: Int]], ColorId : [[String: Int]], delegate : ServerAPIDelegate)
     {
         var materials = String()
         var colors = String()
@@ -429,14 +430,14 @@ class ServerAPI : NSObject
         {
             print("Server Reached - Customization 2 Page")
             
-            let parameters = ["BrandId[0][Id]" : "\(brandId)", "MaterialTypeId[0][Id]" : "\(materials)", "ColorId[0][Id]" : "\(colors)"] as [String : Any]
+            let parameters = ["BrandId" : brandId, "MaterialTypeId" : materialId, "ColorId" : ColorId] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetCustomization2", arguments: [baseURL])
             
             print("URL STRING", urlString)
             print("PARAMETERS", parameters)
             
-            request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
                 print("REQUEST", request)
                 if response.result.value != nil
                 {

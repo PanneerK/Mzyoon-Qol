@@ -32,9 +32,7 @@ class SlideViewController: UIViewController
         y = y * view.frame.height / 100
         
         view.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        
-        sideMenuFunctions()
-        
+                
         screenContents()
 //        screenContentsInArabic()
         super.viewDidLoad()
@@ -118,7 +116,7 @@ class SlideViewController: UIViewController
             slideMenusButton.frame = CGRect(x: 0, y: y1, width: slideViewWidth, height: (4 * y))
             slideMenusButton.tag = i
             
-            if i == 0 || i == 1 || i == 9
+            if i == 0 || i == 1 || i == 9 || i == 8
             {
                 slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
             }
@@ -222,6 +220,11 @@ class SlideViewController: UIViewController
             let addressScreen = AddressViewController()
             addressScreen.viewController = "slide"
             self.navigationController?.pushViewController(addressScreen, animated: true)
+        }
+        else if sender.tag == 8
+        {
+            let settingsScreen = SettingsViewController()
+            self.navigationController?.pushViewController(settingsScreen, animated: true)
         }
         else if sender.tag == 9
         {

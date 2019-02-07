@@ -29,6 +29,8 @@
 		DAE1A10C21DCDD61009A612F /* TrackingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10B21DCDD61009A612F /* TrackingTableViewCell.swift */; };
 		DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */; };
 		FD0611A821D4F481006FDAC4 /* MeasurementCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0611A721D4F481006FDAC4 /* MeasurementCall.swift */; };
+		FD0785D9220964E1001B9FC9 /* ConversionToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0785D8220964E1001B9FC9 /* ConversionToJson.swift */; };
+		FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */; };
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
@@ -134,6 +136,8 @@
 		DDB0F57EB0056E4AF113C9BB /* Pods-Mzyoon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mzyoon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon.debug.xcconfig"; sourceTree = "<group>"; };
 		FD058BD121F89A6C0037C09E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FD0611A721D4F481006FDAC4 /* MeasurementCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementCall.swift; sourceTree = "<group>"; };
+		FD0785D8220964E1001B9FC9 /* ConversionToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionToJson.swift; sourceTree = "<group>"; };
+		FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
@@ -248,9 +252,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FD0785DA2209A464001B9FC9 /* SLIDE MENUS */ = {
+			isa = PBXGroup;
+			children = (
+				FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */,
+			);
+			path = "SLIDE MENUS";
+			sourceTree = "<group>";
+		};
 		FD2ADFAB2175A5480033025B = {
 			isa = PBXGroup;
 			children = (
+				FD0785DA2209A464001B9FC9 /* SLIDE MENUS */,
 				FDFE07332189E47E0056E773 /* VIEW */,
 				FD2ADFEA2175C0160033025B /* SERVER */,
 				FD2ADFE72175BFF00033025B /* VIEW CONTROLLERS */,
@@ -330,6 +343,7 @@
 				FD71D256219E994100FFC067 /* CommonViewController.swift */,
 				FD0611A721D4F481006FDAC4 /* MeasurementCall.swift */,
 				FDF7485321BFBF4700F3BEFF /* FileHandler.swift */,
+				FD0785D8220964E1001B9FC9 /* ConversionToJson.swift */,
 			);
 			path = COMMON;
 			sourceTree = "<group>";
@@ -651,6 +665,7 @@
 				FD4631DC21775055002C06CA /* CountryCodeTableViewCell.swift in Sources */,
 				FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */,
 				FD2ADFEE2175C0230033025B /* ServerAPIDelegate.swift in Sources */,
+				FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */,
 				FD71D25A219EB21700FFC067 /* GenderViewController.swift in Sources */,
 				FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */,
 				DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */,
@@ -679,6 +694,7 @@
 				DA06108721E4C4D1005BB29D /* ServiceTypeViewController.swift in Sources */,
 				FD2ADFED2175C0230033025B /* ServerAPI.swift in Sources */,
 				FD71D25E219EF24200FFC067 /* OrderTypeViewController.swift in Sources */,
+				FD0785D9220964E1001B9FC9 /* ConversionToJson.swift in Sources */,
 				FD53A3D521A809450097B4D9 /* TailorListViewController.swift in Sources */,
 				FDC9BB942186F707003BA5C9 /* ContactUsViewController.swift in Sources */,
 				FD71D25C219EE62F00FFC067 /* DressTypeViewController.swift in Sources */,

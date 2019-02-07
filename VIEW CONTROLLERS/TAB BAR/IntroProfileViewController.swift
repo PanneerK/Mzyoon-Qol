@@ -137,6 +137,10 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
                 {
                     serviceCall.API_IntroProfile(Id: profId, Name: userNameTextField.text!, profilePic: String(imageName!), delegate: self)
                 }
+                else if let profId = UserDefaults.standard.value(forKey: "userId") as? Int
+                {
+                    serviceCall.API_IntroProfile(Id: "\(profId)", Name: userNameTextField.text!, profilePic: String(imageName!), delegate: self)
+                }
             }
         }
         else if ResponseMsg == "Failure"
@@ -361,6 +365,11 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
             {
                 UserDefaults.standard.set(userNameTextField.text!, forKey: "userName")
                 if let profId = UserDefaults.standard.value(forKey: "userId") as? String
+                {
+                    print("ENTERED NAME", userNameTextField.text!)
+                    serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                }
+                else if let profId = UserDefaults.standard.value(forKey: "userId") as? Int
                 {
                     print("ENTERED NAME", userNameTextField.text!)
                     serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)

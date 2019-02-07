@@ -10,7 +10,7 @@ import UIKit
 
 class Customization2ViewController: CommonViewController, ServerAPIDelegate
 {
-    var brandArray = String()
+    var brandArray = [Int]()
     let serviceCall = ServerAPI()
     
     
@@ -53,10 +53,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
-        print("1111", UserDefaults.standard.value(forKey: "season"))
-        print("2222", UserDefaults.standard.value(forKey: "industry"))
-        print("3333", UserDefaults.standard.value(forKey: "brand"))
-        
         print("SELECTED BRANDS IN 2", brandArray)
         navigationBar.isHidden = true
         
@@ -72,7 +68,13 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     func serviceCallFunction(getMaterialId : [Int], getColorId : [Int])
     {
-        self.serviceCall.API_Customization2(brandId: self.brandArray, materialId: getMaterialId, ColorId: getColorId, delegate: self)
+        let getConversion = ConversionToJson()
+        
+        let id1 = getConversion.MakeRequest(id: getMaterialId)
+        let id2 = getConversion.MakeRequest(id: getColorId)
+        let id3 = getConversion.MakeRequest(id: brandArray)
+        
+        self.serviceCall.API_Customization2(brandId: id3, materialId: id1, ColorId: id2, delegate: self)
     }
     
     func DeviceError()

@@ -82,7 +82,16 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     func serviceCallFunction(originIdArray : [Int], seasonIdArray : [Int])
     {
         print("SERVICE CALL", originIdArray, seasonIdArray)
-        self.serviceCall.API_Customization1(originId: originIdArray, seasonId: seasonIdArray , delegate: self)
+        
+        let getConversion = ConversionToJson()
+        
+        let id1 = getConversion.MakeRequest(id: originIdArray)
+        
+        let id2 = getConversion.MakeRequest(id: seasonIdArray)
+        
+        print("WELCOME OF ALL TO CUSTOM 1", id1)
+        
+        self.serviceCall.API_Customization1(originId: id1, seasonId: id2 , delegate: self)
     }
     
     func DeviceError()
@@ -911,7 +920,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         if brandTagIntArray.count == 0
         {
-            custom2Screen.brandArray = "1"
+            custom2Screen.brandArray.append(1)
         }
         else
         {
@@ -919,11 +928,11 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             {
                 if i == 0
                 {
-                    custom2Screen.brandArray.append("\(brandTagIntArray[i])")
+                    custom2Screen.brandArray.append((brandTagIntArray[i]))
                 }
                 else
                 {
-                    custom2Screen.brandArray.append(",\(brandTagIntArray[i])")
+                    custom2Screen.brandArray.append((brandTagIntArray[i]))
                 }
             }
             

@@ -13,6 +13,10 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     //SERVICE PARAMETERS
     let serviceCall = ServerAPI()
     
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let viewDesignLabel = UILabel()
+
     //SCREEN PARAMETERS
     let customedImageView = UIImageView()
     let customedFrontButton = UIButton()
@@ -165,30 +169,47 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        viewDesignLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.text = "التخصيص - 3"
+        viewDesignLabel.text = "عرض التصميم الخاص بك هنا"
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        viewDesignLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+
+        selfScreenNavigationTitle.text = "CUSTOMIZATION-3"
+        viewDesignLabel.text = "VIEW YOUR DESIGN HERE"
+    }
+    
     func customization3Content()
     {
-        let customization3NavigationBar = UIView()
-        customization3NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        customization3NavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(customization3NavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         backButton.tag = 3
-        customization3NavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: customization3NavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "CUSTOMIZATION-3"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        customization3NavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "CUSTOMIZATION-3"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        let viewDesignLabel = UILabel()
-        viewDesignLabel.frame = CGRect(x: (3 * x), y: customization3NavigationBar.frame.maxY + y, width: (25 * x), height: (4 * y))
+        viewDesignLabel.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: (25 * x), height: (4 * y))
         viewDesignLabel.layer.cornerRadius = 10
         viewDesignLabel.layer.masksToBounds = true
         viewDesignLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -286,6 +307,22 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownImageView.image = templateImage4
         dropDownImageView.tintColor = UIColor.white
         
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
+        
         subcCustomization3Content()
     }
     
@@ -367,6 +404,22 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         view.addSubview(customization3NextButton)
         
         self.stopActivity()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

@@ -547,6 +547,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         {
             userId = Int(id)!
         }
+        else if let id = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            userId = id
+        }
         
         if let dressid = UserDefaults.standard.value(forKey: "dressSubType") as? Int
         {
