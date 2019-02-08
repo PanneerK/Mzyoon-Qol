@@ -43,14 +43,16 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         navigationBar.isHidden = true
         selectedButton(tag: 1)
         
-      
-        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+    //  self.serviceCall.API_GetOrderRequest(RequestId: 1070, delegate: self)
+        
+
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
             self.serviceCall.API_GetOrderRequest(RequestId: userId, delegate: self)
         }
-        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
-            self.serviceCall.API_GetOrderRequest(RequestId: "\(userId)", delegate: self)
+            self.serviceCall.API_GetOrderRequest(RequestId: Int(userId)!, delegate: self)
         }
     
         
