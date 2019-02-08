@@ -44,7 +44,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
 //         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         navigationBar.isHidden = true
         selectedButton(tag: 1)
-
+        
+      
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
             self.serviceCall.API_GetOrderRequest(RequestId: userId, delegate: self)
@@ -53,7 +54,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         {
             self.serviceCall.API_GetOrderRequest(RequestId: "\(userId)", delegate: self)
         }
-      
+    
+        
         // Do any additional setup after loading the view.
     }
     
@@ -218,8 +220,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         
             if let imageName = ProductImageArray[i] as? String
             {
-                // let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
-                let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
+                 let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
+               // let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
                 print("SMALL ICON", api)
                 let apiurl = URL(string: api)
                 

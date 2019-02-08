@@ -210,8 +210,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
           
             if let imageName = ShopImageArray[i] as? String
             {
-               // let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
-                let api = "http://192.168.0.21/TailorAPI/Images/TailorImages/\(imageName)"
+                 let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
+               // let api = "http://192.168.0.21/TailorAPI/Images/TailorImages/\(imageName)"
                 print("SMALL ICON", api)
                 let apiurl = URL(string: api)
                 
