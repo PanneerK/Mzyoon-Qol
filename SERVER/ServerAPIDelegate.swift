@@ -109,4 +109,7 @@ import Foundation
     @objc optional func API_CALLBACK_GetTrackingDetails(getTrackingDetails : NSDictionary)
     
     
+    //07.02.2019
+    @objc optional func API_CALLBACK_ReferenceImageUpload(reference : NSDictionary)
+    @objc optional func API_CALLBACK_MaterialImageUpload(material : NSDictionary)
 }

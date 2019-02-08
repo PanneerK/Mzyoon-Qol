@@ -78,6 +78,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
 
     var insertOrUpdate = 1
     
+    var addressStringArray = NSArray()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -268,9 +270,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     func apiSuccessResponseAlertOkAction(action : UIAlertAction)
     {
-        let addressScreen = AddressViewController()
-        addressScreen.viewController = "address2"
-        self.navigationController?.pushViewController(addressScreen, animated: true)
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true)
     }
     
     func API_CALLBACK_CountryCode(countryCodes: NSDictionary) {
@@ -333,6 +334,34 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             checkStateName = 0
             
             MethodName = "getState"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
+    func API_CALLBACK_UpdateAddress(updateAddr: NSDictionary)
+    {
+        let ResponseMsg = updateAddr.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = updateAddr.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            if Result == "1"
+            {
+                let alert = UIAlertController(title: "Alert", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = updateAddr.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "UpdateBuyerAddress"
             ErrorStr = Result
             DeviceError()
         }
@@ -401,6 +430,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         address1Label.numberOfLines = 3
         locationView.addSubview(address1Label)
         
+        let splitted = addressString.split(separator: ",")
+        
+        addressStringArray = splitted as NSArray
+        print("SPLITTED ADDRESS", addressStringArray)
+
         let address2Label = UILabel()
         address2Label.frame = CGRect(x: x, y: address1Label.frame.maxY, width: locationView.frame.width - (8 * x), height: (2 * y))
         address2Label.text = "P.O. Box 901"
@@ -549,6 +583,25 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         countryButton.contentHorizontalAlignment = .left
         countryButton.addTarget(self, action: #selector(self.countryButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(countryButton)
+        
+        for i in 0..<countryNameArray.count
+        {
+            if let country = countryNameArray[i] as? String
+            {
+                let convertedString = country.split(separator: "(")
+                
+                if let countryMatch = addressStringArray.lastObject as? String
+                {
+                    print("convertedString", countryMatch, convertedString[0])
+
+                    if countryMatch == convertedString[0]
+                    {
+                        print("MATCHED COUNTRY", country, countryMatch, countryIdArray[i])
+                        serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[i])", delegate: self)
+                    }
+                }
+            }
+        }
         
         if let country = countryNameArray[0] as? String
         {

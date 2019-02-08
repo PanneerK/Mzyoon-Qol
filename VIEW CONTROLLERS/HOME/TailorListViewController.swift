@@ -29,7 +29,11 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     let marker = GMSMarker()
     let addressLabel = UILabel()
     let tailorDeatiledView = UIView()
-    
+    let shopName = UILabel()
+    let ratingImageView = UIImageView()
+    let ratingCountLabel = UILabel()
+    let ordersCountLabel = UILabel()
+    let distanceLabel = UILabel()
     
     
     var IdArray = NSArray()
@@ -436,6 +440,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     dummyImageView.dowloadFromServer(url: apiurl!)
                 }
                 dummyImageView.tag = -1
+                dummyImageView.contentMode = .scaleToFill
                 tailorImageButton.addSubview(dummyImageView)
             }
             
@@ -469,12 +474,14 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             let shopName = UILabel()
             shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
-            shopName.text = ShopNameArray[i] as? String
+            shopName.text = (ShopNameArray[i] as? String)?.uppercased()
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = tailorName.font.withSize(1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
             tailorView.addSubview(shopName)
+            
+            shopName.attributedText = NSAttributedString(string: ((ShopNameArray[i] as? String)?.uppercased())!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: shopLabel.frame.maxY, width: (9 * x), height: (2 * y))
@@ -718,7 +725,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             marker.position = CLLocationCoordinate2D(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
             marker.title = ShopNameArray[i] as? String
-            marker.snippet = AddressArray[i] as? String
+            marker.snippet = TailorNameArray[i] as? String
             marker.tracksInfoWindowChanges = true
             marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
             marker.map = mapView
@@ -778,36 +785,38 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         tailorDeatiledView.backgroundColor = UIColor.white
         mapView.addSubview(tailorDeatiledView)
         
-        let shopName = UILabel()
+        for views in tailorDeatiledView.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
         shopName.frame = CGRect(x: x, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
-        shopName.text = marker.snippet
+        shopName.text = marker.title?.uppercased()
         shopName.textColor = UIColor.blue
         shopName.textAlignment = .left
-        shopName.font = shopName.font.withSize(1.2 * x)
+        shopName.font = shopName.font.withSize(1.5 * x)
         shopName.adjustsFontSizeToFitWidth = true
         tailorDeatiledView.addSubview(shopName)
         
+        shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        
         let ratingLabel = UILabel()
-        ratingLabel.frame = CGRect(x: x, y: shopName.frame.maxY, width: (5 * x), height: (2 * y))
+        ratingLabel.frame = CGRect(x: x, y: shopName.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
         ratingLabel.text = "Rating : "
         ratingLabel.textColor = UIColor.blue
         ratingLabel.textAlignment = .left
         ratingLabel.font = ratingLabel.font.withSize(1.2 * x)
         tailorDeatiledView.addSubview(ratingLabel)
         
-        let ratingCountLabel = UILabel()
-        ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY, width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
-        ratingCountLabel.text = "\(ratingArray[0])"
+        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
+        tailorDeatiledView.addSubview(ratingImageView)
+        
+        ratingCountLabel.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
         ratingCountLabel.textColor = UIColor.black
         ratingCountLabel.textAlignment = .left
         ratingCountLabel.font = ratingLabel.font.withSize(1.2 * x)
         ratingCountLabel.adjustsFontSizeToFitWidth = true
-        //        tailorDeatiledView.addSubview(ratingCountLabel)
-        
-        let ratingImageView = UIImageView()
-        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY, width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
-        ratingImageView.image = UIImage(named: "4")
-        tailorDeatiledView.addSubview(ratingImageView)
+        tailorDeatiledView.addSubview(ratingCountLabel)
         
         let nameLabel = UILabel()
         nameLabel.frame = CGRect(x: x, y: ratingLabel.frame.maxY, width: (5 * x), height: (2 * y))
@@ -819,7 +828,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         let tailorName = UILabel()
         tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: ratingLabel.frame.maxY, width: tailorDeatiledView.frame.width / 2, height: (2 * y))
-        tailorName.text = marker.title
+        tailorName.text = marker.snippet
         tailorName.textColor = UIColor.black
         tailorName.textAlignment = .left
         tailorName.font = tailorName.font.withSize(1.2 * x)
@@ -833,9 +842,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         ordersLabel.font = ordersLabel.font.withSize(1.2 * x)
         tailorDeatiledView.addSubview(ordersLabel)
         
-        let ordersCountLabel = UILabel()
         ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
-        ordersCountLabel.text = "\(orderCountArray[0])"
         ordersCountLabel.textColor = UIColor.black
         ordersCountLabel.textAlignment = .left
         ordersCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
@@ -843,7 +850,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         tailorDeatiledView.addSubview(ordersCountLabel)
         
         let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-        let coordinate2 = CLLocation(latitude: latitudeArray[0] as! CLLocationDegrees, longitude: longitudeArray[0] as! CLLocationDegrees)
+        let coordinate2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
         
         let distanceInMeters = coordinate1.distance(from: coordinate2)
         
@@ -851,7 +858,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         let distanceInt = Int(distanceInKiloMeters)
         
-        let distanceLabel = UILabel()
+        print("DISTANCE IN KM", distanceInt)
+        
         distanceLabel.frame = CGRect(x: x, y: ordersLabel.frame.maxY, width: tailorDeatiledView.frame.width - (2 * x), height: (2 * y))
         //        distanceLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         distanceLabel.text = "\(distanceInt) Km. from your location"
@@ -879,6 +887,19 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         addressLabel.textAlignment = .left
         addressLabel.numberOfLines = 2
         //        mapView.addSubview(addressLabel)
+        
+        for i in 0..<ShopNameArray.count
+        {
+            if let name = ShopNameArray[i] as? String
+            {
+                if name == marker.title
+                {
+                    ratingImageView.image = UIImage(named: "\(ratingArray[i])")
+                    ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
+                    ordersCountLabel.text = "\(orderCountArray[i])"
+                }
+            }
+        }
         
         Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
     }

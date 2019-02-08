@@ -246,13 +246,17 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         orderSummaryScrollView.addSubview(premiumServicesHeadingLabel)
         
         let premiumServicesView = UIView()
-        premiumServicesView.frame = CGRect(x: (3 * x), y: premiumServicesHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (24 * x))
+        premiumServicesView.frame = CGRect(x: (3 * x), y: premiumServicesHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (11 * x))
         premiumServicesView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(premiumServicesView)
         
-        let premiumArray = ["Measurement + Service - ", "Material Delivery - ", "Urgent Stitches - ", "Additional Design - ", "Special Delivery - "]
+        /*let premiumArray = ["Measurement + Service - ", "Material Delivery - ", "Urgent Stitches - ", "Additional Design - ", "Special Delivery - "]
         let premiumImagesArray = ["Measurement+Service", "material_delivery", "urgent_stitches", "Additional_design", "Special_delivery"]
-        let getPremiumArray = ["50.00 AED", "70.00 AED", "150.00 AED", "20.00 AED", "30.00 AED"]
+        let getPremiumArray = ["50.00 AED", "70.00 AED", "150.00 AED", "20.00 AED", "30.00 AED"]*/
+        
+        let premiumArray = ["Measurement - ", "Service Type - "]
+        let premiumImagesArray = ["Measurement+Service", "Special_delivery"]
+        
         var y3:CGFloat = y
         
         for i in 0..<premiumArray.count
@@ -283,7 +287,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let getDressTypeLabels = UILabel()
             getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX, y: (y / 2), width: (7.5 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
-            getDressTypeLabels.text = getPremiumArray[i]
+//            getDressTypeLabels.text = getPremiumArray[i]
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
@@ -552,7 +556,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             userId = id
         }
         
-        if let dressid = UserDefaults.standard.value(forKey: "dressSubType") as? Int
+        if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
         {
             dressId = dressid
         }
@@ -627,12 +631,19 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         {
             measurementType = type
         }
+        else if let type = UserDefaults.standard.value(forKey: "measurementType") as? String
+        {
+            measurementType = Int(type)!
+        }
+        
         print("MEAUREMENT VALUES", custom3KeyInt, custom3ValuesInt)
         print("USER ID", userId)
         print("DRESS TYPE ID", dressId)
         print("PATTERN ID", patternId)
         print("ADDRESS ID", addressId)
         print("MEASUREMENT NAME", measurementName)
+        print("MEASUREMENT TYPE", measurementType)
+        print("DRESS TYPE", dressId)
         
         
         self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: 1, MaterialImage: [], ReferenceImage: [], OrderCustomizationAttributeId: custom3KeyInt, OrderCustomizationAttributeImageId: custom3ValuesInt, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurementValuesId: measurementId, UserMeasurementValues: measurementValues, DeliveryTypeId: deliveryTypeId, units: "cm", measurementType: measurementType, delegate: self)

@@ -18,6 +18,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     var Measure1IdArray = NSArray()
     var Measure1NameEngArray = NSArray()
+    var Measure1NameAraArray = NSArray()
     var Measure1BodyImage = NSArray()
     var convertedMeasure1BodyImageArray = [UIImage]()
     
@@ -30,6 +31,14 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     var ErrorStr:String!
     var PageNumStr:String!
     var MethodName:String!
+    
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let selfScreenContents = UIView()
+    let manualTitleLabel = UILabel()
+    let goTitleLabel = UILabel()
+    let comeTitleLabel = UILabel()
+
     
     override func viewDidLoad()
     {
@@ -97,6 +106,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             
             Measure1NameEngArray = Result.value(forKey: "MeasurementInEnglish") as! NSArray
             print("Measure1EngArray", Measure1NameEngArray)
+            
+            Measure1NameAraArray = Result.value(forKey: "MeasurementInArabic") as! NSArray
             
             Measure1IdArray = Result.value(forKey: "Id") as! NSArray
             print("Id", Measure1IdArray)
@@ -176,37 +187,35 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func measurement1Content()
     {
-        let measurement1View = UIView()
-        measurement1View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        measurement1View.backgroundColor = UIColor.white
-        //        view.addSubview(measurement1View)
-        
-        let measurement1NavigationBar = UIView()
-        measurement1NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        measurement1NavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(measurement1NavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         backButton.tag = 3
-        measurement1NavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: measurement1NavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "MEASUREMENT-1"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        measurement1NavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "MEASUREMENT-1"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        let manualTitleLabel = UILabel()
-        manualTitleLabel.frame = CGRect(x: (4 * x), y: measurement1NavigationBar.frame.maxY + y, width: view.frame.width - (8 * x), height: (3 * y))
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        self.view.bringSubviewToFront(slideMenuButton)
+
+        manualTitleLabel.frame = CGRect(x: (4 * x), y: y, width: view.frame.width - (8 * x), height: (3 * y))
         manualTitleLabel.text = Measure1NameEngArray[0] as! String
         manualTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         manualTitleLabel.textAlignment = .left
-        view.addSubview(manualTitleLabel)
+        selfScreenContents.addSubview(manualTitleLabel)
         
         let manualButton = UIButton()
         manualButton.frame = CGRect(x: (4 * x), y: manualTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
@@ -214,7 +223,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         //        manualButton.setImage(convertedMeasure1BodyImageArray[0], for: .normal)
         manualButton.tag = Measure1IdArray[0] as! Int
         manualButton.addTarget(self, action: #selector(self.forWhomButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(manualButton)
+        selfScreenContents.addSubview(manualButton)
         
         if let imageName = Measure1BodyImage[0] as? String
         {
@@ -245,12 +254,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         downArrowImageView.image = UIImage(named: "downArrow")
         forWhomButton.addSubview(downArrowImageView)
         
-        let goTitleLabel = UILabel()
         goTitleLabel.frame = CGRect(x: (4 * x), y: manualButton.frame.maxY + (2 * y), width: view.frame.width - (8 * x), height: (3 * y))
         goTitleLabel.text = Measure1NameEngArray[1] as! String
         goTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         goTitleLabel.textAlignment = .left
-        view.addSubview(goTitleLabel)
+        selfScreenContents.addSubview(goTitleLabel)
         
         let goButton = UIButton()
         goButton.frame = CGRect(x: (4 * x), y: goTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
@@ -258,7 +266,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         //        goButton.setImage(convertedMeasure1BodyImageArray[1], for: .normal)
         goButton.tag = Measure1IdArray[1] as! Int
         goButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(goButton)
+        selfScreenContents.addSubview(goButton)
         
         if let imageName = Measure1BodyImage[1] as? String
         {
@@ -275,12 +283,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             goButton.addSubview(dummyImageView)
         }
         
-        let comeTitleLabel = UILabel()
         comeTitleLabel.frame = CGRect(x: (4 * x), y: goButton.frame.maxY + (2 * y), width: view.frame.width - (8 * x), height: (3 * y))
         comeTitleLabel.text = Measure1NameEngArray[2] as! String
         comeTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         comeTitleLabel.textAlignment = .left
-        view.addSubview(comeTitleLabel)
+        selfScreenContents.addSubview(comeTitleLabel)
         
         let comeButton = UIButton()
         comeButton.frame = CGRect(x: (4 * x), y: comeTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
@@ -288,7 +295,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         //        comeButton.setImage(convertedMeasure1BodyImageArray[2], for: .normal)
         comeButton.tag = Measure1IdArray[2] as! Int
         comeButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(comeButton)
+        selfScreenContents.addSubview(comeButton)
         
         if let imageName = Measure1BodyImage[2] as? String
         {
@@ -316,6 +323,65 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         measurement1NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         measurement1NextButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
         //        view.addSubview(measurement1NextButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
+    }
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "قياس-1"
+
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        manualTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        manualTitleLabel.text = (Measure1NameAraArray[0] as! String)
+        manualTitleLabel.textAlignment = .right
+        
+        goTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        goTitleLabel.text = (Measure1NameAraArray[1] as! String)
+        goTitleLabel.textAlignment = .right
+
+        comeTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        comeTitleLabel.text = (Measure1NameAraArray[2] as! String)
+        comeTitleLabel.textAlignment = .right
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "MEASUREMENT-1"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        manualTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        manualTitleLabel.text = (Measure1NameEngArray[0] as! String)
+        manualTitleLabel.textAlignment = .left
+        
+        goTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        goTitleLabel.text = (Measure1NameEngArray[1] as! String)
+        goTitleLabel.textAlignment = .left
+        
+        comeTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        comeTitleLabel.text = (Measure1NameEngArray[2] as! String)
+        comeTitleLabel.textAlignment = .left
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -329,33 +395,105 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         UserDefaults.standard.set(sender.tag, forKey: "measurementType")
         var userListAlert : UIAlertController!
         
-        if nameArray.count == 0
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
-            userListAlert = UIAlertController(title: "Please choose measurement name", message: "", preferredStyle: .alert)
+            if language == "en"
+            {
+                if nameArray.count == 0
+                {
+                    userListAlert = UIAlertController(title: "Alert", message: "Please choose measurement name", preferredStyle: .alert)
+                }
+                else
+                {
+                    userListAlert = UIAlertController(title: "Alert", message: "Please choose measurement name", preferredStyle: .alert)
+                }
+                
+                for i in 0..<nameArray.count
+                {
+                    userListAlert.addAction(UIAlertAction(title: nameArray[i], style: .default, handler: nameSelection(action:)))
+                }
+                userListAlert.addAction(UIAlertAction(title: "Add New", style: .default, handler: addNewAlertAction(action:)))
+                userListAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self.present(userListAlert, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                if nameArray.count == 0
+                {
+                    userListAlert = UIAlertController(title: "محزر", message: "يرجى اختيار اسم القياس", preferredStyle: .alert)
+                }
+                else
+                {
+                    userListAlert = UIAlertController(title: "محزر", message: "يرجى اختيار اسم القياس", preferredStyle: .alert)
+                }
+                
+                for i in 0..<nameArray.count
+                {
+                    userListAlert.addAction(UIAlertAction(title: nameArray[i], style: .default, handler: nameSelection(action:)))
+                }
+                userListAlert.addAction(UIAlertAction(title: "اضف جديد", style: .default, handler: addNewAlertAction(action:)))
+                userListAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+                self.present(userListAlert, animated: true, completion: nil)
+            }
+        }
+        else
+        {if nameArray.count == 0
+        {
+            userListAlert = UIAlertController(title: "Alert", message: "Please choose measurement name", preferredStyle: .alert)
         }
         else
         {
-            userListAlert = UIAlertController(title: "Please choose measurement name", message: "", preferredStyle: .alert)
+            userListAlert = UIAlertController(title: "Alert", message: "Please choose measurement name", preferredStyle: .alert)
+            }
+            
+            for i in 0..<nameArray.count
+            {
+                userListAlert.addAction(UIAlertAction(title: nameArray[i], style: .default, handler: nameSelection(action:)))
+            }
+            userListAlert.addAction(UIAlertAction(title: "Add New", style: .default, handler: addNewAlertAction(action:)))
+            userListAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(userListAlert, animated: true, completion: nil)
         }
-        
-        for i in 0..<nameArray.count
-        {
-            userListAlert.addAction(UIAlertAction(title: nameArray[i], style: .default, handler: nameSelection(action:)))
-        }
-        userListAlert.addAction(UIAlertAction(title: "Add New", style: .default, handler: addNewAlertAction(action:)))
-        userListAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(userListAlert, animated: true, completion: nil)
     }
     
     func addNewAlertAction(action : UIAlertAction)
     {
-        addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - Coat", preferredStyle: .alert)
-        addNameAlert.addTextField(configurationHandler: { (textField) in
-            textField.placeholder = "Enter the name"
-        })
-        addNameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: addNewNameAlertAction(action:)))
-        addNameAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        self.present(addNameAlert, animated: true, completion: nil)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - Coat", preferredStyle: .alert)
+                addNameAlert.addTextField(configurationHandler: { (textField) in
+                    textField.placeholder = "Enter the name"
+                    textField.textAlignment = .left
+                })
+                addNameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: addNewNameAlertAction(action:)))
+                addNameAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                self.present(addNameAlert, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                addNameAlert = UIAlertController(title: "اضف اسما", message: "لنوع الفستان - معطف", preferredStyle: .alert)
+                addNameAlert.addTextField(configurationHandler: { (textField) in
+                    textField.placeholder = "أدخل الاسم"
+                    textField.textAlignment = .right
+                })
+                addNameAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: addNewNameAlertAction(action:)))
+                addNameAlert.addAction(UIAlertAction(title: "إلغاء", style: .default, handler: nil))
+                self.present(addNameAlert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - Coat", preferredStyle: .alert)
+            addNameAlert.addTextField(configurationHandler: { (textField) in
+                textField.placeholder = "Enter the name"
+                textField.textAlignment = .left
+            })
+            addNameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: addNewNameAlertAction(action:)))
+            addNameAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(addNameAlert, animated: true, completion: nil)
+        }
     }
     
     func addNewNameAlertAction(action : UIAlertAction)
@@ -372,10 +510,30 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func nameSelection(action : UIAlertAction)
     {
-        let nameSelectionAlert = UIAlertController(title: "Continue", message: "Please select your option", preferredStyle: .alert)
-        nameSelectionAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
-        nameSelectionAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        self.present(nameSelectionAlert, animated: true, completion: nil)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                let nameSelectionAlert = UIAlertController(title: "Continue", message: "Please select your option", preferredStyle: .alert)
+                nameSelectionAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
+                nameSelectionAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                self.present(nameSelectionAlert, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                let nameSelectionAlert = UIAlertController(title: "استمر", message: "يرجى تحديد خيارك", preferredStyle: .alert)
+                nameSelectionAlert.addAction(UIAlertAction(title: "تقدم", style: .default, handler: proceedAlertAction(action:)))
+                nameSelectionAlert.addAction(UIAlertAction(title: "إلغاء", style: .default, handler: nil))
+                self.present(nameSelectionAlert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            let nameSelectionAlert = UIAlertController(title: "Continue", message: "Please select your option", preferredStyle: .alert)
+            nameSelectionAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
+            nameSelectionAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(nameSelectionAlert, animated: true, completion: nil)
+        }
     }
     
     func proceedAlertAction(action : UIAlertAction)

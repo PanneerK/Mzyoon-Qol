@@ -221,7 +221,7 @@ class CommonViewController: UIViewController
         notificationButton.frame = CGRect(x: (2 * x), y: navigationTitle.frame.minY, width: (4 * x), height: (4 * y))
         notificationButton.setImage(UIImage(named: "notification"), for: .normal)
         //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
-        navigationBar.addSubview(notificationButton)
+//        navigationBar.addSubview(notificationButton)
     }
     
     func tabContents()

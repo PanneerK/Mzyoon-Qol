@@ -105,8 +105,11 @@ class SlideViewController: UIViewController
         underline.backgroundColor = UIColor.white
         view.addSubview(underline)
         
-        let buttonTitle = ["My Account", "Address", "Book an Appointment", "Transaction" ,"Rewards", "Refer Friends", "FAQ", "Terms and Conditions", "Settings", "Log Out"]
-        let buttonImage = ["my_account", "Address", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
+//        let buttonTitle = ["My Account", "Address", "Book an Appointment", "Transaction" ,"Rewards", "Refer Friends", "FAQ", "Terms and Conditions", "Settings", "Log Out"]
+//        let buttonImage = ["my_account", "Address", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
+        
+        let buttonTitle = ["My Account", "Address", "Settings", "Log Out"]
+        let buttonImage = ["my_account", "Address", "settings", "logout"]
         
         var y1:CGFloat = userName.frame.maxY + (2 * y)
         
@@ -117,10 +120,13 @@ class SlideViewController: UIViewController
             slideMenusButton.frame = CGRect(x: 0, y: y1, width: slideViewWidth, height: (4 * y))
             slideMenusButton.tag = i
             
-            if i == 0 || i == 1 || i == 9 || i == 8
-            {
-                slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
-            }
+//            if i == 0 || i == 1 || i == 9 || i == 8
+//            {
+//                slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
+//            }
+            
+            slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
+
             view.addSubview(slideMenusButton)
             
             y1 = slideMenusButton.frame.maxY + y
@@ -222,12 +228,12 @@ class SlideViewController: UIViewController
             addressScreen.viewController = "slide"
             self.navigationController?.pushViewController(addressScreen, animated: true)
         }
-        else if sender.tag == 8
+        else if sender.tag == 2
         {
            // let settingsScreen = SettingsViewController()
           //  self.navigationController?.pushViewController(settingsScreen, animated: true)
         }
-        else if sender.tag == 9
+        else if sender.tag == 3
         {
             let navigateScreen = LoginViewController()
             navigateScreen.findString = "logout"

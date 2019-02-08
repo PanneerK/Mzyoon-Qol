@@ -35,6 +35,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     var ProductNameArray = NSArray()
     var RequestDtArray = NSArray()
     
+    let emptyLabel = UILabel()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -99,6 +101,17 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             let Result = requestList.object(forKey: "Result") as! NSArray
             print("Request List:", Result)
             
+            if Result.count == 0 || Result == nil
+            {
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.text = "You don't have any order request"
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                view.addSubview(emptyLabel)
+            }
+            
             
             NoOfTailorsArray = Result.value(forKey: "NoOfTailors") as! NSArray
             print("NoOfTailorsArray", NoOfTailorsArray)
@@ -125,6 +138,14 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             MethodName = "/GetOrderRequest"
             ErrorStr = Result
             DeviceError()
+            
+            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+            emptyLabel.text = "You don't have any order request"
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            view.addSubview(emptyLabel)
         }
         
          OrderRequestListContent()
