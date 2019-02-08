@@ -1773,10 +1773,21 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         
         print("VALUES", values)
-        UserDefaults.standard.set(PartsIdArray, forKey: "measurementId")
-        UserDefaults.standard.set(values, forKey: "measurementValues")
-        let referenceScreen = ReferenceImageViewController()
-        self.navigationController?.pushViewController(referenceScreen, animated: true)
+        
+        if values.contains(0.0)
+        {
+            let customEmptyAlert = UIAlertController(title: "Alert", message: "Please enter all values to proceed", preferredStyle: .alert)
+            customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(customEmptyAlert, animated: true, completion: nil)
+        }
+        else
+        {
+            UserDefaults.standard.set(PartsIdArray, forKey: "measurementId")
+            UserDefaults.standard.set(values, forKey: "measurementValues")
+            let referenceScreen = ReferenceImageViewController()
+            self.navigationController?.pushViewController(referenceScreen, animated: true)
+        }
+        
     }
     
     

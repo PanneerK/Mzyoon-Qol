@@ -26,6 +26,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     let customedBackButton = UIButton()
     let selectionImage = UIImageView()
     let dropDownButton = UIButton()
+    let dropDownImageView = UIImageView()
     let customizationScrollView = UIScrollView()
     
     let selectionImage1 = UIImageView()
@@ -34,9 +35,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     var customImagesArray = NSArray()
     
     var customAttEnglishNameArray = NSArray()
+    var customAttArabicNameArray = NSArray()
     var customAttIdArray = NSArray()
     
     var subCustomAttEnglishNameArray = NSArray()
+    var subCustomAttArabicNameArray = NSArray()
     var subCustomAttIdArray = NSArray()
     var subCustomAttImageArray = NSArray()
     
@@ -91,12 +94,16 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             customAttEnglishNameArray = CustomizationAttributes.value(forKey: "AttributeNameInEnglish") as! NSArray
             
+            customAttArabicNameArray = CustomizationAttributes.value(forKey: "AttributeNameinArabic") as! NSArray
+            
             customAttIdArray = CustomizationAttributes.value(forKey: "Id") as! NSArray
             
             let AttributeImages = Result.object(forKey: "AttributeImages") as! NSArray
             print("AttributeImages", AttributeImages)
             
             subCustomAttEnglishNameArray = AttributeImages.value(forKey: "AttributeNameInEnglish") as! NSArray
+            
+            subCustomAttArabicNameArray = AttributeImages.value(forKey: "AttributeNameInArabic") as! NSArray
             
             subCustomAttIdArray = AttributeImages.value(forKey: "Id") as! NSArray
             
@@ -118,7 +125,22 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             selectedCustomString = customAttEnglishNameArray[0] as! String
             selectedCustomInt = customAttIdArray[0] as! Int
             
-            customization3Content()
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    customization3Content(inputArray: customAttEnglishNameArray)
+
+                }
+                else if language == "ar"
+                {
+                    customization3Content(inputArray: customAttArabicNameArray)
+                }
+            }
+            else
+            {
+                customization3Content(inputArray: customAttEnglishNameArray)
+            }
         }
         else
         {
@@ -143,11 +165,27 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             subCustomAttEnglishNameArray = Result.value(forKey: "AttributeNameInEnglish") as! NSArray
             
+            subCustomAttArabicNameArray = Result.value(forKey: "AttributeNameInArabic") as! NSArray
+            
             subCustomAttIdArray = Result.value(forKey: "Id") as! NSArray
             
             subCustomAttImageArray = Result.value(forKey: "Images") as! NSArray
             
-            subcCustomization3Content()
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    subcCustomization3Content(inputArray: subCustomAttEnglishNameArray)
+                }
+                else if language == "ar"
+                {
+                    subcCustomization3Content(inputArray: subCustomAttArabicNameArray)
+                }
+            }
+            else
+            {
+                subcCustomization3Content(inputArray: subCustomAttEnglishNameArray)
+            }
         }
         else
         {
@@ -180,6 +218,10 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         viewDesignLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selectionImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        dropDownButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        dropDownImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
         selfScreenNavigationTitle.text = "التخصيص - 3"
         viewDesignLabel.text = "عرض التصميم الخاص بك هنا"
     }
@@ -192,11 +234,14 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         viewDesignLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selectionImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
 
+        dropDownButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        dropDownImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
         selfScreenNavigationTitle.text = "CUSTOMIZATION-3"
         viewDesignLabel.text = "VIEW YOUR DESIGN HERE"
     }
     
-    func customization3Content()
+    func customization3Content(inputArray : NSArray)
     {
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -299,15 +344,15 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownButton.layer.cornerRadius = 5
         dropDownButton.layer.masksToBounds = true
         dropDownButton.backgroundColor = UIColor.lightGray
-        if let textString = customAttEnglishNameArray[0] as? String
+        if let textString = inputArray[0] as? String
         {
             dropDownButton.setTitle(textString.uppercased(), for: .normal)
         }
+        dropDownButton.titleLabel?.textAlignment = .right
         dropDownButton.setTitleColor(UIColor.black, for: .normal)
         dropDownButton.addTarget(self, action: #selector(self.dropDownButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(dropDownButton)
         
-        let dropDownImageView = UIImageView()
         dropDownImageView.frame = CGRect(x: dropDownButton.frame.width - (4 * x), y: 0, width: (4 * x), height: (4 * y))
         dropDownImageView.layer.cornerRadius = 5
         dropDownImageView.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
@@ -323,21 +368,22 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             if language == "en"
             {
                 changeViewToEnglishInSelf()
+                subcCustomization3Content(inputArray: subCustomAttEnglishNameArray)
             }
             else if language == "ar"
             {
                 changeViewToArabicInSelf()
+                subcCustomization3Content(inputArray: subCustomAttArabicNameArray)
             }
         }
         else
         {
             changeViewToEnglishInSelf()
+            subcCustomization3Content(inputArray: subCustomAttEnglishNameArray)
         }
-        
-        subcCustomization3Content()
     }
     
-    func subcCustomization3Content()
+    func subcCustomization3Content(inputArray : NSArray)
     {
         customizationScrollView.frame = CGRect(x: 0, y: dropDownButton.frame.maxY + y, width: view.frame.width, height: (12 * y))
         selfScreenContents.addSubview(customizationScrollView)
@@ -372,6 +418,22 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 }
             }
             
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    customizationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    customizationButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                customizationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: (3 * x), y: 0, width: customizationButton.frame.width - (6 * x), height: customizationButton.frame.height - (2 * y))
@@ -392,7 +454,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: customizationButton.frame.height - (2 * y), width: customizationButton.frame.width, height: (2 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = (subCustomAttEnglishNameArray[i] as! String)
+            buttonTitle.text = (inputArray[i] as! String)
             buttonTitle.adjustsFontSizeToFitWidth = true
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
@@ -415,22 +477,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.addSubview(customization3NextButton)
         
         self.stopActivity()
-        
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
-        {
-            if language == "en"
-            {
-                changeViewToEnglishInSelf()
-            }
-            else if language == "ar"
-            {
-                changeViewToArabicInSelf()
-            }
-        }
-        else
-        {
-            changeViewToEnglishInSelf()
-        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -458,17 +504,51 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func dropDownButtonAction(sender : UIButton)
     {
-        let customizationAlert = UIAlertController(title: "Customize", message: "Customize your material", preferredStyle: .alert)
-        
-        for i in 0..<customAttEnglishNameArray.count
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
-            if let alertString = customAttEnglishNameArray[i] as? String
+            if language == "en"
             {
-                customizationAlert.addAction(UIAlertAction(title: alertString.uppercased(), style: .default, handler: customizaionAlertAction(action:)))
+                let customizationAlert = UIAlertController(title: "Customize", message: "Customize your material", preferredStyle: .alert)
+                
+                for i in 0..<customAttEnglishNameArray.count
+                {
+                    if let alertString = customAttEnglishNameArray[i] as? String
+                    {
+                        customizationAlert.addAction(UIAlertAction(title: alertString.uppercased(), style: .default, handler: customizaionAlertAction(action:)))
+                    }
+                }
+                customizationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self.present(customizationAlert, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                let customizationAlert = UIAlertController(title: "يعدل أو يكيف", message: "تخصيص المواد الخاصة بك", preferredStyle: .alert)
+                
+                for i in 0..<customAttArabicNameArray.count
+                {
+                    if let alertString = customAttArabicNameArray[i] as? String
+                    {
+                        customizationAlert.addAction(UIAlertAction(title: alertString.uppercased(), style: .default, handler: customizaionAlertAction(action:)))
+                    }
+                }
+                customizationAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+                self.present(customizationAlert, animated: true, completion: nil)
             }
         }
-        customizationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(customizationAlert, animated: true, completion: nil)
+        else
+        {
+            let customizationAlert = UIAlertController(title: "Customize", message: "Customize your material", preferredStyle: .alert)
+            
+            for i in 0..<customAttEnglishNameArray.count
+            {
+                if let alertString = customAttEnglishNameArray[i] as? String
+                {
+                    customizationAlert.addAction(UIAlertAction(title: alertString.uppercased(), style: .default, handler: customizaionAlertAction(action:)))
+                }
+            }
+            customizationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(customizationAlert, animated: true, completion: nil)
+        }
     }
     
     func customizaionAlertAction(action : UIAlertAction)
@@ -477,21 +557,67 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         
         selectedCustomString = (action.title?.lowercased())!
         
-        for i in 0..<customAttEnglishNameArray.count
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
-            if let checkAtt = customAttEnglishNameArray[i] as? String
+            if language == "en"
             {
-                print("CHECK ATT", checkAtt, selectedCustomString, customAttIdArray[i])
-                if selectedCustomString == checkAtt.lowercased()
+                for i in 0..<customAttEnglishNameArray.count
                 {
-                    if let attId = customAttIdArray[i] as? Int
+                    if let checkAtt = customAttEnglishNameArray[i] as? String
                     {
-                        self.activityContents()
-                        self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
-                        selectedCustomInt = attId
+                        print("CHECK ATT", checkAtt, selectedCustomString, customAttIdArray[i])
+                        if selectedCustomString == checkAtt.lowercased()
+                        {
+                            if let attId = customAttIdArray[i] as? Int
+                            {
+                                self.activityContents()
+                                self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
+                                selectedCustomInt = attId
+                            }
+                        }
+                    }
+                }
+
+            }
+            else if language == "ar"
+            {
+                for i in 0..<customAttArabicNameArray.count
+                {
+                    if let checkAtt = customAttArabicNameArray[i] as? String
+                    {
+                        if selectedCustomString == checkAtt.lowercased()
+                        {
+                            if let attId = customAttIdArray[i] as? Int
+                            {
+                                self.activityContents()
+                                self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
+                                selectedCustomInt = attId
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        else
+        {
+            for i in 0..<customAttEnglishNameArray.count
+            {
+                if let checkAtt = customAttEnglishNameArray[i] as? String
+                {
+                    print("CHECK ATT", checkAtt, selectedCustomString, customAttIdArray[i])
+                    if selectedCustomString == checkAtt.lowercased()
+                    {
+                        if let attId = customAttIdArray[i] as? Int
+                        {
+                            self.activityContents()
+                            self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
+                            selectedCustomInt = attId
+                        }
                     }
                 }
             }
+
         }
     }
     
@@ -521,21 +647,70 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func customization3NextButtonAction(sender : UIButton)
     {
-        for (keys, values) in selectedCustomStringArray
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
-            print("KEYS - \(keys), VALUES - \(values)")
-            
-            if values.isEmpty == true || values == ""
+            if language == "en"
             {
-                let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and procced to next", preferredStyle: .alert)
-                customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(customEmptyAlert, animated: true, completion: nil)
-            }
-            else
-            {
-                if customAttEnglishNameArray.count != customDictValuesCount
+                for (keys, values) in selectedCustomStringArray
                 {
-                    customDictValuesCount = customDictValuesCount + 1
+                    print("KEYS - \(keys), VALUES - \(values)")
+                    
+                    if values.isEmpty == true || values == ""
+                    {
+                        let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and procced to next", preferredStyle: .alert)
+                        customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(customEmptyAlert, animated: true, completion: nil)
+                    }
+                    else
+                    {
+                        if customAttEnglishNameArray.count != customDictValuesCount
+                        {
+                            customDictValuesCount = customDictValuesCount + 1
+                        }
+                    }
+                }
+            }
+            else if language == "ar"
+            {
+                for (keys, values) in selectedCustomStringArray
+                {
+                    print("KEYS - \(keys), VALUES - \(values)")
+                    
+                    if values.isEmpty == true || values == ""
+                    {
+                        let customEmptyAlert = UIAlertController(title: "محزر", message: "يرجى اختيار التخصيص لوالإجراء التالي", preferredStyle: .alert)
+                        customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(customEmptyAlert, animated: true, completion: nil)
+                    }
+                    else
+                    {
+                        if customAttEnglishNameArray.count != customDictValuesCount
+                        {
+                            customDictValuesCount = customDictValuesCount + 1
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (keys, values) in selectedCustomStringArray
+            {
+                print("KEYS - \(keys), VALUES - \(values)")
+                
+                if values.isEmpty == true || values == ""
+                {
+                    let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and procced to next", preferredStyle: .alert)
+                    customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(customEmptyAlert, animated: true, completion: nil)
+                }
+                else
+                {
+                    if customAttEnglishNameArray.count != customDictValuesCount
+                    {
+                        customDictValuesCount = customDictValuesCount + 1
+                    }
                 }
             }
         }

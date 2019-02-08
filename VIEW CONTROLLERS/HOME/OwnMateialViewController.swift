@@ -16,6 +16,8 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
+    
+    let selfScreenContents = UIView()
 
     //ADD MATERIAL PARAMETERS
     let addReferenceView = UIView()
@@ -65,10 +67,13 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         notifyLabel.text = "يرجى إضافة صورة مادية لتكون مرجعا"
         addMaterialLabel.text = "إضافة صورة مادية لتوصية الطلب"
         
-        /*addReferenceScrolView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        addReferenceImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addReferenceScrolView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         addMaterialButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        addMaterialNextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)*/
+//        addMaterialNextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         print("AFTER X", addMaterialNextButton.frame.minX)
     }
@@ -82,6 +87,9 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         notifyLabel.text = "Please add material image for reference"
         addMaterialLabel.text = "Add material image for tailor refrence"
         
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addReferenceImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+
         addReferenceScrolView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         addMaterialButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
@@ -114,11 +122,15 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        addReferenceImage.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        addReferenceImage.frame = CGRect(x: (3 * x), y: (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
         addReferenceImage.layer.borderWidth = 1
         addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
         addReferenceImage.backgroundColor = UIColor.white
-        view.addSubview(addReferenceImage)
+        selfScreenContents.addSubview(addReferenceImage)
         
         if imageArray.count == 0 || imageArray.isEmpty == true
         {
@@ -135,11 +147,11 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-        view.addSubview(addMaterialLabel)
+        selfScreenContents.addSubview(addMaterialLabel)
         
         addReferenceScrolView.frame = CGRect(x: x, y: addMaterialLabel.frame.maxY, width: view.frame.width - (13 * x), height: (12 * y))
         addReferenceScrolView.backgroundColor = UIColor.clear
-        view.addSubview(addReferenceScrolView)
+        selfScreenContents.addSubview(addReferenceScrolView)
         
         addMaterialButton.frame = CGRect(x: addReferenceScrolView.frame.maxX + x, y: addMaterialLabel.frame.maxY + y, width: (10 * x), height: (10 * y))
         addMaterialButton.backgroundColor = UIColor.blue
@@ -147,7 +159,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialButton.tag = -1
         addMaterialButton.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(addMaterialButton)
+        selfScreenContents.addSubview(addMaterialButton)
         
         addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = addMaterialNextButton.frame.height / 2
@@ -157,7 +169,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         //        addMaterialNextButton.setTitle("Next", for: .normal)
         //        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialNextButton.addTarget(self, action: #selector(self.addMaterialNextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(addMaterialNextButton)
+        selfScreenContents.addSubview(addMaterialNextButton)
         
         //        addMaterial(xPosition: x)
         

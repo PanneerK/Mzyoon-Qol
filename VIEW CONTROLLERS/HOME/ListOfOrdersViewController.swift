@@ -49,6 +49,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     var DelivShopNameEngArray = NSArray()
     var DelivTailorNameEngArray = NSArray()
     
+    let emptyLabel = UILabel()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -112,6 +114,17 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             let Result = PendingOrdersList.object(forKey: "Result") as! NSArray
             print("Result:", Result)
             
+            if Result == nil || Result.count == 0
+            {
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.text = "You have not placed any orders"
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                view.addSubview(emptyLabel)
+            }
+            
             PendImageArray = Result.value(forKey: "Image") as! NSArray
              print("PendImageArray:",PendImageArray)
             
@@ -135,6 +148,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
         else if ResponseMsg == "Failure"
         {
+            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+            emptyLabel.text = "You have not placed any orders"
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            view.addSubview(emptyLabel)
+            
             let Result = PendingOrdersList.object(forKey: "Result") as! String
             print("Result", Result)
             

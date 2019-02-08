@@ -495,7 +495,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (4 * y), width: view.frame.width - (12 * x), height: (2 * y))
         if getDOB.isEmpty == true
         {
-            dob.placeholder = "mm/dd/yyyy"
+            dob.placeholder = "mm/dd/yyyy - Date of Birth"
         }
         else
         {

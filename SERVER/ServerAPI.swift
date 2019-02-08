@@ -761,6 +761,8 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    
+                    print("UPDATE RESPONSE", self.resultDict)
                     delegate.API_CALLBACK_UpdateAddress!(updateAddr: self.resultDict)
                 }
                 else
@@ -2068,38 +2070,5 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
-    
-    func API_DownoadImage(api : String , delegate : ServerAPIDelegate)
-    {
-        if (Reachability()?.isReachable)!
-        {
-            print("Server Reached - List Of Orders Page")
-            
-            let parameters = [:] as [String : Any]
-            
-            let urlString:String = String(format: "%@\(api)", arguments: [baseURL])
-            
-            print("Tracking Details: ", urlString)
-            
-            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
-                // print("REQUEST", request)
-                if response.result.value != nil
-                {
-                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("resultDict", self.resultDict)
-                    
-                    delegate.API_CALLBACK_GetTrackingDetails!(getTrackingDetails: self.resultDict)
-                }
-                else
-                {
-                    delegate.API_CALLBACK_Error(errorNumber: 36, errorMessage: "Tracking Details Failed")
-                }
-            }
-        }
-        else
-        {
-            print("no internet")
-        }
-    }
-    
+
 }
