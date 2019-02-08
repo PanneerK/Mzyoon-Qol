@@ -13,6 +13,7 @@ import CoreImage
 
 class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
+    let serviceCall = ServerAPI()
     
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
@@ -100,10 +101,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     {
         self.stopActivity()
         
-        addReferenceView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        addReferenceView.backgroundColor = UIColor.white
-        //        view.addSubview(addMaterialView)
-        
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(selfScreenNavigationBar)
@@ -125,6 +122,8 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
+        
+        self.view.bringSubviewToFront(slideMenuButton)
         
         addReferenceImage.frame = CGRect(x: (3 * x), y: (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
         addReferenceImage.layer.borderWidth = 1
@@ -215,20 +214,68 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         }
         else
         {
+            let fileAccessing = FileAccess()
+            let file = fileAccessing.configureDirectory()
+            fileAccessing.getImageFromDocumentDirectory(imageName: "Material")
+            let path = fileAccessing.getDirectoryPath()
+            print("FILE-\(file) AND PATH-\(path)")
+            
+            for i in 0..<imageArray.count
+            {
+                fileAccessing.saveImageDocumentDirectory(image: imageArray[i], imageName: "material\(i)", imageType: "Material")
+            }
+            
+            let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material")
+            
+            
+            let returnImage = ConversionToJson()
+            
+            let images = returnImage.imageRequest(imageName: [getImage])
+            
+            print("RETURNED IMAGES", images)
+
+//            self.serviceCall.API_MaterialImageUpload(materialImages: [getImage], delegate: self)
+
             let custom3Screen = Customization3ViewController()
             self.navigationController?.pushViewController(custom3Screen, animated: true)
         }
+    }
+    
+    func API_CALLBACK_ReferenceImageUpload(reference: NSDictionary) {
+        print("REFERENCE IMAGE UPLOAD", reference)
     }
     
     @objc func addMaterialButtonAction(sender : UIButton)
     {
         UserDefaults.standard.set(1, forKey: "screenValue")
         
-        let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
-        cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
-        cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
-        cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(cameraAlert, animated: true, completion: nil)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+                cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+                cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+                cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self.present(cameraAlert, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                let cameraAlert = UIAlertController(title: "محزر", message: "اختر صورة من", preferredStyle: .alert)
+                cameraAlert.addAction(UIAlertAction(title: "الة تصوير", style: .default, handler: cameraAlertAction(action:)))
+                cameraAlert.addAction(UIAlertAction(title: "صالة عرض", style: .default, handler: galleryAlertAction(action:)))
+                cameraAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+                self.present(cameraAlert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+            cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+            cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+            cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(cameraAlert, animated: true, completion: nil)
+        }
     }
     
     func cameraAlertAction(action : UIAlertAction)

@@ -591,7 +591,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         languageButton.setTitleColor(UIColor.black, for: .normal)
         languageButton.titleLabel?.font = languageButton.titleLabel?.font.withSize(1.5 * x)
         //        languageButton.setImage(UIImage(named: "languageBackground"), for: .normal)
-        languageButton.addTarget(self, action: #selector(self.languageButtonAction(sender:)), for: .touchUpInside)
+//        languageButton.addTarget(self, action: #selector(self.languageButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(languageButton)
         
         let languageFlagImageView = UIImageView()

@@ -289,63 +289,11 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
             self.userImage.image = pickedImage
             FileHandler().saveImageDocumentDirectory(image: userImage.image!)
             print("IMAGE NAME", FileHandler().imagePath())
-            
-            print("FILE PATH", getDirectoryPath())
-            
-            //            saveImageDocumentDirectory(image: pickedImage, imageName: "profile")
-            getImageFromDocumentDirectory()
         }
         self.dismiss(animated: true, completion: nil)
     }
     
-    func getDirectoryPath() -> NSURL {
-        let path1 = configureDirectory()
-        
-        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("Mzyoon")
-        let url = NSURL(string: path1)
-        return url!
-    }
     
-    func saveImageDocumentDirectory(image: UIImage, imageName: String) {
-        let path1 = configureDirectory()
-        
-        let fileManager = FileManager.default
-        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("profile")
-        if !fileManager.fileExists(atPath: path) {
-            try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-        }
-        let url = NSURL(string: path1)
-        let imagePath = url!.appendingPathComponent(imageName)
-        print("IMAGE PATH 1", imagePath)
-        let urlString: String = imagePath!.absoluteString
-        let imageData = image.jpegData(compressionQuality: 0.5)
-        //let imageData = UIImagePNGRepresentation(image)
-        fileManager.createFile(atPath: urlString as String, contents: imageData, attributes: nil)
-    }
-    
-    func getImageFromDocumentDirectory() {
-        let fileManager = FileManager.default
-        for i in 0..<1 {
-            let imagePath = (self.getDirectoryPath() as NSURL).appendingPathComponent("profile")
-            let urlString: String = imagePath!.absoluteString
-            if fileManager.fileExists(atPath: urlString) {
-                let image = UIImage(contentsOfFile: urlString)
-                self.userImage.image = image
-            } else {
-                // print("No Image")
-            }
-        }
-    }
-    
-    func configureDirectory() -> String {
-        let fileManager = FileManager.default
-        
-        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("Mzyoon")
-        if !fileManager.fileExists(atPath: path) {
-            try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
-        }
-        return path
-    }
     
     @objc func introProfileNextButtonAction(sender : UIButton)
     {
@@ -358,9 +306,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         else
         {
             active()
-            
-            let path = getDirectoryPath()
-            
+                        
             if userImage.image != nil
             {
                 UserDefaults.standard.set(userNameTextField.text!, forKey: "userName")

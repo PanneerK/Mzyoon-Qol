@@ -121,7 +121,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             print("Download Finished")
             DispatchQueue.main.async() {
 //                self.userImage.image = UIImage(data: data)
-                FileHandler().saveImageDocumentDirectory(image: UIImage(data: data)!)
+//                FileHandler().saveImageDocumentDirectory(image: UIImage(data: data)!)
             }
         }
     }

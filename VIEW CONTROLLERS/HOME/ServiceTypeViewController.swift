@@ -21,6 +21,21 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     var deliveryTypeIdArray = NSArray()
     var deliveryTypeIconArray = NSArray()
     
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let selfScreenContents = UIView()
+    
+    let directDeliveryIcon = UIImageView()
+    let directDeliveryLabel = UILabel()
+    let directDeliveryButton = UIButton()
+    let courierDeliveryIcon = UIImageView()
+    let couriertDeliveryLabel = UILabel()
+    let courierDeliveryButton = UIButton()
+    let companyIcon = UIImageView()
+    let companyLabel = UILabel()
+    let companyButton = UIButton()
+
+    
     override func viewDidLoad()
     {
         serviceCall.API_ServiceRequest(delegate: self)
@@ -59,55 +74,54 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     func serviceTypeContent()
     {
         self.stopActivity()
-        serviceTypeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        serviceTypeView.backgroundColor = UIColor.white
-        //        view.addSubview(serviceTypeView)
         
-        let orderTypeNavigationBar = UIView()
-        orderTypeNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        orderTypeNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(orderTypeNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 3
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        orderTypeNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderTypeNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "SERVICE TYPE"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        orderTypeNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "SERVICE TYPE"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
+        
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        self.view.bringSubviewToFront(slideMenuButton)
         
         // Urgent...
-        let directDeliveryIcon = UIImageView()
-        directDeliveryIcon.frame = CGRect(x: (3 * x), y: orderTypeNavigationBar.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
+        
+        directDeliveryIcon.frame = CGRect(x: (3 * x), y: (2 * y), width: (2 * x), height: (2 * y))
         if let imageName = deliveryTypeIconArray[0] as? String
         {
             let api = "http://appsapi.mzyoon.com/images/ServiceType/\(imageName)"
             let apiurl = URL(string: api)
             directDeliveryIcon.dowloadFromServer(url: apiurl!)
         }
-        view.addSubview(directDeliveryIcon)
-        
-        let directDeliveryLabel = UILabel()
-        directDeliveryLabel.frame = CGRect(x: directDeliveryIcon.frame.maxX + x, y: orderTypeNavigationBar.frame.maxY + (2 * y), width: view.frame.width, height: (2 * y))
+        selfScreenContents.addSubview(directDeliveryIcon)
+
+        directDeliveryLabel.frame = CGRect(x: directDeliveryIcon.frame.maxX + x, y: (2 * y), width: view.frame.width, height: (2 * y))
         directDeliveryLabel.text = (deliveryTypeEnglishNameArray[0] as! String).uppercased()
         directDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         directDeliveryLabel.textAlignment = .left
         directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        view.addSubview(directDeliveryLabel)
+        selfScreenContents.addSubview(directDeliveryLabel)
         
         let directDeliveryUnderline = UILabel()
         directDeliveryUnderline.frame = CGRect(x: (3 * x), y: directDeliveryLabel.frame.maxY + (y / 2), width: view.frame.width - (6 * x), height: 0.5)
         directDeliveryUnderline.backgroundColor = UIColor.lightGray
-        view.addSubview(directDeliveryUnderline)
+        selfScreenContents.addSubview(directDeliveryUnderline)
         
-        let directDeliveryButton = UIButton()
         directDeliveryButton.frame = CGRect(x: (3 * x), y: directDeliveryUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
         directDeliveryButton.backgroundColor = UIColor.lightGray
         if let imageName = deliveryTypeImageArray[0] as? String
@@ -123,10 +137,9 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         }
         directDeliveryLabel.tag = deliveryTypeIdArray[0] as! Int
         directDeliveryButton.addTarget(self, action: #selector(self.UrgentButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(directDeliveryButton)
+        selfScreenContents.addSubview(directDeliveryButton)
         
         // Appointment..
-        let courierDeliveryIcon = UIImageView()
         courierDeliveryIcon.frame = CGRect(x: (3 * x), y: directDeliveryButton.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
         if let imageName = deliveryTypeIconArray[1] as? String
         {
@@ -135,23 +148,21 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
             print("API FOR 2", apiurl)
             courierDeliveryIcon.dowloadFromServer(url: apiurl!)
         }
-        view.addSubview(courierDeliveryIcon)
+        selfScreenContents.addSubview(courierDeliveryIcon)
         
-        let couriertDeliveryLabel = UILabel()
         couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: directDeliveryButton.frame.maxY + (2 * y), width: view.frame.width - (5 * x), height: (2 * y))
         couriertDeliveryLabel.text = (deliveryTypeEnglishNameArray[1] as! String).uppercased()
         couriertDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         couriertDeliveryLabel.textAlignment = .left
         couriertDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
         couriertDeliveryLabel.adjustsFontSizeToFitWidth = true
-        view.addSubview(couriertDeliveryLabel)
+        selfScreenContents.addSubview(couriertDeliveryLabel)
         
         let courierDeliveryUnderline = UILabel()
         courierDeliveryUnderline.frame = CGRect(x: (3 * x), y: couriertDeliveryLabel.frame.maxY + (y / 2), width: view.frame.width - (6 * x), height: 0.5)
         courierDeliveryUnderline.backgroundColor = UIColor.lightGray
-        view.addSubview(courierDeliveryUnderline)
+        selfScreenContents.addSubview(courierDeliveryUnderline)
         
-        let courierDeliveryButton = UIButton()
         courierDeliveryButton.frame = CGRect(x: (3 * x), y: courierDeliveryUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
         courierDeliveryButton.backgroundColor = UIColor.lightGray
         if let imageName = deliveryTypeImageArray[1] as? String
@@ -167,10 +178,9 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         }
         courierDeliveryButton.tag = deliveryTypeIdArray[1] as! Int
         courierDeliveryButton.addTarget(self, action: #selector(self.AppointmentButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(courierDeliveryButton)
+        selfScreenContents.addSubview(courierDeliveryButton)
         
         // Normal...
-        let companyIcon = UIImageView()
         companyIcon.frame = CGRect(x: (3 * x), y: courierDeliveryButton.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
         if let imageName = deliveryTypeIconArray[2] as? String
         {
@@ -178,22 +188,20 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
             let apiurl = URL(string: api)
             companyIcon.dowloadFromServer(url: apiurl!)
         }
-        view.addSubview(companyIcon)
+        selfScreenContents.addSubview(companyIcon)
         
-        let companyLabel = UILabel()
         companyLabel.frame = CGRect(x: companyIcon.frame.maxX + x, y: courierDeliveryButton.frame.maxY + (2 * y), width: view.frame.width, height: (2 * y))
         companyLabel.text = (deliveryTypeEnglishNameArray[2] as! String).uppercased()
         companyLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         companyLabel.textAlignment = .left
         companyLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        view.addSubview(companyLabel)
+        selfScreenContents.addSubview(companyLabel)
         
         let companyUnderline = UILabel()
         companyUnderline.frame = CGRect(x: (3 * x), y: companyLabel.frame.maxY + (y / 2), width: view.frame.width - (6 * x), height: 0.5)
         companyUnderline.backgroundColor = UIColor.lightGray
-        view.addSubview(companyUnderline)
+        selfScreenContents.addSubview(companyUnderline)
         
-        let companyButton = UIButton()
         companyButton.frame = CGRect(x: (3 * x), y: companyUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
         companyButton.backgroundColor = UIColor.lightGray
         if let imageName = deliveryTypeImageArray[2] as? String
@@ -209,7 +217,35 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         }
         companyButton.tag = deliveryTypeIdArray[2] as! Int
         companyButton.addTarget(self, action: #selector(self.NormalButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(companyButton)
+        selfScreenContents.addSubview(companyButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
+    }
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
