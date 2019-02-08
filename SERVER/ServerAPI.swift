@@ -1376,7 +1376,7 @@ class ServerAPI : NSObject
         }
     }
     
-    func API_GetOrderRequest(RequestId : String , delegate : ServerAPIDelegate)
+    func API_GetOrderRequest(RequestId : Int , delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
