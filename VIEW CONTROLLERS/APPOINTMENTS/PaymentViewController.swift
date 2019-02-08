@@ -9,14 +9,15 @@
 import UIKit
 import TelrSDK
 
-class PaymentViewController: CommonViewController
+class PaymentViewController: CommonViewController,UITextFieldDelegate
 {
     
     let KEY:String = "XZCQ~9wRvD^prrJx"
     let STOREID:String = "21552"
     let EMAIL:String = "rohith.qol@gmail.com"
     
-    var Amount_TF = UITextField()
+    let Amount_TF = UITextField()
+    var TotalAmount:Int!
     
    // var paymentRequest:PaymentRequest?
 
@@ -40,6 +41,8 @@ class PaymentViewController: CommonViewController
       */
         
          PaymentContent()
+        
+         self.addDoneButtonOnKeyboard()
     }
     
 
@@ -71,33 +74,41 @@ class PaymentViewController: CommonViewController
     // Payment View..
         
         let PaymentView = UIView()
-        PaymentView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (10 * y))
+        PaymentView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (10 * y))
         //PaymentView.backgroundColor = UIColor.white
         view.addSubview(PaymentView)
         
         // Order Id Label..
         let AmountLabel = UILabel()
-        AmountLabel.frame = CGRect(x: x, y: y, width: PaymentView.frame.width / 2, height: (3 * x))
-        // AmountLabel.backgroundColor = UIColor.gray
+        AmountLabel.frame = CGRect(x: (2 * x), y: y, width: (8 * x), height: (3 * y))
+       // AmountLabel.backgroundColor = UIColor.gray
         AmountLabel.font = UIFont.boldSystemFont(ofSize: 16)
         AmountLabel.text = "Amount : "
         AmountLabel.font = UIFont(name: "Avenir Next", size: 16)
         AmountLabel.textColor = UIColor.black
+        AmountLabel.textAlignment = .right
         PaymentView.addSubview(AmountLabel)
         
        // let Amount_TF = UITextField()
-        Amount_TF.frame = CGRect(x: AmountLabel.frame.maxX - x, y: y, width: PaymentView.frame.width / 2, height: (3 * x))
-         Amount_TF.backgroundColor = UIColor.lightGray
+        Amount_TF.frame = CGRect(x: AmountLabel.frame.maxX + x, y: y, width: PaymentView.frame.width / 2, height: (3 * y))
+        Amount_TF.backgroundColor = UIColor.groupTableViewBackground
         Amount_TF.font = UIFont.boldSystemFont(ofSize: 16)
-        Amount_TF.text = "50.00"
+        Amount_TF.text = "250.00"
         Amount_TF.font = UIFont(name: "Avenir Next", size: 16)
         Amount_TF.textColor = UIColor.black
+        Amount_TF.adjustsFontSizeToFitWidth = true
+        Amount_TF.keyboardType = .numberPad
+        Amount_TF.clearsOnBeginEditing = true
+        Amount_TF.returnKeyType = .done
+        Amount_TF.delegate = self
+        //Amount_TF.layer.borderWidth = 0.5
+        Amount_TF.textAlignment = .left
         PaymentView.addSubview(Amount_TF)
         
         
         //TrackingButton
         let PayButton = UIButton()
-        PayButton.frame = CGRect(x: (8 * x), y: Amount_TF.frame.maxY + (2 * y), width: (15 * x), height: (2 * y))
+        PayButton.frame = CGRect(x: (8 * x), y: Amount_TF.frame.maxY + (3 * y), width: (15 * x), height: (3 * y))
         PayButton.backgroundColor = UIColor.orange
         PayButton.setTitle("Pay", for: .normal)
         PayButton.setTitleColor(UIColor.white, for: .normal)
@@ -108,7 +119,28 @@ class PaymentViewController: CommonViewController
         PaymentView.addSubview(PayButton)
         
     }
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.Amount_TF.inputAccessoryView = doneToolbar
+    }
     
+    @objc func doneButtonAction()
+    {
+        self.view.endEditing(true)
+    }
     
     @objc func otpBackButtonAction(sender : UIButton)
     {
@@ -117,8 +149,12 @@ class PaymentViewController: CommonViewController
     
     @objc func PayButtonAction(sender : UIButton)
     {
-       // paymentRequest = preparePaymentRequest()
+        TotalAmount = Int(Amount_TF.text!)
+        print("Total Amount:",TotalAmount)
         
+        let TelrScreen = TelrGateWayViewController()
+       // TelrScreen.TotalAmount = TotalAmount
+        self.navigationController?.pushViewController(TelrScreen, animated: true)
     }
    
     /*
