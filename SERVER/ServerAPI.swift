@@ -19,7 +19,8 @@ class ServerAPI : NSObject
     var resultDict:NSDictionary = NSDictionary()
     
     //   var baseURL:String = "http://192.168.0.21/TailorAPI"
-         var baseURL:String = "http://appsapi.mzyoon.com"
+    
+    var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
     
@@ -1208,13 +1209,13 @@ class ServerAPI : NSObject
     
     
     // Order Summary... 19/12/2018..
-    func API_InsertOrderSummary(dressType : Int, CustomerId : Int, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [UIImage], ReferenceImage : [UIImage], OrderCustomizationAttributeId : [Int], OrderCustomizationAttributeImageId : [Int], TailorId : [Int], MeasurementBy : String, CreatedBy : Int, MeasurementName : String, UserMeasurementValuesId : NSArray, UserMeasurementValues : [Float], DeliveryTypeId : Int, units : String, measurementType : Int, delegate : ServerAPIDelegate)
+    func API_InsertOrderSummary(dressType : Int, CustomerId : Int, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [UIImage], ReferenceImage : [UIImage], OrderCustomization : [[String : Any]], TailorId : [Int], MeasurementBy : String, CreatedBy : Int, MeasurementName : String, UserMeasurement : [[String : Any]], DeliveryTypeId : Int, units : String, measurementType : Int, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Order Summary Page")
             
-            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage[0][Image]" : "\(MaterialImage)", "ReferenceImage[0][Image]" : "\(ReferenceImage)" , "OrderCustomization[0][CustomizationAttributeId]" : "\(OrderCustomizationAttributeId)", "OrderCustomization[0][AttributeImageId]" : "\(OrderCustomizationAttributeImageId)", "TailorId[0][Id]" : "\(TailorId)", "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurementValues[0][UserMeasurementId]" : "\(UserMeasurementValuesId)", "UserMeasurementValues[0][Value]" : "\(UserMeasurementValues)", "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurementType" : measurementType] as [String : Any]
+            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage[0][Image]" : "\(MaterialImage)", "ReferenceImage[0][Image]" : "\(ReferenceImage)" , "OrderCustomization" : OrderCustomization, "TailorId[0][Id]" : "\(TailorId)", "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurement" : UserMeasurement, "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurementType" : measurementType] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertOrder", arguments: [baseURL])
             
@@ -2064,6 +2065,123 @@ class ServerAPI : NSObject
                     delegate.API_CALLBACK_Error(errorNumber: 36, errorMessage: "Tracking Details Failed")
                 }
             }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    func API_ReferenceImageUpload(referenceImages : [UIImage], delegate : ServerAPIDelegate)
+    {
+        let date = Date().timeIntervalSince1970
+        print("DATE", date)
+        
+        let dateInt = Int(date)
+        
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Reference Image Upload Page")
+            
+            let parameters = ["ReferenceImages" : referenceImages] as [String : [UIImage]]
+            
+            let urlString:String = String(format: "%@/API/FileUpload/UploadFile", arguments: [baseURL])
+            
+            print("URL STRING FOR OrderType", urlString)
+            
+            let headers: HTTPHeaders = [
+                /* "Authorization": "your_access_token",  in case you need authorization header */
+                "Content-type": "multipart/form-data",
+                "Accept":"*/*"
+            ]
+            
+            upload(multipartFormData: {(multipartFormData:MultipartFormData) in
+                
+                for i in 0..<referenceImages.count
+                {
+                    multipartFormData.append(referenceImages[i].jpegData(compressionQuality: 0.5)!, withName: "ReferenceImages", fileName: "Reference_\(dateInt).png", mimeType: "image/jpeg")
+                };
+                
+//                for (key,value) in parameters
+//                {
+//                    multipartFormData.append(value.jpegData(compressionQuality: 0.5)!, withName: key, fileName: "Profile_\(dateInt).png", mimeType: "image/jpeg")
+//                };
+                
+            }, usingThreshold: UInt64.init(), to:  urlString, method: .post, headers: headers, encodingCompletion: { encodingResult in
+                switch encodingResult
+                {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        debugPrint(response)
+                        print("SUCCESS IMAGE", response)
+                        
+                        if response.result.value != nil{
+                            self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                            delegate.API_CALLBACK_ReferenceImageUpload!(reference: self.resultDict)
+                        }
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                    print("FAILURE IMAGE", encodingError)
+                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "REFERENCE Image Upload Page Failed")
+                }
+            })
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    func API_MaterialImageUpload(materialImages : [String : UIImage], delegate : ServerAPIDelegate)
+    {
+        let date = Date().timeIntervalSince1970
+        print("DATE", date)
+        
+        let dateInt = Int(date)
+        
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Material Image Upload Page", materialImages.count)
+            
+            let parameters = ["MaterialImages" : materialImages] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/FileUpload/UploadFile", arguments: [baseURL])
+            
+            print("URL STRING FOR OrderType", urlString)
+            
+            let headers: HTTPHeaders = [
+                /* "Authorization": "your_access_token",  in case you need authorization header */
+                "Content-type": "multipart/form-data",
+                "Accept":"*/*"
+            ]
+            
+            upload(multipartFormData: {(multipartFormData:MultipartFormData) in
+                
+                for (key,value) in parameters
+                {
+//                    multipartFormData.append((value as AnyObject).jpegData(compressionQuality: 0.5)!, withName: key, fileName: "Profile_\(dateInt).png", mimeType: "image/jpeg")
+                };
+                
+            }, usingThreshold: UInt64.init(), to:  urlString, method: .post, headers: headers, encodingCompletion: { encodingResult in
+                switch encodingResult
+                {
+                case .success(let upload, _, _):
+                    upload.responseJSON { response in
+                        debugPrint(response)
+                        print("SUCCESS IMAGE", response)
+                        
+                        if response.result.value != nil{
+                            self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                            delegate.API_CALLBACK_MaterialImageUpload!(material: self.resultDict)
+                        }
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                    print("FAILURE IMAGE", encodingError)
+                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "Material Image Upload Page Failed")
+                }
+            })
         }
         else
         {

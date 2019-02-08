@@ -13,6 +13,9 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     //ADD MATERIAL PARAMETERS
     let addReferenceView = UIView()
     let addReferenceImage = UIImageView()
+    let addMaterialLabel = UILabel()
+    let addMaterialNextButton = UIButton()
+
     let notifyLabel = UILabel()
     
     //ADD MATERIAL PAGE PARAMETERS
@@ -24,6 +27,11 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     var selectedImage = UIImage()
     var selectedTag = Int()
     
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    
+    let selfScreenContents = UIView()
+
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -45,40 +53,79 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         print("OWN MATERIAL", errorMessage)
     }
     
+    func changeViewToArabicInSelf()
+    {
+        print("BEFORE X", addMaterialNextButton.frame.minX)
+        
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.text = "إضافة صورة المواد"
+        notifyLabel.text = "يرجى إضافة صورة للرجوع اليها"
+        addMaterialLabel.text = "إضافة صورة مرجعية لتوصية خياط"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        addReferenceImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addReferenceScrolView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addMaterialButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        //        addMaterialNextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        print("AFTER X", addMaterialNextButton.frame.minX)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.text = "ADD REFERENCE IMAGE"
+        notifyLabel.text = "Please add Image for reference"
+        addMaterialLabel.text = "Add reference image for tailor refrence"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addReferenceImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        addReferenceScrolView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addMaterialButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        addMaterialNextButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
     func addMaterialContent()
     {
         self.stopActivity()
         
-        
-        addReferenceView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        addReferenceView.backgroundColor = UIColor.white
-        //        view.addSubview(addMaterialView)
-        
-        let addMaterialNavigationBar = UIView()
-        addMaterialNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        addMaterialNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(addMaterialNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        addMaterialNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: addMaterialNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ADD REFERENCE IMAGE"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-        addMaterialNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "ADD REFERENCE IMAGE"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        addReferenceImage.frame = CGRect(x: (3 * x), y: addMaterialNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        self.view.bringSubviewToFront(slideMenuButton)
+        
+        addReferenceImage.frame = CGRect(x: (3 * x), y: (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
         addReferenceImage.layer.borderWidth = 1
         addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
         addReferenceImage.backgroundColor = UIColor.white
-        view.addSubview(addReferenceImage)
+        selfScreenContents.addSubview(addReferenceImage)
         
         if imageArray.count == 0 || imageArray.isEmpty == true
         {
@@ -90,16 +137,15 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
             addReferenceImage.addSubview(notifyLabel)
         }
         
-        let addMaterialLabel = UILabel()
         addMaterialLabel.frame = CGRect(x: (2 * x), y: addReferenceImage.frame.maxY + (2 * x), width: view.frame.width, height: (2 * y))
         addMaterialLabel.text = "Add reference image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-        view.addSubview(addMaterialLabel)
+        selfScreenContents.addSubview(addMaterialLabel)
         
         addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: view.frame.width - (12 * x), height: (12 * y))
-        view.addSubview(addReferenceScrolView)
+        selfScreenContents.addSubview(addReferenceScrolView)
         
         addMaterialButton.frame = CGRect(x: addReferenceScrolView.frame.maxX + x, y: addMaterialLabel.frame.maxY + y, width: (10 * x), height: (10 * y))
         addMaterialButton.backgroundColor = UIColor.blue
@@ -107,9 +153,8 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         addMaterialButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialButton.tag = -1
         addMaterialButton.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(addMaterialButton)
+        selfScreenContents.addSubview(addMaterialButton)
         
-        let addMaterialNextButton = UIButton()
         addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = addMaterialNextButton.frame.height / 2
         addMaterialNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
@@ -118,9 +163,25 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         //        addMaterialNextButton.setTitle("Next", for: .normal)
         //        addMaterialNextButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialNextButton.addTarget(self, action: #selector(self.addMaterialNextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(addMaterialNextButton)
+        selfScreenContents.addSubview(addMaterialNextButton)
         
         //        addMaterial(xPosition: x)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     func addMaterial(xPosition : CGFloat)
@@ -141,6 +202,21 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     
     @objc func addMaterialNextButtonAction(sender : UIButton)
     {
+        let fileAccessing = FileAccess()
+        let file = fileAccessing.configureDirectory()
+        fileAccessing.getImageFromDocumentDirectory(imageName: "Reference")
+        let path = fileAccessing.getDirectoryPath()
+        print("FILE-\(file) AND PATH-\(path)")
+        
+        if imageArray.count != 0
+        {
+            for i in 0..<imageArray.count
+            {
+                fileAccessing.saveImageDocumentDirectory(image: imageArray[i], imageName: "reference\(i)", imageType: "Reference")
+            }
+        }
+       
+        
         let addressScreen = AddressViewController()
         addressScreen.viewController = "reference"
         self.navigationController?.pushViewController(addressScreen, animated: true)
@@ -150,11 +226,33 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     {
         UserDefaults.standard.set(1, forKey: "screenValue")
         
-        let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
-        cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
-        cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
-        cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(cameraAlert, animated: true, completion: nil)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+                cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+                cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+                cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self.present(cameraAlert, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                let cameraAlert = UIAlertController(title: "محزر", message: "اختر صورة من", preferredStyle: .alert)
+                cameraAlert.addAction(UIAlertAction(title: "الة تصوير", style: .default, handler: cameraAlertAction(action:)))
+                cameraAlert.addAction(UIAlertAction(title: "صالة عرض", style: .default, handler: galleryAlertAction(action:)))
+                cameraAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+                self.present(cameraAlert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+            cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+            cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+            cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(cameraAlert, animated: true, completion: nil)
+        }
     }
     
     func cameraAlertAction(action : UIAlertAction)

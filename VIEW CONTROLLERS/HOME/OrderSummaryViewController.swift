@@ -645,13 +645,32 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         print("MEASUREMENT TYPE", measurementType)
         print("DRESS TYPE", dressId)
         
+        let orderCustom = OrderCustomizationToJson()
         
-        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: 1, MaterialImage: [], ReferenceImage: [], OrderCustomizationAttributeId: custom3KeyInt, OrderCustomizationAttributeImageId: custom3ValuesInt, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurementValuesId: measurementId, UserMeasurementValues: measurementValues, DeliveryTypeId: deliveryTypeId, units: "cm", measurementType: measurementType, delegate: self)
+        let orderCustomization = orderCustom.makeRequest(attId: custom3KeyInt, imgId: custom3ValuesInt)
+        print("FINALIZED ORDER", orderCustomization)
+        
+        let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
+        print("FINALIZED USER MEASUREMENT", userMeasurement)
+        
+        let fileAccessing = FileAccess()
+        
+        let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material")
+        
+        let convertImage = orderCustom.referenceImage(image: [getImage])
+        
+        self.serviceCall.API_ReferenceImageUpload(referenceImages: [getImage], delegate: self)
+        
+//        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: 1, MaterialImage: [], ReferenceImage: [], OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: "cm", measurementType: measurementType, delegate: self)
         
         let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(randomInt)", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
         //        self.present(alert, animated: true, completion: nil)
         
+    }
+    
+    func API_CALLBACK_ReferenceImageUpload(reference: NSDictionary) {
+        print("REFERENCE IMAGE UPLOAD", reference)
     }
     
     func navigateToHomeScreen(action : UIAlertAction)

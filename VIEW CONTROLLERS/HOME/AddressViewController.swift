@@ -398,7 +398,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
                 addressSelectButton.addSubview(getNameLabel)
                 
                 let addressLabel = UILabel()
-                addressLabel.frame = CGRect(x: x, y: nameLabel.frame.maxY + y, width: (6 * x), height: (2 * x))
+                addressLabel.frame = CGRect(x: x, y: nameLabel.frame.maxY + y, width: (7 * x), height: (2 * x))
                 addressLabel.text = "Address"
                 addressLabel.textColor = UIColor.black
                 addressLabel.textAlignment = .left
