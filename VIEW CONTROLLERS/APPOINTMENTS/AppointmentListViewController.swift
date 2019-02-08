@@ -38,6 +38,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
     var TailorNameInEnglishArray = NSArray()
     var ImageArray = NSArray()
     
+     let emptyLabel = UILabel()
     
     override func viewDidLoad()
     {
@@ -45,18 +46,16 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
 
         // Do any additional setup after loading the view.
      
-    if(BuyerId != nil)
+    
+    if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
     {
-        UserDefaults.standard.set(BuyerId, forKey: "userId")
-        print("Buyer ID:",BuyerId)
-        self.serviceCall.API_GetAppointmentList(BuyerId:BuyerId, delegate:self)
+         self.serviceCall.API_GetAppointmentList(BuyerId:userId, delegate:self)
     }
-    else
+    else if let userId = UserDefaults.standard.value(forKey: "userId") as? String
     {
-        self.serviceCall.API_GetAppointmentList(BuyerId:1, delegate:self)
+         self.serviceCall.API_GetAppointmentList(BuyerId:Int(userId)!, delegate:self)
     }
-       // AppointmentListContent()
-    }
+  }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
@@ -69,34 +68,43 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         
         if ResponseMsg == "Success"
         {
-            let result = getAppointmentList.object(forKey: "Result") as! NSArray
-            print(result)
+            let Result = getAppointmentList.object(forKey: "Result") as! NSArray
+            print(Result)
      
-          if(result.count>0)
-          {
-            ApprovedTailorIdArray = result.value(forKey: "ApprovedTailorId") as! NSArray
+            if Result.count == 0 || Result == nil
+            {
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.text = "You don't have any order request"
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                view.addSubview(emptyLabel)
+            }
+            
+            ApprovedTailorIdArray = Result.value(forKey: "ApprovedTailorId") as! NSArray
             print("ApprovedTailorId:",ApprovedTailorIdArray)
             
-            CreatedOnArray = result.value(forKey: "CreatedOn") as! NSArray
+            CreatedOnArray = Result.value(forKey: "CreatedOn") as! NSArray
             print("CreatedOn:",CreatedOnArray)
             
-            IdArray = result.value(forKey: "Id") as! NSArray
+            IdArray = Result.value(forKey: "Id") as! NSArray
             print("Id:",IdArray)
             
-            ImageArray = result.value(forKey: "Image") as! NSArray
+            ImageArray = Result.value(forKey: "Image") as! NSArray
             print("Image:",ImageArray)
             
-            NameInEnglishArray = result.value(forKey: "NameInEnglish") as! NSArray
+            NameInEnglishArray = Result.value(forKey: "NameInEnglish") as! NSArray
             print("NameInEnglish:",NameInEnglishArray)
             
-            ShopNameInEnglishArray = result.value(forKey: "ShopNameInEnglish") as! NSArray
+            ShopNameInEnglishArray = Result.value(forKey: "ShopNameInEnglish") as! NSArray
             print("ShopNameInEnglish:",ShopNameInEnglishArray)
             
-            TailorNameInEnglishArray = result.value(forKey: "TailorNameInEnglish") as! NSArray
+            TailorNameInEnglishArray = Result.value(forKey: "TailorNameInEnglish") as! NSArray
             print("TailorNameInEnglish:",TailorNameInEnglishArray)
             
-            self.AppointmentListContent()
-         }
+           // self.AppointmentListContent()
+         
         }
         else if ResponseMsg == "Failure"
         {
@@ -104,8 +112,17 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             
             ErrorStr = Result
             DeviceError()
+            
+            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+            emptyLabel.text = "You don't have any order request"
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            view.addSubview(emptyLabel)
         }
         
+       self.AppointmentListContent()
     }
     func DeviceError()
     {
@@ -252,7 +269,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             OR_IdLabel.frame = CGRect(x: O_IdLabel.frame.maxX - x, y: O_DateLabel.frame.maxY, width: AppointmentViewButton.frame.width / 2.5, height: (2 * y))
             let orderNum : Int = IdArray[i] as! Int
             OR_IdLabel.text = "\(orderNum)"
-            OR_IdLabel.tag = IdArray[i] as! Int
+            AppointmentViewButton.tag = IdArray[i] as! Int
             OR_IdLabel.textColor = UIColor.black
             OR_IdLabel.textAlignment = .left
             OR_IdLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)

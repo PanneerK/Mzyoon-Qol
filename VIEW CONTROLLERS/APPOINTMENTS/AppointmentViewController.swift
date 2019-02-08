@@ -76,6 +76,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     var Material_rejectReason_TF = UITextField()
     var Measure_rejectReason_TF = UITextField()
     
+     let emptyLabel = UILabel()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -216,8 +218,18 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             let Result = getAppointmentMaterial.object(forKey: "Result") as! NSArray
             print("Result", Result)
-            if(Result.count > 0)
+            
+            if Result.count == 0 || Result == nil
             {
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.text = "You don't have any Appointment request"
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                view.addSubview(emptyLabel)
+            }
+            
             MaterialBodyImage = Result.value(forKey:"BodyImage") as! NSArray
             print("Body Image:",MaterialBodyImage)
             
@@ -236,11 +248,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MaterialStatus = Result.value(forKey:"status") as! NSArray
             print("status:",MaterialStatus)
             
-           }
-           else
-           {
-                
-           }
+          
             
            // AppointmentContent()
             
@@ -255,6 +263,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
             DeviceError()
             
+            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+            emptyLabel.text = "You don't have any order request"
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            view.addSubview(emptyLabel)
+            
         }
     }
     
@@ -267,8 +283,17 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = getAppointmentMeasure.object(forKey: "Result") as! NSArray
             print("Result", Result)
            
-          if(Result.count > 0)
-          {
+            if Result.count == 0 || Result == nil
+            {
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.text = "You don't have any order request"
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                view.addSubview(emptyLabel)
+            }
+            
             MeasurementBodyImage = Result.value(forKey:"BodyImage") as! NSArray
             print("Body Image:",MeasurementBodyImage)
             
@@ -287,15 +312,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasureStatus = Result.value(forKey:"Status") as! NSArray
             print("status:",MeasureStatus)
             
-            
-            AppointmentContent()
-        }
-        else
-        {
-           
-            AppointmentContent()
-        }
-            
+       
         }
         else if ResponseMsg == "Failure"
         {
@@ -307,7 +324,17 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
             DeviceError()
             
+            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+            emptyLabel.text = "You don't have any order request"
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            view.addSubview(emptyLabel)
+            
         }
+        
+        AppointmentContent()
     }
     
     func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial: NSDictionary)
@@ -360,7 +387,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     func proceedAlertAction(action : UIAlertAction)
     {
-        let HomeScreen = HomeViewController()
+        let HomeScreen = PaymentViewController()
         self.navigationController?.pushViewController(HomeScreen, animated: true)
     }
     
@@ -563,8 +590,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // FromDate Icon..
         let FromDateMatrl_Icon = UIImageView()
         FromDateMatrl_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
-        FromDateMatrl_Icon.backgroundColor = UIColor.white
-        FromDateMatrl_Icon.image = UIImage(named: "OrderDate")
+        //FromDateMatrl_Icon.backgroundColor = UIColor.white
+        FromDateMatrl_Icon.image = UIImage(named: "OrderDate_WH")
         FromDateView.addSubview(FromDateMatrl_Icon)
         
         //let From_MaterialType_TF = UITextField()
@@ -582,8 +609,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // Edit icon..
         let FromDateEditMatrl_Icon = UIImageView()
         FromDateEditMatrl_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
-        FromDateEditMatrl_Icon.backgroundColor = UIColor.white
-        FromDateEditMatrl_Icon.image = UIImage(named: "OrderDate")
+        //FromDateEditMatrl_Icon.backgroundColor = UIColor.white
+        FromDateEditMatrl_Icon.image = UIImage(named: "OrderDate_WH")
         //FromDateView.addSubview(FromDateEditMatrl_Icon)
  
         
@@ -598,8 +625,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // ToDAteIcon..
         let ToDateMatrl_Icon = UIImageView()
         ToDateMatrl_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
-        ToDateMatrl_Icon.backgroundColor = UIColor.white
-        ToDateMatrl_Icon.image = UIImage(named: "OrderDate")
+        //ToDateMatrl_Icon.backgroundColor = UIColor.white
+        ToDateMatrl_Icon.image = UIImage(named: "OrderDate_WH")
          ToDateView.addSubview(ToDateMatrl_Icon)
         
        // let TO_MaterialType_TF = UITextField()
@@ -617,8 +644,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // Edit icon..
         let ToDateEditMatrl_Icon = UIImageView()
         ToDateEditMatrl_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
-        ToDateEditMatrl_Icon.backgroundColor = UIColor.white
-        ToDateEditMatrl_Icon.image = UIImage(named: "OrderDate")
+        //ToDateEditMatrl_Icon.backgroundColor = UIColor.white
+        ToDateEditMatrl_Icon.image = UIImage(named: "OrderDate_WH")
         // ToDateView.addSubview(ToDateEditMatrl_Icon)
         
         
@@ -644,8 +671,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // TimeMatrl_Icon..
         let TimeMatrl_Icon = UIImageView()
         TimeMatrl_Icon.frame = CGRect(x: 2, y: (y/2) - 4, width:(2 * x), height: (2 * y))
-        TimeMatrl_Icon.backgroundColor = UIColor.white
-        TimeMatrl_Icon.image = UIImage(named: "OrderDate")
+        //TimeMatrl_Icon.backgroundColor = UIColor.white
+        TimeMatrl_Icon.image = UIImage(named: "OrderTime_WH")
         Material_TimeSlotView.addSubview(TimeMatrl_Icon)
         
         // let SLOT_MaterialType_TF.frame = UITextField()
@@ -848,8 +875,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // FromDate Icon..
         let FromDateMeasure_Icon = UIImageView()
         FromDateMeasure_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
-        FromDateMeasure_Icon.backgroundColor = UIColor.white
-        FromDateMeasure_Icon.image = UIImage(named: "OrderDate")
+        //FromDateMeasure_Icon.backgroundColor = UIColor.white
+        FromDateMeasure_Icon.image = UIImage(named: "OrderDate_WH")
         Measure_FromDateView.addSubview(FromDateMeasure_Icon)
         
         //let From_MeasurementType_TF = UITextField()
@@ -867,8 +894,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // Edit icon..
         let FromDateEditMeasure_Icon = UIImageView()
         FromDateEditMeasure_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
-        FromDateEditMeasure_Icon.backgroundColor = UIColor.white
-        FromDateEditMeasure_Icon.image = UIImage(named: "OrderDate")
+        //FromDateEditMeasure_Icon.backgroundColor = UIColor.white
+        FromDateEditMeasure_Icon.image = UIImage(named: "OrderDate_WH")
         //Measure_FromDateView.addSubview(FromDateEditMeasure_Icon)
         
         
@@ -883,8 +910,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // ToDAteIcon..
         let ToDateMeasure_Icon = UIImageView()
         ToDateMeasure_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
-        ToDateMeasure_Icon.backgroundColor = UIColor.white
-        ToDateMeasure_Icon.image = UIImage(named: "OrderDate")
+        //ToDateMeasure_Icon.backgroundColor = UIColor.white
+        ToDateMeasure_Icon.image = UIImage(named: "OrderDate_WH")
         Measure_ToDateView.addSubview(ToDateMeasure_Icon)
         
         // let TO_MeasurementType_TF = UITextField()
@@ -902,8 +929,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // Edit icon..
         let ToDateEditMeasure_Icon = UIImageView()
         ToDateEditMeasure_Icon.frame = CGRect(x: TO_MeasurementType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
-        ToDateEditMeasure_Icon.backgroundColor = UIColor.white
-        ToDateEditMeasure_Icon.image = UIImage(named: "OrderDate")
+        //ToDateEditMeasure_Icon.backgroundColor = UIColor.white
+        ToDateEditMeasure_Icon.image = UIImage(named: "OrderDate_WH")
         // Measure_ToDateView.addSubview(ToDateEditMeasure_Icon)
         
         
@@ -926,13 +953,13 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_TimeSlotView.frame = CGRect(x: Slot_MeasureTypeLBL.frame.maxX, y: Measure_FromDateView.frame.maxY + y, width: (24.5 * x), height: (2.5 * y))
         Measure_TimeSlotView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         MeasurementTypeView.addSubview(Measure_TimeSlotView)
-        print("width value :",TailorImageView.frame.width / 2)
+        //print("width value :",TailorImageView.frame.width / 2)
         
         // TimeMatrl_Icon..
         let TimeMeasure_Icon = UIImageView()
         TimeMeasure_Icon.frame = CGRect(x: 2, y: (y/2) - 4, width:(2 * x), height: (2 * y))
-        TimeMeasure_Icon.backgroundColor = UIColor.white
-        TimeMeasure_Icon.image = UIImage(named: "OrderDate")
+        //TimeMeasure_Icon.backgroundColor = UIColor.white
+        TimeMeasure_Icon.image = UIImage(named: "OrderTime_WH")
          Measure_TimeSlotView.addSubview(TimeMeasure_Icon)
         
         // let SLOT_MeasurementType_TF = UITextField()
@@ -1513,6 +1540,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             Mat_OrderID = MaterialOrderID[0] as? Int
         }
+        else
+        {
+            Mat_OrderID = 0
+        }
         
         let FMaterial : String = self.From_MaterialType_TF.text!
         let TMaterial : String = self.TO_MaterialType_TF.text!
@@ -1537,6 +1568,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if(MeasurementOrderID.count > 0)
         {
            Msr_OrderID = MeasurementOrderID[0] as? Int
+        }
+        else
+        {
+            Msr_OrderID = 0
         }
        
         let FMeasure : String = self.From_MeasurementType_TF.text!
