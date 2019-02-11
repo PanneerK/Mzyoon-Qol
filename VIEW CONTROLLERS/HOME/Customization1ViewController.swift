@@ -360,7 +360,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         seasonalScrollView.contentSize.width = x1 + (3 * x)
-        self.stopActivity()
+        
     }
     
     func industryContents()
@@ -481,6 +481,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         brandScrollView.contentSize.width = x2 + (3 * x)
+        
+        self.stopActivity()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

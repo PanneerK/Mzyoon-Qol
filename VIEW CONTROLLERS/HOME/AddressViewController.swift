@@ -13,7 +13,7 @@ import GoogleMaps
 import GooglePlaces
 
 
-class AddressViewController: UIViewController, ServerAPIDelegate
+class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDelegate
 {
     
     var x = CGFloat()
@@ -57,6 +57,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     var activityView = UIActivityIndicatorView()
     
     var selectedAddressString = String()
+    var selectedCoordinate  = CLLocationCoordinate2D()
     
     override func viewDidLoad()
     {
@@ -471,6 +472,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         addNewAddressButton.setTitleColor(UIColor.white, for: .normal)
         addNewAddressButton.addTarget(self, action: #selector(self.addNewAddressButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addNewAddressButton)
+        
+        self.stopActivity()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -487,8 +490,18 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     
     @objc func editButtonAction(sender : UIButton)
     {
-        let selectedCoordinate = CLLocationCoordinate2D(latitude: Lattitude[sender.tag] as! CLLocationDegrees, longitude: Longitude[sender.tag] as! CLLocationDegrees)
+        selectedCoordinate = CLLocationCoordinate2D(latitude: Lattitude[sender.tag] as! CLLocationDegrees, longitude: Longitude[sender.tag] as! CLLocationDegrees)
+        
+        let mapViews = GMSMapView()
+        mapViews.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        mapViews.delegate = self
+        view.addSubview(mapViews)
+        
         reverseGeocodeCoordinate(selectedCoordinate)
+        
+        print("FULL ARRAY", Lattitude, Longitude)
+        
+        print("ARRAY", Lattitude[sender.tag], Longitude[sender.tag])
         
         print("PRINT SELECTION", FirstName[sender.tag], selectedCoordinate)
         let address2Screen = Address2ViewController()
@@ -506,7 +519,23 @@ class AddressViewController: UIViewController, ServerAPIDelegate
         address2Screen.checkDefault = isDefault[sender.tag] as! Int
         address2Screen.addressString = selectedAddressString
         
-        self.navigationController?.pushViewController(address2Screen, animated: true)
+//        self.navigationController?.pushViewController(address2Screen, animated: true)
+        
+        
+        let geoCoder = GMSGeocoder()
+        geoCoder.reverseGeocodeCoordinate(selectedCoordinate) { response, error in
+            
+            guard let address = response?.firstResult(), let lines = address.lines else {
+                print("FAILED TO RTURN ADDRESS")
+                return
+            }
+            
+            print("INBUILD FUNCTION", address)
+        }
+        
+        let editScreen = LocationEditViewController()
+        editScreen.tailorCoordinate = selectedCoordinate
+        self.navigationController?.pushViewController(editScreen, animated: true)
     }
     
     @objc func deleteButtonAction(sender : UIButton)
@@ -525,6 +554,11 @@ class AddressViewController: UIViewController, ServerAPIDelegate
     {
         let locationScreen = LocationViewController()
         self.navigationController?.pushViewController(locationScreen, animated: true)
+    }
+    
+    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition)
+    {
+        reverseGeocodeCoordinate(selectedCoordinate)
     }
     
     private func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D)
@@ -555,8 +589,6 @@ class AddressViewController: UIViewController, ServerAPIDelegate
             {
                 self.view.layoutIfNeeded()
             }
-            
-            self.stopActivity()
         }
     }
     

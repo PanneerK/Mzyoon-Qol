@@ -20,6 +20,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     var addressString = String()
     var splittedAddress = [String]()
+    var getLocation = CLLocationCoordinate2D()
     
     var getEditId = Int()
     var checkDefault = Int()
@@ -271,7 +272,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     func apiSuccessResponseAlertOkAction(action : UIAlertAction)
     {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
-        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true)
+        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
     }
     
     func API_CALLBACK_CountryCode(countryCodes: NSDictionary) {
@@ -1122,8 +1123,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let shippingStr = shippingNotesTextField.text!
         let CountryCode = mobileCountryCodeLabel.text!
         let PhoneNum = mobileTextField.text!
-        let latitude = currentLocation.coordinate.latitude
-        let longitude = currentLocation.coordinate.longitude
+        let latitude = getLocation.latitude
+        let longitude = getLocation.longitude
+        
+        print("GET OF LAT AND LONG", latitude, longitude)
         
         print("FIRST NAME", FirstNameStr)
         print(lastNameStr)

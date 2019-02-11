@@ -717,7 +717,7 @@ class ServerAPI : NSObject
         {
             print("Server Reached - Address Page")
             
-            let parameters = ["BuyerId" : "\(BuyerId)", "FirstName" : "\(FirstName)", "LastName" : LastName, "CountryId" : CountryId, "StateId" : StateId, "Area" : Area, "Floor" : Floor, "LandMark" : LandMark, "LocationType" : LocationType, "ShippingNotes" : ShippingNotes, "IsDefault" : IsDefault, "CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "Longitude" : Longitude, "Latitude" : Latitude] as [String : Any]
+            let parameters = ["BuyerId" : "\(BuyerId)", "FirstName" : "\(FirstName)", "LastName" : LastName, "CountryId" : CountryId, "StateId" : StateId, "Area" : Area, "Floor" : Floor, "LandMark" : LandMark, "LocationType" : LocationType, "ShippingNotes" : ShippingNotes, "IsDefault" : IsDefault, "CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "Longitude" : Longitude, "Lattitude" : Latitude] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Shop/InsertBuyerAddress", arguments: [baseURL])
             
@@ -750,7 +750,7 @@ class ServerAPI : NSObject
         {
             print("Server Reached - Address Page")
             
-            let parameters = ["Id" : Id, "BuyerId" : BuyerId, "FirstName" : FirstName, "LastName" : LastName, "CountryId" : CountryId, "StateId" : StateId, "Area" : Area, "Floor" : Floor, "LandMark" : LandMark, "LocationType" : LocationType, "ShippingNotes" : ShippingNotes, "IsDefault" : IsDefault, "CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "Longitude" : Longitude, "Latitude" : Latitude] as [String : Any]
+            let parameters = ["Id" : Id, "BuyerId" : BuyerId, "FirstName" : FirstName, "LastName" : LastName, "CountryId" : CountryId, "StateId" : StateId, "Area" : Area, "Floor" : Floor, "LandMark" : LandMark, "LocationType" : LocationType, "ShippingNotes" : ShippingNotes, "IsDefault" : IsDefault, "CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "Longitude" : Longitude, "Lattitude" : Latitude] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Shop/UpdateBuyerAddress", arguments: [baseURL])
             
