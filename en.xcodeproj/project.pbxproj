@@ -23,6 +23,7 @@
 		DA0DB15021FA123300C20299 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14721FA117400C20299 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
+		DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8F54D12211ACCA00CCA501 /* XMLReader.m */; };
 		DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */; };
 		DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */; };
 		DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */; };
@@ -130,6 +131,9 @@
 		DA0DB14921FA117900C20299 /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AEXML.framework; sourceTree = "<group>"; };
 		DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotationListViewController.swift; sourceTree = "<group>"; };
 		DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
+		DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mzyoon-Bridging-Header.h"; sourceTree = "<group>"; };
+		DA8F54D02211ACCA00CCA501 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
+		DA8F54D12211ACCA00CCA501 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
 		DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentViewController.swift; sourceTree = "<group>"; };
 		DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
@@ -294,9 +298,12 @@
 			isa = PBXGroup;
 			children = (
 				FD2ADFB72175A5480033025B /* AppDelegate.swift */,
+				DA8F54D02211ACCA00CCA501 /* XMLReader.h */,
+				DA8F54D12211ACCA00CCA501 /* XMLReader.m */,
 				FD2ADFBE2175A5500033025B /* Assets.xcassets */,
 				FD2ADFC02175A5500033025B /* LaunchScreen.storyboard */,
 				FD2ADFC32175A5500033025B /* Info.plist */,
+				DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */,
 			);
 			path = Mzyoon;
 			sourceTree = "<group>";
@@ -507,6 +514,7 @@
 				TargetAttributes = {
 					FD2ADFB32175A5480033025B = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1010;
 					};
 					FD2ADFC72175A5500033025B = {
 						CreatedOnToolsVersion = 10.0;
@@ -682,6 +690,7 @@
 				FD60980021A2812B00DCCF58 /* OrderSummaryViewController.swift in Sources */,
 				FD2ADFE62175A5AB0033025B /* LoginViewController.swift in Sources */,
 				DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */,
+				DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */,
 				FD71D257219E994100FFC067 /* CommonViewController.swift in Sources */,
 				FDC9BB902186F6E1003BA5C9 /* OrdersViewController.swift in Sources */,
 				FD71D264219F1F2200FFC067 /* Customization2ViewController.swift in Sources */,
@@ -875,6 +884,7 @@
 			baseConfigurationReference = DDB0F57EB0056E4AF113C9BB /* Pods-Mzyoon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V4W4WB96C8;
 				ENABLE_BITCODE = NO;
@@ -890,6 +900,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qolsofts.Mzyoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Mzyoon/Mzyoon-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -901,6 +913,7 @@
 			baseConfigurationReference = A5457EC0C6335A24A15B04CE /* Pods-Mzyoon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V4W4WB96C8;
 				ENABLE_BITCODE = NO;
@@ -916,6 +929,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.qolsofts.Mzyoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Mzyoon/Mzyoon-Bridging-Header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
