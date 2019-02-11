@@ -62,6 +62,29 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         serviceCall.API_Gender(delegate: self)
     }*/
     
+    func showActivityIndicator()
+    {
+        let activeView1 = UIView()
+        activeView1.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView1.backgroundColor = UIColor.black.withAlphaComponent(0.25)
+        view.addSubview(activeView1)
+        
+        self.view.bringSubviewToFront(activeView1)
+        
+        let activityView1 = UIActivityIndicatorView()
+        activityView1.frame = CGRect(x: ((activeView1.frame.width - 50) / 2), y: ((activeView1.frame.height - 50) / 2), width: 50, height: 50)
+        activityView1.style = .whiteLarge
+        activityView1.color = UIColor.white
+        activityView1.startAnimating()
+        activeView1.addSubview(activityView1)
+    }
+    
+    func hideActivityIndicator()
+    {
+        activeView.removeFromSuperview()
+        activityView.stopAnimating()
+    }
+    
     
     func DeviceError()
     {

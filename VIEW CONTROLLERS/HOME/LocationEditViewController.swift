@@ -1,9 +1,9 @@
 //
-//  LocationViewController.swift
+//  LocationEditViewController.swift
 //  Mzyoon
 //
-//  Created by QOL on 19/11/18.
-//  Copyright © 2018 QOL. All rights reserved.
+//  Created by QOL on 11/02/19.
+//  Copyright © 2019 QOL. All rights reserved.
 //
 
 import UIKit
@@ -12,11 +12,12 @@ import CoreLocation
 import GoogleMaps
 import GooglePlaces
 
-class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate
+class LocationEditViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate
 {
     var x = CGFloat()
     var y = CGFloat()
     
+    var tailorCoordinate = CLLocationCoordinate2D()
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation!
     
@@ -24,49 +25,15 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     let marker = GMSMarker()
     
     let markerImageView = UIImageView()
-    
     let addressLabel = UILabel()
-    
-    var activeView = UIView()
-    var activityView = UIActivityIndicatorView()
-    
-    var getTraggedPosition = CLLocationCoordinate2D()
+
     
     override func viewDidLoad()
     {
-        x = 10 / 375 * 100
-        x = x * view.frame.width / 100
-        
-        y = 10 / 667 * 100
-        y = y * view.frame.height / 100
-        
-        locationManager.requestAlwaysAuthorization()
-        
         locationContents()
-        
-        
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-    }
-    
-    func activityContents()
-    {
-        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
-        mapView.addSubview(activeView)
-        
-        activityView.frame = CGRect(x: ((activeView.frame.width - 50) / 2), y: ((activeView.frame.height - 50) / 2), width: 50, height: 50)
-        activityView.style = .whiteLarge
-        activityView.color = UIColor.white
-        activityView.startAnimating()
-        activeView.addSubview(activityView)
-    }
-    
-    func stopActivity()
-    {
-        activeView.removeFromSuperview()
-        activityView.stopAnimating()
     }
     
     func locationContents()
@@ -116,15 +83,27 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             print("Current Loc:",currentLocation.coordinate)
         }
         
-        //        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
+        let camera = GMSCameraPosition(target: tailorCoordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
+        
+        print("tailorCoordinate", tailorCoordinate)
         
         mapView.frame = CGRect(x: 0, y: locationNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (11.4 * y))
-        //        mapView.camera = camera
+        mapView.camera = camera
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
         
+        markerImageView.frame = CGRect(x: ((view.frame.width - (6 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (6 * x), height: (5 * y))
+        markerImageView.image = UIImage(named: "marker")
+        view.addSubview(markerImageView)
+        
+        
+        marker.position = tailorCoordinate
+        marker.iconView = markerImageView
+        marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+        marker.map = mapView
+
         addressLabel.frame = CGRect(x: x, y: y, width: view.frame.width - (2 * x), height: (5 * y))
         addressLabel.layer.borderWidth = 1
         addressLabel.layer.borderColor = UIColor.lightGray.cgColor
@@ -141,16 +120,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         addAddressButton.setTitleColor(UIColor.white, for: .normal)
         addAddressButton.addTarget(self, action: #selector(self.addAddressButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addAddressButton)
-        
-        markerImageView.frame = CGRect(x: ((view.frame.width - (6 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (6 * x), height: (5 * y))
-        markerImageView.image = UIImage(named: "marker")
-        view.addSubview(markerImageView)
-        
-        //        marker.position = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-        //        marker.iconView = markerImageView
-        //        marker.map = mapView
-        
-        activityContents()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -163,11 +132,10 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     {
         let address2Screen = Address2ViewController()
         address2Screen.addressString = addressLabel.text!
-        address2Screen.getLocation = getTraggedPosition
         self.navigationController?.pushViewController(address2Screen, animated: true)
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    /*func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
         print("LOCATIONS", locations[0].coordinate.latitude, locations[0].coordinate.longitude)
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
@@ -197,7 +165,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         
         locationManager.stopUpdatingLocation()
         
-    }
+    }*/
     
     //    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
     //        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
@@ -211,7 +179,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         //        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
         print("LAT OF - \(position.target.latitude), LONG OF - \(position.target.longitude)")
         reverseGeocodeCoordinate(position.target)
-        getTraggedPosition = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
     }
     
     private func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D)
@@ -223,13 +190,13 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         // 2
         geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
             
-            print("RESPONSE IN LOCATION", response)
+            print("RESPONSE IN LOCATION EDIT PAGE", response)
             guard let address = response?.firstResult(), let lines = address.lines else {
                 return
             }
             
             // 3
-            print("GET CURRENT ADDRESS", lines.joined(separator: "\n"))
+            print("GET CURRENT ADDRESS  EDIT PAGE", lines.joined(separator: "\n"))
             
             self.addressLabel.text = lines.joined(separator: "\n")
             
@@ -240,20 +207,18 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             {
                 self.view.layoutIfNeeded()
             }
-            
-            self.stopActivity()
         }
     }
     
-    
+
     /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }

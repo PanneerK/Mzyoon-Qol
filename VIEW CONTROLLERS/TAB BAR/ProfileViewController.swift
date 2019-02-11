@@ -314,10 +314,11 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 {
                     userId = ProfId
                 }
-                else
+                else if let ProfId = UserDefaults.standard.value(forKey: "userId") as? Int
                 {
-                    
+                    userId = "\(ProfId)"
                 }
+            
                 let EmailID = email.text
                 let DobStr = dob.text
                 let ModifyStr = "user"
