@@ -56,7 +56,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
     
-    var selectedAddressString = String()
+    var selectedAddressString = [String]()
     var selectedCoordinate  = CLLocationCoordinate2D()
     
     override func viewDidLoad()
@@ -439,6 +439,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                     defaultAddressLabel.text = "Default Address"
                     defaultAddressLabel.textColor = UIColor.black
                     defaultAddressLabel.textAlignment = .left
+                    defaultAddressLabel.adjustsFontSizeToFitWidth = true
                     defaultAddressLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
                     
                     let defaultSwitch = UISwitch()
@@ -490,37 +491,13 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     @objc func editButtonAction(sender : UIButton)
     {
+        activityContents()
         selectedCoordinate = CLLocationCoordinate2D(latitude: Lattitude[sender.tag] as! CLLocationDegrees, longitude: Longitude[sender.tag] as! CLLocationDegrees)
         
         let mapViews = GMSMapView()
         mapViews.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         mapViews.delegate = self
         view.addSubview(mapViews)
-        
-        reverseGeocodeCoordinate(selectedCoordinate)
-        
-        print("FULL ARRAY", Lattitude, Longitude)
-        
-        print("ARRAY", Lattitude[sender.tag], Longitude[sender.tag])
-        
-        print("PRINT SELECTION", FirstName[sender.tag], selectedCoordinate)
-        let address2Screen = Address2ViewController()
-        
-        address2Screen.firstNameEnglishTextField.text = FirstName[sender.tag] as? String
-        address2Screen.secondNameEnglishTextField.text = ""
-        address2Screen.locationTypeTextField.text = LocationType[sender.tag] as? String
-        address2Screen.areaNameTextField.text = areaArray[sender.tag] as? String
-        address2Screen.floorTextField.text = Floor[sender.tag] as? String
-        address2Screen.landMarkTextField.text = LandMark[sender.tag] as? String
-        address2Screen.mobileTextField.text = PhoneNo[sender.tag] as? String
-        address2Screen.mobileCountryCodeLabel.text = CountryCode[sender.tag] as? String
-        address2Screen.shippingNotesTextField.text = ShippingNotes[sender.tag] as? String
-        address2Screen.getEditId = Id[sender.tag] as! Int
-        address2Screen.checkDefault = isDefault[sender.tag] as! Int
-        address2Screen.addressString = selectedAddressString
-        
-//        self.navigationController?.pushViewController(address2Screen, animated: true)
-        
         
         let geoCoder = GMSGeocoder()
         geoCoder.reverseGeocodeCoordinate(selectedCoordinate) { response, error in
@@ -531,11 +508,29 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             }
             
             print("INBUILD FUNCTION", address)
+            print("SUCCESS OF ADDRESS FOR LATITUDE", lines)
+            
+            self.selectedAddressString = lines
+            
+            
+            self.stopActivity()
+            let address2Screen = Address2ViewController()
+            
+            address2Screen.firstNameEnglishTextField.text = self.FirstName[sender.tag] as? String
+            address2Screen.secondNameEnglishTextField.text = ""
+            address2Screen.locationTypeTextField.text = self.LocationType[sender.tag] as? String
+            address2Screen.areaNameTextField.text = self.areaArray[sender.tag] as? String
+            address2Screen.floorTextField.text = self.Floor[sender.tag] as? String
+            address2Screen.landMarkTextField.text = self.LandMark[sender.tag] as? String
+            address2Screen.mobileTextField.text = self.PhoneNo[sender.tag] as? String
+            address2Screen.mobileCountryCodeLabel.text = self.CountryCode[sender.tag] as? String
+            address2Screen.shippingNotesTextField.text = self.ShippingNotes[sender.tag] as? String
+            address2Screen.getEditId = self.Id[sender.tag] as! Int
+            address2Screen.checkDefault = self.isDefault[sender.tag] as! Int
+            address2Screen.addressString = self.selectedAddressString
+            address2Screen.screenTag = 1
+            self.navigationController?.pushViewController(address2Screen, animated: true)
         }
-        
-        let editScreen = LocationEditViewController()
-        editScreen.tailorCoordinate = selectedCoordinate
-        self.navigationController?.pushViewController(editScreen, animated: true)
     }
     
     @objc func deleteButtonAction(sender : UIButton)
@@ -558,7 +553,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition)
     {
-        reverseGeocodeCoordinate(selectedCoordinate)
+        
     }
     
     private func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D)
@@ -580,7 +575,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             // 3
             print("GET CURRENT ADDRESS", lines.joined(separator: "\n"))
             
-            self.selectedAddressString = lines.joined(separator: "\n")
+            self.selectedAddressString = [lines.joined(separator: "\n")]
             
             //  self.addressLabel.text = lines.joined(separator: "\n")
             

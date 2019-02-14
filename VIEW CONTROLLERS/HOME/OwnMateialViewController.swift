@@ -36,8 +36,15 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     var selectedImage = UIImage()
     var selectedTag = Int()
     
+    let fileAccessing = FileAccess()
+    
+    var getMaterialImageNameArray = [String]()
+    
     override func viewDidLoad()
     {
+        fileAccessing.deleteDirectory(imageType: "Mzyoon")
+        fileAccessing.configureDirectory()
+        
         navigationBar.isHidden = true
         
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
@@ -153,7 +160,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         selfScreenContents.addSubview(addReferenceScrolView)
         
         addMaterialButton.frame = CGRect(x: addReferenceScrolView.frame.maxX + x, y: addMaterialLabel.frame.maxY + y, width: (10 * x), height: (10 * y))
-        addMaterialButton.backgroundColor = UIColor.blue
+        addMaterialButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addMaterialButton.setTitle("+", for: .normal)
         addMaterialButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialButton.tag = -1
@@ -214,35 +221,70 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         }
         else
         {
-            let fileAccessing = FileAccess()
-            let file = fileAccessing.configureDirectory()
-            fileAccessing.getImageFromDocumentDirectory(imageName: "Material")
-            let path = fileAccessing.getDirectoryPath()
-            print("FILE-\(file) AND PATH-\(path)")
-            
             for i in 0..<imageArray.count
             {
-                fileAccessing.saveImageDocumentDirectory(image: imageArray[i], imageName: "material\(i)", imageType: "Material")
+                print("BEFORE APPENDING", imageArray[i])
+                fileAccessing.saveImageDocumentDirectory(image: imageArray[i], imageName: "Material\(i)", imageType: "Mzyoon")
             }
             
-            let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material")
             
-            
-            let returnImage = ConversionToJson()
-            
-            let images = returnImage.imageRequest(imageName: [getImage])
-            
-            print("RETURNED IMAGES", images)
+//            let returnImage = ConversionToJson()
+//
+//            let images = returnImage.imageRequest(imageName: [getImage])
+//
+//            print("RETURNED IMAGES", images)
 
-//            self.serviceCall.API_MaterialImageUpload(materialImages: [getImage], delegate: self)
+            
+            UserDefaults.standard.set(imageArray.count, forKey: "materialImageArray")
+            
+            var getImageArray = [UIImage]()
+
+            if let materialImages = UserDefaults.standard.value(forKey: "materialImageArray") as? Int
+            {
+                print("MATERIAL IMAGES COUNT", materialImages)
+                
+                for i in 0..<materialImages
+                {
+                    let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material\(i)")
+                    getImageArray.append(getImage)
+                }
+            }
+            
+//            self.serviceCall.API_MaterialImageUpload(materialImages: getImageArray, delegate: self)
 
             let custom3Screen = Customization3ViewController()
             self.navigationController?.pushViewController(custom3Screen, animated: true)
         }
     }
     
-    func API_CALLBACK_ReferenceImageUpload(reference: NSDictionary) {
-        print("REFERENCE IMAGE UPLOAD", reference)
+    func API_CALLBACK_MaterialImageUpload(material: NSDictionary) {
+        print("MATERIAL IMAGE UPLOAD", material)
+        
+        let ResponseMsg = material.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = material.object(forKey: "Result") as! NSArray
+            
+            if Result.count != 0
+            {
+                for i in 0..<Result.count
+                {
+                    if let file1 = Result[i] as? String
+                    {
+                        let splitted = file1.split(separator: "\\")
+                        print("SPLITTED", splitted)
+                        
+                        let imageName = splitted.last
+                        print("IMAGE NAME", imageName!)
+                        
+                        getMaterialImageNameArray.append((imageName?.description)!)
+                    }
+                }
+            }
+        }
+        
+        print("CALL BACK IMAGE NAME", getMaterialImageNameArray)
     }
     
     @objc func addMaterialButtonAction(sender : UIButton)
@@ -332,6 +374,8 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             self.addReferenceImage.image = pickedImage
             imageArray.append(pickedImage)
             notifyLabel.isHidden = true
+            
+            print("PATH OF PICKED IMAGE", fileAccessing.getDirectoryPath())
             addMaterialSubImage()
         }
         self.dismiss(animated: true, completion: nil)

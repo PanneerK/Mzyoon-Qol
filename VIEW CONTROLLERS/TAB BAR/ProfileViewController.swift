@@ -158,63 +158,81 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             let result = userProfile.object(forKey: "Result") as! NSArray
             print("RESULT IN EXISTING", result)
             
-            let name = result.value(forKey: "Name") as! NSArray
-            print("NAME", name)
-            
-            if let getName = name[0] as? String
+            if result.count != 0
             {
-                UserDefaults.standard.set(getName, forKey: "userName")
-            }
-            
-            
-            let dob = result.value(forKey: "Dob") as! NSArray
-            print("DOB", dob)
-            
-            if dob.count != 0
-            {
-                if let date = dob[0] as? String
+                let name = result.value(forKey: "Name") as! NSArray
+                print("NAME", name)
+                
+                if let getName = name[0] as? String
                 {
-                    getDOB = String(date.prefix(10))
+                    UserDefaults.standard.set(getName, forKey: "userName")
                 }
-            }
-            
-            
-            //            UserDefaults.standard.set(dob[0], forKey: "dob")
-            
-            let mobileNumber = result.value(forKey: "PhoneNumber") as! NSArray
-            print("MOBILE NUMBER", mobileNumber)
-            
-            UserDefaults.standard.set(mobileNumber[0], forKey: "mobileNumber")
-            
-            let email = result.value(forKey: "Email") as! NSArray
-            print("EMAIL", email)
-            
-            if email.count != 0
-            {
-                if let mail = email[0] as? String
+                
+                
+                let dob = result.value(forKey: "Dob") as! NSArray
+                print("DOB", dob)
+                
+                if dob.count != 0
                 {
-                    getEmail = mail
+                    if let date = dob[0] as? String
+                    {
+                        getDOB = String(date.prefix(10))
+                    }
                 }
-            }
-            
-            let gender = result.value(forKey: "Gender") as! NSArray
-            print("Gender", gender)
-            
-            if gender.count != 0
-            {
-                if let gen = gender[0] as? String
+                
+                
+                //            UserDefaults.standard.set(dob[0], forKey: "dob")
+                
+                let mobileNumber = result.value(forKey: "PhoneNumber") as! NSArray
+                print("MOBILE NUMBER", mobileNumber)
+                
+                UserDefaults.standard.set(mobileNumber[0], forKey: "mobileNumber")
+                
+                let email = result.value(forKey: "Email") as! NSArray
+                print("EMAIL", email)
+                
+                if email.count != 0
                 {
-                    getGender = gen
-                    GenderStr = getGender
+                    if let mail = email[0] as? String
+                    {
+                        getEmail = mail
+                    }
                 }
+                
+                let gender = result.value(forKey: "Gender") as! NSArray
+                print("Gender", gender)
+                
+                if gender.count != 0
+                {
+                    if let gen = gender[0] as? String
+                    {
+                        getGender = gen
+                        GenderStr = getGender
+                    }
+                }
+                
+                imageName = result.value(forKey: "ProfilePicture") as! NSArray
+                
+                //            UserDefaults.standard.set(email[0], forKey: "email")
+                
+                screenContents()
             }
-            
-            imageName = result.value(forKey: "ProfilePicture") as! NSArray
-            
-            //            UserDefaults.standard.set(email[0], forKey: "email")
+            else
+            {
+                self.navigationController?.popViewController(animated: true)
+                
+                let alertWindow = UIWindow(frame: UIScreen.main.bounds)
+                alertWindow.rootViewController = UIViewController()
+                alertWindow.windowLevel = UIWindow.Level.alert + 1
+                
+                alertWindow.makeKeyAndVisible()
+                
+                let alert = UIAlertController(title: "Alert", message: "User details doesn't exist", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                
+                alertWindow.rootViewController?.present(alert, animated: true, completion: nil)
+            }
         }
-        
-        screenContents()
     }
     
     
@@ -273,6 +291,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 
                 let imageName = splitted.last
                 print("IMAGE NAME", imageName!)
+                
+                UserDefaults.standard.set(userName.text!, forKey: "userName")
                 
                 if let profId = UserDefaults.standard.value(forKey: "userId") as? String
                 {
@@ -392,7 +412,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         userImage.layer.masksToBounds = true
         if let imageName = imageName[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/Images/BuyerImages/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/Images/BuyerImages/\(imageName)"
 
             print("SMALL ICON", api)
             let apiurl = URL(string: api)

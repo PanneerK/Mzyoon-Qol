@@ -32,15 +32,20 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     
     let selfScreenContents = UIView()
 
+    let fileAccessing = FileAccess()
+
+    
     override func viewDidLoad()
     {
+        fileAccessing.configureDirectory()
+
         navigationBar.isHidden = true
         
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
             // Your code with delay
             self.addMaterialContent()
         }
@@ -148,7 +153,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         selfScreenContents.addSubview(addReferenceScrolView)
         
         addMaterialButton.frame = CGRect(x: addReferenceScrolView.frame.maxX + x, y: addMaterialLabel.frame.maxY + y, width: (10 * x), height: (10 * y))
-        addMaterialButton.backgroundColor = UIColor.blue
+        addMaterialButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addMaterialButton.setTitle("+", for: .normal)
         addMaterialButton.setTitleColor(UIColor.white, for: .normal)
         addMaterialButton.tag = -1
@@ -212,11 +217,12 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         {
             for i in 0..<imageArray.count
             {
-                fileAccessing.saveImageDocumentDirectory(image: imageArray[i], imageName: "reference\(i)", imageType: "Reference")
+                fileAccessing.saveImageDocumentDirectory(image: imageArray[i], imageName: "Reference\(i)", imageType: "Mzyoon")
             }
         }
        
-        
+        UserDefaults.standard.set(imageArray.count, forKey: "referenceImageArray")
+
         let addressScreen = AddressViewController()
         addressScreen.viewController = "reference"
         self.navigationController?.pushViewController(addressScreen, animated: true)

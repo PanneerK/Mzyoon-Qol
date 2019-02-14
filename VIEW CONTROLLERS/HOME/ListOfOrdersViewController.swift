@@ -298,16 +298,16 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
              if let imageName = PendImageArray[i] as? String
              {
-              let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
-            // let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
-             print("SMALL ICON", api)
-             let apiurl = URL(string: api)
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/DressSubType/\(imageName)"
+                print("SMALL ICON", api)
+                let apiurl = URL(string: api)
              
-             let dummyImageView = UIImageView()
-             dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
-             dummyImageView.dowloadFromServer(url: apiurl!)
-             dummyImageView.tag = -1
-             tailorImageView.addSubview(dummyImageView)
+                let dummyImageView = UIImageView()
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
+                dummyImageView.dowloadFromServer(url: apiurl!)
+                dummyImageView.tag = -1
+                tailorImageView.addSubview(dummyImageView)
              }
             
             PendingViewButton.addSubview(tailorImageView)
@@ -494,16 +494,16 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
              if let imageName = DelivImageArray[i] as? String
              {
-             let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
-            // let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
-             print("SMALL ICON", api)
-             let apiurl = URL(string: api)
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/DressSubType/\(imageName)"
+                print("SMALL ICON", api)
+                let apiurl = URL(string: api)
              
-             let dummyImageView = UIImageView()
-             dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
-             dummyImageView.dowloadFromServer(url: apiurl!)
-             dummyImageView.tag = -1
-             tailorImageView.addSubview(dummyImageView)
+                let dummyImageView = UIImageView()
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
+                dummyImageView.dowloadFromServer(url: apiurl!)
+                dummyImageView.tag = -1
+                tailorImageView.addSubview(dummyImageView)
              }
             
             

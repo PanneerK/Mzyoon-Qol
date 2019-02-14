@@ -218,8 +218,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                 dressTypeButton.frame = CGRect(x: x1, y: y1, width: (15.25 * x), height: (16 * y))
                 y1 = dressTypeButton.frame.maxY + y
             }
-            dressTypeButton.layer.borderWidth =  1
-            dressTypeButton.backgroundColor = UIColor.lightGray
+            dressTypeButton.backgroundColor = UIColor.white
             dressTypeButton.tag = getIdArray[i] as! Int
             dressTypeButton.addTarget(self, action: #selector(self.dressTypeButtonAction(sender:)), for: .touchUpInside)
             dressSubTypeScrollView.addSubview(dressTypeButton)
@@ -247,7 +246,8 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             //            dressTypeImageView.image = convertedDressImageArray[i]
             if let imageName = getImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/DressSubType/\(imageName)"
                 print("SUB TYPE IMAGES", api)
                 let apiurl = URL(string: api)
                 if apiurl != nil

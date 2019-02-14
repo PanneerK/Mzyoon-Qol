@@ -111,6 +111,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             for i in 0..<customAttEnglishNameArray.count
             {
+                print("selectedCustomIntArray.keys[i]", selectedCustomIntArray.keys.count)
+                
                 if let textString = customAttEnglishNameArray[i] as? String
                 {
                     selectedCustomStringArray[textString] = ""
@@ -121,6 +123,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                     selectedCustomIntArray["\(idString)"] = ""
                 }
             }
+                        
+            print("SORTED DICTIONARY", selectedCustomIntArray.sorted(by: <))
             
             selectedCustomString = customAttEnglishNameArray[0] as! String
             selectedCustomInt = customAttIdArray[0] as! Int
@@ -281,7 +285,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedImageView.backgroundColor = UIColor.white
         if let imageName = customImagesArray[1] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/Customazation3/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -298,7 +303,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedFrontButton.backgroundColor = UIColor.white
         if let imageName = customImagesArray[1] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/Customazation3/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -324,7 +330,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedBackButton.backgroundColor = UIColor.white
         if let imageName = customImagesArray[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/Customazation3/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -440,7 +447,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             buttonImage.backgroundColor = UIColor.white
             if let imageName = subCustomAttImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Customazation3/\(imageName)"
                 let apiurl = URL(string: api)
                 print("IMAGE OF DOWN", apiurl!)
                 if apiurl != nil
@@ -492,7 +500,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         
         if let imageName = customImagesArray[sender.tag] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/Customazation3/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/Customazation3/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             if apiurl != nil

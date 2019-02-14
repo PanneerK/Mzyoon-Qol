@@ -30,6 +30,30 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     var yPos = CGFloat()
     
+    let fileAccessing = FileAccess()
+    let orderCustom = OrderCustomizationToJson()
+
+    var getMaterialImageNameArray = [String]()
+    var getReferenceImageNameArray = [String]()
+    
+    //INSERT ORDER SUMMARY INPUT PARAMETERS
+    var userId = Int()
+    var dressId = Int()
+    var addressId = Int()
+    var patternId = Int()
+    var orderId = Int()
+    var measurementType = Int()
+    var deliveryTypeId = Int()
+    var measurementIdInt = Int()
+
+    var measurementBy = String()
+    var measurementName = String()
+    var measurementId = NSArray()
+    var measurementValues = [Float]()
+    var units = "CM"
+    var orderCustomization = [[String: Int]]()
+    var tailorId = [[String: Any]]()
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -328,7 +352,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         
         let tailorView = UIView()
-        tailorView.frame = CGRect(x: (3 * x), y: tailorListHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (6 * x * CGFloat(selectedTailors.count)))
+        tailorView.frame = CGRect(x: (3 * x), y: tailorListHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (5 * x * CGFloat(selectedTailors.count)))
         tailorView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(tailorView)
         
@@ -422,6 +446,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             
             getCustomizationOfAll.append(getSeason)
         }
+        else
+        {
+            getCustomizationOfAll.append("")
+        }
         
         if let industry = UserDefaults.standard.value(forKey: "industry") as? [String]
         {
@@ -431,6 +459,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             }
             
             getCustomizationOfAll.append(getIndustry)
+        }
+        else
+        {
+            getCustomizationOfAll.append("")
         }
         
         if let brand = UserDefaults.standard.value(forKey: "brand") as? [String]
@@ -442,6 +474,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             
             getCustomizationOfAll.append(getBrand)
         }
+        else
+        {
+            getCustomizationOfAll.append("")
+        }
         
         if let material = UserDefaults.standard.value(forKey: "material") as? [String]
         {
@@ -452,6 +488,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             
             getCustomizationOfAll.append(getMaterial)
         }
+        else
+        {
+            getCustomizationOfAll.append("")
+        }
         
         if let color = UserDefaults.standard.value(forKey: "color") as? [String]
         {
@@ -461,6 +501,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             }
             
             getCustomizationOfAll.append(getColor)
+        }
+        else
+        {
+            getCustomizationOfAll.append("")
         }
         
         print("WELCOME TO WORLD", UserDefaults.standard.value(forKey: "pattern"))
@@ -506,7 +550,14 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let getDressTypeLabels = UILabel()
             getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
-            getDressTypeLabels.text = getCustomizationOfAll[i]
+            if let custom = getCustomizationOfAll[i] as? String
+            {
+                getDressTypeLabels.text = custom
+            }
+            else
+            {
+                getDressTypeLabels.text = ""
+            }
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
@@ -527,20 +578,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     @objc func submitButtonAction(sender : UIButton)
     {
-        var userId = Int()
-        var dressId = Int()
-        var orderId = Int()
-        var addressId = Int()
-        var patternId = Int()
-        var measurementBy = String()
-        var measurementName = String()
-        var measurementId = NSArray()
-        var measurementValues = [Float]()
-        var tailorId = [Int]()
         var custom3KeyInt = [Int]()
         var custom3ValuesInt = [Int]()
-        var measurementType = Int()
-        var deliveryTypeId = Int()
         
         if let delId = UserDefaults.standard.value(forKey: "serviceType") as? Int
         {
@@ -582,12 +621,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             measurementBy = measurementby
         }
         
-        if let partsId = UserDefaults.standard.value(forKey: "measurementId") as? NSArray
-        {
-            measurementId = partsId
-        }
-        
-        if measurementBy == "User"
+        if measurementBy == "Customer"
         {
             if let name = UserDefaults.standard.value(forKey: "measurementName") as? String
             {
@@ -599,6 +633,15 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             measurementName = ""
         }
         
+        if let id = UserDefaults.standard.value(forKey: "measurementId") as? String
+        {
+            measurementIdInt = Int(id)!
+        }
+        else
+        {
+            measurementIdInt = -1
+        }
+        
         if let patId = UserDefaults.standard.value(forKey: "patternId") as? Int
         {
             patternId = patId
@@ -608,6 +651,16 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             patternId = 0
         }
         
+        if let unit = UserDefaults.standard.value(forKey: "units") as? String
+        {
+            units = unit
+        }
+        
+        if let partsId = UserDefaults.standard.value(forKey: "measurementId") as? NSArray
+        {
+            measurementId = partsId
+        }
+        
         if let dictValues = UserDefaults.standard.value(forKey: "measurementValues") as? [Float]
         {
             measurementValues = dictValues
@@ -615,7 +668,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let taiId = UserDefaults.standard.value(forKey: "selectedTailorsId") as? [Int]
         {
-            tailorId = taiId
+            tailorId = orderCustom.tailorId(id: taiId)
         }
         
         if let custom3 = UserDefaults.standard.value(forKey: "custom3Id") as? [String : String]
@@ -643,34 +696,189 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         print("ADDRESS ID", addressId)
         print("MEASUREMENT NAME", measurementName)
         print("MEASUREMENT TYPE", measurementType)
+        print("MEASUREMENT ID", measurementIdInt)
         print("DRESS TYPE", dressId)
         
-        let orderCustom = OrderCustomizationToJson()
-        
-        let orderCustomization = orderCustom.makeRequest(attId: custom3KeyInt, imgId: custom3ValuesInt)
+        orderCustomization = orderCustom.makeRequest(attId: custom3KeyInt, imgId: custom3ValuesInt)
         print("FINALIZED ORDER", orderCustomization)
-        
-        let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
-        print("FINALIZED USER MEASUREMENT", userMeasurement)
         
         let fileAccessing = FileAccess()
         
         let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material")
         
+        print("GET IMAGE IN ORDER SUMMARY", fileAccessing.getDirectoryPath())
+        
         let convertImage = orderCustom.referenceImage(image: [getImage])
         
-        self.serviceCall.API_ReferenceImageUpload(referenceImages: [getImage], delegate: self)
+        var getImageArray = [UIImage]()
         
-//        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: 1, MaterialImage: [], ReferenceImage: [], OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: "cm", measurementType: measurementType, delegate: self)
+       
         
-        let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(randomInt)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
-        //        self.present(alert, animated: true, completion: nil)
+        print("GET IMAGE ARRAY COUNT", getImageArray.count)
         
+        if let orderType = UserDefaults.standard.value(forKey: "orderType") as? Int
+        {
+            if orderType == 1 || orderType == 2
+            {
+                if let materialImages = UserDefaults.standard.value(forKey: "materialImageArray") as? Int
+                {
+                    print("MATERIAL IMAGES COUNT", materialImages)
+                    
+                    for i in 0..<materialImages
+                    {
+                        let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material\(i)")
+                        getImageArray.append(getImage)
+                    }
+                }
+                
+                self.serviceCall.API_MaterialImageUpload(materialImages: getImageArray, delegate: self)
+
+            }
+            else if orderType == 3
+            {
+                if let materialImages = UserDefaults.standard.value(forKey: "referenceImageArray") as? Int
+                {
+                    print("MATERIAL IMAGES COUNT", materialImages)
+                    
+                    if materialImages != 0
+                    {
+                        for i in 0..<materialImages
+                        {
+                            let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Reference\(i)")
+                            getImageArray.append(getImage)
+                        }
+                        
+                        serviceCall.API_ReferenceImageUpload(referenceImages: getImageArray, delegate: self)
+                    }
+                    else
+                    {
+                        let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
+                        print("FINALIZED USER MEASUREMENT", userMeasurement)
+                        
+//                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
+                        
+                        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
+                        
+                    }
+                }
+            }
+        }
+    }
+    
+    func API_CALLBACK_MaterialImageUpload(material: NSDictionary) {
+        print("MATERIAL IMAGE UPLOAD", material)
+        
+        let ResponseMsg = material.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = material.object(forKey: "Result") as! NSArray
+            
+            if Result.count != 0
+            {
+                for i in 0..<Result.count
+                {
+                    if let file1 = Result[i] as? String
+                    {
+                        let splitted = file1.split(separator: "\\")
+                        print("SPLITTED", splitted)
+                        
+                        let imageName = splitted.last
+                        print("IMAGE NAME", imageName!)
+                        
+                        getMaterialImageNameArray.append((imageName?.description)!)
+                    }
+                }
+                
+                var getImageArray = [UIImage]()
+                
+                if let materialImages = UserDefaults.standard.value(forKey: "referenceImageArray") as? Int
+                {
+                    print("MATERIAL IMAGES COUNT", materialImages)
+                    
+                    for i in 0..<materialImages
+                    {
+                        let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Reference\(i)")
+                        getImageArray.append(getImage)
+                    }
+                    
+                    serviceCall.API_ReferenceImageUpload(referenceImages: getImageArray, delegate: self)
+                }
+            }
+        }
+        else
+        {
+            
+        }
+        
+        print("CALL BACK IMAGE NAME FOR MATERIAL", getMaterialImageNameArray)
     }
     
     func API_CALLBACK_ReferenceImageUpload(reference: NSDictionary) {
         print("REFERENCE IMAGE UPLOAD", reference)
+        
+        let ResponseMsg = reference.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = reference.object(forKey: "Result") as! NSArray
+            
+            if Result.count != 0
+            {
+                for i in 0..<Result.count
+                {
+                    if let file1 = Result[i] as? String
+                    {
+                        let splitted = file1.split(separator: "\\")
+                        print("SPLITTED", splitted)
+                        
+                        let imageName = splitted.last
+                        print("IMAGE NAME", imageName!)
+                        
+                        getReferenceImageNameArray.append((imageName?.description)!)
+                    }
+                }
+                
+                let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
+                print("FINALIZED USER MEASUREMENT", userMeasurement)
+                
+                self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
+
+                
+//                self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
+            }
+        }
+        else
+        {
+            
+        }
+        
+        print("CALL BACK IMAGE NAME FOR REFERENCE", getReferenceImageNameArray)
+    }
+    
+    func API_CALLBACK_InsertUserMeasurement(insUsrMeasurementVal: NSDictionary)
+    {
+        let ResponseMsg = insUsrMeasurementVal.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = insUsrMeasurementVal.object(forKey: "Result") as! Int
+            print("Result Value :", Result)
+            
+            let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
+            print("FINALIZED USER MEASUREMENT", userMeasurement)
+            
+            self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = insUsrMeasurementVal.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "InsertUserMeasurementValues"
+            ErrorStr = Result
+            DeviceError()
+        }
     }
     
     func navigateToHomeScreen(action : UIAlertAction)

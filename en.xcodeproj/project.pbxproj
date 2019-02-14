@@ -33,7 +33,6 @@
 		FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */; };
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
-		FD103E2A2211948400DEF489 /* LocationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD103E292211948400DEF489 /* LocationEditViewController.swift */; };
 		FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */; };
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
@@ -143,7 +142,6 @@
 		FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
-		FD103E292211948400DEF489 /* LocationEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationEditViewController.swift; sourceTree = "<group>"; };
 		FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCustomizationToJson.swift; sourceTree = "<group>"; };
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
@@ -379,7 +377,6 @@
 				FD6097FF21A2812B00DCCF58 /* OrderSummaryViewController.swift */,
 				FD60980121A2B27600DCCF58 /* AddressViewController.swift */,
 				FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */,
-				FD103E292211948400DEF489 /* LocationEditViewController.swift */,
 				FD60980321A2CC8A00DCCF58 /* LocationViewController.swift */,
 				FD53A3D421A809450097B4D9 /* TailorListViewController.swift */,
 				FD63D6D221AEC2910024AE96 /* TailorListTableViewCell.swift */,
@@ -669,7 +666,6 @@
 				FD71D26A219F2EFE00FFC067 /* ReferenceImageViewController.swift in Sources */,
 				FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */,
 				FDFF309321898928002A1A27 /* SlideViewController.swift in Sources */,
-				FD103E2A2211948400DEF489 /* LocationEditViewController.swift in Sources */,
 				FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */,
 				DA06035C21FB427C0081A96F /* ReviewsViewController.swift in Sources */,
 				FD3B7C1B219D4F0C00CD8198 /* NewOrderViewController.swift in Sources */,

@@ -123,7 +123,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
                 
                 if let imageName = orderTypeHeaderImage[i] as? String
                 {
-                    let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/OrderType/\(imageName)"
                     print("BIG ICON", api)
 
                     let apiurl = URL(string: api)
@@ -152,7 +153,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
                 
                 if let imageName = orderTypeBodyImage[i] as? String
                 {
-                    let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/OrderType/\(imageName)"
                     print("SMALL ICON", api)
                     let apiurl = URL(string: api)
                     
@@ -284,7 +286,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
 //        directDeliveryIcon.image = convertedOrderHeaderImageArray[0]
         if let imageName = orderTypeHeaderImage[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
             if apiurl != nil
             {
@@ -308,7 +311,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         directDeliveryButton.frame = CGRect(x: (3 * x), y: directDeliveryUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
         if let imageName = orderTypeBodyImage[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/OrderType/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -329,7 +333,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
 //        courierDeliveryIcon.image = convertedOrderHeaderImageArray[1]
         if let imageName = orderTypeHeaderImage[1] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
             if apiurl != nil
             {
@@ -364,7 +369,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         courierDeliveryButton.frame = CGRect(x: (3 * x), y: courierDeliveryUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
         if let imageName = orderTypeBodyImage[1] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/OrderType/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -385,7 +391,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
 //        companyIcon.image = convertedOrderHeaderImageArray[2]
         if let imageName = orderTypeHeaderImage[2] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
             if apiurl != nil
             {
@@ -410,7 +417,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
 //        companyButton.backgroundColor = UIColor.magenta
         if let imageName = orderTypeBodyImage[2] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/OrderType/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             

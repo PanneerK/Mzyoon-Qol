@@ -503,7 +503,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
       {
         if let imageName = MaterailHeaderImage[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
             if apiurl != nil{
                 courierDeliveryIcon.dowloadFromServer(url: apiurl!)
@@ -541,7 +542,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
       {
         if let imageName = MaterialBodyImage[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/OrderType/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -793,7 +795,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         /*
          if let imageName = orderTypeHeaderImage[1] as? String
          {
-         let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+         let urlString = serviceCall.baseURL
+         let api = "\(urlString)/images/OrderType/\(imageName)"
          let apiurl = URL(string: api)
          courierDeliveryIcon.dowloadFromServer(url: apiurl!)
          }
@@ -829,7 +832,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             if let imageName = MeasurementBodyImage[0] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/OrderType/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/OrderType/\(imageName)"
                 print("SMALL ICON", api)
                 let apiurl = URL(string: api)
                 

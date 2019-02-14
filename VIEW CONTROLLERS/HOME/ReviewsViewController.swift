@@ -396,7 +396,8 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
       /*
         if let imageName = ImageArray[i] as? String
         {
-            // let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
+         // let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/DressSubType/\(imageName)"
             let api = "http://192.168.0.21/TailorAPI/Images/BuyerImages/buyer.jpg"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)

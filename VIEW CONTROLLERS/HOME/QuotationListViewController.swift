@@ -12,7 +12,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
 {
     
     
-   let ServiceCall = ServerAPI()
+   let serviceCall = ServerAPI()
     
     let quotationListNavigationBar = UIView()
     let tailorListScrollView = UIScrollView()
@@ -48,7 +48,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         
          print("request Order ID :",OrderId)
         
-          self.ServiceCall.API_GetQuotationList(OrderId: OrderId, delegate: self)
+          self.serviceCall.API_GetQuotationList(OrderId: OrderId, delegate: self)
         //  self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
         
        // quotationListContent()
@@ -64,7 +64,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
-        self.ServiceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
@@ -210,8 +210,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
           
             if let imageName = ShopImageArray[i] as? String
             {
-                 let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
-               // let api = "http://192.168.0.21/TailorAPI/Images/TailorImages/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Tailorimages/\(imageName)"
                 print("SMALL ICON", api)
                 let apiurl = URL(string: api)
                 

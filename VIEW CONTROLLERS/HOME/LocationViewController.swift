@@ -162,8 +162,9 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     @objc func addAddressButtonAction(sender : UIButton)
     {
         let address2Screen = Address2ViewController()
-        address2Screen.addressString = addressLabel.text!
+        address2Screen.addressString = [addressLabel.text!]
         address2Screen.getLocation = getTraggedPosition
+        address2Screen.screenTag = 2
         self.navigationController?.pushViewController(address2Screen, animated: true)
     }
     

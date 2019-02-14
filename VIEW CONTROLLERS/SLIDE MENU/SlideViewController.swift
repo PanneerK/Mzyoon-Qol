@@ -20,6 +20,8 @@ class SlideViewController: UIViewController
     var window: UIWindow?
     
     let userImage = UIImageView()
+    let userName = UILabel()
+
     
     override func viewDidLoad()
     {
@@ -35,7 +37,6 @@ class SlideViewController: UIViewController
         
         view.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 
-        screenContents()
 //        screenContentsInArabic()
         super.viewDidLoad()
         
@@ -43,6 +44,7 @@ class SlideViewController: UIViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        screenContents()
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -85,7 +87,6 @@ class SlideViewController: UIViewController
         userImage.image = FileHandler().getImageFromDocumentDirectory()
         view.addSubview(userImage)
         
-        let userName = UILabel()
         userName.frame = CGRect(x: 0, y: userImage.frame.maxY + y, width: slideViewWidth, height: (3 * y))
         if let name = UserDefaults.standard.value(forKey: "userName") as? String
         {

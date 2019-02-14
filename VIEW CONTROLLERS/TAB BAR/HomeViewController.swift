@@ -90,20 +90,24 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             let result = userProfile.object(forKey: "Result") as! NSArray
             print("RESULT IN EXISTING", result)
             
-            imageName = result.value(forKey: "ProfilePicture") as! NSArray
-            
-            if let imageName = imageName[0] as? String
+            if result.count != 0
             {
-                let api = "http://appsapi.mzyoon.com/Images/BuyerImages/\(imageName)"
+                imageName = result.value(forKey: "ProfilePicture") as! NSArray
                 
-                print("SMALL ICON", api)
-                let apiurl = URL(string: api)
-                
-                if apiurl != nil
+                if let imageName = imageName[0] as? String
                 {
-//                    userImage.dowloadFromServer(url: apiurl!)
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/Images/BuyerImages/\(imageName)"
                     
-                    downloadImage(from: apiurl!)
+                    print("SMALL ICON", api)
+                    let apiurl = URL(string: api)
+                    
+                    if apiurl != nil
+                    {
+                        //                    userImage.dowloadFromServer(url: apiurl!)
+                        
+                        downloadImage(from: apiurl!)
+                    }
                 }
             }
         }
@@ -120,8 +124,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             print(response?.suggestedFilename ?? url.lastPathComponent)
             print("Download Finished")
             DispatchQueue.main.async() {
-//                self.userImage.image = UIImage(data: data)
-//                FileHandler().saveImageDocumentDirectory(image: UIImage(data: data)!)
+                self.userImage.image = UIImage(data: data)
+                FileHandler().saveImageDocumentDirectory(image: UIImage(data: data)!)
             }
         }
     }
