@@ -11,7 +11,7 @@ import TelrSDK
 import NVActivityIndicatorView
 import WebKit
 
-class TelrGateWayViewController: UIViewController,WKUIDelegate
+class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDelegate
 {
     /*
      var TotalAmount:Int!
@@ -104,13 +104,16 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate
         
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        view.addSubview(activeView)
+       // view.addSubview(activeView)
         
-        activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
-        activityIndicator.color = UIColor.white
+        activityIndicator.frame = CGRect(x: ((view.frame.width - (5 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicator.color = UIColor.black.withAlphaComponent(0.5)
         activityIndicator.style = .whiteLarge
         activityIndicator.startAnimating()
-        activeView.addSubview(activityIndicator)
+        view.addSubview(activityIndicator)
+        
+        TelrWebView.uiDelegate = self
+        TelrWebView.navigationDelegate = self
         
       DispatchQueue.main.async (execute: { () -> Void in
         /*
@@ -123,7 +126,7 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate
          self.activityIndicator.startAnimating()
          self.activityIndicator.hidesWhenStopped = true
          let request = URLRequest(url: URL(string: self.TelrStartUrl)!)
-         self.TelrWebView.load(request)
+        self.TelrWebView.load(request)
         
          })
         
@@ -146,6 +149,33 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate
         }
     }
     
+ /*
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!)
+    {
+        
+        webView.evaluateJavaScript("navigator.userAgent", completionHandler: { result, error in
+            if let userAgent = result as? String
+            {
+                print(userAgent)
+            }
+        })
+    }
+   */
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void)
+    {
+        if navigationAction.navigationType == WKNavigationType.linkActivated
+        {
+            print("Button Action")
+            
+            TransactionRequest()
+            
+            decisionHandler(WKNavigationActionPolicy.cancel)
+            return
+        }
+        
+        print("no Action")
+        decisionHandler(WKNavigationActionPolicy.allow)
+    }
     
   /*
     func webViewDidStartLoad(_ webView: UIWebView)
