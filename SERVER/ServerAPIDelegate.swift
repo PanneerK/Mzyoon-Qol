@@ -13,9 +13,11 @@ import Foundation
     func API_CALLBACK_Error(errorNumber:Int,errorMessage:String)
     
     @objc optional func API_CALLBACK_Login(loginResult : NSDictionary)
+    @objc optional func API_CALLBACK_ResendOTP(otpResult : NSDictionary)
     @objc optional func API_CALLBACK_ValidateOTP(loginResult : NSDictionary)
     @objc optional func API_CALLBACK_CountryCode(countryCodes : NSDictionary)
     @objc optional func API_CALLBACK_FlagImages(flagImages : NSDictionary)
+    @objc optional func API_CALLBACK_AllLanguages(languages : NSDictionary)
     
     @objc optional func API_CALLBACK_Gender(gender : NSDictionary)
     @objc optional func API_CALLBACK_GenderImage(genderImage : Data)
@@ -41,8 +43,8 @@ import Foundation
     @objc optional func API_CALLBACK_ExistingUserProfile(userProfile : NSDictionary)
     
     @objc optional func API_CALLBACK_Measurement1(measure1 : NSDictionary)
-    @objc optional func API_CALLBACK_GetMeasurement1Value(GetMeasurement1val : NSDictionary)
-    @objc optional func API_CALLBACK_GetMeasurement2Value(GetMeasurement2val : NSDictionary)
+    @objc optional func API_CALLBACK_GetMeasurement2(GetMeasurement1val : NSDictionary)
+    @objc optional func API_CALLBACK_DisplayMeasurement(GetMeasurement2val : NSDictionary)
     @objc optional func API_CALLBACK_GetMeasurementParts(getParts : NSDictionary)
     @objc optional func API_CALLBACK_InsertUserMeasurement(insUsrMeasurementVal : NSDictionary)
     @objc optional func API_CALLBACK_ExistingUserMeasurement(getExistUserMeasurement : NSDictionary)

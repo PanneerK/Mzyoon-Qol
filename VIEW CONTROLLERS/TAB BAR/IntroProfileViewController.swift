@@ -310,6 +310,9 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
             if userImage.image != nil
             {
                 UserDefaults.standard.set(userNameTextField.text!, forKey: "userName")
+                
+                serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+
                 if let profId = UserDefaults.standard.value(forKey: "userId") as? String
                 {
                     print("ENTERED NAME", userNameTextField.text!)

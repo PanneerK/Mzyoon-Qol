@@ -85,6 +85,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var otpId = 1
     
+    var selectedLanguage = "English"
+    
     override func viewDidLoad()
     {
         UserDefaults.standard.set(0, forKey: "screenAppearance")
@@ -196,6 +198,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewWillAppear(_ animated: Bool)
     {
         server.API_CountryCode(delegate: self)
+        server.API_AllLanguges(delegate: self)
     }
     
     @objc func closeKeyboard(gesture : UITapGestureRecognizer)
@@ -232,6 +235,10 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    func API_CALLBACK_AllLanguages(languages: NSDictionary) {
+        print("ALL LANGUAGES", languages)
+    }
+    
     func API_CALLBACK_Profile(profile: NSDictionary)
     {
         print("GENDER PROFILE", profile)
@@ -262,7 +269,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
              if let imageName = countryFlagArray[i] as? String
              {
              //                server.API_FlagImages(imageName: imageName, delegate: self)
-             let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+             let urlString = serviceCall.baseURL
+             let api = "\(urlString)/images/flags/\(imageName)"
              let apiurl = URL(string: api)
              //                load(url: apiurl!)
              
@@ -328,16 +336,27 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if responseMsg == "Success"
         {
+            let result = loginResult.object(forKey: "Result") as! String
             activeStop()
-            if otpId == 1
+
+            if result == "No ACCESS Permission."
             {
-                otpContents()
+                let alert = UIAlertController(title: "Alert", message: "Server down please try after some time", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
             else
             {
-                
+                if otpId == 1
+                {
+                    otpContents()
+                }
+                else
+                {
+                    
+                }
+                secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
             }
-            secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
         }
         else if responseMsg == "Failure"
         {
@@ -345,6 +364,52 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             print("Result", Result)
             
             MethodName = "GenerateOTP"
+            ErrorStr = Result
+            DeviceError()
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Alert", message: "Please check your number", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func API_CALLBACK_ResendOTP(otpResult: NSDictionary) {
+        print("otpResult", otpResult)
+        
+        let responseMsg = otpResult.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = otpResult.object(forKey: "Result") as! String
+            activeStop()
+            
+            if result == "No ACCESS Permission."
+            {
+                let alert = UIAlertController(title: "Alert", message: "Server down please try after some time", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else
+            {
+                if otpId == 1
+                {
+                    otpContents()
+                }
+                else
+                {
+                    
+                }
+                secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
+            }
+        }
+        else if responseMsg == "Failure"
+        {
+            let Result = otpResult.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "ResendOTP"
             ErrorStr = Result
             DeviceError()
         }
@@ -517,7 +582,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         flagImageView.frame = CGRect(x: (x / 2), y: (y / 2), width: (2.5 * x), height: (mobileCountryCodeButton.frame.height - y))
         if let imageName = countryFlagArray[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/flags/\(imageName)"
             let apiurl = URL(string: api)
             
             if apiurl != nil
@@ -754,12 +820,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         //        otpContents()
         //        secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
         
-        
-        //        server.API_LoginUser(CountryCode: "971", PhoneNo: "521346851", delegate: self)
-        
         if mobileTextField.text == "1234567"
         {
-            otpContents()
+//            otpContents()
             
             UserDefaults.standard.set(mobileTextField.text!, forKey: "Phone")
         }
@@ -785,7 +848,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     func otpSendAlertAction(action : UIAlertAction)
     {
         active()
-        server.API_LoginUser(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, delegate: self)
+        server.API_LoginUser(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, Language: selectedLanguage, delegate: self)
     }
     
     func active()
@@ -1058,7 +1121,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         resendButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0).withAlphaComponent(0.5)
         resendButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
         
-        server.API_LoginUser(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, delegate: self)
+//        server.API_LoginUser(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, Language: selectedLanguage, delegate: self)
+        
+        server.API_ResendOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, Language: selectedLanguage, delegate: self)
     }
     
     @objc func cancelButtonAction(sender : UIButton)
@@ -1088,7 +1153,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if let imageName = countryFlagArray[indexPath.row] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/flags/\(imageName)"
             let apiurl = URL(string: api)
             
             if apiurl != nil
@@ -1131,7 +1197,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if let imageName = countryFlagArray[indexPath.row] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/flags/\(imageName)"
             let apiurl = URL(string: api)
             print("SELECTED COUNTRY - \(imageName)", apiurl)
             if apiurl != nil

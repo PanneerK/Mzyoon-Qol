@@ -116,9 +116,8 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
             {
                 if let imageName = PartsImagesArray[i] as? String
                 {
-                    
-                    //  let api = "http://192.168.0.21/TailorAPI/images/Measurement2/\(imageName)"
-                    let api = "http://appsapi.mzyoon.com/images/Measurement2/\(imageName)"
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/Measurement2/\(imageName)"
                     let apiurl = URL(string: api)
                     print("PArts : ", api)
                     

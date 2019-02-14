@@ -152,7 +152,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
              {
              if let imageName = brandImageArray[i] as? String
              {
-             let api = "http://appsapi.mzyoon.com/images/Brands/\(imageName)"
+             let urlString = serviceCall.baseURL
+             let api = "\(urlString)/images/Brands/\(imageName)"
              let apiurl = URL(string: api)
              
              if let data = try? Data(contentsOf: apiurl!) {
@@ -183,7 +184,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
              {
              if let imageName = industryImageArray[i] as? String
              {
-             let api = "http://appsapi.mzyoon.com/images/PlaceOfIndustry/\(imageName)"
+             let urlString = serviceCall.baseURL
+             let api = "\(urlString)/images/PlaceOfIndustry/\(imageName)"
              let apiurl = URL(string: api)
              
              if let data = try? Data(contentsOf: apiurl!) {
@@ -215,7 +217,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
              {
              if let imageName = seasonalImageArray[i] as? String
              {
-             let api = "http://appsapi.mzyoon.com/images/Seasons/\(imageName)"
+             let urlString = serviceCall.baseURL
+             let api = "\(urlString)/images/Seasons/\(imageName)"
              let apiurl = URL(string: api)
              
              if let data = try? Data(contentsOf: apiurl!) {
@@ -335,7 +338,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             //            buttonImage.image = convertedSeasonalImageArray[i]
             if let imageName = seasonalImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/Seasons/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Seasons/\(imageName)"
                 let apiurl = URL(string: api)
                 print("SEASONAL API", apiurl!)
                 if apiurl != nil
@@ -397,7 +401,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             //            buttonImage.image = convertedIndustryImageArray[i]
             if let imageName = industryImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/PlaceOfIndustry/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/PlaceOfIndustry/\(imageName)"
                 let apiurl = URL(string: api)
                 if apiurl != nil
                 {
@@ -457,7 +462,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             //            buttonImage.image = convertedBrandImageArray[i]
             if let imageName = brandImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/Brands/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Brands/\(imageName)"
                 let apiurl = URL(string: api)
                 
                 if apiurl != nil{

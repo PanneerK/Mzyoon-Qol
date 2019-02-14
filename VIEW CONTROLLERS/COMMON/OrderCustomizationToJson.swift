@@ -73,14 +73,39 @@ class OrderCustomizationToJson
     
     func makeRequest(attId : [Int], imgId : [Int]) -> [[String: Int]]
     {
+        var compareId = Int()
         var List1 = [[String: Int]]()
-
-        for i in 0..<imgId.count
+        var checkList = [[String: Int]]()
+ 
+        for i in 0..<attId.count
         {
+            if compareId == nil || compareId == 0
+            {
+                checkList.insert(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]], at: i)
+                compareId = attId[i]
+            }
+            else
+            {
+                if compareId > attId[i]
+                {
+                    let count = checkList.count
+                    checkList.insert(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]], at: (i - count))
+                    compareId = attId[i]
+                }
+                else
+                {
+                    checkList.insert(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]], at: i)
+                    compareId = attId[i]
+                }
+            }
+            
             List1.append(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]])
+            print("List1", attId[i])
+            print("CHECK LIST", checkList)
         }
-
-        return List1
+        
+        print("CHECK LIST OUT OF FOR LOOP", checkList)
+        return checkList
     }
     
     func userMeasurementRequest(id : [Int], values : [Float]) -> [[String: Any]]
@@ -89,7 +114,7 @@ class OrderCustomizationToJson
         
         for i in 0..<id.count
         {
-            List1.append(["UserMeasurementId" : id[i], "Value" : values[i]])
+            List1.append(["MeasurementId" : id[i], "Value" : values[i]])
         }
         
         return List1
@@ -102,6 +127,18 @@ class OrderCustomizationToJson
         for i in 0..<image.count
         {
             List1.append(["Image" : image[i]])
+        }
+        
+        return List1
+    }
+    
+    func tailorId(id : [Int]) -> [[String: Any]]
+    {
+        var List1 = [[String: Any]]()
+        
+        for i in 0..<id.count
+        {
+            List1.append(["Id" : id[i]])
         }
         
         return List1

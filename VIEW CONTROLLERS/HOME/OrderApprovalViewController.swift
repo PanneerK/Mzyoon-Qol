@@ -265,8 +265,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         DressImageView.backgroundColor = UIColor.white
         if let imageName = DressImageArray[0] as? String
         {
-              let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
-          //  let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/DressSubType/\(imageName)"
             let apiurl = URL(string: api)
             print("Image Of Dress", apiurl!)
             if apiurl != nil

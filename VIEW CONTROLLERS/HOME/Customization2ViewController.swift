@@ -145,7 +145,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
              {
              if let imageName = colorsImageArray[i] as? String
              {
-             let api = "http://appsapi.mzyoon.com/images/Color/\(imageName)"
+             let urlString = serviceCall.baseURL
+             let api = "\(urlString)/images/Color/\(imageName)"
              print("CUSTOM ALL", api)
              let apiurl = URL(string: api)
              
@@ -179,7 +180,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
              if let imageName = materialsImageArray[i] as? String
              {
              print("IMAGE NAME", imageName)
-             let api = "http://appsapi.mzyoon.com/images/Material/\(imageName)"
+             let urlString = serviceCall.baseURL
+             let api = "\(urlString)/images/Material/\(imageName)"
              print("CUSTOM ALL", api)
              let apiurl = URL(string: api)
              print("IMAGE URL", apiurl)
@@ -217,7 +219,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
              {
              if let imageName = patternsImageArray[i] as? String
              {
-             let api = "http://appsapi.mzyoon.com/images/Pattern/\(imageName)"
+             let urlString = serviceCall.baseURL
+             let api = "\(urlString)/images/Pattern/\(imageName)"
              print("CUSTOM ALL", api)
              let apiurl = URL(string: api)
              
@@ -362,7 +365,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             //            buttonImage.image = convertedMaterialsImageArray[i]
             if let imageName = materialsImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/Material/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Material/\(imageName)"
                 let apiurl = URL(string: api)
                 
                 if apiurl != nil
@@ -427,7 +431,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             //            buttonImage.image = convertedColorsImageArray[i]
             if let imageName = colorsImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/Color/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Color/\(imageName)"
                 let apiurl = URL(string: api)
                 print("COLOR IMAGE API", apiurl)
                 
@@ -493,9 +498,9 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             //            buttonImage.image = convertedPatternsImageArray[i]
             if let imageName = patternsImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/Pattern/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Pattern/\(imageName)"
                 let apiurl = URL(string: api)
-                print("PATTERN IMAGE API", apiurl!)
                 if apiurl != nil
                 {
                     buttonImage.dowloadFromServer(url: apiurl!)

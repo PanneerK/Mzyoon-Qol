@@ -104,7 +104,8 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         directDeliveryIcon.frame = CGRect(x: (3 * x), y: (2 * y), width: (2 * x), height: (2 * y))
         if let imageName = deliveryTypeIconArray[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/ServiceType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/ServiceType/\(imageName)"
             let apiurl = URL(string: api)
             directDeliveryIcon.dowloadFromServer(url: apiurl!)
         }
@@ -126,13 +127,15 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         directDeliveryButton.backgroundColor = UIColor.lightGray
         if let imageName = deliveryTypeImageArray[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/ServiceType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/ServiceType/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: directDeliveryButton.frame.width, height: directDeliveryButton.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
+            dummyImageView.contentMode = .scaleToFill
             directDeliveryButton.addSubview(dummyImageView)
         }
         directDeliveryLabel.tag = deliveryTypeIdArray[0] as! Int
@@ -143,7 +146,8 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         courierDeliveryIcon.frame = CGRect(x: (3 * x), y: directDeliveryButton.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
         if let imageName = deliveryTypeIconArray[1] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/ServiceType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/ServiceType/\(imageName)"
             let apiurl = URL(string: api)
             print("API FOR 2", apiurl)
             courierDeliveryIcon.dowloadFromServer(url: apiurl!)
@@ -167,13 +171,15 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         courierDeliveryButton.backgroundColor = UIColor.lightGray
         if let imageName = deliveryTypeImageArray[1] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/ServiceType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/ServiceType/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: courierDeliveryButton.frame.width, height: courierDeliveryButton.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
+            dummyImageView.contentMode = .scaleToFill
             courierDeliveryButton.addSubview(dummyImageView)
         }
         courierDeliveryButton.tag = deliveryTypeIdArray[1] as! Int
@@ -184,7 +190,8 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         companyIcon.frame = CGRect(x: (3 * x), y: courierDeliveryButton.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
         if let imageName = deliveryTypeIconArray[2] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/ServiceType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/ServiceType/\(imageName)"
             let apiurl = URL(string: api)
             companyIcon.dowloadFromServer(url: apiurl!)
         }
@@ -206,13 +213,15 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         companyButton.backgroundColor = UIColor.lightGray
         if let imageName = deliveryTypeImageArray[2] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/ServiceType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/ServiceType/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
             dummyImageView.frame = CGRect(x: 0, y: 0, width: companyButton.frame.width, height: companyButton.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
+            dummyImageView.contentMode = .scaleToFill
             companyButton.addSubview(dummyImageView)
         }
         companyButton.tag = deliveryTypeIdArray[2] as! Int

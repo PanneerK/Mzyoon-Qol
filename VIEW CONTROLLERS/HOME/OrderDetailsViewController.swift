@@ -10,7 +10,7 @@ import UIKit
 
 class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
 {
-    let ServiceCall = ServerAPI()
+    let serviceCall = ServerAPI()
 
     // Error PAram...
     var DeviceNum:String!
@@ -53,7 +53,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
   
         if(OrderID != nil)
         {
-        self.ServiceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
+        self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
             
         }
         
@@ -153,7 +153,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
-        self.ServiceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
         
     }
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
@@ -264,8 +264,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
        
         if let imageName = Image[0] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/DressSubType/\(imageName)"
-            //  let api = "http://192.168.0.21/TailorAPI/Images/DressSubType/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/DressSubType/\(imageName)"
             let apiurl = URL(string: api)
             print("Image Of Dress", apiurl!)
             DressImageView.dowloadFromServer(url: apiurl!)

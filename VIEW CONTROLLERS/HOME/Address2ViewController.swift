@@ -18,7 +18,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var x = CGFloat()
     var y = CGFloat()
     
-    var addressString = String()
+    var addressString = [String]()
     var splittedAddress = [String]()
     var getLocation = CLLocationCoordinate2D()
     
@@ -81,8 +81,12 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     var addressStringArray = NSArray()
     
+    var screenTag = 1
+    
     override func viewDidLoad()
     {
+        print("ADDRESS STRING ADDRESS 2 VIEW CONTROLLER 1", addressString)
+
         x = 10 / 375 * 100
         x = x * view.frame.width / 100
         
@@ -129,7 +133,16 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     @objc func doneButtonAction()
     {
-        self.view.endEditing(true)
+        if (mobileTextField.text?.count)! > 20 || (mobileTextField.text?.count)! < 6
+        {
+            let alert = UIAlertController(title: "Alert", message: "Please enter a valid mobile number", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else
+        {
+            self.view.endEditing(true)
+        }
     }
     
     func fetchingCurrentLocation()
@@ -175,7 +188,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             // 3
             print("GET CURRENT ADDRESS", lines.joined(separator: "\n"))
             
-            self.addressString = lines.joined(separator: "\n")
+//            self.addressString = [lines.joined(separator: "\n")]
             
             //  self.addressLabel.text = lines.joined(separator: "\n")
             
@@ -421,9 +434,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         locationView.layer.borderColor = UIColor.black.cgColor
         view.addSubview(locationView)
         
+        print("ADDRESS STRING ADDRESS 2 VIEW CONTROLLER 2", addressString)
+        
         let address1Label = UILabel()
         address1Label.frame = CGRect(x: x, y: y / 2, width: locationView.frame.width - (9 * x), height: (6 * y))
-        address1Label.text = addressString
+        address1Label.text = "\(addressString[0])"
         address1Label.textColor = UIColor.black
         address1Label.textAlignment = .left
         address1Label.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -769,7 +784,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(underline8)
         
         let mobileCountryCodeButton = UIButton()
-        mobileCountryCodeButton.frame = CGRect(x: x, y: underline8.frame.maxY + (3 * y), width: (10 * x), height: (2 * y))
+        mobileCountryCodeButton.frame = CGRect(x: x, y: underline8.frame.maxY + (3 * y), width: (10 * x), height: (3 * y))
         mobileCountryCodeButton.backgroundColor = UIColor(red: 0.7647, green: 0.7882, blue: 0.7765, alpha: 1.0)
         mobileCountryCodeButton.addTarget(self, action: #selector(self.mobileCountryCodeButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(mobileCountryCodeButton)
@@ -778,7 +793,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         /*if let imageName = countryFlagArray[0] as? String
          {
-         let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+         let urlString = serviceCall.baseURL
+         let api = "\(urlString)/images/flags/\(imageName)"
          let apiurl = URL(string: api)
          
          if apiurl != nil
@@ -813,7 +829,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                         
                         if let imageName = countryFlagArray[i] as? String
                         {
-                            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+                            let urlString = serviceCall.baseURL
+                            let api = "\(urlString)/images/flags/\(imageName)"
                             let apiurl = URL(string: api)
                             
                             if apiurl != nil
@@ -838,11 +855,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         mobileCountryCodeButton.addSubview(downArrowImageView)
         
         let mobileImageView = UIImageView()
-        mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: underline8.frame.maxY + (3 * y), width: (1.5 * x), height: (2 * y))
+        mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: underline8.frame.maxY + (3 * y), width: (1.5 * x), height: (3 * y))
         mobileImageView.image = UIImage(named: "mobile")
         addressScrollView.addSubview(mobileImageView)
         
-        mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: underline8.frame.maxY + (3 * y), width: addressScrollView.frame.width - (13 * x), height: (2 * y))
+        mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: underline8.frame.maxY + (3 * y), width: addressScrollView.frame.width - (13 * x), height: (3 * y))
         mobileTextField.placeholder = "Mobile Number"
         mobileTextField.textColor = UIColor.black
         mobileTextField.textAlignment = .left
@@ -1011,7 +1028,15 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     @objc func locationEditButtonAction(sender : UIButton)
     {
-        self.navigationController?.popViewController(animated: true)
+        if screenTag == 1
+        {
+            let locationScreen = LocationViewController()
+            self.navigationController?.pushViewController(locationScreen, animated: true)
+        }
+        else
+        {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func countryButtonAction(sender : UIButton)
@@ -1242,7 +1267,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         if let imageName = countryFlagArray[indexPath.row] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/flags/\(imageName)"
             let apiurl = URL(string: api)
             
             if apiurl != nil
@@ -1266,7 +1292,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         if let imageName = countryFlagArray[indexPath.row] as? String
         {
-            let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/flags/\(imageName)"
             let apiurl = URL(string: api)
             print("SELECTED COUNTRY - \(imageName)", apiurl)
             if apiurl != nil

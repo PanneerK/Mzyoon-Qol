@@ -18,19 +18,19 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-  //  var baseURL:String = "http://192.168.0.21/TailorAPI"
-    
-    var baseURL:String = "http://appsapi.mzyoon.com"
+    var baseURL:String = "http://192.168.0.26/TailorAPI"
+
+//    var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
     
-    func API_LoginUser(CountryCode : String, PhoneNo : String, delegate:ServerAPIDelegate)
+    func API_LoginUser(CountryCode : String, PhoneNo : String, Language : String, delegate:ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Login Page")
             
-            let parameters = ["CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "DeviceId" : "\(String(describing: deviceId!))"] as [String : Any]
+            let parameters = ["CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "DeviceId" : "\(deviceId!)", "Language" : Language] as [String : Any]
             
             print("LOGIN PARAMETERS", parameters)
             
@@ -47,6 +47,38 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 1, errorMessage: "Login Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    func API_ResendOTP(CountryCode : String, PhoneNo : String, Language : String, delegate:ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Login Page")
+            
+            let parameters = ["CountryCode" : CountryCode, "PhoneNo" : PhoneNo, "DeviceId" : "\(deviceId!)", "Language" : Language] as [String : Any]
+            
+            print("LOGIN PARAMETERS", parameters)
+            
+            let urlString:String = String(format: "%@/API/Login/ResendOTP", arguments: [baseURL])
+            
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    
+                    delegate.API_CALLBACK_ResendOTP!(otpResult: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 1, errorMessage: "Resend OTP Failed")
                 }
             }
         }
@@ -113,6 +145,43 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 2, errorMessage: "Country Code Failed")
+                }
+                
+                
+            }
+            
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    func API_AllLanguges(delegate : ServerAPIDelegate)
+    {
+        
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Country Code Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            
+            let urlString:String = String(format: "%@/API/Login/GetAllLanguages", arguments: [baseURL])
+            
+            print("URL COUNRTY", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    
+                    delegate.API_CALLBACK_AllLanguages!(languages: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 2, errorMessage: "All Languages Failed")
                 }
                 
                 
@@ -874,7 +943,7 @@ class ServerAPI : NSObject
     }
     
     // Measurement-2 full body pics...
-    func API_GetMeasurement1(Measurement1Value : Int, delegate : ServerAPIDelegate)
+    func API_GetMeasurement2(Measurement1Value : Int, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -884,13 +953,13 @@ class ServerAPI : NSObject
             
             let urlString:String = String(format: "%@/API/Order/GetMeasurement2?Id=\(Measurement1Value)", arguments: [baseURL])
             
+            print("GetMeasurement1 URL STRING", urlString)
+            
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
-                print("REQUEST", request)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("response", self.resultDict)
-                    delegate.API_CALLBACK_GetMeasurement1Value!(GetMeasurement1val: self.resultDict)
+                    delegate.API_CALLBACK_GetMeasurement2!(GetMeasurement1val: self.resultDict)
                 }
                 else
                 {
@@ -915,12 +984,13 @@ class ServerAPI : NSObject
             
             let urlString:String = String(format: "%@/API/Order/GetExistingUserMeasurement?DressTypeId=\(DressTypeId)&UserId=\(UserId)", arguments: [baseURL])
             
+            print("ExistingUserMeasurement URL STRING", urlString)
+            
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 print("REQUEST", request)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("response", self.resultDict)
                     
                     delegate.API_CALLBACK_ExistingUserMeasurement!(getExistUserMeasurement: self.resultDict)
                 }
@@ -968,29 +1038,27 @@ class ServerAPI : NSObject
     }
     
     // Measurement-2 Parts Tab..
-    func API_GetMeasurement2(Measurement2Value : Int, delegate : ServerAPIDelegate)
+    func API_DisplayMeasurement(Measurement2Value : Int, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
-            print("Server Reached - Measurement2 Value")
+            print("Server Reached - Display Measurement Value")
             
             let parameters = [:] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/DisplayMeasurementBySubTypeId?Id=\(Measurement2Value)", arguments: [baseURL])
             
-            print("MEASUREMENT", urlString)
+            print("Display Measurement URL STRING", urlString)
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
-                print("REQUEST", request)
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("response", self.resultDict)
-                    delegate.API_CALLBACK_GetMeasurement2Value!(GetMeasurement2val: self.resultDict)
+                    delegate.API_CALLBACK_DisplayMeasurement!(GetMeasurement2val: self.resultDict)
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Get Measurement-2 Value Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Display Measurement Failed")
                 }
             }
         }
@@ -1032,13 +1100,13 @@ class ServerAPI : NSObject
     }
     
     // Mesurement-2 values Insert..
-    func API_InsertUserMeasurementValues(UserId : Int, DressTypeId : Int, MeasurementValueId : [Int], MeasurementValue : [Int], MeasurementBy : String, CreatedBy : String, delegate : ServerAPIDelegate)
+    func API_InsertUserMeasurementValues(UserId : Int, DressTypeId : Int, MeasurementValue : [[String: Any]], MeasurementBy : String, CreatedBy : String, Units : String, Name : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Measurement Values Page")
             
-            let parameters = ["UserId" : UserId, "DressTypeId" : DressTypeId, "MeasurementValue[0][MeasurementId]" : "\(MeasurementValueId)", "MeasurementValue[0][Value]" : "\(MeasurementValue)", "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy] as [String : Any]
+            let parameters = ["UserId" : UserId, "DressTypeId" : DressTypeId, "MeasurementValue" : MeasurementValue, "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "Units" : Units, "Name" : Name] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertUserMeasurementValues", arguments: [baseURL])
             
@@ -1118,6 +1186,7 @@ class ServerAPI : NSObject
             upload(multipartFormData: {(multipartFormData:MultipartFormData) in
                 for (key,value) in parameters
                 {
+                    print("VALUES", value)
                     multipartFormData.append(value.jpegData(compressionQuality: 0.5)!, withName: key, fileName: "Profile_\(dateInt).png", mimeType: "image/jpeg")
                 };
                 
@@ -1209,13 +1278,13 @@ class ServerAPI : NSObject
     
     
     // Order Summary... 19/12/2018..
-    func API_InsertOrderSummary(dressType : Int, CustomerId : Int, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [UIImage], ReferenceImage : [UIImage], OrderCustomization : [[String : Any]], TailorId : [Int], MeasurementBy : String, CreatedBy : Int, MeasurementName : String, UserMeasurement : [[String : Any]], DeliveryTypeId : Int, units : String, measurementType : Int, delegate : ServerAPIDelegate)
+    func API_InsertOrderSummary(dressType : Int, CustomerId : Int, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [String], ReferenceImage : [String], OrderCustomization : [[String : Any]], TailorId : [[String: Any]], MeasurementBy : String, CreatedBy : Int, MeasurementName : String, UserMeasurement : [[String : Any]], DeliveryTypeId : Int, units : String, measurementType : Int, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Order Summary Page")
             
-            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage[0][Image]" : "\(MaterialImage)", "ReferenceImage[0][Image]" : "\(ReferenceImage)" , "OrderCustomization" : OrderCustomization, "TailorId[0][Id]" : "\(TailorId)", "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurement" : UserMeasurement, "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurementType" : measurementType] as [String : Any]
+            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage" : MaterialImage, "ReferenceImage" : ReferenceImage, "OrderCustomization" : OrderCustomization, "TailorId" : TailorId, "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurement" : UserMeasurement, "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurmentType" : measurementType] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertOrder", arguments: [baseURL])
             
@@ -2097,15 +2166,23 @@ class ServerAPI : NSObject
             
             upload(multipartFormData: {(multipartFormData:MultipartFormData) in
                 
-                for i in 0..<referenceImages.count
+                for (keys,values) in parameters
                 {
-                    multipartFormData.append(referenceImages[i].jpegData(compressionQuality: 0.5)!, withName: "ReferenceImages", fileName: "Reference_\(dateInt).png", mimeType: "image/jpeg")
+                    print("VALUES IN REFERENCE API", values)
+                    
+                    for i in 0..<values.count
+                    {
+                        if let image = values[i] as? UIImage
+                        {
+                            print("IMAGE IN REFERENCE", image)
+                            if image != nil
+                            {
+                                multipartFormData.append(image.jpegData(compressionQuality: 0.5)!, withName: keys, fileName: "Reference\(dateInt).png", mimeType: "image/jpeg")
+                            }
+                        }
+                        
+                    }
                 };
-                
-//                for (key,value) in parameters
-//                {
-//                    multipartFormData.append(value.jpegData(compressionQuality: 0.5)!, withName: key, fileName: "Profile_\(dateInt).png", mimeType: "image/jpeg")
-//                };
                 
             }, usingThreshold: UInt64.init(), to:  urlString, method: .post, headers: headers, encodingCompletion: { encodingResult in
                 switch encodingResult
@@ -2133,7 +2210,7 @@ class ServerAPI : NSObject
         }
     }
     
-    func API_MaterialImageUpload(materialImages : [String : UIImage], delegate : ServerAPIDelegate)
+    func API_MaterialImageUpload(materialImages : [UIImage], delegate : ServerAPIDelegate)
     {
         let date = Date().timeIntervalSince1970
         print("DATE", date)
@@ -2144,7 +2221,7 @@ class ServerAPI : NSObject
         {
             print("Server Reached - Material Image Upload Page", materialImages.count)
             
-            let parameters = ["MaterialImages" : materialImages] as [String : Any]
+            let parameters = ["MaterialImages" : materialImages] as [String : [UIImage]]
             
             let urlString:String = String(format: "%@/API/FileUpload/UploadFile", arguments: [baseURL])
             
@@ -2158,9 +2235,22 @@ class ServerAPI : NSObject
             
             upload(multipartFormData: {(multipartFormData:MultipartFormData) in
                 
-                for (key,value) in parameters
+                for (keys,values) in parameters
                 {
-//                    multipartFormData.append((value as AnyObject).jpegData(compressionQuality: 0.5)!, withName: key, fileName: "Profile_\(dateInt).png", mimeType: "image/jpeg")
+                    print("VALUES IN MATERIAL API", values)
+                    
+                    for i in 0..<values.count
+                    {
+                        if let image = values[i] as? UIImage
+                        {
+                            print("IMAGE IN MATERIAL", image)
+                            if image != nil
+                            {
+                                multipartFormData.append(image.jpegData(compressionQuality: 0.5)!, withName: keys, fileName: "Material\(dateInt).png", mimeType: "image/jpeg")
+                            }
+                        }
+                        
+                    }
                 };
                 
             }, usingThreshold: UInt64.init(), to:  urlString, method: .post, headers: headers, encodingCompletion: { encodingResult in

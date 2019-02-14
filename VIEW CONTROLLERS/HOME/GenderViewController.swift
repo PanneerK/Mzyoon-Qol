@@ -101,8 +101,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR IN GENDER PAGE", errorMessage)
-      //  ErrorStr = errorMessage
-        
     }
  
     
@@ -153,7 +151,8 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         {
             if let imageName = genderImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/\(imageName)"
                 let apiurl = URL(string: api)
                 
                 if let data = try? Data(contentsOf: apiurl!) {
@@ -275,7 +274,8 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
 //            buttonImage.image = convertedGenderImageArray[i]
             if let imageName = genderImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/\(imageName)"
                 let apiurl = URL(string: api)
                 if apiurl != nil
                 {

@@ -79,14 +79,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-        
+        fetchingCurrentLocation()
+
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        fetchingCurrentLocation()
+//        fetchingCurrentLocation()
     }
     
     func fetchingCurrentLocation()
@@ -216,7 +217,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
              {
              if let imageName = ShopOwnerImageArray[i] as? String
              {
-             let api = "http://appsapi.mzyoon.com/images/Measurement2/\(imageName)"
+             let urlString = serviceCall.baseURL
+             let api = "\(urlString)/images/Measurement2/\(imageName)"
              // let api = "http://192.168.0.21/TailorAPI/images/Measurement2/\(imageName)"
              
              let apiurl = URL(string: api)
@@ -429,7 +431,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             if let imageName = ShopOwnerImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/Tailorimages/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Tailorimages/\(imageName)"
                 print("SMALL ICON", api)
                 let apiurl = URL(string: api)
                 

@@ -23,7 +23,7 @@ class FileAccess {
         let path1 = configureDirectory()
         
         let fileManager = FileManager.default
-        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageType)
+        let path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("Mzyoon")
         if !fileManager.fileExists(atPath: path) {
             try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
         }
@@ -63,6 +63,19 @@ class FileAccess {
             try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
         }
         return path
+    }
+    
+    func deleteImage(imageName : String)
+    {
+        let fileManager = FileManager.default
+        let yourProjectImagesPath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
+        if fileManager.fileExists(atPath: yourProjectImagesPath) {
+            try! fileManager.removeItem(atPath: yourProjectImagesPath)
+        }
+        let yourProjectDirectoryPath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("Mzyoon")
+        if fileManager.fileExists(atPath: yourProjectDirectoryPath) {
+            try! fileManager.removeItem(atPath: yourProjectDirectoryPath)
+        }
     }
     
     func deleteDirectory(imageType : String) {

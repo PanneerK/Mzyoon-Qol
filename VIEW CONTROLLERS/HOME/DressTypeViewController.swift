@@ -100,7 +100,8 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             {
                 if let imageName = dressImageArray[i] as? String
                 {
-                    let api = "http://appsapi.mzyoon.com/images/DressTypes/\(imageName)"
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/DressTypes/\(imageName)"
                     let apiurl = URL(string: api)
                     
                     if let data = try? Data(contentsOf: apiurl!) {
@@ -378,7 +379,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                 dressTypeButton.frame = CGRect(x: x1, y: y1, width: (15.25 * x), height: (16 * y))
                 y1 = dressTypeButton.frame.maxY + y
             }
-            dressTypeButton.backgroundColor = UIColor.clear
+            dressTypeButton.backgroundColor = UIColor.white
             dressTypeButton.tag = inputIdArray[i] as! Int
             dressTypeButton.addTarget(self, action: #selector(self.dressTypeButtonAction(sender:)), for: .touchUpInside)
             dressTypeScrollView.addSubview(dressTypeButton)
@@ -407,7 +408,8 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeImageView.frame = CGRect(x: 0, y: 0, width: dressTypeButton.frame.width, height: (13 * y))
             if let imageName = inputImageArray[i] as? String
             {
-                let api = "http://appsapi.mzyoon.com/images/DressTypes/\(imageName)"
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/DressTypes/\(imageName)"
                 print("API OF DRESS TYPE IMAGES", api)
                 let apiurl = URL(string: api)
                 if apiurl != nil
