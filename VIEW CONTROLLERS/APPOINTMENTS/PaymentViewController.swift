@@ -187,8 +187,8 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
                              print("Count:",[data.count])
                             
                           //  let mainDict = ((self.dictionaryData.object(forKey: "mobile")! as AnyObject).object(forKey: "webview")! as AnyObject).object(forKey: "text") ?? NSDictionary()
-                            if (Int(data.count) == 410)
-                            {
+                        //  if (Int(data.count) == 410)  {
+                            
                                 let mobileDict = (self.dictionaryData.object(forKey: "mobile")! as AnyObject)
                                 // print("mobileDict:",mobileDict)
                                 
@@ -234,7 +234,8 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
                                     
                                 }
                                 
-                            }
+                          //  }
+                                /*
                             else
                             {
                                 let mobileDict = (self.dictionaryData.object(forKey: "mobile")! as AnyObject)
@@ -280,6 +281,7 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
                                 }
                                 
                              }
+                            */
                       
                         }
                        
@@ -404,13 +406,16 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
     {
         
        TotalAmount = self.Amount_TF.text
-       
+        
+    /*
       if RequestId == nil
       {
         RequestId = String(arc4random())
         print("Request ID:",RequestId)
       }
-     
+   */
+       RequestId = String(arc4random())
+        
     
       if UserName == nil
       {

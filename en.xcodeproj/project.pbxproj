@@ -24,6 +24,7 @@
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8F54D12211ACCA00CCA501 /* XMLReader.m */; };
+		DAA737BD2215D1BC00B4B573 /* TelrResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */; };
 		DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */; };
 		DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */; };
 		DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */; };
@@ -134,6 +135,7 @@
 		DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mzyoon-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA8F54D02211ACCA00CCA501 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		DA8F54D12211ACCA00CCA501 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelrResponseViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentViewController.swift; sourceTree = "<group>"; };
 		DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */,
 				DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */,
 				DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */,
+				DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */,
 				FD058BD121F89A6C0037C09E /* ViewController.swift */,
 			);
 			path = APPOINTMENTS;
@@ -664,6 +667,7 @@
 				FD71D266219F234B00FFC067 /* Customization3ViewController.swift in Sources */,
 				DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */,
 				DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */,
+				DAA737BD2215D1BC00B4B573 /* TelrResponseViewController.swift in Sources */,
 				FD71D262219F055300FFC067 /* Customization1ViewController.swift in Sources */,
 				FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */,
 				FD71D268219F29AD00FFC067 /* Measurement1ViewController.swift in Sources */,

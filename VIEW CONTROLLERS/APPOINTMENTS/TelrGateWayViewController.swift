@@ -11,8 +11,10 @@ import TelrSDK
 import NVActivityIndicatorView
 import WebKit
 
-class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDelegate
+class TelrGateWayViewController: UIViewController,UIWebViewDelegate
 {
+    var window: UIWindow?
+    
     /*
      var TotalAmount:Int!
      let CardNum_TF = UITextField()
@@ -52,13 +54,16 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDeleg
     var ExpYear:String!
     
     var dictionaryData = NSDictionary()
-   // var TelrWebView = UIWebView()
-      var TelrWebView = WKWebView()
+        var TelrWebView = UIWebView()
+   //   var TelrWebView = WKWebView()
     
     var TelrStartUrl : String!
     var TelrCloseUrl : String!
     var TelrAbortUrl : String!
     var TelrTransCode : String!
+    
+    var TransRef:String!
+    var TransTraceNum:String!
     
     let activeView = UIView()
     let activityIndicator = UIActivityIndicatorView()
@@ -99,40 +104,56 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDeleg
             print("Telr Abort URL:",TelrAbortUrl)
             print("Telr Code:",TelrTransCode)
         
-        TelrWebView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+     //   TelrWebView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        TelrWebView = UIWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         view.addSubview(TelrWebView)
         
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-       // view.addSubview(activeView)
+        view.addSubview(activeView)
         
-        activityIndicator.frame = CGRect(x: ((view.frame.width - (5 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
-        activityIndicator.color = UIColor.black.withAlphaComponent(0.5)
+        activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicator.color = UIColor.white
         activityIndicator.style = .whiteLarge
         activityIndicator.startAnimating()
-        view.addSubview(activityIndicator)
+        activeView.addSubview(activityIndicator)
+      
+        TelrWebView.delegate = self
         
-        TelrWebView.uiDelegate = self
-        TelrWebView.navigationDelegate = self
-        
-      DispatchQueue.main.async (execute: { () -> Void in
         /*
-         self.TelrWebView = UIWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-         self.TelrWebView.loadRequest(NSURLRequest(url: NSURL(string: self.TelrStartUrl)! as URL) as URLRequest)
-         self.TelrWebView.delegate = self;
-         self.view.addSubview(self.TelrWebView)
-        */
+         DispatchQueue.main.async (execute: { () -> Void in
         
+         // self.TelrWebView = UIWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+          self.TelrWebView.loadRequest(NSURLRequest(url: NSURL(string: self.TelrStartUrl)! as URL) as URLRequest)
+          self.view.addSubview(self.TelrWebView)
+ 
+        /*
          self.activityIndicator.startAnimating()
          self.activityIndicator.hidesWhenStopped = true
          let request = URLRequest(url: URL(string: self.TelrStartUrl)!)
         self.TelrWebView.load(request)
-        
+        */
          })
         
-        self.TelrWebView.addObserver(self, forKeyPath: #keyPath(WKWebView.isLoading), options: .new, context: nil)
-
+       // self.TelrWebView.addObserver(self, forKeyPath: #keyPath(WKWebView.isLoading), options: .new, context: nil)
+      */
+       
     }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        self.loadWebView()
+    }
+    func loadWebView()
+    {
+        DispatchQueue.main.async (execute: { () -> Void in
+            self.activityIndicator.startAnimating()
+           // self.activityIndicator.hidesWhenStopped = true
+            self.TelrWebView.loadRequest(NSURLRequest(url: NSURL(string: self.TelrStartUrl)! as URL) as URLRequest)
+             })
+    }
+    
+    /*
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)
     {
         if keyPath == "loading"
@@ -149,7 +170,7 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDeleg
         }
     }
     
- /*
+ 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!)
     {
         
@@ -160,10 +181,18 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDeleg
             }
         })
     }
-   */
+ 
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!)
+    {
+    
+      print("Make Payment")
+        
+        
+    }
+ 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void)
     {
-        if navigationAction.navigationType == WKNavigationType.linkActivated
+        if navigationAction.navigationType == WKNavigationType.formSubmitted
         {
             print("Button Action")
             
@@ -176,21 +205,13 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDeleg
         print("no Action")
         decisionHandler(WKNavigationActionPolicy.allow)
     }
-    
-  /*
+ 
+  */
     func webViewDidStartLoad(_ webView: UIWebView)
     {
         print("webViewDidStartLoad")
         
-        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        view.addSubview(activeView)
-        
-        activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
-        activityIndicator.color = UIColor.white
-        activityIndicator.style = .whiteLarge
-        activityIndicator.startAnimating()
-        activeView.addSubview(activityIndicator)
+    
     }
     func webViewDidFinishLoad(_ webView: UIWebView)
     {
@@ -203,7 +224,23 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDeleg
         
          //TransactionRequest()
     }
-  */
+ 
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool
+    {
+        print("request: \(request.description)")
+        
+        if request.description == TelrCloseUrl
+        {
+            //do close window magic here!!
+            print("url matches...")
+            
+            TransactionRequest()
+            
+            return false
+        }
+        return true
+    }
+    
     
     func TransactionRequest()
     {
@@ -234,6 +271,41 @@ class TelrGateWayViewController: UIViewController,WKUIDelegate,WKNavigationDeleg
                             self.dictionaryData = try XMLReader.dictionary(forXMLData: data, options:UInt(XMLReaderOptionsProcessNamespaces)) as NSDictionary
                             
                              print("Value:",self.dictionaryData)
+                            
+                            let mobileDict = (self.dictionaryData.object(forKey: "mobile")! as AnyObject)
+                            // print("mobileDict:",mobileDict)
+                            
+                            let AuthDict = mobileDict.object(forKey: "auth")! as AnyObject
+                            //  print("webViewDict:",webViewDict)
+                            
+                            let RefNum = AuthDict.object(forKey: "tranref")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            
+                            self.TransRef = (RefNum.object(forKey: "text") as AnyObject) as? String
+                            print("TransRef :",self.TransRef)
+                            
+                            let TraceDict = mobileDict.object(forKey: "trace")! as AnyObject
+                            //  print("webViewDict:",webViewDict)
+                            
+                            self.TransTraceNum = (TraceDict.object(forKey: "text") as AnyObject) as? String
+                            print("TransTraceNum :",self.TransTraceNum)
+                            
+                            if (self.TransRef != nil)
+                            {
+                                DispatchQueue.main.async (execute: { () -> Void in
+                                    
+                                    let TelrResponseScreen = TelrResponseViewController()
+                                    TelrResponseScreen.TransRef = self.TransRef
+                                    TelrResponseScreen.TransTraceNum = self.TransTraceNum
+                                    self.navigationController?.pushViewController(TelrResponseScreen, animated: true)
+                                  
+                                })
+                                
+                            }
+                            else
+                            {
+                                
+                            }
                             
                             
                         }
