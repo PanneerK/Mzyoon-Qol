@@ -1284,7 +1284,7 @@ class ServerAPI : NSObject
         {
             print("Server Reached - Order Summary Page")
             
-            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage" : MaterialImage, "ReferenceImage" : ReferenceImage, "OrderCustomization" : OrderCustomization, "TailorId" : TailorId, "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurement" : UserMeasurement, "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurmentType" : measurementType] as [String : Any]
+            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage" : MaterialImage, "ReferenceImage" : ReferenceImage, "OrderCustomization" : OrderCustomization, "TailorId" : TailorId, "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurementValue" : UserMeasurement, "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurmentType" : measurementType] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertOrder", arguments: [baseURL])
             
