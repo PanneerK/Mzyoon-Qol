@@ -74,7 +74,7 @@ class OrderCustomizationToJson
     func makeRequest(attId : [Int], imgId : [Int]) -> [[String: Int]]
     {
         var compareId = Int()
-        var List1 = [[String: Int]]()
+//        var List1 = [[String: Int]]()
         var checkList = [[String: Int]]()
  
         for i in 0..<attId.count
@@ -99,7 +99,7 @@ class OrderCustomizationToJson
                 }
             }
             
-            List1.append(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]])
+//            List1.append(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]])
             print("List1", attId[i])
             print("CHECK LIST", checkList)
         }
