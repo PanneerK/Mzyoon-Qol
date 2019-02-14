@@ -26,6 +26,25 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
      var x = CGFloat()
      var y = CGFloat()
     
+    // Parameters:
+    var KEY:String!
+    var STOREID:String!
+    var EMAIL:String!
+    
+    var DeviceType:String!
+    var DeviceNum:String!
+    var DeviceAgent:String!
+    var DeviceAccept:String!
+    
+    var AppName:String!
+    var AppVersion:String!
+    var AppUser:String!
+    var AppId:String!
+    
+    
+    
+    var dictionaryData = NSDictionary()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -51,6 +70,18 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
         self.ExpMonth_TF.text = ExpMonthArray[0] as? String
         self.ExpYear_TF.text = ExpYearArray[0] as? String
         
+        KEY = "XZCQ~9wRvD^prrJx"
+        STOREID = "21552"
+        // EMAIL = "rohith.qol@gmail.com"
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        DeviceType = "Simulator"
+        DeviceAgent = "Card"
+        DeviceType = "Auth"
+        
+        AppName = "Mzyoon"
+        AppVersion = UIDevice.current.systemVersion
+        AppUser = "User"
+        AppId = "123456"
     }
     
 
@@ -229,8 +260,109 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
         
      }
 
+func PaymentRequest()
+{
+    
+let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+ "<mobile>" +
+    "<store>\(String(describing: STOREID))</store>" +
+    "<key>\(String(describing: KEY))</key>" +
+    "<device>" +
+    "<type>\(String(describing: DeviceType))</type>" +
+    "<id>\(String(describing: DeviceNum))</id>" +
+    "<agent>\(String(describing: DeviceAgent))</agent>" +
+    "<accept>\(String(describing: DeviceAccept))</accept>" +
+    "</device>" +
+    "<app>" +
+    "<name>\(String(describing: AppName))</name>" +
+    "<version>\(String(describing: AppVersion))</version>" +
+    "<user>\(String(describing: AppUser))</user>" +
+    "<id>\(String(describing: AppId))</id>" +
+    "</app>" +
+    "<tran>" +
+        "<test>0/test>" +
+        "<type>PayPage</type>" +
+        "<class>cont</class>" +
+        "<cartid>Sys100</cartid>" +
+        "<description>Testing</description>" +
+        "<currency>AED</currency>" +
+        "<amount>1</amount>" +
+        "<ref>100000</ref>" +
+    "</tran>" +
+    "<card>" +
+        "<number>4111111111111111</number>" +
+        "<expiry>" +
+          "<month>05</month>" +
+          "<year>2020</year>" +
+        "</expiry>" +
+        "<cvv>123</cvv>" +
+    "</card>" +
+    "<billing>" +
+       "<name>" +
+         "<title>Mr</title>" +
+         "<first>Rohith</first>" +
+         "<last>Singh</last>" +
+       "</name>\n" +
+       "<address>" +
+         "<line1>Appavoo street</line1>" +
+         "<line2>Eliss road</line2>" +
+         "<line3>Triplicane</line3>" +
+         "<city>Chennai</city>" +
+         "<region>TN</region>" +
+         "<country>IN</country>" +
+         "<zip>600002</zip>" +
+       "</address>" +
+    "<email>\(String(describing: EMAIL))</email>" +
+    "</billing>" +
+ "</mobile>"
+    
+    let urlString = "https://secure.innovatepayments.com/gateway/mobile.xml"
+        if let url = NSURL(string: urlString)
+        {
+            let theRequest = NSMutableURLRequest(url: url as URL)
+            theRequest.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            theRequest.addValue("http://tempuri.org/GetMISReqxml", forHTTPHeaderField: "SOAPAction")
+            theRequest.addValue((Message), forHTTPHeaderField: "Content-Length")
+            theRequest.httpMethod = "POST"
+            theRequest.httpBody = Message.data(using: String.Encoding.utf8)
+            let task = URLSession.shared.dataTask(with: theRequest as URLRequest)
+            { (data, response, error) in
+                if error == nil
+                {
+                    if let data = data, let responseString = String(data: data, encoding: String.Encoding.utf8)
+                    {
+                         print("responseString = \(responseString)")
+                        do
+                        {
+                            self.dictionaryData = try XMLReader.dictionary(forXMLData: data, options:UInt(XMLReaderOptionsProcessNamespaces)) as NSDictionary
+                            
+                            print("Value:",self.dictionaryData)
+                            
+                         
+                        }
+                        catch
+                        {
+                            print("Your Dictionary value nil")
+                        }
+                        //print(dictionaryData)
+                    }
+                }
+                else
+                {
+                    print(error!)
+                }
+            }
+            task.resume()
+        }
+        
+        
+    }
      @objc func MakePayment(sender : UIButton)
      {
+        
+        PaymentRequest()
+        
+      /*
         if (CardNum_TF.text?.isEmpty)!
        {
          let appointmentAlert = UIAlertController(title: "Message..!", message: "Please Enter Card Number", preferredStyle: .alert)
@@ -245,6 +377,7 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
         //appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         self.present(appointmentAlert, animated: true, completion: nil)
         }
+        */
      }
      @objc func CancelPayment(sender : UIButton)
      {
