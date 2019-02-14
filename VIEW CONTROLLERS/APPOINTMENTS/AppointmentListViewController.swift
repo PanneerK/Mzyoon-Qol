@@ -345,12 +345,10 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             PR_NameLabel.adjustsFontSizeToFitWidth = true
             AppointmentViewButton.addSubview(PR_NameLabel)
             
-            
             AppointmentViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
-            
             y1 = AppointmentViewButton.frame.maxY + y
+            
         }
-        
         
     }
     

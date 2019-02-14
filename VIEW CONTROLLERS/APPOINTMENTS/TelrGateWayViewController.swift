@@ -8,9 +8,12 @@
 
 import UIKit
 import TelrSDK
+import NVActivityIndicatorView
+import WebKit
 
-class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerViewDelegate,UIPickerViewDataSource
+class TelrGateWayViewController: UIViewController,WKUIDelegate
 {
+    /*
      var TotalAmount:Int!
      let CardNum_TF = UITextField()
      let ExpMonth_TF = UITextField()
@@ -22,9 +25,11 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
     
      var ExpMonthArray = NSArray()
      var ExpYearArray = NSArray()
+   */
     
      var x = CGFloat()
      var y = CGFloat()
+ 
     
     // Parameters:
     var KEY:String!
@@ -41,9 +46,22 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
     var AppUser:String!
     var AppId:String!
     
-    
+    var CardNum:String!
+    var CVVNum:String!
+    var ExpMonth:String!
+    var ExpYear:String!
     
     var dictionaryData = NSDictionary()
+   // var TelrWebView = UIWebView()
+      var TelrWebView = WKWebView()
+    
+    var TelrStartUrl : String!
+    var TelrCloseUrl : String!
+    var TelrAbortUrl : String!
+    var TelrTransCode : String!
+    
+    let activeView = UIView()
+    let activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad()
     {
@@ -51,7 +69,6 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
 
         // Do any additional setup after loading the view.
         
-     
          x = 10 / 375 * 100
          x = x * view.frame.width / 100
          
@@ -60,37 +77,161 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
       
         view.backgroundColor = UIColor.white
         
-        TelrGatewayView()
         
-         self.addDoneButtonOnKeyboard()
         
-         ExpMonthArray = ["01","02","03","04","05","06","07","08","09","10","11","12"]
-         ExpYearArray = ["2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035","2036","2037","2038","2039","2040"]
+       // TelrGatewayView()
         
-        self.ExpMonth_TF.text = ExpMonthArray[0] as? String
-        self.ExpYear_TF.text = ExpYearArray[0] as? String
+        // self.addDoneButtonOnKeyboard()
         
-        KEY = "XZCQ~9wRvD^prrJx"
+       //  ExpMonthArray = ["01","02","03","04","05","06","07","08","09","10","11","12"]
+       //  ExpYearArray = ["2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030","2031","2032","2033","2034","2035","2036","2037","2038","2039","2040"]
+        
+      //  self.ExpMonth_TF.text = ExpMonthArray[0] as? String
+       // self.ExpYear_TF.text = ExpYearArray[0] as? String
+        
+        
+        KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
         STOREID = "21552"
-        // EMAIL = "rohith.qol@gmail.com"
-        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
-        DeviceType = "Simulator"
-        DeviceAgent = "Card"
-        DeviceType = "Auth"
+      
+        //Your code goes here
+            print("Telr Start URL:",TelrStartUrl)
+            print("Telr Close URL:",TelrCloseUrl)
+            print("Telr Abort URL:",TelrAbortUrl)
+            print("Telr Code:",TelrTransCode)
         
-        AppName = "Mzyoon"
-        AppVersion = UIDevice.current.systemVersion
-        AppUser = "User"
-        AppId = "123456"
+        TelrWebView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(TelrWebView)
+        
+        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(activeView)
+        
+        activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicator.color = UIColor.white
+        activityIndicator.style = .whiteLarge
+        activityIndicator.startAnimating()
+        activeView.addSubview(activityIndicator)
+        
+      DispatchQueue.main.async (execute: { () -> Void in
+        /*
+         self.TelrWebView = UIWebView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+         self.TelrWebView.loadRequest(NSURLRequest(url: NSURL(string: self.TelrStartUrl)! as URL) as URLRequest)
+         self.TelrWebView.delegate = self;
+         self.view.addSubview(self.TelrWebView)
+        */
+        
+         self.activityIndicator.startAnimating()
+         self.activityIndicator.hidesWhenStopped = true
+         let request = URLRequest(url: URL(string: self.TelrStartUrl)!)
+         self.TelrWebView.load(request)
+        
+         })
+        
+        self.TelrWebView.addObserver(self, forKeyPath: #keyPath(WKWebView.isLoading), options: .new, context: nil)
+
+    }
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?)
+    {
+        if keyPath == "loading"
+        {
+            if TelrWebView.isLoading
+            {
+                activityIndicator.startAnimating()
+                activityIndicator.isHidden = false
+            }
+            else
+            {
+                activityIndicator.stopAnimating()   
+            }
+        }
     }
     
-
+    
+  /*
+    func webViewDidStartLoad(_ webView: UIWebView)
+    {
+        print("webViewDidStartLoad")
+        
+        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(activeView)
+        
+        activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicator.color = UIColor.white
+        activityIndicator.style = .whiteLarge
+        activityIndicator.startAnimating()
+        activeView.addSubview(activityIndicator)
+    }
+    func webViewDidFinishLoad(_ webView: UIWebView)
+    {
+        
+        print("webViewDidFinishLoad")
+        
+        activeView.removeFromSuperview()
+        activityIndicator.stopAnimating()
+       //  self.TelrWebView.loadRequest(NSURLRequest(url: NSURL(string: self.TelrCloseUrl)! as URL) as URLRequest)
+        
+         //TransactionRequest()
+    }
+  */
+    
+    func TransactionRequest()
+    {
+        let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            "<mobile>" +
+            "<store>\(STOREID!)</store>" +
+            "<key>\(KEY!)</key>" +
+            "<complete>\(TelrTransCode!)</complete>" +
+            "</mobile>"
+        
+        let urlString = "https://secure.innovatepayments.com/gateway/mobile_complete.xml"
+        if let url = NSURL(string: urlString)
+        {
+            let theRequest = NSMutableURLRequest(url: url as URL)
+            theRequest.addValue("application/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            theRequest.addValue((Message), forHTTPHeaderField: "Content-Length")
+            theRequest.httpMethod = "POST"
+            theRequest.httpBody = Message.data(using: String.Encoding.utf8)
+            let task = URLSession.shared.dataTask(with: theRequest as URLRequest)
+            { (data, response, error) in
+                if error == nil
+                {
+                    if let data = data, let responseString = String(data: data, encoding: String.Encoding.utf8)
+                    {
+                        print("responseString = \(responseString)")
+                        do
+                        {
+                            self.dictionaryData = try XMLReader.dictionary(forXMLData: data, options:UInt(XMLReaderOptionsProcessNamespaces)) as NSDictionary
+                            
+                             print("Value:",self.dictionaryData)
+                            
+                            
+                        }
+                        catch
+                        {
+                            print("Your Dictionary value nil")
+                        }
+                        //print(dictionaryData)
+                    }
+                }
+                else
+                {
+                    print(error!)
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    
+ /*
      func TelrGatewayView()
      {
+        
         let PaymentDetailsView = UIView()
         PaymentDetailsView.frame = CGRect(x: x, y: (5 * y) , width: view.frame.width - (2 * x), height: (10 * y))
         PaymentDetailsView.backgroundColor = UIColor(red:0.15, green:0.29, blue:0.12, alpha:1.0)
-        view.addSubview(PaymentDetailsView)
+       // view.addSubview(PaymentDetailsView)
         
         let PaymentLBL = UILabel()
         PaymentLBL.frame = CGRect(x: x, y: y/2 , width: PaymentDetailsView.frame.width - (2 * x), height: (3 * y))
@@ -132,7 +273,7 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
         CardsView.backgroundColor = UIColor.white
         CardsView.layer.borderWidth = 0.5
         CardsView.layer.borderColor = UIColor.lightGray.cgColor
-        view.addSubview(CardsView)
+       // view.addSubview(CardsView)
         
         
         // Delivery Info Label..
@@ -259,28 +400,29 @@ class TelrGateWayViewController: UIViewController,UITextFieldDelegate,UIPickerVi
         CardsView.addSubview(Cancel_BTN)
         
      }
+    
 
 func PaymentRequest()
 {
     
 let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
  "<mobile>" +
-    "<store>\(String(describing: STOREID))</store>" +
-    "<key>\(String(describing: KEY))</key>" +
+    "<store>\(STOREID!)</store>" +
+    "<key>\(KEY!)</key>" +
     "<device>" +
-    "<type>\(String(describing: DeviceType))</type>" +
-    "<id>\(String(describing: DeviceNum))</id>" +
-    "<agent>\(String(describing: DeviceAgent))</agent>" +
-    "<accept>\(String(describing: DeviceAccept))</accept>" +
+    "<type>\(DeviceType!)</type>" +
+    "<id>\(DeviceNum!)</id>" +
+    "<agent></agent>" +
+    "<accept></accept>" +
     "</device>" +
     "<app>" +
-    "<name>\(String(describing: AppName))</name>" +
-    "<version>\(String(describing: AppVersion))</version>" +
-    "<user>\(String(describing: AppUser))</user>" +
-    "<id>\(String(describing: AppId))</id>" +
+    "<name>\(AppName!)</name>" +
+    "<version>\(AppVersion!)</version>" +
+    "<user>Rohith</user>" +
+    "<id>\(AppId!)</id>" +
     "</app>" +
     "<tran>" +
-        "<test>0/test>" +
+        "<test>1</test>" +
         "<type>PayPage</type>" +
         "<class>cont</class>" +
         "<cartid>Sys100</cartid>" +
@@ -290,12 +432,12 @@ let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
         "<ref>100000</ref>" +
     "</tran>" +
     "<card>" +
-        "<number>4111111111111111</number>" +
+        "<number>\(CardNum!)</number>" +
         "<expiry>" +
-          "<month>05</month>" +
-          "<year>2020</year>" +
+          "<month>\(ExpMonth!)</month>" +
+          "<year>\(ExpYear!)</year>" +
         "</expiry>" +
-        "<cvv>123</cvv>" +
+        "<cvv>\(CVVNum!)</cvv>" +
     "</card>" +
     "<billing>" +
        "<name>" +
@@ -312,7 +454,7 @@ let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
          "<country>IN</country>" +
          "<zip>600002</zip>" +
        "</address>" +
-    "<email>\(String(describing: EMAIL))</email>" +
+    "<email>rohith.qol@gmail.com</email>" +
     "</billing>" +
  "</mobile>"
     
@@ -320,8 +462,7 @@ let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
         if let url = NSURL(string: urlString)
         {
             let theRequest = NSMutableURLRequest(url: url as URL)
-            theRequest.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            theRequest.addValue("http://tempuri.org/GetMISReqxml", forHTTPHeaderField: "SOAPAction")
+            theRequest.addValue("application/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
             theRequest.addValue((Message), forHTTPHeaderField: "Content-Length")
             theRequest.httpMethod = "POST"
             theRequest.httpBody = Message.data(using: String.Encoding.utf8)
@@ -331,14 +472,20 @@ let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 {
                     if let data = data, let responseString = String(data: data, encoding: String.Encoding.utf8)
                     {
-                         print("responseString = \(responseString)")
+                          print("responseString = \(responseString)")
                         do
                         {
                             self.dictionaryData = try XMLReader.dictionary(forXMLData: data, options:UInt(XMLReaderOptionsProcessNamespaces)) as NSDictionary
-                            
+                       
                             print("Value:",self.dictionaryData)
                             
-                         
+                            let mainDict = (((self.dictionaryData.object(forKey: "mobile")! as AnyObject).object(forKey: "webview")! as AnyObject).object(forKey: "start")! as AnyObject).object(forKey: "text")  ?? NSDictionary()
+                            
+                             print("Dict:",mainDict)
+                            
+                            
+                            self.ResponseWebView.loadHTMLString(mainDict as! String, baseURL: nil)
+                            
                         }
                         catch
                         {
@@ -360,24 +507,32 @@ let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
      @objc func MakePayment(sender : UIButton)
      {
         
-        PaymentRequest()
+        CardNum = self.CardNum_TF.text
+        CVVNum = self.CVV_TF.text
+        ExpMonth = self.ExpMonth_TF.text
+        ExpYear = self.ExpYear_TF.text
         
-      /*
-        if (CardNum_TF.text?.isEmpty)!
+       
+        
+       if (CardNum_TF.text?.isEmpty)!
        {
          let appointmentAlert = UIAlertController(title: "Message..!", message: "Please Enter Card Number", preferredStyle: .alert)
          appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         //appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         self.present(appointmentAlert, animated: true, completion: nil)
        }
-        else
-        {
-        let appointmentAlert = UIAlertController(title: "Alert..!", message: "Transaction Failed", preferredStyle: .alert)
-        appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
-        //appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        self.present(appointmentAlert, animated: true, completion: nil)
+       else
+       {
+         // PaymentRequest()
+        
+          /*
+            let appointmentAlert = UIAlertController(title: "Alert..!", message: "Transaction Failed", preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+            self.present(appointmentAlert, animated: true, completion: nil)
+          */
         }
-        */
+        
+       
      }
      @objc func CancelPayment(sender : UIButton)
      {
@@ -412,6 +567,7 @@ let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
     
     @objc func doneButtonAction()
     {
+        
         self.view.endEditing(true)
     }
     @objc func ExpiryMonthAction()
@@ -534,5 +690,6 @@ let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             ExpYear_TF.text = ExpYearArray[row] as? String
         }
     }
-
+*/
+    
 }

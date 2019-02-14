@@ -12,16 +12,56 @@ import TelrSDK
 class PaymentViewController: CommonViewController,UITextFieldDelegate
 {
     
-    let KEY:String = "XZCQ~9wRvD^prrJx"
-    let STOREID:String = "21552"
-    let EMAIL:String = "rohith.qol@gmail.com"
+  //  let KEY:String = "XZCQ~9wRvD^prrJx"
+ //   let STOREID:String = "21552"
+ //   let EMAIL:String = "rohith.qol@gmail.com"
     
     let Amount_TF = UITextField()
-    var TotalAmount:Int!
+    var TotalAmount:String!
+    
+    // Parameters:
+    var KEY:String!
+    var STOREID:String!
+    var EMAIL:String!
+    
+    var DeviceType:String!
+    var DeviceNum:String!
+    var DeviceAgent:String!
+    var DeviceAccept:String!
+    
+    var AppName:String!
+    var AppVersion:String!
+    var AppUser:String!
+    var AppId:String!
+    
+    var UserName:String!
+    
+    var CardNum:String!
+    var CVVNum:String!
+    var ExpMonth:String!
+    var ExpYear:String!
+    
+    var RequestId:String!
+    var Currency:String!
+    var Description:String!
+    
+    
+    var dictionaryData = NSDictionary()
+    var UrlDict = NSDictionary()
+    var TelrStartUrl:String!
+    var TelrCloseUrl:String!
+    var TelrAbortUrl:String!
+    var TelrTransCode:String!
+    
+    var TransMsg:String!
+    var StatusCode:String!
+    
+    var ResponseView : UIWebView!
     
    // var paymentRequest:PaymentRequest?
 
     let PaymentNavigationBar = UIView()
+    
     
    // var x = CGFloat()
   //  var y = CGFloat()
@@ -43,9 +83,222 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
          PaymentContent()
         
          self.addDoneButtonOnKeyboard()
+        
+        KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
+        STOREID = "21552"
+        EMAIL = "rohit@qolsofts.com"
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        DeviceType = UIDevice.current.name
+        DeviceAgent = ""
+        DeviceAccept = ""
+        
+        AppName = Bundle.main.infoDictionary![kCFBundleNameKey as String] as? String
+        AppVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        AppUser = Bundle.main.bundleIdentifier
+        AppId = "12345"
+        CardNum = ""
+        ExpYear = ""
+        ExpMonth = ""
+        CVVNum = ""
+       
+        Currency = "AED"
+        Description = "Testing"
+        RequestId = UserDefaults.standard.value(forKey: "requestId") as? String
+        UserName = UserDefaults.standard.value(forKey: "userName") as? String
+       
+        
     }
     
-
+    func PaymentRequest()
+    {
+        let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            "<mobile>" +
+            "<store>\(STOREID!)</store>" +
+            "<key>\(KEY!)</key>" +
+            "<device>" +
+            "<type>\(DeviceType!)</type>" +
+            "<id>\(DeviceNum!)</id>" +
+            "<agent>\(DeviceAgent!)</agent>" +
+            "<accept>\(DeviceAccept!)</accept>" +
+            "</device>" +
+            "<app>" +
+            "<name>\(AppName!)</name>" +
+            "<version>\(AppVersion!)</version>" +
+            "<user>\(AppUser!)</user>" +
+            "<id>\(AppId!)</id>" +
+            "</app>" +
+            "<tran>" +
+            "<test>1</test>" +
+            "<type>PayPage</type>" +
+            "<class>cont</class>" +
+            "<cartid>\(RequestId!)</cartid>" +
+            "<description>\(Description!)</description>" +
+            "<currency>\(Currency!)</currency>" +
+            "<amount>\(TotalAmount!)</amount>" +
+            "<ref>000000000001</ref>" +
+            "</tran>" +
+            "<card>" +
+            "<number>\(CardNum!)</number>" +
+            "<expiry>" +
+            "<month>\(ExpMonth!)</month>" +
+            "<year>\(ExpYear!)</year>" +
+            "</expiry>" +
+            "<cvv>\(CVVNum!)</cvv>" +
+            "</card>" +
+            "<billing>" +
+            "<name>" +
+            "<title>Mrs</title>" +
+            "<first>\(UserName!)</first>" +
+            "<last>tech</last>" +
+            "</name>" +
+            "<address>" +
+            "<line1>Venkatapuram</line1>" +
+            "<line2>velachery Road</line2>" +
+            "<line3>Saidapet</line3>" +
+            "<city>Chennai</city>" +
+            "<region>TN</region>" +
+            "<country>IN</country>" +
+            "<zip>600020</zip>" +
+            "</address>" +
+            "<email>\(EMAIL!)</email>" +
+            "</billing>" +
+        "</mobile>"
+        
+        let urlString = "https://secure.innovatepayments.com/gateway/mobile.xml"
+        if let url = NSURL(string: urlString)
+        {
+            let theRequest = NSMutableURLRequest(url: url as URL)
+            theRequest.addValue("application/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            theRequest.addValue((Message), forHTTPHeaderField: "Content-Length")
+            theRequest.httpMethod = "POST"
+            theRequest.httpBody = Message.data(using: String.Encoding.utf8)
+            let task = URLSession.shared.dataTask(with: theRequest as URLRequest)
+            { (data, response, error) in
+                if error == nil
+                {
+                    if let data = data, let responseString = String(data: data, encoding: String.Encoding.utf8)
+                    {
+                        print("responseString = \(responseString)")
+                        do
+                        {
+                            self.dictionaryData = try XMLReader.dictionary(forXMLData: data, options:UInt(XMLReaderOptionsProcessNamespaces)) as NSDictionary
+                            
+                             print("Value:",self.dictionaryData)
+                             print("Count:",[data.count])
+                            
+                          //  let mainDict = ((self.dictionaryData.object(forKey: "mobile")! as AnyObject).object(forKey: "webview")! as AnyObject).object(forKey: "text") ?? NSDictionary()
+                            if (Int(data.count) == 410)
+                            {
+                                let mobileDict = (self.dictionaryData.object(forKey: "mobile")! as AnyObject)
+                                // print("mobileDict:",mobileDict)
+                                
+                                let webViewDict = mobileDict.object(forKey: "webview")! as AnyObject
+                                //  print("webViewDict:",webViewDict)
+                                
+                                let StartWebView = webViewDict.object(forKey: "start")! as AnyObject
+                                //  print("StartWebView:",StartWebView)
+                                self.TelrStartUrl = (StartWebView.object(forKey: "text") as AnyObject) as? String
+                                print("TelrStartUrl :",self.TelrStartUrl)
+                                
+                                let CloseWebView = webViewDict.object(forKey: "close")! as AnyObject
+                                self.TelrCloseUrl = (CloseWebView.object(forKey: "text") as AnyObject) as? String
+                                print("TelrCloseUrl :",self.TelrCloseUrl)
+                                
+                                let AbortWebView = webViewDict.object(forKey: "abort")! as AnyObject
+                                self.TelrAbortUrl = (AbortWebView.object(forKey: "text") as AnyObject) as? String
+                                print("TelrAbortUrl :",self.TelrAbortUrl)
+                                
+                                let CodeWebView = webViewDict.object(forKey: "code")! as AnyObject
+                                self.TelrTransCode = (CodeWebView.object(forKey: "text") as AnyObject) as? String
+                                print("TelrTransCode :",self.TelrTransCode)
+                                
+                                if (self.TelrStartUrl != nil)
+                                {
+                                    DispatchQueue.main.async (execute: { () -> Void in
+                                        
+                                        self.window = UIWindow(frame: UIScreen.main.bounds)
+                                        let TelrScreen = TelrGateWayViewController()
+                                        TelrScreen.TelrStartUrl = self.TelrStartUrl
+                                        TelrScreen.TelrCloseUrl = self.TelrCloseUrl
+                                        TelrScreen.TelrAbortUrl = self.TelrAbortUrl
+                                        TelrScreen.TelrTransCode = self.TelrTransCode
+                                        let navigationScreen = UINavigationController(rootViewController: TelrScreen)
+                                        navigationScreen.isNavigationBarHidden = true
+                                        self.window?.rootViewController = navigationScreen
+                                        self.window?.makeKeyAndVisible()
+                                    })
+                                    
+                                }
+                                else
+                                {
+                                    
+                                }
+                                
+                            }
+                            else
+                            {
+                                let mobileDict = (self.dictionaryData.object(forKey: "mobile")! as AnyObject)
+                                // print("mobileDict:",mobileDict)
+                                
+                                let AuthDict = mobileDict.object(forKey: "auth")! as AnyObject
+                                //  print("webViewDict:",webViewDict)
+                                
+                                let MessageDict = AuthDict.object(forKey: "message")! as AnyObject
+                                //  print("webViewDict:",webViewDict)
+                                
+                                self.TransMsg = (MessageDict.object(forKey: "text") as AnyObject) as? String
+                                print("Msg:",self.TransMsg)
+                               
+                                let StatusDict = AuthDict.object(forKey: "status")! as AnyObject
+                                //  print("webViewDict:",webViewDict)
+                                
+                                self.StatusCode = (StatusDict.object(forKey: "text") as AnyObject) as? String
+                                print("Status:",self.StatusCode)
+                                
+                                if self.StatusCode == "H"
+                                {
+                                    DispatchQueue.main.async (execute: { () -> Void in
+                                       
+                                        let alert = UIAlertController(title: "Message", message: "Transaction Placed On hold" , preferredStyle:.alert)
+                                        // add an action (button)
+                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                                        // show the alert
+                                        self.present(alert, animated: true, completion: nil)
+                                    })
+                                    
+                                }
+                                else
+                                {
+                                    DispatchQueue.main.async (execute: { () -> Void in
+                                        
+                                        let alert = UIAlertController(title: "Message", message: "Request could not be processed" , preferredStyle:.alert)
+                                        // add an action (button)
+                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                                        // show the alert
+                                        self.present(alert, animated: true, completion: nil)
+                                    })
+                                }
+                                
+                             }
+                      
+                        }
+                       
+                        catch
+                        {
+                            print("Your Dictionary value nil")
+                        }
+                        //print(dictionaryData)
+                    }
+                }
+                else
+                {
+                    print(error!)
+                }
+            }
+            task.resume()
+        }
+        
+    }
     func PaymentContent()
     {
           stopActivity()
@@ -149,54 +402,31 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
     
     @objc func PayButtonAction(sender : UIButton)
     {
-        TotalAmount = Int(Amount_TF.text!)
-        print("Total Amount:",TotalAmount)
         
-        let TelrScreen = TelrGateWayViewController()
-       // TelrScreen.TotalAmount = TotalAmount
-        self.navigationController?.pushViewController(TelrScreen, animated: true)
-    }
-   
-    /*
-    private func preparePaymentRequest() -> PaymentRequest
-     {
-        
-        let paymentReq = PaymentRequest()
-        paymentReq.key = KEY
-        paymentReq.store = STOREID
-        paymentReq.appId = "123456789"
-        paymentReq.appName = "TelrSDK"
-        paymentReq.appUser = "123456"
-        paymentReq.appVersion = "0.0.1"
-        paymentReq.transTest = "1"
-        paymentReq.transType = "auth"
-        paymentReq.transClass = "paypage"
-        paymentReq.transCartid = String(arc4random())
-        paymentReq.transDesc = "Test API"
-        paymentReq.transCurrency = "AED"
-        paymentReq.transAmount = self.Amount_TF.text!
-        paymentReq.transLanguage = "en"
-        paymentReq.billingEmail = EMAIL // TODO fill email
-        paymentReq.billingFName = "Hany"
-        paymentReq.billingLName = "Sakr"
-        paymentReq.billingTitle = "Mr"
-        paymentReq.city = "Dubai"
-        paymentReq.country = "AE"
-        paymentReq.region = "Dubai"
-        paymentReq.address = "line 1"
-        paymentReq.billingPhone="8785643"
-        return paymentReq
-    }
-    */
+       TotalAmount = self.Amount_TF.text
+       
+      if RequestId == nil
+      {
+        RequestId = String(arc4random())
+        print("Request ID:",RequestId)
+      }
+     
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+      if UserName == nil
+      {
+         UserName = "QolTech"
+      }
+     
+        
+        PaymentRequest()
+      
+     /*
+        let TelrScreen = TelrGateWayViewController()
+        //TelrScreen.UrlString = UrlDict
+        self.navigationController?.pushViewController(TelrScreen, animated: true)
+     */
+        
+  }
+  
 }
+

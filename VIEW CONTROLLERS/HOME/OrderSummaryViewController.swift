@@ -699,7 +699,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             
             UserDefaults.standard.set(Result, forKey: "requestId")
             
-            let alert = UIAlertController(title: "Oredered Placed Successfully", message: "Order Id = \(Result)", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Ordered Placed Successfully", message: "Order Id = \(Result)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
             self.present(alert, animated: true, completion: nil)
         }

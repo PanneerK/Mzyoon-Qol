@@ -691,7 +691,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         //let Material_ApproveButton = UIButton()
         Material_ApproveButton.frame = CGRect(x: (8 * x), y: Material_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
-        Material_ApproveButton.backgroundColor = UIColor.black
+        Material_ApproveButton.backgroundColor = UIColor(red:0.25, green:0.62, blue:0.25, alpha:1.0)
         Material_ApproveButton.setTitle("Approve", for: .normal)
         Material_ApproveButton.setTitleColor(UIColor.white, for: .normal)
         Material_ApproveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
@@ -705,7 +705,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
        // let Material_RejectButton = UIButton()
         Material_RejectButton.frame = CGRect(x: Material_ApproveButton.frame.maxX + (2 * x), y: Material_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
-        Material_RejectButton.backgroundColor = UIColor.black
+        Material_RejectButton.backgroundColor = UIColor(red:0.86, green:0.13, blue:0.14, alpha:1.0)
         Material_RejectButton.setTitle("Reject", for: .normal)
         Material_RejectButton.setTitleColor(UIColor.white, for: .normal)
         Material_RejectButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
@@ -980,7 +980,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
        // let ApproveButton = UIButton()
        Measure_ApproveButton.frame = CGRect(x: (8 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
-         Measure_ApproveButton.backgroundColor = UIColor.black
+         Measure_ApproveButton.backgroundColor = UIColor(red:0.25, green:0.62, blue:0.25, alpha:1.0)
         Measure_ApproveButton.setTitle("Approve", for: .normal)
         Measure_ApproveButton.setTitleColor(UIColor.white, for: .normal)
         Measure_ApproveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
@@ -992,7 +992,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
        // let RejectButton = UIButton()
        Measure_RejectButton.frame = CGRect(x: Measure_ApproveButton.frame.maxX + (2 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
-         Measure_RejectButton.backgroundColor = UIColor.black
+         Measure_RejectButton.backgroundColor = UIColor(red:0.86, green:0.13, blue:0.14, alpha:1.0)
         Measure_RejectButton.setTitle("Reject", for: .normal)
         Measure_RejectButton.setTitleColor(UIColor.white, for: .normal)
         Measure_RejectButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
