@@ -44,6 +44,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     var DeliveryTypeArray = NSArray()
     var StichingTimesArray = NSArray()
     
+    let emptyLabel = UILabel()
+    
     override func viewDidLoad()
     {
        // print("SUCCESS")
@@ -159,8 +161,19 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         {
             let Result = orderApprovalDelivery.object(forKey: "Result") as! NSDictionary
             print("Result", Result)
-         
-            let Appointments = Result.object(forKey: "Appoinments") as! NSArray
+            
+            if Result.count == 0 || Result == nil
+            {
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.text = "You don't have any order request"
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                view.addSubview(emptyLabel)
+            }
+            
+          let Appointments = Result.object(forKey: "Appoinments") as! NSArray
             AppoinmentArray = Appointments.value(forKey: "Appoinment") as! NSArray
             print("AppoinmentArray", AppoinmentArray)
             
@@ -175,6 +188,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             let StichingTime = Result.object(forKey: "StichingTime") as! NSArray
             StichingTimesArray = StichingTime.value(forKey: "StichingTimes") as! NSArray
             print("StichingTimesArray", StichingTimesArray)
+            
             
         }
         else if ResponseMsg == "Failure"
