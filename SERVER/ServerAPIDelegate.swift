@@ -93,10 +93,8 @@ import Foundation
     @objc optional func API_CALLBACK_GetAppointmentList(getAppointmentList : NSDictionary)
     @objc optional func API_CALLBACK_ApproveRejectAppointmentList(getTotalAppointmentList : NSDictionary)
     
-    
     //29.01.2019
     @objc optional func API_CALLBACK_ServiceRequest(service : NSDictionary)
-    
     
     //01.02.2019
     @objc optional func API_CALLBACK_DirectionRequest(direction : NSDictionary)
