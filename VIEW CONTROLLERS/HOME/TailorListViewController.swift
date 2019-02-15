@@ -749,7 +749,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
         else
         {
-            //            marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
+            // marker.position = CLLocationCoordinate2D(latitude: (mapView.myLocation?.coordinate.latitude)!, longitude: (mapView.myLocation?.coordinate.longitude)!)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
             marker.iconView = markerImageView
             marker.map = mapView

@@ -40,7 +40,7 @@ class TelrResponseViewController: CommonViewController
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        PaymentNavigationBar.addSubview(backButton)
+        //PaymentNavigationBar.addSubview(backButton)
         
         let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: PaymentNavigationBar.frame.width, height: (3 * y))
@@ -86,24 +86,25 @@ class TelrResponseViewController: CommonViewController
         
     }
     
-    
-    @objc func doneButtonAction()
-    {
-        self.view.endEditing(true)
-    }
-    
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
     }
+    
     @objc func DoneButtonAction(sender : UIButton)
     {
+        /*
         window = UIWindow(frame: UIScreen.main.bounds)
         let loginScreen = HomeViewController()
         let navigationScreen = UINavigationController(rootViewController: loginScreen)
         navigationScreen.isNavigationBarHidden = true
         window?.rootViewController = navigationScreen
         window?.makeKeyAndVisible()
+      */
+        
+        let HomeScreen = HomeViewController()
+        self.navigationController?.pushViewController(HomeScreen, animated: true)
+        
     }
 
 }

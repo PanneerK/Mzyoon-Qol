@@ -144,14 +144,14 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         AppointmentListNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(AppointmentListNavigationBar)
      
-      /*
+      
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         AppointmentListNavigationBar.addSubview(backButton)
-     */
+     
         
         let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: AppointmentListNavigationBar.frame.width, height: (3 * y))
@@ -362,11 +362,11 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         
     }
     
-   /*
+   
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
     }
-   */
+ 
    
 }

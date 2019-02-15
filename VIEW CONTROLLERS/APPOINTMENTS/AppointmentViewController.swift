@@ -439,7 +439,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         
         
-  //----------------------------------------OrderType View---------------------------------------------------------------
+ //----------------------------------------OrderType View---------------------------------------------------------------
         
         // OrderType View..
         OrderTypeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (40 * y))
@@ -459,10 +459,11 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         OrderTypeView.addSubview(orderTypeLabel)
       
         
-      //-------------------------------AppointmentStatusView---------------------
+ // -------------------------------AppointmentStatusView---------------------
         
         let Material_AppointmentStatusView = UIView()
-        Material_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (2 * x)) / 2), y: orderTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
+       // Material_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (2 * x)) / 2), y: orderTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
+        Material_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (4 * x)) / 2), y: orderTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
         Material_AppointmentStatusView.backgroundColor = UIColor.white
         Material_AppointmentStatusView.layer.borderColor = UIColor.lightGray.cgColor
         Material_AppointmentStatusView.layer.borderWidth = 1.0
