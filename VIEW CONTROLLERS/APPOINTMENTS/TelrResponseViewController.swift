@@ -8,13 +8,23 @@
 
 import UIKit
 
-class TelrResponseViewController: CommonViewController
+class TelrResponseViewController: CommonViewController,ServerAPIDelegate
 {
+   
+    let serviceCall = ServerAPI()
     
     var TransRef:String!
     var TransTraceNum:String!
     
-     let PaymentNavigationBar = UIView()
+    let PaymentNavigationBar = UIView()
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
     
     override func viewDidLoad()
     {
@@ -40,7 +50,7 @@ class TelrResponseViewController: CommonViewController
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        PaymentNavigationBar.addSubview(backButton)
+        //PaymentNavigationBar.addSubview(backButton)
         
         let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: PaymentNavigationBar.frame.width, height: (3 * y))
@@ -63,7 +73,7 @@ class TelrResponseViewController: CommonViewController
         AmountLabel.frame = CGRect(x: x, y: y, width: PaymentView.frame.width - (2 * x), height: (6 * y))
         // AmountLabel.backgroundColor = UIColor.gray
         AmountLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        AmountLabel.text = "Payment Placed Successfully Your Transaction Number is \(TransRef!)"
+        AmountLabel.text = "Payment Success , Your Transaction Reference Number is  : \(TransRef!)"
         AmountLabel.font = UIFont(name: "Avenir Next", size: 16)
         AmountLabel.textColor = UIColor.black
         AmountLabel.textAlignment = .left
@@ -86,12 +96,6 @@ class TelrResponseViewController: CommonViewController
         
     }
     
-    
-    @objc func doneButtonAction()
-    {
-        self.view.endEditing(true)
-    }
-    
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
@@ -99,14 +103,114 @@ class TelrResponseViewController: CommonViewController
     
     @objc func DoneButtonAction(sender : UIButton)
     {
-        
+        /*
         window = UIWindow(frame: UIScreen.main.bounds)
         let loginScreen = HomeViewController()
         let navigationScreen = UINavigationController(rootViewController: loginScreen)
         navigationScreen.isNavigationBarHidden = true
         window?.rootViewController = navigationScreen
         window?.makeKeyAndVisible()
+      */
+        
+        /*
+        if let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
+        {
+            self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId, delegate: self)
+        }
+        else if let orderId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId:Int(orderId)!, delegate: self)
+        }
+        */
+        let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
+        let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
+        
+        print("orderId :",orderId!)
+        print("TailorId :",TailorId!)
+        
+        self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
+        self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
+        
+        
+        let HomeScreen = HomeViewController()
+        self.navigationController?.pushViewController(HomeScreen, animated: true)
         
     }
+    
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "TelrResponseViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+        
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("Book an appointment : ", errorMessage)
+    }
+    
+    func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
+    {
+        let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = deviceError.object(forKey: "Result") as! String
+            print("Result", Result)
+        }
+    }
+    
+    func API_CALLBACK_UpdatePaymentStatus(updatePaymentStatus: NSDictionary)
+    {
+        let ResponseMsg = updatePaymentStatus.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = updatePaymentStatus.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = updatePaymentStatus.object(forKey: "Result") as! String
+            
+            ErrorStr = Result
+            MethodName = ""
+            
+            DeviceError()
+          
+        }
+        
+    }
+    func API_CALLBACK_BuyerOrderApproval(buyerOrderApproval: NSDictionary)
+    {
+        let ResponseMsg = buyerOrderApproval.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = buyerOrderApproval.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = buyerOrderApproval.object(forKey: "Result") as! String
+            
+            ErrorStr = Result
+            MethodName = ""
+            
+            DeviceError()
+            
+        }
+    }
+    
+
 
 }

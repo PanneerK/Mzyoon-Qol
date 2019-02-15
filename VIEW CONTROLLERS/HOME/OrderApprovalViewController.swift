@@ -21,7 +21,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     let deliveryDetailsView = UIView()
      let QtyNumTF = UITextField()
     var qtyNum : Int!
-    var orderID : Int!
+    var TailorID : Int!
     
     let serviceCall = ServerAPI()
     
@@ -56,7 +56,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             // Your code with delay
             
        
-            self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.orderID, delegate: self)
+            self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorID, delegate: self)
             
       //  self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
         
@@ -147,7 +147,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             
         }
         
-        self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
+        self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: self.TailorID, delegate: self)
         
         // self.orderApprovalContent()
     }
@@ -238,7 +238,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     func proceedAlertAction(action : UIAlertAction)
     {
         let AppointmentScreen = AppointmentViewController()
-        AppointmentScreen.OrderID = orderID
+         AppointmentScreen.TailorID = TailorID
         self.navigationController?.pushViewController(AppointmentScreen, animated: true)
     }
     
@@ -1183,11 +1183,12 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         qtyNum = Int(QtyNumTF.text!)
        
         print("Qty:",qtyNum)
-        print("orderID:",orderID)
+        let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
+        print("order_Id:",order_Id!)
         
       if qtyNum != nil
       {
-         self.serviceCall.API_UpdateQtyOrderApproval(OrderId: orderID, Qty: qtyNum, delegate: self)
+        self.serviceCall.API_UpdateQtyOrderApproval(OrderId: order_Id!, Qty: qtyNum, delegate: self)
          print("Redirect To Next Page.. !")
       }
       else

@@ -2278,5 +2278,39 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
+    
+    // Insert Payment Status...
+    func API_InsertPaymentStatus(OrderId : Int, Transactionid : Int, Amount : String, Status : String, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Reviews And Ratings Page")
+            
+            let parameters = ["OrderId" : OrderId, "Transactionid" : Transactionid, "Amount" : Amount, "Status" : Status] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/InsertPaymentStatus", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
+            print("PARAMETERS", parameters)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
+                print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_InsertPaymentStatus!(status: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 35, errorMessage: "Insert Payment Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
 
 }

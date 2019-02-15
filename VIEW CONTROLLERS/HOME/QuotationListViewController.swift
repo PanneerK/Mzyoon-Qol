@@ -45,8 +45,9 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
 //         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 1)
 
-        
          print("request Order ID :",OrderId)
+        UserDefaults.standard.set(OrderId, forKey: "OrderID")
+        
         
           self.serviceCall.API_GetQuotationList(OrderId: OrderId, delegate: self)
         //  self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
@@ -231,7 +232,11 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorImageButton.addTarget(self, action: #selector(self.tailorSelectionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(tailorImageButton)
           */
-           
+            
+            let TailorId : Int = IdArray[i] as! Int
+            print("TailorID:","\(TailorId)")
+            tailorViewButton.tag = IdArray[i] as! Int
+            
             let Name_Icon = UIImageView()
             Name_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y/2, width: x, height: y)
             Name_Icon.image = UIImage(named: "TailorName")
@@ -345,7 +350,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
         let orderApproveScreen = OrderApprovalViewController()
-        orderApproveScreen.orderID = OrderId
+        orderApproveScreen.TailorID = sender.tag
         self.navigationController?.pushViewController(orderApproveScreen, animated: true)
     }
     
