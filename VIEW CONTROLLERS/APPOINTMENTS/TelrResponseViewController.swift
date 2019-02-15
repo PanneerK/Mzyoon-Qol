@@ -96,14 +96,17 @@ class TelrResponseViewController: CommonViewController
     {
         self.navigationController?.popViewController(animated: true)
     }
+    
     @objc func DoneButtonAction(sender : UIButton)
     {
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         let loginScreen = HomeViewController()
         let navigationScreen = UINavigationController(rootViewController: loginScreen)
         navigationScreen.isNavigationBarHidden = true
         window?.rootViewController = navigationScreen
         window?.makeKeyAndVisible()
+        
     }
 
 }
