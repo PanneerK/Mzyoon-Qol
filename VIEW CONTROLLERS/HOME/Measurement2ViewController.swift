@@ -1468,7 +1468,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     let urlString = serviceCall.baseURL
                     let api = "\(urlString)/images/Measurement2/\(imageName)"
                     let apiurl = URL(string: api)
-                    print("PArts : ", api)
+                    print("Parts : ", api)
                     
                     if apiurl != nil
                     {

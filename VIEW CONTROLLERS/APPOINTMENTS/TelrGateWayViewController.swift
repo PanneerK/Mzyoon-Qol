@@ -208,6 +208,7 @@ class TelrGateWayViewController: UIViewController,UIWebViewDelegate
     }
  
   */
+    
     func webViewDidStartLoad(_ webView: UIWebView)
     {
         print("webViewDidStartLoad")

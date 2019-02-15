@@ -34,7 +34,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     var MethodName:String!
     
     var OrderID:Int!
-   
+    var TailorID:Int!
     
     // Material...
     var Material_FromDatePick = UIDatePicker()
@@ -86,23 +86,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        
      //  AppointmentContent()
         
+        print("TailorID:",TailorID)
         print("order ID:", OrderID)
-        
-      if(OrderID != nil)
-      {
-         self.serviceCall.API_GetAppointmentMaterial(OrderId: OrderID, delegate: self)
-         self.serviceCall.API_GetAppointmentMeasurement(OrderId: OrderID, delegate: self)
-        
-         // AppointmentContent()
-      }
-      else
-      {
-         print("Order ID Empty/nil..")
-        
-          // self.serviceCall.API_GetAppointmentMaterial(OrderId: 1, delegate: self)
-          // self.serviceCall.API_GetAppointmentMeasurement(OrderId: 4, delegate: self)
-      }
-        
+      
+        if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
+        {
+            self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
+            self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
+        }
+       
+
        TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
         
     }
@@ -387,8 +380,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     func proceedAlertAction(action : UIAlertAction)
     {
-        let HomeScreen = PaymentViewController()
-        self.navigationController?.pushViewController(HomeScreen, animated: true)
+        let PayScreen = PaymentViewController()
+        PayScreen.TailorId = TailorID
+        self.navigationController?.pushViewController(PayScreen, animated: true)
     }
     
     func AppointmentContent()

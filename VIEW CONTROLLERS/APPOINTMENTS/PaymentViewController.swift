@@ -24,6 +24,8 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
     var STOREID:String!
     var EMAIL:String!
     
+    var TailorId:Int!
+    
     var DeviceType:String!
     var DeviceNum:String!
     var DeviceAgent:String!
@@ -44,7 +46,6 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
     var RequestId:String!
     var Currency:String!
     var Description:String!
-    
     
     var dictionaryData = NSDictionary()
     var UrlDict = NSDictionary()
@@ -68,6 +69,9 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
     
     override func viewDidLoad()
     {
+        print("TailorId",TailorId)
+        UserDefaults.standard.set(TailorId, forKey: "TailorID")
+        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -86,6 +90,7 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         
         KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
         STOREID = "21552"
+        
         EMAIL = "rohit@qolsofts.com"
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         DeviceType = UIDevice.current.name
@@ -106,7 +111,6 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         RequestId = UserDefaults.standard.value(forKey: "requestId") as? String
         UserName = UserDefaults.standard.value(forKey: "userName") as? String
        
-        
     }
     
     func PaymentRequest()
