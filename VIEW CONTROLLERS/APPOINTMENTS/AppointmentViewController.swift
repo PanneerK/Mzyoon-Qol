@@ -36,6 +36,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     var OrderID:Int!
     var TailorID:Int!
     
+    var TotalAmount:String!
+    
     // Material...
     var Material_FromDatePick = UIDatePicker()
     var Material_ToDatePick = UIDatePicker()
@@ -257,7 +259,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             DeviceError()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You don't have any order request"
+            emptyLabel.text = "You don't have any Appointment request"
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
             emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -279,7 +281,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             if Result.count == 0 || Result == nil
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any order request"
+                emptyLabel.text = "You don't have any Appointment request"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -318,7 +320,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             DeviceError()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You don't have any order request"
+            emptyLabel.text = "You don't have any Appointment request"
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
             emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -382,6 +384,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     {
         let PayScreen = PaymentViewController()
         PayScreen.TailorId = TailorID
+        PayScreen.TotalAmount = TotalAmount
         self.navigationController?.pushViewController(PayScreen, animated: true)
     }
     

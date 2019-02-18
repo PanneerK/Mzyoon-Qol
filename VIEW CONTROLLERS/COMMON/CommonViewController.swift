@@ -413,7 +413,7 @@ class CommonViewController: UIViewController
         selectedButton(tag: sender.tag)
         
         var navigateScreen = UIViewController()
-        let alertControls = UIAlertController(title: "Alert", message: "No Data", preferredStyle: .alert)
+        let alertControls = UIAlertController(title: "Message", message: "Cart is Empty", preferredStyle: .alert)
         alertControls.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         // Home..
         if sender.tag == 0

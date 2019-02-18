@@ -19,6 +19,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     //let orderIdNumLabel = UILabel()
     
     var BuyerId : Int!
+    var RequestDate = String()
     
     // Error PAram...
     var DeviceNum:String!
@@ -177,7 +178,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     func RequestListView()
     {
         let backDrop = UIView()
-        backDrop.frame = CGRect(x: (3 * x), y: RequestListNavigationBar.frame.maxY + y, width: view.frame.width - (4 * x), height: view.frame.height - (13 * y))
+        backDrop.frame = CGRect(x: (3 * x), y: RequestListNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
         backDrop.backgroundColor = UIColor.clear
         view.addSubview(backDrop)
      
@@ -255,7 +256,11 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             let tailorName = UILabel()
             tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: 0, width: RequestViewButton.frame.width / 2, height: (2 * y))
-            tailorName.text = RequestDtArray[i] as? String
+            if let date = RequestDtArray[i] as? String
+            {
+                RequestDate = String(date.prefix(10))
+            }
+            tailorName.text = RequestDate
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
