@@ -89,6 +89,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
      //  AppointmentContent()
         
         print("TailorID:",TailorID)
+        
         print("order ID:", OrderID)
       
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
@@ -753,7 +754,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
       
         let Measurement_AppointmentStatusView = UIView()
-        Measurement_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (2 * x)) / 2), y: MaterialTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
+        Measurement_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (4 * x)) / 2), y: MaterialTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
         Measurement_AppointmentStatusView.backgroundColor = UIColor.white
         Measurement_AppointmentStatusView.layer.borderColor = UIColor.lightGray.cgColor
         Measurement_AppointmentStatusView.layer.borderWidth = 1.0

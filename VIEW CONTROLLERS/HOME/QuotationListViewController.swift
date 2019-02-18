@@ -35,6 +35,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     var StichTimeArray = NSArray()
     var TotalAmountArray = NSArray()
     
+    let emptyLabel = UILabel()
     
     override func viewDidLoad()
     {
@@ -93,14 +94,28 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             let Result = quotationList.object(forKey: "Result") as! NSDictionary
             print("Result:", Result)
             
-            let QuotationList = Result.object(forKey: "QuotationList") as! NSArray
+           let QuotationList = Result.object(forKey: "QuotationList") as! NSArray
              // print("QuotationList:",QuotationList)
+            if QuotationList.count == 0 || QuotationList == nil
+            {
+              
+                emptyLabel.frame = CGRect(x: (4 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (8 * x), height: (6 * y))
+                emptyLabel.text = "Tailors Yet to Accept Request.,Please Come Back After Some time..!"
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                emptyLabel.textAlignment = .left
+                emptyLabel.lineBreakMode = .byWordWrapping
+                emptyLabel.numberOfLines = 4
+                view.addSubview(emptyLabel)
+            }
             
             OrderIdArray = QuotationList.value(forKey: "OrderId") as! NSArray
           //  print("OrderIdArray", OrderIdArray)
             
             IdArray = QuotationList.value(forKey: "Id") as! NSArray
-           // print("IdArray", IdArray)
+           // print("IdArray", QuotationList)
             
             TailorNameArray = QuotationList.value(forKey: "TailorNameInEnglish") as! NSArray
            // print("TailorNameArray", TailorNameArray)
@@ -131,6 +146,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         }
         
     }
+  
     
    func quotationListContent()
    {
