@@ -593,7 +593,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     @objc func dressTypeButtonAction(sender : UIButton)
     {
-        if sender.tag == 1 || sender.tag == 5
+        if sender.tag != 0
         {
         print("DRESS TYPE OF SELECTED - \(sender.tag)")
 

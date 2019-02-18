@@ -18,9 +18,9 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
- //   var baseURL:String = "http://192.168.0.26/TailorAPI"
+    //   var baseURL:String = "http://192.168.0.26/TailorAPI"
 
-      var baseURL:String = "http://appsapi.mzyoon.com"
+        var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
     
@@ -309,6 +309,8 @@ class ServerAPI : NSObject
             let parameters = [:] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetDressTypeByGender?genderId=\(genderId)", arguments: [baseURL])
+            
+            print("DRESS TYPE API", urlString)
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 
@@ -921,6 +923,8 @@ class ServerAPI : NSObject
             let parameters = [:] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/DisplayDressSubType?Id=\(DressSubTypeId)", arguments: [baseURL])
+            
+            print("DRESS TYPE")
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 print("REQUEST", urlString)

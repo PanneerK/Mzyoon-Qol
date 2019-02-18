@@ -93,22 +93,32 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             let Result = dressSubType.object(forKey: "Result") as! NSArray
             print("Result", Result)
             
-            dressIdArray = Result.value(forKey: "Id") as! NSArray
-            print("dressIdArray", dressIdArray)
-            
-            dressSubTypeIdArray = Result.value(forKey: "DressId") as! NSArray
-            print("Result", Result)
-            
-            dressSubTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
-            print("dressSubTypeArray", dressSubTypeArray)
-            
-            dressSubTypeArrayInArabic = Result.value(forKey: "NameInArabic") as! NSArray
-            print("NameInArabic", dressSubTypeArrayInArabic)
-            
-            dressSubTypeImages = Result.value(forKey: "Image") as! NSArray
-            print("dressSubTypeImages", dressSubTypeImages)
-            
-            screenContents()
+            if Result.count != 0
+            {
+                dressIdArray = Result.value(forKey: "Id") as! NSArray
+                print("dressIdArray", dressIdArray)
+                
+                dressSubTypeIdArray = Result.value(forKey: "DressId") as! NSArray
+                print("Result", Result)
+                
+                dressSubTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
+                print("dressSubTypeArray", dressSubTypeArray)
+                
+                dressSubTypeArrayInArabic = Result.value(forKey: "NameInArabic") as! NSArray
+                print("NameInArabic", dressSubTypeArrayInArabic)
+                
+                dressSubTypeImages = Result.value(forKey: "Image") as! NSArray
+                print("dressSubTypeImages", dressSubTypeImages)
+                
+                screenContents()
+            }
+            else
+            {
+                stopActivity()
+                let emptyAlert = UIAlertController(title: "Alert", message: "We don't have sub types in this", preferredStyle: .alert)
+                emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyDressTypesAlertAction(action:)))
+                self.present(emptyAlert, animated: true, completion: nil)
+            }
         }
         else if ResponseMsg == "Failure"
         {
@@ -118,6 +128,11 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             ErrorStr = Result
             DeviceError()
         }
+    }
+    
+    func emptyDressTypesAlertAction(action : UIAlertAction)
+    {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func screenContents()

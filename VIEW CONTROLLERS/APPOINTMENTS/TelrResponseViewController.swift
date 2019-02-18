@@ -122,6 +122,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
             self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId:Int(orderId)!, delegate: self)
         }
         */
+        
         let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
         let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
         
@@ -210,6 +211,5 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
             
         }
     }
-    
 
 }

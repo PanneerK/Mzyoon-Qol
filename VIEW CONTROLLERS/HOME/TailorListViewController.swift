@@ -344,6 +344,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         backDrop.backgroundColor = UIColor.clear
         view.addSubview(backDrop)
         
+        self.view.bringSubviewToFront(slideMenuButton)
+        
         backDrop.isHidden = isHidden
         
         let totalTailersCountLabel = UILabel()
@@ -715,6 +717,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
         
+        self.view.bringSubviewToFront(slideMenuButton)
+        
         let camera = GMSCameraPosition.camera(withLatitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, zoom: 17.0)
         self.mapView.animate(to: camera)
         
@@ -811,7 +815,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         ratingLabel.font = ratingLabel.font.withSize(1.2 * x)
         tailorDeatiledView.addSubview(ratingLabel)
         
-        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
+        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 4, height: (1.5 * y))
         tailorDeatiledView.addSubview(ratingImageView)
         
         ratingCountLabel.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
@@ -904,7 +908,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
         }
         
-        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
+//        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
     }
     
     @objc func closeAddressLabel()

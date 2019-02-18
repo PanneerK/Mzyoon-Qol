@@ -414,6 +414,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     func AppointmentTypeView()
     {
+        var y2:CGFloat = 0
         //ScrollView..
         
         //let AppointmentScrollview = UIScrollView()
@@ -421,7 +422,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         AppointmentScrollview.backgroundColor = UIColor.clear
         view.addSubview(AppointmentScrollview)
         
-        var viewType : Float!
         
         if MaterialInEnglish .contains("Companies-Material")
         {
@@ -436,7 +436,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
  //----------------------------------------OrderType View---------------------------------------------------------------
         
         // OrderType View..
-        OrderTypeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (40 * y))
+        OrderTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
        // OrderTypeView.backgroundColor = UIColor.lightGray
         AppointmentScrollview.addSubview(OrderTypeView)
         
@@ -728,8 +728,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     //------------------------------------------MeasurementType View--------------------------------------------------------
         
         // MEASUREMENT_1 Type View..
+        
+        y2 = OrderTypeView.frame.maxY + y
 
-        MeasurementTypeView.frame = CGRect(x: 0, y: OrderTypeView.frame.maxY + y, width: view.frame.width, height: (40 * y))
+        MeasurementTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
         //MeasurementTypeView.backgroundColor = UIColor.darkGray
         AppointmentScrollview.addSubview(MeasurementTypeView)
         
