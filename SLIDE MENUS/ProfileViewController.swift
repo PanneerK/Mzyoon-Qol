@@ -60,6 +60,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     let activeView = UIView()
     let activityIndicator = UIActivityIndicatorView()
     
+    //NAVIGATION CONTENTS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -69,6 +73,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         y = y * view.frame.height / 100
         
         view.backgroundColor = UIColor.white
+        
+        active()
         
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
@@ -401,34 +407,85 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         activityIndicator.stopAnimating()
     }
     
+    func changeViewToArabicInSelf()
+    {
+        self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "الملف الشخصي"
+        
+        userName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        userName.textAlignment = .right
+        
+        mobileNumber.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        mobileNumber.textAlignment = .right
+        
+        email.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        email.textAlignment = .right
+        
+        dob.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        dob.textAlignment = .right
+        
+        genderHeadingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        genderHeadingLabel.text = "جنس"
+        
+        updateButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        updateButton.setTitle("تعديل الملف الشخصي", for: .normal)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        self.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "PROFILE"
+        
+        userName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        userName.textAlignment = .left
+        
+        mobileNumber.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        mobileNumber.textAlignment = .left
+        
+        email.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        email.textAlignment = .left
+        
+        dob.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        dob.textAlignment = .left
+        
+        genderHeadingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        genderHeadingLabel.text = "Gender : "
+        
+        updateButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        updateButton.setTitle("Edit Profile", for: .normal)
+    }
+    
     func screenContents()
     {
+        activeStop()
+
         let backgroundImage = UIImageView()
         backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         backgroundImage.image = UIImage(named: "background")
         view.addSubview(backgroundImage)
         
-        let navigationBar = UIView()
-        navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-        view.addSubview(navigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.addTarget(self, action: #selector(self.backButtonAction(sender:)), for: .touchUpInside)
         backButton.tag = 3
-        navigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "PROFILE"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        navigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "PROFILE"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        userImage.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: navigationBar.frame.maxY + y, width: (15 * x), height: (15 * x))
+        userImage.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: selfScreenNavigationBar.frame.maxY + y, width: (15 * x), height: (15 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.backgroundColor = UIColor.white
         userImage.layer.masksToBounds = true
@@ -539,7 +596,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (4 * y), width: view.frame.width - (12 * x), height: (2 * y))
         if getDOB.isEmpty == true
         {
-            dob.placeholder = "mm/dd/yyyy - Date of Birth"
+            dob.placeholder = "dd/mm/yyyy - Date of Birth"
         }
         else
         {
@@ -646,10 +703,27 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         updateButton.frame = CGRect(x: (3 * x), y: genderButton.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (4 * y))
         updateButton.layer.cornerRadius = 10
         updateButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        updateButton.setTitle("Update Profile", for: .normal)
+        updateButton.setTitle("Edit Profile", for: .normal)
         updateButton.setTitleColor(UIColor.white, for: .normal)
         updateButton.addTarget(self, action: #selector(self.updateButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(updateButton)
+        
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func genderButtonActions(sender : UIButton)
@@ -846,6 +920,15 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         sender.removeFromSuperview()
         saveButton.removeFromSuperview()
+        
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            serviceCall.API_ExistingUserProfile(Id: "\(userId)", delegate: self)
+        }
     }
     
     @objc func saveButtonAction(sender : UIButton)

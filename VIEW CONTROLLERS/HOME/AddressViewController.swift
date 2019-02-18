@@ -59,6 +59,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     var selectedAddressString = [String]()
     var selectedCoordinate  = CLLocationCoordinate2D()
     
+    var deleteInt = Int()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -349,28 +351,28 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 y1 = addressSelectButton.frame.maxY + (2 * y)
                 
                 let addressIcon = UIImageView()
-                addressIcon.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
-                addressIcon.image = UIImage(named: "locationMarker")
+                addressIcon.frame = CGRect(x: x, y: y + (y / 2), width: (2 * x), height: (2 * y))
+                addressIcon.image = UIImage(named: "state")
                 addressSelectButton.addSubview(addressIcon)
                 
                 let addressTitle = UILabel()
-                addressTitle.frame = CGRect(x: addressIcon.frame.maxX + x, y: y, width: (10 * x), height: (2 * y))
+                addressTitle.frame = CGRect(x: addressIcon.frame.maxX + x, y: y, width: (10 * x), height: (3 * y))
                 addressTitle.text = (LocationType[i] as! String)
                 addressTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressTitle.textAlignment = .left
                 addressSelectButton.addSubview(addressTitle)
                 
                 let addressEditButton = UIButton()
-                addressEditButton.frame = CGRect(x: addressTitle.frame.maxX + x, y: y, width: (10 * x), height: (2 * y))
+                addressEditButton.frame = CGRect(x: addressTitle.frame.maxX + x, y: y, width: (10 * x), height: (3 * y))
 //                addressEditButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressEditButton.setTitle("Edit", for: .normal)
-                addressEditButton.setTitleColor(UIColor.black, for: .normal)
+                addressEditButton.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0), for: .normal)
                 addressEditButton.tag = i
                 addressEditButton.addTarget(self, action: #selector(self.editButtonAction(sender:)), for: .touchUpInside)
                 addressSelectButton.addSubview(addressEditButton)
                 
                 let addressEditIcon = UIImageView()
-                addressEditIcon.frame = CGRect(x: 0, y: 0, width: (2 * x), height: (2 * y))
+                addressEditIcon.frame = CGRect(x: 0, y: (y / 2), width: (2 * x), height: (2 * y))
                 addressEditIcon.image = UIImage(named: "edit")
                 addressEditButton.addSubview(addressEditIcon)
                 
@@ -380,16 +382,16 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
 //                addressSelectButton.addSubview(linelabel)
                 
                 let addressDeleteButton = UIButton()
-                addressDeleteButton.frame = CGRect(x: addressEditButton.frame.maxX, y: y, width: (10 * x), height: (2 * y))
+                addressDeleteButton.frame = CGRect(x: addressEditButton.frame.maxX, y: y, width: (10 * x), height: (3 * y))
 //                addressDeleteButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressDeleteButton.setTitle("Delete", for: .normal)
-                addressDeleteButton.setTitleColor(UIColor.black, for: .normal)
+                addressDeleteButton.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0), for: .normal)
                 addressDeleteButton.tag = i
                 addressDeleteButton.addTarget(self, action: #selector(self.deleteButtonAction(sender:)), for: .touchUpInside)
                 addressSelectButton.addSubview(addressDeleteButton)
                 
                 let addressDeleteIcon = UIImageView()
-                addressDeleteIcon.frame = CGRect(x: 0, y: 0, width: (2 * x), height: (2 * y))
+                addressDeleteIcon.frame = CGRect(x: 0, y: (y / 2), width: (1.5 * x), height: (2 * y))
                 addressDeleteIcon.image = UIImage(named: "delete")
                 addressDeleteButton.addSubview(addressDeleteIcon)
                 
@@ -403,6 +405,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 nameLabel.text = "Name"
                 nameLabel.textColor = UIColor.black
                 nameLabel.textAlignment = .left
+                nameLabel.font = UIFont(name: "AvenirNext-Bold", size: 15)
                 addressSelectButton.addSubview(nameLabel)
                 
                 let getNameLabel = UILabel()
@@ -410,6 +413,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getNameLabel.text = FirstName[i] as? String
                 getNameLabel.textColor = UIColor.black
                 getNameLabel.textAlignment = .left
+                getNameLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
                 addressSelectButton.addSubview(getNameLabel)
                 
                 let addressLabel = UILabel()
@@ -417,6 +421,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 addressLabel.text = "Address"
                 addressLabel.textColor = UIColor.black
                 addressLabel.textAlignment = .left
+                addressLabel.font = UIFont(name: "AvenirNext-Bold", size: 15)
                 addressSelectButton.addSubview(addressLabel)
                 
                 let getAddressLabel = UILabel()
@@ -436,6 +441,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getAddressLabel.textColor = UIColor.black
                 getAddressLabel.textAlignment = .left
                 getAddressLabel.numberOfLines = 3
+                getAddressLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
                 addressSelectButton.addSubview(getAddressLabel)
                 
                 let mobileLabel = UILabel()
@@ -443,6 +449,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 mobileLabel.text = "Phone Number"
                 mobileLabel.textColor = UIColor.black
                 mobileLabel.textAlignment = .left
+                mobileLabel.font = UIFont(name: "AvenirNext-Bold", size: 15)
                 addressSelectButton.addSubview(mobileLabel)
                 
                 let getMobileLabel = UILabel()
@@ -450,19 +457,20 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getMobileLabel.text = PhoneNo[i] as? String
                 getMobileLabel.textColor = UIColor.black
                 getMobileLabel.textAlignment = .left
+                getMobileLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
                 addressSelectButton.addSubview(getMobileLabel)
                 
                 if let defaultString = isDefault[i] as? Int
                 {
                     let defaultAddressImage = UIImageView()
-                    defaultAddressImage.frame = CGRect(x: addressSelectButton.frame.width - (15 * x), y: addressSelectButton.frame.height - (3 * y), width: (2 * x), height: (2 * y))
+                    defaultAddressImage.frame = CGRect(x: addressSelectButton.frame.width - (18 * x), y: addressSelectButton.frame.height - (3 * y), width: (2 * x), height: (2 * y))
                     defaultAddressImage.image = UIImage(named: "defaultAddress")
                     
                     let defaultAddressLabel = UILabel()
-                    defaultAddressLabel.frame = CGRect(x: defaultAddressImage.frame.maxX, y: addressSelectButton.frame.height - (3 * y), width: (12 * x), height: (2 * y))
+                    defaultAddressLabel.frame = CGRect(x: defaultAddressImage.frame.maxX + x, y: addressSelectButton.frame.height - (3 * y), width: (12 * x), height: (2 * y))
                     //                    defaultAddressLabel.backgroundColor = UIColor.orange
                     defaultAddressLabel.text = "Default Address"
-                    defaultAddressLabel.textColor = UIColor.black
+                    defaultAddressLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                     defaultAddressLabel.textAlignment = .left
                     defaultAddressLabel.adjustsFontSizeToFitWidth = true
                     defaultAddressLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -524,6 +532,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         mapViews.delegate = self
         view.addSubview(mapViews)
         
+        print("SELECTED COORDINATE TO CHECK THE FLOW", selectedCoordinate)
+        
         let geoCoder = GMSGeocoder()
         geoCoder.reverseGeocodeCoordinate(selectedCoordinate) { response, error in
             
@@ -542,7 +552,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             let address2Screen = Address2ViewController()
             
             address2Screen.firstNameEnglishTextField.text = self.FirstName[sender.tag] as? String
-            address2Screen.secondNameEnglishTextField.text = ""
+            address2Screen.secondNameEnglishTextField.text = self.LastName[sender.tag] as? String
             address2Screen.locationTypeTextField.text = self.LocationType[sender.tag] as? String
             address2Screen.areaNameTextField.text = self.areaArray[sender.tag] as? String
             address2Screen.floorTextField.text = self.Floor[sender.tag] as? String
@@ -556,19 +566,31 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             address2Screen.screenTag = 1
             address2Screen.editStateId = self.StateId[sender.tag] as! Int
             address2Screen.editCountryId = self.CountryId[sender.tag] as! Int
+            address2Screen.checkScreen = 1
+            address2Screen.getLocation = self.selectedCoordinate
             self.navigationController?.pushViewController(address2Screen, animated: true)
         }
     }
     
     @objc func deleteButtonAction(sender : UIButton)
     {
+        deleteInt = sender.tag
+
+        let alert = UIAlertController(title: "Alert", message: "Are you sure want to delete the address", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: deleteAddressAction(action:)))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func deleteAddressAction(action : UIAlertAction)
+    {
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
-            serviceCall.API_DeleteAddress(AddressId: Id[sender.tag] as! Int, userId: userId, delegate: self)
+            serviceCall.API_DeleteAddress(AddressId: Id[deleteInt] as! Int, userId: userId, delegate: self)
         }
         else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
-            serviceCall.API_DeleteAddress(AddressId: Id[sender.tag] as! Int, userId: "\(userId)", delegate: self)
+            serviceCall.API_DeleteAddress(AddressId: Id[deleteInt] as! Int, userId: "\(userId)", delegate: self)
         }
     }
     

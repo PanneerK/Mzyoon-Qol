@@ -267,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */,
+				FDC9BB8D2186F6CD003BA5C9 /* ProfileViewController.swift */,
 			);
 			path = "SLIDE MENUS";
 			sourceTree = "<group>";
@@ -408,6 +409,7 @@
 			children = (
 				FD2ADFE52175A5AB0033025B /* LoginViewController.swift */,
 				FD4631DB21775055002C06CA /* CountryCodeTableViewCell.swift */,
+				FD696A8621AC208600E622FC /* IntroProfileViewController.swift */,
 			);
 			path = LOGIN;
 			sourceTree = "<group>";
@@ -417,11 +419,9 @@
 			children = (
 				FDC9BB8B2186F667003BA5C9 /* TabViewController.swift */,
 				FDC9BB862186F30D003BA5C9 /* HomeViewController.swift */,
-				FD696A8621AC208600E622FC /* IntroProfileViewController.swift */,
 				FD3B7C1A219D4F0C00CD8198 /* NewOrderViewController.swift */,
 				FD5774AF219AB2F30026DBF8 /* GenderTableViewCell.swift */,
 				FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */,
-				FDC9BB8D2186F6CD003BA5C9 /* ProfileViewController.swift */,
 				FDC9BB8F2186F6E1003BA5C9 /* OrdersViewController.swift */,
 				FDC9BB912186F6F7003BA5C9 /* CartViewController.swift */,
 				FDC9BB932186F707003BA5C9 /* ContactUsViewController.swift */,

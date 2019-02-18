@@ -625,7 +625,7 @@ class ServerAPI : NSObject
         }
     }
     
-    func API_Customization3(DressTypeId : Int, delegate : ServerAPIDelegate)
+    func API_Customization3(DressTypeId : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
@@ -636,6 +636,7 @@ class ServerAPI : NSObject
             let urlString:String = String(format: "%@/API/Order/GetCustomization3", arguments: [baseURL])
             
             print("Custom 3", urlString)
+            print("CUSTOM 3 PARAMETERS", parameters)
             
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
                 if response.result.value != nil

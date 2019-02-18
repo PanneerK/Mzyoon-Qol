@@ -164,6 +164,12 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         doneToolbar1.items = items1
         doneToolbar1.sizeToFit()
         
+        self.otp1Letter.inputAccessoryView = doneToolbar1
+        self.otp2Letter.inputAccessoryView = doneToolbar1
+        self.otp3Letter.inputAccessoryView = doneToolbar1
+        self.otp4Letter.inputAccessoryView = doneToolbar1
+        self.otp5Letter.inputAccessoryView = doneToolbar1
+        
         self.mobileTextField.inputAccessoryView = doneToolbar1
     }
     
@@ -178,7 +184,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if let string1 = otp1Letter.text, let string2 = otp2Letter.text, let string3 = otp3Letter.text, let string4 = otp4Letter.text, let string5 = otp5Letter.text, let string6 = otp6Letter.text
         {
-            if string1 == "0" && string2 == "0" && string3 == "0" && string4 == "0" && string5 == "0" && string6 == "0"
+             server.API_ValidateOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, otp: "\(string1)\(string2)\(string3)\(string4)\(string5)\(string6)", type: "customer", delegate: self)
+            
+            /*if string1 == "0" && string2 == "0" && string3 == "0" && string4 == "0" && string5 == "0" && string6 == "0"
             {
                 let introProfileScreen = IntroProfileViewController()
                 self.navigationController?.pushViewController(introProfileScreen, animated: true)
@@ -186,7 +194,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             else
             {
                 server.API_ValidateOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, otp: "\(string1)\(string2)\(string3)\(string4)\(string5)\(string6)", type: "customer", delegate: self)
-            }
+            }*/
         }
     }
     

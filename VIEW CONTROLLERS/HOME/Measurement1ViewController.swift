@@ -595,7 +595,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             {
                 if name == action.title
                 {
-                    UserDefaults.standard.set(existingUserId, forKey: "measurementId")
+                    UserDefaults.standard.set(existingUserId[i], forKey: "measurementId")
                     UserDefaults.standard.set(action.title, forKey: "measurementName")
                 }
             }
