@@ -166,6 +166,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         address2Screen.addressString = [addressLabel.text!]
         address2Screen.getLocation = getTraggedPosition
         address2Screen.screenTag = 2
+        address2Screen.checkScreen = 2
         self.navigationController?.pushViewController(address2Screen, animated: true)
     }
     

@@ -70,6 +70,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         view.backgroundColor = UIColor.white
         
+        active()
+        
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
             serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
@@ -403,6 +405,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     func screenContents()
     {
+        activeStop()
+
         let backgroundImage = UIImageView()
         backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         backgroundImage.image = UIImage(named: "background")
@@ -539,7 +543,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (4 * y), width: view.frame.width - (12 * x), height: (2 * y))
         if getDOB.isEmpty == true
         {
-            dob.placeholder = "mm/dd/yyyy - Date of Birth"
+            dob.placeholder = "dd/mm/yyyy - Date of Birth"
         }
         else
         {
@@ -646,7 +650,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         updateButton.frame = CGRect(x: (3 * x), y: genderButton.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (4 * y))
         updateButton.layer.cornerRadius = 10
         updateButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        updateButton.setTitle("Update Profile", for: .normal)
+        updateButton.setTitle("Edit Profile", for: .normal)
         updateButton.setTitleColor(UIColor.white, for: .normal)
         updateButton.addTarget(self, action: #selector(self.updateButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(updateButton)
@@ -846,6 +850,15 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         sender.removeFromSuperview()
         saveButton.removeFromSuperview()
+        
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            serviceCall.API_ExistingUserProfile(Id: "\(userId)", delegate: self)
+        }
     }
     
     @objc func saveButtonAction(sender : UIButton)

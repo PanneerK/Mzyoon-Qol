@@ -430,14 +430,27 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeButton.addSubview(dressTypeImageView)
             
             let dressTypeNameLabel = UILabel()
-            dressTypeNameLabel.frame = CGRect(x: 0, y: dressTypeImageView.frame.maxY, width: dressTypeButton.frame.width, height: (3 * y))
+            if let dressName = inputTextArray[i] as? String
+            {
+                if dressName.characters.count > 15
+                {
+                    dressTypeNameLabel.frame = CGRect(x: 0, y: dressTypeButton.frame.height - (4 * y), width: dressTypeButton.frame.width, height: (4 * y))
+                    dressTypeNameLabel.numberOfLines = 2
+                }
+                else
+                {
+                    dressTypeNameLabel.frame = CGRect(x: 0, y: dressTypeImageView.frame.maxY, width: dressTypeButton.frame.width, height: (3 * y))
+                    dressTypeNameLabel.numberOfLines = 1
+                }
+            }
             dressTypeNameLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             dressTypeNameLabel.text = inputTextArray[i] as? String
             dressTypeNameLabel.textColor = UIColor.white
             dressTypeNameLabel.textAlignment = .center
+            dressTypeNameLabel.font = UIFont(name: "Avenir-Regular", size: 15)
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
-        dressTypeScrollView.contentSize.height = y1 + (20 * y)
+        dressTypeScrollView.contentSize.height = y1 + (2 * y)
     }
     
     
