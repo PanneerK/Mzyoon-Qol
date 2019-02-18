@@ -56,6 +56,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     var profileImage = UIImage()
     
+    //ACTIVITY CONTROLLER
+    let activeView = UIView()
+    let activityIndicator = UIActivityIndicatorView()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -378,6 +382,24 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     //        self.navigationController?.isNavigationBarHidden = true
     //    }
     
+    func active()
+    {
+        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(activeView)
+        
+        activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicator.color = UIColor.white
+        activityIndicator.style = .whiteLarge
+        activityIndicator.startAnimating()
+        activeView.addSubview(activityIndicator)
+    }
+    
+    func activeStop()
+    {
+        activeView.removeFromSuperview()
+        activityIndicator.stopAnimating()
+    }
     
     func screenContents()
     {

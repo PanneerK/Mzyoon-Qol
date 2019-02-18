@@ -95,6 +95,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         orderSummaryScrollView.backgroundColor = UIColor.clear
         view.addSubview(orderSummaryScrollView)
         
+        self.view.bringSubviewToFront(slideMenuButton)
+        
         let dressTypeHeadingLabel = UILabel()
         dressTypeHeadingLabel.frame = CGRect(x: (3 * x), y: y, width: view.frame.width, height: (3 * y))
         dressTypeHeadingLabel.text = "DRESS TYPE"
@@ -109,7 +111,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         orderSummaryScrollView.addSubview(dressTypeView)
         
         let dressTypeArray = ["Gender - ", "Dress Type - ", "Dress Sub Type - "]
-        let dressTypeImageArray = ["Gender-3", "", ""]
+        let dressTypeImageArray = ["Gender-3", "Dress_types", "Dress_subtypes"]
         var getDressTypeArray = ["Men"]
         
         if let dressType = UserDefaults.standard.value(forKey: "dressType") as? String

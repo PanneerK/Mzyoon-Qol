@@ -21,6 +21,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var addressString = [String]()
     var splittedAddress = [String]()
     var getLocation = CLLocationCoordinate2D()
+    var editStateId = Int()
+    var editCountryId = Int()
     
     var getEditId = Int()
     var checkDefault = Int()
@@ -339,6 +341,26 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             {
                 checkStateName = 0
             }
+            
+            if editStateId != 0
+            {
+                for i in 0..<stateCodeArray.count{
+                    
+                    if let matchId = stateCodeArray[i] as? Int
+                    {
+                        print("ID OF BOTH IN STATE", matchId, editStateId)
+                        if editStateId == matchId
+                        {
+                            if let country = stateNameArray[i] as? String
+                            {
+                                print("STATE NAME MATCHED", country, editCountryId, matchId)
+                                let convertedString = country.split(separator: "(")
+                                stateButton.setTitle("\(convertedString[0])", for: .normal)
+                            }
+                        }
+                    }
+                }
+            }
         }
         else if responseMsg == "Failure"
         {
@@ -600,31 +622,57 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         countryButton.addTarget(self, action: #selector(self.countryButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(countryButton)
         
-        for i in 0..<countryNameArray.count
+        if editCountryId != 0
         {
-            if let country = countryNameArray[i] as? String
-            {
-                let convertedString = country.split(separator: "(")
+            for i in 0..<countryIdArray.count{
                 
-                if let countryMatch = addressStringArray.lastObject as? String
+                if let matchId = countryIdArray[i] as? Int
                 {
-                    print("convertedString", countryMatch, convertedString[0])
-
-                    if countryMatch == convertedString[0]
+                    if editCountryId == matchId
                     {
-                        print("MATCHED COUNTRY", country, countryMatch, countryIdArray[i])
-                        serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[i])", delegate: self)
+                        if let country = countryNameArray[i] as? String
+                        {
+                            print("COUNTRY NAME MATCHED", country, editCountryId, matchId)
+                            let convertedString = country.split(separator: "(")
+                            countryButton.setTitle("\(convertedString[0])", for: .normal)
+                            
+                            serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[0])", delegate: self)
+                            stateButton.setTitle("State", for: .normal)
+                        }
                     }
                 }
             }
         }
-        
-        if let country = countryNameArray[0] as? String
+        else
         {
-            let convertedString = country.split(separator: "(")
-            countryButton.setTitle("\(convertedString[0])", for: .normal)
+            for i in 0..<countryNameArray.count
+            {
+                if let country = countryNameArray[i] as? String
+                {
+                    let convertedString = country.split(separator: "(")
+                    
+                    if let countryMatch = addressStringArray.lastObject as? String
+                    {
+                        print("convertedString", countryMatch, convertedString[0])
+                        
+                        if countryMatch == convertedString[0]
+                        {
+                            print("MATCHED COUNTRY", country, countryMatch, countryIdArray[i])
+                            serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[i])", delegate: self)
+                            stateButton.setTitle("State", for: .normal)
+                        }
+                    }
+                }
+            }
             
-            serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[0])", delegate: self)
+            if let country = countryNameArray[0] as? String
+            {
+                let convertedString = country.split(separator: "(")
+                countryButton.setTitle("\(convertedString[0])", for: .normal)
+                
+                serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[0])", delegate: self)
+                stateButton.setTitle("State", for: .normal)
+            }
         }
         
         let countryDropDownIcon = UIImageView()
@@ -643,7 +691,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(stateIcon)
         
         stateButton.frame = CGRect(x: stateIcon.frame.maxX + x, y: underline3.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        stateButton.setTitle("state", for: .normal)
+        stateButton.setTitle("State", for: .normal)
         stateButton.setTitleColor(UIColor.black, for: .normal)
         stateButton.contentHorizontalAlignment = .left
         stateButton.addTarget(self, action: #selector(self.stateButtonAction(sender:)), for: .touchUpInside)
@@ -1071,6 +1119,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 {
                     let int = countryIdArray[i] as! Int
                     serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
+                    stateButton.setTitle("State", for: .normal)
                 }
             }
         }

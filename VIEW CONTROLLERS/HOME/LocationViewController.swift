@@ -26,6 +26,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     let markerImageView = UIImageView()
     
     let addressLabel = UILabel()
+    let addAddressButton = UIButton()
     
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
@@ -134,7 +135,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         addressLabel.font = UIFont(name: "Avenir-Next", size: (2 * x))
         mapView.addSubview(addressLabel)
         
-        let addAddressButton = UIButton()
+        addAddressButton.isEnabled = false
         addAddressButton.frame = CGRect(x: 0, y: mapView.frame.maxY, width: view.frame.width, height: (5 * y))
         addAddressButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addAddressButton.setTitle("Confirm Location", for: .normal)
@@ -243,6 +244,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             }
             
             self.stopActivity()
+            self.addAddressButton.isEnabled = true
         }
     }
     

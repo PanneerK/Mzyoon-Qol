@@ -189,6 +189,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             ShippingNotes = Result.value(forKey: "ShippingNotes") as! NSArray
             print("ShippingNotes", ShippingNotes)
             
+            StateId = Result.value(forKey: "StateId") as! NSArray
+            
+            CountryId = Result.value(forKey: "CountryId") as! NSArray
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -318,7 +322,17 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             for i in 0..<FirstName.count
             {
                 let addressSelectButton = UIButton()
-                addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
+                if let addressList = areaArray[i] as? String
+                {
+                    if addressList.characters.count > 20
+                    {
+                        addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
+                    }
+                    else
+                    {
+                        addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (17 * y))
+                    }
+                }
                 addressSelectButton.backgroundColor = UIColor.white
                 addressSelectButton.tag = Id[i] as! Int
                 addressScrollView.addSubview(addressSelectButton)
@@ -406,7 +420,18 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 addressSelectButton.addSubview(addressLabel)
                 
                 let getAddressLabel = UILabel()
-                getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (6 * x))
+                
+                if let addressList = areaArray[i] as? String
+                {
+                    if addressList.characters.count > 20
+                    {
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (6 * x))
+                    }
+                    else
+                    {
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (2 * x))
+                    }
+                }
                 getAddressLabel.text = areaArray[i] as? String
                 getAddressLabel.textColor = UIColor.black
                 getAddressLabel.textAlignment = .left
@@ -529,6 +554,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             address2Screen.checkDefault = self.isDefault[sender.tag] as! Int
             address2Screen.addressString = self.selectedAddressString
             address2Screen.screenTag = 1
+            address2Screen.editStateId = self.StateId[sender.tag] as! Int
+            address2Screen.editCountryId = self.CountryId[sender.tag] as! Int
             self.navigationController?.pushViewController(address2Screen, animated: true)
         }
     }

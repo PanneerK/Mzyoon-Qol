@@ -310,6 +310,8 @@ class ServerAPI : NSObject
             
             let urlString:String = String(format: "%@/API/Order/GetDressTypeByGender?genderId=\(genderId)", arguments: [baseURL])
             
+            print("DRESS TYPE API", urlString)
+            
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 
                 if response.result.value != nil
@@ -921,6 +923,8 @@ class ServerAPI : NSObject
             let parameters = [:] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/DisplayDressSubType?Id=\(DressSubTypeId)", arguments: [baseURL])
+            
+            print("DRESS TYPE")
             
             request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
                 print("REQUEST", urlString)
