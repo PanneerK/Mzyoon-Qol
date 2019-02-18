@@ -300,7 +300,8 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             dressTypeNameLabel.text = getNameArray[i] as? String
             dressTypeNameLabel.textColor = UIColor.white
             dressTypeNameLabel.textAlignment = .center
-            dressTypeNameLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+            dressTypeNameLabel.font = UIFont(name: "Avenir-Regular", size: 15)
+            dressTypeNameLabel.font = dressTypeNameLabel.font.withSize(15)
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
         dressSubTypeScrollView.contentSize.height = y1 + (2 * y)
@@ -383,7 +384,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     @objc func dressTypeButtonAction(sender : UIButton)
     {
-        if sender.tag == 1
+        if sender.tag != 0
         {
             let dressSubScreen = OrderTypeViewController()
             

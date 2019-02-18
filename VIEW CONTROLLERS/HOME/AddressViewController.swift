@@ -532,6 +532,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         mapViews.delegate = self
         view.addSubview(mapViews)
         
+        print("SELECTED COORDINATE TO CHECK THE FLOW", selectedCoordinate)
+        
         let geoCoder = GMSGeocoder()
         geoCoder.reverseGeocodeCoordinate(selectedCoordinate) { response, error in
             
@@ -565,6 +567,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             address2Screen.editStateId = self.StateId[sender.tag] as! Int
             address2Screen.editCountryId = self.CountryId[sender.tag] as! Int
             address2Screen.checkScreen = 1
+            address2Screen.getLocation = self.selectedCoordinate
             self.navigationController?.pushViewController(address2Screen, animated: true)
         }
     }
@@ -574,7 +577,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         deleteInt = sender.tag
 
         let alert = UIAlertController(title: "Alert", message: "Are you sure want to delete the address", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: deleteAddressAction(action:)))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }

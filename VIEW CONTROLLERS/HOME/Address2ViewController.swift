@@ -94,6 +94,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     let titleLabel = UILabel()
     let cancelButton = UIButton()
     
+    //ACTIVITY PARAMETERS
+    var activeView = UIView()
+    var activityView = UIActivityIndicatorView()
+    
     override func viewDidLoad()
     {
         print("ADDRESS STRING ADDRESS 2 VIEW CONTROLLER 1", addressString)
@@ -122,6 +126,25 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func activityContents()
+    {
+        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
+        view.addSubview(activeView)
+        
+        activityView.frame = CGRect(x: ((activeView.frame.width - 50) / 2), y: ((activeView.frame.height - 50) / 2), width: 50, height: 50)
+        activityView.style = .whiteLarge
+        activityView.color = UIColor.white
+        activityView.startAnimating()
+        activeView.addSubview(activityView)
+    }
+    
+    func stopActivity()
+    {
+        activeView.removeFromSuperview()
+        activityView.stopAnimating()
     }
     
     func addDoneButtonOnKeyboard()
@@ -263,6 +286,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     {
         let ResponseMsg = insertAddr.object(forKey: "ResponseMsg") as! String
         
+        stopActivity()
+        
         if ResponseMsg == "Success"
         {
             let Result = insertAddr.object(forKey: "Result") as! String
@@ -395,6 +420,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     func API_CALLBACK_UpdateAddress(updateAddr: NSDictionary)
     {
         let ResponseMsg = updateAddr.object(forKey: "ResponseMsg") as! String
+        
+        stopActivity()
         
         if ResponseMsg == "Success"
         {
@@ -978,7 +1005,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let saveButton = UIButton()
         saveButton.frame = CGRect(x: view.frame.width - (18 * x), y: addressScrollView.frame.maxY + y, width: (15 * x), height: (3 * y))
         saveButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
-        saveButton.setTitle("Save and Next", for: .normal)
+        saveButton.setTitle("SAVE", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: 10)
         saveButton.addTarget(self, action: #selector(self.saveAndNextButtonAction(sender:)), for: .touchUpInside)
@@ -1142,7 +1169,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         blurView.addSubview(alertView)
         
         titleLabel.frame = CGRect(x: 0, y: y, width: alertView.frame.width, height: (2 * y))
-        titleLabel.text = "Please select your country code"
+        titleLabel.text = "Please select your country"
         titleLabel.textAlignment = .center
         titleLabel.textColor = UIColor.black
         titleLabel.font = UIFont(name: "", size: 10)
@@ -1298,10 +1325,12 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                                         {
                                             if insertOrUpdate == 1
                                             {
+                                                activityContents()
                                                 serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
                                             }
                                             else
                                             {
+                                                activityContents()
                                                 serviceCall.API_UpdateAddress(Id: getEditId, BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
                                             }
                                         }

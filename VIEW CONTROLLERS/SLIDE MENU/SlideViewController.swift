@@ -37,14 +37,28 @@ class SlideViewController: UIViewController
         
         view.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 
-//        screenContentsInArabic()
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        screenContents()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                screenContents()
+            }
+            else
+            {
+                screenContentsInArabic()
+            }
+        }
+        else
+        {
+            screenContents()
+        }
         self.navigationController?.isNavigationBarHidden = true
     }
     
@@ -178,8 +192,12 @@ class SlideViewController: UIViewController
         underline.backgroundColor = UIColor.white
         view.addSubview(underline)
         
-        let buttonTitle = ["حسابي", "عنوان", "حجز موعد", "عملية تجارية" ,"المكافآت", "إحالة الأصدقاء", "أسئلة شائعة", "الأحكام والشروط", "الإعدادات", "الخروج"]
-        let buttonImage = ["my_account", "Address", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
+//        let buttonTitle = ["حسابي", "عنوان", "حجز موعد", "عملية تجارية" ,"المكافآت", "إحالة الأصدقاء", "أسئلة شائعة", "الأحكام والشروط", "الإعدادات", "الخروج"]
+//        let buttonImage = ["my_account", "Address", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
+        
+        
+        let buttonTitle = ["حسابي", "عنوان", "الإعدادات", "الخروج"]
+        let buttonImage = ["my_account", "Address", "settings", "logout"]
         
         var y1:CGFloat = userName.frame.maxY + (2 * y)
         
@@ -190,10 +208,12 @@ class SlideViewController: UIViewController
             slideMenusButton.frame = CGRect(x: 0, y: y1, width: slideViewWidth, height: (4 * y))
             slideMenusButton.tag = i
             
-            if i == 0 || i == 1 || i == 9
-            {
-                slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
-            }
+//            if i == 0 || i == 1 || i == 9
+//            {
+//                slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
+//            }
+            
+            slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
             view.addSubview(slideMenusButton)
             
             y1 = slideMenusButton.frame.maxY + y
@@ -231,8 +251,8 @@ class SlideViewController: UIViewController
         }
         else if sender.tag == 2
         {
-           // let settingsScreen = SettingsViewController()
-          //  self.navigationController?.pushViewController(settingsScreen, animated: true)
+            let settingsScreen = SettingsViewController()
+            self.navigationController?.pushViewController(settingsScreen, animated: true)
         }
         else if sender.tag == 3
         {

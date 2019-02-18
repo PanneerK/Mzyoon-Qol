@@ -126,13 +126,14 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         mapView.isMyLocationEnabled = true
         view.addSubview(mapView)
         
-        addressLabel.frame = CGRect(x: x, y: y, width: view.frame.width - (2 * x), height: (5 * y))
+        addressLabel.frame = CGRect(x: x, y: y, width: view.frame.width - (2 * x), height: (7 * y))
         addressLabel.layer.borderWidth = 1
         addressLabel.layer.borderColor = UIColor.lightGray.cgColor
         addressLabel.backgroundColor = UIColor.white
         addressLabel.textColor = UIColor.black
-        addressLabel.textAlignment = .left
+        addressLabel.textAlignment = .center
         addressLabel.font = UIFont(name: "Avenir-Next", size: (2 * x))
+        addressLabel.numberOfLines = 3
         mapView.addSubview(addressLabel)
         
         addAddressButton.isEnabled = false

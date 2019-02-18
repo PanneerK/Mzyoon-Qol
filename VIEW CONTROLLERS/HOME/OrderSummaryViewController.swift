@@ -768,6 +768,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             
                             //                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
                             
+                            activityContents()
+                            
                             self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
                         }
                         else
@@ -775,6 +777,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             let userMeasurement = [[String : Any]]()
                             
                             //                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
+                            
+                            activityContents()
                             
                             self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
                         }
@@ -815,13 +819,27 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 {
                     print("MATERIAL IMAGES COUNT", materialImages)
                     
-                    for i in 0..<materialImages
+                    if materialImages != 0
                     {
-                        let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Reference\(i)")
-                        getImageArray.append(getImage)
+                        for i in 0..<materialImages
+                        {
+                            let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Reference\(i)")
+                            getImageArray.append(getImage)
+                        }
+                        
+                        serviceCall.API_ReferenceImageUpload(referenceImages: getImageArray, delegate: self)
                     }
-                    
-                    serviceCall.API_ReferenceImageUpload(referenceImages: getImageArray, delegate: self)
+                    else
+                    {
+                        let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
+                        print("FINALIZED USER MEASUREMENT", userMeasurement)
+                        
+//                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
+                        
+                        activityContents()
+                        
+                        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
+                    }
                 }
             }
         }
@@ -861,6 +879,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
                 print("FINALIZED USER MEASUREMENT", userMeasurement)
                 
+                activityContents()
+                
                 self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
 
                 
@@ -886,6 +906,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             
             let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
             print("FINALIZED USER MEASUREMENT", userMeasurement)
+            
+            activityContents()
             
             self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
         }
@@ -918,6 +940,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_InsertOrderSummary(insertOrder: NSDictionary)
     {
         let ResponseMsg = insertOrder.object(forKey: "ResponseMsg") as! String
+     
+        stopActivity()
         
         if ResponseMsg == "Success"
         {

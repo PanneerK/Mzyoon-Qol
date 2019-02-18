@@ -306,27 +306,36 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         else
         {
             active()
-                        
-            if userImage.image != nil
+            
+            if userImage.image != UIImage(named: "emptyUser")
             {
-                UserDefaults.standard.set(userNameTextField.text!, forKey: "userName")
-                
-                serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
-
-                if let profId = UserDefaults.standard.value(forKey: "userId") as? String
+                if userImage.image != nil
                 {
-                    print("ENTERED NAME", userNameTextField.text!)
+                    UserDefaults.standard.set(userNameTextField.text!, forKey: "userName")
+                    
                     serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                    
+                    if let profId = UserDefaults.standard.value(forKey: "userId") as? String
+                    {
+                        print("ENTERED NAME", userNameTextField.text!)
+                        serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                    }
+                    else if let profId = UserDefaults.standard.value(forKey: "userId") as? Int
+                    {
+                        print("ENTERED NAME", userNameTextField.text!)
+                        serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                    }
+                    
+                    //                activeStop()
+                    //                let homeScreen = HomeViewController()
+                    //                self.navigationController?.pushViewController(homeScreen, animated: true)
                 }
-                else if let profId = UserDefaults.standard.value(forKey: "userId") as? Int
+                else
                 {
-                    print("ENTERED NAME", userNameTextField.text!)
-                    serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                    let imageAlert = UIAlertController(title: "Alert", message: "Please choose profile image", preferredStyle: .alert)
+                    imageAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: imageAlertOkAction(action:)))
+                    self.present(imageAlert, animated: true, completion: nil)
                 }
-                
-                //                activeStop()
-                //                let homeScreen = HomeViewController()
-                //                self.navigationController?.pushViewController(homeScreen, animated: true)
             }
             else
             {

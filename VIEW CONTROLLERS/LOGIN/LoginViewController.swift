@@ -164,6 +164,12 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         doneToolbar1.items = items1
         doneToolbar1.sizeToFit()
         
+        self.otp1Letter.inputAccessoryView = doneToolbar1
+        self.otp2Letter.inputAccessoryView = doneToolbar1
+        self.otp3Letter.inputAccessoryView = doneToolbar1
+        self.otp4Letter.inputAccessoryView = doneToolbar1
+        self.otp5Letter.inputAccessoryView = doneToolbar1
+        
         self.mobileTextField.inputAccessoryView = doneToolbar1
     }
     
