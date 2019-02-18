@@ -84,6 +84,8 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         y = y * view.frame.height / 100
       */
         
+       self.Amount_TF.text = TotalAmount!
+        
          PaymentContent()
         
          self.addDoneButtonOnKeyboard()
@@ -352,7 +354,7 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         Amount_TF.frame = CGRect(x: AmountLabel.frame.maxX + x, y: y, width: PaymentView.frame.width / 2, height: (3 * y))
         Amount_TF.backgroundColor = UIColor.groupTableViewBackground
         Amount_TF.font = UIFont.boldSystemFont(ofSize: 16)
-        Amount_TF.text = "250.00"
+        //Amount_TF.text = "250.00"
         Amount_TF.font = UIFont(name: "Avenir Next", size: 16)
         Amount_TF.textColor = UIColor.black
         Amount_TF.adjustsFontSizeToFitWidth = true

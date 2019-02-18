@@ -22,6 +22,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
      let QtyNumTF = UITextField()
     var qtyNum : Int!
     var TailorID : Int!
+    var DeliveryDate:String!
     
     let serviceCall = ServerAPI()
     
@@ -216,10 +217,20 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             let Result = updateQtyOA.object(forKey: "Result") as! String
             print("Result", Result)
             
-            let appointmentAlert = UIAlertController(title: "Info!", message: "Please Book An Appointment Before Proceed to Pay", preferredStyle: .alert)
-            appointmentAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
-            appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            self.present(appointmentAlert, animated: true, completion: nil)
+            if (AppoinmentArray.contains("Companies-Material") && AppoinmentArray.contains("Manually"))
+            {
+                let PaymentScreen = PaymentViewController()
+                let TotalValue : Int = ChargesAmountArray[7] as! Int
+                PaymentScreen.TotalAmount = "\(TotalValue)"
+                self.navigationController?.pushViewController(PaymentScreen, animated: true)
+            }
+            else
+            {
+               let appointmentAlert = UIAlertController(title: "Info!", message: "Please Book An Appointment Before Proceed to Pay", preferredStyle: .alert)
+               appointmentAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
+               appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+               self.present(appointmentAlert, animated: true, completion: nil)
+            }
             
         }
         else if ResponseMsg == "Failure"
@@ -237,9 +248,13 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
      
     func proceedAlertAction(action : UIAlertAction)
     {
-        let AppointmentScreen = AppointmentViewController()
-         AppointmentScreen.TailorID = TailorID
-        self.navigationController?.pushViewController(AppointmentScreen, animated: true)
+       
+           let AppointmentScreen = AppointmentViewController()
+            let TotalValue : Int = ChargesAmountArray[7] as! Int
+            AppointmentScreen.TotalAmount = "\(TotalValue)"
+            AppointmentScreen.TailorID = TailorID
+           self.navigationController?.pushViewController(AppointmentScreen, animated: true)
+     
     }
     
     func orderApprovalContent()
@@ -1156,7 +1171,11 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let DateValueLabel = UILabel()
         DateValueLabel.frame = CGRect(x: DateColonLabel.frame.maxX + x, y: 0 , width: (15 * x), height: (5 * y))
         // DateValueLabel.backgroundColor = UIColor.gray
-        DateValueLabel.text = DeliveryDateArray[0] as? String
+        if let date = DeliveryDateArray[0] as? String
+        {
+            DeliveryDate = String(date.prefix(10))
+        }
+        DateValueLabel.text = DeliveryDate
         DateValueLabel.lineBreakMode = .byWordWrapping
         DateValueLabel.numberOfLines = 2
         DateValueLabel.textColor = UIColor.white
@@ -1193,9 +1212,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
       }
       else
       {
-        let appointmentAlert = UIAlertController(title: "Alert!", message: "Please Enter Quantity..!", preferredStyle: .alert)
-        appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(appointmentAlert, animated: true, completion: nil)
+         let appointmentAlert = UIAlertController(title: "Alert!", message: "Please Enter Quantity..!", preferredStyle: .alert)
+         appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+         self.present(appointmentAlert, animated: true, completion: nil)
       }
         
        

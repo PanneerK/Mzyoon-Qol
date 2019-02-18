@@ -63,36 +63,36 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         
         // Payment View..
         
-        let PaymentView = UIView()
-        PaymentView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (10 * y))
+        let TransactionView = UIView()
+        TransactionView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (10 * y))
         //PaymentView.backgroundColor = UIColor.white
-        view.addSubview(PaymentView)
+        view.addSubview(TransactionView)
         
-        // Order Id Label..
-        let AmountLabel = UILabel()
-        AmountLabel.frame = CGRect(x: x, y: y, width: PaymentView.frame.width - (2 * x), height: (6 * y))
-        // AmountLabel.backgroundColor = UIColor.gray
-        AmountLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        AmountLabel.text = "Payment Success , Your Transaction Reference Number is  : \(TransRef!)"
-        AmountLabel.font = UIFont(name: "Avenir Next", size: 16)
-        AmountLabel.textColor = UIColor.black
-        AmountLabel.textAlignment = .left
-        AmountLabel.lineBreakMode = .byWordWrapping
-        AmountLabel.numberOfLines = 3
-        PaymentView.addSubview(AmountLabel)
+        // Transaction Label..
+        let TransLabel = UILabel()
+        TransLabel.frame = CGRect(x: x, y: y, width: TransactionView.frame.width - (2 * x), height: (6 * y))
+        // TransLabel.backgroundColor = UIColor.gray
+        TransLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        TransLabel.text = "Payment Success, Your Transaction Reference Number is  : \(TransRef!)"
+        TransLabel.font = UIFont(name: "Avenir Next", size: 16)
+        TransLabel.textColor = UIColor.black
+        TransLabel.textAlignment = .left
+        TransLabel.lineBreakMode = .byWordWrapping
+        TransLabel.numberOfLines = 3
+        TransactionView.addSubview(TransLabel)
         
      
-        //TrackingButton
-        let PayButton = UIButton()
-        PayButton.frame = CGRect(x: (8 * x), y: AmountLabel.frame.maxY + (3 * y), width: (15 * x), height: (3 * y))
-        PayButton.backgroundColor = UIColor.orange
-        PayButton.setTitle("Done", for: .normal)
-        PayButton.setTitleColor(UIColor.white, for: .normal)
-        PayButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: 10)
-        PayButton.layer.cornerRadius = 10;  // this value vary as per your desire
-        PayButton.clipsToBounds = true;
-        PayButton.addTarget(self, action: #selector(self.DoneButtonAction(sender:)), for: .touchUpInside)
-        PaymentView.addSubview(PayButton)
+        // Done Button
+        let DoneButton = UIButton()
+        DoneButton.frame = CGRect(x: (8 * x), y: TransLabel.frame.maxY + (4 * y), width: (15 * x), height: (3 * y))
+        DoneButton.backgroundColor = UIColor.orange
+        DoneButton.setTitle("Done", for: .normal)
+        DoneButton.setTitleColor(UIColor.white, for: .normal)
+        DoneButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: 10)
+        DoneButton.layer.cornerRadius = 10;  // this value vary as per your desire
+        DoneButton.clipsToBounds = true;
+        DoneButton.addTarget(self, action: #selector(self.DoneButtonAction(sender:)), for: .touchUpInside)
+        TransactionView.addSubview(DoneButton)
         
     }
     
@@ -103,14 +103,6 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     
     @objc func DoneButtonAction(sender : UIButton)
     {
-        /*
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let loginScreen = HomeViewController()
-        let navigationScreen = UINavigationController(rootViewController: loginScreen)
-        navigationScreen.isNavigationBarHidden = true
-        window?.rootViewController = navigationScreen
-        window?.makeKeyAndVisible()
-      */
         
         /*
         if let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
@@ -122,6 +114,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
             self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId:Int(orderId)!, delegate: self)
         }
         */
+        
         
         let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
         let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
@@ -135,6 +128,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         
         let HomeScreen = HomeViewController()
         self.navigationController?.pushViewController(HomeScreen, animated: true)
+        self.present(HomeScreen, animated: true, completion: nil)
         
     }
     
