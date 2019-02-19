@@ -554,7 +554,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             address2Screen.firstNameEnglishTextField.text = self.FirstName[sender.tag] as? String
             address2Screen.secondNameEnglishTextField.text = self.LastName[sender.tag] as? String
             address2Screen.locationTypeTextField.text = self.LocationType[sender.tag] as? String
-            address2Screen.areaNameTextField.text = self.areaArray[sender.tag] as? String
+            address2Screen.areaButton.setTitle("\(self.areaArray[sender.tag])", for: .normal)
             address2Screen.floorTextField.text = self.Floor[sender.tag] as? String
             address2Screen.landMarkTextField.text = self.LandMark[sender.tag] as? String
             address2Screen.mobileTextField.text = self.PhoneNo[sender.tag] as? String
@@ -597,6 +597,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     @objc func addNewAddressButtonAction(sender : UIButton)
     {
         let locationScreen = LocationViewController()
+        locationScreen.screenTag = 2
         self.navigationController?.pushViewController(locationScreen, animated: true)
     }
     

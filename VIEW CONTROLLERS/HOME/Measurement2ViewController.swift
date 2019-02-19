@@ -112,6 +112,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var unitTag = "cm"
     var pageNumber = 0
     
+    //ACTIVITY INDICATOR PARAMETERS
+    let activeViewSub = UIView()
+    let activityIndicatorSub = UIActivityIndicatorView()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -139,6 +144,25 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func activeStart1()
+    {
+        activeViewSub.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeViewSub.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(activeViewSub)
+        
+        activityIndicatorSub.frame = CGRect(x: ((activeViewSub.frame.width - (5 * x)) / 2), y: ((activeViewSub.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicatorSub.color = UIColor.white
+        activityIndicatorSub.style = .whiteLarge
+        activityIndicatorSub.startAnimating()
+        activeViewSub.addSubview(activityIndicatorSub)
+    }
+    
+    func activeStop1()
+    {
+        activeViewSub.removeFromSuperview()
+        activityIndicatorSub.stopAnimating()
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
@@ -1356,8 +1380,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     @objc func measurementButtonAction(sender : UIButton)
     {
-        let measureScreen = MeasureScrollViewController()
-        
+        activeStart1()
         if sender.tag == 1
         {
             measurerImage = "Head"
@@ -1517,6 +1540,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func measureScrollContents()
     {
+        activeStop1()
+        
         imageBackView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
         imageBackView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubview(imageBackView)
@@ -1763,11 +1788,13 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     @objc func nextButtonAction(sender : UIButton)
     {
+        var keys = [Int]()
         var values = [Float]()
         
-        for (keys, valuess) in measurementValues
+        for (keyss, valuess) in measurementValues
         {
-            print("KEYS & VALUES", keys, valuess)
+            print("KEYS & VALUES", keyss, valuess)
+            keys.append(keyss)
             values.append(valuess)
         }
         
@@ -1781,7 +1808,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         else
         {
-            UserDefaults.standard.set(PartsIdArray, forKey: "measurementId")
+            UserDefaults.standard.set(keys, forKey: "measurementId")
             UserDefaults.standard.set(values, forKey: "measurementValues")
             
             let referenceScreen = ReferenceImageViewController()
@@ -1789,7 +1816,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         
     }
-    
     
     func partsViewContents(isHidden : Bool)
     {
@@ -1819,6 +1845,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func partsContent()
     {
+        activeStop1()
+        
         partsBackView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
         partsBackView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubview(partsBackView)
@@ -1949,6 +1977,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         print("qwertyuiop", measurementValues[valueCount]!)
         
         cell.partsSizeLabel.text = "\(value!)"
+        
+        cell.selectionStyle = .none
 
         return cell
     }
@@ -1968,6 +1998,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         measurerTag = selectedInt
         
+        activeStart1()
+        self.view.bringSubviewToFront(activeView)
         self.serviceCall.API_GetMeasurementParts(MeasurementParts: selectedInt, delegate: self)
     }
     

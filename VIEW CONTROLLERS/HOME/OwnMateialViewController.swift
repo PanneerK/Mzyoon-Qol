@@ -51,13 +51,17 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         selectedButton(tag: 0)
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
-            // Your code with delay
-            self.addMaterialContent()
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
+//            // Your code with delay
+//            self.addMaterialContent()
+//        }
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.addMaterialContent()
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
@@ -215,9 +219,27 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     {
         if imageArray.count == 0
         {
-            let alert = UIAlertController(title: "Alert", message: "Please add a material image for tailor reference", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Please add a material image for tailor reference", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let alert = UIAlertController(title: "محزر", message: "يرجى إضافة صورة مادية لمرجع خياط", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Please add a material image for tailor reference", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
         else
         {

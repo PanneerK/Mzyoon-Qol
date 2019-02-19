@@ -33,7 +33,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     let addressScrollView = UIScrollView()
     let firstNameEnglishTextField = UITextField()
     let secondNameEnglishTextField = UITextField()
-    let areaNameTextField = UITextField()
+    let areaButton = UIButton()
     let floorTextField = UITextField()
     let landMarkTextField = UITextField()
     let locationTypeTextField = UITextField()
@@ -48,6 +48,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     let blurView = UIView()
     let countryCodeTableView = UITableView()
+    let countryTableView = UITableView()
     
     let countryButton = UIButton()
     let stateButton = UIButton()
@@ -97,6 +98,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     //ACTIVITY PARAMETERS
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
+    
+    //AREA LIST API PARAMETERS
+    var areaCodeArray = NSArray()
+    var areaNameArray = NSArray()
     
     override func viewDidLoad()
     {
@@ -415,6 +420,28 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             ErrorStr = Result
             DeviceError()
         }
+    }
+    
+    
+    func API_CALLBACK_GetAreaByState(area: NSDictionary) {
+        print("AREA LIST BY STATE", area)
+        
+        /*let ResponseMsg = area.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = area.object(forKey: "Result") as! NSArray
+            
+            if Result.count != 0
+            {
+                areaNameArray = Result.value(forKey: "Area") as! NSArray
+                print("areaNameArray", areaNameArray)
+            }
+            else
+            {
+                
+            }
+        }*/
     }
     
     func API_CALLBACK_UpdateAddress(updateAddr: NSDictionary)
@@ -754,25 +781,32 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         areaIcon.image = UIImage(named: "Area")
         addressScrollView.addSubview(areaIcon)
         
-        areaNameTextField.frame = CGRect(x: areaIcon.frame.maxX + x, y: underline4.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        areaNameTextField.placeholder = "Area"
-        areaNameTextField.textColor = UIColor.black
-        areaNameTextField.textAlignment = .left
-        areaNameTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        /*areaButton.frame = CGRect(x: areaIcon.frame.maxX + x, y: underline4.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
+        areaButton.placeholder = "Area"
+        areaButton.textColor = UIColor.black
+        areaButton.textAlignment = .left
+        areaButton.font = UIFont(name: "Avenir-Regular", size: 18)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
         //        areaNameTextField.leftView = paddingView2
-        areaNameTextField.leftViewMode = UITextField.ViewMode.always
-        areaNameTextField.adjustsFontSizeToFitWidth = true
-        areaNameTextField.keyboardType = .default
+        areaButton.leftViewMode = UITextField.ViewMode.always
+        areaButton.adjustsFontSizeToFitWidth = true
+        areaButton.keyboardType = .default
         //        areaNameTextField.clearsOnBeginEditing = true
-        areaNameTextField.returnKeyType = .done
-        areaNameTextField.delegate = self
-        //        areaNameTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
-        addressScrollView.addSubview(areaNameTextField)
+        areaButton.returnKeyType = .done
+        areaButton.delegate = self
+        areaButton.addTarget(self, action: #selector(self.areaFunction(textField:)), for: .editingChanged)
+        addressScrollView.addSubview(areaButton)*/
+        
+        areaButton.frame = CGRect(x: areaIcon.frame.maxX + x, y: underline4.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
+        areaButton.setTitle("Area", for: .normal)
+        areaButton.setTitleColor(UIColor.black, for: .normal)
+        areaButton.contentHorizontalAlignment = .left
+        areaButton.addTarget(self, action: #selector(self.areaButtonAction(sender:)), for: .touchUpInside)
+        addressScrollView.addSubview(areaButton)
         
         let areaEditButton = UIButton()
         areaEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline4.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        areaEditButton.setImage(UIImage(named: "edit"), for: .normal)
+        areaEditButton.setImage(UIImage(named: "downArrow"), for: .normal)
         addressScrollView.addSubview(areaEditButton)
         
         let underline5 = UILabel()
@@ -1037,6 +1071,39 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             setDefault = "FALSE"
         }
     }
+    
+    @objc func areaButtonAction(sender : UIButton)
+    {
+        let areaAlert = UIAlertController(title: "Area", message: "Please select your area", preferredStyle: .alert)
+        
+        for i in 0..<areaNameArray.count
+        {
+            if let areaString = areaNameArray[i] as? String
+            {
+                areaAlert.addAction(UIAlertAction(title: areaString, style: .default, handler: areaAlertAction(action:)))
+            }
+        }
+        
+        areaAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(areaAlert, animated: true, completion: nil)
+    }
+    
+    func areaAlertAction(action : UIAlertAction)
+    {
+        areaButton.setTitle(action.title, for: .normal)
+        
+        for i in 0..<areaNameArray.count
+        {
+            if let name = areaNameArray[i] as? String
+            {
+                if name == action.title
+                {
+                    
+                }
+            }
+        }
+    }
+    
     @objc func textFieldDidChange(textField: UITextField){
         
         let text = textField.text
@@ -1046,8 +1113,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         case firstNameEnglishTextField:
             secondNameEnglishTextField.becomeFirstResponder()
         case secondNameEnglishTextField:
-            areaNameTextField.becomeFirstResponder()
-        case areaNameTextField:
+            areaButton.becomeFirstResponder()
+        case areaButton:
             floorTextField.becomeFirstResponder()
         case floorTextField:
             landMarkTextField.becomeFirstResponder()
@@ -1129,6 +1196,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         if screenTag == 1
         {
             let locationScreen = LocationViewController()
+            locationScreen.screenTag = 1
+            locationScreen.selectedCoordinate = getLocation
             self.navigationController?.pushViewController(locationScreen, animated: true)
         }
         else
@@ -1182,15 +1251,15 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         print("LEFT CHANGE", individualCountryFlagArray.count)
         
-        countryCodeTableView.frame = CGRect(x: 0, y: underLine1.frame.maxY, width: alertView.frame.width, height: alertView.frame.height - (8.1 * y))
-        countryCodeTableView.register(CountryCodeTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(CountryCodeTableViewCell.self))
-        countryCodeTableView.dataSource = self
-        countryCodeTableView.delegate = self
-        alertView.addSubview(countryCodeTableView)
+        countryTableView.frame = CGRect(x: 0, y: underLine1.frame.maxY, width: alertView.frame.width, height: alertView.frame.height - (8.1 * y))
+        countryTableView.register(CountryCodeTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(CountryCodeTableViewCell.self))
+        countryTableView.dataSource = self
+        countryTableView.delegate = self
+        alertView.addSubview(countryTableView)
         
-        countryCodeTableView.reloadData()
+        countryTableView.reloadData()
         
-        cancelButton.frame = CGRect(x: 0, y: countryCodeTableView.frame.maxY, width: alertView.frame.width, height: (4 * y))
+        cancelButton.frame = CGRect(x: 0, y: countryTableView.frame.maxY, width: alertView.frame.width, height: (4 * y))
         cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.setTitleColor(UIColor.white, for: .normal)
@@ -1261,6 +1330,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 if state == action.title
                 {
                     getStateId = stateCodeArray[i] as! Int
+                    serviceCall.API_GetAreaByState(stateId: "\(getStateId)", delegate: self)
                 }
             }
         }
@@ -1283,7 +1353,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let FirstNameStr = firstNameEnglishTextField.text!
         let lastNameStr = secondNameEnglishTextField.text!
         let CountryId = 1
-        let AreaStr = areaNameTextField.text!
+        let AreaStr = areaButton.titleLabel?.text!
         let floorStr = floorTextField.text!
         let LandmarkStr = landMarkTextField.text!
         let locationTypeStr = locationTypeTextField.text!
@@ -1309,7 +1379,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         {
             if lastNameStr.isEmpty != true || lastNameStr != ""
             {
-                if AreaStr.isEmpty != true || AreaStr != ""
+                if AreaStr!.isEmpty != true || AreaStr != ""
                 {
                     if floorStr.isEmpty != true || floorStr != ""
                     {
@@ -1326,12 +1396,12 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                                             if insertOrUpdate == 1
                                             {
                                                 activityContents()
-                                                serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                                serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr!, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
                                             }
                                             else
                                             {
                                                 activityContents()
-                                                serviceCall.API_UpdateAddress(Id: getEditId, BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                                serviceCall.API_UpdateAddress(Id: getEditId, BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr!, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
                                             }
                                         }
                                         else
@@ -1404,33 +1474,47 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(CountryCodeTableViewCell.self), for: indexPath as IndexPath) as! CountryCodeTableViewCell
         
-        /*cell.flagImage.frame = CGRect(x: x, y: y, width: (2.5 * x), height: (2 * y))
-        //        cell.flagImage.image = individualCountryFlagArray[indexPath.row]
-        
-        if let imageName = countryFlagArray[indexPath.row] as? String
+        if tableView == countryTableView
         {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/flags/\(imageName)"
-            let apiurl = URL(string: api)
+            cell.countryName.frame = CGRect(x: cell.flagImage.frame.maxX + (2 * x), y: y, width: cell.frame.width - (4 * x), height: (2 * y))
             
-            if apiurl != nil
+            if let country = countryNameArray[indexPath.row] as? String
             {
-                cell.flagImage.dowloadFromServer(url: apiurl!)
+                let convertedString = country.split(separator: "(")
+                cell.countryName.text = "\(convertedString[0])"
             }
-            else
-            {
-                cell.flagImage.image = UIImage(named: "empty")
-            }
-        }*/
-        
-        cell.countryName.frame = CGRect(x: cell.flagImage.frame.maxX + (2 * x), y: y, width: cell.frame.width - (4 * x), height: (2 * y))
-        
-        if let country = countryNameArray[indexPath.row] as? String
+        }
+        else
         {
-            let convertedString = country.split(separator: "(")
-            cell.countryName.text = "\(convertedString[0])"
+            cell.flagImage.frame = CGRect(x: x, y: y, width: (2.5 * x), height: (2 * y))
+            
+            if let imageName = countryFlagArray[indexPath.row] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/flags/\(imageName)"
+                let apiurl = URL(string: api)
+                
+                if apiurl != nil
+                {
+                    cell.flagImage.dowloadFromServer(url: apiurl!)
+                }
+                else
+                {
+                    cell.flagImage.image = UIImage(named: "empty")
+                }
+            }
+            
+            cell.countryName.frame = CGRect(x: cell.flagImage.frame.maxX + (2 * x), y: y, width: cell.frame.width - (4 * x), height: (2 * y))
+            
+            if let country = countryNameArray[indexPath.row] as? String
+            {
+                let convertedString = country.split(separator: "(")
+                cell.countryName.text = country
+            }
         }
 
         return cell
@@ -1438,31 +1522,55 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        for i in 0..<countryNameArray.count
+        if tableView == countryTableView
         {
-            if let country = countryNameArray[i] as? String
+            for i in 0..<countryNameArray.count
             {
-                let convertedString = country.split(separator: "(")
-                
-                if let compareString = countryNameArray[indexPath.row] as? String
+                if let country = countryNameArray[i] as? String
                 {
-                    let compareString1 = compareString.split(separator: "(")
-
-                    print("COMPARE STRING", compareString, convertedString[0])
-                    if "\(compareString1[0])" == "\(convertedString[0])"
+                    let convertedString = country.split(separator: "(")
+                    
+                    if let compareString = countryNameArray[indexPath.row] as? String
                     {
-                        countryButton.setTitle("\(compareString1[0])", for: .normal)
-
-                        let int = countryIdArray[i] as! Int
-                        serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
-                        stateButton.setTitle("State", for: .normal)
-                    }
-                    else
-                    {
+                        let compareString1 = compareString.split(separator: "(")
                         
+                        print("COMPARE STRING", compareString, convertedString[0])
+                        if "\(compareString1[0])" == "\(convertedString[0])"
+                        {
+                            countryButton.setTitle("\(compareString1[0])", for: .normal)
+                            
+                            let int = countryIdArray[i] as! Int
+                            serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
+                            stateButton.setTitle("State", for: .normal)
+                        }
+                        else
+                        {
+                            
+                        }
                     }
                 }
             }
+        }
+        else
+        {
+            flagImageView.image = nil
+            
+            if let imageName = countryFlagArray[indexPath.row] as? String
+            {
+                let api = "http://appsapi.mzyoon.com/images/flags/\(imageName)"
+                let apiurl = URL(string: api)
+                print("SELECTED COUNTRY - \(imageName)", apiurl)
+                if apiurl != nil
+                {
+                    flagImageView.dowloadFromServer(url: apiurl!)
+                }
+                else
+                {
+                    flagImageView.image = UIImage(named: "empty")
+                }
+            }
+            
+            mobileCountryCodeLabel.text = countryCodeArray[indexPath.row] as? String
         }
         
         blurView.removeFromSuperview()
@@ -1514,9 +1622,9 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             secondNameEnglishTextField.resignFirstResponder()
             //            areaNameTextField.becomeFirstResponder()
         }
-        else if textField == areaNameTextField
+        else if textField == areaButton
         {
-            areaNameTextField.resignFirstResponder()
+            areaButton.resignFirstResponder()
             //            floorTextField.becomeFirstResponder()
         }
         else if textField == floorTextField

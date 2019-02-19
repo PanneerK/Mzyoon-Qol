@@ -738,7 +738,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             marker.map = mapView
         }
         
-        let markerImageView = UIImageView()
+        /*let markerImageView = UIImageView()
         markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
         markerImageView.image = UIImage(named: "marker")
         
@@ -757,7 +757,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
             marker.iconView = markerImageView
             marker.map = mapView
-        }
+        }*/
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -805,6 +805,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         shopName.adjustsFontSizeToFitWidth = true
         tailorDeatiledView.addSubview(shopName)
         
+        print("SHOP NAME", shopName.text!)
         shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
         
         let ratingLabel = UILabel()
