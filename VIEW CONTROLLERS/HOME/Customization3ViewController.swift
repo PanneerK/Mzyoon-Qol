@@ -59,6 +59,12 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     var selectedSubCustomInt = Int()
     
+    //ACTIVITY INDICATOR PARAMETERS
+    let activeViewSub = UIView()
+    let activityIndicatorSub = UIActivityIndicatorView()
+    
+    
+    
     override func viewDidLoad() {
         navigationBar.isHidden = true
         selectedButton(tag: 0)
@@ -81,6 +87,25 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool) {
 //        self.serviceCall.API_Customization3(DressTypeId: "5", delegate: self)
+    }
+    
+    func activeStart1()
+    {
+        activeViewSub.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeViewSub.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(activeViewSub)
+        
+        activityIndicatorSub.frame = CGRect(x: ((activeViewSub.frame.width - (5 * x)) / 2), y: ((activeViewSub.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        activityIndicatorSub.color = UIColor.white
+        activityIndicatorSub.style = .whiteLarge
+        activityIndicatorSub.startAnimating()
+        activeViewSub.addSubview(activityIndicatorSub)
+    }
+    
+    func activeStop1()
+    {
+        activeViewSub.removeFromSuperview()
+        activityIndicatorSub.stopAnimating()
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
@@ -495,6 +520,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.addSubview(customization3NextButton)
         
         self.stopActivity()
+        self.activeStop1()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -589,7 +615,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if let attId = customAttIdArray[i] as? Int
                             {
-                                self.activityContents()
+                                self.activeStart1()
+                                self.view.bringSubviewToFront(activeView)
+
                                 self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
                                 selectedCustomInt = attId
                             }
@@ -608,7 +636,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if let attId = customAttIdArray[i] as? Int
                             {
-                                self.activityContents()
+                                self.activeStart1()
+                                self.view.bringSubviewToFront(activeView)
+
                                 self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
                                 selectedCustomInt = attId
                             }
@@ -629,7 +659,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if let attId = customAttIdArray[i] as? Int
                         {
-                            self.activityContents()
+                            self.activeStart1()
+                            self.view.bringSubviewToFront(activeView)
+
                             self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
                             selectedCustomInt = attId
                         }
@@ -666,7 +698,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func customization3NextButtonAction(sender : UIButton)
     {
-        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"

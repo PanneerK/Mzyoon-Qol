@@ -115,4 +115,7 @@ import Foundation
     
     //15.02.2019
     @objc optional func API_CALLBACK_InsertPaymentStatus(status : NSDictionary)
+    
+    //19.02.2019
+    @objc optional func API_CALLBACK_GetAreaByState(area : NSDictionary)
 }

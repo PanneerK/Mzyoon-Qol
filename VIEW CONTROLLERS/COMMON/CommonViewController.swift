@@ -83,7 +83,7 @@ class CommonViewController: UIViewController
         // Do any additional setup after loading the view.
     }
     
-    /*override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -105,7 +105,7 @@ class CommonViewController: UIViewController
             navigationContents()
             tabContents()
         }
-    }*/
+    }
     
     func slideMenu()
     {
@@ -126,9 +126,7 @@ class CommonViewController: UIViewController
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
         backgroundImage.addSubview(activeView)
-        
-        self.view.bringSubviewToFront(activeView)
-
+    
         activityView.frame = CGRect(x: ((activeView.frame.width - 50) / 2), y: ((activeView.frame.height - 50) / 2), width: 50, height: 50)
         activityView.style = .whiteLarge
         activityView.color = UIColor.white

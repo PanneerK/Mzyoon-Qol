@@ -1289,7 +1289,7 @@ class ServerAPI : NSObject
         {
             print("Server Reached - Order Summary Page")
             
-            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage" : MaterialImage, "ReferenceImage" : ReferenceImage, "OrderCustomization" : OrderCustomization, "TailorId" : TailorId, "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurementValue" : UserMeasurement, "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurmentType" : measurementType] as [String : Any]
+            let parameters = ["dressType" : dressType, "CustomerId" : CustomerId, "AddressId" : AddressId, "PatternId" : PatternId, "Ordertype" : Ordertype, "MeasurementId" : MeasurementId, "MaterialImage" : MaterialImage, "ReferenceImage" : ReferenceImage, "OrderCustomization" : OrderCustomization, "TailorId" : TailorId, "MeasurementBy" : MeasurementBy, "CreatedBy" : CreatedBy, "MeasurementName" : MeasurementName, "UserMeasurementValues" : UserMeasurement, "DeliveryTypeId" : DeliveryTypeId, "Units" : units, "MeasurmentType" : measurementType] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertOrder", arguments: [baseURL])
             
@@ -2309,6 +2309,41 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 35, errorMessage: "Insert Payment Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
+    
+    //19.02.2019
+    func API_GetAreaByState(stateId : String, delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            
+            print("Server Reached - Get Area By State Page")
+            
+            let parameters = ["Id" : stateId] as [String : Any]
+            
+            let urlString:String = String(format: "%@/api/Shop/GetAreaByState", arguments: [baseURL])
+            
+            print("URL STRING AREA", urlString)
+            print("PARAMETERS AREA", parameters)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_GetAreaByState!(area: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Get Area By State Failed")
                 }
             }
         }

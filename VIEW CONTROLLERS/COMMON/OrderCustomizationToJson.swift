@@ -114,7 +114,7 @@ class OrderCustomizationToJson
         
         for i in 0..<id.count
         {
-            List1.append(["MeasurementId" : id[i], "Value" : values[i]])
+            List1.append(["UserMeasurementId" : id[i], "Value" : values[i]])
         }
         
         return List1

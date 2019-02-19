@@ -581,7 +581,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         nameArray.append(addNameAlert.textFields![0].text!)
         
         UserDefaults.standard.set(addNameAlert.textFields![0].text!, forKey: "measurementName")
-        UserDefaults.standard.set("-1", forKey: "measurementId")
+        UserDefaults.standard.set("-1", forKey: "measurementIdInt")
         
         let measurement2Screen = Measurement2ViewController()
         self.navigationController?.pushViewController(measurement2Screen, animated: true)

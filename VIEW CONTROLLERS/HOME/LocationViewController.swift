@@ -17,6 +17,9 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     var x = CGFloat()
     var y = CGFloat()
     
+    var screenTag = 1
+    var selectedCoordinate = CLLocationCoordinate2D()
+    
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation!
     
@@ -32,6 +35,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     var activityView = UIActivityIndicatorView()
     
     var getTraggedPosition = CLLocationCoordinate2D()
+    
+    var currentCoordinate = CLLocationCoordinate2D()
     
     override func viewDidLoad()
     {
@@ -117,10 +122,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             print("Current Loc:",currentLocation.coordinate)
         }
         
-        //        let camera = GMSCameraPosition(target: currentLocation.coordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
-        
         mapView.frame = CGRect(x: 0, y: locationNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (11.4 * y))
-        //        mapView.camera = camera
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
@@ -147,10 +149,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         markerImageView.frame = CGRect(x: ((view.frame.width - (6 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (6 * x), height: (5 * y))
         markerImageView.image = UIImage(named: "marker")
         view.addSubview(markerImageView)
-        
-        //        marker.position = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-        //        marker.iconView = markerImageView
-        //        marker.map = mapView
         
         activityContents()
     }
@@ -191,24 +189,35 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         
         //  let camera = GMSCameraPosition(target: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), zoom: 16.0, bearing: 0.5, viewingAngle: 1.0)
         
-        let camera = GMSCameraPosition(target:location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
-        mapView.camera = camera
+        if screenTag == 1
+        {
+            let camera = GMSCameraPosition(target: selectedCoordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
+            mapView.camera = camera
+            
+            currentCoordinate = selectedCoordinate
+        }
+        else
+        {
+            let camera = GMSCameraPosition(target:location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
+            mapView.camera = camera
+            
+            currentCoordinate = location.coordinate
+        }
         
-        //        marker.position = CLLocationCoordinate2D(latitude: camera.target.latitude, longitude: camera.target.longitude)
-        //        marker.iconView = markerImageView
-        //        marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
-        //        marker.map = mapView
+        marker.position = CLLocationCoordinate2D(latitude: currentCoordinate.latitude, longitude: currentCoordinate.longitude)
+        marker.iconView = markerImageView
+        marker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
+        marker.map = mapView
         
         locationManager.stopUpdatingLocation()
         
     }
     
-    //    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-    //        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
-    //        marker.map = mapView
-    //
-    //        print("LAT OF - \(position.target.latitude), LONG OF - \(position.target.longitude)")
-    //    }
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        marker.position = CLLocationCoordinate2D(latitude: position.target.latitude, longitude: position.target.longitude)
+        
+        print("LAT OF - \(position.target.latitude), LONG OF - \(position.target.longitude)")
+    }
     
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition)
     {
