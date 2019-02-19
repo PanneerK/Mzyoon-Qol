@@ -194,10 +194,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
       */
         
         RequestListScrollView.frame = CGRect(x: 0, y: y, width: backDrop.frame.width, height: (52 * y))
-       // RequestListScrollView.backgroundColor = UIColor.gray
+        // RequestListScrollView.backgroundColor = UIColor.gray
         backDrop.addSubview(RequestListScrollView)
-        
-        RequestListScrollView.contentSize.height = (12 * y * CGFloat(OrderIdArray.count))
         
         for views in RequestListScrollView.subviews
         {
@@ -341,7 +339,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             y1 = RequestViewButton.frame.maxY + y
         }
         
-      
+        RequestListScrollView.contentSize.height = y1 + (2 * y)
+
     }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)

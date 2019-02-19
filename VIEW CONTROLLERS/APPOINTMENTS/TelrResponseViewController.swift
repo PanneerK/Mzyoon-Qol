@@ -33,6 +33,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     var STOREID:String!
     var EMAIL:String!
     
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -42,6 +43,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
         STOREID = "21552"
         TelrTransCode = UserDefaults.standard.value(forKey: "TransCode") as? String
+        
         
        // ResponseContent()
         
@@ -146,19 +148,19 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         // Payment View..
         
         let TransactionView = UIView()
-        TransactionView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (10 * y))
-        //PaymentView.backgroundColor = UIColor.white
+        TransactionView.frame = CGRect(x: (3 * x), y: ((view.frame.height - (10 * y)) / 2), width: view.frame.width - (6 * x), height: (10 * y))
+        TransactionView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(TransactionView)
         
         // Transaction Label..
         let TransLabel = UILabel()
-        TransLabel.frame = CGRect(x: x, y: y, width: TransactionView.frame.width - (2 * x), height: (6 * y))
+        TransLabel.frame = CGRect(x: x, y: (y / 2), width: TransactionView.frame.width - (2 * x), height: (5 * y))
         // TransLabel.backgroundColor = UIColor.gray
         TransLabel.font = UIFont.boldSystemFont(ofSize: 16)
         TransLabel.text = "Payment Success, Your Transaction Reference Number is  : \(TransRef!)"
         TransLabel.font = UIFont(name: "Avenir Next", size: 16)
-        TransLabel.textColor = UIColor.black
-        TransLabel.textAlignment = .left
+        TransLabel.textColor = UIColor.white
+        TransLabel.textAlignment = .center
         TransLabel.lineBreakMode = .byWordWrapping
         TransLabel.numberOfLines = 3
         TransactionView.addSubview(TransLabel)
@@ -166,17 +168,19 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
      
         // Done Button
         let DoneButton = UIButton()
-        DoneButton.frame = CGRect(x: (8 * x), y: TransLabel.frame.maxY + (4 * y), width: (15 * x), height: (4 * y))
+        DoneButton.frame = CGRect(x: ((TransactionView.frame.width - (15 * x)) / 2), y: TransLabel.frame.maxY + y, width: (15 * x), height: (3 * y))
         DoneButton.backgroundColor = UIColor.orange
         DoneButton.setTitle("Done", for: .normal)
         DoneButton.setTitleColor(UIColor.white, for: .normal)
         DoneButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.3 * x))
-        DoneButton.layer.cornerRadius = 10;  // this value vary as per your desire
-        DoneButton.clipsToBounds = true;
+        DoneButton.layer.cornerRadius = 10  // this value vary as per your desire
+        DoneButton.isUserInteractionEnabled = true
         DoneButton.addTarget(self, action: #selector(self.DoneButtonAction(sender:)), for: .touchUpInside)
         TransactionView.addSubview(DoneButton)
         
+        self.view.bringSubviewToFront(DoneButton)
     }
+    
     
     @objc func otpBackButtonAction(sender: UIButton)
     {
