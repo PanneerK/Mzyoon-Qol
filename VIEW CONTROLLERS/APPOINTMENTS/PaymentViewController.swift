@@ -217,7 +217,9 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
                                 let CodeWebView = webViewDict.object(forKey: "code")! as AnyObject
                                 self.TelrTransCode = (CodeWebView.object(forKey: "text") as AnyObject) as? String
                                 print("TelrTransCode :",self.TelrTransCode)
-                                
+                            
+                                UserDefaults.standard.set(self.TelrTransCode, forKey: "TransCode")
+                            
                                 if (self.TelrStartUrl != nil)
                                 {
                                     DispatchQueue.main.async (execute: { () -> Void in
@@ -431,11 +433,7 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         
         PaymentRequest()
       
-     /*
-        let TelrScreen = TelrGateWayViewController()
-        //TelrScreen.UrlString = UrlDict
-        self.navigationController?.pushViewController(TelrScreen, animated: true)
-     */
+     
         
   }
   

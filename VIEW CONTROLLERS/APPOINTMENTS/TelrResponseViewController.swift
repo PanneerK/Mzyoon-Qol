@@ -15,8 +15,10 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     
     var TransRef:String!
     var TransTraceNum:String!
+    var TelrTransCode:String!
     
     let PaymentNavigationBar = UIView()
+    var dictionaryData = NSDictionary()
     
     // Error PAram...
     var DeviceNum:String!
@@ -26,13 +28,93 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+    // Parameters:
+    var KEY:String!
+    var STOREID:String!
+    var EMAIL:String!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        ResponseContent()
+        KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
+        STOREID = "21552"
+        TelrTransCode = UserDefaults.standard.value(forKey: "TransCode") as? String
+        
+       // ResponseContent()
+        
+         TransactionRequest()
+        
+    }
+    
+    func TransactionRequest()
+    {
+        let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            "<mobile>" +
+            "<store>\(STOREID!)</store>" +
+            "<key>\(KEY!)</key>" +
+            "<complete>\(TelrTransCode!)</complete>" +
+        "</mobile>"
+        
+        let urlString = "https://secure.innovatepayments.com/gateway/mobile_complete.xml"
+        if let url = NSURL(string: urlString)
+        {
+            let theRequest = NSMutableURLRequest(url: url as URL)
+            theRequest.addValue("application/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            theRequest.addValue((Message), forHTTPHeaderField: "Content-Length")
+            theRequest.httpMethod = "POST"
+            theRequest.httpBody = Message.data(using: String.Encoding.utf8)
+            let task = URLSession.shared.dataTask(with: theRequest as URLRequest)
+            { (data, response, error) in
+                if error == nil
+                {
+                    if let data = data, let responseString = String(data: data, encoding: String.Encoding.utf8)
+                    {
+                        print("responseString = \(responseString)")
+                        do
+                        {
+                            self.dictionaryData = try XMLReader.dictionary(forXMLData: data, options:UInt(XMLReaderOptionsProcessNamespaces)) as NSDictionary
+                            
+                            print("Value:",self.dictionaryData)
+                            
+                            let mobileDict = (self.dictionaryData.object(forKey: "mobile")! as AnyObject)
+                            // print("mobileDict:",mobileDict)
+                            
+                            let AuthDict = mobileDict.object(forKey: "auth")! as AnyObject
+                            //  print("webViewDict:",webViewDict)
+                            
+                            let RefNum = AuthDict.object(forKey: "tranref")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            
+                            self.TransRef = (RefNum.object(forKey: "text") as AnyObject) as? String
+                            print("TransRef :",self.TransRef)
+                            
+                            let TraceDict = mobileDict.object(forKey: "trace")! as AnyObject
+                            //  print("webViewDict:",webViewDict)
+                            
+                            self.TransTraceNum = (TraceDict.object(forKey: "text") as AnyObject) as? String
+                            print("TransTraceNum :",self.TransTraceNum)
+                            
+                            DispatchQueue.main.async (execute: { () -> Void in
+                                self.ResponseContent()
+                            })
+                        }
+                        catch
+                        {
+                            print("Your Dictionary value nil")
+                        }
+                        //print(dictionaryData)
+                    }
+                }
+                else
+                {
+                    print(error!)
+                }
+            }
+            task.resume()
+        }
     }
     
 
@@ -84,11 +166,11 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
      
         // Done Button
         let DoneButton = UIButton()
-        DoneButton.frame = CGRect(x: (8 * x), y: TransLabel.frame.maxY + (4 * y), width: (15 * x), height: (3 * y))
+        DoneButton.frame = CGRect(x: (8 * x), y: TransLabel.frame.maxY + (4 * y), width: (15 * x), height: (4 * y))
         DoneButton.backgroundColor = UIColor.orange
         DoneButton.setTitle("Done", for: .normal)
         DoneButton.setTitleColor(UIColor.white, for: .normal)
-        DoneButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: 10)
+        DoneButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.3 * x))
         DoneButton.layer.cornerRadius = 10;  // this value vary as per your desire
         DoneButton.clipsToBounds = true;
         DoneButton.addTarget(self, action: #selector(self.DoneButtonAction(sender:)), for: .touchUpInside)
@@ -96,7 +178,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         
     }
     
-    @objc func otpBackButtonAction(sender : UIButton)
+    @objc func otpBackButtonAction(sender: UIButton)
     {
         self.navigationController?.popViewController(animated: true)
     }
@@ -125,10 +207,18 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
         self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
         
-        
+      /*
         let HomeScreen = HomeViewController()
         self.navigationController?.pushViewController(HomeScreen, animated: true)
         self.present(HomeScreen, animated: true, completion: nil)
+      */
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let HomeScreen = HomeViewController()
+        let navigationScreen = UINavigationController(rootViewController: HomeScreen)
+        navigationScreen.isNavigationBarHidden = true
+        window?.rootViewController = navigationScreen
+        window?.makeKeyAndVisible()
         
     }
     

@@ -57,14 +57,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             // Your code with delay
             
        
-            self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorID, delegate: self)
-            
-      //  self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: 27, delegate: self)
-        
-      //  self.orderApprovalContent()
-            
-//        self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-            self.selectedButton(tag: 1)
+          self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorID, delegate: self)
+   
+           self.selectedButton(tag: 1)
             
           self.addDoneButtonOnKeyboard()
             
@@ -117,22 +112,22 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             print("Result", Result)
             
             let DressSubType = Result.object(forKey: "DressSubType") as! NSArray
-           // print("DressSubType:",DressSubType)
+            print("DressSubType:",DressSubType)
             
             DressImageArray = DressSubType.value(forKey: "Image") as! NSArray
-            //print("DressImageArray:",DressImageArray)
+            print("DressImageArray:",DressImageArray)
             
             DressNameArray = DressSubType.value(forKey: "NameInEnglish") as! NSArray
-            //print("DressNameArray:",DressNameArray)
+            print("DressNameArray:",DressNameArray)
             
             let TailorCharges = Result.object(forKey: "TailorCharges") as! NSArray
-           // print("TailorCharges:",TailorCharges)
+            print("TailorCharges:",TailorCharges)
             
             ChargesNameArray = TailorCharges.value(forKey: "DescInEnglish") as! NSArray
-            //print("ChargesNameArray:",ChargesNameArray)
+            print("ChargesNameArray:",ChargesNameArray)
             
             ChargesAmountArray = TailorCharges.value(forKey: "Amount") as! NSArray
-           //print("ChargesAmountArray:",ChargesAmountArray)
+           print("ChargesAmountArray:",ChargesAmountArray)
             
            
         }
@@ -1041,7 +1036,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
       for i in 0..<AppoinmentArray.count
       {
         let AppointmentValueLabel = UILabel()
-        AppointmentValueLabel.frame = CGRect(x: AppointColonLabel.frame.maxX + x, y: y1, width: 15 * x, height: (3 * y))
+        AppointmentValueLabel.frame = CGRect(x: AppointColonLabel.frame.maxX + x, y: y1, width: 15 * x, height: (4 * y))
          // AppointmentValueLabel.backgroundColor = UIColor.gray
         AppointmentValueLabel.text = AppoinmentArray[i] as? String
         AppointmentValueLabel.lineBreakMode = .byWordWrapping
@@ -1051,7 +1046,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         AppointmentValueLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         AppointmentsView.addSubview(AppointmentValueLabel)
         
-        y1 = AppointmentValueLabel.frame.maxY + y
+        y1 = AppointmentValueLabel.frame.maxY + 1
      }
         
         // DeliveryTypeView :-
