@@ -57,8 +57,8 @@ class TelrGateWayViewController: UIViewController,UIWebViewDelegate
         view.backgroundColor = UIColor.white
         
       
-        KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
-        STOREID = "21552"
+         KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
+         STOREID = "21552"
       
         //Your code goes here
             print("Telr Start URL:",TelrStartUrl)

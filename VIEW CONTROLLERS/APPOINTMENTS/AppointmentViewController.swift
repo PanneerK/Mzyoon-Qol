@@ -90,6 +90,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         print("TailorID:",TailorID)
         
+        UserDefaults.standard.set(TailorID, forKey: "TailorID")
+        
         print("order ID:", OrderID)
       
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int

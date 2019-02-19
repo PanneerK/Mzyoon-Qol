@@ -98,7 +98,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
              // print("QuotationList:",QuotationList)
             if QuotationList.count == 0 || QuotationList == nil
             {
-              
+                
                 emptyLabel.frame = CGRect(x: (4 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (8 * x), height: (6 * y))
                 emptyLabel.text = "Tailors Yet to Accept Request.,Please Come Back After Some time..!"
                 emptyLabel.textColor = UIColor.black
@@ -150,6 +150,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     
    func quotationListContent()
    {
+    
     self.stopActivity()
     
     //let quotationListNavigationBar = UIView()
@@ -360,6 +361,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         confirmSelectionButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
         backDrop.addSubview(confirmSelectionButton)
      */
+        
     }
     
  
@@ -370,14 +372,5 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         self.navigationController?.pushViewController(orderApproveScreen, animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+ 
 }
