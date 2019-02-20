@@ -103,9 +103,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
             self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
+            
+            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
         }
         
-          TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
+        TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
     }
     
     func DeviceError() 
@@ -380,6 +383,54 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             print("Result", Result)
             
             MethodName = "BuyerOrderApprovalMeasurement"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+    
+    func API_CALLBACK_GetAppointmentDateForMaterail(MaterialDate: NSDictionary)
+    {
+        let ResponseMsg = MaterialDate.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = MaterialDate.object(forKey: "Result") as! NSArray
+            print("Result", Result)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = MaterialDate.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetAppointmentDateForMaterail"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+        
+    }
+    func API_CALLBACK_GetAppointmentDateForMeasurement(MeasurementDate: NSDictionary)
+    {
+        let ResponseMsg = MeasurementDate.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = MeasurementDate.object(forKey: "Result") as! NSArray
+            print("Result", Result)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = MeasurementDate.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetAppointmentDateForMeasurement"
             ErrorStr = Result
             
             DeviceError()
@@ -1014,7 +1065,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_ApproveButton.layer.borderWidth = 1.0
         Measure_ApproveButton.layer.cornerRadius = 10
         Measure_ApproveButton.addTarget(self, action: #selector(self.MeasureApproveButtonAction(sender:)), for: .touchUpInside)
+        if MeasurementInEnglish.contains("Go To Tailor Place")
+        {
+            
+        }
+        else
+        {
         MeasurementTypeView.addSubview(Measure_ApproveButton)
+        }
         
        // let RejectButton = UIButton()
        Measure_RejectButton.frame = CGRect(x: Measure_ApproveButton.frame.maxX + (2 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
@@ -1026,9 +1084,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_RejectButton.layer.borderWidth = 1.0
         Measure_RejectButton.layer.cornerRadius = 10
         Measure_RejectButton.addTarget(self, action: #selector(self.MeasureRejectButtonAction(sender:)), for: .touchUpInside)
+        if MeasurementInEnglish.contains("Go To Tailor Place")
+        {
+            
+        }
+        else
+        {
         MeasurementTypeView.addSubview(Measure_RejectButton)
-        
- 
+        }
+       
         let Measure_SaveButton = UIButton()
         Measure_SaveButton.frame = CGRect(x: TailorImageView.frame.width - (5 * x), y: Measure_RejectButton.frame.minY + (4 * y) , width: (8 * x), height: (2 * y))
         Measure_SaveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -1036,8 +1100,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_SaveButton.setTitleColor(UIColor.white, for: .normal)
         Measure_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
         Measure_SaveButton.addTarget(self, action: #selector(self.Measure_SaveButtonAction(sender:)), for: .touchUpInside)
-        MeasurementTypeView.addSubview(Measure_SaveButton)
-   
+        if MeasurementInEnglish.contains("Tailor Come To Your Place")
+        {
+            
+        }
+        else
+        {
+           MeasurementTypeView.addSubview(Measure_SaveButton)
+        }
         
         AppointmentScrollview.contentSize.height = MeasurementTypeView.frame.maxY + (2 * y)
     }

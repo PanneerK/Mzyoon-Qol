@@ -20,15 +20,16 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     var PageNumStr:String!
     var MethodName:String!
     
+    var OrderID:Int!
+    
     //Tracking array..
     var DateArray = NSArray()
     var StatusArray = NSArray()
     var TrackingStatusIdArray = NSArray()
     
     let TrackingTableview = UITableView()
-   // private var TrackingTableview: UITableView!
-    
-    // private let fruit: NSArray = ["apple", "orange", "banana", "strawberry", "lemon"]
+   
+    var TrackingDate = String()
     
     override func viewDidLoad()
     {
@@ -36,15 +37,14 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
 
         // Do any additional setup after loading the view.
         
-        TrackingView()
-        
         slideMenuButton.isHidden = true
         tabBar.isHidden = true
         
-        self.ServiceCall.API_GetTrackingDetails(OrderId: 1, delegate: self)
-        
-        
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        self.ServiceCall.API_GetTrackingDetails(OrderId: OrderID, delegate: self)
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -94,7 +94,10 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
             TrackingStatusIdArray = Result.value(forKey: "TrackingStatusId") as! NSArray
             print("TrackingStatusIdArray:",TrackingStatusIdArray)
             
+             TrackingView()
+            
              TrackingTableview.reloadData()
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -175,9 +178,8 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     */
     
     // return the number of cells each section.
-   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        
         return StatusArray.count
     }
     
@@ -189,21 +191,25 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
        
         cell.backgroundColor = UIColor.white
         
-        cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (6 * y))
+        cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (5 * y))
         
-        cell.TrackingDate.frame = CGRect(x: x, y: y, width: (10 * x), height: (2 * y))
+        cell.TrackingDate.frame = CGRect(x: x, y: 0, width: (10 * x), height: (5 * y))
+       
+        cell.TrackerImg.frame = CGRect(x: cell.TrackingDate.frame.maxX + x, y: 0, width: x, height: (5 * y))
         
-         cell.TrackerImg.frame = CGRect(x: cell.TrackingDate.frame.maxX + x, y: y, width: x, height: (5 * y))
+        cell.TrackingDetails.frame = CGRect(x: cell.TrackerImg.frame.maxX + x, y: 0, width: cell.frame.width - (15 * x), height: (5 * y))
+       
+       // cell.TrackingTime.frame = CGRect(x: x, y: cell.TrackingDate.frame.maxY, width: (6 * x), height: (3 * y))
         
-        cell.TrackingDetails.frame = CGRect(x: cell.TrackerImg.frame.maxX + x, y: y, width: cell.frame.width - (15 * x), height: (2 * y))
-        
-        cell.TrackingTime.frame = CGRect(x: x, y: cell.TrackingDate.frame.maxY, width: (6 * x), height: (3 * y))
-        
-        cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
+          cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
         
         
         cell.TrackingDetails.text = StatusArray[indexPath.row] as? String
-        cell.TrackingDate.text = DateArray[indexPath.row] as? String
+        if let date = DateArray[indexPath.row] as? String
+        {
+            TrackingDate = String(date.prefix(10))
+        }
+        cell.TrackingDate.text = TrackingDate
         cell.TrackerImg.image = UIImage(named: "TrackingStatus")
         
       //  cell.TrackingTime.text = DateFormatter.localizedString(from: NSDate() as Date, dateStyle: .short, timeStyle: .short)
@@ -213,7 +219,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return (6 * y)
+        return (5 * y)
     }
 
 }

@@ -250,12 +250,8 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
         self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
         
-        self.serviceCall.API_InsertPaymentStatus(OrderId: orderId!, Transactionid: TransRef, Amount: TotalAmt!, Status: TransStatus, Code: TransCode, message: TransMessage, cvv: TransCvv, avs: TransAvs, cardcode: TransCardcode, cardlast4: TransCardlast4, Trace: TransTraceNum, delegate: self)
-      /*
-        let HomeScreen = HomeViewController()
-        self.navigationController?.pushViewController(HomeScreen, animated: true)
-        self.present(HomeScreen, animated: true, completion: nil)
-      */
+        self.serviceCall.API_InsertPaymentStatus(OrderId: orderId!, Transactionid: TransRef, Amount: TotalAmt!, Status: TransStatus, Code: TransCode, message: TransMessage, cvv: TransCvv, avs: TransAvs, cardcode: TransCardcode, cardlast4: TransCardlast4, Trace: TransTraceNum, ca_Valid: TransCa_valid, delegate: self)
+        
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let HomeScreen = HomeViewController()

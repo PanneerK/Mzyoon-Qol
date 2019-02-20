@@ -9,12 +9,16 @@
 import UIKit
 import TelrSDK
 
-class PaymentViewController: CommonViewController,UITextFieldDelegate
+class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
 {
+   
+    
     
   //  let KEY:String = "XZCQ~9wRvD^prrJx"
  //   let STOREID:String = "21552"
  //   let EMAIL:String = "rohith.qol@gmail.com"
+    
+    let serviceCall = ServerAPI()
     
     let Amount_TF = UITextField()
     var TotalAmount:String!
@@ -64,6 +68,13 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
 
     let PaymentNavigationBar = UIView()
     
+    // Error PAram...
+    var DeviceNumStr:String!
+    var UserType:String!
+    var AppVersionStr:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
     
    // var x = CGFloat()
   //  var y = CGFloat()
@@ -91,9 +102,9 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         
          self.addDoneButtonOnKeyboard()
         
-        KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
-        STOREID = "21552"
-        MerchantID = "12168"
+     //   KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
+      //  STOREID = "21552"
+     //   MerchantID = "12168"
         
         EMAIL = "rohit@qolsofts.com"
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
@@ -117,6 +128,10 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         
        // ConvertBase64()
     }
+    override func viewWillAppear(_ animated: Bool)
+    {
+        self.serviceCall.API_GetPaymentStoreDetails(delegate: self)
+    }
     
     func ConvertBase64()
     {
@@ -128,7 +143,62 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         DeviceAgent = "Authorization: Basic \(base64)"
         DeviceAccept = "Authorization: Basic \(base64)"
     }
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "AppointmentViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNumStr, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersionStr, Type: UserType, delegate: self)
+        
+    }
     
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+         print("Payment summary : ", errorMessage)
+    }
+    
+    func API_CALLBACK_GetPaymentStore(StoreDetails: NSDictionary)
+    {
+        let ResponseMsg = StoreDetails.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = StoreDetails.object(forKey: "Result") as! NSArray
+            print("Result", Result)
+            
+             let StoreId = Result.value(forKey: "StoreId") as? NSArray
+             let sID : Int = StoreId![0] as! Int
+             STOREID = "\(sID)"
+             print("STOREID", STOREID)
+            
+            let Key = Result.value(forKey: "KeyId") as? NSArray
+            KEY = Key![0] as? String
+            print("KEY", KEY)
+            
+            let MerchantId = Result.value(forKey: "MerchantId") as? NSArray
+            MerchantID = MerchantId![0] as? String
+            print("MerchantID", MerchantID)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = StoreDetails.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetPaymentStore"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+        
+    }
   /*
     func PaymentRequest()
     {
@@ -326,6 +396,7 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         
     }
   */
+    
     func PayPageRequest()
     {
         let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
@@ -540,7 +611,7 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         
         let PaymentView = UIView()
         PaymentView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (10 * y))
-        //PaymentView.backgroundColor = UIColor.white
+        PaymentView.backgroundColor = UIColor.white
         view.addSubview(PaymentView)
         
         // Order Id Label..

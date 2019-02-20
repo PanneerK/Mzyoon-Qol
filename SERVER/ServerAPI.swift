@@ -2288,13 +2288,13 @@ class ServerAPI : NSObject
     
     
     // Insert Payment Status...
-    func API_InsertPaymentStatus(OrderId : Int, Transactionid : String, Amount : String, Status : String, Code : String, message : String, cvv : String, avs : String, cardcode : String, cardlast4 : String, Trace : String, delegate : ServerAPIDelegate)
+    func API_InsertPaymentStatus(OrderId : Int, Transactionid : String, Amount : String, Status : String, Code : String, message : String, cvv : String, avs : String, cardcode : String, cardlast4 : String, Trace : String, ca_Valid : String,delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Payment Transaction Page")
             
-            let parameters = ["OrderId" : OrderId, "Transactionid" : Transactionid, "Amount" : Amount, "Status" : Status, "Code" : Code, "message" : message, "cvv" : cvv, "avs" : avs, "cardcode" : cardcode, "cardlast4" : cardlast4, "Trace" : Trace] as [String : Any]
+            let parameters = ["OrderId" : OrderId, "Transactionid" : Transactionid, "Amount" : Amount, "Status" : Status, "Code" : Code, "message" : message, "cvv" : cvv, "avs" : avs, "cardcode" : cardcode, "cardlast4" : cardlast4, "Trace" : Trace, "ca_Valid" : ca_Valid] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertPaymentStatus", arguments: [baseURL])
             
@@ -2345,7 +2345,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Get Area By State Failed")
+                    delegate.API_CALLBACK_Error(errorNumber:36, errorMessage: "Get Area By State Failed")
                 }
             }
         }
@@ -2355,4 +2355,107 @@ class ServerAPI : NSObject
         }
     }
 
+    
+    //  Payment Store Details..  20/2/2019
+    func API_GetPaymentStoreDetails(delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Payment Summary Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetPaymentStore", arguments: [baseURL])
+            
+            print("Payment Store Details: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    // print("resultDict", self.resultDict)
+                    
+                    delegate.API_CALLBACK_GetPaymentStore!(StoreDetails: self.resultDict)
+                    
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 37, errorMessage: "Payment Store Details Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+  
+  
+    // Get AppointmentDate ForMaterail List
+    func API_GetAppointmentDateForMaterail(OrderId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Appointment List Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetAppointmentDateForMaterail?OrderId=\(OrderId)", arguments: [baseURL])
+            
+            print("Order Request List: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("resultDict", self.resultDict)
+                    delegate.API_CALLBACK_GetAppointmentDateForMaterail!(MaterialDate: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 38, errorMessage: "Appointment List Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+ 
+    
+    // Get AppointmentDate For Measurement List..
+    func API_GetAppointmentDateForMeasurement(OrderId : Int , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - Appointment List Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetAppointmentDateForMeasurement?OrderId=\(OrderId)", arguments: [baseURL])
+            
+            print("Order Request List: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("resultDict", self.resultDict)
+                    delegate.API_CALLBACK_GetAppointmentDateForMeasurement!(MeasurementDate: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 38, errorMessage: "Appointment List Failed")
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
 }

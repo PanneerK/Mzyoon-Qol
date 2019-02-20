@@ -119,4 +119,9 @@ import Foundation
     //19.02.2019
     @objc optional func API_CALLBACK_GetAreaByState(area : NSDictionary)
     
+    // 20.02.2019
+    @objc optional func API_CALLBACK_GetPaymentStore(StoreDetails : NSDictionary)
+    @objc optional func API_CALLBACK_GetAppointmentDateForMaterail(MaterialDate : NSDictionary)
+    @objc optional func API_CALLBACK_GetAppointmentDateForMeasurement(MeasurementDate : NSDictionary)
+    
 }
