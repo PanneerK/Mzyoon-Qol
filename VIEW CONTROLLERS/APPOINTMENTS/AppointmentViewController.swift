@@ -90,20 +90,25 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         print("TailorID:",TailorID)
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        
         UserDefaults.standard.set(TailorID, forKey: "TailorID")
         
         print("order ID:", OrderID)
-      
+        
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
             self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
         }
-       
-
-       TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
+        
+        TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
         
     }
+    
     func DeviceError() 
     {
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
@@ -428,23 +433,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         AppointmentScrollview.backgroundColor = UIColor.clear
         view.addSubview(AppointmentScrollview)
         
-        
-        if MaterialInEnglish .contains("Companies-Material")
-        {
-            OrderTypeView.removeFromSuperview()
-           
-            //viewType = (OrderTypeView.frame.maxY + y)
-            
-            
-        }
-        
-        
  //----------------------------------------OrderType View---------------------------------------------------------------
         
         // OrderType View..
-        OrderTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
-       // OrderTypeView.backgroundColor = UIColor.lightGray
-        AppointmentScrollview.addSubview(OrderTypeView)
+       
+        
+        if MaterialInEnglish.contains("Companies-Material")
+        {
+            OrderTypeView.removeFromSuperview()
+            //  OrderTypeView.isHidden = true
+        }
+        else
+        {
+            OrderTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
+//            OrderTypeView.backgroundColor = UIColor.lightGray
+            AppointmentScrollview.addSubview(OrderTypeView)
+            y2 = OrderTypeView.frame.maxY + y
+        }
         
         // Order Type..
         let orderTypeLabel = UILabel()
@@ -731,15 +736,28 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         OrderTypeView.addSubview(Material_SaveButton)
      
         
+        
     //------------------------------------------MeasurementType View--------------------------------------------------------
         
         // MEASUREMENT_1 Type View..
         
-        y2 = OrderTypeView.frame.maxY + y
+      //  print("ROHITH", y2)
 
-        MeasurementTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
-        //MeasurementTypeView.backgroundColor = UIColor.darkGray
-        AppointmentScrollview.addSubview(MeasurementTypeView)
+        
+        if MeasurementInEnglish.contains("Manually")
+        {
+            MeasurementTypeView.removeFromSuperview()
+        }
+        else
+        {
+            MeasurementTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
+            //MeasurementTypeView.backgroundColor = UIColor.darkGray
+            AppointmentScrollview.addSubview(MeasurementTypeView)
+            
+           // y2 = OrderTypeView.frame.maxY + y
+        }
+        
+      
         
         
         // MEASUREMENT_1 Type..
@@ -1016,7 +1034,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_SaveButton.setTitle("Save", for: .normal)
         Measure_SaveButton.setTitleColor(UIColor.white, for: .normal)
         Measure_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
-  
         Measure_SaveButton.addTarget(self, action: #selector(self.Measure_SaveButtonAction(sender:)), for: .touchUpInside)
         MeasurementTypeView.addSubview(Measure_SaveButton)
    

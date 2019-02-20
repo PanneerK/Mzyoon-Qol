@@ -47,8 +47,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         selectedButton(tag: 1)
         
     //  self.serviceCall.API_GetOrderRequest(RequestId: 1070, delegate: self)
+    
         
-
+    /*
         if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
             self.serviceCall.API_GetOrderRequest(RequestId: userId, delegate: self)
@@ -57,9 +58,22 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         {
             self.serviceCall.API_GetOrderRequest(RequestId: Int(userId)!, delegate: self)
         }
-    
+    */
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            self.serviceCall.API_GetOrderRequest(RequestId: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            self.serviceCall.API_GetOrderRequest(RequestId: Int(userId)!, delegate: self)
+        }
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)

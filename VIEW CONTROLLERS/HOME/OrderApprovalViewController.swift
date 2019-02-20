@@ -54,26 +54,21 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         print("Tailor ID:",TailorID)
         
-         navigationBar.isHidden = true
+        navigationBar.isHidden = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
-            // Your code with delay
-            
-       
-          self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorID, delegate: self)
-   
-           self.selectedButton(tag: 1)
-            
-          self.addDoneButtonOnKeyboard()
-            
-        }
+        self.selectedButton(tag: 1)
+        
+        self.addDoneButtonOnKeyboard()
         
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-  
+    override func viewWillAppear(_ animated: Bool)
+    {
+         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorID, delegate: self)
+    }
      
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
@@ -467,7 +462,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // MeasurementChargesLabel..
         let MeasurementChargesLabel = UILabel()
-        MeasurementChargesLabel.frame = CGRect(x: x, y: CurrencyButton.frame.minY + (4 * y), width: (ApprovalListScrollView.frame.width / 2), height: 30)
+        MeasurementChargesLabel.frame = CGRect(x: x, y: CurrencyButton.frame.minY + (4 * y), width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
        // MeasurementChargesLabel.backgroundColor = UIColor.gray
         MeasurementChargesLabel.text = "Measurement Charges"
         MeasurementChargesLabel.textColor = UIColor.black
@@ -477,7 +472,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         ApprovalListScrollView.addSubview(MeasurementChargesLabel)
       
         let MeasureRupeeValueLBL = UILabel()
-        MeasureRupeeValueLBL.frame = CGRect(x: MeasurementChargesLabel.frame.maxX + x , y: CurrencyButton.frame.minY + (4 * y), width: (10 * x), height: 30)
+        MeasureRupeeValueLBL.frame = CGRect(x: MeasurementChargesLabel.frame.maxX + x , y: CurrencyButton.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
        // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let MeasureRupeeValue : Int = ChargesAmountArray[4] as! Int
         MeasureRupeeValueLBL.text =  "\(MeasureRupeeValue)"
@@ -488,7 +483,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // CurrencyLabel..
         let CurrencyLabel = UILabel()
-        CurrencyLabel.frame = CGRect(x: MeasureRupeeValueLBL.frame.maxX + 1, y: CurrencyButton.frame.minY + (4 * y), width: (3 * x), height: 30)
+        CurrencyLabel.frame = CGRect(x: MeasureRupeeValueLBL.frame.maxX + 1, y: CurrencyButton.frame.minY + (4 * y), width: (3 * x), height: (3 * y))
        // CurrencyLabel.backgroundColor = UIColor.gray
         CurrencyLabel.text = "AED"
         CurrencyLabel.textColor = UIColor.blue
@@ -499,7 +494,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Customization and Stiching Charges Label..
         let StichingChargesLabel = UILabel()
-        StichingChargesLabel.frame = CGRect(x: x, y: MeasurementChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: 40)
+        StichingChargesLabel.frame = CGRect(x: x, y: MeasurementChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: (4 * y))
        // StichingChargesLabel.backgroundColor = UIColor.gray
         StichingChargesLabel.text = "Customization and Stiching Charges"
         StichingChargesLabel.textColor = UIColor.black
@@ -511,7 +506,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
       
         
         let StichingRupeeValueLBL = UILabel()
-        StichingRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + x , y: MeasurementChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
+        StichingRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + x , y: MeasurementChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let StichingRupeeValue : Int = ChargesAmountArray[1] as! Int
         StichingRupeeValueLBL.text =  "\(StichingRupeeValue)"
@@ -523,7 +518,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
        
         // CurrencyLabel..
         let StichingCurrLabel = UILabel()
-        StichingCurrLabel.frame = CGRect(x: StichingRupeeValueLBL.frame.maxX + 1, y: MeasurementChargesLabel.frame.minY + (4 * y), width: (3 * x), height: 30)
+        StichingCurrLabel.frame = CGRect(x: StichingRupeeValueLBL.frame.maxX + 1, y: MeasurementChargesLabel.frame.minY + (4 * y), width: (3 * x), height: (3 * y))
       //  StichingCurrLabel.backgroundColor = UIColor.gray
         StichingCurrLabel.text = "AED"
         StichingCurrLabel.textColor = UIColor.blue
@@ -534,7 +529,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Appointment Charges Label..
         let AppointmentChargesLabel = UILabel()
-        AppointmentChargesLabel.frame = CGRect(x: x, y: StichingChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: 30)
+        AppointmentChargesLabel.frame = CGRect(x: x, y: StichingChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
       //  AppointmentChargesLabel.backgroundColor = UIColor.gray
         AppointmentChargesLabel.text = "Appointment Charges"
         AppointmentChargesLabel.textColor = UIColor.black
@@ -545,7 +540,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
  
         
         let AppointmentRupeeValueLBL = UILabel()
-        AppointmentRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + x , y: StichingChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
+        AppointmentRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + x , y: StichingChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let AppointmentRupeeValue : Int = ChargesAmountArray[0] as! Int
         AppointmentRupeeValueLBL.text =  "\(AppointmentRupeeValue)"
@@ -556,7 +551,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // CurrencyLabel..
         let AppointmentCurrLabel = UILabel()
-        AppointmentCurrLabel.frame = CGRect(x: AppointmentRupeeValueLBL.frame.maxX + 1, y: StichingChargesLabel.frame.minY + (4 * y), width: (3 * x), height: 30)
+        AppointmentCurrLabel.frame = CGRect(x: AppointmentRupeeValueLBL.frame.maxX + 1, y: StichingChargesLabel.frame.minY + (4 * y), width: (3 * x), height: (3 * y))
       //  AppointmentCurrLabel.backgroundColor = UIColor.gray
         AppointmentCurrLabel.text = "AED"
         AppointmentCurrLabel.textColor = UIColor.blue
@@ -567,7 +562,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Material Delivery Charges Label..
         let MaterialDeliveryChargesLabel = UILabel()
-        MaterialDeliveryChargesLabel.frame = CGRect(x: x, y: AppointmentChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: 30)
+        MaterialDeliveryChargesLabel.frame = CGRect(x: x, y: AppointmentChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
       //  MaterialDeliveryChargesLabel.backgroundColor = UIColor.gray
         MaterialDeliveryChargesLabel.text = "Material Delivery Charges"
         MaterialDeliveryChargesLabel.textColor = UIColor.black
@@ -578,7 +573,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
   
         
         let MaterialRupeeValueLBL = UILabel()
-        MaterialRupeeValueLBL.frame = CGRect(x: MaterialDeliveryChargesLabel.frame.maxX + x , y: AppointmentChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
+        MaterialRupeeValueLBL.frame = CGRect(x: MaterialDeliveryChargesLabel.frame.maxX + x , y: AppointmentChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let MaterialRupeeValue : Int = ChargesAmountArray[3] as! Int
         MaterialRupeeValueLBL.text =  "\(MaterialRupeeValue)"
@@ -589,7 +584,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // CurrencyLabel..
         let MaterialCurrLabel = UILabel()
-        MaterialCurrLabel.frame = CGRect(x: MaterialRupeeValueLBL.frame.maxX + 1, y: AppointmentChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+        MaterialCurrLabel.frame = CGRect(x: MaterialRupeeValueLBL.frame.maxX + 1, y: AppointmentChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
        // MaterialCurrLabel.backgroundColor = UIColor.gray
         MaterialCurrLabel.text = "AED"
         MaterialCurrLabel.textColor = UIColor.blue
@@ -600,7 +595,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Urgent Stiching Charges Label..
         let UrgentStichChargesLabel = UILabel()
-        UrgentStichChargesLabel.frame = CGRect(x: x, y: MaterialDeliveryChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: 30)
+        UrgentStichChargesLabel.frame = CGRect(x: x, y: MaterialDeliveryChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
       //  UrgentStichChargesLabel.backgroundColor = UIColor.gray
         UrgentStichChargesLabel.text = "Urgent Stiching Charges"
         UrgentStichChargesLabel.textColor = UIColor.black
@@ -610,7 +605,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
     
         let UrgentStichValueLBL = UILabel()
-        UrgentStichValueLBL.frame = CGRect(x: UrgentStichChargesLabel.frame.maxX + x , y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
+        UrgentStichValueLBL.frame = CGRect(x: UrgentStichChargesLabel.frame.maxX + x , y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let UrgentStichValue : Int = ChargesAmountArray[8] as! Int
         UrgentStichValueLBL.text =  "\(UrgentStichValue)"
@@ -621,7 +616,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // CurrencyLabel..
         let UrgentCurrLabel = UILabel()
-        UrgentCurrLabel.frame = CGRect(x: UrgentStichValueLBL.frame.maxX + 1, y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+        UrgentCurrLabel.frame = CGRect(x: UrgentStichValueLBL.frame.maxX + 1, y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
        // UrgentCurrLabel.backgroundColor = UIColor.gray
         UrgentCurrLabel.text = "AED"
         UrgentCurrLabel.textColor = UIColor.blue
@@ -632,7 +627,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Delivery Charges Label..
         let DeliveryChargesLabel = UILabel()
-        DeliveryChargesLabel.frame = CGRect(x: x, y: UrgentStichChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: 30)
+        DeliveryChargesLabel.frame = CGRect(x: x, y: UrgentStichChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
       //  DeliveryChargesLabel.backgroundColor = UIColor.gray
         DeliveryChargesLabel.text = "Delivery Charges"
         DeliveryChargesLabel.textColor = UIColor.black
@@ -641,7 +636,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         ApprovalListScrollView.addSubview(DeliveryChargesLabel)
         
         let DeliveryRupeeValueLBL = UILabel()
-        DeliveryRupeeValueLBL.frame = CGRect(x: DeliveryChargesLabel.frame.maxX + x , y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
+        DeliveryRupeeValueLBL.frame = CGRect(x: DeliveryChargesLabel.frame.maxX + x , y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let DeliveryRupeeValue : Int = ChargesAmountArray[2] as! Int
         DeliveryRupeeValueLBL.text =  "\(DeliveryRupeeValue)"
@@ -652,7 +647,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // CurrencyLabel..
         let DeliveryCurrLabel = UILabel()
-        DeliveryCurrLabel.frame = CGRect(x: DeliveryRupeeValueLBL.frame.maxX + 1, y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+        DeliveryCurrLabel.frame = CGRect(x: DeliveryRupeeValueLBL.frame.maxX + 1, y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
       //  DeliveryCurrLabel.backgroundColor = UIColor.gray
         DeliveryCurrLabel.text = "AED"
         DeliveryCurrLabel.textColor = UIColor.blue
@@ -663,7 +658,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Service Charges Label..
         let ServiceChargesLabel = UILabel()
-        ServiceChargesLabel.frame = CGRect(x: x, y: DeliveryChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: 30)
+        ServiceChargesLabel.frame = CGRect(x: x, y: DeliveryChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
        // ServiceChargesLabel.backgroundColor = UIColor.gray
         ServiceChargesLabel.text = "Service Charges"
         ServiceChargesLabel.textColor = UIColor.black
@@ -672,7 +667,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         ApprovalListScrollView.addSubview(ServiceChargesLabel)
         
         let ServiceRupeeValueLBL = UILabel()
-        ServiceRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + x , y: DeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
+        ServiceRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + x , y: DeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let ServiceRupeeValue : Int = ChargesAmountArray[5] as! Int
         ServiceRupeeValueLBL.text =  "\(ServiceRupeeValue)"
@@ -683,7 +678,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // CurrencyLabel..
         let ServiceCurrLabel = UILabel()
-        ServiceCurrLabel.frame = CGRect(x: ServiceRupeeValueLBL.frame.maxX + 1, y: DeliveryChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+        ServiceCurrLabel.frame = CGRect(x: ServiceRupeeValueLBL.frame.maxX + 1, y: DeliveryChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
      //   ServiceCurrLabel.backgroundColor = UIColor.gray
         ServiceCurrLabel.text = "AED"
         ServiceCurrLabel.textColor = UIColor.blue
@@ -693,7 +688,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Tax Charges Label..
         let TaxChargesLabel = UILabel()
-        TaxChargesLabel.frame = CGRect(x: x, y: ServiceChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: 30)
+        TaxChargesLabel.frame = CGRect(x: x, y: ServiceChargesLabel.frame.maxY + 8 , width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
     //    TaxChargesLabel.backgroundColor = UIColor.gray
         TaxChargesLabel.text = "Tax"
         TaxChargesLabel.textColor = UIColor.black
@@ -702,7 +697,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         ApprovalListScrollView.addSubview(TaxChargesLabel)
        
         let TaxRupeeValueLBL = UILabel()
-        TaxRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + x , y: ServiceChargesLabel.frame.minY + (3 * y), width: (10 * x), height: 30)
+        TaxRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + x , y: ServiceChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let TaxRupeeValue : Int = ChargesAmountArray[6] as! Int
         TaxRupeeValueLBL.text =  "\(TaxRupeeValue)"
@@ -713,7 +708,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // CurrencyLabel..
         let TaxCurrLabel = UILabel()
-        TaxCurrLabel.frame = CGRect(x: TaxRupeeValueLBL.frame.maxX + 1, y: ServiceChargesLabel.frame.minY + (3 * y), width: (3 * x), height: 30)
+        TaxCurrLabel.frame = CGRect(x: TaxRupeeValueLBL.frame.maxX + 1, y: ServiceChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
       //  TaxCurrLabel.backgroundColor = UIColor.gray
         TaxCurrLabel.text = "AED"
         TaxCurrLabel.textColor = UIColor.blue
@@ -730,7 +725,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // Grand Total...
         let OrderTotalLabel = UILabel()
-        OrderTotalLabel.frame = CGRect(x: x, y: TaxChargesLabel.frame.minY + (4 * y), width: (ApprovalListScrollView.frame.width / 2), height: 30)
+        OrderTotalLabel.frame = CGRect(x: x, y: TaxChargesLabel.frame.minY + (4 * y), width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
        // OrderTotalLabel.backgroundColor = UIColor.gray
         OrderTotalLabel.text = "ORDER TOTAL"
         OrderTotalLabel.textColor = UIColor.blue
@@ -739,7 +734,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         ApprovalListScrollView.addSubview(OrderTotalLabel)
         
         let OrderTotalValueLBL = UILabel()
-        OrderTotalValueLBL.frame = CGRect(x: OrderTotalLabel.frame.maxX + x , y: TaxChargesLabel.frame.minY + (4 * y), width: (10 * x), height: 30)
+        OrderTotalValueLBL.frame = CGRect(x: OrderTotalLabel.frame.maxX + x , y: TaxChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
         OrderTotalValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         let OrderTotalValue : Int = ChargesAmountArray[7] as! Int
         OrderTotalValueLBL.text =  "\(OrderTotalValue)"
@@ -750,7 +745,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // CurrencyLabel..
         let TotalCurrLabel = UILabel()
-        TotalCurrLabel.frame = CGRect(x: OrderTotalValueLBL.frame.maxX + 1, y: TaxChargesLabel.frame.minY + (4 * y), width: (3 * x), height: 30)
+        TotalCurrLabel.frame = CGRect(x: OrderTotalValueLBL.frame.maxX + 1, y: TaxChargesLabel.frame.minY + (4 * y), width: (3 * x), height: (3 * y))
         //TaxCurrLabel.backgroundColor = UIColor.gray
         TotalCurrLabel.text = "AED"
         TotalCurrLabel.textColor = UIColor.blue

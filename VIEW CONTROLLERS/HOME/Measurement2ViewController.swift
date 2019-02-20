@@ -1356,6 +1356,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         pageControl.currentPage = Int(pageNumbers)
         
         print("PAGE NUMBER OF CURRENT", pageNumbers)
+        
         /*for i in 0..<4
          {
          if let theLabel = self.view.viewWithTag((i + 1) * 20) as? UILabel {

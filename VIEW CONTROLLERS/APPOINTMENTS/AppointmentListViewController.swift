@@ -45,17 +45,20 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-     
-    
-    if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
-    {
-         self.serviceCall.API_GetAppointmentList(BuyerId:userId, delegate:self)
-    }
-    else if let userId = UserDefaults.standard.value(forKey: "userId") as? String
-    {
-         self.serviceCall.API_GetAppointmentList(BuyerId:Int(userId)!, delegate:self)
-    }
+   
   }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            self.serviceCall.API_GetAppointmentList(BuyerId:userId, delegate:self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            self.serviceCall.API_GetAppointmentList(BuyerId:Int(userId)!, delegate:self)
+        }
+    }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
