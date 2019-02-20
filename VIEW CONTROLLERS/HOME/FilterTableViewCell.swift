@@ -1,3 +1,4 @@
+
 //
 //  FilterTableViewCell.swift
 //  Mzyoon
@@ -25,6 +26,7 @@ class FilterTableViewCell: UITableViewCell {
         
         filterImage = UIImageView()
         contentView.addSubview(filterImage)
+        
     }
     required init(coder aDecoder: NSCoder)
     {

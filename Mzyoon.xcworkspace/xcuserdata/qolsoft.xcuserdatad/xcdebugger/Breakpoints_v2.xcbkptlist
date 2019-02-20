@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VIEW CONTROLLERS/APPOINTMENTS/AppointmentViewController.swift"
-            timestampString = "572344270.329865"
+            timestampString = "572354623.290786"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "435"
-            endingLineNumber = "435"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
             landmarkName = "AppointmentTypeView()"
             landmarkType = "7">
          </BreakpointContent>
