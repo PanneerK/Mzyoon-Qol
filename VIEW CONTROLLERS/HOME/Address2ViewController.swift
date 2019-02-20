@@ -24,6 +24,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var editStateId = Int()
     var editCountryId = Int()
     var checkScreen = Int()
+    var editAreaId = Int()
     
     var getEditId = Int()
     var checkDefault = Int()
@@ -442,6 +443,31 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 
                 areaCodeArray = Result.value(forKey: "Id") as! NSArray
                 print("areaCodeArray", areaCodeArray)
+                
+                
+                if areaNameArray.count == 0
+                {
+                    checkAreaName = 0
+                }
+                
+                if editAreaId != 0
+                {
+                    for i in 0..<areaCodeArray.count{
+                        
+                        if let matchId = areaCodeArray[i] as? Int
+                        {
+                            print("ID OF BOTH IN AREA", matchId, editStateId)
+                            if editStateId == matchId
+                            {
+                                if let country = areaNameArray[i] as? String
+                                {
+                                    let convertedString = country.split(separator: "(")
+                                    areaButton.setTitle("\(convertedString[0])", for: .normal)
+                                }
+                            }
+                        }
+                    }
+                }
             }
             else
             {

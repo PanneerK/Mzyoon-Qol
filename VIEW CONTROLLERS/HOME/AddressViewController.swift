@@ -33,6 +33,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     var Longitude = NSArray()
     var CountryId = NSArray()
     var StateId = NSArray()
+    var areaId = NSArray()
     var areaArray = NSArray()
     var Building = NSArray()
     var Floor = NSArray()
@@ -60,6 +61,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     var selectedCoordinate  = CLLocationCoordinate2D()
     
     var deleteInt = Int()
+    
+    var convertedAddressArray = [String]()
     
     override func viewDidLoad()
     {
@@ -195,6 +198,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             
             CountryId = Result.value(forKey: "CountryId") as! NSArray
             
+            areaId = Result.value(forKey: "AreaId") as! NSArray
         }
         else if ResponseMsg == "Failure"
         {
@@ -206,7 +210,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             DeviceError()
         }
         
-        addressContent()
+        for i in 0..<Lattitude.count
+        {
+            reverseGeocodeCoordinate(CLLocationCoordinate2D(latitude: Lattitude[i] as! CLLocationDegrees, longitude: Longitude[i] as! CLLocationDegrees))
+        }
     }
     
     func API_CALLBACK_UpdateAddress(updateAddr: NSDictionary)
@@ -305,11 +312,6 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         addressNavigationBar.addSubview(navigationTitle)
         
-        for i in 0..<Lattitude.count
-        {
-            print("LOCATION STRING ADDRESS", reverseGeocodeCoordinate)
-        }
-        
         if addressCount == 0
         {
             let addressImageView = UIImageView()
@@ -328,18 +330,29 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             
             for i in 0..<FirstName.count
             {
+                print("CONVERTED ADDRESS ARRAY", convertedAddressArray)
                 let addressSelectButton = UIButton()
-                if let addressList = FirstName[i] as? String
+                
+                if convertedAddressArray.count != 0
                 {
-                    if addressList.characters.count > 20
+                    if let addressList = convertedAddressArray[i] as? String
                     {
-                        addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
-                    }
-                    else
-                    {
-                        addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (17 * y))
+                        if addressList.characters.count > 20
+                        {
+                            addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
+                        }
+                        else
+                        {
+                            addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (17 * y))
+                        }
                     }
                 }
+                else
+                {
+                    addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
+                }
+                
+               
                 addressSelectButton.backgroundColor = UIColor.white
                 addressSelectButton.tag = Id[i] as! Int
                 addressScrollView.addSubview(addressSelectButton)
@@ -419,6 +432,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getNameLabel.textColor = UIColor.black
                 getNameLabel.textAlignment = .left
                 getNameLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
+                getNameLabel.font = getNameLabel.font.withSize(15)
                 addressSelectButton.addSubview(getNameLabel)
                 
                 let addressLabel = UILabel()
@@ -431,22 +445,29 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 
                 let getAddressLabel = UILabel()
                 
-                if let addressList = areaArray[i] as? String
+                if let addressList = convertedAddressArray[i] as? String
                 {
-                    if addressList.characters.count > 20
+                    if addressList.characters.count > 50
                     {
-                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (6 * x))
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (4 * y))
+                        getAddressLabel.numberOfLines = 3
                     }
                     else
                     {
-                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (2 * x))
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (2 * y))
+                        getAddressLabel.numberOfLines = 2
                     }
                 }
-                getAddressLabel.text = areaArray[i] as? String
+                else
+                {
+                    
+                }
+                getAddressLabel.text = convertedAddressArray[i] as? String
                 getAddressLabel.textColor = UIColor.black
                 getAddressLabel.textAlignment = .left
-                getAddressLabel.numberOfLines = 3
                 getAddressLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
+                getAddressLabel.font = getAddressLabel.font.withSize(15)
+                getAddressLabel.adjustsFontSizeToFitWidth = true
                 addressSelectButton.addSubview(getAddressLabel)
                 
                 let mobileLabel = UILabel()
@@ -463,6 +484,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getMobileLabel.textColor = UIColor.black
                 getMobileLabel.textAlignment = .left
                 getMobileLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
+                getMobileLabel.font = getMobileLabel.font.withSize(15)
                 addressSelectButton.addSubview(getMobileLabel)
                 
                 if let defaultString = isDefault[i] as? Int
@@ -572,6 +594,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             address2Screen.editStateId = self.StateId[sender.tag] as! Int
             address2Screen.editCountryId = self.CountryId[sender.tag] as! Int
             address2Screen.checkScreen = 1
+            address2Screen.editAreaId = 2
             address2Screen.getLocation = self.selectedCoordinate
             self.navigationController?.pushViewController(address2Screen, animated: true)
         }
@@ -631,8 +654,14 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             
             self.selectedAddressString = [lines.joined(separator: "\n")]
             
+            self.convertedAddressArray.append(lines.joined(separator: "\n"))
+            
             //  self.addressLabel.text = lines.joined(separator: "\n")
             
+            if self.convertedAddressArray.count == self.Lattitude.count
+            {
+                self.addressContent()
+            }
             // 4
             UIView.animate(withDuration: 0.25)
             {
