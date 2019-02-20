@@ -460,8 +460,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     func screenContents()
     {
-        activeStop()
-
         let backgroundImage = UIImageView()
         backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         backgroundImage.image = UIImage(named: "background")
@@ -501,6 +499,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             {
                 userImage.dowloadFromServer(url: apiurl!)
             }
+            activeStop()
         }
 
         userImage.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleBottomMargin.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue | UIView.AutoresizingMask.flexibleRightMargin.rawValue | UIView.AutoresizingMask.flexibleLeftMargin.rawValue | UIView.AutoresizingMask.flexibleTopMargin.rawValue | UIView.AutoresizingMask.flexibleWidth.rawValue)
@@ -548,7 +547,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         mobileNumber.frame = CGRect(x: nameIcon.frame.maxX + x, y: nameIcon.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
         if let getMobileNumber = UserDefaults.standard.value(forKey: "Phone") as? String
         {
-            mobileNumber.text = getMobileNumber
+            if let code = UserDefaults.standard.value(forKey: "countryCode") as? String
+            {
+                mobileNumber.text = "+\(code) \(getMobileNumber)"
+            }
+            else if let code = UserDefaults.standard.value(forKey: "countryCode") as? Int
+            {
+                mobileNumber.text = "+\(code) \(getMobileNumber)"
+            }
         }
         else
         {

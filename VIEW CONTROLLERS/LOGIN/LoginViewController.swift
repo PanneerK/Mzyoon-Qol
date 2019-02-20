@@ -1221,6 +1221,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         mobileCountryCodeLabel.text = countryCodeArray[indexPath.row] as? String
         
+        UserDefaults.standard.set(countryCodeArray[indexPath.row], forKey: "countryCode")
+        
         blurView.removeFromSuperview()
     }
     
