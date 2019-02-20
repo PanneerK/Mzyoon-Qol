@@ -81,6 +81,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     var getStateId = Int()
     var getCountryId = Int()
+    var getAreaId = Int()
 
     var insertOrUpdate = 1
     
@@ -424,10 +425,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     }
     
     
-    func API_CALLBACK_GetAreaByState(area: NSDictionary) {
+    func API_CALLBACK_GetAreaByState(area: NSDictionary)
+    {
         print("AREA LIST BY STATE", area)
         
-        /*let ResponseMsg = area.object(forKey: "ResponseMsg") as! String
+        let ResponseMsg = area.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
@@ -437,12 +439,15 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             {
                 areaNameArray = Result.value(forKey: "Area") as! NSArray
                 print("areaNameArray", areaNameArray)
+                
+                areaCodeArray = Result.value(forKey: "Id") as! NSArray
+                print("areaCodeArray", areaCodeArray)
             }
             else
             {
                 
             }
-        }*/
+        }
     }
     
     func API_CALLBACK_UpdateAddress(updateAddr: NSDictionary)
@@ -1117,7 +1122,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             {
                 if name == action.title
                 {
-                    
+                    print("GET AREA CODE", areaCodeArray[i])
+                    getAreaId = areaCodeArray[i] as! Int
                 }
             }
         }
@@ -1398,7 +1404,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         {
             if lastNameStr.isEmpty != true || lastNameStr != ""
             {
-                if AreaStr!.isEmpty != true || AreaStr != ""
+                if AreaStr!.isEmpty != true || AreaStr != "" || AreaStr != "Area"
                 {
                     if floorStr.isEmpty != true || floorStr != ""
                     {
@@ -1415,12 +1421,12 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                                             if insertOrUpdate == 1
                                             {
                                                 activityContents()
-                                                serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr!, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                                serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: getCountryId, StateId: getStateId, Area: "\(getAreaId)", Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
                                             }
                                             else
                                             {
                                                 activityContents()
-                                                serviceCall.API_UpdateAddress(Id: getEditId, BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: CountryId, StateId: getStateId, Area: AreaStr!, Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                                serviceCall.API_UpdateAddress(Id: getEditId, BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: getCountryId, StateId: getStateId, Area: "\(getAreaId)", Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
                                             }
                                         }
                                         else
@@ -1467,7 +1473,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 }
                 else
                 {
-                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill area to proceed", preferredStyle: .alert)
+                    emptyAlert = UIAlertController(title: "Alert", message: "Please select area to proceed", preferredStyle: .alert)
                     emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(emptyAlert, animated: true, completion: nil)
                 }
@@ -1561,6 +1567,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                             let int = countryIdArray[i] as! Int
                             serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
                             stateButton.setTitle("State", for: .normal)
+                            
+                            getCountryId = countryIdArray[i] as! Int
                         }
                         else
                         {

@@ -305,6 +305,11 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         addressNavigationBar.addSubview(navigationTitle)
         
+        for i in 0..<Lattitude.count
+        {
+            print("LOCATION STRING ADDRESS", reverseGeocodeCoordinate)
+        }
+        
         if addressCount == 0
         {
             let addressImageView = UIImageView()
@@ -324,7 +329,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             for i in 0..<FirstName.count
             {
                 let addressSelectButton = UIButton()
-                if let addressList = areaArray[i] as? String
+                if let addressList = FirstName[i] as? String
                 {
                     if addressList.characters.count > 20
                     {
@@ -608,7 +613,6 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     private func reverseGeocodeCoordinate(_ coordinate: CLLocationCoordinate2D)
     {
-        
         // 1
         let geocoder = GMSGeocoder()
         
