@@ -18,6 +18,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     let tailorListScrollView = UIScrollView()
    // var selectedTailorListArray = [Int]()
     var OrderId:Int!
+    var TailorId:Int!
     
     // Error PAram...
     var DeviceNum:String!
@@ -29,6 +30,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     
     var OrderIdArray = NSArray()
     var IdArray = NSArray()
+    var TailorIdArray = NSArray()
     var TailorNameArray = NSArray()
     var ShopImageArray = NSArray()
     var ShopNameArray = NSArray()
@@ -122,6 +124,9 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             IdArray = QuotationList.value(forKey: "Id") as! NSArray
            // print("IdArray", QuotationList)
+            
+            TailorIdArray = QuotationList.value(forKey: "TailorId") as! NSArray
+            // print("TailorIdArray", TailorIdArray)
             
             TailorNameArray = QuotationList.value(forKey: "TailorNameInEnglish") as! NSArray
            // print("TailorNameArray", TailorNameArray)
@@ -257,9 +262,12 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorView.addSubview(tailorImageButton)
           */
             
-            let TailorId : Int = IdArray[i] as! Int
-            print("TailorID:","\(TailorId)")
+            let TailorResponseID : Int = IdArray[i] as! Int
+            print("TailorResponseID:","\(TailorResponseID)")
             tailorViewButton.tag = IdArray[i] as! Int
+            
+            TailorId = TailorIdArray[i] as? Int
+            print("TailorId:","\(TailorId)")
             
             let Name_Icon = UIImageView()
             Name_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y/2, width: x, height: y)
@@ -375,7 +383,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
         let orderApproveScreen = OrderApprovalViewController()
-        orderApproveScreen.TailorID = sender.tag
+        orderApproveScreen.TailorResponseID = sender.tag
+        orderApproveScreen.TailorID = TailorId
         self.navigationController?.pushViewController(orderApproveScreen, animated: true)
     }
     

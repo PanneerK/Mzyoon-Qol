@@ -2283,16 +2283,18 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+   
+    
     
     
     // Insert Payment Status...
-    func API_InsertPaymentStatus(OrderId : Int, Transactionid : Int, Amount : String, Status : String, delegate : ServerAPIDelegate)
+    func API_InsertPaymentStatus(OrderId : Int, Transactionid : String, Amount : String, Status : String, Code : String, message : String, cvv : String, avs : String, cardcode : String, cardlast4 : String, Trace : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
-            print("Server Reached - Reviews And Ratings Page")
+            print("Server Reached - Payment Transaction Page")
             
-            let parameters = ["OrderId" : OrderId, "Transactionid" : Transactionid, "Amount" : Amount, "Status" : Status] as [String : Any]
+            let parameters = ["OrderId" : OrderId, "Transactionid" : Transactionid, "Amount" : Amount, "Status" : Status, "Code" : Code, "message" : message, "cvv" : cvv, "avs" : avs, "cardcode" : cardcode, "cardlast4" : cardlast4, "Trace" : Trace] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertPaymentStatus", arguments: [baseURL])
             

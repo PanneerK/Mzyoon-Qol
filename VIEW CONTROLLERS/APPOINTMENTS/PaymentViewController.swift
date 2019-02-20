@@ -617,6 +617,8 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
         
        TotalAmount = self.Amount_TF.text
         
+       UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
+        
     /*
       if RequestId == nil
       {
@@ -634,8 +636,17 @@ class PaymentViewController: CommonViewController,UITextFieldDelegate
      
         
       //  PaymentRequest()
-         PayPageRequest()
-     
+      
+       if (TotalAmount != "0")
+       {
+          PayPageRequest()
+       }
+       else
+       {
+         let alert = UIAlertController(title: "Alert", message: "Amount Should Be Greater Than 0" , preferredStyle:.alert)
+         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+         self.present(alert, animated: true, completion: nil)
+       }
         
   }
   

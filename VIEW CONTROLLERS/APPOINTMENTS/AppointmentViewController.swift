@@ -432,14 +432,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         AppointmentScrollview.backgroundColor = UIColor.clear
         view.addSubview(AppointmentScrollview)
         
-        
-        if MaterialInEnglish .contains("Companies-Material")
-        {
-            OrderTypeView.removeFromSuperview()
-           
-            //viewType = (OrderTypeView.frame.maxY + y)
-        }
-        
+          
         
  //----------------------------------------OrderType View---------------------------------------------------------------
         

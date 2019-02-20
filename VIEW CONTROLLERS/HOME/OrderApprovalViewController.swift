@@ -19,8 +19,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     let PricingView = UIView()
     let deliveryDetailsView = UIView()
-     let QtyNumTF = UITextField()
+    let QtyNumTF = UITextField()
     var qtyNum : Int!
+    var TailorResponseID : Int!
     var TailorID : Int!
     var DeliveryDate:String!
     
@@ -53,6 +54,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     {
         
         print("Tailor ID:",TailorID)
+        print("Tailor ResponseID:",TailorResponseID)
         
         navigationBar.isHidden = true
         
@@ -67,7 +69,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     override func viewWillAppear(_ animated: Bool)
     {
-         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorID, delegate: self)
+         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
     }
      
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -141,7 +143,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             
         }
         
-        self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: self.TailorID, delegate: self)
+        self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: self.TailorResponseID, delegate: self)
         
         // self.orderApprovalContent()
     }
