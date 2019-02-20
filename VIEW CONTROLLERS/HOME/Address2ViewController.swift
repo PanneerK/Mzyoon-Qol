@@ -72,6 +72,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var stateCodeArray = NSArray()
     var stateNameArray = NSArray()
     var checkStateName = 1
+    var checkAreaName = 1
     
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation!
@@ -1074,18 +1075,36 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     @objc func areaButtonAction(sender : UIButton)
     {
-        let areaAlert = UIAlertController(title: "Area", message: "Please select your area", preferredStyle: .alert)
-        
-        for i in 0..<areaNameArray.count
+        if areaNameArray.count == 0
         {
-            if let areaString = areaNameArray[i] as? String
+            if checkAreaName == 0
             {
-                areaAlert.addAction(UIAlertAction(title: areaString, style: .default, handler: areaAlertAction(action:)))
+                let alert = UIAlertController(title: "Alert", message: "Area not available in this State", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.navigationController?.present(alert, animated: true, completion: nil)
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Please select your state first", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.navigationController?.present(alert, animated: true, completion: nil)
             }
         }
-        
-        areaAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(areaAlert, animated: true, completion: nil)
+        else
+        {
+            let areaAlert = UIAlertController(title: "Area", message: "Please select your area", preferredStyle: .alert)
+            
+            for i in 0..<areaNameArray.count
+            {
+                if let areaString = areaNameArray[i] as? String
+                {
+                    areaAlert.addAction(UIAlertAction(title: areaString, style: .default, handler: areaAlertAction(action:)))
+                }
+            }
+            
+            areaAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(areaAlert, animated: true, completion: nil)
+        }
     }
     
     func areaAlertAction(action : UIAlertAction)

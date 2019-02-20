@@ -12,20 +12,36 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
 {
     let serviceCall = ServerAPI()
     
+    
+    
+    //NAVIGATION BAR CONTENTS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    
+    //SCREEN CONTENTS
+    let selfScreenContents = UIView()
+    let customization1NextButton = UIButton()
+    let seasonTitleLabel = UILabel()
+    let industryTitleLabel = UILabel()
+    let brandTitleLabel = UILabel()
+    
     //CUSTOMIZATION 1 PAREMETERS
     let customization1View = UIView()
     
-    var seasonalNameArray = NSArray()
+    var seasonalNameEnglishArray = NSArray()
+    var seasonalNameArabicArray = NSArray()
     var seasonalIdArray = NSArray()
     var seasonalImageArray = NSArray()
     var convertedSeasonalImageArray = [UIImage]()
     
-    var industryNameArray = NSArray()
+    var industryNameEnglishArray = NSArray()
+    var industryNameArabicArray = NSArray()
     var industryIdArray = NSArray()
     var industryImageArray = NSArray()
     var convertedIndustryImageArray = [UIImage]()
     
-    var brandNameArray = NSArray()
+    var brandNameEnglishArray = NSArray()
+    var brandNameArabicArray = NSArray()
     var clearBrandNameArray = NSArray()
     var brandIdArray = NSArray()
     var clearBrandIdArray = NSArray()
@@ -133,9 +149,9 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         if ResponseMsg == "Success"
         {
-            print("BRAND NAME ARRAY BEFORE", brandNameArray.count)
-            brandNameArray = clearBrandNameArray
-            print("BRAND NAME ARRAY AFTER", brandNameArray.count)
+            print("BRAND NAME ARRAY BEFORE", brandNameEnglishArray.count)
+            brandNameEnglishArray = clearBrandNameArray
+            print("BRAND NAME ARRAY AFTER", brandNameEnglishArray.count)
             
             brandIdArray = clearBrandIdArray
             brandImageArray = clearBrandImageArray
@@ -143,8 +159,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             let Result = custom1.object(forKey: "Result") as! NSDictionary
             
             let materialBrand = Result.object(forKey: "materialBrand") as! NSArray
-            let BrandInArabic = materialBrand.value(forKey: "BrandInArabic") as! NSArray
-            brandNameArray = materialBrand.value(forKey: "BrandInEnglish") as! NSArray
+            brandNameArabicArray = materialBrand.value(forKey: "BrandInArabic") as! NSArray
+            brandNameEnglishArray = materialBrand.value(forKey: "BrandInEnglish") as! NSArray
             brandIdArray = materialBrand.value(forKey: "Id") as! NSArray
             brandImageArray = materialBrand.value(forKey: "Image") as! NSArray
             
@@ -175,8 +191,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
              }*/
             
             let placeofIndustrys = Result.object(forKey: "placeofIndustrys") as! NSArray
-            let PlaceInArabic = placeofIndustrys.value(forKey: "PlaceInArabic") as! NSArray
-            industryNameArray = placeofIndustrys.value(forKey: "PlaceInEnglish") as! NSArray
+            industryNameArabicArray = placeofIndustrys.value(forKey: "PlaceInArabic") as! NSArray
+            industryNameEnglishArray = placeofIndustrys.value(forKey: "PlaceInEnglish") as! NSArray
             industryIdArray = placeofIndustrys.value(forKey: "Id") as! NSArray
             industryImageArray = placeofIndustrys.value(forKey: "Image") as! NSArray
             
@@ -208,8 +224,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             
             
             let seasons = Result.object(forKey: "seasons") as! NSArray
-            let SeasonInArabic = seasons.value(forKey: "SeasonInArabic") as! NSArray
-            seasonalNameArray = seasons.value(forKey: "SeasonInEnglish") as! NSArray
+            seasonalNameArabicArray = seasons.value(forKey: "SeasonInArabic") as! NSArray
+            seasonalNameEnglishArray = seasons.value(forKey: "SeasonInEnglish") as! NSArray
             seasonalIdArray = seasons.value(forKey: "Id") as! NSArray
             seasonalImageArray = seasons.value(forKey: "Image") as! NSArray
             
@@ -239,7 +255,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
              }
              }*/
             
-            print("FINAL BRAND NAME ARRAY", brandNameArray)
+            print("FINAL BRAND NAME ARRAY", brandNameEnglishArray)
             
             if updateId == 0
             {
@@ -247,11 +263,39 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             }
             else if updateId == 1
             {
-                industryContents()
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        industryContents(getInputArray: industryNameEnglishArray)
+                    }
+                    else if language == "ar"
+                    {
+                        industryContents(getInputArray: industryNameArabicArray)
+                    }
+                }
+                else
+                {
+                    industryContents(getInputArray: industryNameEnglishArray)
+                }
             }
             else if updateId == 2
             {
-                brandContents()
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        brandContents(getInputArray: brandNameEnglishArray)
+                    }
+                    else if language == "ar"
+                    {
+                        brandContents(getInputArray: brandNameArabicArray)
+                    }
+                }
+                else
+                {
+                    brandContents(getInputArray: brandNameEnglishArray)
+                }
             }
         }
         else if ResponseMsg == "Failure"
@@ -264,59 +308,123 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "التخصيص-1"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        seasonTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        industryTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        brandTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        seasonTitleLabel.text = "موسمي"
+        industryTitleLabel.text = "مكان الصناعة"
+        brandTitleLabel.text = "العلامات التجارية"
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "CUSTOMIZATION-1"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        seasonTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        industryTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        brandTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        seasonTitleLabel.text = "SEASONAL"
+        industryTitleLabel.text = "PLACE OF INDUSTRY"
+        brandTitleLabel.text = "BRANDS"
+    }
+    
     func customization1Content()
     {
-        customization1View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        customization1View.backgroundColor = UIColor.white
-        //        view.addSubview(customization1View)
-        
-        let customization1NavigationBar = UIView()
-        customization1NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        customization1NavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(customization1NavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 5
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        customization1NavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: customization1NavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "CUSTOMIZATION-1"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        customization1NavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "CUSTOMIZATION-1"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        self.seasonalContents()
-        self.industryContents()
-        self.brandContents()
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
         
-        let customization1NextButton = UIButton()
+        self.view.bringSubviewToFront(slideMenuButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.seasonalContents(getInputArray: seasonalNameEnglishArray)
+                self.industryContents(getInputArray: industryNameEnglishArray)
+                self.brandContents(getInputArray: brandNameEnglishArray)
+            }
+            else if language == "ar"
+            {
+                self.seasonalContents(getInputArray: seasonalNameArabicArray)
+                self.industryContents(getInputArray: industryNameArabicArray)
+                self.brandContents(getInputArray: brandNameArabicArray)
+            }
+        }
+        else
+        {
+            self.seasonalContents(getInputArray: seasonalNameEnglishArray)
+            self.industryContents(getInputArray: industryNameEnglishArray)
+            self.brandContents(getInputArray: brandNameEnglishArray)
+        }
+        
         customization1NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: brandScrollView.frame.maxY, width: (4 * x), height: (4 * y))
         customization1NextButton.layer.cornerRadius = customization1NextButton.frame.height / 2
         customization1NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization1NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization1NextButton.addTarget(self, action: #selector(self.customization1NextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(customization1NextButton)
+        selfScreenContents.addSubview(customization1NextButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
-    func seasonalContents()
+    func seasonalContents(getInputArray : NSArray)
     {
-        let seasonTitleLabel = UILabel()
-        seasonTitleLabel.frame = CGRect(x: ((view.frame.width - (12 * x)) / 2), y: (8 * y), width: (12 * x), height: (3 * y))
+        seasonTitleLabel.frame = CGRect(x: ((view.frame.width - (12 * x)) / 2), y: y, width: (12 * x), height: (3 * y))
         seasonTitleLabel.layer.borderWidth = 1
         seasonTitleLabel.layer.masksToBounds = true
         seasonTitleLabel.backgroundColor = UIColor.white
         seasonTitleLabel.text = "SEASONAL"
         seasonTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         seasonTitleLabel.textAlignment = .center
-        view.addSubview(seasonTitleLabel)
+        selfScreenContents.addSubview(seasonTitleLabel)
         
         seasonalScrollView.frame = CGRect(x: (3 * x), y: seasonTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
-        view.addSubview(seasonalScrollView)
+        selfScreenContents.addSubview(seasonalScrollView)
         
         var x1:CGFloat = (2 * x)
         
@@ -325,13 +433,29 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             views.removeFromSuperview()
         }
         
-        for i in 0..<seasonalNameArray.count
+        for i in 0..<getInputArray.count
         {
             let seasonalButton = UIButton()
             seasonalButton.frame = CGRect(x: x1, y: y, width: (12 * x), height: (10 * y))
             seasonalButton.tag = seasonalIdArray[i] as! Int
             seasonalButton.addTarget(self, action: #selector(self.seasonalButtonAction(sender:)), for: .touchUpInside)
             seasonalScrollView.addSubview(seasonalButton)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                   seasonalButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    seasonalButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                seasonalButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: seasonalButton.frame.width, height: seasonalButton.frame.height - (2 * y))
@@ -353,7 +477,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: seasonalButton.frame.height - (2 * y), width: seasonalButton.frame.width, height: (2 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = seasonalNameArray[i] as? String
+            buttonTitle.text = getInputArray[i] as? String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
@@ -367,9 +491,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
     }
     
-    func industryContents()
+    func industryContents(getInputArray : NSArray)
     {
-        let industryTitleLabel = UILabel()
         industryTitleLabel.frame = CGRect(x: ((view.frame.width - (20 * x)) / 2), y: seasonalScrollView.frame.maxY + (2 * y), width: (20 * x), height: (3 * y))
         industryTitleLabel.layer.borderWidth = 1
         industryTitleLabel.layer.masksToBounds = true
@@ -377,10 +500,10 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         industryTitleLabel.text = "PLACE OF INDUSTRY"
         industryTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         industryTitleLabel.textAlignment = .center
-        view.addSubview(industryTitleLabel)
+        selfScreenContents.addSubview(industryTitleLabel)
         
         industryScrollView.frame = CGRect(x: (3 * x), y: industryTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
-        view.addSubview(industryScrollView)
+        selfScreenContents.addSubview(industryScrollView)
         
         for views in industryScrollView.subviews
         {
@@ -388,13 +511,29 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         var x3:CGFloat = (2 * x)
-        for i in 0..<industryNameArray.count
+        for i in 0..<getInputArray.count
         {
             let industryButton = UIButton()
             industryButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
             industryButton.tag = industryIdArray[i] as! Int
             industryButton.addTarget(self, action: #selector(self.industryButtonAction(sender:)), for: .touchUpInside)
             industryScrollView.addSubview(industryButton)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    industryButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    industryButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                industryButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: industryButton.frame.width, height: industryButton.frame.height - (2 * y))
@@ -415,7 +554,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: industryButton.frame.height - (2 * y), width: industryButton.frame.width, height: (2 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = industryNameArray[i] as! String
+            buttonTitle.text = getInputArray[i] as? String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
@@ -428,20 +567,19 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         industryScrollView.contentSize.width = x3 + (3 * x)
     }
     
-    func brandContents()
+    func brandContents(getInputArray : NSArray)
     {
-        let brandTitleLabel = UILabel()
-        brandTitleLabel.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: industryScrollView.frame.maxY + (2 * y), width: (10 * x), height: (3 * y))
+        brandTitleLabel.frame = CGRect(x: ((view.frame.width - (13 * x)) / 2), y: industryScrollView.frame.maxY + (2 * y), width: (13 * x), height: (3 * y))
         brandTitleLabel.layer.borderWidth = 1
         brandTitleLabel.layer.masksToBounds = true
         brandTitleLabel.backgroundColor = UIColor.white
         brandTitleLabel.text = "BRANDS"
         brandTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         brandTitleLabel.textAlignment = .center
-        view.addSubview(brandTitleLabel)
+        selfScreenContents.addSubview(brandTitleLabel)
         
         brandScrollView.frame = CGRect(x: (3 * x), y: brandTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
-        view.addSubview(brandScrollView)
+        selfScreenContents.addSubview(brandScrollView)
         
         for views in brandScrollView.subviews
         {
@@ -449,13 +587,29 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         var x2:CGFloat = (2 * x)
-        for i in 0..<brandNameArray.count
+        for i in 0..<getInputArray.count
         {
             let brandButton = UIButton()
             brandButton.frame = CGRect(x: x2, y: y, width: (12 * x), height: (10 * y))
             brandButton.tag = brandIdArray[i] as! Int
             brandButton.addTarget(self, action: #selector(self.brandButtonAction(sender:)), for: .touchUpInside)
             brandScrollView.addSubview(brandButton)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    brandButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    brandButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                brandButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: brandButton.frame.width, height: brandButton.frame.height - (2 * y))
@@ -476,7 +630,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: brandButton.frame.height - (2 * y), width: brandButton.frame.width, height: (2 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = brandNameArray[i] as! String
+            buttonTitle.text = getInputArray[i] as? String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
@@ -866,8 +1020,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == seasonalTagIntArray[j]
                         {
-                            print("SELECTED OF SEASON", seasonalIdArray[i], seasonalNameArray[i])
-                            selectedSeasonNameArray.append(seasonalNameArray[i] as! String)
+                            print("SELECTED OF SEASON", seasonalIdArray[i], seasonalNameEnglishArray[i])
+                            selectedSeasonNameArray.append(seasonalNameEnglishArray[i] as! String)
                         }
                     }
                 }
@@ -890,8 +1044,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == industryTagIntArray[j]
                         {
-                            print("SELECTED OF SEASON", industryIdArray[i], industryNameArray[i])
-                            selectedIndustryNameArray.append(industryNameArray[i] as! String)
+                            print("SELECTED OF SEASON", industryIdArray[i], industryNameEnglishArray[i])
+                            selectedIndustryNameArray.append(industryNameEnglishArray[i] as! String)
                         }
                     }
                 }
@@ -914,8 +1068,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == brandTagIntArray[j]
                         {
-                            print("SELECTED OF SEASON", brandIdArray[i], brandNameArray[i])
-                            selectedBrandNameArray.append(brandNameArray[i] as! String)
+                            print("SELECTED OF SEASON", brandIdArray[i], brandNameEnglishArray[i])
+                            selectedBrandNameArray.append(brandNameEnglishArray[i] as! String)
                         }
                     }
                 }

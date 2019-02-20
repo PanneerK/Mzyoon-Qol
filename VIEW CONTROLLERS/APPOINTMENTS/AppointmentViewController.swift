@@ -434,8 +434,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             OrderTypeView.removeFromSuperview()
            
             //viewType = (OrderTypeView.frame.maxY + y)
-            
-            
         }
         
         

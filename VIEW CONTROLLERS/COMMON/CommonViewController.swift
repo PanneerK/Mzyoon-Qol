@@ -173,7 +173,7 @@ class CommonViewController: UIViewController
         notificationButton.frame = CGRect(x: navigationBar.frame.width - 50, y: navigationTitle.frame.minY, width: 30, height: 30)
         notificationButton.setImage(UIImage(named: "notification"), for: .normal)
         //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
-        navigationBar.addSubview(notificationButton)
+//        navigationBar.addSubview(notificationButton)
     }
     
     func changeViewToEnglish()
