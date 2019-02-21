@@ -210,9 +210,16 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             DeviceError()
         }
         
-        for i in 0..<Lattitude.count
+        if Lattitude.count == 0
         {
-            reverseGeocodeCoordinate(CLLocationCoordinate2D(latitude: Lattitude[i] as! CLLocationDegrees, longitude: Longitude[i] as! CLLocationDegrees))
+            addressContent()
+        }
+        else
+        {
+            for i in 0..<Lattitude.count
+            {
+                reverseGeocodeCoordinate(CLLocationCoordinate2D(latitude: Lattitude[i] as! CLLocationDegrees, longitude: Longitude[i] as! CLLocationDegrees))
+            }
         }
     }
     
