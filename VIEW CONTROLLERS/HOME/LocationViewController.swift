@@ -114,6 +114,13 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             
         }
         
+        #if targetEnvironment(simulator)
+        // your simulator code
+        print("APP IS RUNNING ON SIMULATOR")
+        #else
+        // your real device code
+        print("APP IS RUNNING ON DEVICE")
+        
         if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {
@@ -121,6 +128,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             currentLocation = locationManager.location
             print("Current Loc:",currentLocation.coordinate)
         }
+        
+        #endif
         
         mapView.frame = CGRect(x: 0, y: locationNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (11.4 * y))
         mapView.delegate = self
