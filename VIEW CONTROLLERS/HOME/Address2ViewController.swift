@@ -126,6 +126,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         reverseGeocodeCoordinate(coords)
         
+        getStateId = editStateId
+        getCountryId = editCountryId
+        getAreaId = editAreaId
+        
         serviceCall.API_GetStateListByCountry(countryId: "\(editCountryId)", delegate: self)
         
         serviceCall.API_GetAreaByState(stateId: "\(editStateId)", delegate: self)
@@ -394,6 +398,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     {
         print("STATE LIST", stateList)
         
+        checkAreaName = 1
+        
         let responseMsg = stateList.object(forKey: "ResponseMsg") as! String
         
         if responseMsg == "Success"
@@ -453,6 +459,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         {
             let Result = area.object(forKey: "Result") as! NSArray
             
+            if Result.count == 0
+            {
+                checkAreaName = 0
+            }
+            
             if Result.count != 0
             {
                 areaNameArray = Result.value(forKey: "Area") as! NSArray
@@ -460,12 +471,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 
                 areaCodeArray = Result.value(forKey: "Id") as! NSArray
                 print("areaCodeArray", areaCodeArray)
-                
-                
-                if areaNameArray.count == 0
-                {
-                    checkAreaName = 0
-                }
                 
                 if editAreaId != 0
                 {
@@ -737,6 +742,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(countryIcon)
         
         countryButton.frame = CGRect(x: countryIcon.frame.maxX + x, y: underline2.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
+        countryButton.setTitle("Country", for: .normal)
         countryButton.setTitleColor(UIColor.black, for: .normal)
         countryButton.contentHorizontalAlignment = .left
         countryButton.addTarget(self, action: #selector(self.countryButtonAction(sender:)), for: .touchUpInside)
@@ -765,7 +771,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            for i in 0..<countryNameArray.count
+            /*for i in 0..<countryNameArray.count
             {
                 if let country = countryNameArray[i] as? String
                 {
@@ -790,7 +796,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 
                 serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[0])", delegate: self)
                 stateButton.setTitle("State", for: .normal)
-            }
+            }*/
         }
         
         let countryDropDownIcon = UIImageView()
@@ -840,7 +846,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            for i in 0..<stateNameArray.count
+            /*for i in 0..<stateNameArray.count
             {
                 if let country = stateNameArray[i] as? String
                 {
@@ -858,14 +864,14 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 }
             }
             
-            if let country = countryNameArray[0] as? String
+            if let country = stateNameArray[0] as? String
             {
                 let convertedString = country.split(separator: "(")
-                countryButton.setTitle("\(convertedString[0])", for: .normal)
+                stateButton.setTitle("\(convertedString[0])", for: .normal)
                 
-                serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[0])", delegate: self)
-                stateButton.setTitle("State", for: .normal)
-            }
+                serviceCall.API_GetAreaByState(stateId: "\(stateCodeArray[0])", delegate: self)
+                areaButton.setTitle("Area", for: .normal)
+            }*/
         }
         
         let stateDropDownIcon = UIImageView()
@@ -928,7 +934,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            for i in 0..<areaNameArray.count
+            /*for i in 0..<areaNameArray.count
             {
                 if let country = areaNameArray[i] as? String
                 {
@@ -944,16 +950,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                         }
                     }
                 }
-            }
-            
-            if let country = countryNameArray[0] as? String
-            {
-                let convertedString = country.split(separator: "(")
-                countryButton.setTitle("\(convertedString[0])", for: .normal)
-                
-                serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[0])", delegate: self)
-                stateButton.setTitle("State", for: .normal)
-            }
+            }*/
         }
         
         let areaEditButton = UIButton()
@@ -1226,7 +1223,26 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     @objc func areaButtonAction(sender : UIButton)
     {
-        areaFunctions()
+        print("AREA COUNT IN BUTTON ACTION", areaNameArray.count, checkAreaName)
+        if areaNameArray.count == 0
+        {
+            if checkAreaName == 0
+            {
+                let alert = UIAlertController(title: "Alert", message: "Area not available in this State", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.navigationController?.present(alert, animated: true, completion: nil)
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Please select your state first", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.navigationController?.present(alert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            areaFunctions()
+        }
         
         /*if areaNameArray.count == 0
         {
@@ -1560,6 +1576,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     func stateAlertAction(action : UIAlertAction)
     {
+        areaButton.setTitle("Area", for: .normal)
+        
         stateButton.setTitle(action.title, for: .normal)
         
         for i in 0..<stateNameArray.count
@@ -1785,6 +1803,13 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     {
         if tableView == countryTableView
         {
+            print("BEFORE OF COUNTRY", areaNameArray.count, areaCodeArray.count)
+
+            let dummyArray = NSArray()
+            areaNameArray = dummyArray
+            areaCodeArray = dummyArray
+            
+            print("AFTER OF COUNTRY", areaNameArray.count, areaCodeArray.count)
             for i in 0..<countryNameArray.count
             {
                 if let country = countryNameArray[i] as? String
@@ -1803,7 +1828,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                             let int = countryIdArray[i] as! Int
                             serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
                             stateButton.setTitle("State", for: .normal)
-                            
+                            areaButton.setTitle("Area", for: .normal)
                             getCountryId = countryIdArray[i] as! Int
                         }
                         else
