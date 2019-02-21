@@ -109,14 +109,22 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
         }
         
+        #if targetEnvironment(simulator)
+        // your simulator code
+        print("APP IS RUNNING ON SIMULATOR")
+        #else
+        // your real device code
+        print("APP IS RUNNING ON DEVICE")
+        
         if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {
             
             currentLocation = locationManager.location
             print("Current Loc:",currentLocation.coordinate)
-            self.serviceCall.API_GetTailorList(delegate: self)
         }
+        
+        #endif
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -553,7 +561,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             locationButton.layer.borderColor = UIColor.lightGray.cgColor
             locationButton.setImage(UIImage(named: "locationMarker"), for: .normal)
             locationButton.tag = IdArray[i] as! Int
-            locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
+//            locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(locationButton)
             
             y1 = tailorView.frame.maxY + y
@@ -885,7 +893,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         locationButton.setTitle("DIRECTIONS", for: .normal)
         locationButton.setTitleColor(UIColor.white, for: .normal)
         locationButton.tag = 0
-        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
+//        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
         tailorDeatiledView.addSubview(locationButton)
         
         addressLabel.frame = CGRect(x: (2 * x), y: ((view.frame.height - (5 * y)) / 2), width: view.frame.width - (4 * x), height: (3 * y))
