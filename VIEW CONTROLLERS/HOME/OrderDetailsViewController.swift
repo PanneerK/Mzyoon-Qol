@@ -271,8 +271,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         orderIdNumLabel.frame = CGRect(x: orderIdLabel.frame.maxX, y: orderIdView.frame.minY, width: (15 * x), height: (2 * x))
        // orderIdNumLabel.backgroundColor = UIColor.gray
         orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: 16)
+       if (OrderId.count > 0)
+       {
         let orderIdNum : Int = OrderId[0] as! Int
         orderIdNumLabel.text =  "#\(orderIdNum)"
+        }
+        else
+       {
+          orderIdNumLabel.text =  "#"
+        }
         orderIdNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
          orderIdNumLabel.textColor = UIColor.black
         orderIdView.addSubview(orderIdNumLabel)

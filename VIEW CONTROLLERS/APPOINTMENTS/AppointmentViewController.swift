@@ -37,6 +37,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     var TailorID:Int!
     
     var TotalAmount:String!
+    var MeasureSucessStr:String!
+    var MaterialSucessStr:String!
     
     // Material...
     var Material_FromDatePick = UIDatePicker()
@@ -57,6 +59,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     var MaterialOrderID = NSArray()
     var MaterialPayment = NSArray()
     
+    var MaterialFromDtArr = NSArray()
+    var MaterialToDtArr = NSArray()
+    var MaterialAppointTimeArr = NSArray()
+    
     // Measurement...
     var Measure_FromDatePick = UIDatePicker()
     var Measure_ToDatePick = UIDatePicker()
@@ -76,6 +82,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     var MeasurementOrderID = NSArray()
     var MeasurementPayment = NSArray()
     
+    var MeasureFromDtArr = NSArray()
+    var MeasureToDtArr = NSArray()
+    var MeasureAppointTimeArr = NSArray()
+    
     var Material_rejectReason_TF = UITextField()
     var Measure_rejectReason_TF = UITextField()
     
@@ -90,6 +100,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
      //  AppointmentContent()
         
         print("TailorID:",TailorID)
+        
+        MeasureSucessStr = ""
+        MaterialSucessStr = ""
         
     }
     
@@ -149,10 +162,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = insertAppointmentMaterial.object(forKey: "Result") as! String
             print("Result", Result)
             
-            
-            let appointmentAlert = UIAlertController(title: "Message..!", message: Result, preferredStyle: .alert)
+            MaterialSucessStr = "True"
+            let appointmentAlert = UIAlertController(title: "Sucess..!", message: "Appointment: \(Result)", preferredStyle: .alert)
             appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
-            appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+           // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             self.present(appointmentAlert, animated: true, completion: nil)
             
             /*
@@ -187,10 +200,11 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = insertAppointmentMeasure.object(forKey: "Result") as! String
             print("Result", Result)
             
+            MeasureSucessStr = "True"
             
-            let appointmentAlert = UIAlertController(title: "Message..!", message: Result, preferredStyle: .alert)
+            let appointmentAlert = UIAlertController(title: "Sucess..!", message: "Appointment: \(Result)", preferredStyle: .alert)
             appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
-            appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+           // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             self.present(appointmentAlert, animated: true, completion: nil)
             
             /*
@@ -403,6 +417,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = MaterialDate.object(forKey: "Result") as! NSArray
             print("Result", Result)
             
+            MaterialFromDtArr = Result.value(forKey: "FromDt") as! NSArray
+            print("MaterialFromDtArr:",MaterialFromDtArr)
+            
+            MaterialToDtArr = Result.value(forKey: "ToDt") as! NSArray
+            print("MaterialToDtArr:",MaterialToDtArr)
+            
+            MaterialAppointTimeArr = Result.value(forKey: "AppointmentTime") as! NSArray
+            print("MaterialAppointTimeArr:",MaterialAppointTimeArr)
             
         }
         else if ResponseMsg == "Failure"
@@ -427,6 +449,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = MeasurementDate.object(forKey: "Result") as! NSArray
             print("Result", Result)
             
+            MeasureFromDtArr = Result.value(forKey: "FromDt") as! NSArray
+            print("MeasureFromDtArr:",MeasureFromDtArr)
+            
+            MeasureToDtArr = Result.value(forKey: "ToDt") as! NSArray
+            print("MeasureToDtArr:",MeasureToDtArr)
+            
+            MeasureAppointTimeArr = Result.value(forKey: "AppointmentTime") as! NSArray
+            print("MeasureAppointTimeArr:",MeasureAppointTimeArr)
             
         }
         else if ResponseMsg == "Failure"
@@ -444,22 +474,27 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     func proceedAlertAction(action : UIAlertAction)
     {
-       if (MaterialPayment.contains("Not Paid") || MeasurementPayment.contains("Not Paid"))
-       {
-        let PayScreen = PaymentViewController()
-        PayScreen.TailorId = TailorID
-        PayScreen.TotalAmount = TotalAmount
-        self.navigationController?.pushViewController(PayScreen, animated: true)
+        
+        if (MaterialSucessStr == "True" && MeasureSucessStr == "True")
+        {
+            if (MaterialPayment.contains("Not Paid") || MeasurementPayment.contains("Not Paid"))
+            {
+                let PayScreen = PaymentViewController()
+                PayScreen.TailorId = TailorID
+                PayScreen.TotalAmount = TotalAmount
+                self.navigationController?.pushViewController(PayScreen, animated: true)
+            }
+            else
+            {
+                window = UIWindow(frame: UIScreen.main.bounds)
+                let loginScreen = HomeViewController()
+                let navigationScreen = UINavigationController(rootViewController: loginScreen)
+                navigationScreen.isNavigationBarHidden = true
+                window?.rootViewController = navigationScreen
+                window?.makeKeyAndVisible()
+            }
         }
-       else
-       {
-          window = UIWindow(frame: UIScreen.main.bounds)
-          let loginScreen = HomeViewController()
-          let navigationScreen = UINavigationController(rootViewController: loginScreen)
-          navigationScreen.isNavigationBarHidden = true
-          window?.rootViewController = navigationScreen
-          window?.makeKeyAndVisible()
-       }
+       
     }
     
     func AppointmentContent()
@@ -580,7 +615,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/OrderType/\(imageName)"
             let apiurl = URL(string: api)
-            if apiurl != nil{
+            if apiurl != nil
+            {
                 courierDeliveryIcon.dowloadFromServer(url: apiurl!)
             }
         }
@@ -818,6 +854,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_SaveButton.addTarget(self, action: #selector(self.Material_SaveButtonAction(sender:)), for: .touchUpInside)
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
+            MaterialSucessStr = "True"
+            
             if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
             {
               self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
@@ -1144,6 +1182,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_SaveButton.addTarget(self, action: #selector(self.Measure_SaveButtonAction(sender:)), for: .touchUpInside)
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
+            MeasureSucessStr = "True"
             if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
             {
               self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
