@@ -178,7 +178,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         PageNumStr = "Measurement2ViewController"
         // MethodName = "do"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -289,8 +288,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 }
             }
             
-            print("measurementValues 111111", measurementValues)
-            
             self.measurement2Contents()
             partsTableView.reloadData()
         }
@@ -360,8 +357,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     measurementValues[customString] = 0
                 }
             }
-            
-            print("measurementValues", measurementValues)
             
             self.measurement2Contents()
             partsTableView.reloadData()
@@ -1151,8 +1146,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
              overAllHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
              subView.addSubview(overAllHeightButton)
              
-             print("33333", overAllHeightButton.frame.minX)
-             
              let hipHeightButton = UIButton()
              hipHeightButton.frame = CGRect(x: (4.3 * x), y: (40 * y), width: (17 * x), height: (3 * y))
              hipHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
@@ -1249,7 +1242,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 
                 /*if let labels = views as? UILabel
                  {
-                 print("WELCOME NAYASA", labels.text)
                  if PartsIdArray.contains(buttonTag)
                  {
                  
@@ -1270,9 +1262,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             
         }
         
-        let page = imageScrollView.contentOffset.x / imageScrollView.frame.size.width;
-        print("PAGE NUMBER AND", page, PartsIdArray.count)
-        
+        let page = imageScrollView.contentOffset.x / imageScrollView.frame.size.width
         
         imageScrollView.contentSize = CGSize(width: imageScrollView.frame.size.width * 4,height: imageScrollView.frame.size.height)
         pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
@@ -1292,7 +1282,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             for (keys, values) in measurementValues
             {
                 let inchValue = values * 2.54
-                print("ROUNDED VALUE OF IN", inchValue.rounded())
                 measurementValues[keys] = inchValue.rounded()
             }
             
@@ -1309,7 +1298,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             for (keys, values) in measurementValues
             {
                 let cmValue = values / 2.54
-                print("ROUNDED VALUE OF CM", cmValue)
                 measurementValues[keys] = cmValue
             }
             
@@ -1355,14 +1343,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         let pageNumbers = round(imageScrollView .contentOffset.x / imageScrollView.frame.size.width)
         pageControl.currentPage = Int(pageNumbers)
         
-        print("PAGE NUMBER OF CURRENT", pageNumbers)
-        
         /*for i in 0..<4
          {
          if let theLabel = self.view.viewWithTag((i + 1) * 20) as? UILabel {
          let pageNo = Int(pageNumbers)
          let no = Int(theLabel.text!)! + 1
-         print("THE LABEL TEXT", theLabel.text!, pageNo)
          if pageNo == no
          {
          pageNumber = pageNo
@@ -1479,7 +1464,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         if ResponseMsg == "Success"
         {
             let Result = getParts.object(forKey: "Result") as! NSArray
-            print("Result OF MEASUREMENT-2", Result)
             
             // Body Parts :
             selectedPartsIdArray = Result.value(forKey: "Id") as! NSArray
@@ -1492,13 +1476,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     let urlString = serviceCall.baseURL
                     let api = "\(urlString)/images/Measurement2/\(imageName)"
                     let apiurl = URL(string: api)
-                    print("Parts : ", api)
                     
                     if apiurl != nil
                     {
                         if let data = try? Data(contentsOf: apiurl!)
                         {
-                            print("DATA OF IMAGE", data)
                             if let image = UIImage(data: data)
                             {
                                 self.selectedconvertedPartsImageArray.append(image)
@@ -1609,12 +1591,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 label.text = partsMeasurementLabel.text
                 //                measurementValues[measurerTag] = Int(partsMeasurementLabel.text!)
                 let convertToInt:Float? = Float(label.text!)
-                print("TEXT", convertToInt!)
                 measurementValues.updateValue(convertToInt!, forKey: measurerTag)
             }
         }
-        
-        print("MEAUREMENT KEY AND VALUES", measurementValues)
     }
     
     func rulerContents()
@@ -1794,12 +1773,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         for (keyss, valuess) in measurementValues
         {
-            print("KEYS & VALUES", keyss, valuess)
             keys.append(keyss)
             values.append(valuess)
         }
-        
-        print("VALUES", values)
         
         if values.contains(0.0)
         {
@@ -1855,8 +1831,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         selectedPartsImageView.frame = CGRect(x: (2 * x), y: y, width: view.frame.width - (4 * x), height: (36.98 * y))
         selectedPartsImageView.image = selectedconvertedPartsImageArray[0]
         partsBackView.addSubview(selectedPartsImageView)
-        
-        print("WIDTH", selectedPartsImageView.frame.width)
         
         /*let cmLabel = UILabel()
          cmLabel.frame = CGRect(x: ((view.frame.width - (13 * x)) / 2), y: downArrowImageView.frame.maxY + y, width: (3 * x), height: (2 * y))
@@ -1917,9 +1891,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     {
         
         let convertToInt:Float? = Float(partsInputTextField.text!)
-        print("TEXT", convertToInt!, measurerTag)
         measurementValues.updateValue(convertToInt!, forKey: measurerTag)
-        print("partsSaveButtonAction", measurementValues)
         partsBackView.removeFromSuperview()
         
         partsTableView.reloadData()
@@ -1975,7 +1947,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         let valueCount = indexPath.row + 1
         let value = measurementValues[valueCount]
-        print("qwertyuiop", measurementValues[valueCount]!)
         
         cell.partsSizeLabel.text = "\(value!)"
         
@@ -1992,8 +1963,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let selectedInt = PartsIdArray[indexPath.row] as! Int
-        
-        print("SELECTED INT", selectedInt)
         
         type = "table"
         
@@ -2017,7 +1986,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print("SELECTED ROW", row + 1)
         partsMeasurementLabel.text = "\(row + 1)"
         //        UserDefaults.standard.set(row + 1, forKey: "Measure-\(headingTitle)")
     }

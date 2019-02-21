@@ -106,7 +106,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         PageNumStr = "Measurement1ViewController"
         // MethodName = "do"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -124,23 +123,20 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func API_CALLBACK_Measurement1(measure1: NSDictionary)
     {
+        print("MERASUREMENT 1", measure1)
         let ResponseMsg = measure1.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
             let Result = measure1.object(forKey: "Result") as! NSArray
-            print("Result OF MEASUREMENT", Result)
             
             Measure1NameEngArray = Result.value(forKey: "MeasurementInEnglish") as! NSArray
-            print("Measure1EngArray", Measure1NameEngArray)
             
             Measure1NameAraArray = Result.value(forKey: "MeasurementInArabic") as! NSArray
             
             Measure1IdArray = Result.value(forKey: "Id") as! NSArray
-            print("Id", Measure1IdArray)
             
             Measure1BodyImage = Result.value(forKey: "BodyImage") as! NSArray
-            print("Measure1BodyImageURL",Measure1BodyImage)
             
             /*for i in 0..<Measure1BodyImage.count
              {
@@ -150,10 +146,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
              let api = "\(urlString)/images/Measurement1/\(imageName)"
              let apiurl = URL(string: api)
              
-             print("IMAGE API", api)
-             
              if let data = try? Data(contentsOf: apiurl!) {
-             print("DATA OF IMAGE", data)
              if let image = UIImage(data: data) {
              self.convertedMeasure1BodyImageArray.append(image)
              }
@@ -185,15 +178,14 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func API_CALLBACK_ExistingUserMeasurement(getExistUserMeasurement: NSDictionary)
     {
+        print("EXISTING USER MEASUREMENT", getExistUserMeasurement)
         let ResponseMsg = getExistUserMeasurement.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
             let Result = getExistUserMeasurement.object(forKey: "Result") as! NSArray
-            print("Existing User MEASUREMENT ", Result)
             
             existNameArray = Result.value(forKey: "Name") as! NSArray
-            print("ExistNameArray", existNameArray)
         }
         else if ResponseMsg == "Failure"
         {
@@ -257,7 +249,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Measurement1/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -301,7 +292,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Measurement1/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -331,7 +321,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Measurement1/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -502,7 +491,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             for i in 0..<nameArray.count
             {
                 let splitted = nameArray[i].split(separator: "-")
-                print("WELCOME HOME", splitted.count)
                 
                 var trimmedName = String()
                 
@@ -576,8 +564,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func addNewNameAlertAction(action : UIAlertAction)
     {
-        print("ACTION TEXT", addNameAlert.textFields![0].text!)
-        
         nameArray.append(addNameAlert.textFields![0].text!)
         
         UserDefaults.standard.set(addNameAlert.textFields![0].text!, forKey: "measurementName")

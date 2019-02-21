@@ -97,14 +97,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
-        let button = UIButton()
-        button.frame = CGRect(x: 50, y: 150, width: 100, height: 50)
-        button.backgroundColor = UIColor.red
-        button.addTarget(self, action: Selector(("helpless")), for: .touchUpInside)
-        //        self.view.addSubview(button)
-        
-        print("FIND STRING", findString)
-        
         if findString == "appDelegate"
         {
             splashScreen()
@@ -198,11 +190,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    func helpless(sender : UIButton)
-    {
-        print("WELCOME TO HOME")
-    }
-    
     override func viewWillAppear(_ animated: Bool)
     {
         server.API_CountryCode(delegate: self)
@@ -227,7 +214,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         PageNumStr = "Login ViewController"
         // MethodName = "do"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -269,11 +255,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             screenContentsInEnglish()
             
-            print("COUNT OF", result)
-            
             /*for i in 0..<countryFlagArray.count
              {
-             print("IMAGE NAME -\(i)", countryFlagArray[i])
              if let imageName = countryFlagArray[i] as? String
              {
              //                server.API_FlagImages(imageName: imageName, delegate: self)
@@ -281,8 +264,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
              let api = "\(urlString)/images/flags/\(imageName)"
              let apiurl = URL(string: api)
              //                load(url: apiurl!)
-             
-             print("API URL", apiurl)
              
              if apiurl != nil
              {
@@ -461,8 +442,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         else if ResponseMsg == "Failure"
         {
             /*let Result = loginResult.object(forKey: "Result") as! String
-            print("Result", Result)
-            
+             
             MethodName = "ValidateOTP"
             ErrorStr = Result
             DeviceError()*/
@@ -482,11 +462,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         if responseMsg == "Success"
         {
             let result = userType.object(forKey: "Result") as! String
-            print("Result", result)
             
             UserDefaults.standard.set(mobileCountryCodeLabel.text!, forKey: "countryCode")
-            
-            print("WELCOME OF CODE", UserDefaults.standard.value(forKey: "countryCode")!)
             
             if result == "Existing User"
             {
@@ -782,8 +759,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         underLine1.backgroundColor = UIColor.blue
         alertView.addSubview(underLine1)
         
-        print("LEFT CHANGE", individualCountryFlagArray.count)
-        
         countryCodeTableView.frame = CGRect(x: 0, y: underLine1.frame.maxY, width: alertView.frame.width, height: alertView.frame.height - (8.1 * y))
         countryCodeTableView.register(CountryCodeTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(CountryCodeTableViewCell.self))
         countryCodeTableView.dataSource = self
@@ -818,9 +793,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @objc func continueButtonAction(sender : UIButton)
     {
-        let deviceId = UIDevice.current.identifierForVendor
-        print("DEVICE ID", deviceId!)
-        
         self.view.endEditing(true)
         
         var alert = UIAlertController()
@@ -1208,7 +1180,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/flags/\(imageName)"
             let apiurl = URL(string: api)
-            print("SELECTED COUNTRY - \(imageName)", apiurl)
+
             if apiurl != nil
             {
                 flagImageView.dowloadFromServer(url: apiurl!)
@@ -1297,7 +1269,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let  char = string.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
-        print("BUTTON OF PRESSED", isBackSpace)
         
         let text = textField.text
         
@@ -1329,7 +1300,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         
         if (isBackSpace == -92) {
-            print("Backspace was pressed")
             if (text?.utf16.count)! >= 1
             {
                 switch textField{

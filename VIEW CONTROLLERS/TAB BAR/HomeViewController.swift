@@ -88,7 +88,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         if responseMsg == "Success"
         {
             let result = userProfile.object(forKey: "Result") as! NSArray
-            print("RESULT IN EXISTING", result)
             
             if result.count != 0
             {
@@ -99,7 +98,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                     let urlString = serviceCall.baseURL
                     let api = "\(urlString)/Images/BuyerImages/\(imageName)"
                     
-                    print("SMALL ICON", api)
                     let apiurl = URL(string: api)
                     
                     if apiurl != nil
@@ -118,11 +116,9 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     }
     
     func downloadImage(from url: URL) {
-        print("Download Started")
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             print(response?.suggestedFilename ?? url.lastPathComponent)
-            print("Download Finished")
             DispatchQueue.main.async() {
                 self.userImage.image = UIImage(data: data)
                 FileHandler().saveImageDocumentDirectory(image: UIImage(data: data)!)
@@ -271,24 +267,21 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     {
         if sender.tag == 0
         {
-            print("NEW ORDER")
             let newOrderScreen = GenderViewController()
             self.navigationController?.pushViewController(newOrderScreen, animated: true)
         }
         else if sender.tag == 1
         {
-            print("BOOK AN APPOINTMENT")
-            
             let AppointmentScreen = AppointmentListViewController()
             self.navigationController?.pushViewController(AppointmentScreen, animated: true)
         }
         else if sender.tag == 2
         {
-            print("STORE")
+            
         }
         else if sender.tag == 3
         {
-            print("REFER AND EARN")
+            
         }
     }
 

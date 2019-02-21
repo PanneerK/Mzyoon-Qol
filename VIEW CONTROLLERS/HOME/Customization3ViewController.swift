@@ -134,7 +134,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             customAttIdArray = CustomizationAttributes.value(forKey: "Id") as! NSArray
             
             let AttributeImages = Result.object(forKey: "AttributeImages") as! NSArray
-            print("AttributeImages", AttributeImages)
             
             subCustomAttEnglishNameArray = AttributeImages.value(forKey: "AttributeNameInEnglish") as! NSArray
             
@@ -146,8 +145,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             for i in 0..<customAttEnglishNameArray.count
             {
-                print("selectedCustomIntArray.keys[i]", selectedCustomIntArray.keys.count)
-                
                 if let textString = customAttEnglishNameArray[i] as? String
                 {
                     selectedCustomStringArray[textString] = ""
@@ -158,8 +155,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                     selectedCustomIntArray["\(idString)"] = ""
                 }
             }
-                        
-            print("SORTED DICTIONARY", selectedCustomIntArray.sorted(by: <))
             
             selectedCustomString = customAttEnglishNameArray[0] as! String
             selectedCustomInt = customAttIdArray[0] as! Int
@@ -246,7 +241,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         PageNumStr = "Customization3ViewController"
         // MethodName = "do"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -322,7 +316,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Customazation3/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             if apiurl != nil
@@ -340,7 +333,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Customazation3/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -367,7 +359,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Customazation3/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -485,7 +476,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/Customazation3/\(imageName)"
                 let apiurl = URL(string: api)
-                print("IMAGE OF DOWN", apiurl!)
                 if apiurl != nil
                 {
                     buttonImage.dowloadFromServer(url: apiurl!)
@@ -538,7 +528,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Customazation3/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             if apiurl != nil
             {
@@ -610,7 +599,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if let checkAtt = customAttEnglishNameArray[i] as? String
                     {
-                        print("CHECK ATT", checkAtt, selectedCustomString, customAttIdArray[i])
                         if selectedCustomString == checkAtt.lowercased()
                         {
                             if let attId = customAttIdArray[i] as? Int
@@ -654,7 +642,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             {
                 if let checkAtt = customAttEnglishNameArray[i] as? String
                 {
-                    print("CHECK ATT", checkAtt, selectedCustomString, customAttIdArray[i])
                     if selectedCustomString == checkAtt.lowercased()
                     {
                         if let attId = customAttIdArray[i] as? Int
@@ -691,9 +678,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 }
             }
         }
-        
-        print("SELECTED OF ALL IN ID", selectedCustomIntArray)
-        print("SELECTED OF ALL IN STRING", selectedCustomStringArray)
     }
     
     @objc func customization3NextButtonAction(sender : UIButton)
@@ -704,8 +688,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             {
                 for (keys, values) in selectedCustomStringArray
                 {
-                    print("KEYS - \(keys), VALUES - \(values)")
-                    
                     if values.isEmpty == true || values == ""
                     {
                         let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and procced to next", preferredStyle: .alert)
@@ -725,8 +707,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             {
                 for (keys, values) in selectedCustomStringArray
                 {
-                    print("KEYS - \(keys), VALUES - \(values)")
-                    
                     if values.isEmpty == true || values == ""
                     {
                         let customEmptyAlert = UIAlertController(title: "محزر", message: "يرجى اختيار التخصيص لوالإجراء التالي", preferredStyle: .alert)
@@ -747,8 +727,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             for (keys, values) in selectedCustomStringArray
             {
-                print("KEYS - \(keys), VALUES - \(values)")
-                
                 if values.isEmpty == true || values == ""
                 {
                     let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and procced to next", preferredStyle: .alert)

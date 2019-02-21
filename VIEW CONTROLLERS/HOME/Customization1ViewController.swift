@@ -99,15 +99,11 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func serviceCallFunction(originIdArray : [Int], seasonIdArray : [Int])
     {
-        print("SERVICE CALL", originIdArray, seasonIdArray)
-        
         let getConversion = ConversionToJson()
         
         let id1 = getConversion.MakeRequest(id: originIdArray)
         
         let id2 = getConversion.MakeRequest(id: seasonIdArray)
-        
-        print("WELCOME OF ALL TO CUSTOM 1", id1)
         
         self.serviceCall.API_Customization1(originId: id1, seasonId: id2 , delegate: self)
     }
@@ -121,7 +117,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         PageNumStr = "Customization1ViewController"
         MethodName = "GetCustomization1"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -145,13 +140,12 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func API_CALLBACK_Customization1(custom1: NSDictionary)
     {
+        print("Customization 1", custom1)
         let ResponseMsg = custom1.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
-            print("BRAND NAME ARRAY BEFORE", brandNameEnglishArray.count)
             brandNameEnglishArray = clearBrandNameArray
-            print("BRAND NAME ARRAY AFTER", brandNameEnglishArray.count)
             
             brandIdArray = clearBrandIdArray
             brandImageArray = clearBrandImageArray
@@ -254,8 +248,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
              self.convertedSeasonalImageArray.append(emptyImage!)
              }
              }*/
-            
-            print("FINAL BRAND NAME ARRAY", brandNameEnglishArray)
             
             if updateId == 0
             {
@@ -465,7 +457,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/Seasons/\(imageName)"
                 let apiurl = URL(string: api)
-                print("SEASONAL API", apiurl!)
                 if apiurl != nil
                 {
                     buttonImage.dowloadFromServer(url: apiurl!)
@@ -694,7 +685,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if findView.tag == sender.tag
                             {
-                                print("FIND VIEW", findView.description)
                                 findView.removeFromSuperview()
                             }
                             else
@@ -710,7 +700,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     sender.addSubview(seasonalSelectionImage)
                 }
             }
-            print("SEASONAL ARRAY", seasonalTagIntArray)
             //            self.serviceCall(originIdArray: [0], seasonIdArray: seasonalTagIntArray)
         }
         else
@@ -741,7 +730,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if findView.tag == sender.tag
                         {
-                            print("FIND VIEW", findView.description)
                             findView.removeFromSuperview()
                         }
                         else
@@ -809,7 +797,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if findView.tag == sender.tag
                             {
-                                print("FIND VIEW", findView.description)
                                 findView.removeFromSuperview()
                             }
                             else
@@ -825,7 +812,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     sender.addSubview(industrySelectionImage)
                 }
             }
-            print("INDUSTRY ARRAY", industryTagIntArray)
             
             if industryTagIntArray.count != 0
             {
@@ -864,7 +850,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if findView.tag == sender.tag
                         {
-                            print("FIND VIEW", findView.description)
                             findView.removeFromSuperview()
                         }
                         else
@@ -932,7 +917,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if findView.tag == sender.tag
                             {
-                                print("FIND VIEW", findView.description)
                                 findView.removeFromSuperview()
                             }
                             else
@@ -948,7 +932,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     sender.addSubview(brandSelectionImage)
                 }
             }
-            print("BRAND ARRAY", brandTagIntArray)
         }
         else
         {
@@ -978,7 +961,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if findView.tag == sender.tag
                         {
-                            print("FIND VIEW", findView.description)
                             findView.removeFromSuperview()
                         }
                         else
@@ -1000,10 +982,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func customization1NextButtonAction(sender : UIButton)
     {
-        print("SEASONAL", seasonalTagIntArray)
-        print("INDUSTRY", industryTagIntArray)
-        print("BRAND", brandTagIntArray)
-        
         var selectedSeasonNameArray = [String]()
         var selectedIndustryNameArray = [String]()
         var selectedBrandNameArray = [String]()
@@ -1020,7 +998,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == seasonalTagIntArray[j]
                         {
-                            print("SELECTED OF SEASON", seasonalIdArray[i], seasonalNameEnglishArray[i])
                             selectedSeasonNameArray.append(seasonalNameEnglishArray[i] as! String)
                         }
                     }
@@ -1044,7 +1021,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == industryTagIntArray[j]
                         {
-                            print("SELECTED OF SEASON", industryIdArray[i], industryNameEnglishArray[i])
                             selectedIndustryNameArray.append(industryNameEnglishArray[i] as! String)
                         }
                     }
@@ -1068,7 +1044,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == brandTagIntArray[j]
                         {
-                            print("SELECTED OF SEASON", brandIdArray[i], brandNameEnglishArray[i])
                             selectedBrandNameArray.append(brandNameEnglishArray[i] as! String)
                         }
                     }

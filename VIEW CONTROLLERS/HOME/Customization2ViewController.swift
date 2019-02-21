@@ -53,7 +53,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
-        print("SELECTED BRANDS IN 2", brandArray)
         navigationBar.isHidden = true
         
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
@@ -88,7 +87,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         PageNumStr = "Customization2ViewController"
         MethodName = "GetCustomization2"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -147,11 +145,9 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
              {
              let urlString = serviceCall.baseURL
              let api = "\(urlString)/images/Color/\(imageName)"
-             print("CUSTOM ALL", api)
              let apiurl = URL(string: api)
              
              if let data = try? Data(contentsOf: apiurl!) {
-             print("DATA OF IMAGE", data)
              if let image = UIImage(data: data) {
              self.convertedColorsImageArray.append(image)
              }
@@ -179,17 +175,13 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
              {
              if let imageName = materialsImageArray[i] as? String
              {
-             print("IMAGE NAME", imageName)
              let urlString = serviceCall.baseURL
              let api = "\(urlString)/images/Material/\(imageName)"
-             print("CUSTOM ALL", api)
              let apiurl = URL(string: api)
-             print("IMAGE URL", apiurl)
              
              if apiurl != nil
              {
              if let data = try? Data(contentsOf: apiurl!) {
-             print("DATA OF IMAGE", data)
              if let image = UIImage(data: data) {
              self.convertedMaterialsImageArray.append(image)
              }
@@ -221,11 +213,9 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
              {
              let urlString = serviceCall.baseURL
              let api = "\(urlString)/images/Pattern/\(imageName)"
-             print("CUSTOM ALL", api)
              let apiurl = URL(string: api)
              
              if let data = try? Data(contentsOf: apiurl!) {
-             print("DATA OF IMAGE", data)
              if let image = UIImage(data: data) {
              self.convertedPatternsImageArray.append(image)
              }
@@ -434,7 +424,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/Color/\(imageName)"
                 let apiurl = URL(string: api)
-                print("COLOR IMAGE API", apiurl)
                 
                 if apiurl != nil{
                     buttonImage.dowloadFromServer(url: apiurl!)
@@ -576,7 +565,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if findView.tag == sender.tag
                             {
-                                print("FIND VIEW", findView.description)
                                 findView.removeFromSuperview()
                             }
                             else
@@ -592,7 +580,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                     sender.addSubview(materialSelectionImage)
                 }
             }
-            print("SEASONAL ARRAY", materialTagIntArray)
             
             if materialTagIntArray.count != 0
             {
@@ -645,7 +632,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if findView.tag == sender.tag
                         {
-                            print("FIND VIEW", findView.description)
                             findView.removeFromSuperview()
                         }
                         else
@@ -720,7 +706,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if findView.tag == sender.tag
                             {
-                                print("FIND VIEW", findView.description)
                                 findView.removeFromSuperview()
                             }
                             else
@@ -736,7 +721,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                     sender.addSubview(colorSelectionImage)
                 }
             }
-            print("SEASONAL ARRAY", colorTagIntArray)
             
             if materialTagIntArray.count == 0
             {
@@ -790,7 +774,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if findView.tag == sender.tag
                         {
-                            print("FIND VIEW", findView.description)
                             findView.removeFromSuperview()
                         }
                         else
@@ -847,12 +830,10 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
          {
          if findView.tag == sender.tag
          {
-         print("FIND VIEW", findView.description)
          findView.removeFromSuperview()
          }
          else
          {
-         print("NOT SAME VIEW")
          }
          }
          }
@@ -867,8 +848,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func customization2NextButtonAction(sender : UIButton)
     {
-        print("SELECTED PATTERN ID", selectedPatternId)
-        
         var selectedMaterialNameArray = [String]()
         var selectedColorNameArray = [String]()
         var selectedPatternNameArray = String()
@@ -883,7 +862,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == materialTagIntArray[j]
                         {
-                            print("SELECTED OF MATERIAL", materialsIdArray[i], materialsArray[i])
                             selectedMaterialNameArray.append(materialsArray[i] as! String)
                         }
                     }
@@ -907,7 +885,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == colorTagIntArray[j]
                         {
-                            print("SELECTED OF COLOR", colorsIdArray[i], colorsArray[i])
                             selectedColorNameArray.append(colorsArray[i] as! String)
                         }
                     }
@@ -929,7 +906,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if id == selectedPatternId
                     {
-                        print("SELECTED OF PATTERN", patternsIdArray[i], patternsArray[i])
                         selectedPatternNameArray.append(patternsArray[i] as! String)
                     }
                 }

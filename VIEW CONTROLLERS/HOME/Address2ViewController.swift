@@ -918,13 +918,13 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 
                 if let matchId = areaCodeArray[i] as? Int
                 {
-                    print("EDIT STATE ID AND MATCH ID", editAreaId, matchId, areaNameArray)
+                    print("EDIT AREA ID AND MATCH ID", editAreaId, matchId, areaNameArray)
                     
                     if editAreaId == matchId
                     {
                         if let country = areaNameArray[i] as? String
                         {
-                            print("STATE NAME MATCHED", country, editAreaId, matchId)
+                            print("AREA NAME MATCHED", country, editAreaId, matchId)
                             let convertedString = country.split(separator: "(")
                             areaButton.setTitle("\(convertedString[0])", for: .normal)
                         }
@@ -1329,7 +1329,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         areaBlurView.addSubview(detailedLabel)
         
         areaTableView.frame = CGRect(x: (3 * x), y: detailedLabel.frame.maxY, width: areaBlurView.frame.width - (6 * x), height: areaBlurView.frame.height - (15 * y))
-        areaTableView.backgroundColor = UIColor.clear
+        areaTableView.backgroundColor = UIColor.white
         areaTableView.register(CountryCodeTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(CountryCodeTableViewCell.self))
         areaTableView.dataSource = self
         areaTableView.delegate = self
@@ -1658,6 +1658,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                                             else
                                             {
                                                 activityContents()
+                                                print("STATE AND AREA ID WHILE UPDATING", getCountryId, getStateId, getAreaId)
                                                 serviceCall.API_UpdateAddress(Id: getEditId, BuyerId: buyerId, FirstName: FirstNameStr, LastName: lastNameStr, CountryId: getCountryId, StateId: getStateId, Area: "\(getAreaId)", Floor: floorStr, LandMark: LandmarkStr, LocationType: locationTypeStr, ShippingNotes: shippingStr, IsDefault: setDefault, CountryCode: CountryCode, PhoneNo: PhoneNum, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
                                             }
                                         }
