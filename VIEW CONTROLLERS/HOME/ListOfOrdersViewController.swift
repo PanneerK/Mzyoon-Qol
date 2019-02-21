@@ -170,8 +170,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
       }
    
-    
-    
     func ListOfOrdersContent()
     {
         self.stopActivity()

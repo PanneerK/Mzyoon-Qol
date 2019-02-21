@@ -120,7 +120,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             DressNameArray = DressSubType.value(forKey: "NameInEnglish") as! NSArray
             print("DressNameArray:",DressNameArray)
             
-            let TailorCharges = Result.object(forKey: "TailorCharges") as! NSArray
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       let TailorCharges = Result.object(forKey: "TailorCharges") as! NSArray
             print("TailorCharges:",TailorCharges)
             
             ChargesNameArray = TailorCharges.value(forKey: "DescInEnglish") as! NSArray
@@ -180,6 +180,13 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             let DeliveryTypes = Result.object(forKey: "DeliveryTypes") as! NSArray
             DeliveryTypeArray = DeliveryTypes.value(forKey: "DeliveryType") as! NSArray
             print("DeliveryTypeArray", DeliveryTypeArray)
+            
+            let DressSubType = Result.object(forKey: "DressSubType") as! NSArray
+            DressImageArray = DressSubType.value(forKey: "Image") as! NSArray
+            print("DressImageArray:",DressImageArray)
+            
+            DressNameArray = DressSubType.value(forKey: "NameInEnglish") as! NSArray
+            print("DressNameArray:",DressNameArray)
             
             let StichingTime = Result.object(forKey: "StichingTime") as! NSArray
             StichingTimesArray = StichingTime.value(forKey: "StichingTimes") as! NSArray

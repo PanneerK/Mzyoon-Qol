@@ -18,9 +18,9 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-    var baseURL:String = "http://192.168.0.26/TailorAPI"
+        var baseURL:String = "http://192.168.0.26/TailorAPI"
 
-//    var baseURL:String = "http://appsapi.mzyoon.com"
+  //    var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
     
@@ -1483,13 +1483,13 @@ class ServerAPI : NSObject
     }
     
     //Book an Appointment Material..
-    func API_InsertAppoinmentMaterial(OrderId : Int, AppointmentType : Int, AppointmentTime : String, From : String, To : String, Type : String, CreatedBy : String, delegate : ServerAPIDelegate)
+    func API_InsertAppoinmentMaterial(OrderId : Int, AppointmentType : Int, AppointmentTime : String, From : String, To : String, CreatedBy : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Book an Appointment Page")
             
-            let parameters = ["OrderId" : OrderId, "AppointmentType" : AppointmentType, "AppointmentTime" : AppointmentTime, "From" : From, "To" : To, "Type" : Type, "CreatedBy" : CreatedBy] as [String : Any]
+            let parameters = ["OrderId" : OrderId, "AppointmentType" : AppointmentType, "AppointmentTime" : AppointmentTime, "From" : From, "To" : To, "CreatedBy" : CreatedBy] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertAppointforMaterial", arguments: [baseURL])
             
@@ -1516,13 +1516,13 @@ class ServerAPI : NSObject
     }
     
     //Book an Appointment Measurement..
-    func API_InsertAppoinmentMeasurement(OrderId : Int, AppointmentType : Int, AppointmentTime : String, From : String, To : String, Type : String, CreatedBy : String, delegate : ServerAPIDelegate)
+    func API_InsertAppoinmentMeasurement(OrderId : Int, AppointmentType : Int, AppointmentTime : String, From : String, To : String, CreatedBy : String, delegate : ServerAPIDelegate)
     {
         if (Reachability()?.isReachable)!
         {
             print("Server Reached - Book an Appointment Page")
             
-            let parameters = ["OrderId" : OrderId, "AppointmentType" : AppointmentType, "AppointmentTime" : AppointmentTime, "From" : From, "To" : To, "Type" : Type, "CreatedBy" : CreatedBy] as [String : Any]
+            let parameters = ["OrderId" : OrderId, "AppointmentType" : AppointmentType, "AppointmentTime" : AppointmentTime, "From" : From, "To" : To, "CreatedBy" : CreatedBy] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertAppointforMeasurement", arguments: [baseURL])
             

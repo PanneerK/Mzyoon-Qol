@@ -55,7 +55,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     var MaterialBodyImage = NSArray()
     var MaterialAppointID = NSArray()
     var MaterialOrderID = NSArray()
-    
+    var MaterialPayment = NSArray()
     
     // Measurement...
     var Measure_FromDatePick = UIDatePicker()
@@ -74,6 +74,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     var MeasurementBodyImage = NSArray()
     var MeasurementAppointID = NSArray()
     var MeasurementOrderID = NSArray()
+    var MeasurementPayment = NSArray()
     
     var Material_rejectReason_TF = UITextField()
     var Measure_rejectReason_TF = UITextField()
@@ -104,8 +105,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
             self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
             
-            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
-            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
+           // self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+           // self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
         }
         
         TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
@@ -253,7 +254,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MaterialStatus = Result.value(forKey:"status") as! NSArray
             print("status:",MaterialStatus)
             
-          
+            MaterialPayment = Result.value(forKey:"Payment") as! NSArray
+            print("MaterialPayment:",MaterialPayment)
             
            // AppointmentContent()
             
@@ -317,7 +319,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasureStatus = Result.value(forKey:"Status") as! NSArray
             print("status:",MeasureStatus)
             
-       
+            MeasurementPayment = Result.value(forKey:"Payment") as! NSArray
+            print("MeasurementPayment:",MeasurementPayment)
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -440,10 +444,22 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     func proceedAlertAction(action : UIAlertAction)
     {
+       if (MaterialPayment.contains("Not Paid") || MeasurementPayment.contains("Not Paid"))
+       {
         let PayScreen = PaymentViewController()
         PayScreen.TailorId = TailorID
         PayScreen.TotalAmount = TotalAmount
         self.navigationController?.pushViewController(PayScreen, animated: true)
+        }
+       else
+       {
+          window = UIWindow(frame: UIScreen.main.bounds)
+          let loginScreen = HomeViewController()
+          let navigationScreen = UINavigationController(rootViewController: loginScreen)
+          navigationScreen.isNavigationBarHidden = true
+          window?.rootViewController = navigationScreen
+          window?.makeKeyAndVisible()
+       }
     }
     
     func AppointmentContent()
@@ -759,7 +775,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_ApproveButton.layer.borderWidth = 1.0
         Material_ApproveButton.layer.cornerRadius = 10
         Material_ApproveButton.addTarget(self, action: #selector(self.MaterialApproveButtonAction(sender:)), for: .touchUpInside)
-        OrderTypeView.addSubview(Material_ApproveButton)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+             OrderTypeView.addSubview(Material_ApproveButton)
+        }
+        else
+        {
+            
+            
+        }
+        
   
     //-----------------MAterial Reject button-----------------
         
@@ -773,7 +798,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_RejectButton.layer.borderWidth = 1.0
         Material_RejectButton.layer.cornerRadius = 10
         Material_RejectButton.addTarget(self, action: #selector(self.MaterialRejectButtonAction(sender:)), for: .touchUpInside)
-        OrderTypeView.addSubview(Material_RejectButton)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+             OrderTypeView.addSubview(Material_RejectButton)
+        }
+        else
+        {
+           
+        }
         
     //-----------------Material Save Button------------------------
         
@@ -783,9 +815,19 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_SaveButton.setTitle("Save", for: .normal)
         Material_SaveButton.setTitleColor(UIColor.white, for: .normal)
         Material_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
-        
         Material_SaveButton.addTarget(self, action: #selector(self.Material_SaveButtonAction(sender:)), for: .touchUpInside)
-        OrderTypeView.addSubview(Material_SaveButton)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
+            {
+              self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+            }
+        }
+        else
+        {
+            OrderTypeView.addSubview(Material_SaveButton)
+        }
+        
      
         
         
@@ -1065,18 +1107,18 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_ApproveButton.layer.borderWidth = 1.0
         Measure_ApproveButton.layer.cornerRadius = 10
         Measure_ApproveButton.addTarget(self, action: #selector(self.MeasureApproveButtonAction(sender:)), for: .touchUpInside)
-        if MeasurementInEnglish.contains("Go To Tailor Place")
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-            
+             MeasurementTypeView.addSubview(Measure_ApproveButton)
         }
         else
         {
-        MeasurementTypeView.addSubview(Measure_ApproveButton)
+          
         }
         
        // let RejectButton = UIButton()
-       Measure_RejectButton.frame = CGRect(x: Measure_ApproveButton.frame.maxX + (2 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
-         Measure_RejectButton.backgroundColor = UIColor(red:0.86, green:0.13, blue:0.14, alpha:1.0)
+        Measure_RejectButton.frame = CGRect(x: Measure_ApproveButton.frame.maxX + (2 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
+        Measure_RejectButton.backgroundColor = UIColor(red:0.86, green:0.13, blue:0.14, alpha:1.0)
         Measure_RejectButton.setTitle("Reject", for: .normal)
         Measure_RejectButton.setTitleColor(UIColor.white, for: .normal)
         Measure_RejectButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
@@ -1084,13 +1126,13 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_RejectButton.layer.borderWidth = 1.0
         Measure_RejectButton.layer.cornerRadius = 10
         Measure_RejectButton.addTarget(self, action: #selector(self.MeasureRejectButtonAction(sender:)), for: .touchUpInside)
-        if MeasurementInEnglish.contains("Go To Tailor Place")
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-            
+            MeasurementTypeView.addSubview(Measure_RejectButton)
         }
         else
         {
-        MeasurementTypeView.addSubview(Measure_RejectButton)
+        
         }
        
         let Measure_SaveButton = UIButton()
@@ -1100,9 +1142,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_SaveButton.setTitleColor(UIColor.white, for: .normal)
         Measure_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
         Measure_SaveButton.addTarget(self, action: #selector(self.Measure_SaveButtonAction(sender:)), for: .touchUpInside)
-        if MeasurementInEnglish.contains("Tailor Come To Your Place")
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-            
+            if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
+            {
+              self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
+            }
         }
         else
         {
@@ -1120,7 +1165,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     @objc func MaterialStatusButtonAction(sender : UIButton)
     {
         print("Material status Page..")
-        if(MaterialStatus .contains("Not Approved"))
+        if(MaterialStatus .contains("Rejected"))
         {
             AppointmentStatusContent()
         }
@@ -1133,7 +1178,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     @objc func MeasureStatusButtonAction(sender : UIButton)
     {
         print("Measure status Page..")
-        if(MeasureStatus .contains("Not Approved"))
+        if(MeasureStatus .contains("Rejected"))
         {
             AppointmentStatusContent()
         }
@@ -1538,7 +1583,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let FromMaterial_dateFormatter = DateFormatter()
         FromMaterial_dateFormatter.dateStyle = .medium
         FromMaterial_dateFormatter.timeStyle = .none
-        FromMaterial_dateFormatter.dateFormat = "dd/MM/yyyy"  //"yyyy/MM/dd"
+        FromMaterial_dateFormatter.dateFormat = "MM/dd/yyyy"  //"yyyy/MM/dd"
         From_MaterialType_TF.text = FromMaterial_dateFormatter.string(from: Material_FromDatePick.date)
         From_MaterialType_TF.resignFirstResponder()
         
@@ -1548,7 +1593,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let ToMaterial_dateFormatter = DateFormatter()
         ToMaterial_dateFormatter.dateStyle = .medium
         ToMaterial_dateFormatter.timeStyle = .none
-        ToMaterial_dateFormatter.dateFormat = "dd/MM/yyyy"  //"yyyy/MM/dd"
+        ToMaterial_dateFormatter.dateFormat = "MM/dd/yyyy"  //"yyyy/MM/dd"
         TO_MaterialType_TF.text = ToMaterial_dateFormatter.string(from: Material_ToDatePick.date)
         TO_MaterialType_TF.resignFirstResponder()
         
@@ -1566,7 +1611,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let FromMeasure_dateFormatter = DateFormatter()
         FromMeasure_dateFormatter.dateStyle = .medium
         FromMeasure_dateFormatter.timeStyle = .none
-        FromMeasure_dateFormatter.dateFormat = "dd/MM/yyyy"  //"yyyy/MM/dd"
+        FromMeasure_dateFormatter.dateFormat = "MM/dd/yyyy"  //"yyyy/MM/dd"
         From_MeasurementType_TF.text = FromMeasure_dateFormatter.string(from: Measure_FromDatePick.date)
         From_MeasurementType_TF.resignFirstResponder()
         
@@ -1577,7 +1622,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let ToMeasure_dateFormatter = DateFormatter()
         ToMeasure_dateFormatter.dateStyle = .medium
         ToMeasure_dateFormatter.timeStyle = .none
-        ToMeasure_dateFormatter.dateFormat = "dd/MM/yyyy"  //"yyyy/MM/dd"
+        ToMeasure_dateFormatter.dateFormat = "MM/dd/yyyy"  //"yyyy/MM/dd"
         TO_MeasurementType_TF.text = ToMeasure_dateFormatter.string(from: Measure_ToDatePick.date)
         TO_MeasurementType_TF.resignFirstResponder()
         
@@ -1650,7 +1695,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, Type: "Customer", CreatedBy:"Customer", delegate: self)
+            self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
         }
     }
     
@@ -1679,7 +1724,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-          self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime:  SlotStr, From: FMeasure, To: TMeasure, Type: "Customer", CreatedBy: "Customer", delegate: self)
+           self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime:  SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
         }
     }
     

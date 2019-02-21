@@ -31,6 +31,8 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
    
     var TrackingDate = String()
     
+    let emptyLabel = UILabel()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -84,6 +86,20 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         {
             let Result = getTrackingDetails.object(forKey: "Result") as! NSArray
            // print("Result", Result)
+            
+            if Result.count == 0 || Result == nil
+            {
+                TrackingTableview.removeFromSuperview()
+                
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.text = "No Tracking Details Updated.."
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                view.addSubview(emptyLabel)
+            }
+            
             
             DateArray = Result.value(forKey: "Date") as! NSArray
             print("DateArray:",DateArray)
