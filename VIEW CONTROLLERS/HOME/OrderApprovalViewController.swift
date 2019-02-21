@@ -19,8 +19,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     let PricingView = UIView()
     let deliveryDetailsView = UIView()
-     let QtyNumTF = UITextField()
+    let QtyNumTF = UITextField()
     var qtyNum : Int!
+    var TailorResponseID : Int!
     var TailorID : Int!
     var DeliveryDate:String!
     
@@ -53,6 +54,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     {
         
         print("Tailor ID:",TailorID)
+        print("Tailor ResponseID:",TailorResponseID)
         
         navigationBar.isHidden = true
         
@@ -67,7 +69,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     override func viewWillAppear(_ animated: Bool)
     {
-         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorID, delegate: self)
+         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
     }
      
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -118,7 +120,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             DressNameArray = DressSubType.value(forKey: "NameInEnglish") as! NSArray
             print("DressNameArray:",DressNameArray)
             
-            let TailorCharges = Result.object(forKey: "TailorCharges") as! NSArray
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       let TailorCharges = Result.object(forKey: "TailorCharges") as! NSArray
             print("TailorCharges:",TailorCharges)
             
             ChargesNameArray = TailorCharges.value(forKey: "DescInEnglish") as! NSArray
@@ -141,7 +143,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             
         }
         
-        self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: self.TailorID, delegate: self)
+        self.serviceCall.API_OrderApprovalDelivery(TailorResponseId: self.TailorResponseID, delegate: self)
         
         // self.orderApprovalContent()
     }
@@ -178,6 +180,13 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             let DeliveryTypes = Result.object(forKey: "DeliveryTypes") as! NSArray
             DeliveryTypeArray = DeliveryTypes.value(forKey: "DeliveryType") as! NSArray
             print("DeliveryTypeArray", DeliveryTypeArray)
+            
+            let DressSubType = Result.object(forKey: "DressSubType") as! NSArray
+            DressImageArray = DressSubType.value(forKey: "Image") as! NSArray
+            print("DressImageArray:",DressImageArray)
+            
+            DressNameArray = DressSubType.value(forKey: "NameInEnglish") as! NSArray
+            print("DressNameArray:",DressNameArray)
             
             let StichingTime = Result.object(forKey: "StichingTime") as! NSArray
             StichingTimesArray = StichingTime.value(forKey: "StichingTimes") as! NSArray

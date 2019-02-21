@@ -50,6 +50,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     var DelivTailorNameEngArray = NSArray()
     
     let emptyLabel = UILabel()
+    var OrderPendDate = String()
+    var OrderDelvDate = String()
     
     override func viewDidLoad()
     {
@@ -63,6 +65,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
  
       //  ListOfOrdersContent()
         
+      
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
             self.serviceCall.API_ListOfOrdersPending(BuyerId: userId, delegate: self)
@@ -71,10 +79,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         {
             self.serviceCall.API_ListOfOrdersPending(BuyerId: "\(userId)", delegate: self)
         }
-        
     }
-    
-
  
     func DeviceError()
     {
@@ -165,8 +170,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
       }
    
-    
-    
     func ListOfOrdersContent()
     {
         self.stopActivity()
@@ -249,7 +252,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func PendingViewContents(isHidden : Bool)
     {
        // let PendingViewBackDrop = UIView()
-        PendingViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (4 * x), height: view.frame.height - (16 * y))
+        PendingViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
         PendingViewBackDrop.backgroundColor = UIColor.clear
         view.addSubview(PendingViewBackDrop)
         
@@ -330,6 +333,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: 0, width: PendingViewButton.frame.width / 2, height: (2 * y))
             let orderNum:Int = PendOrderIdArray[i] as! Int
             tailorName.text = "\(orderNum)"
+            PendingViewButton.tag = PendOrderIdArray[i] as! Int
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -420,7 +424,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let OrderDatesLabel = UILabel()
             OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX - x, y: ProductLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
-            OrderDatesLabel.text =  PendOrderDateArray[i] as? String
+            if let date = PendOrderDateArray[i] as? String
+            {
+                OrderPendDate = String(date.prefix(10))
+            }
+            OrderDatesLabel.text = OrderPendDate
             OrderDatesLabel.textColor = UIColor.black
             OrderDatesLabel.textAlignment = .left
             OrderDatesLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -444,7 +452,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func DeliveredViewContents(isHidden : Bool)
     {
         // let DeliveredViewBackDrop = UIView()
-        DeliveredViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (4 * x), height: view.frame.height - (16 * y))
+        DeliveredViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
         DeliveredViewBackDrop.backgroundColor = UIColor.clear
         view.addSubview(DeliveredViewBackDrop)
         
@@ -617,7 +625,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let OrderDatesLabel = UILabel()
             OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX - x, y: ProductLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
-            OrderDatesLabel.text = DelivOrderDateArray[i] as? String
+            if let date = DelivOrderDateArray[i] as? String
+            {
+                OrderDelvDate = String(date.prefix(10))
+            }
+            OrderDatesLabel.text = OrderDelvDate
             OrderDatesLabel.textColor = UIColor.black
             OrderDatesLabel.textAlignment = .left
             OrderDatesLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -640,6 +652,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
         let orderDetailsScreen = OrderDetailsViewController()
+        orderDetailsScreen.OrderID = sender.tag
         self.navigationController?.pushViewController(orderDetailsScreen, animated: true)
     }
     

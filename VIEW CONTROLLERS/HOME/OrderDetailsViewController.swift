@@ -20,6 +20,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+
     //BuyerAddress Array..
     var Area = NSArray()
     var Country_Name = NSArray()
@@ -42,6 +43,14 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     var Total = NSArray()
     
      var OrderID:Int!
+    var OrderDate = String()
+    
+    //Tracking array..
+    var DateArray = NSArray()
+    var StatusArray = NSArray()
+    var TrackingStatusIdArray = NSArray()
+    
+    let OrderDetailsScrollView = UIScrollView()
     
     override func viewDidLoad()
     {
@@ -49,15 +58,17 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
 
         // Do any additional setup after loading the view.
 //        self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        
         selectedButton(tag: 2)
   
-        if(OrderID != nil)
-        {
-        self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
-            
-        }
-        
+       
         //orderDetailsContent()
+    }
+    override func viewWillAppear(_ animated: Bool)
+    {
+         self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
+         self.serviceCall.API_GetTrackingDetails(OrderId: OrderID, delegate: self)
+        
     }
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
@@ -70,7 +81,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             let Result = getOrderDetails.object(forKey: "Result") as! NSDictionary
-            //print("Result", Result)
+            print("Result", Result)
             
             let BuyerAddress = Result.value(forKey: "BuyerAddress") as! NSArray
             // print("BuyerAddress:", BuyerAddress)
@@ -129,7 +140,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             print("Total:", Total)
             
             
-            orderDetailsContent()
+          //  orderDetailsContent()
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -142,6 +154,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             DeviceError()
             
         }
+        
+         orderDetailsContent()
     }
     func DeviceError()
     {
@@ -165,6 +179,40 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             let Result = deviceError.object(forKey: "Result") as! String
             print("Result", Result)
         }
+    }
+    func API_CALLBACK_GetTrackingDetails(getTrackingDetails: NSDictionary)
+    {
+        let ResponseMsg = getTrackingDetails.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = getTrackingDetails.object(forKey: "Result") as! NSArray
+            // print("Result", Result)
+            
+            DateArray = Result.value(forKey: "Date") as! NSArray
+            print("DateArray:",DateArray)
+            
+            StatusArray = Result.value(forKey: "Status") as! NSArray
+            print("StatusArray:",StatusArray)
+            
+            TrackingStatusIdArray = Result.value(forKey: "Id") as! NSArray
+            print("TrackingStatusIdArray:",TrackingStatusIdArray)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getTrackingDetails.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetTrackingDetails"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+        
+       // orderDetailsContent()
     }
     func orderDetailsContent()
     {
@@ -191,11 +239,17 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         orderDetailsNavigationBar.addSubview(navigationTitle)
         
        // Scrollview...
-        let OrderDetailsScrollView = UIScrollView()
+        // let OrderDetailsScrollView = UIScrollView()
         OrderDetailsScrollView.frame = CGRect(x: 0, y: orderDetailsNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
         OrderDetailsScrollView.backgroundColor = UIColor.clear
         OrderDetailsScrollView.contentSize.height = (1.75 * view.frame.height)
         view.addSubview(OrderDetailsScrollView)
+        
+        
+        for views in OrderDetailsScrollView.subviews
+        {
+                views.removeFromSuperview()
+        }
         
         // OrderId View..
         let orderIdView = UIView()
@@ -236,7 +290,11 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         let orderPlacedDateLabel = UILabel()
         orderPlacedDateLabel.frame = CGRect(x: orderPlacedLabel.frame.maxX , y: orderIdLabel.frame.maxY + y, width: (17 * x), height: (2 * x))
        // orderPlacedDateLabel.backgroundColor = UIColor.gray
-        orderPlacedDateLabel.text = OrderDt[0] as? String
+        if let date = OrderDt[0] as? String
+        {
+            OrderDate = String(date.prefix(10))
+        }
+        orderPlacedDateLabel.text = OrderDate
         orderPlacedDateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderPlacedDateLabel.textColor = UIColor.black
         orderIdView.addSubview(orderPlacedDateLabel)
@@ -489,23 +547,28 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //DateLabel..
         let DateLabel = UILabel()
         DateLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: orderedLabel.frame.maxY, width: (20 * x), height: (2 * y))
-        DateLabel.text = OrderDt[0] as? String
+        if let date = OrderDt[0] as? String
+        {
+            OrderDate = String(date.prefix(10))
+        }
+        DateLabel.text = OrderDate
         DateLabel.textColor = UIColor.lightGray
        // DateLabel.backgroundColor = UIColor.gray
         DateLabel.textAlignment = .left
         DateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         OrderStatusView.addSubview(DateLabel)
-        
-        //PackedLabel..
-        let PackedLabel = UILabel()
-        PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
-        PackedLabel.text = "Cloth Recieved"
-        PackedLabel.textColor = UIColor.lightGray
+  
+     if(TrackingStatusIdArray.contains("2"))
+     {
+         //PackedLabel..
+         let PackedLabel = UILabel()
+         PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
+         PackedLabel.text = "Cloth Recieved"
+         PackedLabel.textColor = UIColor.black
         // PackedLabel.backgroundColor = UIColor.gray
         PackedLabel.textAlignment = .left
         PackedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         OrderStatusView.addSubview(PackedLabel)
-        
         
         //TrackingButton
         let TrackingButton = UIButton()
@@ -518,7 +581,32 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TrackingButton.clipsToBounds = true;
         TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
         OrderStatusView.addSubview(TrackingButton)
+     }
+     else
+     {
+        //PackedLabel..
+        let PackedLabel = UILabel()
+        PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
+        PackedLabel.text = "Cloth Recieved"
+        PackedLabel.textColor = UIColor.lightGray
+        // PackedLabel.backgroundColor = UIColor.gray
+        PackedLabel.textAlignment = .left
+        PackedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
+        OrderStatusView.addSubview(PackedLabel)
         
+        //TrackingButton
+        let TrackingButton = UIButton()
+        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (2 * y))
+        TrackingButton.backgroundColor = UIColor.orange
+        TrackingButton.setTitle("Tracking Details", for: .normal)
+        TrackingButton.setTitleColor(UIColor.white, for: .normal)
+        TrackingButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.3 * x))
+        TrackingButton.layer.cornerRadius = 10;  // this value vary as per your desire
+        TrackingButton.clipsToBounds = true;
+        TrackingButton.isUserInteractionEnabled = false
+        TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
+        OrderStatusView.addSubview(TrackingButton)
+     }
         
         // Delivery Info View..
         let DeliveryInfoView = UIView()
@@ -604,7 +692,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PhoneNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         DeliveryInfoView.addSubview(PhoneNumLabel)
         
-       // OrderDetailsScrollView.contentSize.height = y1 + (20 * y)
+        OrderDetailsScrollView.contentSize.height = DeliveryInfoView.frame.maxY + (2 * y)
+        
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -617,17 +706,10 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         print("Tracking ViewController")
         
           let TrackingScreen = TrackingViewController()
+          TrackingScreen.OrderID = OrderID!
           self.navigationController?.pushViewController(TrackingScreen, animated: true)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+  
+    
 }

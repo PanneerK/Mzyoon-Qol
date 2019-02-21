@@ -13,12 +13,21 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
    
     let serviceCall = ServerAPI()
     
-    var TransRef:String!
-    var TransTraceNum:String!
-    var TelrTransCode:String!
+     var TelrTransCode:String!
     
-    let PaymentNavigationBar = UIView()
-    var dictionaryData = NSDictionary()
+     var TransStatus:String!
+     var TransCode:String!
+     var TransMessage:String!
+     var TransRef:String!
+     var TransCvv:String!
+     var TransAvs:String!
+     var TransCardcode:String!
+     var TransCardlast4:String!
+     var TransCa_valid:String!
+     var TransTraceNum:String!
+    
+     let PaymentNavigationBar = UIView()
+     var dictionaryData = NSDictionary()
     
     // Error PAram...
     var DeviceNum:String!
@@ -87,17 +96,56 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
                             let AuthDict = mobileDict.object(forKey: "auth")! as AnyObject
                             //  print("webViewDict:",webViewDict)
                             
+                            let status = AuthDict.object(forKey: "status")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            self.TransStatus = (status.object(forKey: "text") as AnyObject) as? String
+                            print("TransStatus :",self.TransStatus)
+                            
+                            let code = AuthDict.object(forKey: "code")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            self.TransCode = (code.object(forKey: "text") as AnyObject) as? String
+                            print("TransCode :",self.TransCode)
+                            
+                            let message = AuthDict.object(forKey: "message")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            self.TransMessage = (message.object(forKey: "text") as AnyObject) as? String
+                            print("TransMessage :",self.TransMessage)
+                            
                             let RefNum = AuthDict.object(forKey: "tranref")! as AnyObject
                             //  print("StartWebView:",StartWebView)
-                            
                             self.TransRef = (RefNum.object(forKey: "text") as AnyObject) as? String
                             print("TransRef :",self.TransRef)
+                          
+                            let cvv = AuthDict.object(forKey: "cvv")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            self.TransCvv = (cvv.object(forKey: "text") as AnyObject) as? String
+                            print("TransCvv :",self.TransCvv)
+                            
+                            let avs = AuthDict.object(forKey: "avs")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            self.TransAvs = (avs.object(forKey: "text") as AnyObject) as? String
+                            print("TransAvs :",self.TransAvs)
+                            
+                            let cardcode = AuthDict.object(forKey: "cardcode")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            self.TransCardcode = (cardcode.object(forKey: "text") as AnyObject) as? String
+                            print("TransCardcode :",self.TransCardcode)
+                            
+                            let cardlast4 = AuthDict.object(forKey: "cardlast4")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            self.TransCardlast4 = (cardlast4.object(forKey: "text") as AnyObject) as? String
+                            print("TransCardlast4 :",self.TransCardlast4)
+                            
+                            let ca_valid = AuthDict.object(forKey: "ca_valid")! as AnyObject
+                            //  print("StartWebView:",StartWebView)
+                            self.TransCa_valid = (ca_valid.object(forKey: "text") as AnyObject) as? String
+                            print("TransCa_valid :",self.TransCa_valid)
                             
                             let TraceDict = mobileDict.object(forKey: "trace")! as AnyObject
                             //  print("webViewDict:",webViewDict)
-                            
                             self.TransTraceNum = (TraceDict.object(forKey: "text") as AnyObject) as? String
                             print("TransTraceNum :",self.TransTraceNum)
+                            
                             
                             DispatchQueue.main.async (execute: { () -> Void in
                                 self.ResponseContent()
@@ -190,32 +238,20 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     @objc func DoneButtonAction(sender : UIButton)
     {
         
-        /*
-        if let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
-        {
-            self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId, delegate: self)
-        }
-        else if let orderId = UserDefaults.standard.value(forKey: "userId") as? String
-        {
-            self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId:Int(orderId)!, delegate: self)
-        }
-        */
-        
-        
+      
         let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
         let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
+        let TotalAmt = UserDefaults.standard.value(forKey: "TotalAmount") as? String
         
         print("orderId :",orderId!)
         print("TailorId :",TailorId!)
+        print("Total Amt :",TotalAmt!)
         
         self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
         self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
         
-      /*
-        let HomeScreen = HomeViewController()
-        self.navigationController?.pushViewController(HomeScreen, animated: true)
-        self.present(HomeScreen, animated: true, completion: nil)
-      */
+        self.serviceCall.API_InsertPaymentStatus(OrderId: orderId!, Transactionid: TransRef, Amount: TotalAmt!, Status: TransStatus, Code: TransCode, message: TransMessage, cvv: TransCvv, avs: TransAvs, cardcode: TransCardcode, cardlast4: TransCardlast4, Trace: TransTraceNum, ca_Valid: TransCa_valid, delegate: self)
+        
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let HomeScreen = HomeViewController()
@@ -271,7 +307,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
             let Result = updatePaymentStatus.object(forKey: "Result") as! String
             
             ErrorStr = Result
-            MethodName = ""
+            MethodName = "UpdatePaymentStatus"
             
             DeviceError()
           
@@ -293,11 +329,31 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
             let Result = buyerOrderApproval.object(forKey: "Result") as! String
             
             ErrorStr = Result
-            MethodName = ""
+            MethodName = "BuyerOrderApproval"
             
             DeviceError()
             
         }
     }
-
+    func API_CALLBACK_InsertPaymentStatus(status: NSDictionary)
+    {
+        let ResponseMsg = status.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = status.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = status.object(forKey: "Result") as! String
+            
+            ErrorStr = Result
+            MethodName = "InsertPaymentStatus"
+            
+            DeviceError()
+            
+        }
+    }
 }
