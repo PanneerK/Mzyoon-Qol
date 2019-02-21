@@ -210,9 +210,16 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             DeviceError()
         }
         
-        for i in 0..<Lattitude.count
+        if Lattitude.count == 0
         {
-            reverseGeocodeCoordinate(CLLocationCoordinate2D(latitude: Lattitude[i] as! CLLocationDegrees, longitude: Longitude[i] as! CLLocationDegrees))
+            addressContent()
+        }
+        else
+        {
+            for i in 0..<Lattitude.count
+            {
+                reverseGeocodeCoordinate(CLLocationCoordinate2D(latitude: Lattitude[i] as! CLLocationDegrees, longitude: Longitude[i] as! CLLocationDegrees))
+            }
         }
     }
     
@@ -309,7 +316,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         navigationTitle.text = "ADDRESS"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        navigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         addressNavigationBar.addSubview(navigationTitle)
         
         if addressCount == 0
@@ -378,6 +385,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 addressTitle.text = (LocationType[i] as! String)
                 addressTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressTitle.textAlignment = .left
+                addressTitle.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
                 addressSelectButton.addSubview(addressTitle)
                 
                 let addressEditButton = UIButton()
@@ -423,7 +431,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 nameLabel.text = "Name"
                 nameLabel.textColor = UIColor.black
                 nameLabel.textAlignment = .left
-                nameLabel.font = UIFont(name: "AvenirNext-Bold", size: 15)
+                nameLabel.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
                 addressSelectButton.addSubview(nameLabel)
                 
                 let getNameLabel = UILabel()
@@ -431,7 +439,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getNameLabel.text = FirstName[i] as? String
                 getNameLabel.textColor = UIColor.black
                 getNameLabel.textAlignment = .left
-                getNameLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
+                getNameLabel.font = UIFont(name: "Avenir Next Regular", size: (1.5 * x))
                 getNameLabel.font = getNameLabel.font.withSize(15)
                 addressSelectButton.addSubview(getNameLabel)
                 
@@ -440,7 +448,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 addressLabel.text = "Address"
                 addressLabel.textColor = UIColor.black
                 addressLabel.textAlignment = .left
-                addressLabel.font = UIFont(name: "AvenirNext-Bold", size: 15)
+                addressLabel.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
                 addressSelectButton.addSubview(addressLabel)
                 
                 let getAddressLabel = UILabel()
@@ -449,12 +457,12 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 {
                     if addressList.characters.count > 50
                     {
-                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (4 * y))
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (5 * y))
                         getAddressLabel.numberOfLines = 3
                     }
                     else
                     {
-                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (2 * y))
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (4 * y))
                         getAddressLabel.numberOfLines = 2
                     }
                 }
@@ -465,7 +473,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getAddressLabel.text = convertedAddressArray[i] as? String
                 getAddressLabel.textColor = UIColor.black
                 getAddressLabel.textAlignment = .left
-                getAddressLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
+                getAddressLabel.font = UIFont(name: "Avenir Next Regular", size: (1.5 * x))
                 getAddressLabel.font = getAddressLabel.font.withSize(15)
                 getAddressLabel.adjustsFontSizeToFitWidth = true
                 addressSelectButton.addSubview(getAddressLabel)
@@ -475,7 +483,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 mobileLabel.text = "Phone Number"
                 mobileLabel.textColor = UIColor.black
                 mobileLabel.textAlignment = .left
-                mobileLabel.font = UIFont(name: "AvenirNext-Bold", size: 15)
+                mobileLabel.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
                 addressSelectButton.addSubview(mobileLabel)
                 
                 let getMobileLabel = UILabel()
@@ -483,7 +491,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getMobileLabel.text = PhoneNo[i] as? String
                 getMobileLabel.textColor = UIColor.black
                 getMobileLabel.textAlignment = .left
-                getMobileLabel.font = UIFont(name: "Avenir Next Regular", size: 15)
+                getMobileLabel.font = UIFont(name: "Avenir Next Regular", size: (1.5 * x))
                 getMobileLabel.font = getMobileLabel.font.withSize(15)
                 addressSelectButton.addSubview(getMobileLabel)
                 
@@ -578,6 +586,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             self.stopActivity()
             let address2Screen = Address2ViewController()
             
+            print("COUNTRY ID - \(self.CountryId[sender.tag]), STATE ID - \(self.StateId[sender.tag]), AREA ID - \(self.areaId[sender.tag])")
+            
             address2Screen.firstNameEnglishTextField.text = self.FirstName[sender.tag] as? String
             address2Screen.secondNameEnglishTextField.text = self.LastName[sender.tag] as? String
             address2Screen.locationTypeTextField.text = self.LocationType[sender.tag] as? String
@@ -594,7 +604,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             address2Screen.editStateId = self.StateId[sender.tag] as! Int
             address2Screen.editCountryId = self.CountryId[sender.tag] as! Int
             address2Screen.checkScreen = 1
-            address2Screen.editAreaId = 2
+            address2Screen.editAreaId = self.areaId[sender.tag] as! Int
             address2Screen.getLocation = self.selectedCoordinate
             self.navigationController?.pushViewController(address2Screen, animated: true)
         }
@@ -642,7 +652,6 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         // 2
         geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
             
-            print("RESPONSE IN ADDRESS", response)
             guard let address = response?.firstResult(), let lines = address.lines else {
                 print("FAILED TO RTURN ADDRESS")
                 return
