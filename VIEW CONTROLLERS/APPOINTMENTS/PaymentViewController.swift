@@ -106,7 +106,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
       //  STOREID = "21552"
      //   MerchantID = "12168"
         
-        EMAIL = "rohit@qolsofts.com"
+        EMAIL = UserDefaults.standard.value(forKey: "Email") as? String
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         DeviceType = UIDevice.current.name
         DeviceAgent = ""
@@ -122,7 +122,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         CVVNum = ""
        
         Currency = "AED"
-        Description = "Mzyoon Payment Confirmation.."
+        Description = "Mzyoon App Payment Confirmation.."
         RequestId = UserDefaults.standard.value(forKey: "requestId") as? String
         UserName = UserDefaults.standard.value(forKey: "userName") as? String
         
@@ -690,14 +690,14 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
        UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
         
-    /*
+    
       if RequestId == nil
       {
         RequestId = String(arc4random())
         print("Request ID:",RequestId)
       }
-   */
-       RequestId = String(arc4random())
+ 
+     //  RequestId = String(arc4random())
         
     
       if UserName == nil

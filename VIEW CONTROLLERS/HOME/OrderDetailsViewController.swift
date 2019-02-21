@@ -558,7 +558,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         DateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         OrderStatusView.addSubview(DateLabel)
   
-       
+     if(TrackingStatusIdArray.contains("2"))
+     {
          //PackedLabel..
          let PackedLabel = UILabel()
          PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
@@ -580,7 +581,32 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TrackingButton.clipsToBounds = true;
         TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
         OrderStatusView.addSubview(TrackingButton)
-       
+     }
+     else
+     {
+        //PackedLabel..
+        let PackedLabel = UILabel()
+        PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
+        PackedLabel.text = "Cloth Recieved"
+        PackedLabel.textColor = UIColor.lightGray
+        // PackedLabel.backgroundColor = UIColor.gray
+        PackedLabel.textAlignment = .left
+        PackedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
+        OrderStatusView.addSubview(PackedLabel)
+        
+        //TrackingButton
+        let TrackingButton = UIButton()
+        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (2 * y))
+        TrackingButton.backgroundColor = UIColor.orange
+        TrackingButton.setTitle("Tracking Details", for: .normal)
+        TrackingButton.setTitleColor(UIColor.white, for: .normal)
+        TrackingButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.3 * x))
+        TrackingButton.layer.cornerRadius = 10;  // this value vary as per your desire
+        TrackingButton.clipsToBounds = true;
+        TrackingButton.isUserInteractionEnabled = false
+        TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
+        OrderStatusView.addSubview(TrackingButton)
+     }
         
         // Delivery Info View..
         let DeliveryInfoView = UIView()

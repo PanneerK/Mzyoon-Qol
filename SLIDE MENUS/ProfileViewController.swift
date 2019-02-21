@@ -206,6 +206,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                     if let mail = email[0] as? String
                     {
                         getEmail = mail
+                        
+                         UserDefaults.standard.set(getEmail, forKey: "Email")
                     }
                 }
                 
@@ -352,6 +354,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 let EmailID = email.text
                 let DobStr = dob.text
                 let ModifyStr = "user"
+                
                 
                 serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
             }
