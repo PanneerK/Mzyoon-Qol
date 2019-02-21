@@ -102,8 +102,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
          self.addDoneButtonOnKeyboard()
         
-     //   KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
-      //  STOREID = "21552"
+          KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
+          STOREID = "21552"
      //   MerchantID = "12168"
         
         EMAIL = UserDefaults.standard.value(forKey: "Email") as? String
@@ -145,15 +145,16 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     }
     func DeviceError()
     {
-        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
-        AppVersion = UIDevice.current.systemVersion
+        DeviceNumStr = UIDevice.current.identifierForVendor?.uuidString
+        AppVersionStr = UIDevice.current.systemVersion
         UserType = "customer"
         // ErrorStr = "Default Error"
         PageNumStr = "AppointmentViewController"
         //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
-        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNumStr, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersionStr, Type: UserType, delegate: self)
+        
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNumStr!, PageName: PageNumStr!, MethodName: MethodName!, Error: ErrorStr!, ApiVersion: AppVersionStr!, Type: UserType!, delegate: self)
         
     }
     
@@ -194,7 +195,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             MethodName = "GetPaymentStore"
             ErrorStr = Result
             
-            DeviceError()
+          //  DeviceError()
             
         }
         
