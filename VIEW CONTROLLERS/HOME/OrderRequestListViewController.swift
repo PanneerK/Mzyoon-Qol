@@ -38,6 +38,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     
     let emptyLabel = UILabel()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -79,6 +82,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Order Request : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()

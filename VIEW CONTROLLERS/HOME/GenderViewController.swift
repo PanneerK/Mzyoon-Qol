@@ -37,6 +37,9 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+    
+    var applicationDelegate = AppDelegate()
+    
     override func viewDidLoad()
     {
         xPos = 10 / 375 * 100
@@ -50,7 +53,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
 //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
-//        serviceCall.API_Gender(delegate: self)
+        serviceCall.API_Gender(delegate: self)
 
         super.viewDidLoad()
 
@@ -58,7 +61,22 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        serviceCall.API_Gender(delegate: self)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.newOrderContents(getInputArray: genderArray)
+            }
+            else if language == "ar"
+            {
+                self.newOrderContents(getInputArray: genderInArabicArray)
+            }
+        }
+        else
+        {
+            self.newOrderContents(getInputArray: genderArray)
+        }
     }
     
     func showActivityIndicator()
@@ -100,6 +118,8 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR IN GENDER PAGE", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
  
     
@@ -222,6 +242,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         for i in 0..<getInputArray.count
         {
             let genderButton = UIButton()
+            
             if i % 2 == 0
             {
                 genderButton.frame = CGRect(x: x1, y: y1, width: (14.75 * x), height: (16 * y))
@@ -233,6 +254,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
                 y1 = genderButton.frame.maxY + (2 * y)
                 x1 = (3 * x)
             }
+            
             genderButton.layer.borderWidth = 1
             genderButton.backgroundColor = UIColor.lightGray
 //            genderButton.setImage(UIImage(named: "genderBackground"), for: .normal)

@@ -40,6 +40,9 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     var getMaterialImageNameArray = [String]()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         fileAccessing.deleteDirectory(imageType: "Mzyoon")
@@ -51,10 +54,10 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         selectedButton(tag: 0)
         
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
-//            // Your code with delay
-//            self.addMaterialContent()
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
+            // Your code with delay
+            self.addMaterialContent()
+        }
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -64,14 +67,15 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         self.addMaterialContent()
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("OWN MATERIAL", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func changeViewToArabicInSelf()
     {
-        print("BEFORE X", addMaterialNextButton.frame.minX)
-
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
@@ -86,8 +90,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
 //        addMaterialNextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        
-        print("AFTER X", addMaterialNextButton.frame.minX)
     }
     
     func changeViewToEnglishInSelf()
@@ -245,7 +247,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         {
             for i in 0..<imageArray.count
             {
-                print("BEFORE APPENDING", imageArray[i])
                 fileAccessing.saveImageDocumentDirectory(image: imageArray[i], imageName: "Material\(i)", imageType: "Mzyoon")
             }
             
@@ -254,7 +255,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
 //
 //            let images = returnImage.imageRequest(imageName: [getImage])
 //
-//            print("RETURNED IMAGES", images)
 
             
             UserDefaults.standard.set(imageArray.count, forKey: "materialImageArray")
@@ -263,8 +263,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
 
             if let materialImages = UserDefaults.standard.value(forKey: "materialImageArray") as? Int
             {
-                print("MATERIAL IMAGES COUNT", materialImages)
-                
                 for i in 0..<materialImages
                 {
                     let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material\(i)")
@@ -295,18 +293,14 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
                     if let file1 = Result[i] as? String
                     {
                         let splitted = file1.split(separator: "\\")
-                        print("SPLITTED", splitted)
                         
                         let imageName = splitted.last
-                        print("IMAGE NAME", imageName!)
                         
                         getMaterialImageNameArray.append((imageName?.description)!)
                     }
                 }
             }
         }
-        
-        print("CALL BACK IMAGE NAME", getMaterialImageNameArray)
     }
     
     @objc func addMaterialButtonAction(sender : UIButton)
@@ -346,9 +340,8 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     {
         if imageArray.count <= 10
         {
-            if UIImagePickerController.isSourceTypeAvailable(.camera){
-                print("Button capture")
-                
+            if UIImagePickerController.isSourceTypeAvailable(.camera)
+            {
                 imagePicker.delegate = self
                 imagePicker.sourceType = .camera;
                 imagePicker.allowsEditing = false
@@ -372,9 +365,8 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     {
         if imageArray.count <= 10
         {
-            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-                print("Button capture")
-                
+            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum)
+            {
                 imagePicker.delegate = self
                 imagePicker.sourceType = .savedPhotosAlbum;
                 imagePicker.allowsEditing = false
@@ -397,7 +389,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             imageArray.append(pickedImage)
             notifyLabel.isHidden = true
             
-            print("PATH OF PICKED IMAGE", fileAccessing.getDirectoryPath())
             addMaterialSubImage()
         }
         self.dismiss(animated: true, completion: nil)
@@ -405,8 +396,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     func addMaterialSubImage()
     {
-        print("materialCount", imageArray.count)
-        
         var x1:CGFloat = x
         
         for views in addReferenceScrolView.subviews
@@ -463,8 +452,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     @objc func removeMaterialButtonAction(sender : UIButton)
     {
-        
-        print("TAG - \(sender.tag), imageArray - \(imageArray.count)")
         imageArray.remove(at: sender.tag)
         
         addMaterialSubImage()
@@ -477,8 +464,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     func deleteAlertAction(action : UIAlertAction)
     {
-        print("BEFORE", self.selectedTag, imageArray)
-        
         let removeTag = self.selectedTag - 200
         imageArray.remove(at: removeTag)
         
@@ -486,7 +471,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
          {
          if views.tag == self.selectedTag
          {
-         print("TAGS EQUAL", views.tag, self.selectedTag)
          views.removeFromSuperview()
          let removeTag = self.selectedTag - 200
          imageArray.remove(at: removeTag)

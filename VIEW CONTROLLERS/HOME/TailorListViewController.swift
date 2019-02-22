@@ -75,6 +75,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var destinationLocation = CLLocationCoordinate2D()
     var rectanglePolyline = GMSPolyline()
     
+    var applicationDelegate = AppDelegate()
+    
     
     override func viewDidLoad()
     {
@@ -109,6 +111,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
         }
         
+        #if targetEnvironment(simulator)
+        // your simulator code
+        print("APP IS RUNNING ON SIMULATOR")
+        self.serviceCall.API_GetTailorList(delegate: self)
+
+        #else
+        // your real device code
+        print("APP IS RUNNING ON DEVICE")
+        
         if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {
@@ -117,11 +128,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             print("Current Loc:",currentLocation.coordinate)
             self.serviceCall.API_GetTailorList(delegate: self)
         }
+        
+        #endif
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Tailor List : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
@@ -520,7 +535,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
-            //            tailorView.addSubview(ratingCountLabel)
+0            //            tailorView.addSubview(ratingCountLabel)
             
             let ratingImageView = UIImageView()
             ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)
@@ -553,7 +568,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             locationButton.layer.borderColor = UIColor.lightGray.cgColor
             locationButton.setImage(UIImage(named: "locationMarker"), for: .normal)
             locationButton.tag = IdArray[i] as! Int
-            locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
+//            locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(locationButton)
             
             y1 = tailorView.frame.maxY + y
@@ -885,7 +900,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         locationButton.setTitle("DIRECTIONS", for: .normal)
         locationButton.setTitleColor(UIColor.white, for: .normal)
         locationButton.tag = 0
-        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
+//        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
         tailorDeatiledView.addSubview(locationButton)
         
         addressLabel.frame = CGRect(x: (2 * x), y: ((view.frame.height - (5 * y)) / 2), width: view.frame.width - (4 * x), height: (3 * y))

@@ -39,6 +39,9 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     var PageNumStr:String!
     var MethodName:String!
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         self.navigationBar.isHidden = true
@@ -46,7 +49,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
 //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
-//        serviceCall.API_DressType(genderId: tag, delegate: self)
+        serviceCall.API_DressType(genderId: tag, delegate: self)
 
         super.viewDidLoad()
 
@@ -55,7 +58,24 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     override func viewWillAppear(_ animated: Bool)
     {
-        serviceCall.API_DressType(genderId: tag, delegate: self)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+                dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+                dressTypeSubContents(inputTextArray: dressTypeArrayInArabic, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+            dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
+        }
     }
     
     func DeviceError()
@@ -67,34 +87,32 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         PageNumStr = "DressTypeViewController"
         MethodName = "GetDressTypeByGender"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("DRESS TYPE", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_DressType(dressType: NSDictionary)
     {
+        print("DRESS TYPE", dressType)
         let ResponseMsg = dressType.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
             let Result = dressType.object(forKey: "Result") as! NSArray
-            print("Result", Result)
             
             dressTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
-            print("DressTypeInEnglish", dressTypeArray)
             
             dressTypeArrayInArabic = Result.value(forKey: "NameInArabic") as! NSArray
-            print("NameInArabic", dressTypeArrayInArabic)
             
             dressIdArray = Result.value(forKey: "Id") as! NSArray
-            print("Id", dressIdArray)
             
             dressImageArray = Result.value(forKey: "ImageURL") as! NSArray
-            print("ImageURL", dressImageArray)
             
             /*for i in 0..<dressImageArray.count
             {
@@ -105,7 +123,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                     let apiurl = URL(string: api)
                     
                     if let data = try? Data(contentsOf: apiurl!) {
-                        print("DATA OF IMAGE", data)
                         if let image = UIImage(data: data) {
                             self.convertedDressImageArray.append(image)
                         }
@@ -161,16 +178,12 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         if ResponseMsg == "Success"
         {
             let Result = ascending.object(forKey: "Result") as! NSArray
-            print("Result", Result)
             
             dressTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
-            print("DressTypeInEnglish", dressTypeArray)
             
             dressIdArray = Result.value(forKey: "Id") as! NSArray
-            print("Id", dressIdArray)
             
             dressImageArray = Result.value(forKey: "ImageURL") as! NSArray
-            print("ImageURL", dressImageArray)
             
             dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
             
@@ -199,16 +212,12 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         if ResponseMsg == "Success"
         {
             let Result = descending.object(forKey: "Result") as! NSArray
-            print("Result", Result)
             
             dressTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
-            print("DressTypeInEnglish", dressTypeArray)
             
             dressIdArray = Result.value(forKey: "Id") as! NSArray
-            print("Id", dressIdArray)
             
             dressImageArray = Result.value(forKey: "ImageURL") as! NSArray
-            print("ImageURL", dressImageArray)
             
             dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
         }
@@ -358,8 +367,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         //        dressTypeScrollView.backgroundColor = UIColor.red
         view.addSubview(dressTypeScrollView)
         
-        print("TOTAL NUMBER", inputTextArray)
-        
         for views in dressTypeScrollView.subviews
         {
             views.removeFromSuperview()
@@ -400,8 +407,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                 dressTypeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             }
             
-            print("COUNT OF EQUATING", inputTextArray.count, inputIdArray.count)
-            
             x1 = dressTypeButton.frame.maxX + x
             
             let dressTypeImageView = UIImageView()
@@ -410,7 +415,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             {
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/DressTypes/\(imageName)"
-                print("API OF DRESS TYPE IMAGES", api)
                 let apiurl = URL(string: api)
                 if apiurl != nil
                 {
@@ -608,8 +612,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     {
         if sender.tag != 0
         {
-        print("DRESS TYPE OF SELECTED - \(sender.tag)")
-
             let dressSubScreen = DressSubTypeViewController()
             dressSubScreen.screenTag = sender.tag
             
@@ -667,20 +669,16 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         
         let text = textField.text
         
-        print("ENTERED TEXTFIELD")
         if (text?.utf16.count)! >= 1{
             for i in 0..<dressTypeArray.count
             {
                 if let dress = dressTypeArray[i] as? String
                 {
                     let count = textField.text?.count
-                    print("WELCOME OF DRESS", dress.prefix(count!))
                     let subString = dress.prefix(count!)
                     let convertedSubString = String(subString)
                     if textField.text == convertedSubString
                     {
-                        print("BOTH ARE EQUAL", dress)
-                        
                         nameArrayString.append(dress)
                         imageArrayString.append(dressImageArray[i] as! String)
                         idArrayString.append(dressIdArray[i] as! Int)
@@ -691,8 +689,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             nameArray = nameArrayString as NSArray
             imageArray = imageArrayString as NSArray
             idArray = idArrayString as NSArray
-            
-            print("NAME ARRAY AFTER", nameArray)
             
             dressTypeSubContents(inputTextArray: nameArray, inputIdArray: idArray, inputImageArray: imageArray)
         }
@@ -707,7 +703,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         
         if textField == searchTextField
         {
-            print("YES TESTING DONE")
+     
         }
         
         return true
@@ -719,9 +715,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         var nameArray = NSArray()
         var imageArray = NSArray()
         
-        print("CHECKING TEXT FIELD COUNT", textField.text!.count)
-        print("ENTERED TEXT", textField.text)
-        
         if textField == searchTextField
         {
             if (textField.text?.count)! > 0
@@ -731,13 +724,10 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                     if let dress = dressTypeArray[i] as? String
                     {
                         let count = textField.text?.count
-                        print("WELCOME OF DRESS", dress.prefix(count!))
                         let subString = dress.prefix(count!)
                         let convertedSubString = String(subString)
                         if textField.text == convertedSubString
                         {
-                            print("BOTH ARE EQUAL", dress)
-                            
                             nameArray.addingObjects(from: [dress])
                             imageArray.addingObjects(from: [dressImageArray[i]])
                         }

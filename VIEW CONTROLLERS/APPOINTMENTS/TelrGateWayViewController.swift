@@ -42,6 +42,9 @@ class TelrGateWayViewController: UIViewController,UIWebViewDelegate
     let activeView = UIView()
     let activityIndicator = UIActivityIndicatorView()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()

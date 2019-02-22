@@ -89,6 +89,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    func exitContents()
+    {
+        let exitAlert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: .alert)
+        exitAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        
+        let alertWindow = UIWindow(frame: UIScreen.main.bounds)
+        alertWindow.rootViewController = UIViewController()
+        alertWindow.windowLevel = UIWindow.Level.alert + 1;
+        alertWindow.makeKeyAndVisible()
+        alertWindow.rootViewController?.present(exitAlert, animated: true, completion: nil)
+    }
     
 }
 

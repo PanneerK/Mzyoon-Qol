@@ -47,6 +47,9 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -54,7 +57,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
 //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
-//        self.serviceCall.API_OrderType(delegate: self)
+        self.serviceCall.API_OrderType(delegate: self)
 
         super.viewDidLoad()
 
@@ -74,12 +77,14 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         PageNumStr = "OrderTypeViewController"
         MethodName = "DisplayOrderType"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("ORDER TYPE", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
@@ -102,22 +107,16 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             let Result = orderType.object(forKey: "Result") as! NSArray
-            print("Result", Result)
             
             orderTypeNameArray = Result.value(forKey: "HeaderInEnglish") as! NSArray
-            print("OrderTypeInEnglish", orderTypeNameArray)
             
             orderTypeNameArrayInArabic = Result.value(forKey: "HeaderInArabic") as! NSArray
-            print("HeaderInArabic", orderTypeNameArrayInArabic)
             
             orderTypeIDArray = Result.value(forKey: "id") as! NSArray
-            print("Id", orderTypeIDArray)
             
             orderTypeHeaderImage = Result.value(forKey: "HeaderImage") as! NSArray
-            print("HeaderImageURL", orderTypeHeaderImage)
             
             orderTypeBodyImage = Result.value(forKey: "BodyImage") as! NSArray
-            print("BodyImageURL",orderTypeBodyImage)
             
             /*for i in 0..<orderTypeHeaderImage.count
             {
@@ -126,12 +125,10 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
                 {
                     let urlString = serviceCall.baseURL
                     let api = "\(urlString)/images/OrderType/\(imageName)"
-                    print("BIG ICON", api)
 
                     let apiurl = URL(string: api)
                     
                     if let data = try? Data(contentsOf: apiurl!) {
-                        print("Header DATA OF IMAGE", data)
                         if let image = UIImage(data: data) {
                             self.convertedOrderHeaderImageArray.append(image)
                         }
@@ -156,11 +153,9 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
                 {
                     let urlString = serviceCall.baseURL
                     let api = "\(urlString)/images/OrderType/\(imageName)"
-                    print("SMALL ICON", api)
                     let apiurl = URL(string: api)
                     
                     if let data = try? Data(contentsOf: apiurl!) {
-                        print("Body DATA OF IMAGE", data)
                         if let image = UIImage(data: data) {
                             self.convertedOrderBodyImageArray.append(image)
                         }
@@ -314,7 +309,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/OrderType/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -372,7 +366,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/OrderType/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -420,7 +413,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/OrderType/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -464,7 +456,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     @objc func ownMaterialButtonAction(sender : UIButton)
     {
-        print("SENDER TAG IN ORDER TYPE", sender.tag)
         UserDefaults.standard.set(sender.tag, forKey: "orderType")
         let ownMaterialScreen = OwnMateialViewController()
         self.navigationController?.pushViewController(ownMaterialScreen, animated: true)
@@ -473,7 +464,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     @objc func companyButtonAction(sender : UIButton)
     {
-        print("SENDER TAG IN ORDER TYPE", sender.tag)
         UserDefaults.standard.set(sender.tag, forKey: "orderType")
         let customizationScreen = Customization1ViewController()
         self.navigationController?.pushViewController(customizationScreen, animated: true)

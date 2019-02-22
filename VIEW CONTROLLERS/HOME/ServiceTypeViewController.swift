@@ -35,17 +35,27 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     let companyLabel = UILabel()
     let companyButton = UIButton()
 
+    var applicationDelegate = AppDelegate()
+
     
     override func viewDidLoad()
     {
         serviceCall.API_ServiceRequest(delegate: self)
+
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    override func viewWillAppear(_ animated: Bool) {
+        serviceCall.API_ServiceRequest(delegate: self)
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("ERROR", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_ServiceRequest(service: NSDictionary) {

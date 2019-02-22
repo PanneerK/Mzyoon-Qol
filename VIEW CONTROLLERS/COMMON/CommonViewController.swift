@@ -45,7 +45,7 @@ class CommonViewController: UIViewController
     
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
-    
+        
     override func viewDidLoad()
     {
         x = 10 / 375 * 100

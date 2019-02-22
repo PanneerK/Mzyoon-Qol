@@ -37,6 +37,9 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     var PageNumStr:String!
     var MethodName:String!
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -44,15 +47,33 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
-//        self.serviceCall.API_DressSubType(DressSubTypeId: screenTag, delegate: self)
+        self.serviceCall.API_DressSubType(DressSubTypeId: screenTag, delegate: self)
 
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.serviceCall.API_DressSubType(DressSubTypeId: screenTag, delegate: self)
+    override func viewWillAppear(_ animated: Bool)
+    {
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+                self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+                self.subTypeContents(getNameArray: dressSubTypeArrayInArabic, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+            self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
+        }
     }
     
     func DeviceError()
@@ -64,13 +85,14 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         PageNumStr = "DressSuBtypeViewController"
         MethodName = "DisplayDressSubType"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("DRESS SUB-TYPE", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
@@ -96,19 +118,14 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             if Result.count != 0
             {
                 dressIdArray = Result.value(forKey: "Id") as! NSArray
-                print("dressIdArray", dressIdArray)
                 
                 dressSubTypeIdArray = Result.value(forKey: "DressId") as! NSArray
-                print("Result", Result)
                 
                 dressSubTypeArray = Result.value(forKey: "NameInEnglish") as! NSArray
-                print("dressSubTypeArray", dressSubTypeArray)
                 
                 dressSubTypeArrayInArabic = Result.value(forKey: "NameInArabic") as! NSArray
-                print("NameInArabic", dressSubTypeArrayInArabic)
                 
                 dressSubTypeImages = Result.value(forKey: "Image") as! NSArray
-                print("dressSubTypeImages", dressSubTypeImages)
                 
                 screenContents()
             }
@@ -263,7 +280,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             {
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/DressSubType/\(imageName)"
-                print("SUB TYPE IMAGES", api)
                 let apiurl = URL(string: api)
                 if apiurl != nil
                 {
@@ -340,20 +356,16 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         
         let text = textField.text
         
-        print("ENTERED TEXTFIELD")
         if (text?.utf16.count)! >= 1{
             for i in 0..<dressSubTypeArray.count
             {
                 if let dress = dressSubTypeArray[i] as? String
                 {
                     let count = textField.text?.count
-                    print("WELCOME OF DRESS", dress.prefix(count!))
                     let subString = dress.prefix(count!)
                     let convertedSubString = String(subString)
                     if textField.text == convertedSubString
                     {
-                        print("BOTH ARE EQUAL", dress)
-                        
                         nameArrayString.append(dress)
                         imageArrayString.append(dressSubTypeImages[i] as! String)
                         idArrayString.append(dressSubTypeIdArray[i] as! Int)
@@ -364,8 +376,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             nameArray = nameArrayString as NSArray
             imageArray = imageArrayString as NSArray
             idArray = idArrayString as NSArray
-            
-            print("NAME ARRAY AFTER", nameArray)
             
             subTypeContents(getNameArray: nameArray, getIdArray: idArray, getImageArray: imageArray)
             
@@ -394,14 +404,13 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                 {
                     if sender.tag == id
                     {
+                        print("NAVIGATION CONTENTS", id, dressSubTypeArray[i])
                         UserDefaults.standard.set(dressSubTypeArray[i], forKey: "dressSubType")
                         UserDefaults.standard.set(id, forKey: "dressSubTypeId")
-                        print("DRESS SUB TYPE OF SELECTED - \(sender.tag)", dressSubTypeArray[i])
                     }
                 }
             }
             self.navigationController?.pushViewController(dressSubScreen, animated: true)
-            
         }
         else
         {
@@ -409,7 +418,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(emptyAlert, animated: true, completion: nil)
         }
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

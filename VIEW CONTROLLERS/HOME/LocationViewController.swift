@@ -38,6 +38,9 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     
     var currentCoordinate = CLLocationCoordinate2D()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100

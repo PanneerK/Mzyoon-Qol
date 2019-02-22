@@ -78,7 +78,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 1, errorMessage: "Resend OTP Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 2, errorMessage: "Resend OTP Failed")
                 }
             }
         }
@@ -110,7 +110,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 1, errorMessage: "Validate OTP Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 3, errorMessage: "Validate OTP Failed")
                 }
             }
         }
@@ -144,7 +144,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 2, errorMessage: "Country Code Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 4, errorMessage: "Country Code Failed")
                 }
                 
                 
@@ -181,7 +181,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 2, errorMessage: "All Languages Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "All Languages Failed")
                 }
                 
                 
@@ -215,7 +215,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 3, errorMessage: "Flag Images Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 7, errorMessage: "Flag Images Failed")
                 }
             }
             
@@ -248,7 +248,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 4, errorMessage: "Genders Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 8, errorMessage: "Genders Failed")
                 }
             }
             
@@ -280,7 +280,7 @@ class ServerAPI : NSObject
              }
              else
              {
-             delegate.API_CALLBACK_Error(errorNumber: 4, errorMessage: "Genders Image Failed")
+             delegate.API_CALLBACK_Error(errorNumber: 9, errorMessage: "Genders Image Failed")
              }
              }*/
             
@@ -322,7 +322,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Dress Type Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 10, errorMessage: "Dress Type Failed")
                 }
             }
         }
@@ -459,7 +459,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Customization 1 Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 11, errorMessage: "Customization 1 Failed")
                 }
             }
         }
@@ -518,7 +518,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Customization 2 Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 12, errorMessage: "Customization 2 Failed")
                 }
             }
         }
@@ -550,7 +550,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Customization 1 Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "Customization 1 Failed")
                 }
             }
         }
@@ -582,7 +582,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 10, errorMessage: "Order Type Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 14, errorMessage: "Order Type Failed")
                 }
             }
             
@@ -615,7 +615,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "Measurement1 Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 15, errorMessage: "Measurement1 Failed")
                 }
             }
         }
@@ -646,7 +646,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 14, errorMessage: "Customization 3 Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Customization 3 Failed")
                 }
             }
         }
@@ -677,7 +677,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 14, errorMessage: "Customization 3 Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 17, errorMessage: "Customization 3 Failed")
                 }
             }
         }
@@ -708,7 +708,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 11, errorMessage: "Intro Profile Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 18, errorMessage: "Intro Profile Failed")
                 }
             }
         }
@@ -739,7 +739,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 11, errorMessage: "Existing User Profile Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 19, errorMessage: "Existing User Profile Failed")
                 }
             }
         }
@@ -772,7 +772,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 12, errorMessage: "Profile Update Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 20, errorMessage: "Profile Update Failed")
                 }
             }
         }
@@ -805,7 +805,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Save Address Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 21, errorMessage: "Save Address Failed")
                 }
             }
         }
@@ -840,7 +840,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Address Update Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 22, errorMessage: "Address Update Failed")
                 }
             }
         }
@@ -871,7 +871,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Address Delete Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 23, errorMessage: "Address Delete Failed")
                 }
             }
         }
@@ -904,7 +904,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Get Buyer Address Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 24, errorMessage: "Get Buyer Address Failed")
                 }
             }
         }
@@ -937,7 +937,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Dress SubType Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 25, errorMessage: "Dress SubType Failed")
                 }
             }
         }
@@ -968,7 +968,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Get Measurement-1 Value Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 26, errorMessage: "Get Measurement-1 Value Failed")
                 }
             }
         }
@@ -1001,7 +1001,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Profile User Type Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 27, errorMessage: "Profile User Type Failed")
                 }
             }
         }
@@ -1032,7 +1032,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Get Measurement parts Value Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 28, errorMessage: "Get Measurement parts Value Failed")
                 }
             }
         }
@@ -1063,7 +1063,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Display Measurement Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 29, errorMessage: "Display Measurement Failed")
                 }
             }
         }
@@ -1094,7 +1094,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Profile User Type Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 30, errorMessage: "Profile User Type Failed")
                 }
             }
         }
@@ -1127,7 +1127,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "User Measurement Values Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 31, errorMessage: "User Measurement Values Failed")
                 }
             }
         }
@@ -1154,7 +1154,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Insert Device Details Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 32, errorMessage: "Insert Device Details Failed")
                 }
             }
         }
@@ -1211,7 +1211,7 @@ class ServerAPI : NSObject
                 case .failure(let encodingError):
                     print(encodingError)
                     print("FAILURE IMAGE", encodingError)
-                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "Image Upload Page Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 33, errorMessage: "Image Upload Page Failed")
                 }
             })
         }
@@ -1244,7 +1244,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "Tailor List Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 34, errorMessage: "Tailor List Failed")
                 }
             }
         }
@@ -1271,7 +1271,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Insert Error Device Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 35, errorMessage: "Insert Error Device Failed")
                 }
             }
         }
@@ -1305,7 +1305,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Insert Order Summary Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 36, errorMessage: "Insert Order Summary Failed")
                 }
             }
         }
@@ -1341,7 +1341,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "State List Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 37, errorMessage: "State List Failed")
                 }
             }
         }
@@ -1374,7 +1374,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Order Approval Pricing Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 38, errorMessage: "Order Approval Pricing Failed")
                 }
             }
         }
@@ -1406,7 +1406,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 5, errorMessage: "Order Approval Delivery Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 39, errorMessage: "Order Approval Delivery Failed")
                 }
             }
         }
@@ -1440,7 +1440,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 20, errorMessage: "Get Quotation List Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 40, errorMessage: "Get Quotation List Failed")
                 }
             }
         }
@@ -1472,7 +1472,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 22, errorMessage: "Get Order Request Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 41, errorMessage: "Get Order Request Failed")
                 }
             }
         }
@@ -1505,7 +1505,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 15, errorMessage: "Insert Appoinment Material Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 42, errorMessage: "Insert Appoinment Material Failed")
                 }
             }
         }
@@ -1538,7 +1538,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Insert Appoinment Measurement Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 43, errorMessage: "Insert Appoinment Measurement Failed")
                 }
             }
         }
@@ -1570,7 +1570,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Sort Ascending Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 44, errorMessage: "Sort Ascending Failed")
                 }
             }
         }
@@ -1602,7 +1602,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 16, errorMessage: "Sort Descending Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 45, errorMessage: "Sort Descending Failed")
                 }
             }
         }
@@ -1636,7 +1636,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 21, errorMessage: "Order Approval Qty Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 46, errorMessage: "Order Approval Qty Failed")
                 }
             }
         }
@@ -1669,7 +1669,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 24, errorMessage: "Get Appointment Material Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 47, errorMessage: "Get Appointment Material Failed")
                 }
             }
         }
@@ -1702,7 +1702,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 25, errorMessage: "Get Appointment Measurement Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 48, errorMessage: "Get Appointment Measurement Failed")
                 }
             }
         }
@@ -1735,7 +1735,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 26, errorMessage: "IsApprove Material Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 49, errorMessage: "IsApprove Material Failed")
                 }
             }
         }
@@ -1768,7 +1768,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 27, errorMessage: "IsApprove Measurement Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 50, errorMessage: "IsApprove Measurement Failed")
                 }
             }
         }
@@ -1802,7 +1802,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 28, errorMessage: "Payment Status Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 51, errorMessage: "Payment Status Failed")
                 }
             }
         }
@@ -1835,7 +1835,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 29, errorMessage: "Payment Status Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 52, errorMessage: "Payment Status Failed")
                 }
             }
         }
@@ -1868,7 +1868,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 30, errorMessage: "Appointment List Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 53, errorMessage: "Appointment List Failed")
                 }
             }
         }
@@ -1901,7 +1901,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 31, errorMessage: "Appointment List Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 54, errorMessage: "Appointment List Failed")
                 }
             }
         }
@@ -1931,7 +1931,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 10, errorMessage: "Service Request Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 55, errorMessage: "Service Request Failed")
                 }
             }
         }
@@ -1961,7 +1961,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 32, errorMessage: "Get Ratings Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 56, errorMessage: "Get Ratings Failed")
                 }
             }
         }
@@ -1999,7 +1999,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 6, errorMessage: "Direction Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 57, errorMessage: "Direction Failed")
                 }
             }
         }
@@ -2032,7 +2032,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 33, errorMessage: "Insert Ratings Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 58, errorMessage: "Insert Ratings Failed")
                 }
             }
         }
@@ -2066,7 +2066,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 34, errorMessage: "List Of Orders Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 59, errorMessage: "List Of Orders Failed")
                     
                 }
             }
@@ -2102,7 +2102,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 35, errorMessage: "Order Details Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 60, errorMessage: "Order Details Failed")
                 }
             }
         }
@@ -2136,7 +2136,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 36, errorMessage: "Tracking Details Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 61, errorMessage: "Tracking Details Failed")
                 }
             }
         }
@@ -2205,7 +2205,7 @@ class ServerAPI : NSObject
                 case .failure(let encodingError):
                     print(encodingError)
                     print("FAILURE IMAGE", encodingError)
-                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "REFERENCE Image Upload Page Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 62, errorMessage: "REFERENCE Image Upload Page Failed")
                 }
             })
         }
@@ -2274,7 +2274,7 @@ class ServerAPI : NSObject
                 case .failure(let encodingError):
                     print(encodingError)
                     print("FAILURE IMAGE", encodingError)
-                    delegate.API_CALLBACK_Error(errorNumber: 13, errorMessage: "Material Image Upload Page Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 63, errorMessage: "Material Image Upload Page Failed")
                 }
             })
         }
@@ -2310,7 +2310,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 35, errorMessage: "Insert Payment Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 64, errorMessage: "Insert Payment Failed")
                 }
             }
         }
@@ -2345,7 +2345,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber:36, errorMessage: "Get Area By State Failed")
+                    delegate.API_CALLBACK_Error(errorNumber:65, errorMessage: "Get Area By State Failed")
                 }
             }
         }
@@ -2381,7 +2381,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 37, errorMessage: "Payment Store Details Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 66, errorMessage: "Payment Store Details Failed")
                 }
             }
         }
@@ -2415,7 +2415,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 38, errorMessage: "Appointment List Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 67, errorMessage: "Appointment List Failed")
                 }
             }
         }
@@ -2449,7 +2449,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 38, errorMessage: "Appointment List Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 68, errorMessage: "Appointment List Failed")
                 }
             }
         }

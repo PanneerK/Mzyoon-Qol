@@ -44,11 +44,16 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     var existingUserId = [String]()
     var existingUserDressType = [String]()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
+        
+        self.serviceCall.API_Measurement1(delegate: self)
         
         super.viewDidLoad()
         
@@ -93,8 +98,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
 //        }
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("MEASUREMENT 1", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
@@ -106,7 +114,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         PageNumStr = "Measurement1ViewController"
         // MethodName = "do"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -124,23 +131,20 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func API_CALLBACK_Measurement1(measure1: NSDictionary)
     {
+        print("MERASUREMENT 1", measure1)
         let ResponseMsg = measure1.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
             let Result = measure1.object(forKey: "Result") as! NSArray
-            print("Result OF MEASUREMENT", Result)
             
             Measure1NameEngArray = Result.value(forKey: "MeasurementInEnglish") as! NSArray
-            print("Measure1EngArray", Measure1NameEngArray)
             
             Measure1NameAraArray = Result.value(forKey: "MeasurementInArabic") as! NSArray
             
             Measure1IdArray = Result.value(forKey: "Id") as! NSArray
-            print("Id", Measure1IdArray)
             
             Measure1BodyImage = Result.value(forKey: "BodyImage") as! NSArray
-            print("Measure1BodyImageURL",Measure1BodyImage)
             
             /*for i in 0..<Measure1BodyImage.count
              {
@@ -150,10 +154,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
              let api = "\(urlString)/images/Measurement1/\(imageName)"
              let apiurl = URL(string: api)
              
-             print("IMAGE API", api)
-             
              if let data = try? Data(contentsOf: apiurl!) {
-             print("DATA OF IMAGE", data)
              if let image = UIImage(data: data) {
              self.convertedMeasure1BodyImageArray.append(image)
              }
@@ -185,15 +186,14 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func API_CALLBACK_ExistingUserMeasurement(getExistUserMeasurement: NSDictionary)
     {
+        print("EXISTING USER MEASUREMENT", getExistUserMeasurement)
         let ResponseMsg = getExistUserMeasurement.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
             let Result = getExistUserMeasurement.object(forKey: "Result") as! NSArray
-            print("Existing User MEASUREMENT ", Result)
             
             existNameArray = Result.value(forKey: "Name") as! NSArray
-            print("ExistNameArray", existNameArray)
         }
         else if ResponseMsg == "Failure"
         {
@@ -257,7 +257,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Measurement1/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -301,7 +300,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Measurement1/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -331,7 +329,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Measurement1/\(imageName)"
-            print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -451,7 +448,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                     existingUserDressType.append(trimmedDress)
                     existingUserId.append(trimmedId)
                     
-                    userListAlert.addAction(UIAlertAction(title: trimmedName, style: .default, handler: nameSelection(action:)))
+                    userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
                 }
                 userListAlert.addAction(UIAlertAction(title: "Add New", style: .default, handler: addNewAlertAction(action:)))
                 userListAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -480,7 +477,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                     existingUserDressType.append(trimmedDress)
                     existingUserId.append(trimmedId)
                     
-                    userListAlert.addAction(UIAlertAction(title: trimmedName, style: .default, handler: nameSelection(action:)))
+                    userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
                 }
                 userListAlert.addAction(UIAlertAction(title: "اضف جديد", style: .default, handler: addNewAlertAction(action:)))
                 userListAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
@@ -502,7 +499,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             for i in 0..<nameArray.count
             {
                 let splitted = nameArray[i].split(separator: "-")
-                print("WELCOME HOME", splitted.count)
                 
                 var trimmedName = String()
                 
@@ -515,6 +511,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                     existingUserName.append(trimmedName)
                     existingUserDressType.append(trimmedDress)
                     existingUserId.append(trimmedId)
+                    
+                    userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
                 }
                 else
                 {
@@ -524,9 +522,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                     existingUserName.append(trimmedName)
                     existingUserId.append(trimmedId)
                 }
-                
-
-                userListAlert.addAction(UIAlertAction(title: trimmedName, style: .default, handler: nameSelection(action:)))
             }
             userListAlert.addAction(UIAlertAction(title: "Add New", style: .default, handler: addNewAlertAction(action:)))
             userListAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -540,7 +535,12 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             if language == "en"
             {
-                addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - Coat", preferredStyle: .alert)
+                var dressType = String()
+                if let dress = UserDefaults.standard.value(forKey: "dressSubType") as? String
+                {
+                    dressType = dress   
+                }
+                addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - \(dressType)", preferredStyle: .alert)
                 addNameAlert.addTextField(configurationHandler: { (textField) in
                     textField.placeholder = "Enter the name"
                     textField.textAlignment = .left
@@ -574,17 +574,34 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
+    func emptyNameAlertAction(action : UIAlertAction)
+    {
+        addNewAlertAction(action: action)
+    }
+    
     func addNewNameAlertAction(action : UIAlertAction)
     {
-        print("ACTION TEXT", addNameAlert.textFields![0].text!)
-        
-        nameArray.append(addNameAlert.textFields![0].text!)
-        
-        UserDefaults.standard.set(addNameAlert.textFields![0].text!, forKey: "measurementName")
-        UserDefaults.standard.set("-1", forKey: "measurementIdInt")
-        
-        let measurement2Screen = Measurement2ViewController()
-        self.navigationController?.pushViewController(measurement2Screen, animated: true)
+        if let text = addNameAlert.textFields![0].text as? String
+        {
+            if text.isEmpty == true || text == ""
+            {
+                print("VALUES IS EMPTY")
+                let alert = UIAlertController(title: "Alert", message: "Please enter a name and proceed", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyNameAlertAction(action:)))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else
+            {
+                print("VALUES ARE FULL")
+                nameArray.append(addNameAlert.textFields![0].text!)
+                
+                UserDefaults.standard.set(addNameAlert.textFields![0].text!, forKey: "measurementName")
+                UserDefaults.standard.set("-1", forKey: "measurementIdInt")
+                
+                let measurement2Screen = Measurement2ViewController()
+                self.navigationController?.pushViewController(measurement2Screen, animated: true)
+            }
+        }
     }
     
     func nameSelection(action : UIAlertAction)

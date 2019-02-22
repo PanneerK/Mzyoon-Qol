@@ -34,6 +34,9 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     let activeView = UIView()
     let activityIndicator = UIActivityIndicatorView()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -57,8 +60,10 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         self.view.endEditing(true)
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("Intro Profile", errorMessage)
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
@@ -70,7 +75,6 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         PageNumStr = "IntroProfileViewcontroller"
         //  MethodName = "do"
         
-        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
@@ -94,7 +98,6 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         if ResponseMsg == "Success"
         {
             let Result = introProf.object(forKey: "Result") as! String
-            print("Result", Result)
             
             if Result == "1"
             {
@@ -128,10 +131,8 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
             if let file1 = Result[0] as? String
             {
                 let splitted = file1.split(separator: "\\")
-                print("SPLITTED", splitted)
                 
                 let imageName = splitted.last
-                print("IMAGE NAME", imageName!)
                 
                 if let profId = UserDefaults.standard.value(forKey: "userId") as? String
                 {
@@ -260,9 +261,8 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func cameraAlertAction(action : UIAlertAction)
     {
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
-            print("Button capture")
-            
+        if UIImagePickerController.isSourceTypeAvailable(.camera)
+        {
             imagePicker.delegate = self
             imagePicker.sourceType = .camera;
             imagePicker.allowsEditing = false
@@ -273,9 +273,8 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func galleryAlertAction(action : UIAlertAction)
     {
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            print("Button capture")
-            
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum)
+        {
             imagePicker.delegate = self
             imagePicker.sourceType = .savedPhotosAlbum;
             imagePicker.allowsEditing = false
@@ -284,11 +283,12 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any])
+    {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        {
             self.userImage.image = pickedImage
             FileHandler().saveImageDocumentDirectory(image: userImage.image!)
-            print("IMAGE NAME", FileHandler().imagePath())
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -317,12 +317,10 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
                     
                     if let profId = UserDefaults.standard.value(forKey: "userId") as? String
                     {
-                        print("ENTERED NAME", userNameTextField.text!)
                         serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
                     }
                     else if let profId = UserDefaults.standard.value(forKey: "userId") as? Int
                     {
-                        print("ENTERED NAME", userNameTextField.text!)
                         serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
                     }
                     
@@ -351,8 +349,8 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         self.activeStop()
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("END EDITING")
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
         view.endEditing(true)
         return true
     }
@@ -372,7 +370,6 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         {
             returnParameter = true
         }
-        print("return parameter", returnParameter)
         return returnParameter
     }
     

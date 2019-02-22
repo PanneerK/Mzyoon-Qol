@@ -53,6 +53,9 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     var OrderPendDate = String()
     var OrderDelvDate = String()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -108,6 +111,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Quotation List : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_ListOfPendOrders(PendingOrdersList: NSDictionary)

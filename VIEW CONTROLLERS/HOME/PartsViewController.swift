@@ -32,6 +32,9 @@ class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDeleg
     
     let commonScreen = CommonViewController()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -79,6 +82,7 @@ class PartsViewController: UIViewController, UITextFieldDelegate, ServerAPIDeleg
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR MESSAGE", errorMessage)
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()

@@ -91,6 +91,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
      let emptyLabel = UILabel()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -142,7 +145,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
          print("Book an appointment : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
+    
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
     {
         let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String

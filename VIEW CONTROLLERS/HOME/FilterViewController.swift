@@ -16,6 +16,9 @@ class FilterViewController: UIViewController, UITextFieldDelegate, UITableViewDa
     var x = CGFloat()
     var y = CGFloat()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100

@@ -38,6 +38,9 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
     var PageNumStr:String!
     var MethodName:String!
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -70,8 +73,10 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
         self.navigationController?.isNavigationBarHidden = true
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("ERROR MESSAGE", errorMessage)
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
