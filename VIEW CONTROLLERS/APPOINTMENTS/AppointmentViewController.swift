@@ -714,6 +714,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         From_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         From_MaterialType_TF.adjustsFontSizeToFitWidth = true
         //From_MaterialType_TF.backgroundColor = UIColor.gray
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+           From_MaterialType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            From_MaterialType_TF.isUserInteractionEnabled = true
+        }
         From_MaterialType_TF.addTarget(self, action: #selector(self.FMaterial_calendarAction), for: .allEditingEvents)
         From_MaterialType_TF.delegate = self as? UITextFieldDelegate
         FromDateView.addSubview(From_MaterialType_TF)
@@ -749,6 +757,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         TO_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         TO_MaterialType_TF.adjustsFontSizeToFitWidth = true
        // TO_MaterialType_TF.backgroundColor = UIColor.gray  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            TO_MaterialType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            TO_MaterialType_TF.isUserInteractionEnabled = true
+        }
         TO_MaterialType_TF.addTarget(self, action: #selector(self.TMaterial_calendarAction), for: .allEditingEvents)
         TO_MaterialType_TF.delegate = self as? UITextFieldDelegate
         ToDateView.addSubview(TO_MaterialType_TF)
@@ -1044,6 +1060,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         From_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         From_MeasurementType_TF.adjustsFontSizeToFitWidth = true
         //From_MeasurementType_TF.backgroundColor = UIColor.gray
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+           From_MeasurementType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            From_MeasurementType_TF.isUserInteractionEnabled = true
+        }
         From_MeasurementType_TF.addTarget(self, action: #selector(self.FMeasurement_calendarAction), for: .allEditingEvents)
         From_MeasurementType_TF.delegate = self as? UITextFieldDelegate
         Measure_FromDateView.addSubview(From_MeasurementType_TF)
@@ -1079,6 +1103,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         TO_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         TO_MeasurementType_TF.adjustsFontSizeToFitWidth = true
         // TO_MeasurementType_TF.backgroundColor = UIColor.gray  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            TO_MeasurementType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            TO_MeasurementType_TF.isUserInteractionEnabled = true
+        }
         TO_MeasurementType_TF.addTarget(self, action: #selector(self.TMeasurement_calendarAction), for: .allEditingEvents)
         TO_MeasurementType_TF.delegate = self as? UITextFieldDelegate
         Measure_ToDateView.addSubview(TO_MeasurementType_TF)
@@ -1230,9 +1262,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     {
         print("Material Approve Status Page..")
         
+        if (MaterialAppointID.count != 0)
+       {
         let AppointID = MaterialAppointID[0] as! Int
         let Msg = ""
         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
+       }
+       else
+       {
+        
+       }
        
     }
     
@@ -1245,10 +1284,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     @objc func MeasureApproveButtonAction(sender : UIButton)
     {
         print("Measure Approve Status Page..")
-        
+        if (MeasurementAppointID.count != 0)
+        {
         let AppointID = MeasurementAppointID[0] as! Int
         let Msg = ""
         self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
+        }
+        else
+        {
+            
+        }
     }
     
     @objc func MeasureRejectButtonAction(sender : UIButton)
