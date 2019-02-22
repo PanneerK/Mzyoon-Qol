@@ -303,10 +303,17 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         let orderPlacedDateLabel = UILabel()
         orderPlacedDateLabel.frame = CGRect(x: orderPlacedLabel.frame.maxX , y: orderIdLabel.frame.maxY + y, width: (17 * x), height: (2 * x))
        // orderPlacedDateLabel.backgroundColor = UIColor.gray
+       if(OrderDt.count > 0)
+       {
         if let date = OrderDt[0] as? String
         {
             OrderDate = String(date.prefix(10))
         }
+        }
+       else
+       {
+          OrderDate = ""
+       }
         orderPlacedDateLabel.text = OrderDate
         orderPlacedDateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderPlacedDateLabel.textColor = UIColor.black
@@ -333,6 +340,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         DressImageView.frame = CGRect(x: x, y: PaymentInfoLabel.frame.maxY + (2 * y), width: (10 * x), height:(13 * y))
         DressImageView.backgroundColor = UIColor.white
        
+     if(Image.count > 0)
+     {
         if let imageName = Image[0] as? String
         {
             let urlString = serviceCall.baseURL
@@ -341,13 +350,25 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             print("Image Of Dress", apiurl!)
             DressImageView.dowloadFromServer(url: apiurl!)
         }
-        
+     }
+     else
+     {
+        DressImageView.backgroundColor = UIColor.lightGray
+     }
         PaymentInfoView.addSubview(DressImageView)
         
         // DressType Label..
         let DressTypeLabel = UILabel()
         DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: PaymentInfoLabel.frame.maxY + (3 * y) , width: (20 * x), height: (2 * y))
-        DressTypeLabel.text = Product_Name[0] as? String
+       if(Product_Name.count > 0)
+       {
+           DressTypeLabel.text = Product_Name[0] as? String
+       }
+       else
+       {
+          DressTypeLabel.text = ""
+       }
+       
         DressTypeLabel.textColor = UIColor.black
         //  DressTypeLabel.backgroundColor = UIColor.gray
         DressTypeLabel.textAlignment = .left
@@ -365,8 +386,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         let QtyNumLabel = UILabel()
         QtyNumLabel.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (4 * x), height: (2 * y))
-        let QtyNum : Int = qty[0] as! Int
-        QtyNumLabel.text =  "\(QtyNum)"
+        if(qty.count > 0)
+        {
+            let QtyNum : Int = qty[0] as! Int
+            QtyNumLabel.text =  "\(QtyNum)"
+        }
+        else
+        {
+            QtyNumLabel.text = ""
+        }
         QtyNumLabel.textColor = UIColor.black
         QtyNumLabel.textAlignment = .left
         QtyNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
@@ -383,8 +411,16 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         let PriceNumLabel = UILabel()
         PriceNumLabel.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: QtyLabel.frame.minY + (3 * y), width: (8 * x), height: (2 * y))
-        let PriceNum : Int = Price[0] as! Int
-        PriceNumLabel.text = "\(PriceNum)"
+        if(Price.count > 0)
+        {
+            let PriceNum : Int = Price[0] as! Int
+            PriceNumLabel.text = "\(PriceNum)"
+        }
+        else
+        {
+            PriceNumLabel.text = ""
+        }
+        
         PriceNumLabel.textColor = UIColor.black
         PriceNumLabel.textAlignment = .left
         PriceNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
@@ -404,8 +440,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         let SubTotalPriceLabel = UILabel()
         SubTotalPriceLabel.frame = CGRect(x:SubTotalLabel.frame.maxX + (12 * x), y: DressImageView.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
-         let SubPriceNum : Int = Price[0] as! Int
-        SubTotalPriceLabel.text = "\(SubPriceNum)"
+        if(Price.count > 0)
+        {
+            let SubPriceNum : Int = Price[0] as! Int
+            SubTotalPriceLabel.text = "\(SubPriceNum)"
+        }
+        else
+        {
+            SubTotalPriceLabel.text = ""
+        }
         SubTotalPriceLabel.textColor = UIColor.black
         SubTotalPriceLabel.textAlignment = .right
         SubTotalPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
@@ -447,8 +490,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     
         let TaxPriceLabel = UILabel()
         TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
-        let TaxNum : Int = Tax[0] as! Int
-        TaxPriceLabel.text = "\(TaxNum)"
+        if(Tax.count > 0)
+        {
+          let TaxNum : Int = Tax[0] as! Int
+          TaxPriceLabel.text = "\(TaxNum)"
+        }
+        else
+        {
+            TaxPriceLabel.text = ""
+        }
         TaxPriceLabel.textColor = UIColor.black
         TaxPriceLabel.textAlignment = .right
         TaxPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
@@ -469,8 +519,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
        
         let AppointmentPriceLabel = UILabel()
         AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        if(Appoinment.count > 0)
+        {
         let AppointNum : Int = Appoinment[0] as! Int
         AppointmentPriceLabel.text = "\(AppointNum)"
+        }
+        else
+        {
+            AppointmentPriceLabel.text = ""
+        }
         AppointmentPriceLabel.textColor = UIColor.black
         AppointmentPriceLabel.textAlignment = .right
         AppointmentPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
@@ -491,8 +548,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
        
         let TotalPriceLabel = UILabel()
         TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
-        let TotalNum : Int = Total[0] as! Int
-        TotalPriceLabel.text = "\(TotalNum)"
+        if(Total.count > 0)
+        {
+          let TotalNum : Int = Total[0] as! Int
+          TotalPriceLabel.text = "\(TotalNum)"
+        }
+        else
+        {
+            TotalPriceLabel.text = ""
+        }
         TotalPriceLabel.textColor = UIColor.black
         TotalPriceLabel.textAlignment = .right
         TotalPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
@@ -560,9 +624,17 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //DateLabel..
         let DateLabel = UILabel()
         DateLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: orderedLabel.frame.maxY, width: (20 * x), height: (2 * y))
-        if let date = OrderDt[0] as? String
+        
+        if(OrderDt.count > 0)
         {
-            OrderDate = String(date.prefix(10))
+            if let date = OrderDt[0] as? String
+            {
+                OrderDate = String(date.prefix(10))
+            }
+        }
+        else
+        {
+            OrderDate = ""
         }
         DateLabel.text = OrderDate
         DateLabel.textColor = UIColor.lightGray
@@ -571,9 +643,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         DateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         OrderStatusView.addSubview(DateLabel)
   
-     if(TrackingStatusIdArray.contains("2"))
-     {
-         //PackedLabel..
+        //PackedLabel..
          let PackedLabel = UILabel()
          PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
          PackedLabel.text = "Cloth Recieved"
@@ -594,32 +664,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TrackingButton.clipsToBounds = true;
         TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
         OrderStatusView.addSubview(TrackingButton)
-     }
-     else
-     {
-        //PackedLabel..
-        let PackedLabel = UILabel()
-        PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
-        PackedLabel.text = "Cloth Recieved"
-        PackedLabel.textColor = UIColor.lightGray
-        // PackedLabel.backgroundColor = UIColor.gray
-        PackedLabel.textAlignment = .left
-        PackedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        OrderStatusView.addSubview(PackedLabel)
-        
-        //TrackingButton
-        let TrackingButton = UIButton()
-        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (2 * y))
-        TrackingButton.backgroundColor = UIColor.orange
-        TrackingButton.setTitle("Tracking Details", for: .normal)
-        TrackingButton.setTitleColor(UIColor.white, for: .normal)
-        TrackingButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.3 * x))
-        TrackingButton.layer.cornerRadius = 10;  // this value vary as per your desire
-        TrackingButton.clipsToBounds = true;
-        TrackingButton.isUserInteractionEnabled = false
-        TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
-        OrderStatusView.addSubview(TrackingButton)
-     }
+  
         
         // Delivery Info View..
         let DeliveryInfoView = UIView()
@@ -648,7 +693,14 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         // Name Label..
         let NameLabel = UILabel()
         NameLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: DeliveryInfoLabel.frame.maxY + (2 * y) , width: (20 * x), height: (2 * y))
-        NameLabel.text = FirstName[0] as? String
+       if(FirstName.count > 0)
+       {
+          NameLabel.text = FirstName[0] as? String
+        }
+        else
+       {
+          NameLabel.text = ""
+        }
         NameLabel.textColor = UIColor.black
        // NameLabel.backgroundColor = UIColor.gray
         NameLabel.textAlignment = .left
@@ -658,7 +710,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         // Floor Label..
         let FloorLabel = UILabel()
         FloorLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: NameLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        FloorLabel.text = Floor[0] as? String
+        if(Floor.count > 0)
+        {
+            FloorLabel.text = Floor[0] as? String
+        }
+        else
+        {
+            FloorLabel.text = ""
+        }
+        
         FloorLabel.textColor = UIColor.black
        // FloorLabel.backgroundColor = UIColor.gray
         FloorLabel.textAlignment = .left
@@ -668,7 +728,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //Area Label..
         let AreaLabel = UILabel()
         AreaLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: FloorLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        AreaLabel.text = Area[0] as? String
+        if(Area.count > 0)
+        {
+             AreaLabel.text = Area[0] as? String
+        }
+        else
+        {
+            AreaLabel.text = ""
+        }
+       
         AreaLabel.textColor = UIColor.black
         //AreaLabel.backgroundColor = UIColor.gray
         AreaLabel.textAlignment = .left
@@ -678,7 +746,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //State Label..
         let StateLabel = UILabel()
         StateLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: AreaLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        StateLabel.text = StateName[0] as? String
+        if(StateName.count > 0)
+        {
+           StateLabel.text = StateName[0] as? String
+        }
+        else
+        {
+            StateLabel.text = ""
+        }
+        
         StateLabel.textColor = UIColor.black
         //StateLabel.backgroundColor = UIColor.gray
         StateLabel.textAlignment = .left
@@ -688,7 +764,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //Country Label..
         let CountryLabel = UILabel()
         CountryLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: StateLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        CountryLabel.text = Country_Name[0] as? String
+        if(Country_Name.count > 0)
+        {
+            CountryLabel.text = Country_Name[0] as? String
+        }
+        else
+        {
+            CountryLabel.text = ""
+        }
+        
         CountryLabel.textColor = UIColor.black
         //CountryLabel.backgroundColor = UIColor.gray
         CountryLabel.textAlignment = .left
@@ -698,7 +782,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //PhoneNum Label..
         let PhoneNumLabel = UILabel()
         PhoneNumLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: CountryLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        PhoneNumLabel.text = PhoneNo[0] as? String
+        if(PhoneNo.count > 0)
+        {
+            PhoneNumLabel.text = PhoneNo[0] as? String
+        }
+        else
+        {
+            PhoneNumLabel.text = ""
+        }
+        
         PhoneNumLabel.textColor = UIColor.black
         //PhoneNumLabel.backgroundColor = UIColor.gray
         PhoneNumLabel.textAlignment = .left

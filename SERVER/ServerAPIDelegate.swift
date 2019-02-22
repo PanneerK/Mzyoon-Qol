@@ -124,4 +124,6 @@ import Foundation
     @objc optional func API_CALLBACK_GetAppointmentDateForMaterail(MaterialDate : NSDictionary)
     @objc optional func API_CALLBACK_GetAppointmentDateForMeasurement(MeasurementDate : NSDictionary)
     
+    // 22.02.2019
+    @objc optional func API_CALLBACK_ListOfDeliverOrders(DeliverOrdersList : NSDictionary)
 }
