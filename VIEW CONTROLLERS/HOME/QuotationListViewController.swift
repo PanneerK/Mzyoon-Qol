@@ -39,6 +39,9 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     
     let emptyLabel = UILabel()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -91,6 +94,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
          print("Quotation List : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_GetQuotationList(quotationList: NSDictionary)

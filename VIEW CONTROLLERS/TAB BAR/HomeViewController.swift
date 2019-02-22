@@ -24,6 +24,9 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     
     let slideScreen = SlideViewController()
     
+    var applicationDelegate = AppDelegate()
+    
+    
     override func viewDidLoad()
     {
         UserDefaults.standard.set(1, forKey: "screenAppearance")
@@ -75,8 +78,11 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("ERROR MESSAGE IN HOME PAGE", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_ExistingUserProfile(userProfile: NSDictionary)

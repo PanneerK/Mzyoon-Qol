@@ -44,11 +44,16 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     var existingUserId = [String]()
     var existingUserDressType = [String]()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
+        
+        self.serviceCall.API_Measurement1(delegate: self)
         
         super.viewDidLoad()
         
@@ -93,8 +98,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
 //        }
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("MEASUREMENT 1", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
@@ -440,7 +448,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                     existingUserDressType.append(trimmedDress)
                     existingUserId.append(trimmedId)
                     
-                    userListAlert.addAction(UIAlertAction(title: trimmedName, style: .default, handler: nameSelection(action:)))
+                    userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
                 }
                 userListAlert.addAction(UIAlertAction(title: "Add New", style: .default, handler: addNewAlertAction(action:)))
                 userListAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -469,7 +477,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                     existingUserDressType.append(trimmedDress)
                     existingUserId.append(trimmedId)
                     
-                    userListAlert.addAction(UIAlertAction(title: trimmedName, style: .default, handler: nameSelection(action:)))
+                    userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
                 }
                 userListAlert.addAction(UIAlertAction(title: "اضف جديد", style: .default, handler: addNewAlertAction(action:)))
                 userListAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
@@ -503,6 +511,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                     existingUserName.append(trimmedName)
                     existingUserDressType.append(trimmedDress)
                     existingUserId.append(trimmedId)
+                    
+                    userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
                 }
                 else
                 {
@@ -512,9 +522,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                     existingUserName.append(trimmedName)
                     existingUserId.append(trimmedId)
                 }
-                
-
-                userListAlert.addAction(UIAlertAction(title: trimmedName, style: .default, handler: nameSelection(action:)))
             }
             userListAlert.addAction(UIAlertAction(title: "Add New", style: .default, handler: addNewAlertAction(action:)))
             userListAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -528,7 +535,12 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             if language == "en"
             {
-                addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - Coat", preferredStyle: .alert)
+                var dressType = String()
+                if let dress = UserDefaults.standard.value(forKey: "dressSubType") as? String
+                {
+                    dressType = dress   
+                }
+                addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - \(dressType)", preferredStyle: .alert)
                 addNameAlert.addTextField(configurationHandler: { (textField) in
                     textField.placeholder = "Enter the name"
                     textField.textAlignment = .left
@@ -562,15 +574,34 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
+    func emptyNameAlertAction(action : UIAlertAction)
+    {
+        addNewAlertAction(action: action)
+    }
+    
     func addNewNameAlertAction(action : UIAlertAction)
     {
-        nameArray.append(addNameAlert.textFields![0].text!)
-        
-        UserDefaults.standard.set(addNameAlert.textFields![0].text!, forKey: "measurementName")
-        UserDefaults.standard.set("-1", forKey: "measurementIdInt")
-        
-        let measurement2Screen = Measurement2ViewController()
-        self.navigationController?.pushViewController(measurement2Screen, animated: true)
+        if let text = addNameAlert.textFields![0].text as? String
+        {
+            if text.isEmpty == true || text == ""
+            {
+                print("VALUES IS EMPTY")
+                let alert = UIAlertController(title: "Alert", message: "Please enter a name and proceed", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyNameAlertAction(action:)))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else
+            {
+                print("VALUES ARE FULL")
+                nameArray.append(addNameAlert.textFields![0].text!)
+                
+                UserDefaults.standard.set(addNameAlert.textFields![0].text!, forKey: "measurementName")
+                UserDefaults.standard.set("-1", forKey: "measurementIdInt")
+                
+                let measurement2Screen = Measurement2ViewController()
+                self.navigationController?.pushViewController(measurement2Screen, animated: true)
+            }
+        }
     }
     
     func nameSelection(action : UIAlertAction)

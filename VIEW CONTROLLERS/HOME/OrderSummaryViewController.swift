@@ -54,6 +54,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     var orderCustomization = [[String: Int]]()
     var tailorId = [[String: Any]]()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -935,6 +938,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Order Summary", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_InsertOrderSummary(insertOrder: NSDictionary)

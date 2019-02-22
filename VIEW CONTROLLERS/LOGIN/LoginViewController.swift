@@ -87,6 +87,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var selectedLanguage = "English"
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         UserDefaults.standard.set(0, forKey: "screenAppearance")
@@ -201,8 +204,10 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.view.endEditing(true)
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("errorNumber - \(errorNumber), errorMessage - \(errorMessage)")
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()

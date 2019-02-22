@@ -64,6 +64,9 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     var convertedAddressArray = [String]()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -115,6 +118,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Address ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
@@ -199,6 +204,13 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             CountryId = Result.value(forKey: "CountryId") as! NSArray
             
             areaId = Result.value(forKey: "AreaId") as! NSArray
+            
+            for i in 0..<Floor.count
+            {
+                convertedAddressArray.append("\(Floor[i]), \(LandMark[i]), \(ShippingNotes[i])")
+            }
+            
+            addressContent()
         }
         else if ResponseMsg == "Failure"
         {
@@ -210,7 +222,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             DeviceError()
         }
         
-        if Lattitude.count == 0
+        /*if Lattitude.count == 0
         {
             addressContent()
         }
@@ -220,7 +232,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             {
                 reverseGeocodeCoordinate(CLLocationCoordinate2D(latitude: Lattitude[i] as! CLLocationDegrees, longitude: Longitude[i] as! CLLocationDegrees))
             }
-        }
+        }*/
     }
     
     func API_CALLBACK_UpdateAddress(updateAddr: NSDictionary)
@@ -264,17 +276,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             if Result == "1"
             {
                 let alert = UIAlertController(title: "", message: "Deleted Sucessfully", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: deletedSuccessAlertOkAction(action:)))
                 self.present(alert, animated: true, completion: nil)
-            }
-            
-            if let userId = UserDefaults.standard.value(forKey: "userId") as? String
-            {
-                self.serviceCall.API_GetBuyerAddress(BuyerAddressId: userId, delegate: self)
-            }
-            else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
-            {
-                self.serviceCall.API_GetBuyerAddress(BuyerAddressId: "\(userId)", delegate: self)
             }
         }
         else if ResponseMsg == "Failure"
@@ -289,6 +292,18 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             MethodName = "DeleteBuyerAddressByAddressId"
             ErrorStr = Result
             DeviceError()
+        }
+    }
+    
+    func deletedSuccessAlertOkAction(action : UIAlertAction)
+    {
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            self.serviceCall.API_GetBuyerAddress(BuyerAddressId: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            self.serviceCall.API_GetBuyerAddress(BuyerAddressId: "\(userId)", delegate: self)
         }
     }
     
@@ -344,13 +359,13 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 {
                     if let addressList = convertedAddressArray[i] as? String
                     {
-                        if addressList.characters.count > 20
+                        if addressList.characters.count > 50
                         {
                             addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
                         }
                         else
                         {
-                            addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (17 * y))
+                            addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (17        * y))
                         }
                     }
                 }
@@ -462,8 +477,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                     }
                     else
                     {
-                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (4 * y))
-                        getAddressLabel.numberOfLines = 2
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (2 * y))
+                        getAddressLabel.numberOfLines = 1
                     }
                 }
                 else

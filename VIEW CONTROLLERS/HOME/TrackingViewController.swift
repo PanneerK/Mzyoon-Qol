@@ -33,6 +33,9 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     
     let emptyLabel = UILabel()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -52,6 +55,8 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Tracking Details :", errorNumber)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()

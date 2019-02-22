@@ -39,6 +39,9 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     var PageNumStr:String!
     var MethodName:String!
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         self.navigationBar.isHidden = true
@@ -46,7 +49,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
 //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
-//        serviceCall.API_DressType(genderId: tag, delegate: self)
+        serviceCall.API_DressType(genderId: tag, delegate: self)
 
         super.viewDidLoad()
 
@@ -55,7 +58,24 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     override func viewWillAppear(_ animated: Bool)
     {
-        serviceCall.API_DressType(genderId: tag, delegate: self)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+                dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+                dressTypeSubContents(inputTextArray: dressTypeArrayInArabic, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+            dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
+        }
     }
     
     func DeviceError()
@@ -70,8 +90,11 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("DRESS TYPE", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_DressType(dressType: NSDictionary)

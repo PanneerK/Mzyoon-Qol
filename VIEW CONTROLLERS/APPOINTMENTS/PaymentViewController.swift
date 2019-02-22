@@ -79,6 +79,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
    // var x = CGFloat()
   //  var y = CGFloat()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         print("TailorId",TailorId)
@@ -161,6 +164,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
          print("Payment summary : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_GetPaymentStore(StoreDetails: NSDictionary)

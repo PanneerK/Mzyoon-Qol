@@ -34,6 +34,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
 
     let fileAccessing = FileAccess()
 
+    var applicationDelegate = AppDelegate()
     
     override func viewDidLoad()
     {
@@ -54,8 +55,15 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         // Do any additional setup after loading the view.
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    override func viewWillAppear(_ animated: Bool) {
+        self.addMaterialContent()
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("OWN MATERIAL", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func changeViewToArabicInSelf()

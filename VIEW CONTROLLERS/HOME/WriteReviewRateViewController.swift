@@ -32,6 +32,8 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     var PageNumStr:String!
     var MethodName:String!
     
+    var applicationDelegate = AppDelegate()
+    
     
     override func viewDidLoad()
     {
@@ -48,7 +50,10 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Write Reviews Error:",errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
+    
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
     {
         let ResponseMsg = deviceError.object(forKey: "ResponseMsg") as! String

@@ -115,6 +115,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     //ACTIVITY INDICATOR PARAMETERS
     let activeViewSub = UIView()
     let activityIndicatorSub = UIActivityIndicatorView()
+    
+    var applicationDelegate = AppDelegate()
 
     
     override func viewDidLoad()
@@ -123,18 +125,29 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
+//        self.serviceCall.API_DisplayMeasurement(Measurement2Value: 1, delegate: self)
+        
+        let dummyArray = NSArray()
+        
+        genderImageArray = dummyArray
+        genderImagesIdArray = dummyArray
+        PartsIdArray = dummyArray
+        PartsNameArray = dummyArray
+        PartsReferenceNumberArray = dummyArray
+        PartsGenderMeasurementIdArray = dummyArray
+        PartsImagesArray = dummyArray
+        converetedGenderImagesArray.removeAll()
+        convertedPartsImageArray.removeAll()
+        
         if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
         {
             self.serviceCall.API_GetMeasurement2(Measurement1Value: dressid, delegate: self)
-
+            
         }
         else if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
         {
             self.serviceCall.API_GetMeasurement2(Measurement1Value: Int(dressid)!, delegate: self)
         }
-        
-        
-//        self.serviceCall.API_DisplayMeasurement(Measurement2Value: 1, delegate: self)
         
         
         addDoneButtonOnKeyboard()
@@ -144,6 +157,31 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        /*let dummyArray = NSArray()
+        
+        genderImageArray = dummyArray
+        genderImagesIdArray = dummyArray
+        PartsIdArray = dummyArray
+        PartsNameArray = dummyArray
+        PartsReferenceNumberArray = dummyArray
+        PartsGenderMeasurementIdArray = dummyArray
+        PartsImagesArray = dummyArray
+        converetedGenderImagesArray.removeAll()
+        convertedPartsImageArray.removeAll()
+        
+        if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
+        {
+            self.serviceCall.API_GetMeasurement2(Measurement1Value: dressid, delegate: self)
+            
+        }
+        else if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
+        {
+            self.serviceCall.API_GetMeasurement2(Measurement1Value: Int(dressid)!, delegate: self)
+        }*/
     }
     
     func activeStart1()
@@ -165,8 +203,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         activityIndicatorSub.stopAnimating()
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("ERROR MESSAGE", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
@@ -197,6 +238,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     {
         let ResponseMsg = GetMeasurement1val.object(forKey: "ResponseMsg") as! String
         print("GetMeasurement1Value", GetMeasurement1val)
+        
         if ResponseMsg == "Success"
         {
             let Result = GetMeasurement1val.object(forKey: "Result") as! NSDictionary
@@ -215,9 +257,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     let api = "\(urlString)/images/Measurement2/\(imageName)"
                     
                     let apiurl = URL(string: api)
-                    
+
                     if apiurl != nil
                     {
+                        print("API IMAGE FOR GENDERS", apiurl!)
+
                         if let data = try? Data(contentsOf: apiurl!)
                         {
                             if let image = UIImage(data: data)
@@ -465,7 +509,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         var x1:CGFloat = 0
         
-        for i in 0..<4
+        for i in 0..<converetedGenderImagesArray.count
         {
             let pageNumberlabel = UILabel()
             pageNumberlabel.frame = CGRect(x: x1, y: 0, width: (2 * x), height: (2 * x))
@@ -491,8 +535,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             lineLabel.frame = CGRect(x: pageNumberlabel.frame.maxX, y: ((pageNumberlabel.frame.height - 1) / 2), width: (2 * x), height: 1)
             lineLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             
-            if i != 3
+            let checkCount = converetedGenderImagesArray.count - 1
+            if i != checkCount
             {
+                print("PRINT I VALUE - \(i),", checkCount)
                 numberView.addSubview(lineLabel)
             }
             
@@ -514,7 +560,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         imageScrollView.delegate = self
         imageView.addSubview(imageScrollView)
         
-        imageScrollView.contentSize.width = (4 * imageScrollView.frame.width)
+        imageScrollView.contentSize.width = (CGFloat(converetedGenderImagesArray.count) * imageScrollView.frame.width)
         
         pageNumberContents()
         
@@ -571,7 +617,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         var buttonTag = Int()
         
         
-        for index in 0..<4 {
+        for index in 0..<converetedGenderImagesArray.count {
             
             frame.origin.x = imageScrollView.frame.size.width * CGFloat(index)
             frame.size = imageScrollView.frame.size
@@ -1264,7 +1310,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         let page = imageScrollView.contentOffset.x / imageScrollView.frame.size.width
         
-        imageScrollView.contentSize = CGSize(width: imageScrollView.frame.size.width * 4,height: imageScrollView.frame.size.height)
+        imageScrollView.contentSize = CGSize(width: imageScrollView.frame.size.width * CGFloat(converetedGenderImagesArray.count),height: imageScrollView.frame.size.height)
         pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
         self.stopActivity()
     }

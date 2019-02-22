@@ -52,6 +52,9 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     
     let OrderDetailsScrollView = UIScrollView()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -73,7 +76,10 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Order Details :", errorNumber)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
+    
     func API_CALLBACK_GetOrderDetails(getOrderDetails: NSDictionary)
     {
         let ResponseMsg = getOrderDetails.object(forKey: "ResponseMsg") as! String

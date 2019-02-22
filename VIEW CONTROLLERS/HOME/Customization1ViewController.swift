@@ -80,6 +80,9 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     var updateId = Int()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -88,13 +91,16 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         updateId = 0
         
+        self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
+        
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
+    override func viewWillAppear(_ animated: Bool)
+    {
+        customization1Content()
     }
     
     func serviceCallFunction(originIdArray : [Int], seasonIdArray : [Int])
@@ -124,6 +130,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("CUSTOMIZATION 1", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     

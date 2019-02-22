@@ -51,6 +51,9 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     var updatingId = Int()
     var selectedPatternId = Int()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -58,13 +61,16 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
+        self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+    override func viewWillAppear(_ animated: Bool)
+    {
+        self.customization2Content()
     }
     
     func serviceCallFunction(getMaterialId : [Int], getColorId : [Int])
@@ -90,8 +96,11 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("CUSTOM 2 ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     

@@ -40,6 +40,9 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     var getMaterialImageNameArray = [String]()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         fileAccessing.deleteDirectory(imageType: "Mzyoon")
@@ -51,10 +54,10 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         selectedButton(tag: 0)
         
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
-//            // Your code with delay
-//            self.addMaterialContent()
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
+            // Your code with delay
+            self.addMaterialContent()
+        }
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -64,8 +67,11 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         self.addMaterialContent()
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("OWN MATERIAL", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func changeViewToArabicInSelf()

@@ -75,6 +75,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var destinationLocation = CLLocationCoordinate2D()
     var rectanglePolyline = GMSPolyline()
     
+    var applicationDelegate = AppDelegate()
+    
     
     override func viewDidLoad()
     {
@@ -112,6 +114,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         #if targetEnvironment(simulator)
         // your simulator code
         print("APP IS RUNNING ON SIMULATOR")
+        self.serviceCall.API_GetTailorList(delegate: self)
+
         #else
         // your real device code
         print("APP IS RUNNING ON DEVICE")
@@ -122,6 +126,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             currentLocation = locationManager.location
             print("Current Loc:",currentLocation.coordinate)
+            self.serviceCall.API_GetTailorList(delegate: self)
         }
         
         #endif
@@ -130,6 +135,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Tailor List : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
@@ -528,7 +535,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
-            //            tailorView.addSubview(ratingCountLabel)
+0            //            tailorView.addSubview(ratingCountLabel)
             
             let ratingImageView = UIImageView()
             ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)

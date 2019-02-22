@@ -50,9 +50,11 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     let ApprovalListScrollView = UIScrollView()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
-        
         print("Tailor ID:",TailorID)
         print("Tailor ResponseID:",TailorResponseID)
         
@@ -75,6 +77,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Order approval : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()

@@ -34,6 +34,9 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     let activeView = UIView()
     let activityIndicator = UIActivityIndicatorView()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -57,8 +60,10 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         self.view.endEditing(true)
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("Intro Profile", errorMessage)
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()

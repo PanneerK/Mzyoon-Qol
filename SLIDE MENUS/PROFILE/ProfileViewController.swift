@@ -64,6 +64,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
     
+    var applicationDelegate = AppDelegate()
+
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -142,6 +145,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Profile update", errorMessage)
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()
@@ -628,7 +632,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         genderHeadingLabel.frame = CGRect(x: (3 * x), y: dobUnderline.frame.maxY + (2 * y), width: (7 * x), height: (2 * y))
         genderHeadingLabel.text = "Gender : "
-        genderHeadingLabel.textColor = UIColor.black
+        genderHeadingLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         genderHeadingLabel.textAlignment = .left
         view.addSubview(genderHeadingLabel)
         

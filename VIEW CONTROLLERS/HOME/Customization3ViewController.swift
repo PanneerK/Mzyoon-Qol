@@ -63,7 +63,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     let activeViewSub = UIView()
     let activityIndicatorSub = UIActivityIndicatorView()
     
-    
+    var applicationDelegate = AppDelegate()
+
     
     override func viewDidLoad() {
         navigationBar.isHidden = true
@@ -108,8 +109,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         activityIndicatorSub.stopAnimating()
     }
     
-    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
         print("ERROR MESSAGE", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_Customization3(custom3: NSDictionary) {
@@ -297,6 +301,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
+        
+        self.view.bringSubviewToFront(slideMenuButton)
         
         viewDesignLabel.frame = CGRect(x: (3 * x), y: y, width: (25 * x), height: (4 * y))
         viewDesignLabel.layer.cornerRadius = 10

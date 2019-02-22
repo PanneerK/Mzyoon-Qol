@@ -109,6 +109,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var areaCodeArray = NSArray()
     var areaNameArray = NSArray()
     
+    var applicationDelegate = AppDelegate()
+
     
     override func viewDidLoad()
     {
@@ -281,9 +283,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     {
         print("Insert Address", errorMessage)
         
-        let alert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func DeviceError()

@@ -14,7 +14,9 @@ class TabViewController: UITabBarController, UITabBarControllerDelegate, UIGestu
     var y = CGFloat()
     let navigationTitle = UILabel()
 
+    var applicationDelegate = AppDelegate()
 
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100

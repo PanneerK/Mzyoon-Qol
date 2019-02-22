@@ -42,6 +42,8 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     var STOREID:String!
     var EMAIL:String!
     
+    var applicationDelegate = AppDelegate()
+
     
     override func viewDidLoad()
     {
@@ -279,6 +281,8 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("Book an appointment : ", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
