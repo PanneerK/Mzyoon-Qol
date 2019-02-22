@@ -124,7 +124,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             DressNameArray = DressSubType.value(forKey: "NameInEnglish") as! NSArray
             print("DressNameArray:",DressNameArray)
             
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       let TailorCharges = Result.object(forKey: "TailorCharges") as! NSArray
+            let TailorCharges = Result.object(forKey: "TailorCharges") as! NSArray
             print("TailorCharges:",TailorCharges)
             
             ChargesNameArray = TailorCharges.value(forKey: "DescInEnglish") as! NSArray

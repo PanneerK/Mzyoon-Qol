@@ -535,7 +535,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
-0            //            tailorView.addSubview(ratingCountLabel)
+            //            tailorView.addSubview(ratingCountLabel)
             
             let ratingImageView = UIImageView()
             ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)

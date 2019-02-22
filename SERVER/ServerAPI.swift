@@ -2458,4 +2458,40 @@ class ServerAPI : NSObject
             print("no internet")
         }
     }
+    
+    //  List Of Orders(Delivered)..
+    func API_ListOfOrdersDelivered(BuyerId : String , delegate : ServerAPIDelegate)
+    {
+        if (Reachability()?.isReachable)!
+        {
+            print("Server Reached - List Of Orders Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/ListOfOrderDelivered?BuyerId=\(BuyerId)", arguments: [baseURL])
+            
+            print("List of Orders(Delivered): ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    //print("resultDict", self.resultDict)
+                    
+                    delegate.API_CALLBACK_ListOfDeliverOrders!(DeliverOrdersList: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 59, errorMessage: "List Of Orders Failed")
+                    
+                }
+            }
+        }
+        else
+        {
+            print("no internet")
+        }
+    }
+    
 }

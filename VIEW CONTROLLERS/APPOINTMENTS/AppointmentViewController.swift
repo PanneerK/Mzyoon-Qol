@@ -817,6 +817,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         SLOT_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         SLOT_MaterialType_TF.adjustsFontSizeToFitWidth = true
         // SLOT_MaterialType_TF.frame.backgroundColor = UIColor.lightGray //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            SLOT_MaterialType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            SLOT_MaterialType_TF.isUserInteractionEnabled = true
+        }
         SLOT_MaterialType_TF.addTarget(self, action: #selector(self.SlotMaterial_calendarAction), for: .allEditingEvents)
         SLOT_MaterialType_TF.delegate = self as? UITextFieldDelegate
         Material_TimeSlotView.addSubview(SLOT_MaterialType_TF)
@@ -971,7 +979,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
          if let imageName = orderTypeHeaderImage[1] as? String
          {
          let urlString = serviceCall.baseURL
-         let api = "\(urlString)/images/OrderType/\(imageName)"
+         let api = "\(urlString)/images/Measurement1/\(imageName)"
          let apiurl = URL(string: api)
          courierDeliveryIcon.dowloadFromServer(url: apiurl!)
          }
@@ -1008,7 +1016,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             if let imageName = MeasurementBodyImage[0] as? String
             {
                 let urlString = serviceCall.baseURL
-                let api = "\(urlString)/images/OrderType/\(imageName)"
+                let api = "\(urlString)/images/Measurement1/\(imageName)"
                 print("SMALL ICON", api)
                 let apiurl = URL(string: api)
                 
@@ -1165,6 +1173,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         SLOT_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         SLOT_MeasurementType_TF.adjustsFontSizeToFitWidth = true
        // SLOT_MeasurementType_TF.backgroundColor = UIColor.lightGray //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            SLOT_MeasurementType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            SLOT_MeasurementType_TF.isUserInteractionEnabled = true
+        }
         SLOT_MeasurementType_TF.addTarget(self, action: #selector(self.SlotMeasure_calendarAction), for: .allEditingEvents)
         SLOT_MeasurementType_TF.delegate = self as? UITextFieldDelegate
         Measure_TimeSlotView.addSubview(SLOT_MeasurementType_TF)

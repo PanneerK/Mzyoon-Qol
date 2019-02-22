@@ -231,7 +231,8 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
             TrackingDate = String(date.prefix(10))
         }
         cell.TrackingDate.text = TrackingDate
-        cell.TrackerImg.image = UIImage(named: "TrackingStatus")
+        
+       //  cell.TrackerImg.image = UIImage(named: "TrackingStatus")
         
       //  cell.TrackingTime.text = DateFormatter.localizedString(from: NSDate() as Date, dateStyle: .short, timeStyle: .short)
         

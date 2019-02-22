@@ -77,10 +77,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
             self.serviceCall.API_ListOfOrdersPending(BuyerId: userId, delegate: self)
+            self.serviceCall.API_ListOfOrdersDelivered(BuyerId: userId, delegate: self)
         }
         else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
             self.serviceCall.API_ListOfOrdersPending(BuyerId: "\(userId)", delegate: self)
+            self.serviceCall.API_ListOfOrdersDelivered(BuyerId: "\(userId)", delegate: self)
         }
     }
  
@@ -127,7 +129,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             if Result == nil || Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You have not placed any orders"
+                emptyLabel.text = "You Dont Have Pending Orders"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -175,6 +177,66 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
       }
    
+    func API_CALLBACK_ListOfDeliverOrders(DeliverOrdersList: NSDictionary)
+    {
+        let ResponseMsg = DeliverOrdersList.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = DeliverOrdersList.object(forKey: "Result") as! NSArray
+            print("Result:", Result)
+            
+            if Result == nil || Result.count == 0
+            {
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.text = "You Dont Have Delivered orders"
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                view.addSubview(emptyLabel)
+            }
+            
+            DelivImageArray = Result.value(forKey: "Image") as! NSArray
+            print("DelivImageArray:",DelivImageArray)
+            
+            DelivOrderDateArray = Result.value(forKey: "OrderDate") as! NSArray
+            print("DelivOrderDateArray", DelivOrderDateArray)
+            
+            DelivOrderIdArray = Result.value(forKey: "OrderId") as! NSArray
+            print("DelivOrderIdArray", DelivOrderIdArray)
+            
+            DelivProdNameArray = Result.value(forKey: "Product_Name") as! NSArray
+            print("DelivProdNameArray", DelivProdNameArray)
+            
+            DelivShopNameEngArray = Result.value(forKey: "ShopNameInEnglish") as! NSArray
+            print("DelivShopNameEngArray ", DelivShopNameEngArray)
+            
+            DelivTailorNameEngArray = Result.value(forKey: "TailorNameInEnglish") as! NSArray
+            print("DelivTailorNameEngArray", DelivTailorNameEngArray)
+            
+            ListOfOrdersContent()
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+            emptyLabel.text = "You have not placed any orders"
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            view.addSubview(emptyLabel)
+            
+            let Result = DeliverOrdersList.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "ListOfOrderDelivered"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
     func ListOfOrdersContent()
     {
         self.stopActivity()
@@ -652,6 +714,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
        // alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
        // self.present(alert, animated: true, completion: nil)
     }
+        
   }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
