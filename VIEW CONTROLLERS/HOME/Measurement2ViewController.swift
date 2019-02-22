@@ -1328,7 +1328,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             for (keys, values) in measurementValues
             {
                 let inchValue = values * 2.54
-                measurementValues[keys] = inchValue.rounded()
+                measurementValues[keys] = inchValue
             }
             
             UserDefaults.standard.set("CM", forKey: "units")
