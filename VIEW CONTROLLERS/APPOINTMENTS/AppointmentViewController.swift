@@ -104,8 +104,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         print("TailorID:",TailorID)
         
-        MeasureSucessStr = ""
-        MaterialSucessStr = ""
+      //  MeasureSucessStr = ""
+     //   MaterialSucessStr = ""
         
     }
     
@@ -114,18 +114,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         UserDefaults.standard.set(TailorID, forKey: "TailorID")
         
-        print("order ID:", OrderID)
+       // print("order ID:", OrderID)
         
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
             self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
             
-           // self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
-           // self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
+            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
         }
         
         TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
+        
+        MeasureSucessStr = ""
+        MaterialSucessStr = ""
     }
     
     func DeviceError() 
@@ -260,7 +263,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MaterialBodyImage = Result.value(forKey:"BodyImage") as! NSArray
             print("Body Image:",MaterialBodyImage)
             
-            MaterialAppointID = Result.value(forKey:"BookAppointId") as! NSArray
+            MaterialAppointID = Result.value(forKey:"AppointmentId") as! NSArray
             print("Appointment ID:",MaterialAppointID)
             
             MaterailHeaderImage = Result.value(forKey:"HeaderImage") as! NSArray
@@ -325,7 +328,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasurementBodyImage = Result.value(forKey:"BodyImage") as! NSArray
             print("Body Image:",MeasurementBodyImage)
             
-            MeasurementAppointID = Result.value(forKey:"BookAppointId") as! NSArray
+            MeasurementAppointID = Result.value(forKey:"AppointmentId") as! NSArray
             print("Appointment ID:",MeasurementAppointID)
             
          //   MeasurementHeaderImage = Result.value(forKey:"HeaderImage") as! NSArray
@@ -373,10 +376,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if ResponseMsg == "Success"
         {
-            let Result = IsApproveMaterial.object(forKey: "Result") as! NSDictionary
+            let Result = IsApproveMaterial.object(forKey: "Result") as! String
             print("Result", Result)
             
             MaterialSucessStr = "True"
+            
+            let appointmentAlert = UIAlertController(title: "Sucess..!", message: "Appointment Approved", preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+            // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(appointmentAlert, animated: true, completion: nil)
             
         }
         else if ResponseMsg == "Failure"
@@ -398,11 +406,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if ResponseMsg == "Success"
         {
-            let Result = IsApproveMeasure.object(forKey: "Result") as! NSDictionary
+            let Result = IsApproveMeasure.object(forKey: "Result") as! String
             print("Result", Result)
             
             MeasureSucessStr = "True"
             
+            let appointmentAlert = UIAlertController(title: "Sucess..!", message: "Appointment Approved", preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+            // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(appointmentAlert, animated: true, completion: nil)
         }
         else if ResponseMsg == "Failure"
         {
@@ -559,9 +571,11 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         else
         {
             OrderTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
-//            OrderTypeView.backgroundColor = UIColor.lightGray
+//          OrderTypeView.backgroundColor = UIColor.lightGray
+            OrderTypeView.layer.borderWidth = 1
+            OrderTypeView.layer.borderColor = UIColor.lightGray.cgColor
             AppointmentScrollview.addSubview(OrderTypeView)
-            y2 = OrderTypeView.frame.maxY + y
+            y2 = OrderTypeView.frame.maxY
         }
         
         // Order Type..
@@ -581,7 +595,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         let Material_AppointmentStatusView = UIView()
        // Material_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (2 * x)) / 2), y: orderTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
-        Material_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (4 * x)) / 2), y: orderTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
+        Material_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (7 * x)) / 2), y: orderTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
         Material_AppointmentStatusView.backgroundColor = UIColor.white
         Material_AppointmentStatusView.layer.borderColor = UIColor.lightGray.cgColor
         Material_AppointmentStatusView.layer.borderWidth = 1.0
@@ -624,6 +638,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/OrderType/\(imageName)"
+            print("Order Type - Header Image", api)
             let apiurl = URL(string: api)
             if apiurl != nil
             {
@@ -664,7 +679,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/OrderType/\(imageName)"
-            print("SMALL ICON", api)
+            print("Order Type - Body Image", api)
             let apiurl = URL(string: api)
             
             let dummyImageView = UIImageView()
@@ -674,8 +689,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             }
             courierImageView.addSubview(dummyImageView)
         }
+         OrderTypeView.addSubview(courierImageView)
       }
-        OrderTypeView.addSubview(courierImageView)
+       
         
     //---------------OrderType FromDate Label---------------------
         
@@ -848,7 +864,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
              OrderTypeView.addSubview(Material_ApproveButton)
-             MaterialSucessStr = "True"
+            // MaterialSucessStr = "True"
         }
         else
         {
@@ -858,6 +874,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
   
     //-----------------MAterial Reject button-----------------
+        
         
        // let Material_RejectButton = UIButton()
         Material_RejectButton.frame = CGRect(x: Material_ApproveButton.frame.maxX + (2 * x), y: Material_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
@@ -889,12 +906,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_SaveButton.addTarget(self, action: #selector(self.Material_SaveButtonAction(sender:)), for: .touchUpInside)
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
-            MaterialSucessStr = "True"
-            
-            if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
-            {
-              self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
-            }
+           // MaterialSucessStr = "True"
+           
         }
         else
         {
@@ -920,13 +933,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             MeasurementTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
             //MeasurementTypeView.backgroundColor = UIColor.darkGray
+            MeasurementTypeView.layer.borderWidth = 1
+            MeasurementTypeView.layer.borderColor = UIColor.lightGray.cgColor
             AppointmentScrollview.addSubview(MeasurementTypeView)
             
            // y2 = OrderTypeView.frame.maxY + y
         }
         
       
-        
         
         // MEASUREMENT_1 Type..
         let MaterialTypeLabel = UILabel()
@@ -942,7 +956,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
       
         let Measurement_AppointmentStatusView = UIView()
-        Measurement_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (4 * x)) / 2), y: MaterialTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
+        Measurement_AppointmentStatusView.frame = CGRect(x: ((view.frame.width - (7 * x)) / 2), y: MaterialTypeLabel.frame.maxY + (2 * y), width: (19 * x), height: (2 * y))
         Measurement_AppointmentStatusView.backgroundColor = UIColor.white
         Measurement_AppointmentStatusView.layer.borderColor = UIColor.lightGray.cgColor
         Measurement_AppointmentStatusView.layer.borderWidth = 1.0
@@ -986,6 +1000,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
          {
          let urlString = serviceCall.baseURL
          let api = "\(urlString)/images/Measurement1/\(imageName)"
+         print("Measurement - Header Image", api)
          let apiurl = URL(string: api)
          courierDeliveryIcon.dowloadFromServer(url: apiurl!)
          }
@@ -1023,7 +1038,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             {
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/Measurement1/\(imageName)"
-                print("SMALL ICON", api)
+                print("Measurement - Body Image", api)
                 let apiurl = URL(string: api)
                 
                 let dummyImageView = UIImageView()
@@ -1031,11 +1046,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 if apiurl != nil{
                     dummyImageView.dowloadFromServer(url: apiurl!)
                 }
-                courierImageView.addSubview(dummyImageView)
+                TailorImageView.addSubview(dummyImageView)
             }
+             MeasurementTypeView.addSubview(TailorImageView)
         }
        
-         MeasurementTypeView.addSubview(TailorImageView)
+        
         
         let From_MaterialTypeLBL = UILabel()
         From_MaterialTypeLBL.frame = CGRect(x: (3 * x), y: TailorImageView.frame.maxY + y, width: TailorImageView.frame.width / 2 , height: (2 * y))
@@ -1242,18 +1258,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_SaveButton.addTarget(self, action: #selector(self.Measure_SaveButtonAction(sender:)), for: .touchUpInside)
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-            MeasureSucessStr = "True"
-            if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
-            {
-              self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
-            }
+             // MeasureSucessStr = "True"
+          
         }
         else
         {
            MeasurementTypeView.addSubview(Measure_SaveButton)
         }
         
-        AppointmentScrollview.contentSize.height = MeasurementTypeView.frame.maxY + (2 * y)
+        AppointmentScrollview.contentSize.height = MeasurementTypeView.frame.maxY
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -1314,14 +1327,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         print("Measure Approve Status Page..")
         if (MeasurementAppointID.count != 0)
         {
-        let AppointID = MeasurementAppointID[0] as! Int
-        let Msg = ""
-        self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
-        }
-        else
-        {
-            
-        }
+            let AppointID : Int = MeasurementAppointID[0] as! Int
+            let Msg = ""
+            self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
+        
+       }
+     
     }
     
     @objc func MeasureRejectButtonAction(sender : UIButton)

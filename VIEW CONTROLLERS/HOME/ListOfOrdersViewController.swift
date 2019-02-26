@@ -160,13 +160,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
         else if ResponseMsg == "Failure"
         {
-            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You have not placed any orders"
-            emptyLabel.textColor = UIColor.black
-            emptyLabel.textAlignment = .center
-            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
-            view.addSubview(emptyLabel)
             
             let Result = PendingOrdersList.object(forKey: "Result") as! String
             print("Result", Result)
@@ -220,13 +213,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
         else if ResponseMsg == "Failure"
         {
-            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You have not placed any orders"
-            emptyLabel.textColor = UIColor.black
-            emptyLabel.textAlignment = .center
-            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
-            view.addSubview(emptyLabel)
             
             let Result = DeliverOrdersList.object(forKey: "Result") as! String
             print("Result", Result)

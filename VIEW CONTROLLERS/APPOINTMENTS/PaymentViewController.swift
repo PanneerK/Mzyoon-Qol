@@ -105,8 +105,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
          self.addDoneButtonOnKeyboard()
         
-          KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
-          STOREID = "21552"
+         //   KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
+         //   STOREID = "21552"
+        
      //   MerchantID = "12168"
         
         EMAIL = UserDefaults.standard.value(forKey: "Email") as? String
@@ -152,7 +153,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         AppVersionStr = UIDevice.current.systemVersion
         UserType = "customer"
         // ErrorStr = "Default Error"
-        PageNumStr = "AppointmentViewController"
+        PageNumStr = "PaymentViewController"
         //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
@@ -200,7 +201,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             MethodName = "GetPaymentStore"
             ErrorStr = Result
             
-          //  DeviceError()
+            DeviceError()
             
         }
         
@@ -521,55 +522,6 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
                                 
                             }
                             
-                            //  }
-                            /*
-                             else
-                             {
-                             let mobileDict = (self.dictionaryData.object(forKey: "mobile")! as AnyObject)
-                             // print("mobileDict:",mobileDict)
-                             
-                             let AuthDict = mobileDict.object(forKey: "auth")! as AnyObject
-                             //  print("webViewDict:",webViewDict)
-                             
-                             let MessageDict = AuthDict.object(forKey: "message")! as AnyObject
-                             //  print("webViewDict:",webViewDict)
-                             
-                             self.TransMsg = (MessageDict.object(forKey: "text") as AnyObject) as? String
-                             print("Msg:",self.TransMsg)
-                             
-                             let StatusDict = AuthDict.object(forKey: "status")! as AnyObject
-                             //  print("webViewDict:",webViewDict)
-                             
-                             self.StatusCode = (StatusDict.object(forKey: "text") as AnyObject) as? String
-                             print("Status:",self.StatusCode)
-                             
-                             if self.StatusCode == "H"
-                             {
-                             DispatchQueue.main.async (execute: { () -> Void in
-                             
-                             let alert = UIAlertController(title: "Message", message: "Transaction Placed On hold" , preferredStyle:.alert)
-                             // add an action (button)
-                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                             // show the alert
-                             self.present(alert, animated: true, completion: nil)
-                             })
-                             
-                             }
-                             else
-                             {
-                             DispatchQueue.main.async (execute: { () -> Void in
-                             
-                             let alert = UIAlertController(title: "Message", message: "Request could not be processed" , preferredStyle:.alert)
-                             // add an action (button)
-                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                             // show the alert
-                             self.present(alert, animated: true, completion: nil)
-                             })
-                             }
-                             
-                             }
-                             */
-                            
                         }
                             
                         catch
@@ -616,7 +568,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     // Payment View..
         
         let PaymentView = UIView()
-        PaymentView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (10 * y))
+        PaymentView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (12 * y))
         PaymentView.backgroundColor = UIColor.white
         view.addSubview(PaymentView)
         
@@ -704,8 +656,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
       }
  
      //  RequestId = String(arc4random())
-        
-    
+       
+
       if UserName == nil
       {
          UserName = "QolTech"
@@ -720,7 +672,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
        }
        else
        {
-         let alert = UIAlertController(title: "Alert", message: "Amount Should Be Greater Than 0" , preferredStyle:.alert)
+         let alert = UIAlertController(title: "Alert", message: "Amount Should Not Be Zero or Empty" , preferredStyle:.alert)
          alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
          self.present(alert, animated: true, completion: nil)
        }
