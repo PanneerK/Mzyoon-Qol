@@ -18,7 +18,7 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-//      var baseURL:String = "http://192.168.0.26/TailorAPI"
+//  var baseURL:String = "http://192.168.0.26/TailorAPI"
 
     var baseURL:String = "http://appsapi.mzyoon.com"
  
@@ -2009,13 +2009,13 @@ class ServerAPI : NSObject
     }
     
     // Insert Ratings...
-    func API_InsertRatings(OrderId : Int, CategoryId : Int, Review : String, Rating : Int, TailorId : Int, delegate : ServerAPIDelegate)
+    func API_InsertRatings(OrderId : Int, Category : [[String : Any]], Review : String, TailorId : Int, delegate : ServerAPIDelegate)
     {
         if Reachability.Connection.self != .none
         {
             print("Server Reached - Reviews And Ratings Page")
             
-            let parameters = ["OrderId" : OrderId, "CategoryId" : CategoryId, "Review" : Review, "Rating" : Rating, "TailorId" : TailorId] as [String : Any]
+            let parameters = ["OrderId" : OrderId, "Category" : Category, "Review" : Review, "TailorId" : TailorId] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertRating", arguments: [baseURL])
             

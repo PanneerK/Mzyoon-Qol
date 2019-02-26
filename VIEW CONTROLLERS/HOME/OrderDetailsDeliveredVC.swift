@@ -1,17 +1,18 @@
 //
-//  OrderDetailsViewController.swift
+//  OrderDetailsDeliveredVC.swift
 //  Mzyoon
 //
-//  Created by QOLSoft on 20/12/18.
-//  Copyright © 2018 QOL. All rights reserved.
+//  Created by QOLSoft on 25/02/19.
+//  Copyright © 2019 QOL. All rights reserved.
 //
 
 import UIKit
 
-class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
+class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
 {
-    let serviceCall = ServerAPI()
 
+    let serviceCall = ServerAPI()
+    
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -20,7 +21,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
-
     //BuyerAddress Array..
     var Area = NSArray()
     var Country_Name = NSArray()
@@ -42,35 +42,27 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     var Tax = NSArray()
     var Total = NSArray()
     
-     var OrderID:Int!
+    var OrderID:Int!
     var OrderDate = String()
-    
-    //Tracking array..
-    var DateArray = NSArray()
-    var StatusArray = NSArray()
-    var TrackingStatusIdArray = NSArray()
     
     let OrderDetailsScrollView = UIScrollView()
     
     var applicationDelegate = AppDelegate()
-
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         
         selectedButton(tag: 2)
-  
-       
-        //orderDetailsContent()
     }
+    
+
+
     override func viewWillAppear(_ animated: Bool)
     {
-         self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
-         self.serviceCall.API_GetTrackingDetails(OrderId: OrderID, delegate: self)
+        self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
         
     }
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -146,7 +138,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             print("Total:", Total)
             
             
-          //  orderDetailsContent()
+            //  orderDetailsContent()
             
         }
         else if ResponseMsg == "Failure"
@@ -161,7 +153,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             
         }
         
-         orderDetailsContent()
+        orderDetailsContent()
     }
     func DeviceError()
     {
@@ -169,7 +161,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         AppVersion = UIDevice.current.systemVersion
         UserType = "customer"
         // ErrorStr = "Default Error"
-        PageNumStr = "OrderDetailsViewController"
+        PageNumStr = "OrderDetailsDeliveredVC"
         //  MethodName = "do"
         
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
@@ -186,40 +178,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             print("Result", Result)
         }
     }
-    func API_CALLBACK_GetTrackingDetails(getTrackingDetails: NSDictionary)
-    {
-        let ResponseMsg = getTrackingDetails.object(forKey: "ResponseMsg") as! String
-        
-        if ResponseMsg == "Success"
-        {
-            let Result = getTrackingDetails.object(forKey: "Result") as! NSArray
-            // print("Result", Result)
-            
-            DateArray = Result.value(forKey: "Date") as! NSArray
-            print("DateArray:",DateArray)
-            
-            StatusArray = Result.value(forKey: "Status") as! NSArray
-            print("StatusArray:",StatusArray)
-            
-            TrackingStatusIdArray = Result.value(forKey: "Id") as! NSArray
-            print("TrackingStatusIdArray:",TrackingStatusIdArray)
-            
-            
-        }
-        else if ResponseMsg == "Failure"
-        {
-            let Result = getTrackingDetails.object(forKey: "Result") as! String
-            print("Result", Result)
-            
-            MethodName = "GetTrackingDetails"
-            ErrorStr = Result
-            
-            DeviceError()
-            
-        }
-        
-       // orderDetailsContent()
-    }
+  
     func orderDetailsContent()
     {
         self.stopActivity()
@@ -238,13 +197,13 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         let navigationTitle = UILabel()
         navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderDetailsNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ORDER DETAILS"
+        navigationTitle.text = "DELIVERED ORDER DETAILS"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         orderDetailsNavigationBar.addSubview(navigationTitle)
         
-       // Scrollview...
+        // Scrollview...
         // let OrderDetailsScrollView = UIScrollView()
         OrderDetailsScrollView.frame = CGRect(x: 0, y: orderDetailsNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
         OrderDetailsScrollView.backgroundColor = UIColor.clear
@@ -254,7 +213,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         for views in OrderDetailsScrollView.subviews
         {
-                views.removeFromSuperview()
+            views.removeFromSuperview()
         }
         
         // OrderId View..
@@ -266,7 +225,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         // Order Id Label..
         let orderIdLabel = UILabel()
         orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (10 * x), height: (2 * x))
-       // orderIdLabel.backgroundColor = UIColor.gray
+        // orderIdLabel.backgroundColor = UIColor.gray
         orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
         orderIdLabel.text = "ORDER ID : "
         orderIdLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
@@ -275,25 +234,25 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         let orderIdNumLabel = UILabel()
         orderIdNumLabel.frame = CGRect(x: orderIdLabel.frame.maxX, y: orderIdView.frame.minY, width: (15 * x), height: (2 * x))
-       // orderIdNumLabel.backgroundColor = UIColor.gray
+        // orderIdNumLabel.backgroundColor = UIColor.gray
         orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: 16)
-       if (OrderId.count > 0)
-       {
-        let orderIdNum : Int = OrderId[0] as! Int
-        orderIdNumLabel.text =  "#\(orderIdNum)"
+        if (OrderId.count > 0)
+        {
+            let orderIdNum : Int = OrderId[0] as! Int
+            orderIdNumLabel.text =  "#\(orderIdNum)"
         }
         else
-       {
-          orderIdNumLabel.text =  "#"
+        {
+            orderIdNumLabel.text =  "#"
         }
         orderIdNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-         orderIdNumLabel.textColor = UIColor.black
+        orderIdNumLabel.textColor = UIColor.black
         orderIdView.addSubview(orderIdNumLabel)
         
         // Order Placed Label..
         let orderPlacedLabel = UILabel()
         orderPlacedLabel.frame = CGRect(x: x, y: orderIdLabel.frame.maxY + y, width: (13 * x), height: (2 * x))
-       // orderPlacedLabel.backgroundColor = UIColor.gray
+        // orderPlacedLabel.backgroundColor = UIColor.gray
         orderPlacedLabel.text = "Order Placed On :"
         orderPlacedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderPlacedLabel.textColor = UIColor.black
@@ -302,18 +261,18 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         let orderPlacedDateLabel = UILabel()
         orderPlacedDateLabel.frame = CGRect(x: orderPlacedLabel.frame.maxX , y: orderIdLabel.frame.maxY + y, width: (17 * x), height: (2 * x))
-       // orderPlacedDateLabel.backgroundColor = UIColor.gray
-       if(OrderDt.count > 0)
-       {
-        if let date = OrderDt[0] as? String
+        // orderPlacedDateLabel.backgroundColor = UIColor.gray
+        if(OrderDt.count > 0)
         {
-            OrderDate = String(date.prefix(10))
+            if let date = OrderDt[0] as? String
+            {
+                OrderDate = String(date.prefix(10))
+            }
         }
+        else
+        {
+            OrderDate = ""
         }
-       else
-       {
-          OrderDate = ""
-       }
         orderPlacedDateLabel.text = OrderDate
         orderPlacedDateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderPlacedDateLabel.textColor = UIColor.black
@@ -326,49 +285,49 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         OrderDetailsScrollView.addSubview(PaymentInfoView)
         
         
-         // PaymentInfo Label..
-         let PaymentInfoLabel = UILabel()
-         PaymentInfoLabel.frame = CGRect(x: 0, y: 0, width: PaymentInfoView.frame.width, height: (4 * x))
-         PaymentInfoLabel.text = " PAYMENT INFORMATION"
-         PaymentInfoLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-         PaymentInfoLabel.font = UIFont(name: "Avenir Next", size: 16)
-         PaymentInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
-         PaymentInfoLabel.textColor = UIColor.white
-         PaymentInfoView.addSubview(PaymentInfoLabel)
+        // PaymentInfo Label..
+        let PaymentInfoLabel = UILabel()
+        PaymentInfoLabel.frame = CGRect(x: 0, y: 0, width: PaymentInfoView.frame.width, height: (4 * x))
+        PaymentInfoLabel.text = " PAYMENT INFORMATION"
+        PaymentInfoLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        PaymentInfoLabel.font = UIFont(name: "Avenir Next", size: 16)
+        PaymentInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
+        PaymentInfoLabel.textColor = UIColor.white
+        PaymentInfoView.addSubview(PaymentInfoLabel)
         
         let DressImageView = UIImageView()
         DressImageView.frame = CGRect(x: x, y: PaymentInfoLabel.frame.maxY + (2 * y), width: (10 * x), height:(13 * y))
         DressImageView.backgroundColor = UIColor.white
-       
-     if(Image.count > 0)
-     {
-        if let imageName = Image[0] as? String
+        
+        if(Image.count > 0)
         {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/DressSubType/\(imageName)"
-            let apiurl = URL(string: api)
-            print("Image Of Dress", apiurl!)
-            DressImageView.dowloadFromServer(url: apiurl!)
+            if let imageName = Image[0] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/DressSubType/\(imageName)"
+                let apiurl = URL(string: api)
+                print("Image Of Dress", apiurl!)
+                DressImageView.dowloadFromServer(url: apiurl!)
+            }
         }
-     }
-     else
-     {
-        DressImageView.backgroundColor = UIColor.lightGray
-     }
+        else
+        {
+            DressImageView.backgroundColor = UIColor.lightGray
+        }
         PaymentInfoView.addSubview(DressImageView)
         
         // DressType Label..
         let DressTypeLabel = UILabel()
         DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: PaymentInfoLabel.frame.maxY + (3 * y) , width: (20 * x), height: (2 * y))
-       if(Product_Name.count > 0)
-       {
-           DressTypeLabel.text = Product_Name[0] as? String
-       }
-       else
-       {
-          DressTypeLabel.text = ""
-       }
-       
+        if(Product_Name.count > 0)
+        {
+            DressTypeLabel.text = Product_Name[0] as? String
+        }
+        else
+        {
+            DressTypeLabel.text = ""
+        }
+        
         DressTypeLabel.textColor = UIColor.black
         //  DressTypeLabel.backgroundColor = UIColor.gray
         DressTypeLabel.textAlignment = .left
@@ -487,13 +446,13 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TaxLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(TaxLabel)
         
-    
+        
         let TaxPriceLabel = UILabel()
         TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
-          let TaxNum : Int = Tax[0] as! Int
-          TaxPriceLabel.text = "\(TaxNum)"
+            let TaxNum : Int = Tax[0] as! Int
+            TaxPriceLabel.text = "\(TaxNum)"
         }
         else
         {
@@ -516,13 +475,13 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         AppointmentLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(AppointmentLabel)
         
-       
+        
         let AppointmentPriceLabel = UILabel()
         AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Appoinment.count > 0)
         {
-        let AppointNum : Int = Appoinment[0] as! Int
-        AppointmentPriceLabel.text = "\(AppointNum)"
+            let AppointNum : Int = Appoinment[0] as! Int
+            AppointmentPriceLabel.text = "\(AppointNum)"
         }
         else
         {
@@ -545,13 +504,13 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TotalLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(TotalLabel)
         
-       
+        
         let TotalPriceLabel = UILabel()
         TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Total.count > 0)
         {
-          let TotalNum : Int = Total[0] as! Int
-          TotalPriceLabel.text = "\(TotalNum)"
+            let TotalNum : Int = Total[0] as! Int
+            TotalPriceLabel.text = "\(TotalNum)"
         }
         else
         {
@@ -587,7 +546,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         // Order Status View..
         let OrderStatusView = UIView()
-        OrderStatusView.frame = CGRect(x: (3 * x), y: PaymentInfoView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (18 * y))
+        OrderStatusView.frame = CGRect(x: (3 * x), y: PaymentInfoView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (12 * y))
         OrderStatusView.backgroundColor = UIColor.white
         OrderDetailsScrollView.addSubview(OrderStatusView)
         
@@ -595,209 +554,28 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         // Order status Label..
         let OrderStatusLabel = UILabel()
         OrderStatusLabel.frame = CGRect(x: 0, y: 0, width: OrderStatusView.frame.width, height: (4 * x))
-        OrderStatusLabel.text = " ORDER STATUS"
+        OrderStatusLabel.text = " RATE US"
         OrderStatusLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         OrderStatusLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
         OrderStatusLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
         OrderStatusLabel.textColor = UIColor.white
         OrderStatusView.addSubview(OrderStatusLabel)
         
-        
-        // Imageview
-        let TrackImageView = UIImageView()
-        TrackImageView.frame = CGRect(x: (2 * x), y: OrderStatusLabel.frame.maxY + (2 * y), width: x, height:(6 * y))
-        TrackImageView.backgroundColor = UIColor.white
-        TrackImageView.image = UIImage(named: "TrackingStatus")
-        OrderStatusView.addSubview(TrackImageView)
-        
-        
-        //orderedLabel..
-        let orderedLabel = UILabel()
-        orderedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: OrderStatusLabel.frame.minY + (5 * y), width: (20 * x), height: (2 * y))
-        orderedLabel.text = "Ordered"
-        orderedLabel.textColor = UIColor.black
-       // orderedLabel.backgroundColor = UIColor.gray
-        orderedLabel.textAlignment = .left
-        orderedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        OrderStatusView.addSubview(orderedLabel)
-        
-        //DateLabel..
-        let DateLabel = UILabel()
-        DateLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: orderedLabel.frame.maxY, width: (20 * x), height: (2 * y))
-        
-        if(OrderDt.count > 0)
-        {
-            if let date = OrderDt[0] as? String
-            {
-                OrderDate = String(date.prefix(10))
-            }
-        }
-        else
-        {
-            OrderDate = ""
-        }
-        DateLabel.text = OrderDate
-        DateLabel.textColor = UIColor.lightGray
-       // DateLabel.backgroundColor = UIColor.gray
-        DateLabel.textAlignment = .left
-        DateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        OrderStatusView.addSubview(DateLabel)
-  
-        //PackedLabel..
-         let PackedLabel = UILabel()
-         PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
-         PackedLabel.text = "Cloth Recieved"
-         PackedLabel.textColor = UIColor.black
-        // PackedLabel.backgroundColor = UIColor.gray
-        PackedLabel.textAlignment = .left
-        PackedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        OrderStatusView.addSubview(PackedLabel)
-        
+      
         //TrackingButton
         let TrackingButton = UIButton()
-        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (2 * y))
+        TrackingButton.frame = CGRect(x: (2 * x), y: OrderStatusLabel.frame.maxY + (2 * y), width: OrderStatusView.frame.width - (4 * x), height:(3 * y))
         TrackingButton.backgroundColor = UIColor.orange
-        TrackingButton.setTitle("Tracking Details", for: .normal)
+        TrackingButton.setTitle("RATE AND WRITE A REVIEW", for: .normal)
         TrackingButton.setTitleColor(UIColor.white, for: .normal)
-        TrackingButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.3 * x))
+        TrackingButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.2 * x))
         TrackingButton.layer.cornerRadius = 10;  // this value vary as per your desire
         TrackingButton.clipsToBounds = true;
-        TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
+        TrackingButton.addTarget(self, action: #selector(self.RatingButtonAction(sender:)), for: .touchUpInside)
         OrderStatusView.addSubview(TrackingButton)
-  
-        
-        // Delivery Info View..
-        let DeliveryInfoView = UIView()
-        DeliveryInfoView.frame = CGRect(x: (3 * x), y: OrderStatusView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (24 * y))
-        DeliveryInfoView.backgroundColor = UIColor.white
-        OrderDetailsScrollView.addSubview(DeliveryInfoView)
         
         
-        // Delivery Info Label..
-        let DeliveryInfoLabel = UILabel()
-        DeliveryInfoLabel.frame = CGRect(x: 0, y: 0, width: DeliveryInfoView.frame.width, height: (4 * x))
-        DeliveryInfoLabel.text = " DELIVERY INFORMATION"
-        DeliveryInfoLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        DeliveryInfoLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
-        DeliveryInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
-        DeliveryInfoLabel.textColor = UIColor.white
-        DeliveryInfoView.addSubview(DeliveryInfoLabel)
-        
-        
-        let MapImageView = UIImageView()
-        MapImageView.frame = CGRect(x: x, y: DeliveryInfoLabel.frame.maxY + (2 * y), width: (5 * x), height:(4 * y))
-        MapImageView.backgroundColor = UIColor.white
-        MapImageView.image = UIImage(named: "locationMarker")
-        DeliveryInfoView.addSubview(MapImageView)
-        
-        // Name Label..
-        let NameLabel = UILabel()
-        NameLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: DeliveryInfoLabel.frame.maxY + (2 * y) , width: (20 * x), height: (2 * y))
-       if(FirstName.count > 0)
-       {
-          NameLabel.text = FirstName[0] as? String
-        }
-        else
-       {
-          NameLabel.text = ""
-        }
-        NameLabel.textColor = UIColor.black
-       // NameLabel.backgroundColor = UIColor.gray
-        NameLabel.textAlignment = .left
-        NameLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        DeliveryInfoView.addSubview(NameLabel)
-        
-        // Floor Label..
-        let FloorLabel = UILabel()
-        FloorLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: NameLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        if(Floor.count > 0)
-        {
-            FloorLabel.text = Floor[0] as? String
-        }
-        else
-        {
-            FloorLabel.text = ""
-        }
-        
-        FloorLabel.textColor = UIColor.black
-       // FloorLabel.backgroundColor = UIColor.gray
-        FloorLabel.textAlignment = .left
-        FloorLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        DeliveryInfoView.addSubview(FloorLabel)
-        
-        //Area Label..
-        let AreaLabel = UILabel()
-        AreaLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: FloorLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        if(Area.count > 0)
-        {
-             AreaLabel.text = Area[0] as? String
-        }
-        else
-        {
-            AreaLabel.text = ""
-        }
-       
-        AreaLabel.textColor = UIColor.black
-        //AreaLabel.backgroundColor = UIColor.gray
-        AreaLabel.textAlignment = .left
-        AreaLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        DeliveryInfoView.addSubview(AreaLabel)
-        
-        //State Label..
-        let StateLabel = UILabel()
-        StateLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: AreaLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        if(StateName.count > 0)
-        {
-           StateLabel.text = StateName[0] as? String
-        }
-        else
-        {
-            StateLabel.text = ""
-        }
-        
-        StateLabel.textColor = UIColor.black
-        //StateLabel.backgroundColor = UIColor.gray
-        StateLabel.textAlignment = .left
-        StateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        DeliveryInfoView.addSubview(StateLabel)
-        
-        //Country Label..
-        let CountryLabel = UILabel()
-        CountryLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: StateLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        if(Country_Name.count > 0)
-        {
-            CountryLabel.text = Country_Name[0] as? String
-        }
-        else
-        {
-            CountryLabel.text = ""
-        }
-        
-        CountryLabel.textColor = UIColor.black
-        //CountryLabel.backgroundColor = UIColor.gray
-        CountryLabel.textAlignment = .left
-        CountryLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        DeliveryInfoView.addSubview(CountryLabel)
-        
-        //PhoneNum Label..
-        let PhoneNumLabel = UILabel()
-        PhoneNumLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: CountryLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
-        if(PhoneNo.count > 0)
-        {
-            PhoneNumLabel.text = PhoneNo[0] as? String
-        }
-        else
-        {
-            PhoneNumLabel.text = ""
-        }
-        
-        PhoneNumLabel.textColor = UIColor.black
-        //PhoneNumLabel.backgroundColor = UIColor.gray
-        PhoneNumLabel.textAlignment = .left
-        PhoneNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        DeliveryInfoView.addSubview(PhoneNumLabel)
-        
-        OrderDetailsScrollView.contentSize.height = DeliveryInfoView.frame.maxY + (2 * y)
+        OrderDetailsScrollView.contentSize.height = OrderStatusView.frame.maxY + (2 * y)
         
     }
     
@@ -806,13 +584,11 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func TrackingButtonAction(sender : UIButton)
+    @objc func RatingButtonAction(sender : UIButton)
     {
-        print("Tracking ViewController")
-        
-          let TrackingScreen = TrackingViewController()
-          TrackingScreen.OrderID = OrderID!
-          self.navigationController?.pushViewController(TrackingScreen, animated: true)
+        let RatingScreen = WriteReviewRateViewController()
+        RatingScreen.OrderID = OrderID!
+        self.navigationController?.pushViewController(RatingScreen, animated: true)
     }
     
 }
