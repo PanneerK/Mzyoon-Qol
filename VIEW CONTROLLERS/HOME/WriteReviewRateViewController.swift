@@ -15,12 +15,15 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     let ReviewNavigationBar = UIView()
     var RatingTypeArray = NSArray()
-    let Review_TF = UITextField()
+    var Review_TF = UITextField()
     
     var reviewStr:String!
-    var RatingNum:Int!
+    var OnTimeServiceRatingNum:Int!
+    var StitchingQualityRatingNum:Int!
+    var CustomerServiceRatingNum:Int!
+    
     var OrderID:Int!
-    var CategoryID:Int!
+  //  var CategoryID = [[String : AnyObject]]()
     var TailorID:Int!
     
     
@@ -34,18 +37,21 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     var applicationDelegate = AppDelegate()
     
+    var RatingsInt = Int()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        RatingTypeArray = ["ON TIME SERVICE","STICHING QUALITY","CUSTOMER SERVICE"]
-        
-        writeReviewContent()
         
         
+    }
+    override func viewWillAppear(_ animated: Bool)
+    {
+         RatingTypeArray = ["ON TIME SERVICE","STICHING QUALITY","CUSTOMER SERVICE"]
         
+         writeReviewContent()
     }
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
@@ -73,12 +79,19 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
         
         if ResponseMsg == "Success"
         {
-            let Result = insertRating.object(forKey: "Result") as! NSDictionary
+            let Result = insertRating.object(forKey: "Result") as! String
             
             print("RAting Result :",Result)
+           
+           if(Result == "1")
+           {
             
-          //  let HomeScreen = HomeViewController()
-          //  self.navigationController?.pushViewController(HomeScreen, animated: true)
+            let alert = UIAlertController(title: "", message: "Thank You for FeedBack", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: OkAction(action:)))
+            self.present(alert, animated: true, completion: nil)
+            
+           }
+          
         }
         else if ResponseMsg == "Failure"
         {
@@ -92,6 +105,17 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
         
         
     }
+    func OkAction(action : UIAlertAction)
+    {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let HomeScreen = HomeViewController()
+        let navigationScreen = UINavigationController(rootViewController: HomeScreen)
+        navigationScreen.isNavigationBarHidden = true
+        window?.rootViewController = navigationScreen
+        window?.makeKeyAndVisible()
+    }
+    
+    
     func DeviceError()
     {
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
@@ -151,7 +175,10 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     RatingsView.frame = CGRect(x: (3 * x), y: RatingsUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * y))
     RatingsView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     view.addSubview(RatingsView)
+ 
     
+ /*
+     
   var y1:CGFloat = y
     
   for i in 0..<RatingTypeArray.count
@@ -218,6 +245,159 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
       y1 = RatingTypeView.frame.maxY + y
     }
+ 
+ */
+    
+    //OnTimeServiceView..
+    let OnTimeServiceView = UIView()
+    OnTimeServiceView.frame = CGRect(x: (2 * x), y: y, width: RatingsView.frame.width - (4 * x), height: (2.5 * y))
+    OnTimeServiceView.backgroundColor = UIColor.white
+    RatingsView.addSubview(OnTimeServiceView)
+    
+    //RatingsTypeLabel
+    let OnTimeServiceLabel = UILabel()
+    OnTimeServiceLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (2.5 * y))
+    OnTimeServiceLabel.textColor = UIColor.black
+    // OnTimeServiceLabel.backgroundColor = UIColor.lightGray
+    OnTimeServiceLabel.text = "ON TIME SERVICE"
+    OnTimeServiceLabel.textAlignment = .center
+    OnTimeServiceLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    OnTimeServiceLabel.adjustsFontSizeToFitWidth = true
+    OnTimeServiceView.addSubview(OnTimeServiceLabel)
+    
+    // ColonLabel :-
+    let ColonLabel1 = UILabel()
+    ColonLabel1.frame = CGRect(x: OnTimeServiceLabel.frame.maxX, y: 0, width: (2 * x), height: (2.5 * y))
+    //ColonLabel1.backgroundColor = UIColor.gray
+    ColonLabel1.text = "-"
+    ColonLabel1.textColor = UIColor.black
+    ColonLabel1.textAlignment = .center
+    ColonLabel1.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    OnTimeServiceView.addSubview(ColonLabel1)
+    
+    // Ratings....
+    let OnTimeServiceRating = CosmosView()
+    OnTimeServiceRating.frame = CGRect(x: ColonLabel1.frame.maxX, y: y/2, width: (12 * x), height:(2.5 * y))
+    //OnTimeServiceRating.settings.updateOnTouch = false
+    OnTimeServiceRating.settings.fillMode = .half
+    OnTimeServiceRating.settings.starSize = 20
+    // OnTimeServiceRating.settings.starMargin = 5
+    OnTimeServiceRating.settings.filledColor = UIColor.orange
+    OnTimeServiceRating.settings.emptyBorderColor = UIColor.orange
+    OnTimeServiceRating.settings.filledBorderColor = UIColor.orange
+    OnTimeServiceRating.settings.filledImage = UIImage(named: "GoldStarFull")?.withRenderingMode(.alwaysOriginal)
+    OnTimeServiceRating.settings.emptyImage = UIImage(named: "GoldStarEmpty")?.withRenderingMode(.alwaysOriginal)
+    OnTimeServiceView.addSubview(OnTimeServiceRating)
+    
+    
+    OnTimeServiceRating.didTouchCosmos = { rating in
+        print("OnTimeServiceRating :", "\(rating)")
+        
+        self.OnTimeServiceRatingNum = Int(rating)
+        
+    }
+    
+    
+    //StichingQualityView..
+    let StichingQualityView = UIView()
+    StichingQualityView.frame = CGRect(x: (2 * x), y: OnTimeServiceView.frame.maxY + y, width: RatingsView.frame.width - (4 * x), height: (2.5 * y))
+    StichingQualityView.backgroundColor = UIColor.white
+    RatingsView.addSubview(StichingQualityView)
+    
+    
+    //StitchingQualityLabel
+    let StitchingQualityLabel = UILabel()
+    StitchingQualityLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (2.5 * y))
+    StitchingQualityLabel.textColor = UIColor.black
+    // StitchingQualityLabel.backgroundColor = UIColor.lightGray
+    StitchingQualityLabel.text = "STICHING QUALITY"
+    StitchingQualityLabel.textAlignment = .center
+    StitchingQualityLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    StitchingQualityLabel.adjustsFontSizeToFitWidth = true
+    StichingQualityView.addSubview(StitchingQualityLabel)
+    
+    // ColonLabel :-
+    let ColonLabel2 = UILabel()
+    ColonLabel2.frame = CGRect(x: StitchingQualityLabel.frame.maxX, y: 0, width: (2 * x), height: (2.5 * y))
+    //ColonLabel2.backgroundColor = UIColor.gray
+    ColonLabel2.text = "-"
+    ColonLabel2.textColor = UIColor.black
+    ColonLabel2.textAlignment = .center
+    ColonLabel2.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    StichingQualityView.addSubview(ColonLabel2)
+    
+    // Ratings....
+    let StichingQualityRating = CosmosView()
+    StichingQualityRating.frame = CGRect(x: ColonLabel2.frame.maxX, y: y/2, width: (12 * x), height:(2.5 * y))
+    //StichingQualityRating.settings.updateOnTouch = false
+    StichingQualityRating.settings.fillMode = .half
+    StichingQualityRating.settings.starSize = 20
+    //StichingQualityRating.settings.starMargin = 5
+    StichingQualityRating.settings.filledColor = UIColor.orange
+    StichingQualityRating.settings.emptyBorderColor = UIColor.orange
+    StichingQualityRating.settings.filledBorderColor = UIColor.orange
+    StichingQualityRating.settings.filledImage = UIImage(named: "GoldStarFull")?.withRenderingMode(.alwaysOriginal)
+    StichingQualityRating.settings.emptyImage = UIImage(named: "GoldStarEmpty")?.withRenderingMode(.alwaysOriginal)
+    StichingQualityView.addSubview(StichingQualityRating)
+    
+    
+    StichingQualityRating.didTouchCosmos = { rating in
+        print("StichingQualityRating :", "\(rating)")
+        
+        self.StitchingQualityRatingNum = Int(rating)
+        
+    }
+    
+    
+    //CustomerServiceView..
+    let CustomerServiceView = UIView()
+    CustomerServiceView.frame = CGRect(x: (2 * x), y: StichingQualityView.frame.maxY + y, width: RatingsView.frame.width - (4 * x), height: (2.5 * y))
+    CustomerServiceView.backgroundColor = UIColor.white
+    RatingsView.addSubview(CustomerServiceView)
+    
+    //CustomerServiceLabel
+    let CustomerServiceLabel = UILabel()
+    CustomerServiceLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (2.5 * y))
+    CustomerServiceLabel.textColor = UIColor.black
+    // CustomerServiceLabel.backgroundColor = UIColor.lightGray
+    CustomerServiceLabel.text = "CUSTOMER SERVICE"
+    CustomerServiceLabel.textAlignment = .center
+    CustomerServiceLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    CustomerServiceLabel.adjustsFontSizeToFitWidth = true
+    CustomerServiceView.addSubview(CustomerServiceLabel)
+    
+    // ColonLabel :-
+    let ColonLabel3 = UILabel()
+    ColonLabel3.frame = CGRect(x: CustomerServiceLabel.frame.maxX, y: 0, width: (2 * x), height: (2.5 * y))
+    //ColonLabel3.backgroundColor = UIColor.gray
+    ColonLabel3.text = "-"
+    ColonLabel3.textColor = UIColor.black
+    ColonLabel3.textAlignment = .center
+    ColonLabel3.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    CustomerServiceView.addSubview(ColonLabel3)
+    
+    // Ratings....
+    let CustomerServiceRating = CosmosView()
+    CustomerServiceRating.frame = CGRect(x: ColonLabel3.frame.maxX, y: y/2, width: (12 * x), height:(2.5 * y))
+    //CustomerServiceRating.settings.updateOnTouch = false
+    CustomerServiceRating.settings.fillMode = .half
+    CustomerServiceRating.settings.starSize = 20
+    // CustomerServiceRating.settings.starMargin = 5
+    CustomerServiceRating.settings.filledColor = UIColor.orange
+    CustomerServiceRating.settings.emptyBorderColor = UIColor.orange
+    CustomerServiceRating.settings.filledBorderColor = UIColor.orange
+    CustomerServiceRating.settings.filledImage = UIImage(named: "GoldStarFull")?.withRenderingMode(.alwaysOriginal)
+    CustomerServiceRating.settings.emptyImage = UIImage(named: "GoldStarEmpty")?.withRenderingMode(.alwaysOriginal)
+    CustomerServiceView.addSubview(CustomerServiceRating)
+    
+    
+    CustomerServiceRating.didTouchCosmos = { rating in
+        print("CustomerServiceRating :", "\(rating)")
+        
+        self.CustomerServiceRatingNum = Int(rating)
+        
+    }
+    
     
     //RatingsLabel..
     let ReviewLabel = UILabel()
@@ -235,7 +415,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     view.addSubview(ReviewUnderline)
     
     // REviewsTF..
-     let Review_TF = UITextField()
+    // let Review_TF = UITextField()
     Review_TF.frame = CGRect(x: (3 * x), y: ReviewUnderline.frame.maxY + y, width: view.frame.width - (6 * x), height: (10 * y))
     Review_TF.backgroundColor = UIColor.white
     Review_TF.placeholder = "      Write a review..   "
@@ -276,16 +456,29 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
   @objc func DoneAction()
   {
+    
      Review_TF.resignFirstResponder()
+     reviewStr = self.Review_TF.text
+    
   }
     
   @objc func SubmitButtonAction(sender : UIButton)
   {
     
-    print("Review:",reviewStr)
-    print("Rating:",RatingNum)
+    let CategoryID: [[String: Int]] = [["1":OnTimeServiceRatingNum],["2":StitchingQualityRatingNum],["3":CustomerServiceRatingNum]]
+    let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
     
-    self.serviceCall.API_InsertRatings(OrderId:1, CategoryId:1, Review:reviewStr, Rating:RatingNum, TailorId:1, delegate: self)
+    print("Review:",reviewStr)
+    print("Category:",CategoryID)
+    print("Order ID:",OrderID)
+    print("Tailor Id",TailorId!)
+    
+    if (reviewStr == nil || reviewStr.isEmpty)
+    {
+        reviewStr = ""
+    }
+    
+    self.serviceCall.API_InsertRatings(OrderId:OrderID!, Category:CategoryID, Review:reviewStr, TailorId:TailorId!, delegate: self)
     
   }
 }

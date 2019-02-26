@@ -602,11 +602,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: 0, width: DeliveredViewButton.frame.width / 2, height: (2 * y))
             let orderNum:Int = DelivOrderIdArray[i] as! Int
             tailorName.text = "\(orderNum)"
+            DeliveredViewButton.tag = DelivOrderIdArray[i] as! Int
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             DeliveredViewButton.addSubview(tailorName)
-            
             
             let TailorName_Icon = UIImageView()
             TailorName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
@@ -703,7 +703,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             OrderDatesLabel.adjustsFontSizeToFitWidth = true
             DeliveredViewButton.addSubview(OrderDatesLabel)
             
-          //  DeliveredViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
+            DeliveredViewButton.addTarget(self, action: #selector(self.DeliveredDetailsButtonAction(sender:)), for: .touchUpInside)
             
             y2 = DeliveredViewButton.frame.maxY + y
         }
@@ -724,4 +724,10 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         self.navigationController?.pushViewController(orderDetailsScreen, animated: true)
     }
     
+    @objc func DeliveredDetailsButtonAction(sender : UIButton)
+    {
+        let orderDetVCScreen = OrderDetailsDeliveredVC()
+        orderDetVCScreen.OrderID = sender.tag
+        self.navigationController?.pushViewController(orderDetVCScreen, animated: true)
+    }
 }

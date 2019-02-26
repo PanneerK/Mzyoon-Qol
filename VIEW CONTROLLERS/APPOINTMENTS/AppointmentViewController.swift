@@ -169,6 +169,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             print("Result", Result)
             
             MaterialSucessStr = "True"
+            
             let appointmentAlert = UIAlertController(title: "Sucess..!", message: "Appointment: \(Result)", preferredStyle: .alert)
             appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
            // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
@@ -375,6 +376,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = IsApproveMaterial.object(forKey: "Result") as! NSDictionary
             print("Result", Result)
             
+            MaterialSucessStr = "True"
             
         }
         else if ResponseMsg == "Failure"
@@ -399,6 +401,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = IsApproveMeasure.object(forKey: "Result") as! NSDictionary
             print("Result", Result)
             
+            MeasureSucessStr = "True"
             
         }
         else if ResponseMsg == "Failure"
@@ -551,6 +554,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             OrderTypeView.removeFromSuperview()
             //  OrderTypeView.isHidden = true
+            MaterialSucessStr = "True"
         }
         else
         {
@@ -844,6 +848,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
              OrderTypeView.addSubview(Material_ApproveButton)
+             MaterialSucessStr = "True"
         }
         else
         {
@@ -909,6 +914,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Manually")
         {
             MeasurementTypeView.removeFromSuperview()
+             MeasureSucessStr = "True"
         }
         else
         {
@@ -1201,11 +1207,11 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_ApproveButton.addTarget(self, action: #selector(self.MeasureApproveButtonAction(sender:)), for: .touchUpInside)
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-             MeasurementTypeView.addSubview(Measure_ApproveButton)
+            MeasurementTypeView.addSubview(Measure_ApproveButton)
         }
         else
         {
-          
+           
         }
         
        // let RejectButton = UIButton()
@@ -1286,10 +1292,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if (MaterialAppointID.count != 0)
        {
-        let AppointID = MaterialAppointID[0] as! Int
-        let Msg = ""
-        self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
-       }
+         let AppointID = MaterialAppointID[0] as! Int
+         let Msg = ""
+         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
+      }
        else
        {
         
@@ -1489,18 +1495,24 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     {
         MaterialRejectButtonView.removeFromSuperview()
         
+      if(MaterialAppointID.count != 0)
+      {
         let AppointID = MaterialAppointID[0] as! Int
         let Msg : String = self.Material_rejectReason_TF.text!
         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 2, Reason: Msg, delegate: self)
+      }
     }
     
     @objc func Save_MeasureRejectAction(sender : UIButton)
     {
         MeasureRejectButtonView.removeFromSuperview()
         
+        if(MeasurementAppointID.count != 0)
+        {
         let AppointID = MeasurementAppointID[0] as! Int
         let Msg : String = self.Measure_rejectReason_TF.text!
         self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 2, Reason: Msg, delegate: self)
+        }
     }
     
     @objc func FMaterial_calendarAction()

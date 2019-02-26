@@ -255,10 +255,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
      
     func proceedAlertAction(action : UIAlertAction)
     {
-       
-           let AppointmentScreen = AppointmentViewController()
+          let AppointmentScreen = AppointmentViewController()
+         if(ChargesAmountArray.count != 0)
+         {
             let TotalValue : Int = ChargesAmountArray[7] as! Int
             AppointmentScreen.TotalAmount = "\(TotalValue)"
+         }
+        else
+         {
+             AppointmentScreen.TotalAmount = "1"
+         }
             AppointmentScreen.TailorID = TailorID
         
            self.navigationController?.pushViewController(AppointmentScreen, animated: true)
@@ -300,6 +306,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let DressImageView = UIImageView()
         DressImageView.frame = CGRect(x: x, y: y, width: (8 * x), height:(8 * y))
         DressImageView.backgroundColor = UIColor.white
+        
+       if(DressImageArray.count != 0)
+       {
         if let imageName = DressImageArray[0] as? String
         {
             let urlString = serviceCall.baseURL
@@ -312,10 +321,23 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             }
         }
         DressDetView.addSubview(DressImageView)
+       }
+      else
+       {
+          DressImageView.backgroundColor = UIColor.lightGray
+          DressDetView.addSubview(DressImageView)
+        }
         
         let DressTypeLabel = UILabel()
         DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: DressDetView.frame.minY - (6 * y), width: (20 * x), height: (2 * y))
-        DressTypeLabel.text = DressNameArray[0] as? String
+        if(DressNameArray.count != 0)
+        {
+          DressTypeLabel.text = DressNameArray[0] as? String
+        }
+        else
+        {
+            DressTypeLabel.text = ""
+        }
         DressTypeLabel.textColor = UIColor.white
     //  DressTypeLabel.backgroundColor = UIColor.gray
         DressTypeLabel.textAlignment = .left
@@ -487,8 +509,17 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let MeasureRupeeValueLBL = UILabel()
         MeasureRupeeValueLBL.frame = CGRect(x: MeasurementChargesLabel.frame.maxX + x , y: CurrencyButton.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
        // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let MeasureRupeeValue : Int = ChargesAmountArray[4] as! Int
-        MeasureRupeeValueLBL.text =  "\(MeasureRupeeValue)"
+        
+     
+       if (ChargesAmountArray.count != 0)
+       {
+          let MeasureRupeeValue : Int = ChargesAmountArray[4] as! Int
+          MeasureRupeeValueLBL.text =  "\(MeasureRupeeValue)"
+        }
+        else
+        {
+           MeasureRupeeValueLBL.text = ""
+        }
         MeasureRupeeValueLBL.textColor = UIColor.blue
         MeasureRupeeValueLBL.textAlignment = .center
         MeasureRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -521,8 +552,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let StichingRupeeValueLBL = UILabel()
         StichingRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + x , y: MeasurementChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let StichingRupeeValue : Int = ChargesAmountArray[1] as! Int
-        StichingRupeeValueLBL.text =  "\(StichingRupeeValue)"
+        if(ChargesAmountArray.count != 0)
+        {
+            let StichingRupeeValue : Int = ChargesAmountArray[1] as! Int
+            StichingRupeeValueLBL.text =  "\(StichingRupeeValue)"
+        }
+        else
+        {
+            StichingRupeeValueLBL.text = ""
+        }
+        
         StichingRupeeValueLBL.textColor = UIColor.blue
         StichingRupeeValueLBL.textAlignment = .center
         StichingRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -555,8 +594,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let AppointmentRupeeValueLBL = UILabel()
         AppointmentRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + x , y: StichingChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let AppointmentRupeeValue : Int = ChargesAmountArray[0] as! Int
-        AppointmentRupeeValueLBL.text =  "\(AppointmentRupeeValue)"
+        if(ChargesAmountArray.count != 0)
+        {
+            let AppointmentRupeeValue : Int = ChargesAmountArray[0] as! Int
+            AppointmentRupeeValueLBL.text =  "\(AppointmentRupeeValue)"
+        }
+        else
+        {
+            AppointmentRupeeValueLBL.text = ""
+        }
+       
         AppointmentRupeeValueLBL.textColor = UIColor.blue
         AppointmentRupeeValueLBL.textAlignment = .center
         AppointmentRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -588,8 +635,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let MaterialRupeeValueLBL = UILabel()
         MaterialRupeeValueLBL.frame = CGRect(x: MaterialDeliveryChargesLabel.frame.maxX + x , y: AppointmentChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let MaterialRupeeValue : Int = ChargesAmountArray[3] as! Int
-        MaterialRupeeValueLBL.text =  "\(MaterialRupeeValue)"
+        if(ChargesAmountArray.count != 0)
+        {
+            let MaterialRupeeValue : Int = ChargesAmountArray[3] as! Int
+            MaterialRupeeValueLBL.text =  "\(MaterialRupeeValue)"
+        }
+        else
+        {
+            MaterialRupeeValueLBL.text = ""
+        }
+        
         MaterialRupeeValueLBL.textColor = UIColor.blue
         MaterialRupeeValueLBL.textAlignment = .center
         MaterialRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -620,8 +675,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let UrgentStichValueLBL = UILabel()
         UrgentStichValueLBL.frame = CGRect(x: UrgentStichChargesLabel.frame.maxX + x , y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let UrgentStichValue : Int = ChargesAmountArray[8] as! Int
-        UrgentStichValueLBL.text =  "\(UrgentStichValue)"
+        if(ChargesAmountArray.count != 0)
+        {
+            let UrgentStichValue : Int = ChargesAmountArray[8] as! Int
+            UrgentStichValueLBL.text =  "\(UrgentStichValue)"
+        }
+        else
+        {
+            UrgentStichValueLBL.text = ""
+        }
+        
         UrgentStichValueLBL.textColor = UIColor.blue
         UrgentStichValueLBL.textAlignment = .center
         UrgentStichValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -651,8 +714,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let DeliveryRupeeValueLBL = UILabel()
         DeliveryRupeeValueLBL.frame = CGRect(x: DeliveryChargesLabel.frame.maxX + x , y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let DeliveryRupeeValue : Int = ChargesAmountArray[2] as! Int
-        DeliveryRupeeValueLBL.text =  "\(DeliveryRupeeValue)"
+        if(ChargesAmountArray.count != 0)
+        {
+            let DeliveryRupeeValue : Int = ChargesAmountArray[2] as! Int
+            DeliveryRupeeValueLBL.text =  "\(DeliveryRupeeValue)"
+        }
+        else
+        {
+            DeliveryRupeeValueLBL.text = ""
+        }
+       
         DeliveryRupeeValueLBL.textColor = UIColor.blue
         DeliveryRupeeValueLBL.textAlignment = .center
         DeliveryRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -682,8 +753,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let ServiceRupeeValueLBL = UILabel()
         ServiceRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + x , y: DeliveryChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let ServiceRupeeValue : Int = ChargesAmountArray[5] as! Int
-        ServiceRupeeValueLBL.text =  "\(ServiceRupeeValue)"
+        if(ChargesAmountArray.count != 0)
+        {
+            let ServiceRupeeValue : Int = ChargesAmountArray[5] as! Int
+            ServiceRupeeValueLBL.text =  "\(ServiceRupeeValue)"
+        }
+        else
+        {
+            ServiceRupeeValueLBL.text = ""
+        }
+        
         ServiceRupeeValueLBL.textColor = UIColor.blue
         ServiceRupeeValueLBL.textAlignment = .center
         ServiceRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -712,8 +791,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let TaxRupeeValueLBL = UILabel()
         TaxRupeeValueLBL.frame = CGRect(x: ServiceChargesLabel.frame.maxX + x , y: ServiceChargesLabel.frame.minY + (3 * y), width: (10 * x), height: (3 * y))
         // MeasureRupeeValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let TaxRupeeValue : Int = ChargesAmountArray[6] as! Int
-        TaxRupeeValueLBL.text =  "\(TaxRupeeValue)"
+        if(ChargesAmountArray.count != 0)
+        {
+            let TaxRupeeValue : Int = ChargesAmountArray[6] as! Int
+            TaxRupeeValueLBL.text =  "\(TaxRupeeValue)"
+        }
+        else
+        {
+            TaxRupeeValueLBL.text = ""
+        }
+       
         TaxRupeeValueLBL.textColor = UIColor.blue
         TaxRupeeValueLBL.textAlignment = .center
         TaxRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -749,8 +836,16 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let OrderTotalValueLBL = UILabel()
         OrderTotalValueLBL.frame = CGRect(x: OrderTotalLabel.frame.maxX + x , y: TaxChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
         OrderTotalValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        let OrderTotalValue : Int = ChargesAmountArray[7] as! Int
-        OrderTotalValueLBL.text =  "\(OrderTotalValue)"
+        if(ChargesAmountArray.count != 0)
+        {
+            let OrderTotalValue : Int = ChargesAmountArray[7] as! Int
+            OrderTotalValueLBL.text =  "\(OrderTotalValue)"
+        }
+        else
+        {
+            OrderTotalValueLBL.text = ""
+        }
+        
         OrderTotalValueLBL.textColor = UIColor.white
         OrderTotalValueLBL.textAlignment = .center
         OrderTotalValueLBL.font = UIFont(name: "Avenir Next", size: 1.5 * x)
