@@ -29,7 +29,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     let directDeliveryLabel = UILabel()
     let directDeliveryButton = UIButton()
     let courierDeliveryIcon = UIImageView()
-    let couriertDeliveryLabel = UILabel()
+    let courierDeliveryLabel = UILabel()
     let courierDeliveryButton = UIButton()
     let companyIcon = UIImageView()
     let companyLabel = UILabel()
@@ -125,7 +125,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         directDeliveryLabel.text = (deliveryTypeEnglishNameArray[0] as! String).uppercased()
         directDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         directDeliveryLabel.textAlignment = .left
-        directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.5 * x))
         selfScreenContents.addSubview(directDeliveryLabel)
         
         let directDeliveryUnderline = UILabel()
@@ -164,16 +164,16 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         }
         selfScreenContents.addSubview(courierDeliveryIcon)
         
-        couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: directDeliveryButton.frame.maxY + (2 * y), width: view.frame.width - (5 * x), height: (2 * y))
-        couriertDeliveryLabel.text = (deliveryTypeEnglishNameArray[1] as! String).uppercased()
-        couriertDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        couriertDeliveryLabel.textAlignment = .left
-        couriertDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
-        couriertDeliveryLabel.adjustsFontSizeToFitWidth = true
-        selfScreenContents.addSubview(couriertDeliveryLabel)
+        courierDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: directDeliveryButton.frame.maxY + (2 * y), width: view.frame.width - (5 * x), height: (2 * y))
+        courierDeliveryLabel.text = (deliveryTypeEnglishNameArray[1] as! String).uppercased()
+        courierDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        courierDeliveryLabel.textAlignment = .left
+        courierDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.5 * x))
+        courierDeliveryLabel.adjustsFontSizeToFitWidth = true
+        selfScreenContents.addSubview(courierDeliveryLabel)
         
         let courierDeliveryUnderline = UILabel()
-        courierDeliveryUnderline.frame = CGRect(x: (3 * x), y: couriertDeliveryLabel.frame.maxY + (y / 2), width: view.frame.width - (6 * x), height: 0.5)
+        courierDeliveryUnderline.frame = CGRect(x: (3 * x), y: courierDeliveryLabel.frame.maxY + (y / 2), width: view.frame.width - (6 * x), height: 0.5)
         courierDeliveryUnderline.backgroundColor = UIColor.lightGray
         selfScreenContents.addSubview(courierDeliveryUnderline)
         
@@ -211,7 +211,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         companyLabel.text = (deliveryTypeEnglishNameArray[2] as! String).uppercased()
         companyLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         companyLabel.textAlignment = .left
-        companyLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        companyLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.5 * x))
         selfScreenContents.addSubview(companyLabel)
         
         let companyUnderline = UILabel()
@@ -259,12 +259,56 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.text = "نوع الخدمة"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        directDeliveryIcon.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        directDeliveryLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        directDeliveryButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        directDeliveryLabel.text = deliveryTypeArabicNameArray[0] as? String
+        directDeliveryLabel.textAlignment = .right
+        
+        courierDeliveryIcon.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        courierDeliveryLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        courierDeliveryButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        courierDeliveryLabel.text = deliveryTypeArabicNameArray[1] as? String
+        courierDeliveryLabel.textAlignment = .right
+        
+        companyIcon.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        companyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        companyButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        companyLabel.text = deliveryTypeArabicNameArray[2] as? String
+        companyLabel.textAlignment = .right
     }
     
     func changeViewToEnglishInSelf()
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.text = "SERVICE TYPE"
+
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        directDeliveryIcon.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        directDeliveryLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        directDeliveryButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        directDeliveryLabel.text = deliveryTypeEnglishNameArray[0] as? String
+        directDeliveryLabel.textAlignment = .left
+        
+        courierDeliveryIcon.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        courierDeliveryLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        courierDeliveryButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        courierDeliveryLabel.text = deliveryTypeEnglishNameArray[1] as? String
+        courierDeliveryLabel.textAlignment = .left
+        
+        companyIcon.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        companyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        companyButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        companyLabel.text = deliveryTypeEnglishNameArray[2] as? String
+        companyLabel.textAlignment = .left
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

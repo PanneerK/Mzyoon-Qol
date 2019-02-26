@@ -239,7 +239,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         var x1:CGFloat = (3 * x)
         var y1:CGFloat =  (10.65 * y)
         
-        for i in 0..<getInputArray.count
+        /*for i in 0..<getInputArray.count
         {
             let genderButton = UIButton()
             
@@ -322,6 +322,43 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
             genderButton.addSubview(buttonTitle)
+        }*/
+        
+        var buttonYPos:CGFloat = (2 * y)
+        
+        for i in 0..<genderIdArray.count
+        {
+            let genderButton = UIButton()
+            genderButton.frame = CGRect(x: (2 * x), y: buttonYPos, width: selfScreenContents.frame.width - (4 * x), height: (12 * y))
+            let buttonImage = UIImageView()
+            buttonImage.frame = CGRect(x: 0, y: 0, width: genderButton.frame.width, height: genderButton.frame.height)
+            //            buttonImage.image = convertedSeasonalImageArray[i]
+            if let imageName =  genderImageArray[i] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/\(imageName)"
+                let apiurl = URL(string: api)
+                if apiurl != nil
+                {
+                    buttonImage.dowloadFromServer(url: apiurl!)
+                }
+            }
+            genderButton.addSubview(buttonImage)
+
+            genderButton.tag = genderIdArray[i] as! Int
+            genderButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
+            selfScreenContents.addSubview(genderButton)
+            
+            if i == genderImageArray.count - 1
+            {
+                self.stopActivity()
+            }
+            else
+            {
+                
+            }
+            
+            buttonYPos = genderButton.frame.maxY + y
         }
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String

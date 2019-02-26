@@ -145,8 +145,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
          print("Book an appointment : ", errorMessage)
-        stopActivity()
-        applicationDelegate.exitContents()
+         stopActivity()
+         applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)

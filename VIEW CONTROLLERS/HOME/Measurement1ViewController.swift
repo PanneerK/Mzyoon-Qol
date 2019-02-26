@@ -414,7 +414,18 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func otpBackButtonAction(sender : UIButton)
     {
-        self.navigationController?.popViewController(animated: true)
+        if let values = UserDefaults.standard.value(forKey: "custom3Response") as? Int
+        {
+            if values == 1
+            {
+                let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+            }
+            else
+            {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     @objc func forWhomButtonAction(sender : UIButton)

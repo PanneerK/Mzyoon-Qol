@@ -274,6 +274,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             
             if Result == "1"
             {
+                activeStop()
                 let alert = UIAlertController(title: "", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: savedAlertAction(action:)))
                 self.present(alert, animated: true, completion: nil)
@@ -988,6 +989,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                         
                         sender.removeFromSuperview()
                         cancelButton.removeFromSuperview()
+                        
+                        active()
                         
                         serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
                     }
