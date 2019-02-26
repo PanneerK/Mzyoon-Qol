@@ -470,6 +470,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             UserDefaults.standard.set(mobileCountryCodeLabel.text!, forKey: "countryCode")
             
+            UserDefaults.standard.set("en", forKey: "language")
+            
             if result == "Existing User"
             {
                 let homeScreen = HomeViewController()
@@ -514,7 +516,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         cancelButton.setTitle("إلغاء", for: .normal)
         
-        countryCodeTableView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//        countryCodeTableView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglish()
@@ -549,7 +551,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         cancelButton.setTitle("Cancel", for: .normal)
         
-        countryCodeTableView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+//        countryCodeTableView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     func screenContentsInEnglish()
@@ -647,7 +649,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         languageButton.setTitleColor(UIColor.black, for: .normal)
         languageButton.titleLabel?.font = languageButton.titleLabel?.font.withSize(1.5 * x)
         //        languageButton.setImage(UIImage(named: "languageBackground"), for: .normal)
-//        languageButton.addTarget(self, action: #selector(self.languageButtonAction(sender:)), for: .touchUpInside)
+        languageButton.addTarget(self, action: #selector(self.languageButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(languageButton)
         
         let languageFlagImageView = UIImageView()
@@ -663,7 +665,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         languageLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
         //        languageButton.addSubview(languageLabel)
         
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        /*if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
             {
@@ -677,7 +679,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         else
         {
             changeViewToEnglish()
-        }
+        }*/
     }
     
     @objc func languageButtonAction(sender : UIButton)
@@ -696,14 +698,15 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         if action.title == "English"
         {
             UserDefaults.standard.set("en", forKey: "language")
-            
-            changeViewToEnglish()
+            selectedLanguage = "English"
+//            changeViewToEnglish()
         }
         else if action.title == "Arabic"
         {
             UserDefaults.standard.set("ar", forKey: "language")
-            
-            changeViewToArabic()
+            selectedLanguage = "Arabic"
+
+//            changeViewToArabic()
         }
     }
     
