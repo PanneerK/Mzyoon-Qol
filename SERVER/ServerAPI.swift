@@ -26,7 +26,7 @@ class ServerAPI : NSObject
     
     func API_LoginUser(CountryCode : String, PhoneNo : String, Language : String, delegate:ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Login Page")
             
@@ -52,13 +52,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_ResendOTP(CountryCode : String, PhoneNo : String, Language : String, delegate:ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Login Page")
             
@@ -84,13 +84,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_ValidateOTP(CountryCode : String, PhoneNo : String, otp : String, type : String, delegate:ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Validate OTP Page")
             
@@ -116,19 +116,17 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_CountryCode(delegate : ServerAPIDelegate)
     {
-        
-        if (Reachability()?.isReachable)!
+        print("ABCDEFGHIJKLMNOPQRSTUVWXYZ", (Reachability()?.connection)!)
+
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Country Code Page")
-            
-            let parameters = [:] as [String : Any]
-            
             
             let urlString:String = String(format: "%@/API/login/getallcountries", arguments: [baseURL])
             
@@ -153,14 +151,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_AllLanguges(delegate : ServerAPIDelegate)
     {
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Country Code Page")
             
@@ -190,14 +188,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_FlagImages(imageName : String, delegate : ServerAPIDelegate)
     {
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Flag Images Page")
             
@@ -222,14 +220,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_Gender(delegate : ServerAPIDelegate)
     {
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Gender Page")
             
@@ -255,14 +253,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_GenderImage(imageName : String, delegate : ServerAPIDelegate)
     {
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Gender Image Page")
             
@@ -296,13 +294,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_DressType(genderId : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Dress Type Page")
             
@@ -328,7 +326,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -437,7 +435,7 @@ class ServerAPI : NSObject
         print("DICT NEW SEASON", season)
 
                 
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Customization 1 Page")
             
@@ -465,7 +463,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -498,7 +496,7 @@ class ServerAPI : NSObject
             }
         }
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Customization 2 Page")
             
@@ -524,13 +522,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_Profile(delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Customization 1 Page")
             
@@ -556,13 +554,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_OrderType(delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - OrderType Page")
             
@@ -589,14 +587,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_Measurement1(delegate : ServerAPIDelegate)
     {
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Measurement1 Page")
             
@@ -621,13 +619,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_Customization3(DressTypeId : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Customization 3 Page")
             
@@ -652,13 +650,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_Customization3Attr(AttributeId : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Dress Type Page")
             
@@ -683,13 +681,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_IntroProfile(Id : String, Name : String, profilePic : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Intro Profile Page")
             
@@ -714,13 +712,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_ExistingUserProfile(Id : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        print("ABCDEFGHIJKLMNOPQRSTUVWXYZ", Reachability()?.connection)
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Existing User Profile Page")
             
@@ -745,14 +744,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Profile Update
     func API_ProfileUpdate(Id : String, Email : String, Dob : String, Gender : String, ModifiedBy : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Intro Profile Page")
             
@@ -778,14 +777,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Insert Buyer Address..
     func API_InsertAddress(BuyerId : String, FirstName : String, LastName : String, CountryId : Int, StateId : Int, Area : String, Floor : String, LandMark : String, LocationType : String, ShippingNotes : String, IsDefault : String, CountryCode : String, PhoneNo : String, Longitude : Float, Latitude : Float, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Address Page")
             
@@ -811,14 +810,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Update Buyer Address..
     func API_UpdateAddress(Id : Int ,BuyerId : String, FirstName : String, LastName : String, CountryId : Int, StateId : Int, Area : String, Floor : String, LandMark : String, LocationType : String, ShippingNotes : String, IsDefault : String, CountryCode : String, PhoneNo : String, Longitude : Float, Latitude : Float, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Address Page")
             
@@ -846,14 +845,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //Delete Buyer Address..
     func API_DeleteAddress(AddressId : Int, userId : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Address Page")
             
@@ -877,14 +876,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //GEt Buyer Address..
     func API_GetBuyerAddress(BuyerAddressId : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Address Page")
             
@@ -910,14 +909,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //Dress Sub-type..
     func API_DressSubType(DressSubTypeId : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Dress SubType")
             
@@ -943,14 +942,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Measurement-2 full body pics...
     func API_GetMeasurement2(Measurement1Value : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Measurement2 Value")
             
@@ -974,14 +973,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Measurement-1 Manually list show of existing user..
     func API_ExistingUserMeasurement(DressTypeId : String, UserId : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Existing User Measurement Page")
             
@@ -1007,14 +1006,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Measurement-2 Parts after selection..
     func API_GetMeasurementParts(MeasurementParts : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Measurement Parts Value")
             
@@ -1038,14 +1037,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Measurement-2 Parts Tab..
     func API_DisplayMeasurement(Measurement2Value : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Display Measurement Value")
             
@@ -1069,14 +1068,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Profile User Type..
     func API_IsProfileUserType(UserType : String , UserId : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Profile User Type")
             
@@ -1100,14 +1099,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Mesurement-2 values Insert..
     func API_InsertUserMeasurementValues(UserId : Int, DressTypeId : Int, MeasurementValue : [[String: Any]], MeasurementBy : String, CreatedBy : String, Units : String, Name : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Measurement Values Page")
             
@@ -1133,14 +1132,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //Device Details..
     func API_InsertDeviceDetails(DeviceId : String, Os : String, Manufacturer : String, CountryCode : String, PhoneNumber : String, Model : String, AppVersion : String, Type : String,delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             let parameters = ["DeviceId" : DeviceId, "Os" : Os, "Manufacturer" : Manufacturer, "CountryCode" : CountryCode, "PhoneNumber" : PhoneNumber, "Model" : Model, "AppVersion" : AppVersion, "Type" : Type] as [String : Any]
             
@@ -1160,7 +1159,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -1172,7 +1171,7 @@ class ServerAPI : NSObject
         
         let dateInt = Int(date)
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Image Upload Page")
             
@@ -1217,7 +1216,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -1225,7 +1224,7 @@ class ServerAPI : NSObject
     func API_GetTailorList(delegate : ServerAPIDelegate)
     {
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Tailor List Page")
             
@@ -1250,14 +1249,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Device error...
     func API_InsertErrorDevice(DeviceId : String, PageName : String, MethodName : String, Error : String, ApiVersion : String, Type : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             let parameters = ["DeviceId" : DeviceId, "PageName" : PageName, "MethodName" : MethodName, "Error" : Error, "ApiVersion" : ApiVersion, "Type" : Type] as [String : Any]
             
@@ -1277,7 +1276,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -1285,7 +1284,7 @@ class ServerAPI : NSObject
     // Order Summary... 19/12/2018..
     func API_InsertOrderSummary(dressType : Int, CustomerId : Int, AddressId : Int, PatternId : Int, Ordertype : Int, MeasurementId : Int, MaterialImage : [String], ReferenceImage : [String], OrderCustomization : [[String : Any]], TailorId : [[String: Any]], MeasurementBy : String, CreatedBy : Int, MeasurementName : String, UserMeasurement : [[String : Any]], DeliveryTypeId : Int, units : String, measurementType : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Order Summary Page")
             
@@ -1311,14 +1310,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_GetStateListByCountry(countryId : String, delegate : ServerAPIDelegate)
     {
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             
             print("Server Reached - State List Page")
@@ -1347,14 +1346,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Order Approval .. 21/12/2018..
     func API_OrderApprovalPrice(TailorResponseId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached -  Value")
             
@@ -1380,13 +1379,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_OrderApprovalDelivery(TailorResponseId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached -  Value")
             
@@ -1412,7 +1411,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -1420,7 +1419,7 @@ class ServerAPI : NSObject
     
     func API_GetQuotationList(OrderId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached -  Value")
             
@@ -1446,13 +1445,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_GetOrderRequest(RequestId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached -  Value")
             
@@ -1478,14 +1477,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //Book an Appointment Material..
     func API_InsertAppoinmentMaterial(OrderId : Int, AppointmentType : Int, AppointmentTime : String, From : String, To : String, CreatedBy : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Book an Appointment Page")
             
@@ -1511,14 +1510,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //Book an Appointment Measurement..
     func API_InsertAppoinmentMeasurement(OrderId : Int, AppointmentType : Int, AppointmentTime : String, From : String, To : String, CreatedBy : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Book an Appointment Page")
             
@@ -1544,13 +1543,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_SortAscending(delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Sort Ascending Page")
             
@@ -1576,13 +1575,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_SortDescending(delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Sort Descending Page")
             
@@ -1608,7 +1607,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -1616,7 +1615,7 @@ class ServerAPI : NSObject
     // Order Approval - Qty update..
     func API_UpdateQtyOrderApproval(OrderId : Int, Qty : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Order Approval Page")
             
@@ -1642,14 +1641,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Book an Appointment Get Material..
     func API_GetAppointmentMaterial(OrderId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Book an Appointemnt Page")
             
@@ -1675,14 +1674,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Book an Appointment Get Measurement..
     func API_GetAppointmentMeasurement(OrderId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached -  Book an Appointemnt Page")
             
@@ -1708,14 +1707,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Book an Appointment IsApprove Material..
     func API_IsApproveAppointmentMaterial(AppointmentId : Int, IsApproved : Int, Reason:String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Book an Appointemnt Page")
             
@@ -1741,14 +1740,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Book an Appointment IsApprove Measurement..
     func API_IsApproveAppointmentMeasurement(AppointmentId : Int, IsApproved : Int, Reason:String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached -  Book an Appointemnt Page")
             
@@ -1774,7 +1773,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -1782,7 +1781,7 @@ class ServerAPI : NSObject
     // Payment Status....
     func API_updatePaymentStatus(PaymentStatus : Int, OrderId : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached -  Payment Page")
             
@@ -1808,14 +1807,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Buyer Order Approval....
     func API_BuyerOrderApproval(OrderId : Int, ApprovedTailorId : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached -  Payment Page")
             
@@ -1841,14 +1840,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Get Appointments List..
     func API_GetAppointmentList(BuyerId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Appointment List Page")
             
@@ -1874,14 +1873,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Total Appointment List.. Approve and reject List..
     func API_ApproveRejectAppointmentList(BuyerId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Appointment List Page")
             
@@ -1907,13 +1906,13 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     func API_ServiceRequest(delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Service Request Page")
             
@@ -1941,7 +1940,7 @@ class ServerAPI : NSObject
     // Get Ratings..
     func API_GetRatings(TailorId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Reviews and Ratings Page")
             
@@ -1967,7 +1966,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -1975,7 +1974,7 @@ class ServerAPI : NSObject
     
     func API_DirectionRequest(origin : String, destination : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Direction Page")
             
@@ -2005,14 +2004,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     // Insert Ratings...
     func API_InsertRatings(OrderId : Int, Category : [[String : Any]], Review : String, TailorId : Int, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Reviews And Ratings Page")
             
@@ -2038,14 +2037,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //  List Of Orders(Pending)..
     func API_ListOfOrdersPending(BuyerId : String , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - List Of Orders Page")
             
@@ -2073,7 +2072,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -2081,7 +2080,7 @@ class ServerAPI : NSObject
     //  ORder Details..
     func API_GetOrderDetails(OrderId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - List Of Orders Page")
             
@@ -2108,14 +2107,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //  Tracking Details..
     func API_GetTrackingDetails(OrderId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - List Of Orders Page")
             
@@ -2142,7 +2141,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -2153,7 +2152,7 @@ class ServerAPI : NSObject
         
         let dateInt = Int(date)
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Reference Image Upload Page")
             
@@ -2211,7 +2210,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -2222,7 +2221,7 @@ class ServerAPI : NSObject
         
         let dateInt = Int(date)
         
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Material Image Upload Page", materialImages.count)
             
@@ -2280,7 +2279,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
    
@@ -2290,7 +2289,7 @@ class ServerAPI : NSObject
     // Insert Payment Status...
     func API_InsertPaymentStatus(OrderId : Int, Transactionid : String, Amount : String, Status : String, Code : String, message : String, cvv : String, avs : String, cardcode : String, cardlast4 : String, Trace : String, ca_Valid : String,delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Payment Transaction Page")
             
@@ -2316,7 +2315,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
@@ -2324,7 +2323,7 @@ class ServerAPI : NSObject
     //19.02.2019
     func API_GetAreaByState(stateId : String, delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             
             print("Server Reached - Get Area By State Page")
@@ -2351,7 +2350,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
 
@@ -2359,7 +2358,7 @@ class ServerAPI : NSObject
     //  Payment Store Details..  20/2/2019
     func API_GetPaymentStoreDetails(delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Payment Summary Page")
             
@@ -2387,7 +2386,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
   
@@ -2395,7 +2394,7 @@ class ServerAPI : NSObject
     // Get AppointmentDate ForMaterail List
     func API_GetAppointmentDateForMaterail(OrderId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Appointment List Page")
             
@@ -2421,7 +2420,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
  
@@ -2429,7 +2428,7 @@ class ServerAPI : NSObject
     // Get AppointmentDate For Measurement List..
     func API_GetAppointmentDateForMeasurement(OrderId : Int , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - Appointment List Page")
             
@@ -2455,14 +2454,14 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     
     //  List Of Orders(Delivered)..
     func API_ListOfOrdersDelivered(BuyerId : String , delegate : ServerAPIDelegate)
     {
-        if (Reachability()?.isReachable)!
+        if Reachability.Connection.self != .none
         {
             print("Server Reached - List Of Orders Page")
             
@@ -2490,7 +2489,7 @@ class ServerAPI : NSObject
         }
         else
         {
-            print("no internet")
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
     

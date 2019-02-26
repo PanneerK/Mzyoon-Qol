@@ -70,16 +70,16 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         navigationBar.isHidden = true
         selectedButton(tag: 0)
         
-        /*if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
+        if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
         {
             self.serviceCall.API_Customization3(DressTypeId: id, delegate: self)
         }
         else if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
         {
             self.serviceCall.API_Customization3(DressTypeId: "\(id)", delegate: self)
-        }*/
+        }
         
-        self.serviceCall.API_Customization3(DressTypeId: "5", delegate: self)
+//        self.serviceCall.API_Customization3(DressTypeId: "5", delegate: self)
         
         super.viewDidLoad()
         
@@ -116,8 +116,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         applicationDelegate.exitContents()
     }
     
-    func API_CALLBACK_Customization3(custom3: NSDictionary) {
-        print("CUSTOM 3", custom3)
+    func API_CALLBACK_Customization3(custom3: NSDictionary)
+    {
+        print("CUSTOM 3 RESPONSE", custom3)
         
         let ResponseMsg = custom3.object(forKey: "ResponseMsg") as! String
         
@@ -127,57 +128,89 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             let CustomizationImages = Result.object(forKey: "CustomizationImages") as! NSArray
             
-            customImagesArray = CustomizationImages.value(forKey: "Image") as! NSArray
-            
-            let CustomizationAttributes = Result.object(forKey: "CustomizationAttributes") as! NSArray
-            
-            customAttEnglishNameArray = CustomizationAttributes.value(forKey: "AttributeNameInEnglish") as! NSArray
-            
-            customAttArabicNameArray = CustomizationAttributes.value(forKey: "AttributeNameinArabic") as! NSArray
-            
-            customAttIdArray = CustomizationAttributes.value(forKey: "Id") as! NSArray
-            
-            let AttributeImages = Result.object(forKey: "AttributeImages") as! NSArray
-            
-            subCustomAttEnglishNameArray = AttributeImages.value(forKey: "AttributeNameInEnglish") as! NSArray
-            
-            subCustomAttArabicNameArray = AttributeImages.value(forKey: "AttributeNameInArabic") as! NSArray
-            
-            subCustomAttIdArray = AttributeImages.value(forKey: "Id") as! NSArray
-            
-            subCustomAttImageArray = AttributeImages.value(forKey: "Images") as! NSArray
-            
-            for i in 0..<customAttEnglishNameArray.count
+            if CustomizationImages.count != 0
             {
-                if let textString = customAttEnglishNameArray[i] as? String
+                customImagesArray = CustomizationImages.value(forKey: "Image") as! NSArray
+                
+                let CustomizationAttributes = Result.object(forKey: "CustomizationAttributes") as! NSArray
+                
+                customAttEnglishNameArray = CustomizationAttributes.value(forKey: "AttributeNameInEnglish") as! NSArray
+                
+                customAttArabicNameArray = CustomizationAttributes.value(forKey: "AttributeNameinArabic") as! NSArray
+                
+                customAttIdArray = CustomizationAttributes.value(forKey: "Id") as! NSArray
+                
+                let AttributeImages = Result.object(forKey: "AttributeImages") as! NSArray
+                
+                subCustomAttEnglishNameArray = AttributeImages.value(forKey: "AttributeNameInEnglish") as! NSArray
+                
+                subCustomAttArabicNameArray = AttributeImages.value(forKey: "AttributeNameInArabic") as! NSArray
+                
+                subCustomAttIdArray = AttributeImages.value(forKey: "Id") as! NSArray
+                
+                subCustomAttImageArray = AttributeImages.value(forKey: "Images") as! NSArray
+                
+                for i in 0..<customAttEnglishNameArray.count
                 {
-                    selectedCustomStringArray[textString] = ""
+                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                    {
+                        if language == "en"
+                        {
+                            if let textString = customAttEnglishNameArray[i] as? String
+                            {
+                                selectedCustomStringArray[textString] = ""
+                                selectedCustomString = customAttEnglishNameArray[0] as! String
+                            }
+                        }
+                        else if language == "ar"
+                        {
+                            if let textString = customAttArabicNameArray[i] as? String
+                            {
+                                selectedCustomStringArray[textString] = ""
+                                selectedCustomString = customAttArabicNameArray[0] as! String
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if let textString = customAttEnglishNameArray[i] as? String
+                        {
+                            selectedCustomStringArray[textString] = ""
+                            selectedCustomString = customAttEnglishNameArray[0] as! String
+                        }
+                    }
+                    
+                    if let idString = customAttIdArray[i] as? Int
+                    {
+                        selectedCustomIntArray["\(idString)"] = ""
+                    }
                 }
                 
-                if let idString = customAttIdArray[i] as? Int
+                selectedCustomInt = customAttIdArray[0] as! Int
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
                 {
-                    selectedCustomIntArray["\(idString)"] = ""
+                    if language == "en"
+                    {
+                        customization3Content(inputArray: customAttEnglishNameArray)
+                        
+                    }
+                    else if language == "ar"
+                    {
+                        customization3Content(inputArray: customAttArabicNameArray)
+                    }
                 }
-            }
-            
-            selectedCustomString = customAttEnglishNameArray[0] as! String
-            selectedCustomInt = customAttIdArray[0] as! Int
-            
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
+                else
                 {
                     customization3Content(inputArray: customAttEnglishNameArray)
-
-                }
-                else if language == "ar"
-                {
-                    customization3Content(inputArray: customAttArabicNameArray)
                 }
             }
             else
             {
-                customization3Content(inputArray: customAttEnglishNameArray)
+                stopActivity()
+                let responseEmptyAlert = UIAlertController(title: "Alert", message: "Customization not available for this dress type", preferredStyle: .alert)
+                responseEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: responseEmptyAlertAction(action:)))
+                self.present(responseEmptyAlert, animated: true, completion: nil)
             }
         }
         else
@@ -189,6 +222,13 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             ErrorStr = Result
             DeviceError()
         }
+    }
+    
+    func responseEmptyAlertAction(action : UIAlertAction)
+    {
+        UserDefaults.standard.set(1, forKey: "custom3Response")
+        let measurement1Screen = Measurement1ViewController()
+        self.navigationController?.pushViewController(measurement1Screen, animated: true)
     }
     
     func API_CALLBACK_Customization3Attr(custom3Attr: NSDictionary)
@@ -696,7 +736,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if values.isEmpty == true || values == ""
                     {
-                        let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and procced to next", preferredStyle: .alert)
+                        let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and proceed to next", preferredStyle: .alert)
                         customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                         self.present(customEmptyAlert, animated: true, completion: nil)
                     }
@@ -715,7 +755,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if values.isEmpty == true || values == ""
                     {
-                        let customEmptyAlert = UIAlertController(title: "محزر", message: "يرجى اختيار التخصيص لوالإجراء التالي", preferredStyle: .alert)
+                        print("CHECK WITH EMPTY KEYS", keys, values)
+                        print("OVER ALL ARRAY", selectedCustomStringArray)
+                        let customEmptyAlert = UIAlertController(title: "محزر", message: "الرجاء اختيار التخصيص لـ \(keys) والمتابعة إلى التالي", preferredStyle: .alert)
                         customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                         self.present(customEmptyAlert, animated: true, completion: nil)
                     }
@@ -735,7 +777,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             {
                 if values.isEmpty == true || values == ""
                 {
-                    let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and procced to next", preferredStyle: .alert)
+                    let customEmptyAlert = UIAlertController(title: "Alert", message: "Please choose your customization for \(keys) and proceed to next", preferredStyle: .alert)
                     customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                     self.present(customEmptyAlert, animated: true, completion: nil)
                 }
@@ -753,6 +795,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         {
             UserDefaults.standard.set(selectedCustomStringArray, forKey: "custom3")
             UserDefaults.standard.set(selectedCustomIntArray, forKey: "custom3Id")
+            UserDefaults.standard.set(0, forKey: "custom3Response")
             let measurement1Screen = Measurement1ViewController()
             self.navigationController?.pushViewController(measurement1Screen, animated: true)
         }

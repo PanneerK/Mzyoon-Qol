@@ -115,9 +115,9 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
             TrackingStatusIdArray = Result.value(forKey: "TrackingStatusId") as! NSArray
             print("TrackingStatusIdArray:",TrackingStatusIdArray)
             
-             TrackingView()
+            TrackingView()
             
-             TrackingTableview.reloadData()
+            TrackingTableview.reloadData()
             
         }
         else if ResponseMsg == "Failure"

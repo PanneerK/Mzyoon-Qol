@@ -27,6 +27,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     var selectedTailors = [String]()
     
     let orderSummaryScrollView = UIScrollView()
+    let submitButton = UIButton()
     
     var yPos = CGFloat()
     
@@ -405,7 +406,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         
         
-        let submitButton = UIButton()
         submitButton.frame = CGRect(x: orderSummaryScrollView.frame.width - (13 * x), y: tailorView.frame.maxY + (2 * y), width: (10 * x), height: (4 * y))
         submitButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         submitButton.setTitle("SUBMIT", for: .normal)
@@ -583,6 +583,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     @objc func submitButtonAction(sender : UIButton)
     {
+        sender.isEnabled = false
         var custom3KeyInt = [Int]()
         var custom3ValuesInt = [Int]()
         
@@ -739,7 +740,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                         getImageArray.append(getImage)
                     }
                 }
-                
+                activityContents()
+
                 self.serviceCall.API_MaterialImageUpload(materialImages: getImageArray, delegate: self)
             }
             else if orderType == 3
@@ -756,6 +758,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             getImageArray.append(getImage)
                         }
                         
+                        activityContents()
+
                         serviceCall.API_ReferenceImageUpload(referenceImages: getImageArray, delegate: self)
                     }
                     else
@@ -848,7 +852,15 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         else
         {
+            submitButton.isEnabled = true
+            applicationDelegate.exitContents()
             
+            let Result = material.object(forKey: "Result") as! String
+            print("Result IN FAILURE", Result)
+            
+            MethodName = "Material Image Upload"
+            ErrorStr = Result
+            DeviceError()
         }
         
         print("CALL BACK IMAGE NAME FOR MATERIAL", getMaterialImageNameArray)
@@ -892,7 +904,15 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         else
         {
+            submitButton.isEnabled = true
+            applicationDelegate.exitContents()
             
+            let Result = reference.object(forKey: "Result") as! String
+            print("Result IN FAILURE", Result)
+            
+            MethodName = "Reference Image Upload"
+            ErrorStr = Result
+            DeviceError()
         }
         
         print("CALL BACK IMAGE NAME FOR REFERENCE", getReferenceImageNameArray)
@@ -961,6 +981,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         else if ResponseMsg == "Failure"
         {
+            submitButton.isEnabled = true
+            applicationDelegate.exitContents()
+            
             let Result = insertOrder.object(forKey: "Result") as! String
             print("Result IN FAILURE", Result)
             

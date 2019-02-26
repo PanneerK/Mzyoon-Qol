@@ -13,18 +13,29 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     var brandArray = [Int]()
     let serviceCall = ServerAPI()
     
-    
-    var colorsArray = NSArray()
+    //SCREEN CONTENTS PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let customization2NextButton = UIButton()
+    let selfScreenContents = UIView()
+    let materialTitleLabel = UILabel()
+    let colorTitleLabel = UILabel()
+    let patternTitleLabel = UILabel()
+
+    var colorsArrayInEnglish = NSArray()
+    var colorsArrayInArabic = NSArray()
     var colorsIdArray = NSArray()
     var colorsImageArray = NSArray()
     var convertedColorsImageArray = [UIImage]()
     
-    var materialsArray = NSArray()
+    var materialsArrayInEnglish = NSArray()
+    var materialsArrayInArabic = NSArray()
     var materialsIdArray = NSArray()
     var materialsImageArray = NSArray()
     var convertedMaterialsImageArray = [UIImage]()
     
-    var patternsArray = NSArray()
+    var patternsArrayInEnglish = NSArray()
+    var patternsArrayInArabic = NSArray()
     var patternsIdArray = NSArray()
     var patternsImageArray = NSArray()
     var convertedPatternsImageArray = [UIImage]()
@@ -132,19 +143,23 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             
             let Colors = Result.object(forKey: "Colors") as! NSArray
             
-            colorsArray = nameArray
+            colorsArrayInEnglish = nameArray
+            colorsArrayInArabic = nameArray
             colorsIdArray = idArray
             colorsImageArray = imageArray
             
-            materialsArray = nameArray
+            materialsArrayInEnglish = nameArray
+            materialsArrayInArabic = nameArray
             materialsIdArray = idArray
             materialsImageArray = imageArray
             
-            patternsArray = nameArray
+            patternsArrayInEnglish = nameArray
+            patternsArrayInArabic = nameArray
             patternsIdArray = idArray
             patternsImageArray = imageArray
             
-            colorsArray = Colors.value(forKey: "ColorInEnglish") as! NSArray
+            colorsArrayInEnglish = Colors.value(forKey: "ColorInEnglish") as! NSArray
+            colorsArrayInArabic = Colors.value(forKey: "ColorInArabic") as! NSArray
             colorsIdArray = Colors.value(forKey: "Id") as! NSArray
             colorsImageArray = Colors.value(forKey: "Image") as! NSArray
             
@@ -176,7 +191,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             
             let Materials = Result.object(forKey: "Materials") as! NSArray
             
-            materialsArray = Materials.value(forKey: "MaterialInEnglish") as! NSArray
+            materialsArrayInEnglish = Materials.value(forKey: "MaterialInEnglish") as! NSArray
+            materialsArrayInArabic = Materials.value(forKey: "MaterialInArabic") as! NSArray
             materialsIdArray = Materials.value(forKey: "Id") as! NSArray
             materialsImageArray = Materials.value(forKey: "Image") as! NSArray
             
@@ -212,7 +228,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             
             let Patterns = Result.object(forKey: "Patterns") as! NSArray
             
-            patternsArray = Patterns.value(forKey: "PatternInEnglish") as! NSArray
+            patternsArrayInEnglish = Patterns.value(forKey: "PatternInEnglish") as! NSArray
+            patternsArrayInArabic = Patterns.value(forKey: "PatternInArabic") as! NSArray
             patternsIdArray = Patterns.value(forKey: "Id") as! NSArray
             patternsImageArray = Patterns.value(forKey: "Image") as! NSArray
             
@@ -248,11 +265,39 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             }
             else if updatingId == 1
             {
-                colorContent()
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        colorContent(getInputArray: colorsArrayInEnglish)
+                    }
+                    else if language == "ar"
+                    {
+                        colorContent(getInputArray: colorsArrayInArabic)
+                    }
+                }
+                else
+                {
+                    colorContent(getInputArray: colorsArrayInEnglish)
+                }
             }
             else if updatingId == 2
             {
-                patternContent()
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        patternContent(getInputArray: patternsArrayInEnglish)
+                    }
+                    else if language == "ar"
+                    {
+                        patternContent(getInputArray: patternsArrayInArabic)
+                    }
+                }
+                else
+                {
+                    patternContent(getInputArray: patternsArrayInEnglish)
+                }
             }
         }
         else if ResponseMsg == "Failure"
@@ -266,33 +311,63 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "التخصيص-2"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        materialTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        colorTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        patternTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        materialTitleLabel.text = "نوع المادة"
+        colorTitleLabel.text = "اللون"
+        patternTitleLabel.text = "نمط"
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "CUSTOMIZATION-2"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        materialTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        colorTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        patternTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        materialTitleLabel.text = "MATERIAL TYPE"
+        colorTitleLabel.text = "COLOR"
+        patternTitleLabel.text = "PATTERN"
+    }
     
     func customization2Content()
     {
-        let customization2View = UIView()
-        customization2View.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        customization2View.backgroundColor = UIColor.white
-        //        view.addSubview(customization2View)
-        
-        let customization2NavigationBar = UIView()
-        customization2NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        customization2NavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(customization2NavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         backButton.tag = 3
-        customization2NavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: customization2NavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "CUSTOMIZATION-2"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        customization2NavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "CUSTOMIZATION-2"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
+        
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        self.view.bringSubviewToFront(slideMenuButton)
         
         /*let custom1Title = ["MATERIAL TYPE", "COLOR", "PATTERN"]
          
@@ -315,42 +390,74 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
          y1 = custom1Image.frame.maxY + (14 * y)
          }*/
         
-        materialContent()
-        colorContent()
-        patternContent()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                materialContent(getInputArray: materialsArrayInEnglish)
+                colorContent(getInputArray: colorsArrayInEnglish)
+                patternContent(getInputArray: patternsArrayInEnglish)
+            }
+            else if language == "ar"
+            {
+                materialContent(getInputArray: materialsArrayInArabic)
+                colorContent(getInputArray: colorsArrayInArabic)
+                patternContent(getInputArray: patternsArrayInArabic)
+            }
+        }
+        else
+        {
+            materialContent(getInputArray: materialsArrayInEnglish)
+            colorContent(getInputArray: colorsArrayInEnglish)
+            patternContent(getInputArray: patternsArrayInEnglish)
+        }
         
-        let customization2NextButton = UIButton()
         customization2NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))
         customization2NextButton.layer.cornerRadius = customization2NextButton.frame.height / 2
         customization2NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization2NextButton.addTarget(self, action: #selector(self.customization2NextButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(customization2NextButton)
+        selfScreenContents.addSubview(customization2NextButton)
         
         self.stopActivity()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
-    func materialContent()
+    func materialContent(getInputArray: NSArray)
     {
-        let materialTitleLabel = UILabel()
-        materialTitleLabel.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: (8 * y), width: (15 * x), height: (3 * y))
+        materialTitleLabel.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: y, width: (15 * x), height: (3 * y))
         materialTitleLabel.layer.borderWidth = 1
         materialTitleLabel.layer.masksToBounds = true
         materialTitleLabel.text = "MATERIAL TYPE"
         materialTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         materialTitleLabel.textAlignment = .center
         materialTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
-        view.addSubview(materialTitleLabel)
+        selfScreenContents.addSubview(materialTitleLabel)
         
         materialScrollView.frame = CGRect(x: (3 * x), y: materialTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
-        view.addSubview(materialScrollView)
+        selfScreenContents.addSubview(materialScrollView)
         
         let buttonTitleText = ["All Material Type", "Fabric", "Synthetic", "Coton"]
         let imageName = ["All Color", "Red", "Green", "Black"]
         
         var x1:CGFloat = (2 * x)
         
-        for i in 0..<materialsArray.count
+        for i in 0..<getInputArray.count
         {
             let materialButton = UIButton()
             materialButton.frame = CGRect(x: x1, y: y, width: (12 * x), height: (10 * y))
@@ -358,6 +465,22 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             materialButton.tag = materialsIdArray[i] as! Int
             materialButton.addTarget(self, action: #selector(self.materialButtonAction), for: .touchUpInside)
             materialScrollView.addSubview(materialButton)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    materialButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    materialButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                materialButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: materialButton.frame.width, height: materialButton.frame.height - (2 * y))
@@ -379,7 +502,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: materialButton.frame.height - (2 * y), width: materialButton.frame.width, height: (2 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = materialsArray[i] as! String
+            buttonTitle.text = getInputArray[i] as! String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
@@ -393,9 +516,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         materialScrollView.contentSize.width = x1 + (2 * x)
     }
     
-    func colorContent()
+    func colorContent(getInputArray: NSArray)
     {
-        let colorTitleLabel = UILabel()
         colorTitleLabel.frame = CGRect(x: ((view.frame.width - (8 * x)) / 2), y: materialScrollView.frame.maxY + (2 * y), width: (8 * x), height: (3 * y))
         colorTitleLabel.layer.borderWidth = 1
         colorTitleLabel.layer.masksToBounds = true
@@ -404,10 +526,10 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         colorTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         colorTitleLabel.textAlignment = .center
         colorTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
-        view.addSubview(colorTitleLabel)
+        selfScreenContents.addSubview(colorTitleLabel)
         
         colorScrollView.frame = CGRect(x: (3 * x), y: colorTitleLabel.frame.maxY, width: view.frame.width - (3 * x), height: (12 * y))
-        view.addSubview(colorScrollView)
+        selfScreenContents.addSubview(colorScrollView)
         
         for views in colorScrollView.subviews
         {
@@ -416,7 +538,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         let buttonTitleText2 = ["All Color", "Red", "Green", "Black"]
         var x2:CGFloat = (2 * x)
-        for i in 0..<colorsArray.count
+        for i in 0..<getInputArray.count
         {
             let colorButton = UIButton()
             colorButton.frame = CGRect(x: x2, y: y, width: (12 * x), height: (10 * y))
@@ -424,6 +546,22 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             colorButton.tag = colorsIdArray[i] as! Int
             colorButton.addTarget(self, action: #selector(self.colorButtonAction), for: .touchUpInside)
             colorScrollView.addSubview(colorButton)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    colorButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    colorButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                colorButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: colorButton.frame.width, height: colorButton.frame.height - (2 * y))
@@ -444,7 +582,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: colorButton.frame.height - (2 * y), width: colorButton.frame.width, height: (2 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = colorsArray[i] as! String
+            buttonTitle.text = getInputArray[i] as! String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
@@ -457,9 +595,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         colorScrollView.contentSize.width = x2 + (2 * x)
     }
     
-    func patternContent()
+    func patternContent(getInputArray: NSArray)
     {
-        let patternTitleLabel = UILabel()
         patternTitleLabel.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: colorScrollView.frame.maxY + (2 * y), width: (10 * x), height: (3 * y))
         patternTitleLabel.layer.borderWidth = 1
         patternTitleLabel.layer.masksToBounds = true
@@ -468,10 +605,10 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         patternTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         patternTitleLabel.textAlignment = .center
         patternTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
-        view.addSubview(patternTitleLabel)
+        selfScreenContents.addSubview(patternTitleLabel)
         
         patternScrollView.frame = CGRect(x: (3 * x), y: patternTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
-        view.addSubview(patternScrollView)
+        selfScreenContents.addSubview(patternScrollView)
         
         for views in patternScrollView.subviews
         {
@@ -482,7 +619,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         var x3:CGFloat = (2 * x)
         
-        for i in 0..<patternsArray.count
+        for i in 0..<getInputArray.count
         {
             let patternButton = UIButton()
             patternButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
@@ -490,6 +627,22 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             patternButton.tag = patternsIdArray[i] as! Int
             patternButton.addTarget(self, action: #selector(self.patternButtonAction), for: .touchUpInside)
             patternScrollView.addSubview(patternButton)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    patternButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    patternButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                patternButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: patternButton.frame.width, height: patternButton.frame.height - (2 * y))
@@ -510,7 +663,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: patternButton.frame.height - (2 * y), width: patternButton.frame.width, height: (2 * y))
             buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = patternsArray[i] as! String
+            buttonTitle.text = getInputArray[i] as! String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
@@ -871,7 +1024,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == materialTagIntArray[j]
                         {
-                            selectedMaterialNameArray.append(materialsArray[i] as! String)
+                            selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
                         }
                     }
                 }
@@ -894,7 +1047,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                     {
                         if id == colorTagIntArray[j]
                         {
-                            selectedColorNameArray.append(colorsArray[i] as! String)
+                            selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
                         }
                     }
                 }
@@ -915,7 +1068,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if id == selectedPatternId
                     {
-                        selectedPatternNameArray.append(patternsArray[i] as! String)
+                        selectedPatternNameArray.append(patternsArrayInEnglish[i] as! String)
                     }
                 }
             }
@@ -924,7 +1077,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            UserDefaults.standard.set(patternsArray[0], forKey: "pattern")
+            UserDefaults.standard.set(patternsArrayInEnglish[0], forKey: "pattern")
         }
         
         if selectedPatternId != 0
@@ -936,9 +1089,27 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            let alert = UIAlertController(title: "Alert", message: "Please select any one pattern to proceed", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Please select any one pattern to proceed", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let alert = UIAlertController(title: "محزر", message: "يرجى تحديد نمط واحد للمتابعة", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Please select any one pattern to proceed", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
     

@@ -1633,7 +1633,99 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         print(CountryCode)
         print(PhoneNum)
         
-        if FirstNameStr.isEmpty != true || FirstNameStr != ""
+        if firstNameEnglishTextField.text != "" || firstNameEnglishTextField.text?.count != 0 || firstNameEnglishTextField.text?.isEmpty != true
+        {
+            if secondNameEnglishTextField.text != "" || secondNameEnglishTextField.text?.count != 0 || secondNameEnglishTextField.text?.isEmpty != true
+            {
+                if countryButton.titleLabel?.text != "Country"
+                {
+                    if stateButton.titleLabel?.text != "State"
+                    {
+                        if areaButton.titleLabel?.text != "Area"
+                        {
+                            if floorTextField.text != "" || floorTextField.text?.count != 0 || floorTextField.text?.isEmpty != true
+                            {
+                                if landMarkTextField.text != "" || landMarkTextField.text?.count != 0 || landMarkTextField.text?.isEmpty != true
+                                {
+                                    if locationTypeTextField.text != "" || locationTypeTextField.text?.count != 0 || locationTypeTextField.text?.isEmpty != true
+                                    {
+                                        if mobileTextField.text != "" || mobileTextField.text?.count != 0 || mobileTextField.text?.isEmpty != true
+                                        {
+                                            if insertOrUpdate == 1
+                                            {
+                                                activityContents()
+                                                serviceCall.API_InsertAddress(BuyerId: buyerId, FirstName: firstNameEnglishTextField.text!, LastName: secondNameEnglishTextField.text!, CountryId: getCountryId, StateId: getStateId, Area: "\(getAreaId)", Floor: floorTextField.text!, LandMark: landMarkTextField.text!, LocationType: locationTypeTextField.text!, ShippingNotes: shippingNotesTextField.text!, IsDefault: setDefault, CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                            }
+                                            else
+                                            {
+                                                activityContents()
+                                                serviceCall.API_UpdateAddress(Id: getEditId, BuyerId: buyerId, FirstName: firstNameEnglishTextField.text!, LastName: secondNameEnglishTextField.text!, CountryId: getCountryId, StateId: getStateId, Area: "\(getAreaId)", Floor: floorTextField.text!, LandMark: landMarkTextField.text!, LocationType: locationTypeTextField.text!, ShippingNotes: shippingNotesTextField.text!, IsDefault: setDefault, CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, Longitude: Float(longitude), Latitude: Float(latitude), delegate: self)
+                                            }
+                                        }
+                                        else
+                                        {
+                                            emptyAlert = UIAlertController(title: "Alert", message: "Please fill mobile number to proceed", preferredStyle: .alert)
+                                            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                            self.present(emptyAlert, animated: true, completion: nil)
+                                        }
+                                    }
+                                    else
+                                    {
+                                        emptyAlert = UIAlertController(title: "Alert", message: "Please select location type to proceed", preferredStyle: .alert)
+                                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        self.present(emptyAlert, animated: true, completion: nil)
+                                    }
+                                }
+                                else
+                                {
+                                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill landmark details to proceed", preferredStyle: .alert)
+                                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    self.present(emptyAlert, animated: true, completion: nil)
+                                }
+                            }
+                            else
+                            {
+                                emptyAlert = UIAlertController(title: "Alert", message: "Please fill floor details to proceed", preferredStyle: .alert)
+                                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                self.present(emptyAlert, animated: true, completion: nil)
+                            }
+                        }
+                        else
+                        {
+                            emptyAlert = UIAlertController(title: "Alert", message: "Please select your area to proceed", preferredStyle: .alert)
+                            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(emptyAlert, animated: true, completion: nil)
+                        }
+                    }
+                    else
+                    {
+                        emptyAlert = UIAlertController(title: "Alert", message: "Please select your state to proceed", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(emptyAlert, animated: true, completion: nil)
+                    }
+                }
+                else
+                {
+                    emptyAlert = UIAlertController(title: "Alert", message: "Please select your country to proceed", preferredStyle: .alert)
+                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(emptyAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                emptyAlert = UIAlertController(title: "Alert", message: "Please fill second name to proceed", preferredStyle: .alert)
+                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(emptyAlert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            emptyAlert = UIAlertController(title: "Alert", message: "Please fill first name to proceed", preferredStyle: .alert)
+            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(emptyAlert, animated: true, completion: nil)
+        }
+        
+        /*if FirstNameStr.isEmpty != true || FirstNameStr != ""
         {
             if lastNameStr.isEmpty != true || lastNameStr != ""
             {
@@ -1724,7 +1816,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             emptyAlert = UIAlertController(title: "Alert", message: "Please fill first name to proceed", preferredStyle: .alert)
             emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(emptyAlert, animated: true, completion: nil)
-        }
+        }*/
         
     }
     

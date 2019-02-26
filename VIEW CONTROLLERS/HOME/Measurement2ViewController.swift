@@ -286,54 +286,66 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             // Body Parts :
             
             let Measurements = Result.object(forKey: "Measurements") as! NSArray
-            PartsIdArray = Measurements.value(forKey: "Id") as! NSArray
-            PartsNameArray = Measurements.value(forKey: "TextInEnglish") as! NSArray
-            PartsReferenceNumberArray = Measurements.value(forKey: "ReferenceNumber") as! NSArray
-            PartsGenderMeasurementIdArray = Measurements.value(forKey: "GenderMeasurementId") as! NSArray
-            PartsImagesArray = Measurements.value(forKey: "Image") as! NSArray
             
-            for i in 0..<PartsImagesArray.count
+            if Measurements.count != 0
             {
-                if let imageName = PartsImagesArray[i] as? String
+                PartsIdArray = Measurements.value(forKey: "Id") as! NSArray
+                PartsNameArray = Measurements.value(forKey: "TextInEnglish") as! NSArray
+                PartsReferenceNumberArray = Measurements.value(forKey: "ReferenceNumber") as! NSArray
+                PartsGenderMeasurementIdArray = Measurements.value(forKey: "GenderMeasurementId") as! NSArray
+                PartsImagesArray = Measurements.value(forKey: "Image") as! NSArray
+                
+                for i in 0..<PartsImagesArray.count
                 {
-                    let urlString = serviceCall.baseURL
-                    let api = "\(urlString)/images/Measurement2/\(imageName)"
-                    
-                    let apiurl = URL(string: api)
-                    
-                    if apiurl != nil
+                    if let imageName = PartsImagesArray[i] as? String
                     {
-                        if let data = try? Data(contentsOf: apiurl!)
+                        let urlString = serviceCall.baseURL
+                        let api = "\(urlString)/images/Measurement2/\(imageName)"
+                        
+                        let apiurl = URL(string: api)
+                        
+                        if apiurl != nil
                         {
-                            if let image = UIImage(data: data)
+                            if let data = try? Data(contentsOf: apiurl!)
                             {
-                                self.convertedPartsImageArray.append(image)
+                                if let image = UIImage(data: data)
+                                {
+                                    self.convertedPartsImageArray.append(image)
+                                }
+                            }
+                            else
+                            {
+                                let emptyImage = UIImage(named: "empty")
+                                self.convertedPartsImageArray.append(emptyImage!)
                             }
                         }
-                        else
-                        {
-                            let emptyImage = UIImage(named: "empty")
-                            self.convertedPartsImageArray.append(emptyImage!)
-                        }
+                    }
+                    else if PartsImagesArray[i] is NSNull
+                    {
+                        let emptyImage = UIImage(named: "empty")
+                        self.convertedPartsImageArray.append(emptyImage!)
                     }
                 }
-                else if PartsImagesArray[i] is NSNull
+                
+                for i in 0..<PartsIdArray.count
                 {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedPartsImageArray.append(emptyImage!)
+                    if let customString = PartsIdArray[i] as? Int
+                    {
+                        measurementValues[customString] = 0
+                    }
                 }
+                
+                self.measurement2Contents()
+                partsTableView.reloadData()
             }
-            
-            for i in 0..<PartsIdArray.count
+            else
             {
-                if let customString = PartsIdArray[i] as? Int
-                {
-                    measurementValues[customString] = 0
-                }
+                stopActivity()
+                let responseEmptyAlert = UIAlertController(title: "Alert", message: "Measurements are not available for this dress type", preferredStyle: .alert)
+                responseEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: responseEmptyAlertAction(action:)))
+                self.present(responseEmptyAlert, animated: true, completion: nil)
             }
             
-            self.measurement2Contents()
-            partsTableView.reloadData()
         }
         else if ResponseMsg == "Failure"
         {
@@ -343,8 +355,13 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             ErrorStr = Result
             DeviceError()
         }
-        
-        
+    }
+    
+    func responseEmptyAlertAction(action : UIAlertAction)
+    {
+        UserDefaults.standard.set(1, forKey: "measurement2Response")
+        let referenceScreen = ReferenceImageViewController()
+        self.navigationController?.pushViewController(referenceScreen, animated: true)
     }
     
     func API_CALLBACK_DisplayMeasurement(GetMeasurement2val: NSDictionary) 
@@ -602,17 +619,30 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         nextButton.addTarget(self, action: #selector(self.nextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(nextButton)
         
-        gender = "men"
+        if let getGender = UserDefaults.standard.value(forKey: "gender") as? String
+        {
+            gender = getGender
+        }
         
         var measureImages = [String]()
-        if gender == "men"
+        
+        if gender == "Male"
         {
             measureImages = ["Man-front", "Man-front_2", "Man-Back", "Man-Back_2"]
         }
-        else
+        else if gender == "Boy"
         {
             measureImages = ["boyFront_1", "boyFront_2", "boyBack_1", "boyBack_2"]
         }
+        else if gender == "Female"
+        {
+            measureImages = ["womenFront_1", "womenFront_2", "womenFront_3", "womenback_1", "womenback_2"]
+        }
+        else if gender == "Girl"
+        {
+            measureImages = ["boyFront_1", "boyFront_2", "boyBack_1", "boyBack_2"]
+        }
+        
         
         var buttonTag = Int()
         
@@ -631,8 +661,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             let measurementImageView = UIImageView()
             measurementImageView.frame = CGRect(x: x, y: y, width: subView.frame.width / 2, height: subView.frame.height - (2 * y))
             //            measurementImageView.backgroundColor = UIColor.cyan
-//            measurementImageView.image = UIImage(named: measureImages[index])
-            measurementImageView.image = converetedGenderImagesArray[index]
+            measurementImageView.image = UIImage(named: measureImages[index])
+//            measurementImageView.image = converetedGenderImagesArray[index]
             subView.addSubview(measurementImageView)
             
             let verticalLine = UILabel()
@@ -645,7 +675,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             //            verticalLine2.backgroundColor = UIColor.red
             subView.addSubview(verticalLine2)
             
-            if gender == "men"
+            if gender == "Male"
             {
                 if index == 0
                 {
@@ -1237,8 +1267,498 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
              subView.addSubview(fullSleeveButton)
              }
              }*/
+            else if gender == "Female"
+            {
+                if index == 0
+                {
+                    let headLabel = UILabel()
+                    headLabel.frame = CGRect(x: (10.8 * x), y: (y / 2), width: (10.8 * x), height: (2 * y))
+                    headLabel.text = "Head"
+                    headLabel.textColor = UIColor.black
+                    headLabel.textAlignment = .center
+                    headLabel.font = headLabel.font.withSize(15)
+                    headLabel.tag = ((1 * 1) + 300)
+                    subView.addSubview(headLabel)
+                    
+                    let headButton = UIButton()
+                    headButton.frame = CGRect(x: (10.8 * x), y: (1.5 * y), width: subView.frame.width - (16.8 * x), height: (3 * y))
+                    headButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    headButton.tag = 1
+                    headButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(headButton)
+                    
+                    getHeadLabel.frame = CGRect(x: headButton.frame.maxX, y: (1.2 * y), width: (5 * x), height: (3 * y))
+                    if let measurement = UserDefaults.standard.value(forKey: "Measure-Head") as? String
+                    {
+                        getHeadLabel.text = measurement
+                    }
+                    else
+                    {
+                        getHeadLabel.text = "0.0"
+                    }
+                    getHeadLabel.textColor = UIColor.blue
+                    getHeadLabel.textAlignment = .center
+                    getHeadLabel.font = headLabel.font.withSize(15)
+                    getHeadLabel.tag = ((1 * 1) + 200)
+                    subView.addSubview(getHeadLabel)
+                    
+                    let neckLabel = UILabel()
+                    neckLabel.frame = CGRect(x: (11.8 * x), y: (10 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
+                    neckLabel.text = "Neck"
+                    neckLabel.textColor = UIColor.black
+                    neckLabel.textAlignment = .center
+                    neckLabel.font = headLabel.font.withSize(15)
+                    neckLabel.tag = ((2 * 1) + 300)
+                    subView.addSubview(neckLabel)
+                    
+                    let neckButton = UIButton()
+                    neckButton.frame = CGRect(x: (11.8 * x), y: (10.6 * y), width: subView.frame.width - (17.8 * x), height: (3 * y))
+                    neckButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    neckButton.tag = 2
+                    neckButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(neckButton)
+                    
+                    getNeckLabel.frame = CGRect(x: neckButton.frame.maxX, y: (10.6 * y), width: (5 * x), height: (3 * y))
+                    getNeckLabel.text = "0.0"
+                    getNeckLabel.textColor = UIColor.blue
+                    getNeckLabel.textAlignment = .center
+                    getNeckLabel.font = headLabel.font.withSize(15)
+                    getNeckLabel.tag = ((2 * 1) + 200)
+                    subView.addSubview(getNeckLabel)
+                    
+                    let chestLabel = UILabel()
+                    chestLabel.frame = CGRect(x: (13.2 * x), y: (12.9 * y), width: subView.frame.width - (19.2 * x), height: (2 * y))
+                    chestLabel.text = "Chest"
+                    chestLabel.textColor = UIColor.black
+                    chestLabel.textAlignment = .center
+                    chestLabel.font = headLabel.font.withSize(15)
+                    chestLabel.tag = ((3 * 1) + 300)
+                    subView.addSubview(chestLabel)
+                    
+                    let chestButton = UIButton()
+                    chestButton.frame = CGRect(x: (13.2 * x), y: (13.4 * y), width: subView.frame.width - (19.2 * x), height: (3 * y))
+                    chestButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    chestButton.tag = 3
+                    chestButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(chestButton)
+                    
+                    getChestLabel.frame = CGRect(x: chestButton.frame.maxX, y: (13.4 * y), width: (5 * x), height: (3 * y))
+                    getChestLabel.text = "0.0"
+                    getChestLabel.textColor = UIColor.blue
+                    getChestLabel.textAlignment = .center
+                    getChestLabel.font = headLabel.font.withSize(15)
+                    getChestLabel.tag = ((3 * 1) + 200)
+                    subView.addSubview(getChestLabel)
+                    
+                    let waistLabel = UILabel()
+                    waistLabel.frame = CGRect(x: (12.5 * x), y: (14.5 * y), width: subView.frame.width - (18.5 * x), height: (2 * y))
+                    waistLabel.text = "Waist"
+                    waistLabel.textColor = UIColor.black
+                    waistLabel.textAlignment = .center
+                    waistLabel.font = headLabel.font.withSize(15)
+                    waistLabel.tag = ((4 * 1) + 300)
+                    subView.addSubview(waistLabel)
+                    
+                    let waistButton = UIButton()
+                    waistButton.frame = CGRect(x: (12.5 * x), y: (15 * y), width: subView.frame.width - (18.5 * x), height: (3 * y))
+                    waistButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    waistButton.tag = 4
+                    waistButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(waistButton)
+                    
+                    getWaistLabel.frame = CGRect(x: waistButton.frame.maxX, y: (15 * y), width: (5 * x), height: (3 * y))
+                    getWaistLabel.text = "0.0"
+                    getWaistLabel.textColor = UIColor.blue
+                    getWaistLabel.textAlignment = .center
+                    getWaistLabel.font = headLabel.font.withSize(15)
+                    getWaistLabel.tag = ((4 * 1) + 200)
+                    subView.addSubview(getWaistLabel)
+                    
+                    let thighLabel = UILabel()
+                    thighLabel.frame = CGRect(x: (13 * x), y: (25.6 * y), width: subView.frame.width - (19 * x), height: (2 * y))
+                    thighLabel.text = "Thigh"
+                    thighLabel.textColor = UIColor.black
+                    thighLabel.textAlignment = .center
+                    thighLabel.font = headLabel.font.withSize(15)
+                    thighLabel.tag = ((5 * 1) + 300)
+                    subView.addSubview(thighLabel)
+                    
+                    let thighButton = UIButton()
+                    thighButton.frame = CGRect(x: (13 * x), y: (26.1 * y), width: subView.frame.width - (19 * x), height: (3 * y))
+                    thighButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    thighButton.tag = 5
+                    thighButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(thighButton)
+                    
+                    getThighLabel.frame = CGRect(x: thighButton.frame.maxX, y: (26.1 * y), width: (5 * x), height: (3 * y))
+                    getThighLabel.text = "0.0"
+                    getThighLabel.textColor = UIColor.blue
+                    getThighLabel.textAlignment = .center
+                    getThighLabel.font = headLabel.font.withSize(15)
+                    getThighLabel.tag = ((5 * 1) + 200)
+                    subView.addSubview(getThighLabel)
+                    
+                    let kneeLabel = UILabel()
+                    kneeLabel.frame = CGRect(x: (11.8 * x), y: (30.6 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
+                    kneeLabel.text = "Knee"
+                    kneeLabel.textColor = UIColor.black
+                    kneeLabel.textAlignment = .center
+                    kneeLabel.font = headLabel.font.withSize(15)
+                    kneeLabel.tag = ((6 * 1) + 300)
+                    subView.addSubview(kneeLabel)
+                    
+                    let kneeButton = UIButton()
+                    kneeButton.frame = CGRect(x: (11.8 * x), y: (31.1 * y), width: subView.frame.width - (17.8 * x), height: (3 * y))
+                    kneeButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    kneeButton.tag = 6
+                    kneeButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(kneeButton)
+                    
+                    getKneeLabel.frame = CGRect(x: kneeButton.frame.maxX, y: (31.1 * y), width: (5 * x), height: (3 * y))
+                    getKneeLabel.text = "0.0"
+                    getKneeLabel.textColor = UIColor.blue
+                    getKneeLabel.textAlignment = .center
+                    getKneeLabel.font = headLabel.font.withSize(15)
+                    getKneeLabel.tag = ((6 * 1) + 200)
+                    subView.addSubview(getKneeLabel)
+                    
+                    let ankleLabel = UILabel()
+                    ankleLabel.frame = CGRect(x: (11.2 * x), y: (39.9 * y), width: subView.frame.width - (17.2 * x), height: (2 * y))
+                    ankleLabel.text = "Ankle"
+                    ankleLabel.textColor = UIColor.black
+                    ankleLabel.textAlignment = .center
+                    ankleLabel.font = headLabel.font.withSize(15)
+                    ankleLabel.tag = ((7 * 1) + 300)
+                    subView.addSubview(ankleLabel)
+                    
+                    let ankleButton = UIButton()
+                    ankleButton.frame = CGRect(x: (11.2 * x), y: (40.4 * y), width: subView.frame.width - (17.2 * x), height: (3 * y))
+                    ankleButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    ankleButton.tag = 7
+                    ankleButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(ankleButton)
+                    
+                    getAnkleLabel.frame = CGRect(x: ankleButton.frame.maxX, y: (40.4 * y), width: (5 * x), height: (3 * y))
+                    getAnkleLabel.text = "0.0"
+                    getAnkleLabel.textColor = UIColor.blue
+                    getAnkleLabel.textAlignment = .center
+                    getAnkleLabel.font = headLabel.font.withSize(15)
+                    getAnkleLabel.tag = ((7 * 1) + 200)
+                    subView.addSubview(getAnkleLabel)
+                }
+                else if index == 1
+                {
+                    let totalheightLabel = UILabel()
+                    totalheightLabel.frame = CGRect(x: 0, y: (14.5 * y), width: subView.frame.width - (6 * x), height: (2 * y))
+                    totalheightLabel.text = "Over all height"
+                    totalheightLabel.textColor = UIColor.black
+                    totalheightLabel.textAlignment = .center
+                    totalheightLabel.font = totalheightLabel.font.withSize(15)
+                    totalheightLabel.tag = ((8 * 1) + 300)
+                    subView.addSubview(totalheightLabel)
+                    
+                    let overAllHeightButton = UIButton()
+                    overAllHeightButton.frame = CGRect(x: 0, y: (15 * y), width: subView.frame.width - (6 * x), height: (3 * y))
+                    overAllHeightButton.setImage(UIImage(named: "lengthArrowMark"), for: .normal)
+                    //                    overAllHeightButton.backgroundColor = UIColor.red
+                    overAllHeightButton.tag = 8
+                    overAllHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(overAllHeightButton)
+                    
+                    gettotalheightLabel.frame = CGRect(x: overAllHeightButton.frame.maxX, y: (15 * y), width: (5 * x), height: (3 * y))
+                    gettotalheightLabel.text = "0.0"
+                    gettotalheightLabel.textColor = UIColor.blue
+                    gettotalheightLabel.textAlignment = .center
+                    gettotalheightLabel.font = gettotalheightLabel.font.withSize(15)
+                    gettotalheightLabel.tag = ((8 * 1) + 200)
+                    subView.addSubview(gettotalheightLabel)
+                    
+                    let hipHeightLabel = UILabel()
+                    hipHeightLabel.frame = CGRect(x: (4.3 * x), y: (39.5 * y), width: subView.frame.width - (10.3 * x), height: (2 * y))
+                    hipHeightLabel.text = "Hip height"
+                    hipHeightLabel.textColor = UIColor.black
+                    hipHeightLabel.textAlignment = .center
+                    hipHeightLabel.font = hipHeightLabel.font.withSize(15)
+                    hipHeightLabel.tag = ((9 * 1) + 300)
+                    subView.addSubview(hipHeightLabel)
+                    
+                    let hipHeightButton = UIButton()
+                    hipHeightButton.frame = CGRect(x: (4.3 * x), y: (40 * y), width: subView.frame.width - (10.3 * x), height: (3 * y))
+                    hipHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    hipHeightButton.tag = 9
+                    hipHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(hipHeightButton)
+                    
+                    getHipheightLabel.frame = CGRect(x: hipHeightButton.frame.maxX, y: (40 * y), width: (5 * x), height: (3 * y))
+                    getHipheightLabel.text = "0.0"
+                    getHipheightLabel.textColor = UIColor.blue
+                    getHipheightLabel.textAlignment = .center
+                    getHipheightLabel.font = getHipheightLabel.font.withSize(15)
+                    getHipheightLabel.tag = ((9 * 1) + 200)
+                    subView.addSubview(getHipheightLabel)
+                    
+                    let bottomheightLabel = UILabel()
+                    bottomheightLabel.frame = CGRect(x: (8.2 * x), y: (34.5 * y), width: subView.frame.width - (14.2 * x), height: (2 * y))
+                    bottomheightLabel.text = "Bottom height"
+                    bottomheightLabel.textColor = UIColor.black
+                    bottomheightLabel.textAlignment = .center
+                    bottomheightLabel.font = totalheightLabel.font.withSize(15)
+                    bottomheightLabel.tag = ((10 * 1) + 300)
+                    subView.addSubview(bottomheightLabel)
+                    
+                    let bottomHeightButton = UIButton()
+                    bottomHeightButton.frame = CGRect(x: (8.2 * x), y: (35 * y), width: subView.frame.width - (14.2 * x), height: (3 * y))
+                    bottomHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    bottomHeightButton.tag = 10
+                    bottomHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(bottomHeightButton)
+                    
+                    getBottomheightLabel.frame = CGRect(x: bottomHeightButton.frame.maxX, y: (35 * y), width: (5 * x), height: (3 * y))
+                    getBottomheightLabel.text = "0.0"
+                    getBottomheightLabel.textColor = UIColor.blue
+                    getBottomheightLabel.textAlignment = .center
+                    getBottomheightLabel.font = getBottomheightLabel.font.withSize(15)
+                    getBottomheightLabel.tag = ((10 * 1) + 200)
+                    subView.addSubview(getBottomheightLabel)
+                    
+                    let kneeheightLabel = UILabel()
+                    kneeheightLabel.frame = CGRect(x: (11.6 * x), y: (27.3 * y), width: subView.frame.width - (17.6 * x), height: (2 * y))
+                    kneeheightLabel.text = "Knee height"
+                    kneeheightLabel.textColor = UIColor.black
+                    kneeheightLabel.textAlignment = .center
+                    kneeheightLabel.font = totalheightLabel.font.withSize(15)
+                    kneeheightLabel.tag = ((11 * 1) + 300)
+                    subView.addSubview(kneeheightLabel)
+                    
+                    let kneeHeightButton = UIButton()
+                    kneeHeightButton.frame = CGRect(x: (11.6 * x), y: (27.8 * y), width: subView.frame.width - (17.6 * x), height: (3 * y))
+                    kneeHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    kneeHeightButton.tag = 11
+                    kneeHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(kneeHeightButton)
+                    
+                    getKneeheightLabel.frame = CGRect(x: kneeHeightButton.frame.maxX, y: (27.8 * y), width: (5 * x), height: (3 * y))
+                    getKneeheightLabel.text = "0.0"
+                    getKneeheightLabel.textColor = UIColor.blue
+                    getKneeheightLabel.textAlignment = .center
+                    getKneeheightLabel.font = getKneeheightLabel.font.withSize(15)
+                    getKneeheightLabel.tag = ((11 * 1) + 200)
+                    subView.addSubview(getKneeheightLabel)
+                }
+                else if index == 2
+                {
+                    let shoulderLabel = UILabel()
+                    shoulderLabel.frame = CGRect(x: (13.6 * x), y: (7 * y), width: subView.frame.width - (19.6 * x), height: (2 * y))
+                    shoulderLabel.text = "Shoulder"
+                    shoulderLabel.textColor = UIColor.black
+                    shoulderLabel.textAlignment = .center
+                    shoulderLabel.font = shoulderLabel.font.withSize(15)
+                    shoulderLabel.tag = ((12 * 1) + 300)
+                    subView.addSubview(shoulderLabel)
+                    
+                    let shoulderButton = UIButton()
+                    shoulderButton.frame = CGRect(x: (13.6 * x), y: (7.5 * y), width: subView.frame.width - (19.6 * x), height: (3 * y))
+                    shoulderButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    shoulderButton.tag = 12
+                    shoulderButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(shoulderButton)
+                    
+                    getShoulderLabel.frame = CGRect(x: shoulderButton.frame.maxX, y: (7.5 * y), width: (5 * x), height: (3 * y))
+                    getShoulderLabel.text = "0.0"
+                    getShoulderLabel.textColor = UIColor.blue
+                    getShoulderLabel.textAlignment = .center
+                    getShoulderLabel.font = getShoulderLabel.font.withSize(15)
+                    getShoulderLabel.tag = ((12 * 1) + 200)
+                    subView.addSubview(getShoulderLabel)
+                    
+                    let sleeveLabel = UILabel()
+                    sleeveLabel.frame = CGRect(x: (14.5 * x), y: (11 * y), width: subView.frame.width - (20.5 * x), height: (2 * y))
+                    sleeveLabel.text = "Half Sleeve"
+                    sleeveLabel.textColor = UIColor.black
+                    sleeveLabel.textAlignment = .center
+                    sleeveLabel.font = sleeveLabel.font.withSize(15)
+                    sleeveLabel.tag = ((13 * 1) + 300)
+                    subView.addSubview(sleeveLabel)
+                    
+                    let sleeveButton = UIButton()
+                    sleeveButton.frame = CGRect(x: (14.5 * x), y: (11.5 * y), width: subView.frame.width - (20.5 * x), height: (3 * y))
+                    sleeveButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    sleeveButton.tag = 13
+                    sleeveButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(sleeveButton)
+                    
+                    getSleeveLabel.frame = CGRect(x: sleeveButton.frame.maxX, y: (11.5 * y), width: (5 * x), height: (3 * y))
+                    getSleeveLabel.text = "0.0"
+                    getSleeveLabel.textColor = UIColor.blue
+                    getSleeveLabel.textAlignment = .center
+                    getSleeveLabel.font = getSleeveLabel.font.withSize(15)
+                    getSleeveLabel.tag = ((13 * 1) + 200)
+                    subView.addSubview(getSleeveLabel)
+                    
+                    let bicepLabel = UILabel()
+                    bicepLabel.frame = CGRect(x: (15.7 * x), y: (14.1 * y), width: subView.frame.width - (21.7 * x), height: (2 * y))
+                    bicepLabel.text = "Bicep"
+                    bicepLabel.textColor = UIColor.black
+                    bicepLabel.textAlignment = .center
+                    bicepLabel.font = bicepLabel.font.withSize(15)
+                    bicepLabel.tag = ((14 * 1) + 300)
+                    subView.addSubview(bicepLabel)
+                    
+                    let bicepButton = UIButton()
+                    bicepButton.frame = CGRect(x: (15.7 * x), y: (14.6 * y), width: subView.frame.width - (21.7 * x), height: (3 * y))
+                    bicepButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    bicepButton.tag = 14
+                    bicepButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(bicepButton)
+                    
+                    getBicepLabel.frame = CGRect(x: bicepButton.frame.maxX, y: (14.6 * y), width: (5 * x), height: (3 * y))
+                    getBicepLabel.text = "0.0"
+                    getBicepLabel.textColor = UIColor.blue
+                    getBicepLabel.textAlignment = .center
+                    getBicepLabel.font = getBicepLabel.font.withSize(15)
+                    getBicepLabel.tag = ((14 * 1) + 200)
+                    subView.addSubview(getBicepLabel)
+                    
+                    let hipLabel = UILabel()
+                    hipLabel.frame = CGRect(x: (12.4 * x), y: (16.8 * y), width: subView.frame.width - (18.4 * x), height: (2 * y))
+                    hipLabel.text = "Hip"
+                    hipLabel.textColor = UIColor.black
+                    hipLabel.textAlignment = .center
+                    hipLabel.font = hipLabel.font.withSize(15)
+                    hipLabel.tag = ((15 * 1) + 300)
+                    subView.addSubview(hipLabel)
+                    
+                    let hipButton = UIButton()
+                    hipButton.frame = CGRect(x: (12.4 * x), y: (17.3 * y), width: subView.frame.width - (18.4 * x), height: (3 * y))
+                    hipButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    hipButton.tag = 15
+                    hipButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(hipButton)
+                    
+                    getHipLabel.frame = CGRect(x: hipButton.frame.maxX, y: (17.3 * y), width: (5 * x), height: (3 * y))
+                    getHipLabel.text = "0.0"
+                    getHipLabel.textColor = UIColor.blue
+                    getHipLabel.textAlignment = .center
+                    getHipLabel.font = getHipLabel.font.withSize(15)
+                    getHipLabel.tag = ((15 * 1) + 200)
+                    subView.addSubview(getHipLabel)
+                    
+                    let backLabel = UILabel()
+                    backLabel.frame = CGRect(x: (12.9 * x), y: (20.5 * y), width: subView.frame.width - (18.9 * x), height: (2 * y))
+                    backLabel.text = "Back"
+                    backLabel.textColor = UIColor.black
+                    backLabel.textAlignment = .center
+                    backLabel.font = backLabel.font.withSize(15)
+                    backLabel.tag = ((16 * 1) + 300)
+                    subView.addSubview(backLabel)
+                    
+                    let backButton = UIButton()
+                    backButton.frame = CGRect(x: (12.9 * x), y: (21 * y), width: subView.frame.width - (18.9 * x), height: (3 * y))
+                    backButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    backButton.tag = 16
+                    backButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(backButton)
+                    
+                    getBackLabel.frame = CGRect(x: backButton.frame.maxX, y: (21 * y), width: (5 * x), height: (3 * y))
+                    getBackLabel.text = "0.0"
+                    getBackLabel.textColor = UIColor.blue
+                    getBackLabel.textAlignment = .center
+                    getBackLabel.font = getBackLabel.font.withSize(15)
+                    getBackLabel.tag = ((16 * 1) + 200)
+                    subView.addSubview(getBackLabel)
+                }
+                else if index == 3
+                {
+                    let heightLabel = UILabel()
+                    heightLabel.frame = CGRect(x: (9.6 * x), y: (10.6 * y), width: subView.frame.width - (15.6 * x), height: (2 * y))
+                    heightLabel.text = "Height"
+                    heightLabel.textColor = UIColor.black
+                    heightLabel.textAlignment = .center
+                    heightLabel.font = heightLabel.font.withSize(15)
+                    heightLabel.tag = ((17 * 1) + 300)
+                    subView.addSubview(heightLabel)
+                    
+                    let heightButton = UIButton()
+                    heightButton.frame = CGRect(x: (9.6 * x), y: (11.1 * y), width: subView.frame.width - (15.6 * x), height: (3 * y))
+                    heightButton.setImage(UIImage(named: "lengthArrowMark"), for: .normal)
+                    heightButton.tag = 17
+                    heightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(heightButton)
+                    
+                    getHeightLabel.frame = CGRect(x: heightButton.frame.maxX, y: (11.1 * y), width: (5 * x), height: (3 * y))
+                    getHeightLabel.text = "0.0"
+                    getHeightLabel.textColor = UIColor.blue
+                    getHeightLabel.textAlignment = .center
+                    getHeightLabel.font = getHeightLabel.font.withSize(15)
+                    getHeightLabel.tag = ((17 * 1) + 200)
+                    subView.addSubview(getHeightLabel)
+                    
+                    let fullSleeveLabel = UILabel()
+                    fullSleeveLabel.frame = CGRect(x: (14.6 * x), y: (15.1 * y), width: subView.frame.width - (20.6 * x), height: (2 * y))
+                    fullSleeveLabel.text = "Sleeve Height"
+                    fullSleeveLabel.textColor = UIColor.black
+                    fullSleeveLabel.textAlignment = .center
+                    fullSleeveLabel.font = heightLabel.font.withSize(15)
+                    fullSleeveLabel.tag = ((18 * 1) + 300)
+                    subView.addSubview(fullSleeveLabel)
+                    
+                    let fullSleeveButton = UIButton()
+                    fullSleeveButton.frame = CGRect(x: (14.6 * x), y: (15.6 * y), width: subView.frame.width - (20.6 * x), height: (3 * y))
+                    fullSleeveButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    fullSleeveButton.tag = 18
+                    fullSleeveButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(fullSleeveButton)
+                    
+                    getFullSleeveLabel.frame = CGRect(x: fullSleeveButton.frame.maxX, y: (15.6 * y), width: (5 * x), height: (3 * y))
+                    getFullSleeveLabel.text = "0.0"
+                    getFullSleeveLabel.textColor = UIColor.blue
+                    getFullSleeveLabel.textAlignment = .center
+                    getFullSleeveLabel.font = getFullSleeveLabel.font.withSize(15)
+                    getFullSleeveLabel.tag = ((18 * 1) + 200)
+                    subView.addSubview(getFullSleeveLabel)
+                    
+                    let handKneeLabel = UILabel()
+                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (19.9 * y), width: subView.frame.width - (21.5 * x), height: (2 * y))
+                    handKneeLabel.text = "Hand Cuf"
+                    handKneeLabel.textColor = UIColor.black
+                    handKneeLabel.textAlignment = .center
+                    handKneeLabel.font = handKneeLabel.font.withSize(15)
+                    handKneeLabel.tag = ((19 * 1) + 300)
+                    subView.addSubview(handKneeLabel)
+                    
+                    let handKneeButton = UIButton()
+                    handKneeButton.frame = CGRect(x: (15.5 * x), y: (20.3 * y), width: subView.frame.width - (21.5 * x), height: (3 * y))
+                    handKneeButton.setImage(UIImage(named: "arrowMark"), for: .normal)
+                    handKneeButton.tag = 19
+                    handKneeButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+                    subView.addSubview(handKneeButton)
+                    
+                    getHandKneeLabel.frame = CGRect(x: handKneeButton.frame.maxX, y: (20.3 * y), width: (5 * x), height: (3 * y))
+                    getHandKneeLabel.text = "0.0"
+                    getHandKneeLabel.textColor = UIColor.blue
+                    getHandKneeLabel.textAlignment = .center
+                    getHandKneeLabel.font = getHandKneeLabel.font.withSize(15)
+                    getHandKneeLabel.tag = ((19 * 1) + 200)
+                    subView.addSubview(getHandKneeLabel)
+                }
+                
+                /*for view in subView.subviews
+                 {
+                 for i in 0..<PartsIdArray.count
+                 {
+                 if let button = view.viewWithTag(PartsIdArray[i] as! Int) as? UIButton
+                 {
+                 button.backgroundColor = UIColor.green
+                 }
+                 else
+                 {
+                 
+                 }
+                 }
+                 }*/
+            }
             
-            for views in subView.subviews
+            /*for views in subView.subviews
             {
                 if let button = views as? UIButton
                 {
@@ -1304,7 +1824,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                  }
                  }
                  }*/
-            }
+            }*/
             
         }
         
@@ -1833,7 +2353,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         {
             UserDefaults.standard.set(keys, forKey: "measurementId")
             UserDefaults.standard.set(values, forKey: "measurementValues")
-            
+            UserDefaults.standard.set(0, forKey: "measurement2Response")
             let referenceScreen = ReferenceImageViewController()
             self.navigationController?.pushViewController(referenceScreen, animated: true)
         }

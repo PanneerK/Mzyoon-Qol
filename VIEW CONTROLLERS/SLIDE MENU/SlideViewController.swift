@@ -144,8 +144,6 @@ class SlideViewController: UIViewController
 
             view.addSubview(slideMenusButton)
             
-            y1 = slideMenusButton.frame.maxY + y
-            
             let slideMenuButonImage = UIImageView()
             slideMenuButonImage.frame = CGRect(x: (2 * x), y: y, width: (3 * x), height: (2 * y))
             slideMenuButonImage.image = UIImage(named: buttonImage[i])
@@ -158,6 +156,13 @@ class SlideViewController: UIViewController
             slideMenuButtonTitle.textAlignment = .left
             slideMenuButtonTitle.font = slideMenuButtonTitle.font.withSize(2 * x)
             slideMenusButton.addSubview(slideMenuButtonTitle)
+            
+            let lineLabel = UILabel()
+            lineLabel.frame = CGRect(x: 0, y: slideMenusButton.frame.maxY, width: slideViewWidth, height: 1)
+            lineLabel.backgroundColor = UIColor.white
+            view.addSubview(lineLabel)
+            
+            y1 = slideMenusButton.frame.maxY + y
         }
     }
     
