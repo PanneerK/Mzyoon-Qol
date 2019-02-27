@@ -174,10 +174,25 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     @objc func addAddressButtonAction(sender : UIButton)
     {
         let address2Screen = Address2ViewController()
-        address2Screen.addressString = [addressLabel.text!]
-        address2Screen.getLocation = getTraggedPosition
+        
         address2Screen.screenTag = 2
         address2Screen.checkScreen = 2
+        address2Screen.firstNameEnglishTextField.text = Variables.sharedManager.firstName
+        address2Screen.secondNameEnglishTextField.text = Variables.sharedManager.secondName
+        address2Screen.locationTypeTextField.text = Variables.sharedManager.locationType
+        address2Screen.areaButton.setTitle("\(Variables.sharedManager.areaName)", for: .normal)
+        address2Screen.floorTextField.text = Variables.sharedManager.floor
+        address2Screen.landMarkTextField.text = Variables.sharedManager.landmark
+        address2Screen.mobileTextField.text = Variables.sharedManager.mobileNumber
+        address2Screen.mobileCountryCodeLabel.text = Variables.sharedManager.countryCode
+        address2Screen.shippingNotesTextField.text = Variables.sharedManager.shippingNotes
+        address2Screen.checkDefault = Variables.sharedManager.checkDefaultId
+        address2Screen.addressString = [addressLabel.text!]
+        address2Screen.editStateId = Variables.sharedManager.stateId
+        address2Screen.editCountryId = Variables.sharedManager.countryCodeId
+        address2Screen.editAreaId = Variables.sharedManager.areaId
+        address2Screen.getLocation = getTraggedPosition
+        
         self.navigationController?.pushViewController(address2Screen, animated: true)
     }
     

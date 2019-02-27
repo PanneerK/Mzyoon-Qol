@@ -109,6 +109,9 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var areaCodeArray = NSArray()
     var areaNameArray = NSArray()
     
+    //SCREEN CONTENTS
+    let addressSwitchButton = UISwitch()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -325,6 +328,23 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             
             if Result == "1"
             {
+                Variables.sharedManager.firstName = ""
+                Variables.sharedManager.secondName = ""
+                Variables.sharedManager.countryName = ""
+                Variables.sharedManager.stateName = ""
+                Variables.sharedManager.areaName = ""
+                Variables.sharedManager.floor = ""
+                Variables.sharedManager.landmark = ""
+                Variables.sharedManager.locationType = ""
+                Variables.sharedManager.mobileNumber = ""
+                Variables.sharedManager.countryCode = ""
+                Variables.sharedManager.shippingNotes = ""
+                
+                Variables.sharedManager.countryCodeId = 0
+                Variables.sharedManager.stateId = 0
+                Variables.sharedManager.areaId = 0
+                Variables.sharedManager.checkDefaultId = 0
+                
                 let alert = UIAlertController(title: "Alert", message: "Saved Sucessfully", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
                 self.present(alert, animated: true, completion: nil)
@@ -512,6 +532,23 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             
             if Result == "1"
             {
+                Variables.sharedManager.firstName = ""
+                Variables.sharedManager.secondName = ""
+                Variables.sharedManager.countryName = ""
+                Variables.sharedManager.stateName = ""
+                Variables.sharedManager.areaName = ""
+                Variables.sharedManager.floor = ""
+                Variables.sharedManager.landmark = ""
+                Variables.sharedManager.locationType = ""
+                Variables.sharedManager.mobileNumber = ""
+                Variables.sharedManager.countryCode = ""
+                Variables.sharedManager.shippingNotes = ""
+                
+                Variables.sharedManager.countryCodeId = 0
+                Variables.sharedManager.stateId = 0
+                Variables.sharedManager.areaId = 0
+                Variables.sharedManager.checkDefaultId = 0
+                
                 let alert = UIAlertController(title: "Alert", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
                 self.present(alert, animated: true, completion: nil)
@@ -646,7 +683,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressDefaultLabel.font = editLabel.font.withSize(15)
         view.addSubview(addressDefaultLabel)
         
-        let addressSwitchButton = UISwitch()
         addressSwitchButton.frame = CGRect(x: addressDefaultLabel.frame.maxX + (2 * x), y: locationView.frame.maxY + y, width: (5 * x), height: (2 * y))
         if checkDefault == 1
         {
@@ -1206,7 +1242,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true)
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
         }
     }
     
@@ -1449,8 +1485,39 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     @objc func locationEditButtonAction(sender : UIButton)
     {
-        if screenTag == 1
+        Variables.sharedManager.firstName = firstNameEnglishTextField.text!
+        Variables.sharedManager.secondName = secondNameEnglishTextField.text!
+        Variables.sharedManager.countryName = (countryButton.titleLabel?.text)!
+        Variables.sharedManager.stateName = (stateButton.titleLabel?.text)!
+        Variables.sharedManager.areaName = (areaButton.titleLabel?.text)!
+        Variables.sharedManager.floor = floorTextField.text!
+        Variables.sharedManager.landmark = landMarkTextField.text!
+        Variables.sharedManager.locationType = locationTypeTextField.text!
+        Variables.sharedManager.mobileNumber = mobileTextField.text!
+        Variables.sharedManager.countryCode = mobileCountryCodeLabel.text!
+        Variables.sharedManager.shippingNotes = shippingNotesTextField.text!
+        
+        Variables.sharedManager.countryId = getCountryId
+        Variables.sharedManager.stateId = getStateId
+        Variables.sharedManager.areaId = getAreaId
+        
+        if addressSwitchButton.isOn == true
         {
+            Variables.sharedManager.checkDefaultId = 1
+        }
+        else
+        {
+            Variables.sharedManager.checkDefaultId = 0
+        }
+        
+        let locationScreen = LocationViewController()
+        locationScreen.screenTag = 1
+        locationScreen.selectedCoordinate = getLocation
+        self.navigationController?.pushViewController(locationScreen, animated: true)
+        
+        /*if screenTag == 1
+        {
+            Variables.sharedManager.firstName = firstNameEnglishTextField.text!
             let locationScreen = LocationViewController()
             locationScreen.screenTag = 1
             locationScreen.selectedCoordinate = getLocation
@@ -1459,7 +1526,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         else
         {
             self.navigationController?.popViewController(animated: true)
-        }
+        }*/
     }
     
     @objc func countryButtonAction(sender : UIButton)
