@@ -43,23 +43,29 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     var RatingArray = NSArray()
     var ValueArray = NSArray()
     
+    let emptyLabel = UILabel()
+    
     var applicationDelegate = AppDelegate()
+    
+    let Review_LBL = UILabel()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        print("Tailor Id:",TailorID)
         
         if(TailorID != nil)
         {
-          self.serviceCall.API_GetRatings(TailorId:TailorID, delegate: self)
+            self.serviceCall.API_GetRatings(TailorId:TailorID, delegate: self)
         }
-        else
-        {
-          self.serviceCall.API_GetRatings(TailorId: 1, delegate: self)
-        }
-        // reviewsContent()
+       
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -77,7 +83,6 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         {
             let Result = deviceError.object(forKey: "Result") as! String
             print("Result", Result)
-            
             
             
         }
@@ -187,7 +192,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     ratingsNavigationBar.addSubview(navigationTitle)
     
     let RatingsView = UIView()
-    RatingsView.frame = CGRect(x: x , y: ratingsNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: (12 * y))
+    RatingsView.frame = CGRect(x: x , y: ratingsNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: (15 * y))
     //RatingsView.layer.cornerRadius = 5
     RatingsView.layer.borderWidth = 1
     RatingsView.layer.backgroundColor = UIColor.white.cgColor
@@ -195,41 +200,72 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     view.addSubview(RatingsView)
     
     let StarImageView = UIImageView()
-    StarImageView.frame = CGRect(x: x/2, y: y/2, width: (8 * x), height:(6 * y))
+    StarImageView.frame = CGRect(x: x/2, y: y/2, width: (7 * x), height:(6 * y))
     //StarImageView.backgroundColor = UIColor.lightGray
     StarImageView.image = UIImage(named: "star")
-    RatingsView.addSubview(StarImageView)
+    if(FullStatusArr.count > 0)
+    {
+      RatingsView.addSubview(StarImageView)
+    }
+    else
+    {
+        
+    }
    
     let RatingNumLabel = UILabel()
-    RatingNumLabel.frame = CGRect(x: (3 * x), y: (2 * y), width: (3 * x), height: (2 * y))
-    let rateNum : Int = Int(FullStatusArr[0] as! Double)
-    RatingNumLabel.text = "\(rateNum)/5"
+    RatingNumLabel.frame = CGRect(x: (2 * x), y: (2 * y), width: (3 * x), height: (2 * y))
+    if(FullStatusArr.count > 0)
+    {
+      let rateNum : Int = Int(FullStatusArr[0] as! Double)
+      RatingNumLabel.text = "\(rateNum)/5"
+    }
+    else
+    {
+        RatingNumLabel.text = ""
+    }
     RatingNumLabel.textColor = UIColor.white
-   // RatingNumLabel.backgroundColor = UIColor.gray
-    RatingNumLabel.textAlignment = .left
+    //RatingNumLabel.backgroundColor = UIColor.gray
+    RatingNumLabel.textAlignment = .center
     RatingNumLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
     StarImageView.addSubview(RatingNumLabel)
     
+    
     let RatingStatusLabel = UILabel()
     RatingStatusLabel.frame = CGRect(x: x/2, y: StarImageView.frame.maxY, width: (8 * x), height: (2 * y))
-    RatingStatusLabel.text = PerformenceStatusArr[0] as? String
+    if(PerformenceStatusArr.count > 0)
+    {
+      RatingStatusLabel.text = PerformenceStatusArr[0] as? String
+    }
+    else
+    {
+        RatingStatusLabel.text = "GOOD"
+    }
     RatingStatusLabel.textColor = UIColor.black
     //RatingStatusLabel.backgroundColor = UIColor.gray
-    RatingStatusLabel.textAlignment = .center
+    RatingStatusLabel.textAlignment = .left
     RatingStatusLabel.font = UIFont(name: "Avenir Next", size: 1.4 * x)
     RatingsView.addSubview(RatingStatusLabel)
     
+    
     let ReviewStatusLabel = UILabel()
-    ReviewStatusLabel.frame = CGRect(x: x/2, y: RatingStatusLabel.frame.maxY, width: (8 * x), height: (3 * y))
-    let StatusNum : Int = Based_On_ReviewsArr[0] as! Int
-    ReviewStatusLabel.text = "(Based on \(StatusNum) Reviews)"
+    ReviewStatusLabel.frame = CGRect(x: x/2, y: RatingStatusLabel.frame.maxY, width: (8 * x), height: (5 * y))
+    if(Based_On_ReviewsArr.count > 0)
+    {
+       let StatusNum : Int = Based_On_ReviewsArr[0] as! Int
+       ReviewStatusLabel.text = "(Based on \(StatusNum) Reviews)"
+    }
+    else
+    {
+       ReviewStatusLabel.text = ""
+    }
     ReviewStatusLabel.textColor = UIColor.black
-    //ReviewStatusLabel.backgroundColor = UIColor.gray
+   // ReviewStatusLabel.backgroundColor = UIColor.gray
     ReviewStatusLabel.textAlignment = .center
     ReviewStatusLabel.lineBreakMode = .byWordWrapping
     ReviewStatusLabel.numberOfLines = 2
     ReviewStatusLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
     RatingsView.addSubview(ReviewStatusLabel)
+    
     
  /*
     let serviceLabel = UILabel()
@@ -307,6 +343,31 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         RatingTypeView.addSubview(RatingCountLBL)
         
        
+      /*
+        // Ratings....
+        let OnTimeServiceRating = CosmosView()
+        OnTimeServiceRating.frame = CGRect(x: ColonLabel1.frame.maxX, y: y/2, width: (12 * x), height:(2.5 * y))
+        //OnTimeServiceRating.settings.updateOnTouch = false
+        OnTimeServiceRating.settings.fillMode = .half
+        OnTimeServiceRating.settings.starSize = 20
+        // OnTimeServiceRating.settings.starMargin = 5
+        OnTimeServiceRating.settings.filledColor = UIColor.orange
+        OnTimeServiceRating.settings.emptyBorderColor = UIColor.orange
+        OnTimeServiceRating.settings.filledBorderColor = UIColor.orange
+        OnTimeServiceRating.settings.filledImage = UIImage(named: "GoldStarFull")?.withRenderingMode(.alwaysOriginal)
+        OnTimeServiceRating.settings.emptyImage = UIImage(named: "GoldStarEmpty")?.withRenderingMode(.alwaysOriginal)
+        OnTimeServiceView.addSubview(OnTimeServiceRating)
+        
+        
+        OnTimeServiceRating.didTouchCosmos = { rating in
+            print("OnTimeServiceRating :", "\(rating)")
+            
+            self.OnTimeServiceRatingNum = Int(rating)
+            
+        }
+        */
+        
+        
         // Ratings Buttons
         let ratingNum : Int = Int(RatingArray[i] as! Double)
         let CustomerRatingImageView = UIImageView()
@@ -335,6 +396,8 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         }
         RatingTypeView.addSubview(CustomerRatingImageView)
         
+        
+        
         let RatingValLBL = UILabel()
         RatingValLBL.frame = CGRect(x:CustomerRatingImageView.frame.maxX, y: 0, width: (2 * x), height: (2 * y))
         RatingValLBL.textColor = UIColor.black
@@ -346,7 +409,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         RatingValLBL.adjustsFontSizeToFitWidth = true
         RatingTypeView.addSubview(RatingValLBL)
         
-        y1 = RatingTypeView.frame.maxY + y
+        y1 = RatingTypeView.frame.maxY + (2 * y)
     }
  
     
@@ -354,21 +417,21 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     let WriteReviewButton = UIButton()
     WriteReviewButton.frame = CGRect(x: (3 * x), y: RatingsView.frame.maxY + (2 * y) , width: view.frame.width - (6 * x), height: (3 * y))
     WriteReviewButton.backgroundColor =  UIColor.orange  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-    WriteReviewButton.setTitle("RATE AND WRITE A REVIEW", for: .normal)
+    WriteReviewButton.setTitle("REVIEWS", for: .normal)
     WriteReviewButton.setTitleColor(UIColor.white, for: .normal)
     WriteReviewButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: 1.2 * x)
     //SubmitButton.layer.borderWidth = 1.0
    // SubmitButton.layer.cornerRadius = 15
-    WriteReviewButton.addTarget(self, action: #selector(self.WriteReviewButtonAction(sender:)), for: .touchUpInside)
-    view.addSubview(WriteReviewButton)
+    WriteReviewButton.isUserInteractionEnabled = false
+     //WriteReviewButton.addTarget(self, action: #selector(self.WriteReviewButtonAction(sender:)), for: .touchUpInside)
+     view.addSubview(WriteReviewButton)
     
     
     //Reviews ScrollView...
-    ReviewsScrollView.frame = CGRect(x: (3 * x), y: WriteReviewButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (35 * y))
-    // ReviewsScrollView.backgroundColor = UIColor.gray
+    ReviewsScrollView.frame = CGRect(x: (3 * x), y: WriteReviewButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (30 * y))
+    ReviewsScrollView.backgroundColor = UIColor.white
     view.addSubview(ReviewsScrollView)
     
-    ReviewsScrollView.contentSize.height = (12 * y * CGFloat(CustomerNameArray.count))
     
     for views in ReviewsScrollView.subviews
     {
@@ -377,11 +440,23 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     
     var y2:CGFloat = 0
     
+    if(CustomerNameArray.count == 0)
+    {
+        emptyLabel.frame = CGRect(x: 0, y: ((ReviewsScrollView.frame.height - (3 * y)) / 2), width: ReviewsScrollView.frame.width, height: (3 * y))
+        emptyLabel.text = "No Reviews For this Shop"
+        emptyLabel.textColor = UIColor.black
+        emptyLabel.textAlignment = .center
+        emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+        emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+        ReviewsScrollView.addSubview(emptyLabel)
+    }
+    else
+    {
     for i in 0..<CustomerNameArray.count
     {
         //
         let ReviewsView = UIView()
-        ReviewsView.frame = CGRect(x: 0, y: y2, width: ReviewsScrollView.frame.width, height: (12 * y))
+        ReviewsView.frame = CGRect(x: 0, y: y2, width: ReviewsScrollView.frame.width, height: (10 * y))
         ReviewsView.backgroundColor = UIColor.white
         ReviewsScrollView.addSubview(ReviewsView)
         
@@ -466,7 +541,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         RatingDate_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
         ReviewsView.addSubview(RatingDate_LBL)
         
-        let Review_LBL = UILabel()
+       // let Review_LBL = UILabel()
         Review_LBL.frame = CGRect(x: userImageView.frame.maxX + x, y: RatingDate_LBL.frame.maxY, width: ReviewsView.frame.width - (8 * x), height: (7 * y))
         Review_LBL.text = CustomerReviewArray[i] as? String
        // Review_LBL.backgroundColor = UIColor.lightGray
@@ -496,9 +571,11 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
       //  AppointmentViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
         
         y2 = ReviewsView.frame.maxY + y/2
-    }
-    
-    }
+        
+     }
+         ReviewsScrollView.contentSize.height = Review_LBL.frame.maxY + y
+   }
+ }
     
    
     @objc func otpBackButtonAction(sender : UIButton)

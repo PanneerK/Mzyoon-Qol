@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7867C36215F8BE32510B3549 /* Pods_Mzyoon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */; };
+		DA02A4F922265FD700577CBA /* ShopDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA02A4F822265FD700577CBA /* ShopDetailsViewController.swift */; };
 		DA06035A21FAFEB20081A96F /* WriteReviewRateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06035921FAFEB20081A96F /* WriteReviewRateViewController.swift */; };
 		DA06035C21FB427C0081A96F /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06035B21FB427C0081A96F /* ReviewsViewController.swift */; };
 		DA06108721E4C4D1005BB29D /* ServiceTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06108621E4C4D1005BB29D /* ServiceTypeViewController.swift */; };
@@ -119,6 +120,7 @@
 /* Begin PBXFileReference section */
 		84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mzyoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5457EC0C6335A24A15B04CE /* Pods-Mzyoon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mzyoon.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon.release.xcconfig"; sourceTree = "<group>"; };
+		DA02A4F822265FD700577CBA /* ShopDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailsViewController.swift; sourceTree = "<group>"; };
 		DA06035921FAFEB20081A96F /* WriteReviewRateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewRateViewController.swift; sourceTree = "<group>"; };
 		DA06035B21FB427C0081A96F /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
 		DA06108621E4C4D1005BB29D /* ServiceTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTypeViewController.swift; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				FD6097FF21A2812B00DCCF58 /* OrderSummaryViewController.swift */,
 				FD53A3D421A809450097B4D9 /* TailorListViewController.swift */,
 				FD63D6D221AEC2910024AE96 /* TailorListTableViewCell.swift */,
+				DA02A4F822265FD700577CBA /* ShopDetailsViewController.swift */,
 				DA06035B21FB427C0081A96F /* ReviewsViewController.swift */,
 				DA06035921FAFEB20081A96F /* WriteReviewRateViewController.swift */,
 				DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */,
@@ -694,6 +697,7 @@
 				FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */,
 				FD71D268219F29AD00FFC067 /* Measurement1ViewController.swift in Sources */,
 				FD462DDA21AD0E9A0073B53B /* Measurement2ViewController.swift in Sources */,
+				DA02A4F922265FD700577CBA /* ShopDetailsViewController.swift in Sources */,
 				DA0DB13A21F98D9C00C20299 /* PaymentViewController.swift in Sources */,
 				DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */,
 				DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */,
