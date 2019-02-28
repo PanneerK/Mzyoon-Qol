@@ -30,6 +30,15 @@ class Variables: NSObject
 
     public var individualAddressId:Int = 0
 
+    public var AddressLine1:String = ""
+    public var AddressLine2:String = ""
+    public var AddressLine3:String = ""
+    public var AddressCity:String = ""
+    public var AddressState:String = ""
+    public var AddressCountry:String = ""
+    public var AddressZipcode:String = ""
+    public var EmailId:String = ""
+    
     // Here is how you would get to it without there being a global collision of variables.
     // , or in other words, it is a globally accessable parameter that is specific to the
     // class.

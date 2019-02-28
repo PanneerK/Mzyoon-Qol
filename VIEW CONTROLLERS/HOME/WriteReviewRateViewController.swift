@@ -446,7 +446,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     SubmitButton.layer.cornerRadius = 15
     SubmitButton.addTarget(self, action: #selector(self.SubmitButtonAction(sender:)), for: .touchUpInside)
     
-  view.addSubview(SubmitButton)
+    view.addSubview(SubmitButton)
    }
     
   @objc func otpBackButtonAction(sender : UIButton)

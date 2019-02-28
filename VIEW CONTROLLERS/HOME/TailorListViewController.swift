@@ -32,6 +32,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     let shopName = UILabel()
     let ratingImageView = UIImageView()
     let ratingCountLabel = UILabel()
+    let reviewsButton = UIButton()
     let ordersCountLabel = UILabel()
     let distanceLabel = UILabel()
     
@@ -77,19 +78,22 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     var applicationDelegate = AppDelegate()
     
+    var TailorID:Int!
     
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-        fetchingCurrentLocation()
+      //  fetchingCurrentLocation()
 
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        fetchingCurrentLocation()
+    override func viewWillAppear(_ animated: Bool)
+    {
+         navigationBar.isHidden = true
+        fetchingCurrentLocation()
     }
     
     func fetchingCurrentLocation()
@@ -521,7 +525,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             tailorView.addSubview(ordersCountLabel)
             
             let ratingLabel = UILabel()
-            ratingLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ordersLabel.frame.maxY, width: (5 * x), height: (2 * y))
+            ratingLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ordersLabel.frame.maxY, width: (8 * x), height: (2 * y))
             ratingLabel.text = "Rating : "
             ratingLabel.textColor = UIColor.blue
             ratingLabel.textAlignment = .left
@@ -536,6 +540,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
             //            tailorView.addSubview(ratingCountLabel)
+            
             
             let ratingImageView = UIImageView()
             ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)
@@ -834,12 +839,22 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 4, height: (1.5 * y))
         tailorDeatiledView.addSubview(ratingImageView)
         
+        
+       // let ReviewsButton = UIButton()
+        reviewsButton.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: (7 * x), height: (2 * y))
+       // reviewsButton.backgroundColor = UIColor.lightGray
+        reviewsButton.setTitleColor(UIColor.blue, for: .normal)
+        reviewsButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
+        reviewsButton.addTarget(self, action: #selector(self.ReviewsButtonAction(sender:)), for: .touchUpInside)
+        tailorDeatiledView.addSubview(reviewsButton)
+        
         ratingCountLabel.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
         ratingCountLabel.textColor = UIColor.black
         ratingCountLabel.textAlignment = .left
         ratingCountLabel.font = ratingLabel.font.withSize(1.2 * x)
         ratingCountLabel.adjustsFontSizeToFitWidth = true
-        tailorDeatiledView.addSubview(ratingCountLabel)
+       // tailorDeatiledView.addSubview(ratingCountLabel)
+        
         
         let nameLabel = UILabel()
         nameLabel.frame = CGRect(x: x, y: ratingLabel.frame.maxY, width: (5 * x), height: (2 * y))
@@ -918,18 +933,28 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                 if name == marker.title
                 {
                     ratingImageView.image = UIImage(named: "\(ratingArray[i])")
-                    ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
-                    ordersCountLabel.text = "\(orderCountArray[i])"
+                    
+                   // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
+                     reviewsButton.setTitle("(\(ratingArray[i]) reviews)", for: .normal)
+                     ordersCountLabel.text = "\(orderCountArray[i])"
+                    
+                      TailorID = IdArray[i] as? Int
+             
                 }
             }
         }
         
 //        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
     }
-    
+    @objc func ReviewsButtonAction(sender : UIButton)
+    {
+        let ReviewsScreen = ReviewsViewController()
+        ReviewsScreen.TailorID = TailorID!
+        self.navigationController?.pushViewController(ReviewsScreen, animated: true)
+    }
     @objc func closeAddressLabel()
     {
-        //        addressLabel.removeFromSuperview()
+        //  addressLabel.removeFromSuperview()
         tailorDeatiledView.removeFromSuperview()
     }
     

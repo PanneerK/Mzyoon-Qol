@@ -21,13 +21,32 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     let serviceCall = ServerAPI()
     
     let Amount_TF = UITextField()
+    
+    //Billing Address Fields..
+    let Line1_TF = UITextField()
+    let Line2_TF = UITextField()
+    let Line3_TF = UITextField()
+    let City_TF = UITextField()
+    let State_TF = UITextField()
+    let Country_TF = UITextField()
+    let ZipCode_TF = UITextField()
+    let Email_TF = UITextField()
+    
     var TotalAmount:String!
     
     // Parameters:
     var KEY:String!
     var STOREID:String!
-    var EMAIL:String!
     var MerchantID:String!
+    
+    var EMAIL:String!
+    var AddLine1:String!
+    var AddLine2:String!
+    var AddLine3:String!
+    var City:String!
+    var State:String!
+    var Country:String!
+    var Zipcode:String!
     
     var TailorId:Int!
     
@@ -99,7 +118,14 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         y = y * view.frame.height / 100
       */
         
-       self.Amount_TF.text = TotalAmount!
+       if(TotalAmount == nil)
+       {
+         self.Amount_TF.text = "1"
+       }
+       else
+       {
+         self.Amount_TF.text = TotalAmount!
+       }
         
          PaymentContent()
         
@@ -110,7 +136,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
      //   MerchantID = "12168"
         
-        EMAIL = UserDefaults.standard.value(forKey: "Email") as? String
+       // EMAIL = UserDefaults.standard.value(forKey: "Email") as? String
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         DeviceType = UIDevice.current.name
         DeviceAgent = ""
@@ -135,6 +161,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     override func viewWillAppear(_ animated: Bool)
     {
         self.serviceCall.API_GetPaymentStoreDetails(delegate: self)
+        
+        self.Email_TF.text = UserDefaults.standard.value(forKey: "Email") as? String
     }
     
     func ConvertBase64()
@@ -147,6 +175,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         DeviceAgent = "Authorization: Basic \(base64)"
         DeviceAccept = "Authorization: Basic \(base64)"
     }
+    
     func DeviceError()
     {
         DeviceNumStr = UIDevice.current.identifierForVendor?.uuidString
@@ -437,13 +466,13 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             "<last></last>" +
             "</name>" +
             "<address>" +
-            "<line1>Venkatapuram</line1>" +
-            "<line2>velachery Road</line2>" +
-            "<line3>Saidapet</line3>" +
-            "<city>Chennai</city>" +
-            "<region>TN</region>" +
-            "<country>IN</country>" +
-            "<zip>600020</zip>" +
+            "<line1>\(AddLine1!)</line1>" +
+            "<line2>\(AddLine2!)</line2>" +
+            "<line3>\(AddLine3!)</line3>" +
+            "<city>\(City!)</city>" +
+            "<region>\(State!)</region>" +
+            "<country>\(Country!)</country>" +
+            "<zip>\(Zipcode!)</zip>" +
             "</address>" +
             "<email>\(EMAIL!)</email>" +
             "</billing>" +
@@ -565,44 +594,292 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         PaymentNavigationBar.addSubview(navigationTitle)
         
     
-    // Payment View..
+        // Billing Details View..
         
-        let PaymentView = UIView()
-        PaymentView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY + (3 * y), width: view.frame.width - (6 * x), height: (12 * y))
-        PaymentView.backgroundColor = UIColor.white
-        view.addSubview(PaymentView)
+        let BillingView = UIView()
+        BillingView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: (42 * y))
+        BillingView.backgroundColor = UIColor.clear
+        view.addSubview(BillingView)
         
-        // Order Id Label..
+        //BILLINGLabel..
+        let BILLINGLabel = UILabel()
+        BILLINGLabel.frame = CGRect(x: (2 * x), y: y, width: (15 * x), height: (2.5 * y))
+        BILLINGLabel.text = "BILLING ADDRESS"
+        BILLINGLabel.font = UIFont(name: "Avenir Next", size: (1.4 * x))
+        BILLINGLabel.textColor =  UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        //RatingsLabel.backgroundColor = UIColor.lightGray
+        BillingView.addSubview(BILLINGLabel)
+        
+        // UnderLine..
+        let BillingUnderline = UILabel()
+        BillingUnderline.frame = CGRect(x: (2 * x), y: BILLINGLabel.frame.maxY - 5, width: (12 * x), height: 0.5)
+        BillingUnderline.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        BillingView.addSubview(BillingUnderline)
+        
+        // Line1Label..
+        let Line1Label = UILabel()
+        Line1Label.frame = CGRect(x: (2 * x), y: BillingUnderline.frame.maxY + (2 * y), width: (8 * x), height: (3 * y))
+        // FNameLabel.backgroundColor = UIColor.gray
+        Line1Label.font = UIFont.boldSystemFont(ofSize: 16)
+        Line1Label.text = "Line-1 : "
+        Line1Label.font = UIFont(name: "Avenir Next", size: 16)
+        Line1Label.textColor = UIColor.black
+        Line1Label.textAlignment = .right
+        BillingView.addSubview(Line1Label)
+        
+        // let Line1_TF = UITextField()
+        Line1_TF.frame = CGRect(x: Line1Label.frame.maxX + x, y: BillingUnderline.frame.maxY + (2 * y), width: (20 * x), height: (3 * y))
+        Line1_TF.backgroundColor = UIColor.white
+        Line1_TF.font = UIFont.boldSystemFont(ofSize: 14)
+        //Line1_TF.text = "250.00"
+        Line1_TF.font = UIFont(name: "Avenir Next", size: (1.3 * x))
+        Line1_TF.textColor = UIColor.black
+        Line1_TF.adjustsFontSizeToFitWidth = true
+        Line1_TF.keyboardType = .default
+        Line1_TF.clearsOnBeginEditing = false
+        Line1_TF.returnKeyType = .done
+        Line1_TF.delegate = self
+        //Line1_TF.layer.borderWidth = 0.5
+        Line1_TF.textAlignment = .left
+      //  Line1_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+        BillingView.addSubview(Line1_TF)
+        
+        
+        // Line2Label..
+        let Line2Label = UILabel()
+        Line2Label.frame = CGRect(x: (2 * x), y: Line1Label.frame.maxY + y, width: (8 * x), height: (3 * y))
+        // FNameLabel.backgroundColor = UIColor.gray
+        Line2Label.font = UIFont.boldSystemFont(ofSize: 16)
+        Line2Label.text = "Line-2 : "
+        Line2Label.font = UIFont(name: "Avenir Next", size: 16)
+        Line2Label.textColor = UIColor.black
+        Line2Label.textAlignment = .right
+        BillingView.addSubview(Line2Label)
+        
+        // let Line2_TF = UITextField()
+        Line2_TF.frame = CGRect(x: Line2Label.frame.maxX + x, y: Line1Label.frame.maxY + y, width: (20 * x), height: (3 * y))
+        Line2_TF.backgroundColor = UIColor.white
+        Line2_TF.font = UIFont.boldSystemFont(ofSize: 16)
+        //Line2_TF.text = "250.00"
+        Line2_TF.font = UIFont(name: "Avenir Next", size: 16)
+        Line2_TF.textColor = UIColor.black
+        Line2_TF.adjustsFontSizeToFitWidth = true
+        Line2_TF.keyboardType = .default
+        Line2_TF.clearsOnBeginEditing = false
+        Line2_TF.returnKeyType = .done
+        Line2_TF.delegate = self
+        //Line2_TF.layer.borderWidth = 0.5
+        Line2_TF.textAlignment = .left
+      //  Line2_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+        BillingView.addSubview(Line2_TF)
+       
+        
+        // Line3Label..
+        let Line3Label = UILabel()
+        Line3Label.frame = CGRect(x: (2 * x), y: Line2Label.frame.maxY + y, width: (8 * x), height: (3 * y))
+        // FNameLabel.backgroundColor = UIColor.gray
+        Line3Label.font = UIFont.boldSystemFont(ofSize: 16)
+        Line3Label.text = "Line-3 : "
+        Line3Label.font = UIFont(name: "Avenir Next", size: 16)
+        Line3Label.textColor = UIColor.black
+        Line3Label.textAlignment = .right
+        BillingView.addSubview(Line3Label)
+        
+        // let Line3_TF = UITextField()
+        Line3_TF.frame = CGRect(x: Line3Label.frame.maxX + x, y: Line2Label.frame.maxY + y, width: (20 * x), height: (3 * y))
+        Line3_TF.backgroundColor = UIColor.white
+        Line3_TF.font = UIFont.boldSystemFont(ofSize: 16)
+        //Line3_TF.text = "250.00"
+        Line3_TF.font = UIFont(name: "Avenir Next", size: 16)
+        Line3_TF.textColor = UIColor.black
+        Line3_TF.adjustsFontSizeToFitWidth = true
+        Line3_TF.keyboardType = .default
+        Line3_TF.clearsOnBeginEditing = false
+        Line3_TF.returnKeyType = .done
+        Line3_TF.delegate = self
+        //Line3_TF.layer.borderWidth = 0.5
+        Line3_TF.textAlignment = .left
+      //  Line3_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+        BillingView.addSubview(Line3_TF)
+        
+        
+        // CityLabel..
+        let CityLabel = UILabel()
+        CityLabel.frame = CGRect(x: (2 * x), y: Line3Label.frame.maxY + y, width: (8 * x), height: (3 * y))
+        // CityLabel.backgroundColor = UIColor.gray
+        CityLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        CityLabel.text = "City : "
+        CityLabel.font = UIFont(name: "Avenir Next", size: 16)
+        CityLabel.textColor = UIColor.black
+        CityLabel.textAlignment = .right
+        BillingView.addSubview(CityLabel)
+        
+        // let City_TF = UITextField()
+        City_TF.frame = CGRect(x: CityLabel.frame.maxX + x, y: Line3Label.frame.maxY + y, width: (20 * x), height: (3 * y))
+        City_TF.backgroundColor = UIColor.white
+        City_TF.font = UIFont.boldSystemFont(ofSize: 16)
+        //City_TF.text = "250.00"
+        City_TF.font = UIFont(name: "Avenir Next", size: 16)
+        City_TF.textColor = UIColor.black
+        City_TF.adjustsFontSizeToFitWidth = true
+        City_TF.keyboardType = .default
+        City_TF.clearsOnBeginEditing = false
+        City_TF.returnKeyType = .done
+        City_TF.delegate = self
+        //City_TF.layer.borderWidth = 0.5
+        City_TF.textAlignment = .left
+     //   City_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+        BillingView.addSubview(City_TF)
+        
+        
+        // StateLabel..
+        let StateLabel = UILabel()
+        StateLabel.frame = CGRect(x: (2 * x), y: CityLabel.frame.maxY + y, width: (8 * x), height: (3 * y))
+        // StateLabel.backgroundColor = UIColor.gray
+        StateLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        StateLabel.text = "State : "
+        StateLabel.font = UIFont(name: "Avenir Next", size: 16)
+        StateLabel.textColor = UIColor.black
+        StateLabel.textAlignment = .right
+        BillingView.addSubview(StateLabel)
+        
+        // let State_TF = UITextField()
+        State_TF.frame = CGRect(x: StateLabel.frame.maxX + x, y: CityLabel.frame.maxY + y, width: (20 * x), height: (3 * y))
+        State_TF.backgroundColor = UIColor.white
+        State_TF.font = UIFont.boldSystemFont(ofSize: 16)
+        //State_TF.text = "250.00"
+        State_TF.font = UIFont(name: "Avenir Next", size: 16)
+        State_TF.textColor = UIColor.black
+        State_TF.adjustsFontSizeToFitWidth = true
+        State_TF.keyboardType = .default
+        State_TF.clearsOnBeginEditing = false
+        State_TF.returnKeyType = .done
+        State_TF.delegate = self
+        //State_TF.layer.borderWidth = 0.5
+        State_TF.textAlignment = .left
+      //  State_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+        BillingView.addSubview(State_TF)
+        
+        
+        // CountryLabel..
+        let CountryLabel = UILabel()
+        CountryLabel.frame = CGRect(x: (2 * x), y: StateLabel.frame.maxY + y, width: (8 * x), height: (3 * y))
+        // CountryLabel.backgroundColor = UIColor.gray
+        CountryLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        CountryLabel.text = "Country : "
+        CountryLabel.font = UIFont(name: "Avenir Next", size: 16)
+        CountryLabel.textColor = UIColor.black
+        CountryLabel.textAlignment = .right
+        BillingView.addSubview(CountryLabel)
+        
+        // let Country_TF = UITextField()
+        Country_TF.frame = CGRect(x: CountryLabel.frame.maxX + x, y: StateLabel.frame.maxY + y, width: (20 * x), height: (3 * y))
+        Country_TF.backgroundColor = UIColor.white
+        Country_TF.font = UIFont.boldSystemFont(ofSize: 16)
+        //Country_TF.text = "250.00"
+        Country_TF.font = UIFont(name: "Avenir Next", size: 16)
+        Country_TF.textColor = UIColor.black
+        Country_TF.adjustsFontSizeToFitWidth = true
+        Country_TF.keyboardType = .default
+        Country_TF.clearsOnBeginEditing = false
+        Country_TF.returnKeyType = .done
+        Country_TF.delegate = self
+        //Country_TF.layer.borderWidth = 0.5
+        Country_TF.textAlignment = .left
+      //  Country_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+        BillingView.addSubview(Country_TF)
+        
+        
+        // ZipCodeLabel..
+        let ZipCodeLabel = UILabel()
+        ZipCodeLabel.frame = CGRect(x: (2 * x), y: CountryLabel.frame.maxY + y, width: (8 * x), height: (3 * y))
+        // ZipCodeLabel.backgroundColor = UIColor.gray
+        ZipCodeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        ZipCodeLabel.text = "Zip Code : "
+        ZipCodeLabel.font = UIFont(name: "Avenir Next", size: 16)
+        ZipCodeLabel.textColor = UIColor.black
+        ZipCodeLabel.textAlignment = .right
+        BillingView.addSubview(ZipCodeLabel)
+        
+        
+        // let ZipCode_TF = UITextField()
+        ZipCode_TF.frame = CGRect(x: ZipCodeLabel.frame.maxX + x, y: CountryLabel.frame.maxY + y, width: (20 * x), height: (3 * y))
+        ZipCode_TF.backgroundColor = UIColor.white
+        ZipCode_TF.font = UIFont.boldSystemFont(ofSize: 16)
+        //ZipCode_TF.text = "250.00"
+        ZipCode_TF.font = UIFont(name: "Avenir Next", size: 16)
+        ZipCode_TF.textColor = UIColor.black
+        ZipCode_TF.adjustsFontSizeToFitWidth = true
+        ZipCode_TF.keyboardType = .numberPad
+        ZipCode_TF.clearsOnBeginEditing = false
+        ZipCode_TF.returnKeyType = .done
+        ZipCode_TF.delegate = self
+        //ZipCode_TF.layer.borderWidth = 0.5
+        ZipCode_TF.textAlignment = .left
+        BillingView.addSubview(ZipCode_TF)
+        
+        
+        // EmailLabel..
+        let EmailLabel = UILabel()
+        EmailLabel.frame = CGRect(x: (2 * x), y: ZipCodeLabel.frame.maxY + y, width: (8 * x), height: (3 * y))
+        // ZipCodeLabel.backgroundColor = UIColor.gray
+        EmailLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        EmailLabel.text = "Email : "
+        EmailLabel.font = UIFont(name: "Avenir Next", size: 16)
+        EmailLabel.textColor = UIColor.black
+        EmailLabel.textAlignment = .right
+        BillingView.addSubview(EmailLabel)
+        
+        // let ZipCode_TF = UITextField()
+        Email_TF.frame = CGRect(x: EmailLabel.frame.maxX + x, y: ZipCodeLabel.frame.maxY + y, width: (20 * x), height: (3 * y))
+        Email_TF.backgroundColor = UIColor.white
+        Email_TF.font = UIFont.boldSystemFont(ofSize: 16)
+        //Email_TF.text = "250.00"
+        Email_TF.font = UIFont(name: "Avenir Next", size: 16)
+        Email_TF.textColor = UIColor.black
+        Email_TF.adjustsFontSizeToFitWidth = true
+        Email_TF.keyboardType = .default
+        Email_TF.clearsOnBeginEditing = false
+        Email_TF.returnKeyType = .done
+        Email_TF.delegate = self
+        //Email_TF.layer.borderWidth = 0.5
+        Email_TF.textAlignment = .left
+      //  Email_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+        BillingView.addSubview(Email_TF)
+        
+        
+        // Amount Label..
         let AmountLabel = UILabel()
-        AmountLabel.frame = CGRect(x: (2 * x), y: y, width: (8 * x), height: (3 * y))
-       // AmountLabel.backgroundColor = UIColor.gray
+        AmountLabel.frame = CGRect(x: (2 * x), y: EmailLabel.frame.maxY + y, width: (8 * x), height: (3 * y))
+        // AmountLabel.backgroundColor = UIColor.gray
         AmountLabel.font = UIFont.boldSystemFont(ofSize: 16)
         AmountLabel.text = "Amount : "
         AmountLabel.font = UIFont(name: "Avenir Next", size: 16)
         AmountLabel.textColor = UIColor.black
         AmountLabel.textAlignment = .right
-        PaymentView.addSubview(AmountLabel)
+        BillingView.addSubview(AmountLabel)
         
-       // let Amount_TF = UITextField()
-        Amount_TF.frame = CGRect(x: AmountLabel.frame.maxX + x, y: y, width: PaymentView.frame.width / 2, height: (3 * y))
-        Amount_TF.backgroundColor = UIColor.groupTableViewBackground
+        // let Amount_TF = UITextField()
+        Amount_TF.frame = CGRect(x: AmountLabel.frame.maxX + x, y: EmailLabel.frame.maxY + y, width: (20 * x), height: (3 * y))
+        Amount_TF.backgroundColor = UIColor.white
         Amount_TF.font = UIFont.boldSystemFont(ofSize: 16)
         //Amount_TF.text = "250.00"
         Amount_TF.font = UIFont(name: "Avenir Next", size: 16)
         Amount_TF.textColor = UIColor.black
         Amount_TF.adjustsFontSizeToFitWidth = true
         Amount_TF.keyboardType = .numberPad
-        Amount_TF.clearsOnBeginEditing = true
+        Amount_TF.clearsOnBeginEditing = false
         Amount_TF.returnKeyType = .done
         Amount_TF.delegate = self
         //Amount_TF.layer.borderWidth = 0.5
         Amount_TF.textAlignment = .left
-        PaymentView.addSubview(Amount_TF)
+        Amount_TF.isUserInteractionEnabled = false
+        BillingView.addSubview(Amount_TF)
         
         
-        //TrackingButton
+        //PayButton
         let PayButton = UIButton()
-        PayButton.frame = CGRect(x: (8 * x), y: Amount_TF.frame.maxY + (3 * y), width: (15 * x), height: (3 * y))
+        PayButton.frame = CGRect(x: (12 * x), y: BillingView.frame.maxY + y, width: (15 * x), height: (3 * y))
         PayButton.backgroundColor = UIColor.orange
         PayButton.setTitle("Pay", for: .normal)
         PayButton.setTitleColor(UIColor.white, for: .normal)
@@ -610,7 +887,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         PayButton.layer.cornerRadius = 10;  // this value vary as per your desire
         PayButton.clipsToBounds = true;
         PayButton.addTarget(self, action: #selector(self.PayButtonAction(sender:)), for: .touchUpInside)
-        PaymentView.addSubview(PayButton)
+        view.addSubview(PayButton)
+        
+     
         
     }
     func addDoneButtonOnKeyboard()
@@ -628,7 +907,22 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         doneToolbar.items = items
         doneToolbar.sizeToFit()
         
-        self.Amount_TF.inputAccessoryView = doneToolbar
+      //  self.Amount_TF.inputAccessoryView = doneToolbar
+        self.ZipCode_TF.inputAccessoryView = doneToolbar
+        
+    }
+    
+    @objc func DoneAction()
+    {
+        Line1_TF.resignFirstResponder()
+        Line2_TF.resignFirstResponder()
+        Line3_TF.resignFirstResponder()
+        City_TF.resignFirstResponder()
+        State_TF.resignFirstResponder()
+        Country_TF.resignFirstResponder()
+        Email_TF.resignFirstResponder()
+        
+       // reviewStr = self.Review_TF.text
     }
     
     @objc func doneButtonAction()
@@ -641,12 +935,26 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         self.navigationController?.popViewController(animated: true)
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        view.endEditing(true)
+        return true
+    }
+    
     @objc func PayButtonAction(sender : UIButton)
     {
-        
-       TotalAmount = self.Amount_TF.text
-        
-       UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
+       
+        AddLine1 = self.Line1_TF.text
+        AddLine2 = self.Line2_TF.text
+        AddLine3 = self.Line3_TF.text
+        City = self.City_TF.text
+        State = self.State_TF.text
+        Country = self.Country_TF.text
+        Zipcode = self.ZipCode_TF.text
+        EMAIL = self.Email_TF.text
+        TotalAmount = self.Amount_TF.text
+       
+        UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
         
     
       if RequestId == nil
@@ -657,24 +965,34 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
  
      //  RequestId = String(arc4random())
        
-
-      if UserName == nil
-      {
+    /*
+       if UserName == nil
+       {
          UserName = "QolTech"
-      }
-     
+       }
+    */
         
       //  PaymentRequest()
       
-       if (TotalAmount != "0")
+       if (EMAIL.isEmpty)
        {
-          PayPageRequest()
+        
+        let alert = UIAlertController(title: "Message", message: "Please Enter Your Email Id..!" , preferredStyle:.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
        }
        else
        {
-         let alert = UIAlertController(title: "Alert", message: "Amount Should Not Be Zero or Empty" , preferredStyle:.alert)
-         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-         self.present(alert, animated: true, completion: nil)
+         if (TotalAmount != "0")
+         {
+            PayPageRequest()
+         }
+         else
+         {
+            let alert = UIAlertController(title: "Alert", message: "Amount Should Not Be Zero or Empty" , preferredStyle:.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+         }
        }
         
   }
