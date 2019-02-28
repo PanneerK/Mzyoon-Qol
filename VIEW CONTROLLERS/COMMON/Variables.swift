@@ -28,6 +28,7 @@ class Variables: NSObject
     public var areaId:Int = 0
     public var checkDefaultId:Int = 0
 
+    public var individualAddressId:Int = 0
 
     // Here is how you would get to it without there being a global collision of variables.
     // , or in other words, it is a globally accessable parameter that is specific to the

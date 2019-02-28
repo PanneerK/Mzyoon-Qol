@@ -175,23 +175,38 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     {
         let address2Screen = Address2ViewController()
         
-        address2Screen.screenTag = 2
-        address2Screen.checkScreen = 2
-        address2Screen.firstNameEnglishTextField.text = Variables.sharedManager.firstName
-        address2Screen.secondNameEnglishTextField.text = Variables.sharedManager.secondName
-        address2Screen.locationTypeTextField.text = Variables.sharedManager.locationType
-        address2Screen.areaButton.setTitle("\(Variables.sharedManager.areaName)", for: .normal)
-        address2Screen.floorTextField.text = Variables.sharedManager.floor
-        address2Screen.landMarkTextField.text = Variables.sharedManager.landmark
-        address2Screen.mobileTextField.text = Variables.sharedManager.mobileNumber
-        address2Screen.mobileCountryCodeLabel.text = Variables.sharedManager.countryCode
-        address2Screen.shippingNotesTextField.text = Variables.sharedManager.shippingNotes
-        address2Screen.checkDefault = Variables.sharedManager.checkDefaultId
-        address2Screen.addressString = [addressLabel.text!]
-        address2Screen.editStateId = Variables.sharedManager.stateId
-        address2Screen.editCountryId = Variables.sharedManager.countryCodeId
-        address2Screen.editAreaId = Variables.sharedManager.areaId
-        address2Screen.getLocation = getTraggedPosition
+//        address2Screen.screenTag = 2
+//        address2Screen.firstNameEnglishTextField.text = Variables.sharedManager.firstName
+//        address2Screen.secondNameEnglishTextField.text = Variables.sharedManager.secondName
+//        address2Screen.locationTypeTextField.text = Variables.sharedManager.locationType
+//        address2Screen.areaButton.setTitle("\(Variables.sharedManager.areaName)", for: .normal)
+//        address2Screen.floorTextField.text = Variables.sharedManager.floor
+//        address2Screen.landMarkTextField.text = Variables.sharedManager.landmark
+//        address2Screen.mobileTextField.text = Variables.sharedManager.mobileNumber
+//        address2Screen.mobileCountryCodeLabel.text = Variables.sharedManager.countryCode
+//        address2Screen.shippingNotesTextField.text = Variables.sharedManager.shippingNotes
+//        address2Screen.checkDefault = Variables.sharedManager.checkDefaultId
+//        address2Screen.addressString = [addressLabel.text!]
+//        address2Screen.editStateId = Variables.sharedManager.stateId
+//        address2Screen.editCountryId = Variables.sharedManager.countryCodeId
+//        address2Screen.editAreaId = Variables.sharedManager.areaId
+//        address2Screen.getLocation = getTraggedPosition
+        
+        if screenTag == 1
+        {
+            address2Screen.addressString = [addressLabel.text!]
+            address2Screen.getLocation = getTraggedPosition
+            address2Screen.screenTag = 2
+            address2Screen.checkScreen = 2
+        }
+        else
+        {
+            address2Screen.addressString = [addressLabel.text!]
+            address2Screen.getLocation = getTraggedPosition
+            address2Screen.screenTag = 1
+            address2Screen.checkScreen = 1
+            address2Screen.checkTag = 1
+        }
         
         self.navigationController?.pushViewController(address2Screen, animated: true)
     }
@@ -216,12 +231,24 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         
         //  let camera = GMSCameraPosition(target: CLLocationCoordinate2D(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude), zoom: 16.0, bearing: 0.5, viewingAngle: 1.0)
         
-        if screenTag == 1
+        if screenTag != 1
         {
-            let camera = GMSCameraPosition(target: selectedCoordinate, zoom: 15.0, bearing: 0, viewingAngle: 0)
-            mapView.camera = camera
-            
-            currentCoordinate = selectedCoordinate
+            if selectedCoordinate.latitude == 0.0 || selectedCoordinate.longitude == 0.0
+            {
+                stopActivity()
+                
+                let camera = GMSCameraPosition(target:location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
+                mapView.camera = camera
+                
+                currentCoordinate = location.coordinate
+            }
+            else
+            {
+                let camera = GMSCameraPosition(target: selectedCoordinate, zoom: 16.0, bearing: 0, viewingAngle: 0)
+                mapView.camera = camera
+                
+                currentCoordinate = selectedCoordinate
+            }
         }
         else
         {
@@ -263,7 +290,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         // 2
         geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
             
-            print("RESPONSE IN LOCATION", response)
+            print("RESPONSE IN LOCATION ", response)
             guard let address = response?.firstResult(), let lines = address.lines else {
                 return
             }

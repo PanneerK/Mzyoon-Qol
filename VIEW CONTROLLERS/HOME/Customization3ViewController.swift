@@ -594,7 +594,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if let alertString = customAttEnglishNameArray[i] as? String
                     {
-                        customizationAlert.addAction(UIAlertAction(title: alertString.uppercased(), style: .default, handler: customizaionAlertAction(action:)))
+                        customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
                     }
                 }
                 customizationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -608,7 +608,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if let alertString = customAttArabicNameArray[i] as? String
                     {
-                        customizationAlert.addAction(UIAlertAction(title: alertString.uppercased(), style: .default, handler: customizaionAlertAction(action:)))
+                        customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
                     }
                 }
                 customizationAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
@@ -623,7 +623,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             {
                 if let alertString = customAttEnglishNameArray[i] as? String
                 {
-                    customizationAlert.addAction(UIAlertAction(title: alertString.uppercased(), style: .default, handler: customizaionAlertAction(action:)))
+                    customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
                 }
             }
             customizationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -633,9 +633,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     func customizaionAlertAction(action : UIAlertAction)
     {
-        dropDownButton.setTitle(action.title!, for: .normal)
+        dropDownButton.setTitle(action.title?.uppercased(), for: .normal)
         
-        selectedCustomString = (action.title?.lowercased())!
+        selectedCustomString = (action.title)!
+        
+        print("ACTION TITLE AFTER CLICK", selectedCustomStringArray)
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -645,7 +647,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if let checkAtt = customAttEnglishNameArray[i] as? String
                     {
-                        if selectedCustomString == checkAtt.lowercased()
+                        print("EQUAATING OR CHECKING THE CONDITION", selectedCustomString, checkAtt)
+                        if selectedCustomString == checkAtt
                         {
                             if let attId = customAttIdArray[i] as? Int
                             {
@@ -666,7 +669,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if let checkAtt = customAttArabicNameArray[i] as? String
                     {
-                        if selectedCustomString == checkAtt.lowercased()
+                        if selectedCustomString == checkAtt
                         {
                             if let attId = customAttIdArray[i] as? Int
                             {
@@ -688,7 +691,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             {
                 if let checkAtt = customAttEnglishNameArray[i] as? String
                 {
-                    if selectedCustomString == checkAtt.lowercased()
+                    if selectedCustomString == checkAtt
                     {
                         if let attId = customAttIdArray[i] as? Int
                         {
@@ -790,6 +793,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 }
             }
         }
+        
+        print("CUSTOMIZATION NEXT BUTTON ACTION", selectedCustomStringArray)
+        print("selectedCustomIntArrayselectedCustomIntArray", selectedCustomIntArray)
         
         if customAttEnglishNameArray.count == customDictValuesCount
         {

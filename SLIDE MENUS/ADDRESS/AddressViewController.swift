@@ -46,6 +46,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     var CreatedBy = NSArray()
     var ModifiedBy = NSArray()
     
+    var areaNameArray = NSArray()
+    var countryNameArray = NSArray()
+    var stateNameArray = NSArray()
+    
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -65,7 +69,11 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     var convertedAddressArray = [String]()
     
     var applicationDelegate = AppDelegate()
-
+    
+    
+    //SCREEN PARAMETERS
+    let addressScrollView = UIScrollView()
+    
     
     override func viewDidLoad()
     {
@@ -205,9 +213,16 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             
             areaId = Result.value(forKey: "AreaId") as! NSArray
             
-            for i in 0..<Floor.count
+            areaNameArray = Result.value(forKey: "Area") as! NSArray
+            
+            stateNameArray = Result.value(forKey: "StateName") as! NSArray
+            
+            countryNameArray = Result.value(forKey: "Name") as! NSArray
+
+
+            for i in 0..<areaNameArray.count
             {
-                convertedAddressArray.append("\(Floor[i]), \(LandMark[i]), \(ShippingNotes[i])")
+                convertedAddressArray.append("\(areaNameArray[i]), \(stateNameArray[i]), \(countryNameArray[i])")
             }
             
             addressContent()
@@ -343,10 +358,14 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         }
         else
         {
-            let addressScrollView = UIScrollView()
             addressScrollView.frame = CGRect(x: x, y: addressNavigationBar.frame.maxY + (2 * y), width: view.frame.width - (2 * x), height: view.frame.height - (14 * y))
             addressScrollView.backgroundColor = UIColor.clear
             view.addSubview(addressScrollView)
+            
+            for allViews in addressScrollView.subviews
+            {
+                allViews.removeFromSuperview()
+            }
             
             var y1:CGFloat = 0
             
@@ -477,15 +496,15 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                     }
                     else
                     {
-                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (2 * y))
-                        getAddressLabel.numberOfLines = 1
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (4 * y))
+                        getAddressLabel.numberOfLines = 2
                     }
                 }
                 else
                 {
                     
                 }
-                getAddressLabel.text = convertedAddressArray[i] as? String
+                getAddressLabel.text = "\(areaNameArray[i]),\(stateNameArray[i]),\(countryNameArray[i])"
                 getAddressLabel.textColor = UIColor.black
                 getAddressLabel.textAlignment = .left
                 getAddressLabel.font = UIFont(name: "Avenir Next Regular", size: (1.5 * x))
@@ -583,8 +602,16 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         view.addSubview(mapViews)
         
         print("SELECTED COORDINATE TO CHECK THE FLOW", selectedCoordinate)
+        let address2Screen = Address2ViewController()
+        address2Screen.screenTag = 1
+        address2Screen.checkScreen = 2
+        address2Screen.getAddressId = self.Id[sender.tag] as! Int
+        self.navigationController?.pushViewController(address2Screen, animated: true)
         
-        let geoCoder = GMSGeocoder()
+        Variables.sharedManager.individualAddressId = self.Id[sender.tag] as! Int
+        
+        
+        /*let geoCoder = GMSGeocoder()
         geoCoder.reverseGeocodeCoordinate(selectedCoordinate) { response, error in
             
             guard let address = response?.firstResult(), let lines = address.lines else {
@@ -603,7 +630,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             
             print("COUNTRY ID - \(self.CountryId[sender.tag]), STATE ID - \(self.StateId[sender.tag]), AREA ID - \(self.areaId[sender.tag])")
             
-            address2Screen.firstNameEnglishTextField.text = self.FirstName[sender.tag] as? String
+            /*address2Screen.firstNameEnglishTextField.text = self.FirstName[sender.tag] as? String
             address2Screen.secondNameEnglishTextField.text = self.LastName[sender.tag] as? String
             address2Screen.locationTypeTextField.text = self.LocationType[sender.tag] as? String
             address2Screen.areaButton.setTitle("\(self.areaArray[sender.tag])", for: .normal)
@@ -618,11 +645,11 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             address2Screen.screenTag = 1
             address2Screen.editStateId = self.StateId[sender.tag] as! Int
             address2Screen.editCountryId = self.CountryId[sender.tag] as! Int
-            address2Screen.checkScreen = 1
             address2Screen.editAreaId = self.areaId[sender.tag] as! Int
-            address2Screen.getLocation = self.selectedCoordinate
+            address2Screen.getLocation = self.selectedCoordinate*/
+            address2Screen.getAddressId = self.Id[sender.tag] as! Int
             self.navigationController?.pushViewController(address2Screen, animated: true)
-        }
+        }*/
     }
     
     @objc func deleteButtonAction(sender : UIButton)
@@ -649,8 +676,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     @objc func addNewAddressButtonAction(sender : UIButton)
     {
+        Variables.sharedManager.individualAddressId = 0
+        
         let locationScreen = LocationViewController()
-        locationScreen.screenTag = 2
+        locationScreen.screenTag = 1
         self.navigationController?.pushViewController(locationScreen, animated: true)
     }
     

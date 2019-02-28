@@ -516,7 +516,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         cancelButton.setTitle("إلغاء", for: .normal)
         
-//        countryCodeTableView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        countryCodeTableView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglish()
@@ -551,7 +551,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         cancelButton.setTitle("Cancel", for: .normal)
         
-//        countryCodeTableView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        countryCodeTableView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     func screenContentsInEnglish()
@@ -1158,7 +1158,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.countryName.frame = CGRect(x: cell.flagImage.frame.maxX + (2 * x), y: y, width: cell.frame.width - (4 * x), height: (2 * y))
         cell.countryName.text = countryNameArray[indexPath.row] as! String
         
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        /*if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "ar"
             {
@@ -1175,7 +1175,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             cell.flagImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        }
+        }*/
         return cell
     }
     
