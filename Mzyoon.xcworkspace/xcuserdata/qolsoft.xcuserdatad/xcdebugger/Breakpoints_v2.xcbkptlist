@@ -100,22 +100,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VIEW CONTROLLERS/APPOINTMENTS/AppointmentViewController.swift"
-            timestampString = "572882416.628619"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "523"
-            endingLineNumber = "523"
-            landmarkName = "AppointmentContent()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/APPOINTMENTS/AppointmentViewController.swift"
             timestampString = "572882416.628665"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -148,12 +132,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VIEW CONTROLLERS/HOME/ReviewsViewController.swift"
-            timestampString = "572965261.22955"
+            timestampString = "572968310.429227"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "575"
             endingLineNumber = "575"
             landmarkName = "reviewsContent()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VIEW CONTROLLERS/APPOINTMENTS/PaymentViewController.swift"
+            timestampString = "573054128.3287359"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "947"
+            endingLineNumber = "947"
+            landmarkName = "PayButtonAction(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
