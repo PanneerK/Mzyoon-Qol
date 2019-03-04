@@ -434,6 +434,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         UserDefaults.standard.set(sender.tag, forKey: "measurementType")
         var userListAlert : UIAlertController!
         
+        var trimmedName = String()
+        var trimmedDress = String()
+        var trimmedId = String()
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -451,13 +455,26 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                 {
                     let splitted = nameArray[i].split(separator: "-")
                     
-                    let trimmedName = splitted[2].trimmingCharacters(in: .whitespaces)
-                    let trimmedDress = splitted[1].trimmingCharacters(in: .whitespaces)
-                    let trimmedId = splitted[0].trimmingCharacters(in: .whitespaces)
-                    
-                    existingUserName.append(trimmedName)
-                    existingUserDressType.append(trimmedDress)
-                    existingUserId.append(trimmedId)
+                    if splitted.count == 3
+                    {
+                        trimmedName = splitted[2].trimmingCharacters(in: .whitespaces)
+                        trimmedDress = splitted[1].trimmingCharacters(in: .whitespaces)
+                        trimmedId = splitted[0].trimmingCharacters(in: .whitespaces)
+                        
+                        existingUserName.append(trimmedName)
+                        existingUserDressType.append(trimmedDress)
+                        existingUserId.append(trimmedId)
+                        
+                        userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
+                    }
+                    else
+                    {
+                        trimmedName = splitted[1].trimmingCharacters(in: .whitespaces)
+                        trimmedId = splitted[0].trimmingCharacters(in: .whitespaces)
+                        
+                        existingUserName.append(trimmedName)
+                        existingUserId.append(trimmedId)
+                    }
                     
                     userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
                 }
@@ -480,13 +497,26 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                 {
                     let splitted = nameArray[i].split(separator: "-")
                     
-                    let trimmedName = splitted[2].trimmingCharacters(in: .whitespaces)
-                    let trimmedDress = splitted[1].trimmingCharacters(in: .whitespaces)
-                    let trimmedId = splitted[0].trimmingCharacters(in: .whitespaces)
-                    
-                    existingUserName.append(trimmedName)
-                    existingUserDressType.append(trimmedDress)
-                    existingUserId.append(trimmedId)
+                    if splitted.count == 3
+                    {
+                        trimmedName = splitted[2].trimmingCharacters(in: .whitespaces)
+                        trimmedDress = splitted[1].trimmingCharacters(in: .whitespaces)
+                        trimmedId = splitted[0].trimmingCharacters(in: .whitespaces)
+                        
+                        existingUserName.append(trimmedName)
+                        existingUserDressType.append(trimmedDress)
+                        existingUserId.append(trimmedId)
+                        
+                        userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
+                    }
+                    else
+                    {
+                        trimmedName = splitted[1].trimmingCharacters(in: .whitespaces)
+                        trimmedId = splitted[0].trimmingCharacters(in: .whitespaces)
+                        
+                        existingUserName.append(trimmedName)
+                        existingUserId.append(trimmedId)
+                    }
                     
                     userListAlert.addAction(UIAlertAction(title: "\(trimmedName)-\(trimmedDress)", style: .default, handler: nameSelection(action:)))
                 }
@@ -511,13 +541,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             {
                 let splitted = nameArray[i].split(separator: "-")
                 
-                var trimmedName = String()
-                
                 if splitted.count == 3
                 {
                     trimmedName = splitted[2].trimmingCharacters(in: .whitespaces)
-                    let trimmedDress = splitted[1].trimmingCharacters(in: .whitespaces)
-                    let trimmedId = splitted[0].trimmingCharacters(in: .whitespaces)
+                    trimmedDress = splitted[1].trimmingCharacters(in: .whitespaces)
+                    trimmedId = splitted[0].trimmingCharacters(in: .whitespaces)
                     
                     existingUserName.append(trimmedName)
                     existingUserDressType.append(trimmedDress)

@@ -8,6 +8,8 @@
 
 import UIKit
 import SideMenu
+import SidebarOverlay
+import SideMenuSwift
 
 class CommonViewController: UIViewController
 {
@@ -105,6 +107,10 @@ class CommonViewController: UIViewController
             navigationContents()
             tabContents()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("DISAPPEAR VIEW")
     }
     
     func slideMenu()
@@ -387,6 +393,10 @@ class CommonViewController: UIViewController
     
     @objc func slideMenuButtonAction(sender : UIButton)
     {
+        UserDefaults.standard.set(1, forKey: "sideValue")
+        
+        sender.setImage(UIImage(named: "closeMenu"), for: .normal)
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -403,7 +413,11 @@ class CommonViewController: UIViewController
             self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
         }
         
-        self.viewDidLoad()
+        
+//        if let container = self.so_containerViewController {
+//            container.isSideViewControllerPresented = true
+//        }
+//        self.viewDidLoad()
     }
     
     @objc func tabBarButtonAction(sender : UIButton)
