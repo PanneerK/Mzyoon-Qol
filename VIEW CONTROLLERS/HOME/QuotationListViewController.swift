@@ -272,7 +272,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorViewButton.tag = IdArray[i] as! Int
             
             TailorId = TailorIdArray[i] as? Int
-            print("TailorId:","\(TailorId)")
+            print("TailorId:","\(String(describing: TailorId))")
             
             let Name_Icon = UIImageView()
             Name_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y/2, width: x, height: y)
