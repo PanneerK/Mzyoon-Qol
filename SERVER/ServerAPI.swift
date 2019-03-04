@@ -913,6 +913,39 @@ class ServerAPI : NSObject
         }
     }
     
+    func API_GetBuyerIndividualAddressByAddressId(addressId : String, delegate : ServerAPIDelegate)
+    {
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - Individual Address Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Shop/GetBuyerAddressById?Id=\(addressId)", arguments: [baseURL])
+            
+            print("URL STRING", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    
+                    delegate.API_CALLBACK_GetBuyerIndividualAddressByAddressId!(getAddress: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 24, errorMessage: "Get Buyer Individual Address Failed")
+                }
+            }
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
+    }
+
+
     //Dress Sub-type..
     func API_DressSubType(DressSubTypeId : Int, delegate : ServerAPIDelegate)
     {

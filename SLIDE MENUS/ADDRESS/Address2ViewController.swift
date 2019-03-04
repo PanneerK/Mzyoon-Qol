@@ -18,6 +18,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var x = CGFloat()
     var y = CGFloat()
     
+    var getAddressId = Int()
+    
     var addressString = [String]()
     var splittedAddress = [String]()
     var getLocation = CLLocationCoordinate2D()
@@ -83,12 +85,15 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     var getStateId = Int()
     var getCountryId = Int()
     var getAreaId = Int()
+    var getCountryCode = String()
 
     var insertOrUpdate = 1
     
     var addressStringArray = NSArray()
     
     var screenTag = 1
+    var checkTag = 0
+    var setOrHide = 0
     
     var countryAlert = UIAlertController()
     
@@ -117,6 +122,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     override func viewDidLoad()
     {
+        activityContents()
+        
         print("ADDRESS STRING ADDRESS 2 VIEW CONTROLLER 1", addressString)
 
         x = 10 / 375 * 100
@@ -131,15 +138,15 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         reverseGeocodeCoordinate(coords)
         
-        getStateId = editStateId
-        getCountryId = editCountryId
-        getAreaId = editAreaId
-        
-        serviceCall.API_GetStateListByCountry(countryId: "\(editCountryId)", delegate: self)
-        
-        serviceCall.API_GetAreaByState(stateId: "\(editStateId)", delegate: self)
-        
-        serviceCall.API_CountryCode(delegate: self)
+        if screenTag == 1
+        {
+            setOrHide = 1
+            serviceCall.API_GetBuyerIndividualAddressByAddressId(addressId : "\(getAddressId)", delegate : self)
+        }
+        else
+        {
+            serviceCall.API_CountryCode(delegate: self)
+        }
         
         view.backgroundColor = UIColor.white
         
@@ -315,6 +322,141 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
     }
     
+    func API_CALLBACK_GetBuyerIndividualAddressByAddressId(getAddress : NSDictionary)
+    {
+        print("zzzzzzzzzzzz", getAddress)
+        
+        let ResponseMsg = getAddress.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = getAddress.object(forKey: "Result") as! NSArray
+            
+            if Result.count != 0
+            {
+                let FirstName = Result.value(forKey: "FirstName") as! NSArray
+                print("FirstName", FirstName)
+                
+                let LastName = Result.value(forKey: "LastName") as! NSArray
+                print("LastName", LastName)
+                
+                let PhoneNo = Result.value(forKey: "PhoneNo") as! NSArray
+                print("PhoneNo", PhoneNo)
+                
+                let Lattitude = Result.value(forKey: "Lattitude") as! NSArray
+                print("Lattitude", Lattitude)
+                
+                let Longitude = Result.value(forKey: "Longitude") as! NSArray
+                print("Longitude", Longitude)
+                
+                let isDefault = Result.value(forKey: "IsDefault") as! NSArray
+                print("IsDefault", isDefault)
+                
+                let Id = Result.value(forKey: "Id") as! NSArray
+                print("ADDRESS ID ARRAY", Id)
+                
+                let LocationType = Result.value(forKey: "LocationType") as! NSArray
+                print("LocationType", LocationType)
+                
+                let Floor = Result.value(forKey: "Floor") as! NSArray
+                print("Floor", Floor)
+                
+                let LandMark = Result.value(forKey: "LandMark") as! NSArray
+                print("LandMark", LandMark)
+                
+                let CountryCode = Result.value(forKey: "CountryCode") as! NSArray
+                print("CountryCode", CountryCode)
+                
+                let ShippingNotes = Result.value(forKey: "ShippingNotes") as! NSArray
+                print("ShippingNotes", ShippingNotes)
+                
+                let StateId = Result.value(forKey: "StateId") as! NSArray
+                print("StateId", StateId)
+
+                let CountryId = Result.value(forKey: "CountryId") as! NSArray
+                print("CountryId", CountryId)
+
+                let areaId = Result.value(forKey: "AreaId") as! NSArray
+                print("areaId", areaId)
+                
+                firstNameEnglishTextField.text = FirstName[0] as? String
+                secondNameEnglishTextField.text = LastName[0] as? String
+                floorTextField.text = Floor[0] as? String
+                landMarkTextField.text = LandMark[0] as? String
+                locationTypeTextField.text = LocationType[0] as? String
+                mobileCountryCodeLabel.text = CountryCode[0] as? String
+                mobileTextField.text = PhoneNo[0] as? String
+                shippingNotesTextField.text = ShippingNotes[0] as? String
+                
+                getCountryId = CountryId[0] as! Int
+                getStateId = StateId[0] as! Int
+                getAreaId = areaId[0] as! Int
+                getCountryCode = CountryCode[0] as! String
+                
+                getEditId = Id[0] as! Int
+                
+                if let defaultValue = isDefault[0] as? Int
+                {
+                    checkDefault = defaultValue
+                }
+                else if let defaultValue = isDefault[0] as? Bool
+                {
+                    if defaultValue == true
+                    {
+                        checkDefault = 1
+                    }
+                    else
+                    {
+                        checkDefault = 0
+                    }
+                }
+                
+                if checkScreen == 1
+                {
+
+                }
+                else
+                {
+                    getLocation = CLLocationCoordinate2D(latitude: Lattitude[0] as! CLLocationDegrees, longitude: Longitude[0] as! CLLocationDegrees)
+                }
+                
+                
+                print("GET LOCATION CHECK", getLocation)
+                
+                if getLocation.latitude == 0.0 || getLocation.longitude == 0.0
+                {
+                    
+                }
+                else
+                {
+                    let geoCoder = GMSGeocoder()
+                    geoCoder.reverseGeocodeCoordinate(CLLocationCoordinate2D(latitude: getLocation.latitude, longitude: getLocation.longitude)) { response, error in
+                        
+                        guard let address = response?.firstResult(), let lines = address.lines else {
+                            print("FAILED TO RTURN ADDRESS")
+                            return
+                        }
+                        
+                        print("INBUILD FUNCTION", address)
+                        print("SUCCESS OF ADDRESS FOR LATITUDE", lines)
+                        
+                        self.addressString = lines
+                        
+                        self.addressContents()
+                    }
+                }
+                
+                serviceCall.API_CountryCode(delegate: self)
+                serviceCall.API_GetStateListByCountry(countryId: "\(getCountryId)", delegate: self)
+                serviceCall.API_GetAreaByState(stateId: "\(getAreaId)", delegate: self)
+            }
+        }
+        else
+        {
+            
+        }
+    }
+    
     func API_CALLBACK_InsertAddress(insertAddr: NSDictionary)
     {
         let ResponseMsg = insertAddr.object(forKey: "ResponseMsg") as! String
@@ -372,9 +514,16 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
         
-        if checkScreen == 1
+        if screenTag == 1
         {
-            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true)
+            if checkScreen == 1
+            {
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
+            }
+            else
+            {
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true)
+            }
         }
         else
         {
@@ -401,6 +550,42 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             countryFlagArray = result.value(forKey: "Flag") as! NSArray
             
             print("COUNT OF", countryFlagArray.count)
+            
+            if screenTag == 1
+            {
+//                getAddressId = Variables.sharedManager.individualAddressId
+//
+//                if getAddressId != 0
+//                {
+//                    serviceCall.API_GetBuyerIndividualAddressByAddressId(addressId : "\(getAddressId)", delegate : self)
+//                }
+            }
+            else
+            {
+                self.addressContents()
+            }
+            
+            if screenTag == 1 && setOrHide == 1
+            {
+                for i in 0..<countryIdArray.count
+                {
+                    if let matchId = countryIdArray[i] as? Int
+                    {
+                        if getCountryId == matchId
+                        {
+                            if let country = countryNameArray[i] as? String
+                            {
+                                print("COUNTRY NAME MATCHED", country, editCountryId, matchId)
+                                let convertedString = country.split(separator: "(")
+                                countryButton.setTitle("\(convertedString[0])", for: .normal)
+                                
+                                //                            serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[i])", delegate: self)
+//                                stateButton.setTitle("State", for: .normal)
+                            }
+                        }
+                    }
+                }
+            }
         }
         else if responseMsg == "Failure"
         {
@@ -412,7 +597,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             DeviceError()
         }
         
-        self.addressContents()
     }
     
     func API_CALLBACK_GetStateListByCountry(stateList: NSDictionary)
@@ -436,14 +620,14 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 checkStateName = 0
             }
             
-            if editStateId != 0
+            if screenTag == 1 && setOrHide == 1
             {
                 for i in 0..<stateCodeArray.count{
                     
                     if let matchId = stateCodeArray[i] as? Int
                     {
                         print("ID OF BOTH IN STATE", matchId, editStateId)
-                        if editStateId == matchId
+                        if getStateId == matchId
                         {
                             if let country = stateNameArray[i] as? String
                             {
@@ -455,6 +639,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                     }
                 }
             }
+            
+//            if getAddressId != 0
+//            {
+//                serviceCall.API_GetAreaByState(stateId: "\(getStateId)", delegate: self)
+//            }
         }
         else if responseMsg == "Failure"
         {
@@ -476,6 +665,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let ResponseMsg = area.object(forKey: "ResponseMsg") as! String
         
+        stopActivity()
+        
         if ResponseMsg == "Success"
         {
             let Result = area.object(forKey: "Result") as! NSArray
@@ -493,14 +684,14 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 areaCodeArray = Result.value(forKey: "Id") as! NSArray
                 print("areaCodeArray", areaCodeArray)
                 
-                if editAreaId != 0
+                if screenTag == 1 && setOrHide == 1
                 {
                     for i in 0..<areaCodeArray.count{
                         
                         if let matchId = areaCodeArray[i] as? Int
                         {
-                            print("ID OF BOTH IN AREA", matchId, editStateId)
-                            if editStateId == matchId
+                            print("ID OF BOTH IN AREA", matchId, getAreaId)
+                            if getAreaId == matchId
                             {
                                 if let country = areaNameArray[i] as? String
                                 {
@@ -510,6 +701,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                             }
                         }
                     }
+                }
+                
+                if screenTag == 1
+                {
+//                    addressContents()
                 }
             }
             else
@@ -566,10 +762,20 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
     }
     
-    
     func addressContents()
     {
-        if getEditId != 0
+        stopActivity()
+        
+//        if getEditId != 0
+//        {
+//            insertOrUpdate = 2
+//        }
+//        else
+//        {
+//            insertOrUpdate = 1
+//        }
+        
+        if screenTag == 1
         {
             insertOrUpdate = 2
         }
@@ -623,7 +829,16 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         let address1Label = UILabel()
         address1Label.frame = CGRect(x: x, y: y / 2, width: locationView.frame.width - (9 * x), height: (6 * y))
-        address1Label.text = "\(addressString[0])"
+        
+        if addressString.isEmpty == true
+        {
+            address1Label.text = "Address is not available"
+        }
+        else
+        {
+            address1Label.text = "\(addressString[0])"
+        }
+        
         address1Label.textColor = UIColor.black
         address1Label.textAlignment = .left
         address1Label.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -779,13 +994,21 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(countryIcon)
         
         countryButton.frame = CGRect(x: countryIcon.frame.maxX + x, y: underline2.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        countryButton.setTitle("Country", for: .normal)
+        if getAddressId != 0
+        {
+            
+        }
+        else
+        {
+            countryButton.setTitle("Country", for: .normal)
+        }
         countryButton.setTitleColor(UIColor.black, for: .normal)
         countryButton.contentHorizontalAlignment = .left
         countryButton.addTarget(self, action: #selector(self.countryButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(countryButton)
         
-        if editCountryId != 0
+        
+        /*if editCountryId != 0
         {
             for i in 0..<countryIdArray.count{
                 
@@ -836,6 +1059,28 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             }*/
         }
         
+        if getAddressId != 0
+        {
+            for i in 0..<countryIdArray.count
+            {
+                if let matchId = countryIdArray[i] as? Int
+                {
+                    if getCountryId == matchId
+                    {
+                        if let country = countryNameArray[i] as? String
+                        {
+                            print("COUNTRY NAME MATCHED", country, editCountryId, matchId)
+                            let convertedString = country.split(separator: "(")
+                            countryButton.setTitle("\(convertedString[0])", for: .normal)
+                            
+//                            serviceCall.API_GetStateListByCountry(countryId: "\(countryIdArray[i])", delegate: self)
+                            stateButton.setTitle("State", for: .normal)
+                        }
+                    }
+                }
+            }
+        }*/
+        
         let countryDropDownIcon = UIImageView()
         countryDropDownIcon.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline2.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
         countryDropDownIcon.image = UIImage(named: "downArrow")
@@ -852,13 +1097,20 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(stateIcon)
         
         stateButton.frame = CGRect(x: stateIcon.frame.maxX + x, y: underline3.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        stateButton.setTitle("State", for: .normal)
+        if getAddressId != 0
+        {
+            
+        }
+        else
+        {
+            stateButton.setTitle("State", for: .normal)
+        }
         stateButton.setTitleColor(UIColor.black, for: .normal)
         stateButton.contentHorizontalAlignment = .left
         stateButton.addTarget(self, action: #selector(self.stateButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(stateButton)
         
-        if editStateId != 0
+        /*if editStateId != 0
         {
             for i in 0..<stateCodeArray.count{
                 
@@ -911,6 +1163,30 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             }*/
         }
         
+        if getAddressId != 0
+        {
+            for i in 0..<stateCodeArray.count
+            {
+                if let matchId = stateCodeArray[i] as? Int
+                {
+                    print("EDIT STATE ID AND MATCH ID", editStateId, matchId, stateNameArray)
+                    
+                    if getStateId == matchId
+                    {
+                        if let country = stateNameArray[i] as? String
+                        {
+                            print("STATE NAME MATCHED", country, editCountryId, matchId)
+                            let convertedString = country.split(separator: "(")
+                            stateButton.setTitle("\(convertedString[0])", for: .normal)
+                            
+//                            serviceCall.API_GetAreaByState(stateId: "\(stateCodeArray[i])", delegate: self)
+                            areaButton.setTitle("Area", for: .normal)
+                        }
+                    }
+                }
+            }
+        }*/
+        
         let stateDropDownIcon = UIImageView()
         stateDropDownIcon.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline3.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
         stateDropDownIcon.image = UIImage(named: "downArrow")
@@ -943,16 +1219,25 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(areaButton)*/
         
         areaButton.frame = CGRect(x: areaIcon.frame.maxX + x, y: underline4.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        areaButton.setTitle("Area", for: .normal)
+        
+        if getAddressId != 0
+        {
+            
+        }
+        else
+        {
+            areaButton.setTitle("Area", for: .normal)
+        }
+        
         areaButton.setTitleColor(UIColor.black, for: .normal)
         areaButton.contentHorizontalAlignment = .left
         areaButton.addTarget(self, action: #selector(self.areaButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(areaButton)
         
-        if editAreaId != 0
+        /*if editAreaId != 0
         {
-            for i in 0..<areaCodeArray.count{
-                
+            for i in 0..<areaCodeArray.count
+            {
                 if let matchId = areaCodeArray[i] as? Int
                 {
                     print("EDIT AREA ID AND MATCH ID", editAreaId, matchId, areaNameArray)
@@ -989,6 +1274,27 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 }
             }*/
         }
+        
+        if getAddressId != 0
+        {
+            for i in 0..<areaCodeArray.count
+            {
+                if let matchId = areaCodeArray[i] as? Int
+                {
+                    print("EDIT AREA ID AND MATCH ID", editAreaId, matchId, areaNameArray)
+                    
+                    if getAreaId == matchId
+                    {
+                        if let country = areaNameArray[i] as? String
+                        {
+                            print("AREA NAME MATCHED", country, editAreaId, matchId)
+                            let convertedString = country.split(separator: "(")
+                            areaButton.setTitle("\(convertedString[0])", for: .normal)
+                        }
+                    }
+                }
+            }
+        }*/
         
         let areaEditButton = UIButton()
         areaEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline4.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
@@ -1125,17 +1431,15 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         mobileCountryCodeLabel.font = UIFont(name: "Avenir-Regular", size: 18)
         mobileCountryCodeButton.addSubview(mobileCountryCodeLabel)
         
-        if let countryCode = UserDefaults.standard.value(forKey: "countryCode") as? String
+        if screenTag == 1
         {
-            print("COUNTRY CODE IN ADDRESS FIELD", countryCode)
-            
             for i in 0..<countryCodeArray.count
             {
                 if let id = countryCodeArray[i] as? String
                 {
-                    if id == countryCode
+                    if id == getCountryCode
                     {
-                        print("ID OF DE", id, countryCode)
+                        print("ID OF DE", id, getCountryCode)
                         
                         if let imageName = countryFlagArray[i] as? String
                         {
@@ -1154,6 +1458,42 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                         }
                         
                         mobileCountryCodeLabel.text = (countryCodeArray[i] as! String)
+                    }
+                }
+            }
+        }
+        else
+        {
+            if let countryCode = UserDefaults.standard.value(forKey: "countryCode") as? String
+            {
+                print("COUNTRY CODE IN ADDRESS FIELD", countryCode)
+                
+                for i in 0..<countryCodeArray.count
+                {
+                    if let id = countryCodeArray[i] as? String
+                    {
+                        if id == countryCode
+                        {
+                            print("ID OF DE", id, countryCode)
+                            
+                            if let imageName = countryFlagArray[i] as? String
+                            {
+                                let urlString = serviceCall.baseURL
+                                let api = "\(urlString)/images/flags/\(imageName)"
+                                let apiurl = URL(string: api)
+                                
+                                if apiurl != nil
+                                {
+                                    flagImageView.dowloadFromServer(url: apiurl!)
+                                }
+                                else
+                                {
+                                    flagImageView.image = UIImage(named: "empty")
+                                }
+                            }
+                            
+                            mobileCountryCodeLabel.text = (countryCodeArray[i] as! String)
+                        }
                     }
                 }
             }
@@ -1236,9 +1576,16 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     {
         let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
 
-        if checkScreen == 1
+        if screenTag == 1
         {
-            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true)
+            if checkTag == 1
+            {
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
+            }
+            else
+            {
+                self.navigationController!.popToViewController(viewControllers[viewControllers.count - 2], animated: true)
+            }
         }
         else
         {
@@ -1511,7 +1858,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         
         let locationScreen = LocationViewController()
-        locationScreen.screenTag = 1
+        locationScreen.screenTag = 2
         locationScreen.selectedCoordinate = getLocation
         self.navigationController?.pushViewController(locationScreen, animated: true)
         
@@ -1602,6 +1949,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 
                 if action.title == "\(convertedString[0])"
                 {
+                    setOrHide = 0
                     let int = countryIdArray[i] as! Int
                     serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
                     stateButton.setTitle("State", for: .normal)
@@ -1654,8 +2002,10 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             {
                 if state == action.title
                 {
+                    setOrHide = 0
                     getStateId = stateCodeArray[i] as! Int
                     serviceCall.API_GetAreaByState(stateId: "\(getStateId)", delegate: self)
+                    activityContents()
                 }
             }
         }
@@ -1985,7 +2335,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                         if "\(compareString1[0])" == "\(convertedString[0])"
                         {
                             countryButton.setTitle("\(compareString1[0])", for: .normal)
-                            
+                            setOrHide = 0
                             let int = countryIdArray[i] as! Int
                             serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
                             stateButton.setTitle("State", for: .normal)

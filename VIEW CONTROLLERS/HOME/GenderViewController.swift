@@ -62,6 +62,11 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         
+        for allViews in selfScreenContents.subviews
+        {
+            allViews.removeFromSuperview()
+        }
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -329,7 +334,17 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         for i in 0..<genderIdArray.count
         {
             let genderButton = UIButton()
-            genderButton.frame = CGRect(x: (2 * x), y: buttonYPos, width: selfScreenContents.frame.width - (4 * x), height: (12 * y))
+            
+            if i == 0 || i == 2
+            {
+                genderButton.frame = CGRect(x: selfScreenContents.frame.maxX, y: buttonYPos, width: selfScreenContents.frame.width - (6 * x), height: (12 * y))
+            }
+            else
+            {
+                genderButton.frame = CGRect(x: -(selfScreenContents.frame.width - (6 * x)), y: buttonYPos, width: selfScreenContents.frame.width - (6 * x), height: (12 * y))
+            }
+            
+            genderButton.backgroundColor = UIColor.blue
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: genderButton.frame.width, height: genderButton.frame.height)
             //            buttonImage.image = convertedSeasonalImageArray[i]
@@ -343,6 +358,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
                     buttonImage.dowloadFromServer(url: apiurl!)
                 }
             }
+            buttonImage.contentMode = .scaleToFill
             genderButton.addSubview(buttonImage)
 
             genderButton.tag = genderIdArray[i] as! Int
@@ -357,6 +373,31 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             {
                 
             }
+            
+            let genderButtonLabel = UILabel()
+            if i == 0 || i == 2
+            {
+                genderButtonLabel.frame = CGRect(x: 0, y: ((genderButton.frame.height - (2 * y)) / 2), width: (7 * x), height: (2 * y))
+            }
+            else
+            {
+                genderButtonLabel.frame = CGRect(x: genderButton.frame.width - (7 * x), y: ((genderButton.frame.height - (2 * y)) / 2), width: (7 * x), height: (2 * y))
+            }
+            genderButtonLabel.backgroundColor = UIColor.darkGray
+            genderButtonLabel.text = genderArray[i] as! String
+            genderButtonLabel.textColor = UIColor.white
+            genderButtonLabel.textAlignment = .center
+            genderButton.addSubview(genderButtonLabel)
+            
+            UIView.animate(withDuration: 1.0, animations: {
+                //self.viewTrack.frame.origin.y = UIScreen.main.bounds.size.height
+                genderButton.frame.origin.x = (3 * self.x)
+                
+            }, completion: { finished in
+                if finished{
+                    
+                }
+            })
             
             buttonYPos = genderButton.frame.maxY + y
         }

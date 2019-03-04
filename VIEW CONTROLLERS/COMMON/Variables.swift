@@ -28,6 +28,8 @@ class Variables: NSObject
     public var areaId:Int = 0
     public var checkDefaultId:Int = 0
 
+    public var individualAddressId:Int = 0
+
     public var AddressLine1:String = ""
     public var AddressLine2:String = ""
     public var AddressLine3:String = ""

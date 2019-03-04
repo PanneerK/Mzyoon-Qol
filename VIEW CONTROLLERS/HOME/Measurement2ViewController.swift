@@ -1327,7 +1327,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getNeckLabel)
                     
                     let chestLabel = UILabel()
-                    chestLabel.frame = CGRect(x: (13.2 * x), y: (12.9 * y), width: subView.frame.width - (19.2 * x), height: (2 * y))
+                    chestLabel.frame = CGRect(x: (11.8 * x), y: (13.1 * y), width: subView.frame.width - (18.2 * x), height: (2 * y))
                     chestLabel.text = "Chest"
                     chestLabel.textColor = UIColor.black
                     chestLabel.textAlignment = .center
@@ -1336,13 +1336,13 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(chestLabel)
                     
                     let chestButton = UIButton()
-                    chestButton.frame = CGRect(x: (13.2 * x), y: (13.4 * y), width: subView.frame.width - (19.2 * x), height: (3 * y))
+                    chestButton.frame = CGRect(x: (11.8 * x), y: (13.6 * y), width: subView.frame.width - (18.2 * x), height: (3 * y))
                     chestButton.setImage(UIImage(named: "arrowMark"), for: .normal)
                     chestButton.tag = 3
                     chestButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(chestButton)
                     
-                    getChestLabel.frame = CGRect(x: chestButton.frame.maxX, y: (13.4 * y), width: (5 * x), height: (3 * y))
+                    getChestLabel.frame = CGRect(x: chestButton.frame.maxX, y: (13.7 * y), width: (5 * x), height: (3 * y))
                     getChestLabel.text = "0.0"
                     getChestLabel.textColor = UIColor.blue
                     getChestLabel.textAlignment = .center
@@ -1351,7 +1351,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getChestLabel)
                     
                     let waistLabel = UILabel()
-                    waistLabel.frame = CGRect(x: (12.5 * x), y: (14.5 * y), width: subView.frame.width - (18.5 * x), height: (2 * y))
+                    waistLabel.frame = CGRect(x: (12.5 * x), y: (16.4 * y), width: subView.frame.width - (18.5 * x), height: (2 * y))
                     waistLabel.text = "Waist"
                     waistLabel.textColor = UIColor.black
                     waistLabel.textAlignment = .center
@@ -1360,13 +1360,13 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(waistLabel)
                     
                     let waistButton = UIButton()
-                    waistButton.frame = CGRect(x: (12.5 * x), y: (15 * y), width: subView.frame.width - (18.5 * x), height: (3 * y))
+                    waistButton.frame = CGRect(x: (12.5 * x), y: (16.9 * y), width: subView.frame.width - (18.5 * x), height: (3 * y))
                     waistButton.setImage(UIImage(named: "arrowMark"), for: .normal)
                     waistButton.tag = 4
                     waistButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(waistButton)
                     
-                    getWaistLabel.frame = CGRect(x: waistButton.frame.maxX, y: (15 * y), width: (5 * x), height: (3 * y))
+                    getWaistLabel.frame = CGRect(x: waistButton.frame.maxX, y: (16.9 * y), width: (5 * x), height: (3 * y))
                     getWaistLabel.text = "0.0"
                     getWaistLabel.textColor = UIColor.blue
                     getWaistLabel.textAlignment = .center

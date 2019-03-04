@@ -34,6 +34,7 @@ import Foundation
     @objc optional func API_CALLBACK_UpdateAddress(updateAddr : NSDictionary)
     @objc optional func API_CALLBACK_DeleteAddress(deleteAddr : NSDictionary)
     @objc optional func API_CALLBACK_GetBuyerAddress(getBuyerAddr : NSDictionary)
+    @objc optional func API_CALLBACK_GetBuyerIndividualAddressByAddressId(getAddress : NSDictionary)
     
     @objc optional func API_CALLBACK_Profile(profile : NSDictionary)
     @objc optional func API_CALLBACK_IntroProfile(introProf : NSDictionary)
