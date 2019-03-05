@@ -18,9 +18,9 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-//  var baseURL:String = "http://192.168.0.26/TailorAPI"
+       var baseURL:String = "http://192.168.0.26/TailorAPI"
 
-    var baseURL:String = "http://appsapi.mzyoon.com"
+  //     var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
     
@@ -2042,13 +2042,13 @@ class ServerAPI : NSObject
     }
     
     // Insert Ratings...
-    func API_InsertRatings(OrderId : Int, Category : [[String : Any]], Review : String, TailorId : Int, delegate : ServerAPIDelegate)
-    {
+    func API_InsertRatings(OrderId : Int, CategoryId0 : Int, CategoryRating0 : Int, CategoryId1 : Int, CategoryRating1 : Int, CategoryId2 : Int, CategoryRating2 : Int, Review : String, TailorId : Int, delegate : ServerAPIDelegate)
+   {
         if Reachability.Connection.self != .none
         {
             print("Server Reached - Reviews And Ratings Page")
             
-            let parameters = ["OrderId" : OrderId, "Category" : Category, "Review" : Review, "TailorId" : TailorId] as [String : Any]
+            let parameters = ["OrderId" : OrderId, "Category[0][Id]" : CategoryId0, "Category[0][Rating]" : CategoryRating0, "Category[1][Id]" : CategoryId1, "Category[1][Rating]" : CategoryRating1, "Category[2][Id]" : CategoryId2, "Category[2][Rating]" : CategoryRating2, "Review" : Review, "TailorId" : TailorId] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/InsertRating", arguments: [baseURL])
             
@@ -2516,6 +2516,77 @@ class ServerAPI : NSObject
                 else
                 {
                     delegate.API_CALLBACK_Error(errorNumber: 59, errorMessage: "List Of Orders Failed")
+                    
+                }
+            }
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
+    }
+    
+    
+    //  Get Payment Address..
+    func API_GetPaymentAddress(BuyerId : String , delegate : ServerAPIDelegate)
+    {
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - Payment Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetPaymentAddress?BuyerId=\(BuyerId)", arguments: [baseURL])
+            
+            print("Get Payment Address: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    //print("resultDict", self.resultDict)
+                    
+                    delegate.API_CALLBACK_GetPaymentAddress!(getAddress:self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 60, errorMessage: "Payment Address Failed")
+                    
+                }
+            }
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
+    }
+    
+    //  Get Shop Details..
+    func API_GetShopDetails(TailorId : Int , delegate : ServerAPIDelegate)
+    {
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - Shop Details Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Order/GetShopDetails?TailorId=\(TailorId)", arguments: [baseURL])
+            
+            print("Get Shop Details: ", urlString)
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    //print("resultDict", self.resultDict)
+                    
+                    delegate.API_CALLBACK_GetShopDetails!(getShopDetails: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 61, errorMessage: "Shop Details Failed")
                     
                 }
             }

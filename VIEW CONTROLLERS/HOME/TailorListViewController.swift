@@ -539,7 +539,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
-            //            tailorView.addSubview(ratingCountLabel)
+            //  tailorView.addSubview(ratingCountLabel)
             
             
             let ratingImageView = UIImageView()
@@ -604,7 +604,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
         }
         
-        //        serviceCall.API_DirectionRequest(origin: "\(currentLocation.coordinate.latitude)", destination: "\(currentLocation.coordinate.longitude)", delegate: self)
+        //  serviceCall.API_DirectionRequest(origin: "\(currentLocation.coordinate.latitude)", destination: "\(currentLocation.coordinate.longitude)", delegate: self)
     }
     
     func directionViewContents(isHidden : Bool)

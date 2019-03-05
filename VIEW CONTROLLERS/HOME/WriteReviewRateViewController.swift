@@ -431,7 +431,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     Review_TF.keyboardType = .default
     Review_TF.clearsOnBeginEditing = true
     Review_TF.returnKeyType = .done
-    Review_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+   // Review_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
     Review_TF.delegate = self
     view.addSubview(Review_TF)
     
@@ -461,15 +461,21 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
      reviewStr = self.Review_TF.text
     
   }
-    
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool
+  {
+        view.endEditing(true)
+        return true
+  }
   @objc func SubmitButtonAction(sender : UIButton)
   {
     
-    let CategoryID: [[String: Int]] = [["1":OnTimeServiceRatingNum],["2":StitchingQualityRatingNum],["3":CustomerServiceRatingNum]]
+   // let CategoryID: [[String: Int]] = [["1":OnTimeServiceRatingNum],["2":StitchingQualityRatingNum],["3":CustomerServiceRatingNum]]
     let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
     
+    reviewStr = self.Review_TF.text
+    
     print("Review:",reviewStr)
-    print("Category:",CategoryID)
+   // print("Category:",CategoryID)
     print("Order ID:",OrderID)
     print("Tailor Id",TailorId!)
     
@@ -478,7 +484,9 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
         reviewStr = ""
     }
     
-    self.serviceCall.API_InsertRatings(OrderId:OrderID!, Category:CategoryID, Review:reviewStr, TailorId:TailorId!, delegate: self)
+   //  self.serviceCall.API_InsertRatings(OrderId:OrderID!, Category:CategoryID, Review:reviewStr, TailorId:TailorId!, delegate: self)
+    
+   self.serviceCall.API_InsertRatings(OrderId: OrderID, CategoryId0: 1, CategoryRating0: OnTimeServiceRatingNum, CategoryId1: 2, CategoryRating1: StitchingQualityRatingNum, CategoryId2: 3, CategoryRating2: CustomerServiceRatingNum, Review: reviewStr, TailorId: TailorId!, delegate: self)
     
   }
 }

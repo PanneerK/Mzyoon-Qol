@@ -124,11 +124,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             let Result = PendingOrdersList.object(forKey: "Result") as! NSArray
-            print("Result:", Result)
+            print("Pending Result:", Result)
             
             if Result == nil || Result.count == 0
             {
-                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.frame = CGRect(x: 0, y: ((PendingViewBackDrop.frame.height - (3 * y)) / 2), width: PendingViewBackDrop.frame.width, height: (3 * y))
                 emptyLabel.text = "You Dont Have Pending Orders"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
@@ -177,17 +177,17 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             let Result = DeliverOrdersList.object(forKey: "Result") as! NSArray
-            print("Result:", Result)
+            print("Delivered Result:", Result)
             
             if Result == nil || Result.count == 0
             {
-                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                emptyLabel.frame = CGRect(x: 0, y: ((DeliveredViewBackDrop.frame.height - (3 * y)) / 2), width: DeliveredViewBackDrop.frame.width, height: (3 * y))
                 emptyLabel.text = "You Dont Have Delivered orders"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
                 emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
-                view.addSubview(emptyLabel)
+                DeliveredViewBackDrop.addSubview(emptyLabel)
             }
             
             DelivImageArray = Result.value(forKey: "Image") as! NSArray

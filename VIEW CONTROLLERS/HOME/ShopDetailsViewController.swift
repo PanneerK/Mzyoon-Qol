@@ -8,8 +8,10 @@
 
 import UIKit
 
-class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITableViewDataSource
+class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITableViewDataSource,ServerAPIDelegate
 {
+   
+    let serviceCall = ServerAPI()
     
     let shopName = UILabel()
     let ratingImageView = UIImageView()
@@ -36,13 +38,22 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     }
     override func viewWillAppear(_ animated: Bool)
     {
+        
+        self.serviceCall.API_GetShopDetails(TailorId: 2, delegate: self)
+        
+        
         ShopDetailsContent()
        // strPhoneNumber = "+91 8015557649"
         DaysArray = ["Sunday","Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"]
         TimeArray = ["Closed","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM"]
         
     }
-
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        
+    }
+    
   func ShopDetailsContent()
   {
      self.stopActivity()
