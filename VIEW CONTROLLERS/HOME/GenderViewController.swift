@@ -458,6 +458,20 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             dressTypeScreen.tag = sender.tag
             self.navigationController?.pushViewController(dressTypeScreen, animated: true)
         }
+        else if sender.tag == 3
+        {
+            UserDefaults.standard.set("Boy", forKey: "gender")
+            let dressTypeScreen = DressTypeViewController()
+            dressTypeScreen.tag = sender.tag
+            self.navigationController?.pushViewController(dressTypeScreen, animated: true)
+        }
+        else if sender.tag == 4
+        {
+            UserDefaults.standard.set("Girl", forKey: "gender")
+            let dressTypeScreen = DressTypeViewController()
+            dressTypeScreen.tag = sender.tag
+            self.navigationController?.pushViewController(dressTypeScreen, animated: true)
+        }
         else
         {
             let emptyAlert = UIAlertController(title: "Alert", message: "As of now we are providing services for men alone", preferredStyle: .alert)

@@ -196,6 +196,23 @@ open class UISideMenuNavigationController: UINavigationController {
             return
         }
         
+        print("SIDE MENU VALUE", UserDefaults.standard.value(forKey: "sideValue"))
+                
+        if let value = UserDefaults.standard.value(forKey: "sideValue") as? Int
+        {
+            if value == 1
+            {
+                
+            }
+        }
+        else if let value = UserDefaults.standard.value(forKey: "sideValue") as? String
+        {
+            if value == "1"
+            {
+                
+            }
+        }
+        
         activeDelegate?.sideMenuWillDisappear?(menu: self, animated: animated)
     }
     

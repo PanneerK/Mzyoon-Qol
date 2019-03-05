@@ -141,6 +141,14 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         if screenTag == 1
         {
             setOrHide = 1
+            if checkTag == 1
+            {
+                getAddressId = Variables.sharedManager.individualAddressId
+            }
+            else
+            {
+                
+            }
             serviceCall.API_GetBuyerIndividualAddressByAddressId(addressId : "\(getAddressId)", delegate : self)
         }
         else
@@ -398,16 +406,27 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 if let defaultValue = isDefault[0] as? Int
                 {
                     checkDefault = defaultValue
+                    
+                    if defaultValue == 0
+                    {
+                        setDefault = "FALSE"
+                    }
+                    else
+                    {
+                        setDefault = "TRUE"
+                    }
                 }
                 else if let defaultValue = isDefault[0] as? Bool
                 {
                     if defaultValue == true
                     {
                         checkDefault = 1
+                        setDefault = "TRUE"
                     }
                     else
                     {
                         checkDefault = 0
+                        setDefault = "FALSE"
                     }
                 }
                 
@@ -448,7 +467,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 
                 serviceCall.API_CountryCode(delegate: self)
                 serviceCall.API_GetStateListByCountry(countryId: "\(getCountryId)", delegate: self)
-                serviceCall.API_GetAreaByState(stateId: "\(getAreaId)", delegate: self)
+                serviceCall.API_GetAreaByState(stateId: "\(getStateId)", delegate: self)
             }
         }
         else
@@ -553,7 +572,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             
             if screenTag == 1
             {
-//                getAddressId = Variables.sharedManager.individualAddressId
+                getAddressId = Variables.sharedManager.individualAddressId
 //
 //                if getAddressId != 0
 //                {
@@ -2025,7 +2044,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             buyerId = "\(getBuyerId)"
         }
         
-        let FirstNameStr = firstNameEnglishTextField.text!
+        /*let FirstNameStr = firstNameEnglishTextField.text!
         let lastNameStr = secondNameEnglishTextField.text!
         let CountryId = 1
         let AreaStr = areaButton.titleLabel?.text!
@@ -2035,8 +2054,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let shippingStr = shippingNotesTextField.text!
         let CountryCode = mobileCountryCodeLabel.text!
         let PhoneNum = mobileTextField.text!
-        let latitude = getLocation.latitude
-        let longitude = getLocation.longitude
+        
         
         print("GET OF LAT AND LONG", latitude, longitude)
         
@@ -2048,17 +2066,20 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         print(locationTypeStr)
         print(shippingStr)
         print(CountryCode)
-        print(PhoneNum)
+        print(PhoneNum)*/
+        
+        let latitude = getLocation.latitude
+        let longitude = getLocation.longitude
         
         if firstNameEnglishTextField.text != "" || firstNameEnglishTextField.text?.count != 0 || firstNameEnglishTextField.text?.isEmpty != true
         {
             if secondNameEnglishTextField.text != "" || secondNameEnglishTextField.text?.count != 0 || secondNameEnglishTextField.text?.isEmpty != true
             {
-                if countryButton.titleLabel?.text != "Country"
+                if countryButton.titleLabel?.text != "Country" || countryButton.titleLabel?.text?.isEmpty == true || countryButton.titleLabel?.text == nil
                 {
-                    if stateButton.titleLabel?.text != "State"
+                    if stateButton.titleLabel?.text != "State" || stateButton.titleLabel?.text?.isEmpty == true || stateButton.titleLabel?.text == nil
                     {
-                        if areaButton.titleLabel?.text != "Area"
+                        if areaButton.titleLabel?.text != "Area" || areaButton.titleLabel?.text?.isEmpty == true || areaButton.titleLabel?.text == nil
                         {
                             if floorTextField.text != "" || floorTextField.text?.count != 0 || floorTextField.text?.isEmpty != true
                             {

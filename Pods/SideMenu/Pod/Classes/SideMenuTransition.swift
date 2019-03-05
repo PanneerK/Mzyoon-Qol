@@ -555,6 +555,9 @@ extension SideMenuTransition: UIViewControllerTransitioningDelegate {
     // return the animator used when dismissing from a viewcontroller
     open func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         presenting = false
+        
+        UserDefaults.standard.set(0, forKey: "sideValue")
+        
         return self
     }
     

@@ -1,6 +1,7 @@
 use_frameworks!
 
 target 'Mzyoon' do
+
   pod 'AlamofireDomain', '~> 4.1'
   pod 'ReachabilitySwift', '~> 4.3'
   pod 'NVActivityIndicatorView'
@@ -8,4 +9,7 @@ target 'Mzyoon' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'Cosmos', '~> 18.0'
+  pod 'SideMenuSwift'
+  pod 'SidebarOverlay'
+
 end

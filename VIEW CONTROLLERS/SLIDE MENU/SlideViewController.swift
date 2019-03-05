@@ -22,6 +22,7 @@ class SlideViewController: UIViewController
     let userImage = UIImageView()
     let userName = UILabel()
 
+    let commonScreen = CommonViewController()
     
     override func viewDidLoad()
     {
@@ -62,6 +63,11 @@ class SlideViewController: UIViewController
         self.navigationController?.isNavigationBarHidden = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        commonScreen.slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
+        print("WELCOME TO DISAPPEAR")
+    }
+    
     func sideMenuFunctions()
     {
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: self)
@@ -93,7 +99,7 @@ class SlideViewController: UIViewController
     
     func screenContents()
     {
-        userImage.frame = CGRect(x: ((slideViewWidth - (10 * x)) / 2), y: (2.5 * y), width: (10 * x), height: (10 * x))
+        userImage.frame = CGRect(x: ((slideViewWidth - (10 * x)) / 2), y: (5 * y), width: (10 * x), height: (10 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.borderWidth = 0.50
         userImage.layer.borderColor = UIColor.white.cgColor
@@ -241,8 +247,6 @@ class SlideViewController: UIViewController
     
     @objc func menuButtonAction(sender : UIButton)
     {
-        view.removeFromSuperview()
-        
         if sender.tag == 0
         {
             let profileScreen = ProfileViewController()
@@ -261,20 +265,28 @@ class SlideViewController: UIViewController
         }
         else if sender.tag == 3
         {
-            let navigateScreen = LoginViewController()
-            navigateScreen.findString = "logout"
-            window = UIWindow(frame: UIScreen.main.bounds)
-            let navigationScreen = UINavigationController(rootViewController: navigateScreen)
-            navigationScreen.isNavigationBarHidden = true
-            window?.rootViewController = navigationScreen
-            window?.makeKeyAndVisible()
+            let logoutAlert = UIAlertController(title: "Alert", message: "Are you sure want to logout", preferredStyle: .alert)
+            logoutAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: logoutAlertOkAction(action:)))
+            logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(logoutAlert, animated: true, completion: nil)
         }
-        else
+        /*else
         {
             let alertControls = UIAlertController(title: "Alert", message: "No Data", preferredStyle: .alert)
             alertControls.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alertControls, animated: true, completion: nil)
-        }
+        }*/
+    }
+    
+    func logoutAlertOkAction(action : UIAlertAction)
+    {
+        let navigateScreen = LoginViewController()
+        navigateScreen.findString = "logout"
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let navigationScreen = UINavigationController(rootViewController: navigateScreen)
+        navigationScreen.isNavigationBarHidden = true
+        window?.rootViewController = navigationScreen
+        window?.makeKeyAndVisible()
     }
     
     @objc func slideMenuButtonAction(sender : UIButton)

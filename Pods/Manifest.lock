@@ -12,7 +12,9 @@ PODS:
     - NVActivityIndicatorView/Presenter (= 4.4.0)
   - NVActivityIndicatorView/Presenter (4.4.0)
   - ReachabilitySwift (4.3.0)
+  - SidebarOverlay (4.2.2)
   - SideMenu (5.0.1)
+  - SideMenuSwift (1.0.1)
 
 DEPENDENCIES:
   - AlamofireDomain (~> 4.1)
@@ -21,7 +23,9 @@ DEPENDENCIES:
   - GooglePlaces
   - NVActivityIndicatorView
   - ReachabilitySwift (~> 4.3)
+  - SidebarOverlay
   - SideMenu
+  - SideMenuSwift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -31,7 +35,9 @@ SPEC REPOS:
     - GooglePlaces
     - NVActivityIndicatorView
     - ReachabilitySwift
+    - SidebarOverlay
     - SideMenu
+    - SideMenuSwift
 
 SPEC CHECKSUMS:
   AlamofireDomain: 6a17c975e5fe8c10d8dbfdb1ab28e6dd0ae7cd41
@@ -40,8 +46,10 @@ SPEC CHECKSUMS:
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SidebarOverlay: a5365455a2f9d54f70d0765764ca1a2806b1b11d
   SideMenu: 87efd943737bb83aedf0358884d09fcf5576636d
+  SideMenuSwift: a78d47182aa03b5c07570fe57d3ba22c4561f2ce
 
-PODFILE CHECKSUM: 424d9ca73e75cc0dddbc257b0e828c56504608d8
+PODFILE CHECKSUM: 0a0b4665e8a1ba7505432021351a01e9b2d8f06e
 
 COCOAPODS: 1.5.3

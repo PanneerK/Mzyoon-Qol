@@ -373,8 +373,9 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             {
                 print("CONVERTED ADDRESS ARRAY", convertedAddressArray)
                 let addressSelectButton = UIButton()
-                
-                if convertedAddressArray.count != 0
+                addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (20 * y))
+
+                /*if convertedAddressArray.count != 0
                 {
                     if let addressList = convertedAddressArray[i] as? String
                     {
@@ -384,14 +385,14 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                         }
                         else
                         {
-                            addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (17        * y))
+                            addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (17 * y))
                         }
                     }
                 }
                 else
                 {
                     addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
-                }
+                }*/
                 
                
                 addressSelectButton.backgroundColor = UIColor.white

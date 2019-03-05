@@ -251,6 +251,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             let result = countryCodes.object(forKey: "Result") as! NSArray
             
+            print("CountryCode", result)
+            
             countryNameArray = result.value(forKey: "CountryName") as! NSArray
             
             countryCodeArray = result.value(forKey: "PhoneCode") as! NSArray
@@ -497,8 +499,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         mobileCountryCodeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        mobileTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-//        mobileTextField.textAlignment = .right
+        mobileTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        mobileTextField.textAlignment = .right
         mobileTextField.placeholder = "رقم الهاتف المحمول"
         
         continueButton.setTitle("استمر", for: .normal)
@@ -531,8 +533,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         mobileCountryCodeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
-//        mobileTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-//        mobileTextField.textAlignment = .left
+        mobileTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        mobileTextField.textAlignment = .left
         
         mobileTextField.placeholder = "Mobile Number"
 
@@ -705,7 +707,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             UserDefaults.standard.set("ar", forKey: "language")
             selectedLanguage = "Arabic"
-
 //            changeViewToArabic()
         }
     }
@@ -781,6 +782,22 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(self.countryCodeCancelAction(sender:)), for: .touchUpInside)
         alertView.addSubview(cancelButton)
+        
+        /*if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            changeViewToEnglish()
+        }*/
     }
     
     @objc func mobileTextField(textField : UITextField)
@@ -829,6 +846,28 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 alert = UIAlertController(title: "Alert", message: "OTP has sent to your \(mobileTextField.text!) mobile number", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: otpSendAlertAction(action:)))
                 self.navigationController?.present(alert, animated: true, completion: nil)
+                
+                /*if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        alert = UIAlertController(title: "Alert", message: "OTP has sent to your \(mobileTextField.text!) mobile number", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: otpSendAlertAction(action:)))
+                        self.navigationController?.present(alert, animated: true, completion: nil)
+                    }
+                    else if language == "ar"
+                    {
+                        alert = UIAlertController(title: "محزر", message: "لقد أرسل OTP إلى رقم هاتفك المحمول", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: otpSendAlertAction(action:)))
+                        self.navigationController?.present(alert, animated: true, completion: nil)
+                    }
+                }
+                else
+                {
+                    alert = UIAlertController(title: "Alert", message: "OTP has sent to your \(mobileTextField.text!) mobile number", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: otpSendAlertAction(action:)))
+                    self.navigationController?.present(alert, animated: true, completion: nil)
+                }*/
             }
         }
     }
@@ -1164,17 +1203,20 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             {
                 cell.flagImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 cell.countryName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.countryName.textAlignment = .right
             }
             else if language == "en"
             {
                 cell.flagImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.countryName.textAlignment = .left
             }
         }
         else
         {
             cell.flagImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.countryName.textAlignment = .left
         }*/
         return cell
     }

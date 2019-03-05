@@ -21,9 +21,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     var yPos:CGFloat!
     
     var imageName = NSArray()
-    
-    let slideScreen = SlideViewController()
-    
+        
     var applicationDelegate = AppDelegate()
     
     
