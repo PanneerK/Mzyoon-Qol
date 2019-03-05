@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShopDetailsViewController: CommonViewController
+class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITableViewDataSource
 {
     
     let shopName = UILabel()
@@ -18,6 +18,15 @@ class ShopDetailsViewController: CommonViewController
     let ordersCountLabel = UILabel()
     
     var strPhoneNumber:String!
+    
+     let TimingsTableView = UITableView()
+    let blurView = UIView()
+    let alertView = UIView()
+    let titleLabel = UILabel()
+    let cancelButton = UIButton()
+    
+    var DaysArray = NSArray()
+    var TimeArray = NSArray()
     
     override func viewDidLoad()
     {
@@ -29,6 +38,9 @@ class ShopDetailsViewController: CommonViewController
     {
         ShopDetailsContent()
        // strPhoneNumber = "+91 8015557649"
+        DaysArray = ["Sunday","Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"]
+        TimeArray = ["Closed","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM"]
+        
     }
 
   func ShopDetailsContent()
@@ -186,14 +198,15 @@ class ShopDetailsViewController: CommonViewController
     let Time_Label = UILabel()
     Time_Label.frame = CGRect(x: Time_Icon.frame.maxX + x, y: underLine1.frame.maxY + y, width: (16 * x), height: (1.5 * y))
     //Time_Label.backgroundColor = UIColor.lightGray
-    Time_Label.text = "OPEN : Closes 10:00 PM"
+    Time_Label.text = "OPEN : Closes 09:00 PM"
     Time_Label.font = UIFont(name: "Avenir Next", size: (1.2 * x))
     DetailsView.addSubview(Time_Label)
     
-    let DownArrow_Icon = UIImageView()
+    let DownArrow_Icon = UIButton()
     DownArrow_Icon.frame = CGRect(x: Time_Label.frame.maxX, y: underLine1.frame.maxY + y, width: (1.5 * x), height: (1.5 * y))
-    DownArrow_Icon.image = UIImage(named: "downArrow")
-    DetailsView.addSubview(DownArrow_Icon)
+    DownArrow_Icon.setImage(UIImage(named: "downArrow"), for: .normal)
+    DownArrow_Icon.addTarget(self, action: #selector(self.TimingsButtonAction(sender:)), for: .touchUpInside)
+     DetailsView.addSubview(DownArrow_Icon)
     
     let underLine2 = UILabel()
     underLine2.frame = CGRect(x: 0, y: Time_Label.frame.maxY + y, width: DetailsView.frame.width, height: 0.5)
@@ -288,6 +301,24 @@ class ShopDetailsViewController: CommonViewController
     Share_LBL.textAlignment = .center
     view.addSubview(Share_LBL)
     
+    
+    // Order Type..
+    let Photos_Label = UILabel()
+    Photos_Label.frame = CGRect(x: ((view.frame.width - (14 * x)) / 2), y: Call_LBL.frame.maxY + (2 * y), width: (16 * x), height: (3 * y))
+    Photos_Label.backgroundColor = UIColor.white
+    Photos_Label.text = "SHOP PHOTOS"
+    Photos_Label.layer.borderColor = UIColor.lightGray.cgColor
+    Photos_Label.layer.borderWidth = 1.0
+    Photos_Label.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+    Photos_Label.textAlignment = .center
+    Photos_Label.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    view.addSubview(Photos_Label)
+    
+    let PhotosScrollview = UIScrollView()
+    PhotosScrollview.frame = CGRect(x: (3 * x), y: Photos_Label.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * x))
+    PhotosScrollview.backgroundColor = UIColor.white
+    PhotosScrollview.layer.borderColor = UIColor.lightGray.cgColor
+    view.addSubview(PhotosScrollview)
   }
 
   @objc func otpBackButtonAction(sender : UIButton)
@@ -300,6 +331,52 @@ class ShopDetailsViewController: CommonViewController
      let ReviewsScreen = ReviewsViewController()
      self.navigationController?.pushViewController(ReviewsScreen, animated: true)
   }
+  @objc func TimingsButtonAction(sender : UIButton)
+  {
+      print("Timings Button..Click..!")
+    
+    blurView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+    blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    view.addSubview(blurView)
+    
+    alertView.frame = CGRect(x: (3 * x), y: (17 * y), width: view.frame.width - (6 * x), height: view.frame.height - (34 * y))
+    alertView.layer.cornerRadius = 15
+    alertView.layer.masksToBounds = true
+    alertView.backgroundColor = UIColor.white
+    blurView.addSubview(alertView)
+    
+    titleLabel.frame = CGRect(x: 0, y: 0, width: alertView.frame.width, height: (3 * y))
+    titleLabel.text = "SHOP TIMINGS"
+    titleLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+    titleLabel.textAlignment = .center
+    titleLabel.textColor = UIColor.white
+    titleLabel.font = UIFont(name: "Avenir Next", size: (1.6 * x))
+    alertView.addSubview(titleLabel)
+    
+    let underLine1 = UILabel()
+    underLine1.frame = CGRect(x: 0, y: titleLabel.frame.maxY, width: alertView.frame.width, height: 1)
+    underLine1.backgroundColor = UIColor.blue
+    alertView.addSubview(underLine1)
+    
+    TimingsTableView.frame = CGRect(x: 0, y: underLine1.frame.maxY, width: alertView.frame.width, height: alertView.frame.height - (8.1 * y))
+    TimingsTableView.register(ShopDetailsTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(ShopDetailsTableViewCell.self))
+    TimingsTableView.dataSource = self
+    TimingsTableView.delegate = self
+    alertView.addSubview(TimingsTableView)
+    
+    TimingsTableView.reloadData()
+    
+    cancelButton.frame = CGRect(x: 0, y: TimingsTableView.frame.maxY + (2 * y), width: alertView.frame.width, height: (3 * y))
+    cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+    cancelButton.setTitle("CANCEL", for: .normal)
+    cancelButton.setTitleColor(UIColor.white, for: .normal)
+    cancelButton.addTarget(self, action: #selector(self.CancelAction(sender:)), for: .touchUpInside)
+    alertView.addSubview(cancelButton)
+  }
+    @objc func CancelAction(sender : UIButton)
+    {
+        blurView.removeFromSuperview()
+    }
     
   @objc func DirectionButtonAction(sender : UIButton)
   {
@@ -316,6 +393,36 @@ class ShopDetailsViewController: CommonViewController
   @objc func ShareButtonAction(sender : UIButton)
   {
       print("Share Button..Click..!")
+    
+     let textToShare = "Swift is awesome!  Check out this website about it!"
+    
+      if let myWebsite = NSURL(string: "http://www.codingexplorer.com/")
+      {
+        let objectsToShare = [textToShare, myWebsite] as [Any]
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        
+        activityVC.popoverPresentationController?.sourceView = sender
+        self.present(activityVC, animated: true, completion: nil)
+      }
   }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return DaysArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(ShopDetailsTableViewCell.self), for: indexPath as IndexPath) as! ShopDetailsTableViewCell
+        
+        cell.DaysName.frame = CGRect(x: (3 * x), y: y, width: (10 * x), height: (2 * y))
+        cell.DaysName.text = DaysArray[indexPath.row] as? String
+        
+        cell.ShopTime.frame = CGRect(x: cell.DaysName.frame.maxX + (2 * x), y: y, width: cell.frame.width - (15 * x), height: (2 * y))
+        
+        cell.ShopTime.text = TimeArray[indexPath.row] as? String
+    
+        
+        return cell
+    }
 }
