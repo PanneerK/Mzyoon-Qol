@@ -248,7 +248,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         TransLabel.frame = CGRect(x: x, y: (y / 2), width: TransactionView.frame.width - (2 * x), height: (5 * y))
         // TransLabel.backgroundColor = UIColor.gray
         TransLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        if(self.TransMessage == "Sucess")
+        if(self.TransMessage == "Authorised")
         {
           TransLabel.text = "Payment Success, Your Transaction Reference Number is  : \(TransRef!)"
         }
@@ -293,31 +293,41 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
         let TotalAmt = UserDefaults.standard.value(forKey: "TotalAmount") as? String
         
-        print("orderId :",orderId!)
-        print("TailorId :",TailorId!)
-        print("Total Amt :",TotalAmt!)
        
-        if(self.TransMessage == "Sucess")
+       
+        if(self.TransMessage == "Authorised")
         {
+            print("orderId :",orderId!)
+            print("TailorId :",TailorId!)
+            print("Total Amt :",TotalAmt!)
+            
             self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
             self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
             
             self.serviceCall.API_InsertPaymentStatus(OrderId: orderId!, Transactionid: TransRef, Amount: TotalAmt!, Status: TransStatus, Code: TransCode, message: TransMessage, cvv: TransCvv, avs: TransAvs, cardcode: TransCardcode, cardlast4: TransCardlast4, Trace: TransTraceNum, ca_Valid: TransCa_valid, delegate: self)
             
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let HomeScreen = HomeViewController()
+            let navigationScreen = UINavigationController(rootViewController: HomeScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+            
         }
         else if(self.TransMessage == "Cancelled")
         {
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let HomeScreen = PaymentViewController()
+            let navigationScreen = UINavigationController(rootViewController: HomeScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
             
         }
         
         
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let HomeScreen = HomeViewController()
-        let navigationScreen = UINavigationController(rootViewController: HomeScreen)
-        navigationScreen.isNavigationBarHidden = true
-        window?.rootViewController = navigationScreen
-        window?.makeKeyAndVisible()
+       
         
     }
     

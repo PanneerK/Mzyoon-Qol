@@ -182,7 +182,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     override func viewWillAppear(_ animated: Bool)
     {
         
+        // UITextfield Move upward & Downward Code..
         
+        NotificationCenter.default.removeObserver(self)
     }
     
     func ConvertBase64()
@@ -265,6 +267,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             let Result = getAddress.object(forKey: "Result") as! NSArray
             print("Result", Result)
             
+            if Result.count > 0
+            {
             
             let Floor = Result.value(forKey: "Floor") as? NSArray
             Line1Str = Floor![0] as? String
@@ -302,7 +306,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             self.State_TF.text = StateStr
             self.Country_TF.text = CountryStr
             self.Email_TF.text = EmailStr
-            
+                
+            }
         }
         else if ResponseMsg == "Failure"
         {
@@ -1038,7 +1043,15 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
        
         UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
         
-    
+      if Country == "UNITED ARAB EMIRATES"
+      {
+          Country = "UAE"
+      }
+      else if Country == "INDIA"
+      {
+          Country = "IN"
+      }
+        
       if RequestId == nil
       {
         RequestId = String(arc4random())
@@ -1079,5 +1092,25 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
   }
   
+    // UITextfield Move upward & Downward Code..
+    func textFieldDidBeginEditing(_ textField: UITextField)
+    {
+        animateViewMoving(up: true, moveValue: 170)
+    }
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        animateViewMoving(up: false, moveValue: 170)
+    }
+    
+    func animateViewMoving (up:Bool, moveValue :CGFloat)
+    {
+        let movementDuration:TimeInterval = 0.3
+        let movement:CGFloat = ( up ? -moveValue : moveValue)
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = self.view.frame.offsetBy(dx: 0,  dy: movement)
+        UIView.commitAnimations()
+    }
 }
 

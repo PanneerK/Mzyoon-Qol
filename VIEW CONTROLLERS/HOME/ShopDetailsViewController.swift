@@ -30,6 +30,16 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     var DaysArray = NSArray()
     var TimeArray = NSArray()
     
+     var TailorID:Int!
+    
+    // Error PAram...
+    var DeviceNum:String!
+    var UserType:String!
+    var AppVersion:String!
+    var ErrorStr:String!
+    var PageNumStr:String!
+    var MethodName:String!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -38,20 +48,58 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     }
     override func viewWillAppear(_ animated: Bool)
     {
+       if(TailorID != nil)
+       {
+         self.serviceCall.API_GetShopDetails(TailorId: TailorID!, delegate: self)
+       }
         
-        self.serviceCall.API_GetShopDetails(TailorId: 2, delegate: self)
-        
-        
-        ShopDetailsContent()
+       // ShopDetailsContent()
        // strPhoneNumber = "+91 8015557649"
+        
         DaysArray = ["Sunday","Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"]
         TimeArray = ["Closed","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM"]
         
     }
+    func DeviceError()
+    {
+        DeviceNum = UIDevice.current.identifierForVendor?.uuidString
+        AppVersion = UIDevice.current.systemVersion
+        UserType = "customer"
+        // ErrorStr = "Default Error"
+        PageNumStr = "ShopDetailsViewController"
+        //  MethodName = "do"
+        
+        print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
+        self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
+    }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
+        print("Shop Details : ", errorMessage)
+    }
+    
+    func API_CALLBACK_GetShopDetails(getShopDetails: NSDictionary)
+    {
+        let ResponseMsg = getShopDetails.object(forKey: "ResponseMsg") as! String
         
+        if ResponseMsg == "Success"
+        {
+            let Result = getShopDetails.object(forKey: "Result") as! NSArray
+            print("Shop Details :", Result)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getShopDetails.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetShopDetails"
+            ErrorStr = Result
+            DeviceError()
+        }
+        
+        self.ShopDetailsContent()
     }
     
   func ShopDetailsContent()

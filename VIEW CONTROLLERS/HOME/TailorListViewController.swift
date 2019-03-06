@@ -13,7 +13,7 @@ import GoogleMaps
 import GooglePlaces
 
 
-class TailorListViewController: CommonViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate
+class TailorListViewController: CommonViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate,UIGestureRecognizerDelegate
 {
     
     let serviceCall = ServerAPI()
@@ -94,6 +94,12 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     {
          navigationBar.isHidden = true
         fetchingCurrentLocation()
+        
+        let up = UISwipeGestureRecognizer(target : self, action : #selector(TailorListViewController.upSwipe))
+        up.direction = .up
+        self.tailorDeatiledView.addGestureRecognizer(up)
+        
+        
     }
     
     func fetchingCurrentLocation()
@@ -803,6 +809,11 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         //        mapView.camera = camera
         addressOfMarker(marker: marker)
         
+        let gesture = UIPanGestureRecognizer(target: self, action: Selector(("wasDragged:")))
+        tailorDeatiledView.addGestureRecognizer(gesture)
+        tailorDeatiledView.isUserInteractionEnabled = true
+        gesture.delegate = self
+        
         return true
     }
     
@@ -945,13 +956,50 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
         
 //        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
+        
+       
+        
     }
+
     @objc func ReviewsButtonAction(sender : UIButton)
     {
+       
         let ReviewsScreen = ReviewsViewController()
         ReviewsScreen.TailorID = TailorID!
         self.navigationController?.pushViewController(ReviewsScreen, animated: true)
     }
+    
+   @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer)
+    {
+        if gestureRecognizer.state == UIGestureRecognizer.State.began || gestureRecognizer.state == UIGestureRecognizer.State.changed
+        {
+            let translation = gestureRecognizer.translation(in: self.view)
+            print(gestureRecognizer.view!.center.y)
+            if(gestureRecognizer.view!.center.y < 555) {
+                gestureRecognizer.view!.center =  CGPoint(x: gestureRecognizer.view!.center.x, y: gestureRecognizer.view!.center.y + translation.y)//CGPointMake(gestureRecognizer.view!.center.x, gestureRecognizer.view!.center.y + translation.y)
+            }else {
+                gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x, y: 554)
+            }
+            
+            gestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+        }
+        
+    }
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool
+    {
+        
+        print("swipe Gesture...")
+        return true
+    }
+    
+    @objc func upSwipe()
+    {
+        
+        let ShopDetailsScreen = ShopDetailsViewController()
+        ShopDetailsScreen.TailorID = TailorID!
+        self.navigationController?.pushViewController(ShopDetailsScreen, animated: true)
+    }
+    
     @objc func closeAddressLabel()
     {
         //  addressLabel.removeFromSuperview()
@@ -997,7 +1045,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         return 10
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
         return headerView
