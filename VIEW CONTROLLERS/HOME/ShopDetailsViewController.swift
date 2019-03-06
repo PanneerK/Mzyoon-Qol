@@ -84,7 +84,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         
         if ResponseMsg == "Success"
         {
-            let Result = getShopDetails.object(forKey: "Result") as! NSArray
+            let Result = getShopDetails.object(forKey: "Result") as! NSDictionary
             print("Shop Details :", Result)
             
             

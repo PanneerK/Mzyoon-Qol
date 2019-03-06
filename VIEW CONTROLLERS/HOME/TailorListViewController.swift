@@ -30,6 +30,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     let addressLabel = UILabel()
     let tailorDeatiledView = UIView()
     let shopName = UILabel()
+    let shopNameBtn = UIButton()
     let ratingImageView = UIImageView()
     let ratingCountLabel = UILabel()
     let reviewsButton = UIButton()
@@ -80,6 +81,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     var TailorID:Int!
     
+    var swipeGesture = UISwipeGestureRecognizer()
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -88,17 +91,14 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+  
+      
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
          navigationBar.isHidden = true
         fetchingCurrentLocation()
-        
-        let up = UISwipeGestureRecognizer(target : self, action : #selector(TailorListViewController.upSwipe))
-        up.direction = .up
-        self.tailorDeatiledView.addGestureRecognizer(up)
-        
         
     }
     
@@ -809,11 +809,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         //        mapView.camera = camera
         addressOfMarker(marker: marker)
         
-        let gesture = UIPanGestureRecognizer(target: self, action: Selector(("wasDragged:")))
-        tailorDeatiledView.addGestureRecognizer(gesture)
-        tailorDeatiledView.isUserInteractionEnabled = true
-        gesture.delegate = self
-        
         return true
     }
     
@@ -827,7 +822,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         {
             views.removeFromSuperview()
         }
-        
+      
+       /*
         shopName.frame = CGRect(x: x, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
         shopName.text = marker.title?.uppercased()
         shopName.textColor = UIColor.blue
@@ -835,31 +831,39 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         shopName.font = shopName.font.withSize(1.5 * x)
         shopName.adjustsFontSizeToFitWidth = true
         tailorDeatiledView.addSubview(shopName)
+       */
         
-        print("SHOP NAME", shopName.text!)
-        shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        shopNameBtn.frame = CGRect(x: x, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
+        shopNameBtn.setTitle(marker.title?.uppercased(), for: .normal)
+        shopNameBtn.setTitleColor(UIColor.blue, for: .normal)
+        shopNameBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.5 * x)!
+        shopNameBtn.addTarget(self, action: #selector(self.ShopButtonAction(sender:)), for: .touchUpInside)
+        tailorDeatiledView.addSubview(shopNameBtn)
+        
+        print("SHOP NAME", shopNameBtn.currentTitle!)
+       // shopName.attributedText = NSAttributedString(string: shopNameBtn.currentTitle!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
         
         let ratingLabel = UILabel()
-        ratingLabel.frame = CGRect(x: x, y: shopName.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
+        ratingLabel.frame = CGRect(x: x, y: shopNameBtn.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
         ratingLabel.text = "Rating : "
         ratingLabel.textColor = UIColor.blue
         ratingLabel.textAlignment = .left
         ratingLabel.font = ratingLabel.font.withSize(1.2 * x)
         tailorDeatiledView.addSubview(ratingLabel)
         
-        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 4, height: (1.5 * y))
+        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopNameBtn.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 4, height: (1.5 * y))
         tailorDeatiledView.addSubview(ratingImageView)
         
         
        // let ReviewsButton = UIButton()
-        reviewsButton.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: (7 * x), height: (2 * y))
+        reviewsButton.frame = CGRect(x: ratingImageView.frame.maxX, y: shopNameBtn.frame.maxY + (y / 2), width: (7 * x), height: (2 * y))
        // reviewsButton.backgroundColor = UIColor.lightGray
         reviewsButton.setTitleColor(UIColor.blue, for: .normal)
         reviewsButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         reviewsButton.addTarget(self, action: #selector(self.ReviewsButtonAction(sender:)), for: .touchUpInside)
         tailorDeatiledView.addSubview(reviewsButton)
         
-        ratingCountLabel.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
+        ratingCountLabel.frame = CGRect(x: ratingImageView.frame.maxX, y: shopNameBtn.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
         ratingCountLabel.textColor = UIColor.black
         ratingCountLabel.textAlignment = .left
         ratingCountLabel.font = ratingLabel.font.withSize(1.2 * x)
@@ -957,48 +961,25 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
 //        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
         
-       
         
     }
-
+    
+    
+    @objc func ShopButtonAction(sender : UIButton)
+    {
+        let ShopDetailsScreen = ShopDetailsViewController()
+        ShopDetailsScreen.TailorID = TailorID!
+        self.navigationController?.pushViewController(ShopDetailsScreen, animated: true)
+    }
+    
     @objc func ReviewsButtonAction(sender : UIButton)
     {
-       
         let ReviewsScreen = ReviewsViewController()
         ReviewsScreen.TailorID = TailorID!
         self.navigationController?.pushViewController(ReviewsScreen, animated: true)
     }
     
-   @objc func wasDragged(gestureRecognizer: UIPanGestureRecognizer)
-    {
-        if gestureRecognizer.state == UIGestureRecognizer.State.began || gestureRecognizer.state == UIGestureRecognizer.State.changed
-        {
-            let translation = gestureRecognizer.translation(in: self.view)
-            print(gestureRecognizer.view!.center.y)
-            if(gestureRecognizer.view!.center.y < 555) {
-                gestureRecognizer.view!.center =  CGPoint(x: gestureRecognizer.view!.center.x, y: gestureRecognizer.view!.center.y + translation.y)//CGPointMake(gestureRecognizer.view!.center.x, gestureRecognizer.view!.center.y + translation.y)
-            }else {
-                gestureRecognizer.view!.center = CGPoint(x: gestureRecognizer.view!.center.x, y: 554)
-            }
-            
-            gestureRecognizer.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
-        }
-        
-    }
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool
-    {
-        
-        print("swipe Gesture...")
-        return true
-    }
-    
-    @objc func upSwipe()
-    {
-        
-        let ShopDetailsScreen = ShopDetailsViewController()
-        ShopDetailsScreen.TailorID = TailorID!
-        self.navigationController?.pushViewController(ShopDetailsScreen, animated: true)
-    }
+   
     
     @objc func closeAddressLabel()
     {
