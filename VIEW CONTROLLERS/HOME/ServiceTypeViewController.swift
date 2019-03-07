@@ -148,7 +148,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
             dummyImageView.contentMode = .scaleToFill
             directDeliveryButton.addSubview(dummyImageView)
         }
-        directDeliveryLabel.tag = deliveryTypeIdArray[0] as! Int
+        directDeliveryButton.tag = deliveryTypeIdArray[0] as! Int
         directDeliveryButton.addTarget(self, action: #selector(self.UrgentButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(directDeliveryButton)
         
@@ -318,21 +318,24 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     
     @objc func UrgentButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set(0, forKey: "serviceType")
+        print("UrgentButtonAction", sender.tag, deliveryTypeIdArray[0])
+        UserDefaults.standard.set(sender.tag, forKey: "serviceType")
         let tailorScreen = TailorListViewController()
         self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     
     @objc func AppointmentButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set(1, forKey: "serviceType")
+        print("AppointmentButtonAction", sender.tag)
+        UserDefaults.standard.set(sender.tag, forKey: "serviceType")
         let tailorScreen = TailorListViewController()
         self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     
     @objc func NormalButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set(2, forKey: "serviceType")
+        print("NormalButtonAction", sender.tag)
+        UserDefaults.standard.set(sender.tag, forKey: "serviceType")
         let tailorScreen = TailorListViewController()
         self.navigationController?.pushViewController(tailorScreen, animated: true)
     }

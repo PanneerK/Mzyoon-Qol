@@ -18,11 +18,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     let serviceCall = ServerAPI()
     
-    let listViewButton = UIButton()
-    let mapViewButton = UIButton()
-    
-    let tailorListTableView = UITableView()
-    
     var locationManager = CLLocationManager()
     
     let mapView = GMSMapView()
@@ -58,8 +53,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var orderCountArray = NSArray()
     var ratingArray = NSArray()
     
-    let totalTailersSelectedCountLabel = UILabel()
-    
     let tailorListScrollView = UIScrollView()
     var currentLocation: CLLocation!
     
@@ -77,6 +70,22 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var destinationLocation = CLLocationCoordinate2D()
     var rectanglePolyline = GMSPolyline()
     
+    //SCREEN CONTENTS PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let selfScreenContents = UIView()
+    let listViewButton = UIButton()
+    let mapViewButton = UIButton()
+    
+    let backDrop = UIView()
+    let totalTailersCountLabel = UILabel()
+    let totalTailersLabel = UILabel()
+    let totalTailersSelectedCountLabel = UILabel()
+    let totalSelectedTailersLabel = UILabel()
+    let sortButton = UIButton()
+    let confirmSelectionButton = UIButton()
+    let tailorListTableView = UITableView()
+
     var applicationDelegate = AppDelegate()
     
     var TailorID:Int!
@@ -289,45 +298,123 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         print("SELF OF DIRECTION REQUEST", direction)
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "قائمة الخياطين"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        listViewButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        mapViewButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        listViewButton.setTitle("عرض القائمة", for: .normal)
+        mapViewButton.setTitle("عرض الخريطة", for: .normal)
+        
+        totalTailersCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        totalTailersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        totalTailersSelectedCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        totalSelectedTailersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        sortButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        confirmSelectionButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        totalTailersLabel.text = "قائمة من الخياطين"
+        totalTailersLabel.textAlignment = .right
+        totalSelectedTailersLabel.text = "الخياطين المختارة"
+        totalSelectedTailersLabel.textAlignment = .right
+        
+        sortButton.setTitle("فرز", for: .normal)
+        confirmSelectionButton.setTitle("تأكيد التحديد", for: .normal)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "TAILORS LIST"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        listViewButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        mapViewButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        listViewButton.setTitle("LIST VIEW", for: .normal)
+        mapViewButton.setTitle("MAP VIEW", for: .normal)
+        
+        totalTailersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        totalTailersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        totalTailersSelectedCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        totalSelectedTailersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        sortButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        confirmSelectionButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        totalTailersLabel.text = "LIST OF TAILORS"
+        totalTailersLabel.textAlignment = .left
+        totalSelectedTailersLabel.text = "SELECTED TAILORS"
+        totalSelectedTailersLabel.textAlignment = .left
+        
+        sortButton.setTitle("SORT", for: .normal)
+        confirmSelectionButton.setTitle("Confirm Selection", for: .normal)
+    }
+    
     func orderSummaryContent()
     {
         self.stopActivity()
-        
-        let tailorListNavigationBar = UIView()
-        tailorListNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        tailorListNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(tailorListNavigationBar)
+    
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        tailorListNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: tailorListNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "TAILORS LIST"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        tailorListNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "TAILORS LIST"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        listViewButton.frame = CGRect(x: 0, y: tailorListNavigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: 50)
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        listViewButton.frame = CGRect(x: 0, y: 0, width: ((view.frame.width / 2) - 1), height: 50)
         listViewButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         listViewButton.setTitle("LIST VIEW", for: .normal)
         listViewButton.setTitleColor(UIColor.white, for: .normal)
         listViewButton.tag = 0
         listViewButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(listViewButton)
+        selfScreenContents.addSubview(listViewButton)
         
-        mapViewButton.frame = CGRect(x: listViewButton.frame.maxX + 1, y: tailorListNavigationBar.frame.maxY, width: view.frame.width / 2, height: 50)
+        mapViewButton.frame = CGRect(x: listViewButton.frame.maxX + 1, y: 0, width: view.frame.width / 2, height: 50)
         mapViewButton.backgroundColor = UIColor.lightGray
         mapViewButton.setTitle("MAP VIEW", for: .normal)
         mapViewButton.setTitleColor(UIColor.black, for: .normal)
         mapViewButton.tag = 1
         mapViewButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(mapViewButton)
+        selfScreenContents.addSubview(mapViewButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
         
         mapViewButton.backgroundColor = UIColor.lightGray
         mapViewButton.setTitleColor(UIColor.black, for: .normal)
@@ -363,16 +450,14 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func listViewContents(isHidden : Bool)
     {
-        let backDrop = UIView()
         backDrop.frame = CGRect(x: (3 * x), y: listViewButton.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (18 * y))
         backDrop.backgroundColor = UIColor.clear
-        view.addSubview(backDrop)
+        selfScreenContents.addSubview(backDrop)
         
         self.view.bringSubviewToFront(slideMenuButton)
         
         backDrop.isHidden = isHidden
         
-        let totalTailersCountLabel = UILabel()
         totalTailersCountLabel.frame = CGRect(x: 0, y: y, width: (3 * x), height: (3 * y))
         totalTailersCountLabel.layer.cornerRadius = totalTailersCountLabel.frame.height / 2
         totalTailersCountLabel.layer.borderWidth = 1
@@ -384,7 +469,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         totalTailersCountLabel.textAlignment = .center
         backDrop.addSubview(totalTailersCountLabel)
         
-        let totalTailersLabel = UILabel()
         totalTailersLabel.frame = CGRect(x: totalTailersCountLabel.frame.maxX + x, y: y, width: (10 * x), height: (3 * y))
         totalTailersLabel.text = "LIST OF TAILORS"
         totalTailersLabel.textColor = UIColor.black
@@ -404,7 +488,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         totalTailersSelectedCountLabel.textAlignment = .center
         backDrop.addSubview(totalTailersSelectedCountLabel)
         
-        let totalSelectedTailersLabel = UILabel()
         totalSelectedTailersLabel.frame = CGRect(x: totalTailersSelectedCountLabel.frame.maxX + x, y: y, width: (15 * x), height: (3 * y))
         totalSelectedTailersLabel.text = "SELECTED TAILORS"
         totalSelectedTailersLabel.textColor = UIColor.black
@@ -413,7 +496,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         totalSelectedTailersLabel.font = totalTailersLabel.font.withSize(12)
         backDrop.addSubview(totalSelectedTailersLabel)
         
-        let sortButton = UIButton()
         sortButton.frame = CGRect(x: backDrop.frame.width - (10 * x), y: totalTailersSelectedCountLabel.frame.maxY, width: (10 * x), height: (3 * y))
         sortButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         sortButton.setTitle("SORT", for: .normal)
@@ -581,15 +663,67 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
 //            locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(locationButton)
             
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    tailorImageButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ratingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    distanceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    
+                    distanceLabel.text = "\(distanceInt) Km. from your location"
+                }
+                else if language == "ar"
+                {
+                    tailorImageButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ratingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    distanceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    
+                    distanceLabel.text = "كم. من موقع  \(distanceInt)"
+                }
+            }
+            else
+            {
+                tailorImageButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ratingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                distanceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                distanceLabel.text = "\(distanceInt) Km. from your location"
+            }
+            
             y1 = tailorView.frame.maxY + y
         }
         
-        let confirmSelectionButton = UIButton()
         confirmSelectionButton.frame = CGRect(x: ((backDrop.frame.width - (17 * x)) / 2), y: tailorListScrollView.frame.maxY + (2 * y), width: (17 * x), height: (3 * y))
         confirmSelectionButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         confirmSelectionButton.setTitle("Confirm Selection", for: .normal)
         confirmSelectionButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
         backDrop.addSubview(confirmSelectionButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func directionButtonAction(sender : UIButton)

@@ -17,7 +17,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     var imagePicker = UIImagePickerController()
     let cameraButton = UIButton()
     
-    
+    let backgroundImage = UIImageView()
+
     let userName = UITextField()
     let mobileNumber = UITextField()
     let email = UITextField()
@@ -76,6 +77,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         y = y * view.frame.height / 100
         
         view.backgroundColor = UIColor.white
+        
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        backgroundImage.image = UIImage(named: "background")
+        view.addSubview(backgroundImage)
         
         active()
         
@@ -400,7 +405,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     {
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        view.addSubview(activeView)
+        backgroundImage.addSubview(activeView)
         
         activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
         activityIndicator.color = UIColor.white
@@ -468,11 +473,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     func screenContents()
     {
-        let backgroundImage = UIImageView()
-        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        backgroundImage.image = UIImage(named: "background")
-        view.addSubview(backgroundImage)
-        
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         view.addSubview(selfScreenNavigationBar)
@@ -502,8 +502,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
 
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
-            
-            if apiurl != nil
+          //  userImage.
+            if apiurl != nil 
             {
                 userImage.dowloadFromServer(url: apiurl!)
             }

@@ -134,9 +134,9 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         
         if ResponseMsg == "Success"
         {
-            print("RESPONSE GENDER PAGE")
-
             let result = gender.object(forKey: "Result") as! NSArray
+            
+            print("RESPONSE GENDER PAGE", result)
             
             genderArray = result.value(forKey: "gender") as! NSArray
             
@@ -384,10 +384,26 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
                 genderButtonLabel.frame = CGRect(x: genderButton.frame.width - (7 * x), y: ((genderButton.frame.height - (2 * y)) / 2), width: (7 * x), height: (2 * y))
             }
             genderButtonLabel.backgroundColor = UIColor.darkGray
-            genderButtonLabel.text = genderArray[i] as! String
+            genderButtonLabel.text = getInputArray[i] as? String
             genderButtonLabel.textColor = UIColor.white
             genderButtonLabel.textAlignment = .center
             genderButton.addSubview(genderButtonLabel)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    genderButtonLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    genderButtonLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                genderButtonLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
             
             UIView.animate(withDuration: 1.0, animations: {
                 //self.viewTrack.frame.origin.y = UIScreen.main.bounds.size.height
@@ -410,7 +426,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             }
             else if language == "ar"
             {
-                changeViewToArabicISelf()
+                changeViewToArabicInSelf()
             }
         }
         else
@@ -428,7 +444,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
-    func changeViewToArabicISelf()
+    func changeViewToArabicInSelf()
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
