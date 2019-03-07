@@ -13,7 +13,7 @@ import GoogleMaps
 import GooglePlaces
 
 
-class TailorListViewController: CommonViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate
+class TailorListViewController: CommonViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate,UIGestureRecognizerDelegate
 {
     
     let serviceCall = ServerAPI()
@@ -25,6 +25,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     let addressLabel = UILabel()
     let tailorDeatiledView = UIView()
     let shopName = UILabel()
+    let shopNameBtn = UIButton()
     let ratingImageView = UIImageView()
     let ratingCountLabel = UILabel()
     let reviewsButton = UIButton()
@@ -89,6 +90,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     var TailorID:Int!
     
+    var swipeGesture = UISwipeGestureRecognizer()
+    
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
@@ -97,12 +100,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+  
+      
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
          navigationBar.isHidden = true
         fetchingCurrentLocation()
+        
     }
     
     func fetchingCurrentLocation()
@@ -621,7 +627,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.textAlignment = .left
             ratingCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
             ratingCountLabel.adjustsFontSizeToFitWidth = true
-            //            tailorView.addSubview(ratingCountLabel)
+            //  tailorView.addSubview(ratingCountLabel)
             
             
             let ratingImageView = UIImageView()
@@ -738,7 +744,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
         }
         
-        //        serviceCall.API_DirectionRequest(origin: "\(currentLocation.coordinate.latitude)", destination: "\(currentLocation.coordinate.longitude)", delegate: self)
+        //  serviceCall.API_DirectionRequest(origin: "\(currentLocation.coordinate.latitude)", destination: "\(currentLocation.coordinate.longitude)", delegate: self)
     }
     
     func directionViewContents(isHidden : Bool)
@@ -950,7 +956,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         {
             views.removeFromSuperview()
         }
-        
+      
+       /*
         shopName.frame = CGRect(x: x, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
         shopName.text = marker.title?.uppercased()
         shopName.textColor = UIColor.blue
@@ -958,31 +965,39 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         shopName.font = shopName.font.withSize(1.5 * x)
         shopName.adjustsFontSizeToFitWidth = true
         tailorDeatiledView.addSubview(shopName)
+       */
         
-        print("SHOP NAME", shopName.text!)
-        shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        shopNameBtn.frame = CGRect(x: x, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
+        shopNameBtn.setTitle(marker.title?.uppercased(), for: .normal)
+        shopNameBtn.setTitleColor(UIColor.blue, for: .normal)
+        shopNameBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.5 * x)!
+        shopNameBtn.addTarget(self, action: #selector(self.ShopButtonAction(sender:)), for: .touchUpInside)
+        tailorDeatiledView.addSubview(shopNameBtn)
+        
+        print("SHOP NAME", shopNameBtn.currentTitle!)
+       // shopName.attributedText = NSAttributedString(string: shopNameBtn.currentTitle!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
         
         let ratingLabel = UILabel()
-        ratingLabel.frame = CGRect(x: x, y: shopName.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
+        ratingLabel.frame = CGRect(x: x, y: shopNameBtn.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
         ratingLabel.text = "Rating : "
         ratingLabel.textColor = UIColor.blue
         ratingLabel.textAlignment = .left
         ratingLabel.font = ratingLabel.font.withSize(1.2 * x)
         tailorDeatiledView.addSubview(ratingLabel)
         
-        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 4, height: (1.5 * y))
+        ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: shopNameBtn.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 4, height: (1.5 * y))
         tailorDeatiledView.addSubview(ratingImageView)
         
         
        // let ReviewsButton = UIButton()
-        reviewsButton.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: (7 * x), height: (2 * y))
+        reviewsButton.frame = CGRect(x: ratingImageView.frame.maxX, y: shopNameBtn.frame.maxY + (y / 2), width: (7 * x), height: (2 * y))
        // reviewsButton.backgroundColor = UIColor.lightGray
         reviewsButton.setTitleColor(UIColor.blue, for: .normal)
         reviewsButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         reviewsButton.addTarget(self, action: #selector(self.ReviewsButtonAction(sender:)), for: .touchUpInside)
         tailorDeatiledView.addSubview(reviewsButton)
         
-        ratingCountLabel.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
+        ratingCountLabel.frame = CGRect(x: ratingImageView.frame.maxX, y: shopNameBtn.frame.maxY + (y / 2), width: tailorDeatiledView.frame.width / 2.5, height: (2 * y))
         ratingCountLabel.textColor = UIColor.black
         ratingCountLabel.textAlignment = .left
         ratingCountLabel.font = ratingLabel.font.withSize(1.2 * x)
@@ -1079,13 +1094,27 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
         
 //        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
+        
+        
     }
+    
+    
+    @objc func ShopButtonAction(sender : UIButton)
+    {
+        let ShopDetailsScreen = ShopDetailsViewController()
+        ShopDetailsScreen.TailorID = TailorID!
+        self.navigationController?.pushViewController(ShopDetailsScreen, animated: true)
+    }
+    
     @objc func ReviewsButtonAction(sender : UIButton)
     {
         let ReviewsScreen = ReviewsViewController()
         ReviewsScreen.TailorID = TailorID!
         self.navigationController?.pushViewController(ReviewsScreen, animated: true)
     }
+    
+   
+    
     @objc func closeAddressLabel()
     {
         //  addressLabel.removeFromSuperview()
@@ -1131,7 +1160,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         return 10
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
         let headerView = UIView()
         headerView.backgroundColor = UIColor.clear
         return headerView

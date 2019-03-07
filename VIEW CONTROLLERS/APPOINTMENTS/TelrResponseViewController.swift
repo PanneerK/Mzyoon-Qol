@@ -40,6 +40,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     // Parameters:
     var KEY:String!
     var STOREID:String!
+    var MerchantID:String!
     var EMAIL:String!
     
     var applicationDelegate = AppDelegate()
@@ -51,17 +52,57 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
 
         // Do any additional setup after loading the view.
         
-        KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
-        STOREID = "21552"
+      //  KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
+      //  STOREID = "21552"
+        
         TelrTransCode = UserDefaults.standard.value(forKey: "TransCode") as? String
         
+       self.serviceCall.API_GetPaymentStoreDetails(delegate: self)
         
        // ResponseContent()
         
-         TransactionRequest()
+       
         
     }
-    
+    func API_CALLBACK_GetPaymentStore(StoreDetails: NSDictionary)
+    {
+        let ResponseMsg = StoreDetails.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = StoreDetails.object(forKey: "Result") as! NSArray
+            print("Result", Result)
+            
+            let StoreId = Result.value(forKey: "StoreId") as? NSArray
+            let sID : Int = StoreId![0] as! Int
+            STOREID = "\(sID)"
+            print("STOREID", STOREID)
+            
+            let Key = Result.value(forKey: "KeyId") as? NSArray
+            KEY = Key![0] as? String
+            print("KEY", KEY)
+            
+            let MerchantId = Result.value(forKey: "MerchantId") as? NSArray
+            MerchantID = MerchantId![0] as? String
+            print("MerchantID", MerchantID)
+            
+            
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = StoreDetails.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetPaymentStore"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+        
+          TransactionRequest()
+        
+    }
     func TransactionRequest()
     {
         let Message: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
@@ -207,7 +248,14 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         TransLabel.frame = CGRect(x: x, y: (y / 2), width: TransactionView.frame.width - (2 * x), height: (5 * y))
         // TransLabel.backgroundColor = UIColor.gray
         TransLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        TransLabel.text = "Payment Success, Your Transaction Reference Number is  : \(TransRef!)"
+        if(self.TransMessage == "Authorised")
+        {
+          TransLabel.text = "Payment Success, Your Transaction Reference Number is  : \(TransRef!)"
+        }
+        else if(self.TransMessage == "Cancelled")
+        {
+          TransLabel.text = "Transaction Failed.. Please Try Again.."
+        }
         TransLabel.font = UIFont(name: "Avenir Next", size: 16)
         TransLabel.textColor = UIColor.white
         TransLabel.textAlignment = .center
@@ -245,22 +293,41 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
         let TotalAmt = UserDefaults.standard.value(forKey: "TotalAmount") as? String
         
-        print("orderId :",orderId!)
-        print("TailorId :",TailorId!)
-        print("Total Amt :",TotalAmt!)
+       
+       
+        if(self.TransMessage == "Authorised")
+        {
+            print("orderId :",orderId!)
+            print("TailorId :",TailorId!)
+            print("Total Amt :",TotalAmt!)
+            
+            self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
+            self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
+            
+            self.serviceCall.API_InsertPaymentStatus(OrderId: orderId!, Transactionid: TransRef, Amount: TotalAmt!, Status: TransStatus, Code: TransCode, message: TransMessage, cvv: TransCvv, avs: TransAvs, cardcode: TransCardcode, cardlast4: TransCardlast4, Trace: TransTraceNum, ca_Valid: TransCa_valid, delegate: self)
+            
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let HomeScreen = HomeViewController()
+            let navigationScreen = UINavigationController(rootViewController: HomeScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+            
+        }
+        else if(self.TransMessage == "Cancelled")
+        {
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let HomeScreen = PaymentViewController()
+            let navigationScreen = UINavigationController(rootViewController: HomeScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+            
+        }
         
-        self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
-        self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
-        
-        self.serviceCall.API_InsertPaymentStatus(OrderId: orderId!, Transactionid: TransRef, Amount: TotalAmt!, Status: TransStatus, Code: TransCode, message: TransMessage, cvv: TransCvv, avs: TransAvs, cardcode: TransCardcode, cardlast4: TransCardlast4, Trace: TransTraceNum, ca_Valid: TransCa_valid, delegate: self)
         
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let HomeScreen = HomeViewController()
-        let navigationScreen = UINavigationController(rootViewController: HomeScreen)
-        navigationScreen.isNavigationBarHidden = true
-        window?.rootViewController = navigationScreen
-        window?.makeKeyAndVisible()
+       
         
     }
     

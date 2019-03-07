@@ -15,6 +15,7 @@
 		DA077FC021D62A5400D9E565 /* ListOfOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */; };
 		DA077FC221D6608000D9E565 /* OrderRequestListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */; };
 		DA07CF112223C571007DB14C /* OrderDetailsDeliveredVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07CF102223C571007DB14C /* OrderDetailsDeliveredVC.swift */; };
+		DA0BC660222E49630061245B /* ShopDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC65F222E49630061245B /* ShopDetailsTableViewCell.swift */; };
 		DA0DB13A21F98D9C00C20299 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */; };
 		DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */; };
 		DA0DB14221FA0FF100C20299 /* TelrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB13B21F9928200C20299 /* TelrSDK.framework */; };
@@ -128,6 +129,7 @@
 		DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfOrdersViewController.swift; sourceTree = "<group>"; };
 		DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestListViewController.swift; sourceTree = "<group>"; };
 		DA07CF102223C571007DB14C /* OrderDetailsDeliveredVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsDeliveredVC.swift; sourceTree = "<group>"; };
+		DA0BC65F222E49630061245B /* ShopDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		DA0DB13B21F9928200C20299 /* TelrSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TelrSDK.framework; sourceTree = "<group>"; };
 		DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelrGateWayViewController.swift; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				FD53A3D421A809450097B4D9 /* TailorListViewController.swift */,
 				FD63D6D221AEC2910024AE96 /* TailorListTableViewCell.swift */,
 				DA02A4F822265FD700577CBA /* ShopDetailsViewController.swift */,
+				DA0BC65F222E49630061245B /* ShopDetailsTableViewCell.swift */,
 				DA06035B21FB427C0081A96F /* ReviewsViewController.swift */,
 				DA06035921FAFEB20081A96F /* WriteReviewRateViewController.swift */,
 				DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */,
@@ -696,6 +699,7 @@
 				FD5774B2219ADE980026DBF8 /* FilterViewController.swift in Sources */,
 				FDC9BB8C2186F667003BA5C9 /* TabViewController.swift in Sources */,
 				FDF7485421BFBF4E00F3BEFF /* FileHandler.swift in Sources */,
+				DA0BC660222E49630061245B /* ShopDetailsTableViewCell.swift in Sources */,
 				FD71D266219F234B00FFC067 /* Customization3ViewController.swift in Sources */,
 				DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */,
 				DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */,

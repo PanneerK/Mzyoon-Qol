@@ -13,7 +13,6 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
 {
    
     
-    
   //  let KEY:String = "XZCQ~9wRvD^prrJx"
  //   let STOREID:String = "21552"
  //   let EMAIL:String = "rohith.qol@gmail.com"
@@ -100,6 +99,13 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
     var applicationDelegate = AppDelegate()
 
+    var Line1Str:String!
+    var Line2Str:String!
+    var Line3Str:String!
+    var CityStr:String!
+    var StateStr:String!
+    var CountryStr:String!
+    var EmailStr:String!
     
     override func viewDidLoad()
     {
@@ -157,12 +163,28 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         UserName = UserDefaults.standard.value(forKey: "userName") as? String
         
        // ConvertBase64()
+        
+        self.serviceCall.API_GetPaymentStoreDetails(delegate: self)
+      
+        
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            self.serviceCall.API_GetPaymentAddress(BuyerId: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            self.serviceCall.API_GetPaymentAddress(BuyerId: "\(userId)", delegate: self)
+        }
+        
+        //  self.Email_TF.text = UserDefaults.standard.value(forKey: "Email") as? String
+        
     }
     override func viewWillAppear(_ animated: Bool)
     {
-        self.serviceCall.API_GetPaymentStoreDetails(delegate: self)
         
-        self.Email_TF.text = UserDefaults.standard.value(forKey: "Email") as? String
+        // UITextfield Move upward & Downward Code..
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     func ConvertBase64()
@@ -194,7 +216,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
          print("Payment summary : ", errorMessage)
-        stopActivity()
+         stopActivity()
+        
         applicationDelegate.exitContents()
     }
     
@@ -235,6 +258,70 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         }
         
     }
+    func API_CALLBACK_GetPaymentAddress(getAddress: NSDictionary)
+    {
+        let ResponseMsg = getAddress.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = getAddress.object(forKey: "Result") as! NSArray
+            print("Result", Result)
+            
+            if Result.count > 0
+            {
+            
+            let Floor = Result.value(forKey: "Floor") as? NSArray
+            Line1Str = Floor![0] as? String
+            print("Line1Str", Line1Str)
+            
+            let Building = Result.value(forKey: "Building") as? NSArray
+            Line2Str = Building![0] as? String
+            print("Line2Str", Line2Str)
+            
+            let Landmark = Result.value(forKey: "Landmark") as? NSArray
+            Line3Str = Landmark![0] as? String
+            print("Line3Str", Line3Str)
+            
+            let Area = Result.value(forKey: "Area") as? NSArray
+            CityStr = Area![0] as? String
+            print("CityStr", CityStr)
+            
+            let StateName = Result.value(forKey: "StateName") as? NSArray
+            StateStr = StateName![0] as? String
+            print("StateStr", StateStr)
+            
+            let CountryName = Result.value(forKey: "CountryName") as? NSArray
+            CountryStr = CountryName![0] as? String
+            print("CountryStr", CountryStr)
+            
+            let Email = Result.value(forKey: "Email") as? NSArray
+            EmailStr = Email![0] as? String
+            print("EmailStr", EmailStr)
+            
+            
+            self.Line1_TF.text = Line1Str
+            self.Line2_TF.text = Line2Str
+            self.Line3_TF.text = Line3Str
+            self.City_TF.text = CityStr
+            self.State_TF.text = StateStr
+            self.Country_TF.text = CountryStr
+            self.Email_TF.text = EmailStr
+                
+            }
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = getAddress.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "GetPaymentAddress"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+    
   /*
     func PaymentRequest()
     {
@@ -956,7 +1043,15 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
        
         UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
         
-    
+      if Country == "UNITED ARAB EMIRATES"
+      {
+          Country = "UAE"
+      }
+      else if Country == "INDIA"
+      {
+          Country = "IN"
+      }
+        
       if RequestId == nil
       {
         RequestId = String(arc4random())
@@ -997,5 +1092,25 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
   }
   
+    // UITextfield Move upward & Downward Code..
+    func textFieldDidBeginEditing(_ textField: UITextField)
+    {
+        animateViewMoving(up: true, moveValue: 170)
+    }
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
+        animateViewMoving(up: false, moveValue: 170)
+    }
+    
+    func animateViewMoving (up:Bool, moveValue :CGFloat)
+    {
+        let movementDuration:TimeInterval = 0.3
+        let movement:CGFloat = ( up ? -moveValue : moveValue)
+        UIView.beginAnimations( "animateView", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(movementDuration )
+        self.view.frame = self.view.frame.offsetBy(dx: 0,  dy: movement)
+        UIView.commitAnimations()
+    }
 }
 

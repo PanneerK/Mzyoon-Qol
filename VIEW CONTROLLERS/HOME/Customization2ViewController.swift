@@ -171,7 +171,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
              let api = "\(urlString)/images/Color/\(imageName)"
              let apiurl = URL(string: api)
              
-             if let data = try? Data(contentsOf: apiurl!) {
+             if let data = try? Data(contentsOf: apiurl!)
+             {
              if let image = UIImage(data: data) {
              self.convertedColorsImageArray.append(image)
              }
