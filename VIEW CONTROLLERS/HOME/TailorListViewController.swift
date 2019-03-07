@@ -88,17 +88,16 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         navigationBar.isHidden = true
       //  fetchingCurrentLocation()
 
-        super.viewDidLoad()
+         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
   
-      
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
          navigationBar.isHidden = true
-        fetchingCurrentLocation()
+         fetchingCurrentLocation()
         
     }
     
@@ -932,14 +931,16 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         locationButton.tag = 0
 //        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
         tailorDeatiledView.addSubview(locationButton)
-        
+      
+        /*
         addressLabel.frame = CGRect(x: (2 * x), y: ((view.frame.height - (5 * y)) / 2), width: view.frame.width - (4 * x), height: (3 * y))
         addressLabel.backgroundColor = UIColor.white
         addressLabel.text = "\(marker.title!) \(marker.snippet!)"
         addressLabel.textColor = UIColor.black
         addressLabel.textAlignment = .left
         addressLabel.numberOfLines = 2
-        //        mapView.addSubview(addressLabel)
+        mapView.addSubview(addressLabel)
+       */
         
         for i in 0..<ShopNameArray.count
         {

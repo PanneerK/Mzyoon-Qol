@@ -16,6 +16,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     let PendingButton = UIButton()
     
     var BuyerId : Int!
+    var TailorId : Int!
     
     let ListOfOrdersNavigationBar = UIView()
     
@@ -48,6 +49,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     var DelivProdNameArray = NSArray()
     var DelivShopNameEngArray = NSArray()
     var DelivTailorNameEngArray = NSArray()
+    var DelivTailorIdArray = NSArray()
     
     let emptyLabel = UILabel()
     var OrderPendDate = String()
@@ -207,6 +209,9 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             DelivTailorNameEngArray = Result.value(forKey: "TailorNameInEnglish") as! NSArray
             print("DelivTailorNameEngArray", DelivTailorNameEngArray)
+            
+            DelivTailorIdArray = Result.value(forKey: "TailorId") as! NSArray
+            print("DelivTailorIdArray", DelivTailorIdArray)
             
             ListOfOrdersContent()
             
@@ -689,6 +694,10 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             OrderDatesLabel.adjustsFontSizeToFitWidth = true
             DeliveredViewButton.addSubview(OrderDatesLabel)
             
+          
+            TailorId = DelivTailorIdArray[i] as? Int
+            print("TailorId:","\(String(describing: TailorId))")
+            
             DeliveredViewButton.addTarget(self, action: #selector(self.DeliveredDetailsButtonAction(sender:)), for: .touchUpInside)
             
             y2 = DeliveredViewButton.frame.maxY + y
@@ -712,8 +721,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     
     @objc func DeliveredDetailsButtonAction(sender : UIButton)
     {
+       // let TailorID = UserDefaults.standard.value(forKey: "TailorID")
+        print("Tailor ID:",TailorId!)
+        
         let orderDetVCScreen = OrderDetailsDeliveredVC()
         orderDetVCScreen.OrderID = sender.tag
+        orderDetVCScreen.TailorID = TailorId
         self.navigationController?.pushViewController(orderDetVCScreen, animated: true)
     }
 }

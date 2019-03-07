@@ -470,14 +470,14 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
   {
     
    // let CategoryID: [[String: Int]] = [["1":OnTimeServiceRatingNum],["2":StitchingQualityRatingNum],["3":CustomerServiceRatingNum]]
-    let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
+   // let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
     
     reviewStr = self.Review_TF.text
     
     print("Review:",reviewStr)
    // print("Category:",CategoryID)
     print("Order ID:",OrderID)
-    print("Tailor Id",TailorId!)
+    print("Tailor Id",TailorID!)
     
     if (reviewStr == nil || reviewStr.isEmpty)
     {
@@ -486,7 +486,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
    //  self.serviceCall.API_InsertRatings(OrderId:OrderID!, Category:CategoryID, Review:reviewStr, TailorId:TailorId!, delegate: self)
     
-   self.serviceCall.API_InsertRatings(OrderId: OrderID, CategoryId0: 1, CategoryRating0: OnTimeServiceRatingNum, CategoryId1: 2, CategoryRating1: StitchingQualityRatingNum, CategoryId2: 3, CategoryRating2: CustomerServiceRatingNum, Review: reviewStr, TailorId: TailorId!, delegate: self)
+   self.serviceCall.API_InsertRatings(OrderId: OrderID, CategoryId0: 1, CategoryRating0: OnTimeServiceRatingNum, CategoryId1: 2, CategoryRating1: StitchingQualityRatingNum, CategoryId2: 3, CategoryRating2: CustomerServiceRatingNum, Review: reviewStr, TailorId: TailorID!, delegate: self)
     
   }
 }

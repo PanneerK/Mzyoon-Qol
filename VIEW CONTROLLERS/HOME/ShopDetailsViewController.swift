@@ -18,6 +18,10 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     let ratingCountLabel = UILabel()
     let reviewsButton = UIButton()
     let ordersCountLabel = UILabel()
+    let tailorName = UILabel()
+    let Call_LBL = UILabel()
+    let Link_Label = UILabel()
+    let Address_Label = UILabel()
     
     var strPhoneNumber:String!
     
@@ -40,6 +44,33 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     var PageNumStr:String!
     var MethodName:String!
     
+    // String..
+    var AddressInEnglish:String!
+    var ShopNameInEnglish:String!
+    var CountryName:String!
+    var StateName:String!
+    var TailorNameInEnglish:String!
+    var WebSite:String!
+    var PhoneNumber:String!
+    var OrderCount:String!
+    var Rating:String!
+    var Review:String!
+    
+    
+    // Array..
+    var AddressArray = NSArray()
+    var ShopNameArray = NSArray()
+    var TailorNameArray = NSArray()
+    var CountryArray = NSArray()
+    var StateArray = NSArray()
+    var WebsiteArray = NSArray()
+    var PhoneNumberArray = NSArray()
+    var OrderCountArray = NSArray()
+    var RatingArray = NSArray()
+    var ReviewArray = NSArray()
+    var ShopImageArray = NSArray()
+    var TailorShopTimeArray = NSArray()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -51,6 +82,10 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
        if(TailorID != nil)
        {
          self.serviceCall.API_GetShopDetails(TailorId: TailorID!, delegate: self)
+       }
+        else
+       {
+          self.serviceCall.API_GetShopDetails(TailorId: 2, delegate: self)
        }
         
        // ShopDetailsContent()
@@ -87,7 +122,81 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
             let Result = getShopDetails.object(forKey: "Result") as! NSDictionary
             print("Shop Details :", Result)
             
+            let GetShopDetails = Result.object(forKey: "GetShopDetails") as! NSArray
+            print("GetShopDetails:",GetShopDetails)
             
+            AddressArray = GetShopDetails.value(forKey: "AddressInEnglish") as! NSArray
+            print("AddressArray:",AddressArray)
+          //  AddressInEnglish = AddressArray[0] as? String
+          //  print("AddressInEnglish:",AddressInEnglish)
+            
+            CountryArray = GetShopDetails.value(forKey: "CountryName") as! NSArray
+             print("CountryArray:",CountryArray)
+          //  CountryName = CountryArray[0] as? String
+          //  print("CountryName:",CountryName)
+            
+            PhoneNumberArray = GetShopDetails.value(forKey: "PhoneNumber") as! NSArray
+            print("PhoneNumberArray:",PhoneNumberArray)
+          //  PhoneNumber = PhoneNumberArray[0] as? String
+          //  print("PhoneNumber:",PhoneNumber)
+            
+            StateArray = GetShopDetails.value(forKey: "StateName") as! NSArray
+            print("StateArray:",StateArray)
+          //  StateName = StateArray[0] as? String
+          //  print("StateName:",StateName)
+            
+            TailorNameArray = GetShopDetails.value(forKey: "TailorNameInEnglish") as! NSArray
+            print("TailorNameArray:",TailorNameArray)
+           // TailorNameInEnglish = TailorNameArray[0] as? String
+           // print("TailorNameInEnglish:",TailorNameInEnglish)
+            
+            WebsiteArray = GetShopDetails.value(forKey: "WebSite") as! NSArray
+            print("WebsiteArray:",WebsiteArray)
+           // WebSite = WebsiteArray[0] as? String
+           // print("WebSite:",WebSite)
+            
+            ShopNameArray = GetShopDetails.value(forKey: "ShopNameInEnglish") as! NSArray
+            print("ShopNameArray:",ShopNameArray)
+           // ShopNameInEnglish = ShopNameArray[0] as? String
+           // print("ShopNameInEnglish:",ShopNameInEnglish)
+            
+            
+            let OrderCounts = Result.object(forKey: "OrderCount") as! NSArray
+            print("OrderCounts:",OrderCounts)
+            
+            OrderCountArray = OrderCounts.value(forKey: "OrderCount") as! NSArray
+            print("OrderCountArray:",OrderCountArray)
+          //  OrderCount = OrderCountArray[0] as? String
+           // print("OrderCount:",OrderCount)
+            
+            RatingArray = OrderCounts.value(forKey: "Rating") as! NSArray
+            print("RatingArray:",RatingArray)
+          //  Rating = RatingArray[0] as? String
+          //  print("Rating:",Rating)
+            
+            
+            let ReviewCount = Result.object(forKey: "ReviewCount") as! NSArray
+            print("ReviewCount:",ReviewCount)
+            
+            ReviewArray = ReviewCount.value(forKey: "Review") as! NSArray
+            print("ReviewArray:",ReviewArray)
+          //  Review = ReviewArray[0] as? String
+           // print("Review:",Review)
+            
+            
+            let ShopImages = Result.object(forKey: "ShopImages") as! NSArray
+            print("ShopImages:",ShopImages)
+            
+            ShopImageArray = ShopImages.value(forKey: "Image") as! NSArray
+            print("ShopImageArray:",ShopImageArray)
+            
+            
+            let TailorShopTime = Result.object(forKey: "TailorShopTime") as! NSArray
+            print("TailorShopTime:",TailorShopTime)
+            
+            TailorShopTimeArray = TailorShopTime.value(forKey: "TailorShopTime") as! NSArray
+            print("ShopImageArray:",ShopImageArray)
+         
         }
         else if ResponseMsg == "Failure"
         {
@@ -128,15 +237,15 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     
     // let shopName = UILabel()
     shopName.frame = CGRect(x: (3 * x), y: ShopDetailsNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: (3 * y))
-    shopName.text = "Shop Title"  // marker.title?.uppercased()
+  //  shopName.text = ShopNameInEnglish   // marker.title?.uppercased()
     shopName.textColor = UIColor.blue
     shopName.textAlignment = .left
     shopName.font = UIFont(name: "Avenir Next", size: (1.5 * x))
     shopName.adjustsFontSizeToFitWidth = true
     view.addSubview(shopName)
     
-    print("SHOP NAME", shopName.text!)
-    shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+   // print("SHOP NAME", shopName.text!)
+  //  shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
     
     let ratingLabel = UILabel()
     ratingLabel.frame = CGRect(x: (3 * x), y: shopName.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
@@ -180,9 +289,9 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     nameLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
     view.addSubview(nameLabel)
     
-    let tailorName = UILabel()
+   // let tailorName = UILabel()
     tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: ratingImageView.frame.maxY + (y / 2), width: view.frame.width / 2, height: (2 * y))
-    tailorName.text = "Tailor Name"  //marker.snippet
+   // tailorName.text = "Tailor Name"  //marker.snippet
     tailorName.textColor = UIColor.black
     tailorName.textAlignment = .left
     tailorName.font = UIFont(name: "Avenir Next", size: (1.2 * x))
@@ -204,25 +313,6 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     ordersCountLabel.adjustsFontSizeToFitWidth = true
     view.addSubview(ordersCountLabel)
     
-    /*
-     for i in 0..<ShopNameArray.count
-     {
-        if let name = ShopNameArray[i] as? String
-        {
-            if name == marker.title
-            {
-                ratingImageView.image = UIImage(named: "\(ratingArray[i])")
-                
-                // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
-                reviewsButton.setTitle("(\(ratingArray[i]) reviews)", for: .normal)
-                ordersCountLabel.text = "\(orderCountArray[i])"
-                
-                TailorID = IdArray[i] as? Int
-                
-            }
-        }
-     }
-    */
     
     let DetailsView = UIView()
     DetailsView.frame = CGRect(x: (3 * x), y: ordersCountLabel.frame.maxY + y, width: view.frame.width - (6 * x), height: (11 * y))
@@ -239,7 +329,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     let Address_Label = UILabel()
     Address_Label.frame = CGRect(x: Addr_Icon.frame.maxX + x, y: y, width: (26 * x), height: (1.5 * y))
     // Address_Label.backgroundColor = UIColor.lightGray
-    Address_Label.text = "Villa No:58, Near Dubai Zoo,Dubai, UAE"
+   // Address_Label.text = "Villa No:58, Near Dubai Zoo,Dubai, UAE"
     Address_Label.font = UIFont(name: "Avenir Next", size: (1.2 * x))
     DetailsView.addSubview(Address_Label)
     
@@ -278,12 +368,14 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Link_Icon.image = UIImage(named: "WebLink")
     DetailsView.addSubview(Link_Icon)
     
-    let Link_Label = UILabel()
+   // let Link_Label = UILabel()
     Link_Label.frame = CGRect(x: Time_Icon.frame.maxX + x, y: underLine2.frame.maxY + y, width: (20 * x), height: (1.5 * y))
    // Link_Label.backgroundColor = UIColor.lightGray
-    Link_Label.text = "http://www.shopname.com"
+    // Link_Label.text = "http://www.shopname.com"
     Link_Label.font = UIFont(name: "Avenir Next", size: (1.3 * x))
     DetailsView.addSubview(Link_Label)
+    
+
     
     // Directions Button..
     let Direction_Btn = UIButton()
@@ -326,10 +418,10 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Call_Btn.addTarget(self, action: #selector(self.CallButtonAction(sender:)), for: .touchUpInside)
     view.addSubview(Call_Btn)
     
-    let Call_LBL = UILabel()
+    //let Call_LBL = UILabel()
     Call_LBL.frame = CGRect(x: Directions_LBL.frame.maxX + (2 * x), y: Direction_Btn.frame.maxY + y, width: (10 * x), height: y)
     //Call_LBL.backgroundColor = UIColor.lightGray
-    Call_LBL.text = "044 48616069"
+   // Call_LBL.text = "044 48616069"
     Call_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     Call_LBL.font = UIFont(name: "Avenir Next", size: y)
     Call_LBL.textAlignment = .center
@@ -378,6 +470,25 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     PhotosScrollview.backgroundColor = UIColor.white
     PhotosScrollview.layer.borderColor = UIColor.lightGray.cgColor
     view.addSubview(PhotosScrollview)
+    
+    
+    for i in 0..<ShopNameArray.count
+    {
+        
+        shopName.text = ShopNameArray[i] as? String
+        ratingImageView.image = UIImage(named: "\(RatingArray[i])")
+        tailorName.text = TailorNameArray[i] as? String
+        // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
+        reviewsButton.setTitle("(\(RatingArray[i]) reviews)", for: .normal)
+        ordersCountLabel.text = "\(OrderCountArray[i])"
+        Call_LBL.text = PhoneNumberArray[i] as? String
+        Link_Label.text = WebsiteArray[i] as? String
+        Address_Label.text = AddressArray[i] as? String
+        
+        shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        
+        
+    }
   }
 
   @objc func otpBackButtonAction(sender : UIButton)

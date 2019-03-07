@@ -65,6 +65,10 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         {
             self.serviceCall.API_GetRatings(TailorId:TailorID, delegate: self)
         }
+        else
+        {
+            self.serviceCall.API_GetRatings(TailorId:2, delegate: self)
+        }
        
     }
     

@@ -2055,7 +2055,7 @@ class ServerAPI : NSObject
             print("URL STRING", urlString)
             print("PARAMETERS", parameters)
             
-            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
+            request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
                 print("REQUEST", request)
                 if response.result.value != nil
                 {
