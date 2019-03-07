@@ -605,6 +605,75 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                     }
                 }
             }
+            
+            if screenTag == 1
+            {
+                for i in 0..<countryCodeArray.count
+                {
+                    if let id = countryCodeArray[i] as? String
+                    {
+                        if id == getCountryCode
+                        {
+                            print("ID OF DE 1", id, getCountryCode)
+                            
+                            if let imageName = countryFlagArray[i] as? String
+                            {
+                                let urlString = serviceCall.baseURL
+                                let api = "\(urlString)/images/flags/\(imageName)"
+                                let apiurl = URL(string: api)
+                                
+                                if apiurl != nil
+                                {
+                                    flagImageView.dowloadFromServer(url: apiurl!)
+                                }
+                                else
+                                {
+                                    flagImageView.image = UIImage(named: "empty")
+                                }
+                            }
+                            
+                            mobileCountryCodeLabel.text = (countryCodeArray[i] as! String)
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if let countryCode = UserDefaults.standard.value(forKey: "countryCode") as? String
+                {
+                    print("COUNTRY CODE IN ADDRESS FIELD", countryCode)
+                    
+                    for i in 0..<countryCodeArray.count
+                    {
+                        if let id = countryCodeArray[i] as? String
+                        {
+                            if id == countryCode
+                            {
+                                print("ID OF DE 2", id, countryCode)
+                                
+                                if let imageName = countryFlagArray[i] as? String
+                                {
+                                    let urlString = serviceCall.baseURL
+                                    let api = "\(urlString)/images/flags/\(imageName)"
+                                    let apiurl = URL(string: api)
+                                    
+                                    if apiurl != nil
+                                    {
+                                        flagImageView.dowloadFromServer(url: apiurl!)
+                                    }
+                                    else
+                                    {
+                                        flagImageView.image = UIImage(named: "empty")
+                                    }
+                                }
+                                
+                                mobileCountryCodeLabel.text = (countryCodeArray[i] as! String)
+                            }
+                        }
+                    }
+                }
+            }
+            
         }
         else if responseMsg == "Failure"
         {
@@ -1458,7 +1527,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 {
                     if id == getCountryCode
                     {
-                        print("ID OF DE", id, getCountryCode)
+                        print("ID OF DE 1", id, getCountryCode)
                         
                         if let imageName = countryFlagArray[i] as? String
                         {
@@ -1493,7 +1562,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                     {
                         if id == countryCode
                         {
-                            print("ID OF DE", id, countryCode)
+                            print("ID OF DE 2", id, countryCode)
                             
                             if let imageName = countryFlagArray[i] as? String
                             {

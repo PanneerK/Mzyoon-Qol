@@ -2515,7 +2515,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 59, errorMessage: "List Of Orders Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 69, errorMessage: "List Of Orders Failed")
                     
                 }
             }

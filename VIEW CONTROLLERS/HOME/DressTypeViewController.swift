@@ -454,7 +454,17 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeNameLabel.font = UIFont(name: "Avenir-Regular", size: 15)
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
-        dressTypeScrollView.contentSize.height = y1 + (2 * y)
+        
+        print("CHECKING COUNT", inputTextArray.count % 2)
+        
+        if inputTextArray.count % 2 == 0
+        {
+            dressTypeScrollView.contentSize.height = y1 + (2 * y)
+        }
+        else
+        {
+            dressTypeScrollView.contentSize.height = y1 + (18 * y)
+        }
     }
     
     
