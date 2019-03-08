@@ -40,6 +40,8 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
+        navigationBar.isHidden = true
+        selectedButton(tag: 0)
         serviceCall.API_ServiceRequest(delegate: self)
 
         super.viewDidLoad()
