@@ -486,9 +486,34 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         Address_Label.text = AddressArray[i] as? String
         
         shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
-        
-        
+   
     }
+    
+    var x3:CGFloat = x
+    
+    for i in 0..<ShopImageArray.count
+    {
+        let PhotosIV = UIImageView()
+        PhotosIV.frame = CGRect(x: x3, y: 0, width: (12 * x), height: (12 * y))
+        PhotosIV.backgroundColor = UIColor.groupTableViewBackground
+       // PhotosScrollview.addSubview(PhotosIV)
+     
+        if let imageName = ShopImageArray[i] as? String
+        {
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/ShopImages/\(imageName)"
+            let apiurl = URL(string: api)
+            if apiurl != nil
+            {
+                PhotosIV.dowloadFromServer(url: apiurl!)
+            }
+        }
+        
+        PhotosScrollview.addSubview(PhotosIV)
+        x3 = PhotosIV.frame.maxX + x
+    }
+    
+    PhotosScrollview.contentSize.width = x3 + x
   }
 
   @objc func otpBackButtonAction(sender : UIButton)
@@ -555,8 +580,8 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     
    @objc func CallButtonAction(sender : UIButton)
   {
-    
-     let url: NSURL = URL(string: "TEL://914448616069")! as NSURL
+     let NumStr = PhoneNumberArray[0] as? String
+     let url: NSURL = URL(string: "TEL://\(NumStr!)")! as NSURL
      UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
   }
     
