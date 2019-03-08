@@ -616,7 +616,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // Material_StatusBtn.backgroundColor = UIColor.gray
         if(MaterialStatus.count > 0)
         {
-          Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
+           if(MaterialStatus.contains("Not Approved"))
+           {
+              Material_StatusBtn.setTitle("Pending", for: .normal)
+           }
+            else
+           {
+             Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
+           }
         }
         else
         {
@@ -978,7 +985,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // Measure_StatusBtn.backgroundColor = UIColor.gray
         if(MeasureStatus.count > 0)
         {
-           Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
+            if(MeasureStatus.contains("Not Approved"))
+            {
+                Measure_StatusBtn.setTitle("Pending", for: .normal)
+            }
+            else
+            {
+                Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
+            }
         }
         else
         {
