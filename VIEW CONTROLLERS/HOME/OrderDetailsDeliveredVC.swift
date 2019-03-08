@@ -44,6 +44,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
     
     var OrderID:Int!
     var OrderDate = String()
+    var TailorID:Int!
     
     let OrderDetailsScrollView = UIScrollView()
     
@@ -56,12 +57,16 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         // Do any additional setup after loading the view.
         
         selectedButton(tag: 2)
+        
     }
     
-
-
     override func viewWillAppear(_ animated: Bool)
     {
+        
+       // TailorID = UserDefaults.standard.value(forKey: "TailorID") as? Int
+        
+        print("Tailor ID:",TailorID!)
+        
         self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
         
     }
@@ -588,6 +593,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
     {
         let RatingScreen = WriteReviewRateViewController()
         RatingScreen.OrderID = OrderID!
+        RatingScreen.TailorID = TailorID!
         self.navigationController?.pushViewController(RatingScreen, animated: true)
     }
     
