@@ -109,6 +109,11 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
          fetchingCurrentLocation()
         
     }
+    override func viewDidAppear(_ animated: Bool)
+    {
+        super.viewDidAppear(animated)
+         // addBottomSheetView()
+    }
     
     func fetchingCurrentLocation()
     {
@@ -919,7 +924,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }*/
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
         
         let location = locations.last
         
@@ -966,7 +972,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         tailorDeatiledView.addSubview(shopName)
        */
         
-        shopNameBtn.frame = CGRect(x: x, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
+        shopNameBtn.frame = CGRect(x: 0, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
         shopNameBtn.setTitle(marker.title?.uppercased(), for: .normal)
         shopNameBtn.setTitleColor(UIColor.blue, for: .normal)
         shopNameBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.5 * x)!
@@ -1098,14 +1104,29 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         
     }
-    
+    func addBottomSheetView()
+    {
+        // 1- Init bottomSheetVC
+        let bottomSheetVC = ShopDetailsViewController()
+        
+        // 2- Add bottomSheetVC as a child view
+        self.addChild(bottomSheetVC)
+        self.mapView.addSubview(bottomSheetVC.view)
+        bottomSheetVC.didMove(toParent: self)
+        
+        // 3- Adjust bottomSheet frame and initial position.
+        let height = view.frame.height
+        let width  = view.frame.width
+        bottomSheetVC.view.frame =  CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height)
+         //CGRectMake(0, self.view.frame.maxY, width, height)
+    }
     
     @objc func ShopButtonAction(sender : UIButton)
     {
         let ShopDetailsScreen = ShopDetailsViewController()
         ShopDetailsScreen.TailorID = TailorID!
         self.navigationController?.pushViewController(ShopDetailsScreen, animated: true)
-    }
+}
     
     @objc func ReviewsButtonAction(sender : UIButton)
     {
@@ -1115,7 +1136,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     }
     
    
-    
     @objc func closeAddressLabel()
     {
         //  addressLabel.removeFromSuperview()

@@ -15,6 +15,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
    let serviceCall = ServerAPI()
     var TailorID:Int!
    let ReviewsScrollView = UIScrollView()
+    var RequestDate = String()
     
     // Error PAram...
     var DeviceNum:String!
@@ -65,10 +66,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         {
             self.serviceCall.API_GetRatings(TailorId:TailorID, delegate: self)
         }
-        else
-        {
-            self.serviceCall.API_GetRatings(TailorId:2, delegate: self)
-        }
+       
        
     }
     
@@ -246,7 +244,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     }
     RatingStatusLabel.textColor = UIColor.black
     //RatingStatusLabel.backgroundColor = UIColor.gray
-    RatingStatusLabel.textAlignment = .left
+    RatingStatusLabel.textAlignment = .center
     RatingStatusLabel.font = UIFont(name: "Avenir Next", size: 1.4 * x)
     RatingsView.addSubview(RatingStatusLabel)
     
@@ -398,6 +396,10 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         {
             CustomerRatingImageView.image = UIImage(named: "5")
         }
+        else
+        {
+            CustomerRatingImageView.image = UIImage(named: "0")
+        }
         RatingTypeView.addSubview(CustomerRatingImageView)
         
         
@@ -532,13 +534,21 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         {
             CustomerRatingImageView.image = UIImage(named: "5")
         }
+        else
+        {
+            CustomerRatingImageView.image = UIImage(named: "0")
+        }
         ReviewsView.addSubview(CustomerRatingImageView)
         
         
         //
         let RatingDate_LBL = UILabel()
         RatingDate_LBL.frame = CGRect(x: CustomerRatingImageView.frame.maxX + x, y: UserNameLabel.frame.maxY, width: (12 * x), height: (1.5 * y))
-        RatingDate_LBL.text = CustomerCreateDtArray[i] as? String
+        if let date = CustomerCreateDtArray[i] as? String
+        {
+            RequestDate = String(date.prefix(10))
+        }
+        RatingDate_LBL.text = RequestDate
         //RatingDate_LBL.backgroundColor = UIColor.lightGray
         RatingDate_LBL.textColor = UIColor.blue
         RatingDate_LBL.textAlignment = .left

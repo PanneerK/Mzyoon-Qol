@@ -76,17 +76,22 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        
+        //  let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(ShopDetailsViewController.panGesture))
+        //  view.addGestureRecognizer(gesture)
     }
+    
     override func viewWillAppear(_ animated: Bool)
     {
+        
+    //  prepareBackgroundView()
+        
        if(TailorID != nil)
        {
          self.serviceCall.API_GetShopDetails(TailorId: TailorID!, delegate: self)
        }
-        else
-       {
-          self.serviceCall.API_GetShopDetails(TailorId: 2, delegate: self)
-       }
+      
         
        // ShopDetailsContent()
        // strPhoneNumber = "+91 8015557649"
@@ -95,6 +100,44 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         TimeArray = ["Closed","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM"]
         
     }
+    
+   /*
+    override func viewDidAppear(_ animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            let frame = self?.view.frame
+            let yComponent = UIScreen.main.bounds.height - 200
+            self?.view.frame = CGRect(x: 0, y: yComponent, width: frame!.width, height: frame!.height)
+                                    // CGRectMake(0, yComponent, frame!.width, frame!.height)
+        }
+    }
+    
+    @objc func panGesture(recognizer: UIPanGestureRecognizer)
+    {
+        let translation = recognizer.translation(in: self.view)
+        let y = self.view.frame.minY
+        self.view.frame = CGRect(x: 0, y: y+translation.y, width: view.frame.width, height: view.frame.width)
+        // CGRectMake(0, y + translation.y, view.frame.width, view.frame.height)
+        recognizer.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+        
+    }
+     
+     func prepareBackgroundView()
+     {
+     let blurEffect = UIBlurEffect.init(style: .dark)
+     let visualEffect = UIVisualEffectView.init(effect: blurEffect)
+     let bluredView = UIVisualEffectView.init(effect: blurEffect)
+     bluredView.contentView.addSubview(visualEffect)
+     
+     visualEffect.frame = UIScreen.main.bounds
+     bluredView.frame = UIScreen.main.bounds
+     
+     view.insertSubview(bluredView, at: 0)
+     }
+ */
+    
     func DeviceError()
     {
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
@@ -107,6 +150,8 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
+    
+ 
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
@@ -229,7 +274,14 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     
     let navigationTitle = UILabel()
     navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: ShopDetailsNavigationBar.frame.width, height: (3 * y))
-    navigationTitle.text = "SHOP DETAILS"
+    if(ShopNameArray.count > 0)
+    {
+      navigationTitle.text = ShopNameArray[0] as? String
+    }
+    else
+    {
+         navigationTitle.text = "SHOP DETAILS"
+    }
     navigationTitle.textColor = UIColor.white
     navigationTitle.textAlignment = .center
     navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
@@ -261,7 +313,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     
     
    // let reviewsButton = UIButton()
-    reviewsButton.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: (7 * x), height: (2 * y))
+    reviewsButton.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: (10 * x), height: (2 * y))
     // reviewsButton.backgroundColor = UIColor.lightGray
     reviewsButton.setTitleColor(UIColor.blue, for: .normal)
     reviewsButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
@@ -474,19 +526,74 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     
     for i in 0..<ShopNameArray.count
     {
+        if(ShopNameArray.count > 0)
+        {
+            shopName.text = ShopNameArray[i] as? String
+            shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        }
+       else
+       {
+          shopName.text = ""
+       }
         
-        shopName.text = ShopNameArray[i] as? String
-        ratingImageView.image = UIImage(named: "\(RatingArray[i])")
-        tailorName.text = TailorNameArray[i] as? String
-        // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
-        reviewsButton.setTitle("(\(RatingArray[i]) reviews)", for: .normal)
-        ordersCountLabel.text = "\(OrderCountArray[i])"
-        Call_LBL.text = PhoneNumberArray[i] as? String
-        Link_Label.text = WebsiteArray[i] as? String
-        Address_Label.text = AddressArray[i] as? String
+        if(RatingArray.count > 0)
+        {
+           ratingImageView.image = UIImage(named: "\(RatingArray[i])")
+           reviewsButton.setTitle("(\(RatingArray[i]) reviews)", for: .normal)
+          // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
+        }
+        else
+        {
+            ratingImageView.image = UIImage(named: "0")
+            reviewsButton.setTitle("(0 reviews)", for: .normal)
+        }
         
-        shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
-   
+        if(TailorNameArray.count > 0)
+        {
+            tailorName.text = TailorNameArray[i] as? String
+        }
+        else
+        {
+            tailorName.text = ""
+        }
+        
+        if(OrderCountArray.count > 0)
+        {
+            ordersCountLabel.text = "\(OrderCountArray[i])"
+        }
+        else
+        {
+            ordersCountLabel.text = "0"
+        }
+        
+        if(PhoneNumberArray.count > 0)
+        {
+            Call_LBL.text = PhoneNumberArray[i] as? String
+        }
+        else
+        {
+            Call_LBL.text = ""
+        }
+        
+        
+        if(WebsiteArray.count > 0)
+        {
+             Link_Label.text = WebsiteArray[i] as? String
+        }
+        else
+        {
+            Link_Label.text = "http://"
+        }
+        
+        if(AddressArray.count > 0)
+        {
+            Address_Label.text = AddressArray[i] as? String
+        }
+        else
+        {
+            Address_Label.text = ""
+        }
+    
     }
     
     var x3:CGFloat = x
@@ -513,7 +620,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         x3 = PhotosIV.frame.maxX + x
     }
     
-    PhotosScrollview.contentSize.width = x3 + x
+     PhotosScrollview.contentSize.width = x3 + x
   }
 
   @objc func otpBackButtonAction(sender : UIButton)
@@ -524,6 +631,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
   @objc func ReviewsButtonAction(sender : UIButton)
   {
      let ReviewsScreen = ReviewsViewController()
+     ReviewsScreen.TailorID = TailorID!
      self.navigationController?.pushViewController(ReviewsScreen, animated: true)
   }
   @objc func TimingsButtonAction(sender : UIButton)
@@ -580,18 +688,21 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     
    @objc func CallButtonAction(sender : UIButton)
   {
-     let NumStr = PhoneNumberArray[0] as? String
-     let url: NSURL = URL(string: "TEL://\(NumStr!)")! as NSURL
-     UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+     if(PhoneNumberArray.count > 0)
+     {
+      let NumStr = PhoneNumberArray[0] as? String
+      let url: NSURL = URL(string: "TEL://\(NumStr!)")! as NSURL
+      UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+     }
   }
     
   @objc func ShareButtonAction(sender : UIButton)
   {
       print("Share Button..Click..!")
     
-     let textToShare = "Swift is awesome!  Check out this website about it!"
+     let textToShare = ""
     
-      if let myWebsite = NSURL(string: "http://www.codingexplorer.com/")
+      if let myWebsite = NSURL(string: "")
       {
         let objectsToShare = [textToShare, myWebsite] as [Any]
         let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
