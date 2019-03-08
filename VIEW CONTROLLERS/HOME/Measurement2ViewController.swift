@@ -65,9 +65,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     let getFullSleeveLabel = UILabel()      //18
     let getHandKneeLabel = UILabel()        //19
     
-    let headLabel = UILabel()
-
-    
     // Parts...
     var PartsIdArray = NSArray()
     var PartsGenderMeasurementIdArray = NSArray()
@@ -117,6 +114,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     var headingPartsArray = [Int]()
     var valuePartsArray = [Int]()
+    var increamentHeadingTag = 0
+    var increamentValueTag = 0
     
     //ACTIVITY INDICATOR PARAMETERS
     let activeViewSub = UIView()
@@ -515,6 +514,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     {
         if sender.tag == 0
         {
+            increamentHeadingTag = 0
+            increamentValueTag = 0
+            
             partsButton.backgroundColor = UIColor.lightGray
             partsButton.setTitleColor(UIColor.black, for: .normal)
             imageViewContents(isHidden: false)
@@ -667,7 +669,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         var buttonTag = Int()
         
-        
         for index in 0..<converetedGenderImagesArray.count {
             
             frame.origin.x = imageScrollView.frame.size.width * CGFloat(index)
@@ -699,6 +700,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 if index == 0
                 {
+                    let headLabel = UILabel()
                     headLabel.frame = CGRect(x: (10.8 * x), y: (y / 2), width: (10.8 * x), height: (2 * y))
                     headLabel.text = "Head"
                     headLabel.textColor = UIColor.black
@@ -3075,14 +3077,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         for views in imageScrollView.subviews
         {
-            print("VIEWS IN SCROLL VIEW", views.tag)
-            
             if views.tag != 0
             {
                 for views1 in views.subviews
                 {
-                    print("SUB VIEW IN SCROLL VIEW", views1.tag)
-                    
                     if let button = views1 as? UIButton
                     {
                         if PartsIdArray.contains(button.tag)
@@ -3096,15 +3094,25 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     }
                     else if let label1 = views1 as? UILabel
                     {
-                        print("LABEL 1", label1.tag, getTag)
-                        
                         if headingPartsArray.contains(label1.tag)
                         {
-                                                                                                                                                                                           
+                            print("HEADING LABEL", increamentHeadingTag, headingPartsArray.count, views.tag)
+                            
+                            if increamentHeadingTag < PartsNameArray.count
+                            {
+                                label1.text = PartsNameArray[increamentHeadingTag] as? String
+                                increamentHeadingTag = increamentHeadingTag + 1
+                            }
                         }
                         else if valuePartsArray.contains(label1.tag)
                         {
-                            
+                            print("measurementValues", measurementValues)
+                            if increamentValueTag < PartsNameArray.count
+                            {
+                                let value = measurementValues[getTag]
+                                label1.text = "\(value!)"
+                                increamentValueTag = increamentValueTag + 1
+                            }
                         }
                         else
                         {
@@ -3117,7 +3125,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                         }
                         else if label1.tag == ((getTag * 1) + 200)
                         {
-                            
+                         
                         }
                         else
                         {

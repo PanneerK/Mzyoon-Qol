@@ -65,6 +65,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
     
+    var selectPicker = false
+    var selectName = false
+    var apiName = String()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -184,6 +188,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 
                 if let getName = name[0] as? String
                 {
+                    apiName = getName
                     UserDefaults.standard.set(getName, forKey: "userName")
                 }
                 
@@ -406,6 +411,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         backgroundImage.addSubview(activeView)
+        
+        self.view.bringSubviewToFront(activeView)
         
         activityIndicator.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
         activityIndicator.color = UIColor.white
@@ -799,6 +806,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.userImage.image = pickedImage
+            selectPicker = true
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -949,15 +957,15 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     {
         var userId = String()
         
-        
         if let ProfId = UserDefaults.standard.value(forKey: "userId") as? String
         {
             userId = ProfId
         }
-        else
+        else if let userIds = UserDefaults.standard.value(forKey: "userId") as? Int
         {
-            
+            userId = "\(userIds)"
         }
+        
         let EmailID = email.text
         let DobStr = dob.text
         let ModifyStr = "user"
@@ -992,7 +1000,25 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                         
                         active()
                         
-                        serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                         if selectPicker == true
+                        {
+                            serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
+                        }
+                        else if apiName != userName.text!
+                        {
+                            if let profId = UserDefaults.standard.value(forKey: "userId") as? String
+                            {
+                                serviceCall.API_IntroProfile(Id: profId, Name: userName.text!, profilePic: imageName[0] as! String, delegate: self)
+                            }
+                            else if let profId = UserDefaults.standard.value(forKey: "userId") as? Int
+                            {
+                                serviceCall.API_IntroProfile(Id: "\(profId)", Name: userName.text!, profilePic: imageName[0] as! String, delegate: self)
+                            }
+                        }
+                        else
+                        {
+                            serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
+                        }
                     }
                     else
                     {
@@ -1074,7 +1100,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+        let ACCEPTABLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
         var returnParameter = Bool()
         
         if textField == userName

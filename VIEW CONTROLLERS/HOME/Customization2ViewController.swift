@@ -685,6 +685,105 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     @objc func materialButtonAction(sender : UIButton)
     {
         updatingId = 1
+        if sender.tag == 1
+        {
+            if materialTagIntArray.contains(sender.tag)
+            {
+                materialTagIntArray.removeAll()
+            }
+            else
+            {
+                for i in 0..<materialsIdArray.count
+                {
+                    materialTagIntArray.append(materialsIdArray[i] as! Int)
+                }
+            }
+        }
+        else
+        {
+            if materialTagIntArray.contains(1)
+            {
+                if materialTagIntArray.contains(sender.tag)
+                {
+                    materialTagIntArray = materialTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    materialTagIntArray.append(sender.tag)
+                }
+                
+                materialTagIntArray = materialTagIntArray.filter { $0 != 1 }
+            }
+            else
+            {
+                if materialTagIntArray.contains(sender.tag)
+                {
+                    materialTagIntArray = materialTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    materialTagIntArray.append(sender.tag)
+                }
+            }
+        }
+        
+        print("MATERIAL TAG INT ARRAY", materialTagIntArray)
+        
+        for views in materialScrollView.subviews
+        {
+            for foundView in views.subviews
+            {
+                print("FOUND VIEW NAMES", foundView)
+                if let imageView = foundView as? UIImageView
+                {
+                    if imageView.tag > 0
+                    {
+                        imageView.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        
+        for views in materialScrollView.subviews
+        {
+            for i in 0..<materialTagIntArray.count
+            {
+                if views.tag == materialTagIntArray[i]
+                {
+                    print("VIEWS TAG", views.tag)
+                    let materialSelectionImage = UIImageView()
+                    materialSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+                    materialSelectionImage.image = UIImage(named: "selectionImage")
+                    materialSelectionImage.tag = sender.tag
+                    views.addSubview(materialSelectionImage)
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+        
+        if materialTagIntArray.count == 0 && colorTagIntArray.count == 0
+        {
+            self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+        }
+        else if materialTagIntArray.count != 0 && colorTagIntArray.count == 0
+        {
+            self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: [1])
+        }
+        else if materialTagIntArray.count == 0 && colorTagIntArray.count != 0
+        {
+            self.serviceCallFunction(getMaterialId: [1], getColorId: colorTagIntArray)
+        }
+        else if materialTagIntArray.count != 0 && colorTagIntArray.count != 0
+        {
+            self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+        }
+        
+    }
+    /*{
+        updatingId = 1
         
         let materialSelectionImage = UIImageView()
         materialSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
@@ -821,10 +920,109 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
             }
         }
-    }
+    }*/
     
     @objc func colorButtonAction(sender : UIButton)
     {
+        updatingId = 2
+        
+        if sender.tag == 1
+        {
+            if colorTagIntArray.contains(sender.tag)
+            {
+                colorTagIntArray.removeAll()
+            }
+            else
+            {
+                for i in 0..<materialsIdArray.count
+                {
+                    colorTagIntArray.append(materialsIdArray[i] as! Int)
+                }
+            }
+        }
+        else
+        {
+            if colorTagIntArray.contains(1)
+            {
+                if colorTagIntArray.contains(sender.tag)
+                {
+                    colorTagIntArray = colorTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    colorTagIntArray.append(sender.tag)
+                }
+                
+                colorTagIntArray = colorTagIntArray.filter { $0 != 1 }
+            }
+            else
+            {
+                if colorTagIntArray.contains(sender.tag)
+                {
+                    colorTagIntArray = colorTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    colorTagIntArray.append(sender.tag)
+                }
+            }
+        }
+        
+        print("COLOR TAG INT ARRAY", colorTagIntArray)
+        
+        for views in colorScrollView.subviews
+        {
+            for foundView in views.subviews
+            {
+                print("FOUND VIEW NAMES", foundView)
+                if let imageView = foundView as? UIImageView
+                {
+                    if imageView.tag > 0
+                    {
+                        imageView.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        
+        for views in colorScrollView.subviews
+        {
+            for i in 0..<colorTagIntArray.count
+            {
+                if views.tag == colorTagIntArray[i]
+                {
+                    print("VIEWS TAG", views.tag)
+                    let colorSelectionImage = UIImageView()
+                    colorSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+                    colorSelectionImage.image = UIImage(named: "selectionImage")
+                    colorSelectionImage.tag = sender.tag
+                    views.addSubview(colorSelectionImage)
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+        
+        if materialTagIntArray.count == 0 && colorTagIntArray.count == 0
+        {
+            self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+        }
+        else if materialTagIntArray.count != 0 && colorTagIntArray.count == 0
+        {
+            self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: [1])
+        }
+        else if materialTagIntArray.count == 0 && colorTagIntArray.count != 0
+        {
+            self.serviceCallFunction(getMaterialId: [1], getColorId: colorTagIntArray)
+        }
+        else if materialTagIntArray.count != 0 && colorTagIntArray.count != 0
+        {
+            self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
+        }
+    }
+    /*{
         updatingId = 2
         
         let colorSelectionImage = UIImageView()
@@ -963,7 +1161,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: [1])
             }
         }
-    }
+    }*/
     
     @objc func patternButtonAction(sender : UIButton)
     {

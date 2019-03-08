@@ -651,6 +651,87 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func seasonalButtonAction(sender : UIButton)
     {
+        updateId = 1
+        if sender.tag == 1
+        {
+            if seasonalTagIntArray.contains(sender.tag)
+            {
+                seasonalTagIntArray.removeAll()
+            }
+            else
+            {
+                for i in 0..<seasonalIdArray.count
+                {
+                    seasonalTagIntArray.append(seasonalIdArray[i] as! Int)
+                }
+            }
+        }
+        else
+        {
+            if seasonalTagIntArray.contains(1)
+            {
+                if seasonalTagIntArray.contains(sender.tag)
+                {
+                    seasonalTagIntArray = seasonalTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    seasonalTagIntArray.append(sender.tag)
+                }
+                
+                seasonalTagIntArray = seasonalTagIntArray.filter { $0 != 1 }
+            }
+            else
+            {
+                if seasonalTagIntArray.contains(sender.tag)
+                {
+                    seasonalTagIntArray = seasonalTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    seasonalTagIntArray.append(sender.tag)
+                }
+            }
+        }
+        
+        print("SEASOSNAL TAG INT ARRAY", seasonalTagIntArray)
+        
+        for views in seasonalScrollView.subviews
+        {
+            for foundView in views.subviews
+            {
+                print("FOUND VIEW NAMES", foundView)
+                if let imageView = foundView as? UIImageView
+                {
+                    if imageView.tag > 0
+                    {
+                        imageView.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        
+        for views in seasonalScrollView.subviews
+        {
+            for i in 0..<seasonalTagIntArray.count
+            {
+                if views.tag == seasonalTagIntArray[i]
+                {
+                    print("VIEWS TAG", views.tag)
+                    let seasonalSelectionImage = UIImageView()
+                    seasonalSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+                    seasonalSelectionImage.image = UIImage(named: "selectionImage")
+                    seasonalSelectionImage.tag = sender.tag
+                    views.addSubview(seasonalSelectionImage)
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+    }
+    /*{
         let seasonalSelectionImage = UIImageView()
         seasonalSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         seasonalSelectionImage.image = UIImage(named: "selectionImage")
@@ -759,10 +840,101 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         updateId = 1
-    }
+    }*/
     
     @objc func industryButtonAction(sender : UIButton)
     {
+        updateId = 2
+
+        if sender.tag == 1
+        {
+            if industryTagIntArray.contains(sender.tag)
+            {
+                industryTagIntArray.removeAll()
+            }
+            else
+            {
+                for i in 0..<industryIdArray.count
+                {
+                    industryTagIntArray.append(industryIdArray[i] as! Int)
+                }
+            }
+        }
+        else
+        {
+            if industryTagIntArray.contains(1)
+            {
+                if industryTagIntArray.contains(sender.tag)
+                {
+                    industryTagIntArray = industryTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    industryTagIntArray.append(sender.tag)
+                }
+                
+                industryTagIntArray = industryTagIntArray.filter { $0 != 1 }
+            }
+            else
+            {
+                if industryTagIntArray.contains(sender.tag)
+                {
+                    industryTagIntArray = industryTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    industryTagIntArray.append(sender.tag)
+                }
+            }
+        }
+        
+        print("INDUSTRY TAG INT ARRAY", industryTagIntArray)
+        
+        for views in industryScrollView.subviews
+        {
+            for foundView in views.subviews
+            {
+                print("FOUND VIEW NAMES", foundView)
+                if let imageView = foundView as? UIImageView
+                {
+                    if imageView.tag > 0
+                    {
+                        imageView.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        
+        for views in industryScrollView.subviews
+        {
+            for i in 0..<industryTagIntArray.count
+            {
+                if views.tag == industryTagIntArray[i]
+                {
+                    print("VIEWS TAG", views.tag)
+                    let industrySelectionImage = UIImageView()
+                    industrySelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+                    industrySelectionImage.image = UIImage(named: "selectionImage")
+                    industrySelectionImage.tag = sender.tag
+                    views.addSubview(industrySelectionImage)
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+        
+        if industryTagIntArray.count != 0
+        {
+            self.serviceCallFunction(originIdArray: industryTagIntArray, seasonIdArray: [1])
+        }
+        else
+        {
+            self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
+        }
+    }
+    /*{
         let industrySelectionImage = UIImageView()
         industrySelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         industrySelectionImage.image = UIImage(named: "selectionImage")
@@ -879,10 +1051,90 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         updateId = 2
-    }
+    }*/
     
     @objc func brandButtonAction(sender : UIButton)
     {
+        if sender.tag == 1
+        {
+            if brandTagIntArray.contains(sender.tag)
+            {
+                brandTagIntArray.removeAll()
+            }
+            else
+            {
+                for i in 0..<brandIdArray.count
+                {
+                    brandTagIntArray.append(brandIdArray[i] as! Int)
+                }
+            }
+        }
+        else
+        {
+            if brandTagIntArray.contains(1)
+            {
+                if brandTagIntArray.contains(sender.tag)
+                {
+                    brandTagIntArray = brandTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    brandTagIntArray.append(sender.tag)
+                }
+                
+                brandTagIntArray = brandTagIntArray.filter { $0 != 1 }
+            }
+            else
+            {
+                if brandTagIntArray.contains(sender.tag)
+                {
+                    brandTagIntArray = brandTagIntArray.filter { $0 != sender.tag }
+                }
+                else
+                {
+                    brandTagIntArray.append(sender.tag)
+                }
+            }
+        }
+        
+        print("BRAND TAG INT ARRAY", brandTagIntArray)
+        
+        for views in brandScrollView.subviews
+        {
+            for foundView in views.subviews
+            {
+                print("FOUND VIEW NAMES", foundView)
+                if let imageView = foundView as? UIImageView
+                {
+                    if imageView.tag > 0
+                    {
+                        imageView.removeFromSuperview()
+                    }
+                }
+            }
+        }
+        
+        for views in brandScrollView.subviews
+        {
+            for i in 0..<brandTagIntArray.count
+            {
+                if views.tag == brandTagIntArray[i]
+                {
+                    print("VIEWS TAG", views.tag)
+                    let brandSelectionImage = UIImageView()
+                    brandSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+                    brandSelectionImage.image = UIImage(named: "selectionImage")
+                    brandSelectionImage.tag = sender.tag
+                    views.addSubview(brandSelectionImage)
+                }
+                else
+                {
+                    
+                }
+            }
+        }
+    }
+    /*{
         let brandSelectionImage = UIImageView()
         brandSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
         brandSelectionImage.image = UIImage(named: "selectionImage")
@@ -986,7 +1238,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 sender.addSubview(brandSelectionImage)
             }
         }
-    }
+    }*/
     
     @objc func customization1NextButtonAction(sender : UIButton)
     {
