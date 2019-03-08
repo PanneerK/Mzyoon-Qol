@@ -76,8 +76,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     let serviceCall = ServerAPI()
     
-    let activityIndication = UIActivityIndicatorView()
-    
     let countryCodeTableView = UITableView()
     
     let activeView = UIView()

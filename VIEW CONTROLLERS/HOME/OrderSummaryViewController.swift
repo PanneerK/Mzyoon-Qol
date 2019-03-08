@@ -317,7 +317,36 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let getDressTypeLabels = UILabel()
             getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX, y: (y / 2), width: (7.5 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
-//            getDressTypeLabels.text = getPremiumArray[i]
+            
+            if let type = UserDefaults.standard.value(forKey: "serviceType") as? Int
+            {
+                if type == 1
+                {
+                    if i != 0
+                    {
+                        getDressTypeLabels.text = "Appointment"
+                    }
+                }
+                else if type == 2
+                {
+                    if i != 0
+                    {
+                        getDressTypeLabels.text = "Urgent"
+                    }
+                }
+                else if type == 3
+                {
+                    if i != 0
+                    {
+                        getDressTypeLabels.text = "Normal"
+                    }
+                }
+            }
+            else
+            {
+                
+            }
+           
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
@@ -342,7 +371,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         noteLabel.numberOfLines = 2
         noteView.addSubview(noteLabel)
         
-        
         let tailorListHeadingLabel = UILabel()
         tailorListHeadingLabel.frame = CGRect(x: (3 * x), y: noteView.frame.maxY + y, width: view.frame.width, height: (3 * y))
         tailorListHeadingLabel.text = "TOTAL NUMBER OF TAILORS"
@@ -358,7 +386,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         
         let tailorView = UIView()
-        tailorView.frame = CGRect(x: (3 * x), y: tailorListHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (5 * x * CGFloat(selectedTailors.count)))
+        tailorView.frame = CGRect(x: (3 * x), y: tailorListHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (5 * x * CGFloat(selectedTailors.count)) + y)
         tailorView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(tailorView)
         

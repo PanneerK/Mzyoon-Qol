@@ -212,6 +212,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     {
         if let values = UserDefaults.standard.value(forKey: "measurement2Response") as? Int
         {
+            print("otpBackButtonAction", values)
             if values == 1
             {
                 let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
@@ -221,6 +222,10 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
             {
                 self.navigationController?.popViewController(animated: true)
             }
+        }
+        else
+        {
+            self.navigationController?.popViewController(animated: true)
         }
     }
     

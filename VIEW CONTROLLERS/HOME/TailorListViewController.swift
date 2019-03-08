@@ -137,14 +137,13 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         #else
         // your real device code
         print("APP IS RUNNING ON DEVICE")
-        
+        self.serviceCall.API_GetTailorList(delegate: self)
         if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {
             
             currentLocation = locationManager.location
             print("Current Loc:",currentLocation.coordinate)
-            self.serviceCall.API_GetTailorList(delegate: self)
         }
         
         #endif

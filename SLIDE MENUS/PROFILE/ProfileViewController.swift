@@ -284,6 +284,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             
             if Result == "1"
             {
+                updateButton.isHidden = false
                 activeStop()
                 let alert = UIAlertController(title: "", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: savedAlertAction(action:)))
@@ -410,7 +411,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     {
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        backgroundImage.addSubview(activeView)
+        view.addSubview(activeView)
         
         self.view.bringSubviewToFront(activeView)
         
@@ -993,7 +994,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                         cameraButton.isEnabled = false
                         genderButton.isEnabled = false
                         
-                        updateButton.isHidden = false
+                        updateButton.isHidden = true
                         
                         sender.removeFromSuperview()
                         cancelButton.removeFromSuperview()

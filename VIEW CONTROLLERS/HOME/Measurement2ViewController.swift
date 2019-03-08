@@ -106,7 +106,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var measurerImage = String()
     var measurerTag = Int()
     
-    var measurementValues = [Int : Float]()
+    var measurementValues = [Int : Double]()
     
     var type = "table"
     var unitTag = "cm"
@@ -601,6 +601,11 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         imageScrollView.contentSize.width = (CGFloat(converetedGenderImagesArray.count) * imageScrollView.frame.width)
         
+        for views in imageScrollView.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
         pageNumberContents()
         
         unitView.frame = CGRect(x: (2 * x), y: view.frame.height - (9 * y), width: (7 * x), height: (2.5 * y))
@@ -608,6 +613,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         unitView.layer.borderWidth = 1
         view.addSubview(unitView)
         
+        cmButton.isEnabled = false
         cmButton.frame = CGRect(x: 0, y: 0, width: unitView.frame.width / 2, height: unitView.frame.height)
         cmButton.setTitle("CM", for: .normal)
         cmButton.tag = 1
@@ -3125,7 +3131,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                         }
                         else if label1.tag == ((getTag * 1) + 200)
                         {
-                         
+                            
                         }
                         else
                         {
@@ -3156,6 +3162,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             for (keys, values) in measurementValues
             {
                 let inchValue = values * 2.54
+
                 measurementValues[keys] = inchValue
             }
             
@@ -3172,6 +3179,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             for (keys, values) in measurementValues
             {
                 let cmValue = values / 2.54
+                print("cmValue", cmValue)
                 measurementValues[keys] = cmValue
             }
             
@@ -3189,6 +3197,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             if let foundView = view.viewWithTag((keys * 1) + 200) {
                 if let label = foundView as? UILabel
                 {
+                    print("CONVERTED VALUES", values)
+                    
                     label.text = "\(values)"
                 }
             }
@@ -3464,7 +3474,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 label.text = partsMeasurementLabel.text
                 //                measurementValues[measurerTag] = Int(partsMeasurementLabel.text!)
-                let convertToInt:Float? = Float(label.text!)
+                let convertToInt:Double? = Double(label.text!)
                 measurementValues.updateValue(convertToInt!, forKey: measurerTag)
             }
         }
@@ -3492,7 +3502,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         rulerScroll.scrollsToTop = true
         rulerScroll.setContentOffset(scrollPoint, animated: true)
         
-        for i in 0..<2029
+        for i in 0..<2030
         {
             let measureLabel = UILabel()
             
@@ -3643,7 +3653,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     @objc func nextButtonAction(sender : UIButton)
     {
         var keys = [Int]()
-        var values = [Float]()
+        var values = [Double]()
         
         for (keyss, valuess) in measurementValues
         {
@@ -3764,7 +3774,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     @objc func partsSaveButtonAction(sender : UIButton)
     {
         
-        let convertToInt:Float? = Float(partsInputTextField.text!)
+        let convertToInt:Double? = Double(partsInputTextField.text!)
         measurementValues.updateValue(convertToInt!, forKey: measurerTag)
         partsBackView.removeFromSuperview()
         
