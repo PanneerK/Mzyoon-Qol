@@ -63,7 +63,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     {
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
-        mapView.addSubview(activeView)
+        view.addSubview(activeView)
         
         activityView.frame = CGRect(x: ((activeView.frame.width - 50) / 2), y: ((activeView.frame.height - 50) / 2), width: 50, height: 50)
         activityView.style = .whiteLarge

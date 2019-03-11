@@ -86,6 +86,7 @@ class CommonViewController: UIViewController
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -131,7 +132,7 @@ class CommonViewController: UIViewController
     {
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
-        backgroundImage.addSubview(activeView)
+        view.addSubview(activeView)
     
         activityView.frame = CGRect(x: ((activeView.frame.width - 50) / 2), y: ((activeView.frame.height - 50) / 2), width: 50, height: 50)
         activityView.style = .whiteLarge
@@ -417,7 +418,9 @@ class CommonViewController: UIViewController
 //        if let container = self.so_containerViewController {
 //            container.isSideViewControllerPresented = true
 //        }
-//        self.viewDidLoad()
+        
+//        self.sideMenuController?.cache(viewController: SlideViewController(), with: "true")
+//        self.sideMenuController?.setContentViewController(to: SlideViewController())
     }
     
     @objc func tabBarButtonAction(sender : UIButton)

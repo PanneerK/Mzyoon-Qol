@@ -87,15 +87,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
                 self.serviceCall.API_ExistingUserMeasurement(DressTypeId: "\(dressId)", UserId: "\(userId)", delegate: self)
             }
         }
-
-//        if let userId = UserDefaults.standard.value(forKey: "UserId") as? String, let dressId = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-//        {
-//            self.serviceCall.API_ExistingUserMeasurement(DressTypeId: dressId, UserId: userId, delegate: self)
-//        }
-//        else if let userId = UserDefaults.standard.value(forKey: "UserId") as? Int, let dressId = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-//        {
-//            self.serviceCall.API_ExistingUserMeasurement(DressTypeId: "\(dressId)", UserId: "\(userId)", delegate: self)
-//        }
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -696,6 +687,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     {
         UserDefaults.standard.set("Tailor", forKey: "measurementBy")
         UserDefaults.standard.set(sender.tag, forKey: "measurementType")
+        UserDefaults.standard.set(0, forKey: "measurement2Response")
         let referencImageScreen = ReferenceImageViewController()
         self.navigationController?.pushViewController(referencImageScreen, animated: true)
     }

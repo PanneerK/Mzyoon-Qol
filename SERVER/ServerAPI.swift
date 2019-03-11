@@ -18,9 +18,9 @@ class ServerAPI : NSObject
     
     var resultDict:NSDictionary = NSDictionary()
     
-//         var baseURL:String = "http://192.168.0.26/TailorAPI"
-
-       var baseURL:String = "http://appsapi.mzyoon.com"
+//    var baseURL:String = "http://192.168.0.26/TailorAPI"
+    
+    var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
     
@@ -1174,9 +1174,12 @@ class ServerAPI : NSObject
     {
         if Reachability.Connection.self != .none
         {
-            let parameters = ["DeviceId" : DeviceId, "Os" : Os, "Manufacturer" : Manufacturer, "CountryCode" : CountryCode, "PhoneNumber" : PhoneNumber, "Model" : Model, "AppVersion" : AppVersion, "Type" : Type] as [String : Any]
+            let parameters = ["DeviceId" : deviceId!, "Os" : Os, "Manufacturer" : Manufacturer, "CountryCode" : CountryCode, "PhoneNumber" : PhoneNumber, "Model" : Model, "AppVersion" : AppVersion, "Type" : Type] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Login/InsertUpdateDeviceDetails", arguments: [baseURL])
+            
+            print("API_InsertDeviceDetails", urlString)
+            print("API_InsertDeviceDetails", parameters)
             
             request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
                 if response.result.value != nil
