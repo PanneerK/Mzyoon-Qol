@@ -2442,7 +2442,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("resultDict", self.resultDict)
+                   // print("resultDict", self.resultDict)
                     delegate.API_CALLBACK_GetAppointmentDateForMaterail!(MaterialDate: self.resultDict)
                 }
                 else
@@ -2476,7 +2476,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-                    print("resultDict", self.resultDict)
+                   // print("resultDict", self.resultDict)
                     delegate.API_CALLBACK_GetAppointmentDateForMeasurement!(MeasurementDate: self.resultDict)
                 }
                 else
