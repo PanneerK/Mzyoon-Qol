@@ -132,24 +132,25 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
                 view.addSubview(emptyLabel)
             }
-            
-            
-            NoOfTailorsArray = Result.value(forKey: "NoOfTailors") as! NSArray
-            print("NoOfTailorsArray", NoOfTailorsArray)
-            
-            OrderIdArray = Result.value(forKey: "OrderId") as! NSArray
-            print("OrderIdArray", OrderIdArray)
-            
-            ProductImageArray = Result.value(forKey: "ProductImage") as! NSArray
-            print("ProductImageArray", ProductImageArray)
-            
-            ProductNameArray = Result.value(forKey: "Product_NameInEnglish") as! NSArray
-            print("ProductNameArray", ProductNameArray)
-            
-            RequestDtArray = Result.value(forKey: "RequestDt") as! NSArray
-            print("RequestDtArray", RequestDtArray)
-            
-            
+            else
+            {
+                NoOfTailorsArray = Result.value(forKey: "NoOfTailors") as! NSArray
+                print("NoOfTailorsArray", NoOfTailorsArray)
+                
+                OrderIdArray = Result.value(forKey: "OrderId") as! NSArray
+                print("OrderIdArray", OrderIdArray)
+                
+                ProductImageArray = Result.value(forKey: "ProductImage") as! NSArray
+                print("ProductImageArray", ProductImageArray)
+                
+                ProductNameArray = Result.value(forKey: "Product_NameInEnglish") as! NSArray
+                print("ProductNameArray", ProductNameArray)
+                
+                RequestDtArray = Result.value(forKey: "RequestDt") as! NSArray
+                print("RequestDtArray", RequestDtArray)
+                
+                OrderRequestListContent()
+            }
         }
         else if ResponseMsg == "Failure"
         {
@@ -168,8 +169,6 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
             view.addSubview(emptyLabel)
         }
-        
-         OrderRequestListContent()
     }
         
     
