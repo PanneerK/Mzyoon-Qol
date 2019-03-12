@@ -23,6 +23,12 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     let serviceCall = ServerAPI()
     
+    //SSCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let selfScreenContents = UIView()
+    let addNewAddressButton = UIButton()
+
     var viewController = String()
     
     var FirstName = NSArray()
@@ -322,6 +328,34 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         }
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "عنوان"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        addressScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        addNewAddressButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addNewAddressButton.setTitle("إضافة عنوان جديد", for: .normal)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "ADDRESS"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        addressScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        addNewAddressButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addNewAddressButton.setTitle("ADD NEW ADDRESS", for: .normal)
+    }
+    
     func addressContent()
     {
         let backgroundImageview = UIImageView()
@@ -329,25 +363,27 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         backgroundImageview.image = UIImage(named: "background")
         view.addSubview(backgroundImageview)
         
-        let addressNavigationBar = UIView()
-        addressNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        addressNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(addressNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        addressNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: addressNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ADDRESS"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-        addressNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "ADDRESS"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
+        
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
         
         if addressCount == 0
         {
@@ -358,9 +394,9 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         }
         else
         {
-            addressScrollView.frame = CGRect(x: x, y: addressNavigationBar.frame.maxY + (2 * y), width: view.frame.width - (2 * x), height: view.frame.height - (14 * y))
+            addressScrollView.frame = CGRect(x: x, y: (2 * y), width: view.frame.width - (2 * x), height: view.frame.height - (14 * y))
             addressScrollView.backgroundColor = UIColor.clear
-            view.addSubview(addressScrollView)
+            selfScreenContents.addSubview(addressScrollView)
             
             for allViews in addressScrollView.subviews
             {
@@ -569,15 +605,30 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             
         }
         
-        let addNewAddressButton = UIButton()
-        addNewAddressButton.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
+        addNewAddressButton.frame = CGRect(x: 0, y: selfScreenContents.frame.height - (5 * y), width: selfScreenContents.frame.width, height: (5 * y))
         addNewAddressButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addNewAddressButton.setTitle("ADD NEW ADDRESS", for: .normal)
         addNewAddressButton.setTitleColor(UIColor.white, for: .normal)
         addNewAddressButton.addTarget(self, action: #selector(self.addNewAddressButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(addNewAddressButton)
+        selfScreenContents.addSubview(addNewAddressButton)
         
         self.stopActivity()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
