@@ -47,8 +47,17 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     let emptyLabel = UILabel()
     
     var applicationDelegate = AppDelegate()
-    
+  
+    /*
+    let ReviewsView = UIView()
+    let userImageView = UIImageView()
+    let UserNameLabel = UILabel()
+    let CustomerRatingImageView = UIImageView()
+    let RatingDate_LBL = UILabel()
     let Review_LBL = UILabel()
+    let ReviewUnderline_LBL = UILabel()
+    */
+    
     
     override func viewDidLoad()
     {
@@ -171,6 +180,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     }
   func reviewsContent()
   {
+    
     self.stopActivity()
     
     let ratingsNavigationBar = UIView()
@@ -435,9 +445,8 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     
     //Reviews ScrollView...
     ReviewsScrollView.frame = CGRect(x: (3 * x), y: WriteReviewButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (30 * y))
-    ReviewsScrollView.backgroundColor = UIColor.white
+    ReviewsScrollView.backgroundColor = UIColor.groupTableViewBackground
     view.addSubview(ReviewsScrollView)
-    
     
     for views in ReviewsScrollView.subviews
     {
@@ -458,25 +467,27 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     }
     else
     {
-    for i in 0..<CustomerNameArray.count
-    {
-        //
+        
+      for i in 0..<CustomerNameArray.count
+      {
+        
         let ReviewsView = UIView()
-        ReviewsView.frame = CGRect(x: 0, y: y2, width: ReviewsScrollView.frame.width, height: (10 * y))
+        ReviewsView.frame = CGRect(x: 0, y: y2, width: ReviewsScrollView.frame.width, height: (12 * y))
         ReviewsView.backgroundColor = UIColor.white
         ReviewsScrollView.addSubview(ReviewsView)
         
-        //
-        let userImageView = UIImageView()
-        userImageView.frame = CGRect(x: x/2, y: y/2, width: (6 * x), height: (5 * y))
-        userImageView.backgroundColor = UIColor.lightGray  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        userImageView.layer.borderWidth = 1
+       
+       let userImageView = UIImageView()
+        userImageView.frame = CGRect(x: x/2, y: y/2, width: (5 * x), height: (5 * y))
+        userImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        userImageView.layer.borderWidth = 1.0
         userImageView.layer.masksToBounds = false
         userImageView.layer.borderColor = UIColor.black.cgColor
-        userImageView.layer.cornerRadius = userImageView.frame.height/2
+        userImageView.layer.cornerRadius = userImageView.frame.width/2
         userImageView.clipsToBounds = true
-       // userImageView.image = UIImage(named: "TailorName")
+        userImageView.image = UIImage(named: "TailorName")
         userImageView.layer.borderColor = UIColor.lightGray.cgColor
+        
         
       /*
         if let imageName = ImageArray[i] as? String
@@ -497,9 +508,9 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         
         ReviewsView.addSubview(userImageView)
         
-      
+       
         let UserNameLabel = UILabel()
-        UserNameLabel.frame = CGRect(x: userImageView.frame.maxX + x, y: y/2, width: ReviewsView.frame.width / 2, height: (2 * y))
+        UserNameLabel.frame = CGRect(x: userImageView.frame.maxX + x, y: y, width: ReviewsView.frame.width / 2, height: (2 * y))
         UserNameLabel.text = CustomerNameArray[i] as? String
         //UserNameLabel.backgroundColor = UIColor.lightGray
         UserNameLabel.textColor = UIColor.blue
@@ -541,7 +552,6 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         ReviewsView.addSubview(CustomerRatingImageView)
         
         
-        //
         let RatingDate_LBL = UILabel()
         RatingDate_LBL.frame = CGRect(x: CustomerRatingImageView.frame.maxX + x, y: UserNameLabel.frame.maxY, width: (12 * x), height: (1.5 * y))
         if let date = CustomerCreateDtArray[i] as? String
@@ -555,14 +565,15 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         RatingDate_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
         ReviewsView.addSubview(RatingDate_LBL)
         
-       // let Review_LBL = UILabel()
-        Review_LBL.frame = CGRect(x: userImageView.frame.maxX + x, y: RatingDate_LBL.frame.maxY, width: ReviewsView.frame.width - (8 * x), height: (7 * y))
+        let Review_LBL = UILabel()
+        Review_LBL.frame = CGRect(x: x, y: CustomerRatingImageView.frame.maxY + y, width: ReviewsView.frame.width - (8 * x), height: (6 * y))
         Review_LBL.text = CustomerReviewArray[i] as? String
        // Review_LBL.backgroundColor = UIColor.lightGray
         Review_LBL.textColor = UIColor.black
         Review_LBL.textAlignment = .left
         Review_LBL.lineBreakMode = .byWordWrapping
-        Review_LBL.numberOfLines = 4
+        Review_LBL.numberOfLines = 0
+        Review_LBL .sizeToFit()
         Review_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
         Review_LBL.adjustsFontSizeToFitWidth = true
         ReviewsView.addSubview(Review_LBL)
@@ -570,7 +581,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         let ReviewUnderline_LBL = UILabel()
         ReviewUnderline_LBL.frame = CGRect(x: 0, y: Review_LBL.frame.maxY + y, width: ReviewsView.frame.width, height: 0.5)
         ReviewUnderline_LBL.backgroundColor = UIColor.lightGray
-      //  ReviewsView.addSubview(ReviewUnderline_LBL)
+       // ReviewsView.addSubview(ReviewUnderline_LBL)
         
         /*
         btnDetail.titleLabel?.numberOfLines = 5
@@ -584,10 +595,10 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         
       //  AppointmentViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
         
-        y2 = ReviewsView.frame.maxY + y/2
+         y2 = ReviewsView.frame.maxY + y
         
      }
-         ReviewsScrollView.contentSize.height = Review_LBL.frame.maxY + y
+         ReviewsScrollView.contentSize.height = y2 + (2 * y)
    }
  }
     

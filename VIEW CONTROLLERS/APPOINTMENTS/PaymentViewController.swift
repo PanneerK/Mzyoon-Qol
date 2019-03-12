@@ -159,8 +159,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
        
         Currency = "AED"
         Description = "Mzyoon App Payment Confirmation.."
-        RequestId = UserDefaults.standard.value(forKey: "requestId") as? String
-        UserName = UserDefaults.standard.value(forKey: "userName") as? String
+       
         
        // ConvertBase64()
         
@@ -960,7 +959,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         Amount_TF.delegate = self
         //Amount_TF.layer.borderWidth = 0.5
         Amount_TF.textAlignment = .left
-        Amount_TF.isUserInteractionEnabled = false
+        Amount_TF.isUserInteractionEnabled = true
         BillingView.addSubview(Amount_TF)
         
         
@@ -1043,6 +1042,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
        
         UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
         
+        RequestId = UserDefaults.standard.value(forKey: "requestId") as? String
+        UserName = UserDefaults.standard.value(forKey: "userName") as? String
+        
       if Country == "UNITED ARAB EMIRATES"
       {
           Country = "UAE"
@@ -1057,7 +1059,11 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         RequestId = String(arc4random())
         print("Request ID:",RequestId)
       }
- 
+        else
+      {
+         print("Request ID:",RequestId)
+      }
+      
      //  RequestId = String(arc4random())
        
     /*

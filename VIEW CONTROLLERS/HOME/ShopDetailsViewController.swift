@@ -539,7 +539,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         if(RatingArray.count > 0)
         {
            ratingImageView.image = UIImage(named: "\(RatingArray[i])")
-           reviewsButton.setTitle("(\(RatingArray[i]) reviews)", for: .normal)
+           reviewsButton.setTitle("(\(ReviewArray[i]) reviews)", for: .normal)
           // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
         }
         else
