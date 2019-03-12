@@ -1129,9 +1129,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     @objc func ReviewsButtonAction(sender : UIButton)
     {
-        let ReviewsScreen = ReviewsViewController()
-        ReviewsScreen.TailorID = TailorID!
-        self.navigationController?.pushViewController(ReviewsScreen, animated: true)
+      //  let ReviewsScreen = ReviewsViewController()
+      //  ReviewsScreen.TailorID = TailorID!
+      //  self.navigationController?.pushViewController(ReviewsScreen, animated: true)
     }
     
    
