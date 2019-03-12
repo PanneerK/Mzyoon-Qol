@@ -477,7 +477,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         ReviewsScrollView.addSubview(ReviewsView)
         
        
-       let userImageView = UIImageView()
+        let userImageView = UIImageView()
         userImageView.frame = CGRect(x: x/2, y: y/2, width: (5 * x), height: (5 * y))
         userImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         userImageView.layer.borderWidth = 1.0

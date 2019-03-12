@@ -122,10 +122,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
+            // Material Details like image,Heading etc..
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
+            
+            // Material Dates from Tailor..
+            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+            
+            // Measurement Details like image,Heading etc..
             self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
             
-            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+            // Measurement Dates from Tailor..
             self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
         }
         
@@ -307,7 +313,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             view.addSubview(emptyLabel)
             
         }
-          AppointmentContent()
+        
+       //   AppointmentContent()
     }
     
     func API_CALLBACK_GetAppointmentMeasurement(getAppointmentMeasure: NSDictionary)
@@ -372,7 +379,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
         }
         
-        AppointmentContent()
+      //  AppointmentContent()
     }
     
     func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial: NSDictionary)
