@@ -13,6 +13,18 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     let randomInt = Int.random(in: 10265..<10365)
     
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let dressTypeHeadingLabel = UILabel()
+
+    let customization1HeadingLabel = UILabel()
+    let customizationHeadingLabel = UILabel()
+    let premiumServicesHeadingLabel = UILabel()
+    let tailorListHeadingLabel = UILabel()
+    let noteLabel = UILabel()
+
+
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -72,36 +84,105 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "ORDER SUMMARY"
+
+        orderSummaryScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        dressTypeHeadingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        dressTypeHeadingLabel.text = "DRESS TYPE"
+        dressTypeHeadingLabel.textAlignment = .left
+        
+        customization1HeadingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        customization1HeadingLabel.text = "CUSTOMIZATION 1 AND CUSTOMIZATION 2"
+        customization1HeadingLabel.textAlignment = .left
+        
+        customizationHeadingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        customizationHeadingLabel.text = "CUSTOMIZATION 3"
+        customizationHeadingLabel.textAlignment = .left
+        
+        premiumServicesHeadingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        premiumServicesHeadingLabel.text = "PREMIUM SERVICES"
+        premiumServicesHeadingLabel.textAlignment = .left
+        
+        tailorListHeadingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tailorListHeadingLabel.text = "TOTAL NUMBER OF TAILORS"
+        tailorListHeadingLabel.textAlignment = .left
+        
+        submitButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        submitButton.setTitle("SUBMIT", for: .normal)
+        
+        noteLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        noteLabel.text = "NOTE : The price, services and courier will add to order total amount"
+
+    }
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "ملخص الطلب"
+        
+        orderSummaryScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        dressTypeHeadingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        dressTypeHeadingLabel.text = "نوع اللباس"
+        dressTypeHeadingLabel.textAlignment = .right
+        
+        customization1HeadingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        customization1HeadingLabel.text = "التخصيص 1 والتخصيص 2"
+        customization1HeadingLabel.textAlignment = .right
+        
+        customizationHeadingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        customizationHeadingLabel.text = "التخصيص 3"
+        customizationHeadingLabel.textAlignment = .right
+        
+        premiumServicesHeadingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        premiumServicesHeadingLabel.text = "خدمات مميزة"
+        premiumServicesHeadingLabel.textAlignment = .right
+        
+        tailorListHeadingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tailorListHeadingLabel.text = "مجموع عدد الخياطين"
+        tailorListHeadingLabel.textAlignment = .right
+        
+        submitButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        submitButton.setTitle("خضع", for: .normal)
+        
+        noteLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        noteLabel.text = "ملاحظة: سيضيف السعر والخدمات والبريد السريع المبلغ الإجمالي للطلب"
+    }
+    
     func orderSummaryContent()
     {
         self.stopActivity()
-        let orderSummaryNavigationBar = UIView()
-        orderSummaryNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        orderSummaryNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(orderSummaryNavigationBar)
+        
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        orderSummaryNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderSummaryNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ORDER SUMMARY"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        orderSummaryNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "ORDER SUMMARY"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        orderSummaryScrollView.frame = CGRect(x: 0, y: orderSummaryNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
+        orderSummaryScrollView.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
         orderSummaryScrollView.backgroundColor = UIColor.clear
         view.addSubview(orderSummaryScrollView)
         
         self.view.bringSubviewToFront(slideMenuButton)
         
-        let dressTypeHeadingLabel = UILabel()
         dressTypeHeadingLabel.frame = CGRect(x: (3 * x), y: y, width: view.frame.width, height: (3 * y))
         dressTypeHeadingLabel.text = "DRESS TYPE"
         dressTypeHeadingLabel.textColor = UIColor.black
@@ -114,9 +195,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         dressTypeView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(dressTypeView)
         
-        let dressTypeArray = ["Gender - ", "Dress Type - ", "Dress Sub Type - "]
+        let dressTypeArray = ["Gender", "Dress Type", "Dress Sub Type"]
         let dressTypeImageArray = ["Gender-3", "Dress_types", "Dress_subtypes"]
         var getDressTypeArray = ["Men"]
+        let dressTypeArabicArray = ["جنس", "نوع الفستان", "اللباس النوع الفرعي"]
         
         if let dressType = UserDefaults.standard.value(forKey: "dressType") as? String
         {
@@ -149,8 +231,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
             dressTypeLabels.backgroundColor = UIColor.clear
             dressTypeLabels.text = dressTypeArray[i]
-            dressTypeLabels.textColor = UIColor.white
             dressTypeLabels.textAlignment = .left
+            dressTypeLabels.textColor = UIColor.white
             dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
             dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
@@ -159,14 +241,48 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             getDressTypeLabels.text = getDressTypeArray[i]
-            getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
+            getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
             getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
             getDressTypeLabels.adjustsFontSizeToFitWidth = true
             dressSubViews.addSubview(getDressTypeLabels)
             
             y1 = dressSubViews.frame.maxY + (y / 2)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    dressTypeLabels.text = dressTypeArray[i] + "-"
+                    dressTypeLabels.textAlignment = .left
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    getDressTypeLabels.text = getDressTypeArray[i]
+                    getDressTypeLabels.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    dressTypeLabels.text = dressTypeArabicArray[i] + "-"
+                    dressTypeLabels.textAlignment = .right
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    getDressTypeLabels.text = getDressTypeArray[i]
+                    getDressTypeLabels.textAlignment = .right
+                }
+            }
+            else
+            {
+                dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                dressTypeLabels.text = dressTypeArray[i] + "-"
+                dressTypeLabels.textAlignment = .left
+                
+                getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                getDressTypeLabels.text = getDressTypeArray[i]
+                getDressTypeLabels.textAlignment = .left
+            }
         }
         
         yPos = dressTypeView.frame.maxY + y
@@ -194,7 +310,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             }
         }
         
-        let customizationHeadingLabel = UILabel()
         customizationHeadingLabel.frame = CGRect(x: (3 * x), y: yPos, width: view.frame.width, height: (3 * y))
         customizationHeadingLabel.text = "CUSTOMIZATION 3"
         customizationHeadingLabel.textColor = UIColor.black
@@ -246,7 +361,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let dressTypeLabels = UILabel()
             dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
             dressTypeLabels.backgroundColor = UIColor.clear
-            dressTypeLabels.text = "\(customKeys[i]) - "
+            dressTypeLabels.text = "\(customKeys[i])" + "-"
             dressTypeLabels.textColor = UIColor.white
             dressTypeLabels.textAlignment = .left
             dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
@@ -265,9 +380,42 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressSubViews.addSubview(getDressTypeLabels)
             
             y2 = dressSubViews.frame.maxY + (y / 2)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    dressTypeLabels.text = "\(customKeys[i])" + "-"
+                    dressTypeLabels.textAlignment = .left
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    getDressTypeLabels.text = customvalues[i]
+                    getDressTypeLabels.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    dressTypeLabels.text = "\(customKeys[i])" + "-"
+                    dressTypeLabels.textAlignment = .right
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    getDressTypeLabels.text = customvalues[i]
+                    getDressTypeLabels.textAlignment = .right
+                }
+            }
+            else
+            {
+                dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                dressTypeLabels.text = "\(customKeys[i])" + "-"
+                dressTypeLabels.textAlignment = .left
+                
+                getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                getDressTypeLabels.text = customvalues[i]
+                getDressTypeLabels.textAlignment = .left
+            }
         }
         
-        let premiumServicesHeadingLabel = UILabel()
         premiumServicesHeadingLabel.frame = CGRect(x: (3 * x), y: customizationView.frame.maxY + y, width: view.frame.width, height: (3 * y))
         premiumServicesHeadingLabel.text = "PREMIUM SERVICES"
         premiumServicesHeadingLabel.textColor = UIColor.black
@@ -284,7 +432,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         let premiumImagesArray = ["Measurement+Service", "material_delivery", "urgent_stitches", "Additional_design", "Special_delivery"]
         let getPremiumArray = ["50.00 AED", "70.00 AED", "150.00 AED", "20.00 AED", "30.00 AED"]*/
         
-        let premiumArray = ["Measurement - ", "Service Type - "]
+        let premiumArray = ["Measurement", "Service Type"]
+        let premiumArabicArray = ["قياس", "نوع الخدمة"]
         let premiumImagesArray = ["Measurement+Service", "Special_delivery"]
         
         var y3:CGFloat = y
@@ -355,6 +504,37 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressSubViews.addSubview(getDressTypeLabels)
             
             y3 = dressSubViews.frame.maxY + (y / 2)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    dressTypeLabels.text = premiumArray[i] + "-"
+                    dressTypeLabels.textAlignment = .left
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    getDressTypeLabels.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    dressTypeLabels.text = premiumArabicArray[i] + "-"
+                    dressTypeLabels.textAlignment = .right
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    getDressTypeLabels.textAlignment = .right
+                }
+            }
+            else
+            {
+                dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                dressTypeLabels.text = premiumArray[i] + "-"
+                dressTypeLabels.textAlignment = .left
+                
+                getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                getDressTypeLabels.textAlignment = .left
+            }
         }
         
         let noteView = UIView()
@@ -362,7 +542,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         noteView.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         orderSummaryScrollView.addSubview(noteView)
         
-        let noteLabel = UILabel()
         noteLabel.frame = CGRect(x: x, y: 0, width: noteView.frame.width - (2 * x), height: (4 * y))
         noteLabel.text = "NOTE : The price, services and courier will add to order total amount"
         noteLabel.textAlignment = .center
@@ -371,7 +550,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         noteLabel.numberOfLines = 2
         noteView.addSubview(noteLabel)
         
-        let tailorListHeadingLabel = UILabel()
         tailorListHeadingLabel.frame = CGRect(x: (3 * x), y: noteView.frame.maxY + y, width: view.frame.width, height: (3 * y))
         tailorListHeadingLabel.text = "TOTAL NUMBER OF TAILORS"
         tailorListHeadingLabel.textColor = UIColor.black
@@ -431,6 +609,40 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressSubViews.addSubview(getDressTypeLabels)
             
             y4 = dressSubViews.frame.maxY + (y / 2)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    dressTypeLabels.text = "Tailor_\(i)" + "-"
+                    dressTypeLabels.textAlignment = .left
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    getDressTypeLabels.text = selectedTailors[i]
+                    getDressTypeLabels.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    dressTypeLabels.text = "خياط_\(i)" + "-"
+                    dressTypeLabels.textAlignment = .right
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    getDressTypeLabels.text = selectedTailors[i]
+                    getDressTypeLabels.textAlignment = .right
+                }
+            }
+            else
+            {
+                dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                dressTypeLabels.text = "Tailor_\(i)" + "-"
+                dressTypeLabels.textAlignment = .left
+                
+                getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                getDressTypeLabels.text = selectedTailors[i]
+                getDressTypeLabels.textAlignment = .left
+            }
         }
         
         
@@ -442,11 +654,26 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         orderSummaryScrollView.addSubview(submitButton)
         
         orderSummaryScrollView.contentSize.height = submitButton.frame.maxY + (2 * y)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     func custom1AndCustom2Content()
     {
-        let customization1HeadingLabel = UILabel()
         customization1HeadingLabel.frame = CGRect(x: (3 * x), y: yPos, width: view.frame.width, height: (3 * y))
         customization1HeadingLabel.text = "CUSTOMIZATION 1 AND CUSTOMIZATION 2"
         customization1HeadingLabel.textColor = UIColor.black
@@ -459,8 +686,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         customization1View.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(customization1View)
         
-        let customization1Array = ["Seasonal - ", "Place of Industry - ", "Brands - ", "Color - ", "Material Type - ", "Pattern - "]
-        let customizationImage1Array = ["Seasonal", "Place_of_industry", "Brand", "", "Material_type", ""]
+        let customization1Array = ["Seasonal", "Place of Industry", "Brands", "Color", "Material Type", "Pattern"]
+        let customizationArabicArray = ["موسمي", "مكان الصناعة", "العلامات التجارية", "اللون", "نوع المادة", "نمط"]
+        let customizationImage1Array = ["Seasonal", "Place_of_industry", "Brand", "Color", "Material_type", "pattern"]
         var getSeason = String()
         var getIndustry = String()
         var getBrand = String()
@@ -599,6 +827,40 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressSubViews.addSubview(getDressTypeLabels)
             
             y6 = dressSubViews.frame.maxY + (y / 2)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    dressTypeLabels.text = customization1Array[i] + "-"
+                    dressTypeLabels.textAlignment = .left
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+//                    getDressTypeLabels.text = getDressTypeArray[i]
+                    getDressTypeLabels.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    dressTypeLabels.text = customizationArabicArray[i] + "-"
+                    dressTypeLabels.textAlignment = .right
+                    
+                    getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//                    getDressTypeLabels.text = getDressTypeArray[i]
+                    getDressTypeLabels.textAlignment = .right
+                }
+            }
+            else
+            {
+                dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                dressTypeLabels.text = customization1Array[i] + "-"
+                dressTypeLabels.textAlignment = .left
+                
+                getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+//                getDressTypeLabels.text = getDressTypeArray[i]
+                getDressTypeLabels.textAlignment = .left
+            }
         }
         
         yPos = customization1View.frame.maxY + y

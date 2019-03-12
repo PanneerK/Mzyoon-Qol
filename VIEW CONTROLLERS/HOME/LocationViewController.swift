@@ -18,6 +18,12 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     var y = CGFloat()
     
     var screenTag = 1
+    
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let selfScreenContents = UIView()
+
     var selectedCoordinate = CLLocationCoordinate2D()
     
     var locationManager = CLLocationManager()
@@ -78,6 +84,34 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         activityView.stopAnimating()
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "موقعك"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        addAddressButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addAddressButton.setTitle("تأكيد الموقع", for: .normal)
+        
+        mapView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "LOCATION"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        addAddressButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addAddressButton.setTitle("Confirm Location", for: .normal)
+        
+        mapView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
     func locationContents()
     {
         let backgroundImageview = UIImageView()
@@ -85,25 +119,23 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         backgroundImageview.image = UIImage(named: "background")
         view.addSubview(backgroundImageview)
         
-        let locationNavigationBar = UIView()
-        locationNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        locationNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(locationNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        locationNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: locationNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "LOCATION"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        locationNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "LOCATION"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         
         if CLLocationManager.locationServicesEnabled() {
@@ -134,11 +166,15 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         
         #endif
         
-        mapView.frame = CGRect(x: 0, y: locationNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (11.4 * y))
+        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        mapView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: selfScreenContents.frame.height - (5 * y))
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.isMyLocationEnabled = true
-        view.addSubview(mapView)
+        selfScreenContents.addSubview(mapView)
         
         addressLabel.frame = CGRect(x: x, y: y, width: view.frame.width - (2 * x), height: (7 * y))
         addressLabel.layer.borderWidth = 1
@@ -156,11 +192,27 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         addAddressButton.setTitle("Confirm Location", for: .normal)
         addAddressButton.setTitleColor(UIColor.white, for: .normal)
         addAddressButton.addTarget(self, action: #selector(self.addAddressButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(addAddressButton)
+        selfScreenContents.addSubview(addAddressButton)
         
         markerImageView.frame = CGRect(x: ((view.frame.width - (6 * x)) / 2), y: ((view.frame.height - (5 * y)) / 2), width: (6 * x), height: (5 * y))
         markerImageView.image = UIImage(named: "marker")
         view.addSubview(markerImageView)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
         
         activityContents()
     }

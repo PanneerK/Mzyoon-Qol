@@ -638,7 +638,19 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingImageView.image = UIImage(named: "\(ratingArray[i])")
             tailorView.addSubview(ratingImageView)
             
+            #if targetEnvironment(simulator)
+            // your simulator code
+            print("APP IS RUNNING ON SIMULATOR")
+            let coordinate1 = CLLocation(latitude: 41.92296, longitude: -87.63892)
+
+            #else
+            // your real device code
+            print("APP IS RUNNING ON DEVICE")
+            
             let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            
+            #endif
+            
             let coordinate2 = CLLocation(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             
             let distanceInMeters = coordinate1.distance(from: coordinate2)
@@ -679,6 +691,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     distanceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     
                     distanceLabel.text = "\(distanceInt) Km. from your location"
+                    
+                    nameLabel.textAlignment = .left
                 }
                 else if language == "ar"
                 {
@@ -688,8 +702,36 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     ordersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                     ratingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                     distanceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    
+
                     distanceLabel.text = "كم. من موقع  \(distanceInt)"
+                    
+                    nameLabel.text = "اسم" + ":"
+                    nameLabel.textAlignment = .right
+                    
+//                    tailorName.text = ""
+                    tailorName.textAlignment = .right
+                    tailorName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    
+                    shopLabel.text = "اسم المحل" + ":"
+                    shopLabel.textAlignment = .right
+                    
+//                    shopName.text = ""
+                    shopName.textAlignment = .right
+                    shopName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    
+                    ordersLabel.text = "عدد الطلبات" + ":"
+                    ordersLabel.textAlignment = .right
+                    
+//                    ordersCountLabel.text = ""
+                    ordersCountLabel.textAlignment = .right
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    
+                    ratingLabel.text = "تقييم" + ":"
+                    ratingLabel.textAlignment = .right
+                    
+//                    ratingCountLabel.text = ""
+                    ratingCountLabel.textAlignment = .right
+                    ratingCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 }
             }
             else
@@ -702,6 +744,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                 distanceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 
                 distanceLabel.text = "\(distanceInt) Km. from your location"
+                
+                nameLabel.textAlignment = .left
             }
             
             y1 = tailorView.frame.maxY + y
@@ -873,16 +917,28 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     func mapViewContents(isHidden : Bool)
     {
         mapView.clear()
-        mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (10.4 * y))
+        mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (16 * y))
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.settings.compassButton = true
         mapView.isMyLocationEnabled = true
-        view.addSubview(mapView)
+        selfScreenContents.addSubview(mapView)
         
         self.view.bringSubviewToFront(slideMenuButton)
         
+        #if targetEnvironment(simulator)
+        // your simulator code
+        print("APP IS RUNNING ON SIMULATOR")
+        let camera = GMSCameraPosition.camera(withLatitude: 41.92296, longitude: -87.63892, zoom: 17.0)
+
+        #else
+        // your real device code
+        print("APP IS RUNNING ON DEVICE")
+        
         let camera = GMSCameraPosition.camera(withLatitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, zoom: 17.0)
+
+        #endif
+        
         self.mapView.animate(to: camera)
         
         mapView.isHidden = isHidden
@@ -971,10 +1027,12 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         tailorDeatiledView.addSubview(shopName)
        */
         
-        shopNameBtn.frame = CGRect(x: 0, y: 0, width: tailorDeatiledView.frame.width / 2.5, height: (3 * y))
+//        shopNameBtn.backgroundColor = UIColor.cyan
+        shopNameBtn.frame = CGRect(x: x, y: 0, width: tailorDeatiledView.frame.width - (2 * x), height: (3 * y))
         shopNameBtn.setTitle(marker.title?.uppercased(), for: .normal)
         shopNameBtn.setTitleColor(UIColor.blue, for: .normal)
         shopNameBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.5 * x)!
+        shopNameBtn.contentHorizontalAlignment = .left
         shopNameBtn.addTarget(self, action: #selector(self.ShopButtonAction(sender:)), for: .touchUpInside)
         tailorDeatiledView.addSubview(shopNameBtn)
         

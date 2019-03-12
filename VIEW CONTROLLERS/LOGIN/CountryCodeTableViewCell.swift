@@ -22,7 +22,6 @@ class CountryCodeTableViewCell: UITableViewCell
         
         countryName = UILabel()
         countryName.textColor = UIColor.black
-        countryName.textAlignment = .left
         countryName.font = UIFont(name: "Gilroy-Regular", size: 12)
         contentView.addSubview(countryName)
     }

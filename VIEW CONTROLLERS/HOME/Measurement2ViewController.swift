@@ -35,6 +35,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var Measurement2ImagesArray = NSArray()
     var convertedMeasurement2ImageArray = [UIImage]()
     
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
     
     // Measurements2...
     var MeasurementsIdArray = NSArray()
@@ -69,6 +72,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var PartsIdArray = NSArray()
     var PartsGenderMeasurementIdArray = NSArray()
     var PartsNameArray = NSArray()
+    var partsNameArabicArray = NSArray()
     var PartsImagesArray = NSArray()
     var PartsReferenceNumberArray = NSArray()
     var convertedPartsImageArray = [UIImage]()
@@ -80,6 +84,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     let partsTableView = UITableView()
     
+    let partsNameLabel = UILabel()
     let partsMeasurementLabel = UILabel()
     let rulerScroll = UIScrollView()
     let imageBackView = UIView()
@@ -87,6 +92,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     let partsBackView = UIView()
     let selectedPartsImageView = UIImageView()
     let partsInputTextField = UITextField()
+    let cancelButton = UIButton()
+    let saveButton = UIButton()
+
     
     
     // Error PAram...
@@ -138,6 +146,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         genderImagesIdArray = dummyArray
         PartsIdArray = dummyArray
         PartsNameArray = dummyArray
+        partsNameArabicArray = dummyArray
         PartsReferenceNumberArray = dummyArray
         PartsGenderMeasurementIdArray = dummyArray
         PartsImagesArray = dummyArray
@@ -153,7 +162,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         {
             self.serviceCall.API_GetMeasurement2(Measurement1Value: Int(dressid)!, delegate: self)
         }
-        
         
         addDoneButtonOnKeyboard()
         
@@ -172,6 +180,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         genderImagesIdArray = dummyArray
         PartsIdArray = dummyArray
         PartsNameArray = dummyArray
+        partsNameArabicArray = dummayArray
         PartsReferenceNumberArray = dummyArray
         PartsGenderMeasurementIdArray = dummyArray
         PartsImagesArray = dummyArray
@@ -187,25 +196,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         {
             self.serviceCall.API_GetMeasurement2(Measurement1Value: Int(dressid)!, delegate: self)
         }*/
-    }
-    
-    func activeStart1()
-    {
-        activeViewSub.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        activeViewSub.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        view.addSubview(activeViewSub)
-        
-        activityIndicatorSub.frame = CGRect(x: ((activeViewSub.frame.width - (5 * x)) / 2), y: ((activeViewSub.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
-        activityIndicatorSub.color = UIColor.white
-        activityIndicatorSub.style = .whiteLarge
-        activityIndicatorSub.startAnimating()
-        activeViewSub.addSubview(activityIndicatorSub)
-    }
-    
-    func activeStop1()
-    {
-        activeViewSub.removeFromSuperview()
-        activityIndicatorSub.stopAnimating()
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -296,6 +286,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 PartsIdArray = Measurements.value(forKey: "Id") as! NSArray
                 PartsNameArray = Measurements.value(forKey: "TextInEnglish") as! NSArray
+                partsNameArabicArray = Measurements.value(forKey: "TextInArabic") as! NSArray
                 PartsReferenceNumberArray = Measurements.value(forKey: "ReferenceNumber") as! NSArray
                 PartsGenderMeasurementIdArray = Measurements.value(forKey: "GenderMeasurementId") as! NSArray
                 PartsImagesArray = Measurements.value(forKey: "Image") as! NSArray
@@ -361,11 +352,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 let responseEmptyAlert = UIAlertController(title: "Alert", message: "Measurements are not available for this dress type", preferredStyle: .alert)
                 responseEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: responseEmptyAlertAction(action:)))
                 self.present(responseEmptyAlert, animated: true, completion: nil)
-                
-//                self.measurement2Contents()
-//                partsTableView.reloadData()
             }
-            
         }
         else if ResponseMsg == "Failure"
         {
@@ -395,6 +382,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             // Body Parts :
             PartsIdArray = Result.value(forKey: "Id") as! NSArray
             PartsNameArray = Result.value(forKey: "TextInEnglish") as! NSArray
+            partsNameArabicArray = Result.value(forKey: "TextInArabic") as! NSArray
             PartsReferenceNumberArray = Result.value(forKey: "ReferenceNumber") as! NSArray
             PartsGenderMeasurementIdArray = Result.value(forKey: "GenderMeasurementId") as! NSArray
             PartsImagesArray = Result.value(forKey: "Image") as! NSArray
@@ -452,31 +440,93 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
     }
     
+    func changeViewToEnglishInSelf()
+    {
+        view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "MEASUREMENT-2"
+        
+        imageButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        imageButton.setTitle("IMAGE", for: .normal)
+        partsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        partsButton.setTitle("PARTS", for: .normal)
+        
+//        imageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        partsImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        cmButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        cmButton.setTitle("CM", for: .normal)
+        inButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        inButton.setTitle("IN", for: .normal)
+        
+        partsNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        partsMeasurementLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        saveButton.setTitle("SAVE", for: .normal)
+        cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        cancelButton.setTitle("CANCEL", for: .normal)
+        
+        partsInputTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
+    func changeViewToArabicInSelf()
+    {
+        view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+//        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "قياس-2"
+        
+        imageButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        imageButton.setTitle("صورة", for: .normal)
+        partsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        partsButton.setTitle("أجزاء", for: .normal)
+        
+//        imageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        partsImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        cmButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        cmButton.setTitle("CM", for: .normal)
+        inButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        inButton.setTitle("IN", for: .normal)
+        
+        partsNameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        partsMeasurementLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        saveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        saveButton.setTitle("حفظ", for: .normal)
+        cancelButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        cancelButton.setTitle("إلغاء", for: .normal)
+        
+        partsInputTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
+    
     func measurement2Contents()
     {
         imageBackView.removeFromSuperview()
         
-        let measurement1NavigationBar = UIView()
-        measurement1NavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        measurement1NavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(measurement1NavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         backButton.tag = 3
-        measurement1NavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: measurement1NavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "MEASUREMENT-2"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        measurement1NavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "MEASUREMENT-2"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        imageButton.frame = CGRect(x: 0, y: measurement1NavigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: (5 * y))
+        imageButton.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: (5 * y))
         imageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         imageButton.setTitle("IMAGE", for: .normal)
         imageButton.setTitleColor(UIColor.white, for: .normal)
@@ -489,7 +539,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         dropDown.image = UIImage(named: "downArrow")
         imageButton.addSubview(dropDown)
         
-        partsButton.frame = CGRect(x: imageButton.frame.maxX + 1, y: measurement1NavigationBar.frame.maxY, width: view.frame.width / 2, height: (5 * y))
+        partsButton.frame = CGRect(x: imageButton.frame.maxX + 1, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width / 2, height: (5 * y))
         partsButton.backgroundColor = UIColor.lightGray
         partsButton.setTitle("PARTS", for: .normal)
         partsButton.setTitleColor(UIColor.black, for: .normal)
@@ -501,6 +551,28 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         dropDown1.frame = CGRect(x: partsButton.frame.width - (5 * x), y: y, width: (3 * x), height: (3 * y))
         dropDown1.image = UIImage(named: "downArrow")
         partsButton.addSubview(dropDown1)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+                dropDown.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                dropDown1.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+                dropDown.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                dropDown1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+            dropDown.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            dropDown1.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         imageViewContents(isHidden : false)
     }
@@ -582,6 +654,22 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             }
             
             x1 = lineLabel.frame.maxX
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    pageNumberlabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+                else if language == "ar"
+                {
+                    pageNumberlabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                }
+            }
+            else
+            {
+                pageNumberlabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
         }
     }
     
@@ -3077,6 +3165,28 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 }*/
             }*/
             
+            
+            for views in subView.subviews
+            {
+                if let foundView = views as? UILabel
+                {
+                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                    {
+                        if language == "en"
+                        {
+                            foundView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        }
+                        else if language == "ar"
+                        {
+                            foundView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        }
+                    }
+                    else
+                    {
+                        foundView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    }
+                }
+            }
         }
         
         var getTag = Int()
@@ -3106,7 +3216,22 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                             
                             if increamentHeadingTag < PartsNameArray.count
                             {
-                                label1.text = PartsNameArray[increamentHeadingTag] as? String
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        label1.text = PartsNameArray[increamentHeadingTag] as? String
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        label1.text = partsNameArabicArray[increamentHeadingTag] as? String
+                                    }
+                                }
+                                else
+                                {
+                                    label1.text = PartsNameArray[increamentHeadingTag] as? String
+                                }
+                                
                                 increamentHeadingTag = increamentHeadingTag + 1
                             }
                         }
@@ -3146,7 +3271,24 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         imageScrollView.contentSize = CGSize(width: imageScrollView.frame.size.width * CGFloat(converetedGenderImagesArray.count),height: imageScrollView.frame.size.height)
         pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
-        self.stopActivity()
+        
+        stopActivity()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func unitButtonAction(sender : UIButton)
@@ -3250,7 +3392,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     @objc func measurementButtonAction(sender : UIButton)
     {
-        activeStart1()
         if sender.tag == 1
         {
             measurerImage = "Head"
@@ -3407,8 +3548,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func measureScrollContents()
     {
-        activeStop1()
-        
         imageBackView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
         imageBackView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubview(imageBackView)
@@ -3425,7 +3564,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsImageView.image = selectedconvertedPartsImageArray[0]
         imageBackView.addSubview(partsImageView)
         
-        let partsNameLabel = UILabel()
         partsNameLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsImageView.frame.maxY + y, width: (10 * x), height: (3 * y))
         partsNameLabel.text = measurerImage
         partsNameLabel.textColor = UIColor.white
@@ -3441,7 +3579,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsMeasurementLabel.textAlignment = .center
         imageBackView.addSubview(partsMeasurementLabel)
         
-        let cancelButton = UIButton()
         cancelButton.frame = CGRect(x: rulerScroll.frame.maxX + x, y: partsMeasurementLabel.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
         cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         cancelButton.setTitle("CANCEL", for: .normal)
@@ -3450,7 +3587,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         cancelButton.tag = 3
         imageBackView.addSubview(cancelButton)
         
-        let saveButton = UIButton()
         saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * y), y: partsMeasurementLabel.frame.maxY + (8 * y), width: (10 * x), height: (3 * y))
         saveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         saveButton.setTitle("SAVE", for: .normal)
@@ -3458,6 +3594,22 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         saveButton.addTarget(self, action: #selector(self.saveButtonAction(sender:)), for: .touchUpInside)
         saveButton.tag = 3
         imageBackView.addSubview(saveButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func measureScrollCancelButtonAction(sender : UIButton)
@@ -3560,6 +3712,31 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         selectedMeasureImage.frame = CGRect(x: 0, y: ((view.frame.height - (4 * y)) / 2), width: (4 * x), height: (4 * y))
         selectedMeasureImage.image = UIImage(named: "arrowPointer")
         imageBackView.addSubview(selectedMeasureImage)
+        
+        for views in rulerScroll.subviews
+        {
+            if let foundView = views as? UILabel
+            {
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        foundView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        foundView.textAlignment = .left
+                    }
+                    else if language == "ar"
+                    {
+                        foundView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        foundView.textAlignment = .right
+                    }
+                }
+                else
+                {
+                    foundView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    foundView.textAlignment = .left
+                }
+            }
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView)
@@ -3663,9 +3840,27 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         if values.contains(0.0)
         {
-            let customEmptyAlert = UIAlertController(title: "Alert", message: "Please enter all values to proceed", preferredStyle: .alert)
-            customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(customEmptyAlert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let customEmptyAlert = UIAlertController(title: "Alert", message: "Please enter all values to proceed", preferredStyle: .alert)
+                    customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(customEmptyAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let customEmptyAlert = UIAlertController(title: "محزر", message: "الرجاء إدخال جميع القيم للمتابعة", preferredStyle: .alert)
+                    customEmptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(customEmptyAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let customEmptyAlert = UIAlertController(title: "Alert", message: "Please enter all values to proceed", preferredStyle: .alert)
+                customEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(customEmptyAlert, animated: true, completion: nil)
+            }
         }
         else
         {
@@ -3706,8 +3901,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func partsContent()
     {
-        activeStop1()
-        
         partsBackView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
         partsBackView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubview(partsBackView)
@@ -3749,7 +3942,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         partsInputTextField.delegate = self
         partsBackView.addSubview(partsInputTextField)
         
-        let cancelButton = UIButton()
         cancelButton.frame = CGRect(x: x, y: partsInputTextField.frame.maxY + (3 * y), width: ((view.frame.width / 2) - (2 * x)), height: (4 * y))
         cancelButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0)
         cancelButton.setTitle("CANCEL", for: .normal)
@@ -3757,13 +3949,28 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         cancelButton.addTarget(self, action: #selector(self.partsCancelButtonAction(sender:)), for: .touchUpInside)
         partsBackView.addSubview(cancelButton)
         
-        let saveButton = UIButton()
         saveButton.frame = CGRect(x: cancelButton.frame.maxX + (2 * x), y: partsInputTextField.frame.maxY + (3 * y), width: ((view.frame.width / 2) - (2 * x)), height: (4 * y))
         saveButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0)
         saveButton.setTitle("SAVE", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.addTarget(self, action: #selector(self.partsSaveButtonAction(sender:)), for: .touchUpInside)
         partsBackView.addSubview(saveButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func partsCancelButtonAction(sender : UIButton)
@@ -3827,7 +4034,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
         
         cell.partsImage.image = convertedPartsImageArray[indexPath.row]
-        cell.partsName.text = PartsNameArray[indexPath.row] as? String
         
         let valueCount:Int = PartsIdArray[indexPath.row] as! Int
         let value = measurementValues[valueCount]
@@ -3838,6 +4044,44 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         
         cell.selectionStyle = .none
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                cell.partsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.partsName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.partsSizeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                cell.partsName.textAlignment = .left
+                cell.partsSizeLabel.textAlignment = .left
+                
+                cell.partsName.text = PartsNameArray[indexPath.row] as? String
+
+            }
+            else if language == "ar"
+            {
+                cell.partsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.partsName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.partsSizeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                cell.partsName.textAlignment = .right
+                cell.partsSizeLabel.textAlignment = .right
+                
+                cell.partsName.text = partsNameArabicArray[indexPath.row] as? String
+            }
+        }
+        else
+        {
+            cell.partsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.partsName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.partsSizeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            cell.partsName.textAlignment = .left
+            cell.partsSizeLabel.textAlignment = .left
+            
+            cell.partsName.text = PartsNameArray[indexPath.row] as? String
+        }
 
         return cell
     }
@@ -3855,7 +4099,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         measurerTag = selectedInt
         
-        activeStart1()
         self.view.bringSubviewToFront(activeView)
         self.serviceCall.API_GetMeasurementParts(MeasurementParts: selectedInt, delegate: self)
     }

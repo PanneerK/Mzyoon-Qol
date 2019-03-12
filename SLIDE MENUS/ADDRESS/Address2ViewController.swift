@@ -33,6 +33,19 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     let serviceCall = ServerAPI()
     
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let locationAddressLabel = UILabel()
+    let address1Label = UILabel()
+    let editLocationButton = UIButton()
+    let editLabel = UILabel()
+    let addressDefaultLabel = UILabel()
+    let addressInfoHeadingLabel = UILabel()
+    let saveButton = UIButton()
+    let countryCodeTitleLabel = UILabel()
+
+
     let addressScrollView = UIScrollView()
     let firstNameEnglishTextField = UITextField()
     let secondNameEnglishTextField = UITextField()
@@ -40,6 +53,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     let floorTextField = UITextField()
     let landMarkTextField = UITextField()
     let locationTypeTextField = UITextField()
+    let mobileCountryCodeButton = UIButton()
     let mobileTextField = UITextField()
     let shippingNotesTextField = UITextField()
     
@@ -850,6 +864,130 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
     }
     
+    func changeViewToArabicInSelf()
+    {
+        view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+//        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "عنوان"
+        
+        saveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        saveButton.setTitle("حفظ", for: .normal)
+        
+        locationAddressLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        locationAddressLabel.text = "عنوان الموقع"
+        locationAddressLabel.textAlignment = .right
+        
+        address1Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        address1Label.textAlignment = .right
+        
+        editLocationButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        editLabel.text = "تصحيح"
+        
+        addressDefaultLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addressDefaultLabel.text = "اجعله افتراضيًا"
+        
+        addressInfoHeadingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addressInfoHeadingLabel.text = "معلومات العنوان"
+        
+        firstNameEnglishTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        secondNameEnglishTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        floorTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        landMarkTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        locationTypeTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        mobileTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        shippingNotesTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        firstNameEnglishTextField.textAlignment = .right
+        secondNameEnglishTextField.textAlignment = .right
+        floorTextField.textAlignment = .right
+        landMarkTextField.textAlignment = .right
+        locationTypeTextField.textAlignment = .right
+        mobileTextField.textAlignment = .right
+        shippingNotesTextField.textAlignment = .right
+        
+        countryButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        countryButton.contentHorizontalAlignment = .right
+        stateButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        stateButton.contentHorizontalAlignment = .right
+        areaButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        areaButton.contentHorizontalAlignment = .right
+        
+        titleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        titleLabel.text = "يرجى تحديد بلدك"
+        
+        countryCodeTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        countryCodeTitleLabel.text = "يرجى تحديد رمز البلد الخاص بك"
+        
+        cancelButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        cancelButton.setTitle("إلغاء", for: .normal)
+        
+        mobileCountryCodeButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+
+//        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "ADDRESS"
+        
+        saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        saveButton.setTitle("SAVE", for: .normal)
+        
+        locationAddressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        locationAddressLabel.text = "Location Address"
+        locationAddressLabel.textAlignment = .left
+        
+        address1Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        address1Label.textAlignment = .left
+        
+        editLocationButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        editLabel.text = "EDIT"
+        
+        addressDefaultLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addressDefaultLabel.text = "Make as Default"
+        
+        addressInfoHeadingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addressInfoHeadingLabel.text = "Address Info"
+        
+        firstNameEnglishTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        secondNameEnglishTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        floorTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        landMarkTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        locationTypeTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        mobileTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        shippingNotesTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        firstNameEnglishTextField.textAlignment = .left
+        secondNameEnglishTextField.textAlignment = .left
+        floorTextField.textAlignment = .left
+        landMarkTextField.textAlignment = .left
+        locationTypeTextField.textAlignment = .left
+        mobileTextField.textAlignment = .left
+        shippingNotesTextField.textAlignment = .left
+        
+        countryButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        countryButton.contentHorizontalAlignment = .right
+        stateButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        stateButton.contentHorizontalAlignment = .right
+        areaButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        areaButton.contentHorizontalAlignment = .right
+        
+        titleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        titleLabel.text = "Please select your country"
+        
+        countryCodeTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        countryCodeTitleLabel.text = "Please select your country code"
+        
+        cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        cancelButton.setTitle("Cancel", for: .normal)
+        
+        mobileCountryCodeButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
     func addressContents()
     {
         stopActivity()
@@ -872,33 +1010,30 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             insertOrUpdate = 1
         }
         
-        let addressNavigationBar = UIView()
-        addressNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        addressNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(addressNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 1
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        addressNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: addressNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ADDRESS"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        addressNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "ADDRESS"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         let locationIcon = UIImageView()
-        locationIcon.frame = CGRect(x: x, y: addressNavigationBar.frame.maxY + y + (y / 2), width: (1.5 * x), height: (2 * y))
+        locationIcon.frame = CGRect(x: x, y: selfScreenNavigationBar.frame.maxY + y + (y / 2), width: (1.5 * x), height: (2 * y))
         locationIcon.image = UIImage(named: "Location_address")
         view.addSubview(locationIcon)
         
-        let locationAddressLabel = UILabel()
-        locationAddressLabel.frame = CGRect(x: locationIcon.frame.maxX + x, y: addressNavigationBar.frame.maxY + y, width: view.frame.width / 2, height: (3 * y))
+        locationAddressLabel.frame = CGRect(x: locationIcon.frame.maxX + x, y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width / 2, height: (3 * y))
         locationAddressLabel.text = "Location Address"
         locationAddressLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         locationAddressLabel.textAlignment = .left
@@ -915,7 +1050,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         print("ADDRESS STRING ADDRESS 2 VIEW CONTROLLER 2", addressString)
         
-        let address1Label = UILabel()
         address1Label.frame = CGRect(x: x, y: y / 2, width: locationView.frame.width - (9 * x), height: (6 * y))
         
         if addressString.isEmpty == true
@@ -938,26 +1072,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         addressStringArray = splitted as NSArray
         print("SPLITTED ADDRESS", addressStringArray)
-
-        let address2Label = UILabel()
-        address2Label.frame = CGRect(x: x, y: address1Label.frame.maxY, width: locationView.frame.width - (8 * x), height: (2 * y))
-        address2Label.text = "P.O. Box 901"
-        address2Label.textColor = UIColor.black
-        address2Label.textAlignment = .left
-        address2Label.font = UIFont(name: "Avenir-Regular", size: 15)
-        address2Label.font = address2Label.font.withSize(15)
-        //        locationView.addSubview(address2Label)
         
-        let address3Label = UILabel()
-        address3Label.frame = CGRect(x: x, y: address2Label.frame.maxY, width: locationView.frame.width - (8 * x), height: (2 * y))
-        address3Label.text = "Abu Dhabi"
-        address3Label.textColor = UIColor.black
-        address3Label.textAlignment = .left
-        address3Label.font = UIFont(name: "Avenir-Regular", size: 15)
-        address3Label.font = address3Label.font.withSize(15)
-        //        locationView.addSubview(address3Label)
-        
-        let editLocationButton = UIButton()
         editLocationButton.frame = CGRect(x: locationView.frame.width - (8 * x), y: 0, width: (8 * x), height: (8 * y))
         //        editLocationButton.layer.cornerRadius = 5
         //        editLocationButton.layer.borderWidth = 1
@@ -967,7 +1082,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         editLocationButton.addTarget(self, action: #selector(self.locationEditButtonAction(sender:)), for: .touchUpInside)
         locationView.addSubview(editLocationButton)
         
-        let editLabel = UILabel()
         editLabel.frame = CGRect(x: 4, y: editLocationButton.frame.height - (2 * y), width: editLocationButton.frame.width - 8, height: (2 * y))
         editLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         editLabel.text = "EDIT"
@@ -977,7 +1091,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         editLabel.font = editLabel.font.withSize(15)
         editLocationButton.addSubview(editLabel)
         
-        let addressDefaultLabel = UILabel()
         addressDefaultLabel.frame = CGRect(x: (18 * x), y: locationView.frame.maxY + y + (y / 4), width: (12 * x), height: (2 * y))
         addressDefaultLabel.text = "Make as Default"
         addressDefaultLabel.textColor = UIColor.black
@@ -998,7 +1111,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressSwitchButton.addTarget(self, action: #selector(self.addressSwitchButtonAction(action:)), for: .valueChanged)
         view.addSubview(addressSwitchButton)
         
-        let addressInfoHeadingLabel = UILabel()
         addressInfoHeadingLabel.frame = CGRect(x: (3 * x), y: addressDefaultLabel.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (3 * y))
         addressInfoHeadingLabel.backgroundColor = UIColor.lightGray.withAlphaComponent(0.25)
         addressInfoHeadingLabel.text = "Address Info"
@@ -1487,7 +1599,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         underline8.backgroundColor = UIColor.lightGray
         addressScrollView.addSubview(underline8)
         
-        let mobileCountryCodeButton = UIButton()
         mobileCountryCodeButton.frame = CGRect(x: x, y: underline8.frame.maxY + (3 * y), width: (10 * x), height: (3 * y))
         mobileCountryCodeButton.backgroundColor = UIColor(red: 0.7647, green: 0.7882, blue: 0.7765, alpha: 1.0)
         mobileCountryCodeButton.addTarget(self, action: #selector(self.mobileCountryCodeButtonAction(sender:)), for: .touchUpInside)
@@ -1650,7 +1761,6 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         underline10.backgroundColor = UIColor.lightGray
         addressScrollView.addSubview(underline10)
         
-        let saveButton = UIButton()
         saveButton.frame = CGRect(x: view.frame.width - (18 * x), y: addressScrollView.frame.maxY + y, width: (15 * x), height: (3 * y))
         saveButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
         saveButton.setTitle("SAVE", for: .normal)
@@ -1658,6 +1768,22 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         saveButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: 10)
         saveButton.addTarget(self, action: #selector(self.saveAndNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(saveButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -1870,47 +1996,58 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         blurView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(blurView)
         
-        let alertView = UIView()
-        alertView.frame = CGRect(x: (3 * x), y: (3 * y), width: view.frame.width - (6 * x), height: view.frame.height - (6 * y))
-        alertView.layer.cornerRadius = 15
-        alertView.layer.masksToBounds = true
-        alertView.backgroundColor = UIColor.white
-        blurView.addSubview(alertView)
+        let countryCodeAlertView = UIView()
+        countryCodeAlertView.frame = CGRect(x: (3 * x), y: (3 * y), width: view.frame.width - (6 * x), height: view.frame.height - (6 * y))
+        countryCodeAlertView.layer.cornerRadius = 15
+        countryCodeAlertView.layer.masksToBounds = true
+        countryCodeAlertView.backgroundColor = UIColor.white
+        blurView.addSubview(countryCodeAlertView)
         
-        let titleLabel = UILabel()
-        titleLabel.frame = CGRect(x: 0, y: y, width: alertView.frame.width, height: 20)
-        titleLabel.text = "Please select your country code"
-        titleLabel.textAlignment = .center
-        titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "", size: 10)
-        alertView.addSubview(titleLabel)
+        countryCodeTitleLabel.frame = CGRect(x: 0, y: y, width: countryCodeAlertView.frame.width, height: (2 * y))
+        countryCodeTitleLabel.text = "Please select your country code"
+        countryCodeTitleLabel.textAlignment = .center
+        countryCodeTitleLabel.textColor = UIColor.black
+        countryCodeTitleLabel.font = UIFont(name: "", size: 10)
+        countryCodeAlertView.addSubview(countryCodeTitleLabel)
         
         let underLine1 = UILabel()
-        underLine1.frame = CGRect(x: 0, y: titleLabel.frame.maxY + y, width: alertView.frame.width, height: 1)
+        underLine1.frame = CGRect(x: 0, y: countryCodeTitleLabel.frame.maxY + y, width: countryCodeAlertView.frame.width, height: 1)
         underLine1.backgroundColor = UIColor.blue
-        alertView.addSubview(underLine1)
+        countryCodeAlertView.addSubview(underLine1)
         
         print("LEFT CHANGE", individualCountryFlagArray.count)
         
-        countryCodeTableView.frame = CGRect(x: 0, y: underLine1.frame.maxY + y, width: alertView.frame.width, height: alertView.frame.height - 102)
+        countryCodeTableView.frame = CGRect(x: 0, y: underLine1.frame.maxY, width: countryCodeAlertView.frame.width, height: countryCodeAlertView.frame.height - (8.1 * y))
         countryCodeTableView.register(CountryCodeTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(CountryCodeTableViewCell.self))
         countryCodeTableView.dataSource = self
         countryCodeTableView.delegate = self
-        alertView.addSubview(countryCodeTableView)
+        countryCodeAlertView.addSubview(countryCodeTableView)
         
         countryCodeTableView.reloadData()
         
-        let underLine2 = UILabel()
-        underLine2.frame = CGRect(x: 0, y: countryCodeTableView.frame.maxY + y, width: alertView.frame.width, height: 1)
-        underLine2.backgroundColor = UIColor.blue
-        alertView.addSubview(underLine2)
-        
-        let cancelButton = UIButton()
-        cancelButton.frame = CGRect(x: 0, y: underLine2.frame.maxY, width: alertView.frame.width, height: 30)
+//        let cancelButton = UIButton()
+        cancelButton.frame = CGRect(x: 0, y: countryCodeTableView.frame.maxY, width: countryCodeAlertView.frame.width, height: (4 * y))
+        cancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.setTitleColor(UIColor.black, for: .normal)
+        cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(self.countryCodeCancelAction(sender:)), for: .touchUpInside)
-        alertView.addSubview(cancelButton)
+        countryCodeAlertView.addSubview(cancelButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func countryCodeCancelAction(sender : UIButton)
@@ -2023,6 +2160,22 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(self.countryCodeCancelAction(sender:)), for: .touchUpInside)
         alertView.addSubview(cancelButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     func countryCodeAlertAction(action : UIAlertAction)
@@ -2350,12 +2503,31 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         if tableView == countryTableView
         {
-            cell.countryName.frame = CGRect(x: cell.flagImage.frame.maxX + (2 * x), y: y, width: cell.frame.width - (4 * x), height: (2 * y))
+            cell.countryName.frame = CGRect(x: (2 * x), y: y, width: cell.frame.width - (4 * x), height: (2 * y))
             
             if let country = countryNameArray[indexPath.row] as? String
             {
                 let convertedString = country.split(separator: "(")
                 cell.countryName.text = "\(convertedString[0])"
+            }
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    cell.countryName.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    cell.countryName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    cell.countryName.textAlignment = .right
+                }
+            }
+            else
+            {
+                cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.countryName.textAlignment = .left
             }
         }
         else if tableView == areaTableView
@@ -2394,6 +2566,28 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             {
                 let convertedString = country.split(separator: "(")
                 cell.countryName.text = country
+            }
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    cell.flagImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    cell.countryName.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    cell.flagImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    cell.countryName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    cell.countryName.textAlignment = .right
+                }
+            }
+            else
+            {
+                cell.flagImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.countryName.textAlignment = .left
             }
         }
 

@@ -19,6 +19,7 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
     var viewTag = Int()
     
     var pickerMeasure = 0
+    let partsNameLabel = UILabel()
     let partsMeasurementLabel = UILabel()
     let rulerScroll = UIScrollView()
 
@@ -206,7 +207,6 @@ class MeasureScrollViewController: UIViewController, UIPickerViewDataSource, UIP
         partsImageView.image = convertedPartsImageArray[0]
         view.addSubview(partsImageView)
         
-        let partsNameLabel = UILabel()
         partsNameLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsImageView.frame.maxY + y, width: (10 * x), height: (3 * y))
         partsNameLabel.text = headingTitle
         partsNameLabel.textColor = UIColor.black
