@@ -275,17 +275,17 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     func API_CALLBACK_ProfileUpdate(profUpdate: NSDictionary)
     {
+        print("API_CALLBACK_ProfileUpdate", profUpdate)
+        
         let ResponseMsg = profUpdate.object(forKey: "ResponseMsg") as! String
         
         if ResponseMsg == "Success"
         {
             let Result = profUpdate.object(forKey: "Result") as! String
-            print("Result", Result)
+            print("Result WITH TESTER", Result)
             
             if Result == "1"
             {
-                updateButton.isHidden = false
-                activeStop()
                 let alert = UIAlertController(title: "", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: savedAlertAction(action:)))
                 self.present(alert, animated: true, completion: nil)
@@ -301,6 +301,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             ErrorStr = Result
             DeviceError()
         }
+        
+        updateButton.isHidden = false
+        activeStop()
     }
     
     func API_CALLBACK_ProfileImageUpload(ImageUpload: NSDictionary)

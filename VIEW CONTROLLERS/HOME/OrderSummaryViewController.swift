@@ -374,8 +374,20 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.text = customvalues[i]
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
-            getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
-            getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+            if let strings = customvalues[i] as? String
+            {
+                if strings.count > 15
+                {
+                    getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+                    getDressTypeLabels.font = getDressTypeLabels.font.withSize(x)
+                    getDressTypeLabels.numberOfLines = 2
+                }
+                else
+                {
+                    getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+                    getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+                }
+            }
             getDressTypeLabels.adjustsFontSizeToFitWidth = true
             dressSubViews.addSubview(getDressTypeLabels)
             

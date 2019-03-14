@@ -277,6 +277,15 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            serviceCall.API_ExistingUserProfile(Id: "\(userId)", delegate: self)
+        }
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"

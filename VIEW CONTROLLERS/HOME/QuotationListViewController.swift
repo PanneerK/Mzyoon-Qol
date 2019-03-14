@@ -14,7 +14,10 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     
    let serviceCall = ServerAPI()
     
-    let quotationListNavigationBar = UIView()
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+
     let tailorListScrollView = UIScrollView()
    // var selectedTailorListArray = [Int]()
     var OrderId:Int!
@@ -162,35 +165,63 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         }
         
     }
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "قائمة الاقتباس"
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "QUOTATION LIST"
+    }
   
     
-   func quotationListContent()
-   {
-    
-    self.stopActivity()
-    
-    //let quotationListNavigationBar = UIView()
-    quotationListNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-    quotationListNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-    view.addSubview(quotationListNavigationBar)
-    
-    let backButton = UIButton()
-    backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-    backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-    backButton.tag = 4
-    backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-    quotationListNavigationBar.addSubview(backButton)
-    
-    let navigationTitle = UILabel()
-    navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: quotationListNavigationBar.frame.width, height: (3 * y))
-    navigationTitle.text = "QUOTATION LIST"
-    navigationTitle.textColor = UIColor.white
-    navigationTitle.textAlignment = .center
-    navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-    quotationListNavigationBar.addSubview(navigationTitle)
-
-    TailorListView()
-   }
+    func quotationListContent()
+    {
+        self.stopActivity()
+        
+        //let quotationListNavigationBar = UIView()
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
+        
+        let backButton = UIButton()
+        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
+        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
+        backButton.tag = 4
+        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
+        selfScreenNavigationBar.addSubview(backButton)
+        
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "QUOTATION LIST"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
+        
+        TailorListView() 
+    }
     
     @objc func otpBackButtonAction(sender : UIButton)
     {
@@ -201,7 +232,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     func TailorListView()
     {
         let backDrop = UIView()
-        backDrop.frame = CGRect(x: (3 * x), y: quotationListNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
+        backDrop.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
         backDrop.backgroundColor = UIColor.clear
         view.addSubview(backDrop)
         

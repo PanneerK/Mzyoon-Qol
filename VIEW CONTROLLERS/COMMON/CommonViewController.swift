@@ -213,7 +213,7 @@ class CommonViewController: UIViewController
         navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         view.addSubview(navigationBar)
         
-        navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
+        navigationTitle.frame = CGRect(x: 0, y: (3 * y), width: navigationBar.frame.width, height: (3 * y))
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
