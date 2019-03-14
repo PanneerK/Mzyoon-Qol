@@ -571,7 +571,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     func AppointmentTypeView()
     {
-        var y2:CGFloat = 0
+        var y2:CGFloat = y/2
         //ScrollView..
         
         //let AppointmentScrollview = UIScrollView()
@@ -594,12 +594,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            OrderTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
+            OrderTypeView.frame = CGRect(x: x/2, y: y2, width: view.frame.width - x, height: (40 * y))
 //          OrderTypeView.backgroundColor = UIColor.lightGray
             OrderTypeView.layer.borderWidth = 1
-            OrderTypeView.layer.borderColor = UIColor.lightGray.cgColor
+            OrderTypeView.layer.borderColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
             AppointmentScrollview.addSubview(OrderTypeView)
-            y2 = OrderTypeView.frame.maxY
+            y2 = OrderTypeView.frame.maxY + y/2
         }
         
         // Order Type..
@@ -993,10 +993,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            MeasurementTypeView.frame = CGRect(x: 0, y: y2, width: view.frame.width, height: (40 * y))
+            MeasurementTypeView.frame = CGRect(x: x/2, y: y2, width: view.frame.width - x, height: (40 * y))
             //MeasurementTypeView.backgroundColor = UIColor.darkGray
             MeasurementTypeView.layer.borderWidth = 1
-            MeasurementTypeView.layer.borderColor = UIColor.lightGray.cgColor
+            MeasurementTypeView.layer.borderColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
             AppointmentScrollview.addSubview(MeasurementTypeView)
             
            // y2 = OrderTypeView.frame.maxY + y
@@ -1928,8 +1928,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
+            if (FMaterial.compare(TMaterial) == .orderedAscending || FMaterial.compare(TMaterial) == .orderedSame)
+            {
+                print("From-Date is smaller than To-Date")
+                
+                self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
+            }
+            else
+            {
+                print("From-Date is Lesser then To-Date")
+                
+                let appointmentAlert = UIAlertController(title: "Alert..!", message: "To-Date Should Greater Than From-Date..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+                
+            }
             
-            self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
         }
     }
     
@@ -1958,7 +1973,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-           self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime:  SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
+            if (FMeasure.compare(TMeasure) == .orderedAscending || FMeasure.compare(TMeasure) == .orderedSame)
+            {
+                print("From-Date is smaller then To-Date")
+                
+              self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime:  SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
+            }
+            else
+            {
+                print("From-Date is Lesser then To-Date")
+                
+                let appointmentAlert = UIAlertController(title: "Alert..!", message: "To-Date Should Greater Than From-Date..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
         }
     }
     
