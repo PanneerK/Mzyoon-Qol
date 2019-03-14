@@ -149,8 +149,10 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 RequestDtArray = Result.value(forKey: "RequestDt") as! NSArray
                 print("RequestDtArray", RequestDtArray)
                 
-                OrderRequestListContent()
+               // OrderRequestListContent()
             }
+            
+            OrderRequestListContent()
         }
         else if ResponseMsg == "Failure"
         {
@@ -169,6 +171,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
             view.addSubview(emptyLabel)
         }
+        
+       // OrderRequestListContent()
     }
         
     
