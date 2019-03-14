@@ -698,9 +698,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         customization1View.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(customization1View)
         
-        let customization1Array = ["Seasonal", "Place of Industry", "Brands", "Color", "Material Type", "Pattern"]
-        let customizationArabicArray = ["موسمي", "مكان الصناعة", "العلامات التجارية", "اللون", "نوع المادة", "نمط"]
-        let customizationImage1Array = ["Seasonal", "Place_of_industry", "Brand", "Color", "Material_type", "pattern"]
+        let customization1Array = ["Seasonal", "Place of Industry", "Brands", "Material Type", "Color", "Pattern"]
+        let customizationArabicArray = ["موسمي", "مكان الصناعة", "العلامات التجارية", "نوع المادة", "اللون", "نمط"]
+        let customizationImage1Array = ["Seasonal", "Place_of_industry", "Brand", "Material_type", "Color", "pattern"]
         var getSeason = String()
         var getIndustry = String()
         var getBrand = String()

@@ -1215,15 +1215,22 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         if materialTagIntArray.count != 0
         {
-            for i in 0..<materialsIdArray.count
+            if materialTagIntArray.contains(1)
             {
-                for j in 0..<materialTagIntArray.count
+                selectedMaterialNameArray.append("All Material")
+            }
+            else
+            {
+                for i in 0..<materialsIdArray.count
                 {
-                    if let id = materialsIdArray[i] as? Int
+                    for j in 0..<materialTagIntArray.count
                     {
-                        if id == materialTagIntArray[j]
+                        if let id = materialsIdArray[i] as? Int
                         {
-                            selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
+                            if id == materialTagIntArray[j]
+                            {
+                                selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
+                            }
                         }
                     }
                 }
@@ -1238,19 +1245,27 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         if colorTagIntArray.count != 0
         {
-            for i in 0..<colorsIdArray.count
+            if colorTagIntArray.contains(1)
             {
-                for j in 0..<colorTagIntArray.count
+                selectedColorNameArray.append("All Colors")
+            }
+            else
+            {
+                for i in 0..<colorsIdArray.count
                 {
-                    if let id = colorsIdArray[i] as? Int
+                    for j in 0..<colorTagIntArray.count
                     {
-                        if id == colorTagIntArray[j]
+                        if let id = colorsIdArray[i] as? Int
                         {
-                            selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
+                            if id == colorTagIntArray[j]
+                            {
+                                selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
+                            }
                         }
                     }
                 }
             }
+            
             
             UserDefaults.standard.set(selectedColorNameArray, forKey: "color")
         }
