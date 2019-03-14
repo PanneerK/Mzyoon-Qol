@@ -959,7 +959,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         Amount_TF.delegate = self
         //Amount_TF.layer.borderWidth = 0.5
         Amount_TF.textAlignment = .left
-        Amount_TF.isUserInteractionEnabled = true
+        Amount_TF.isUserInteractionEnabled = false
         BillingView.addSubview(Amount_TF)
         
         
