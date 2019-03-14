@@ -363,7 +363,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         QtyNumTF.font = QtyNumTF.font!.withSize(14)
         QtyNumTF.adjustsFontSizeToFitWidth = true
         QtyNumTF.keyboardType = .numberPad
-        QtyNumTF.clearsOnBeginEditing = true
+        QtyNumTF.clearsOnBeginEditing = false
         QtyNumTF.returnKeyType = .done
         QtyNumTF.delegate = self
         DressDetView.addSubview(QtyNumTF)
