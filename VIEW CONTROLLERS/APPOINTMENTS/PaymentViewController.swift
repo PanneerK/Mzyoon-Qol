@@ -1042,7 +1042,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
        
         UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
         
-        RequestId = UserDefaults.standard.value(forKey: "requestId") as? String
+     //   RequestId = UserDefaults.standard.value(forKey: "requestId") as? String
         UserName = UserDefaults.standard.value(forKey: "userName") as? String
         
       if Country == "UNITED ARAB EMIRATES"
@@ -1054,6 +1054,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
           Country = "IN"
       }
         
+        /*
       if RequestId == nil
       {
         RequestId = String(arc4random())
@@ -1061,10 +1062,12 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
       }
         else
       {
+         RequestId = String(arc4random())
          print("Request ID:",RequestId)
       }
-      
-     //  RequestId = String(arc4random())
+      */
+        
+        RequestId = String(arc4random())
        
     /*
        if UserName == nil

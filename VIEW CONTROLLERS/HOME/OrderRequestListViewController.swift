@@ -175,6 +175,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
 //                OrderRequestListContent()
                 RequestListView()
             }
+            
+            OrderRequestListContent()
         }
         else if ResponseMsg == "Failure"
         {
@@ -195,6 +197,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
             view.addSubview(emptyLabel)
         }
+        
+       // OrderRequestListContent()
     }
         
     

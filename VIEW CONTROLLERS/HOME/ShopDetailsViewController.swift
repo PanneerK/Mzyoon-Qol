@@ -91,8 +91,8 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
        {
          self.serviceCall.API_GetShopDetails(TailorId: TailorID!, delegate: self)
        }
-      
-        
+     
+   
        // ShopDetailsContent()
        // strPhoneNumber = "+91 8015557649"
         

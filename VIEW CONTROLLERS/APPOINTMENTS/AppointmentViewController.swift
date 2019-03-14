@@ -112,6 +112,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
      //   MaterialSucessStr = ""
         
     }
+    override func viewDidAppear(_ animated: Bool)
+    {
+        
+    }
     
     override func viewWillAppear(_ animated: Bool)
     {
@@ -122,11 +126,18 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
+            // Material Dates from Tailor..
+            self.serviceCall.API_GetAppointmentDateForMaterail    (OrderId: order_Id, delegate: self)
+            
+            // Measurement Dates from Tailor..
+            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
+            
+            // Material Details like image,Heading etc..
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
+            
+            // Measurement Details like image,Heading etc..
             self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
             
-            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
-            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
         }
         
         TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
@@ -205,6 +216,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         
     }
+    
     func API_CALLBACK_InsertAppointmentMeasurement(insertAppointmentMeasure: NSDictionary)
     {
         let ResponseMsg = insertAppointmentMeasure.object(forKey: "ResponseMsg") as! String
@@ -285,7 +297,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MaterialPayment = Result.value(forKey:"Payment") as! NSArray
             print("MaterialPayment:",MaterialPayment)
             
-           // AppointmentContent()
+            
+         //   AppointmentContent()
             
         }
         else if ResponseMsg == "Failure"
@@ -307,7 +320,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             view.addSubview(emptyLabel)
             
         }
-          AppointmentContent()
+        
+         //  AppointmentContent()
+        
     }
     
     func API_CALLBACK_GetAppointmentMeasurement(getAppointmentMeasure: NSDictionary)
@@ -372,7 +387,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
         }
         
-        AppointmentContent()
+         AppointmentContent()
     }
     
     func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial: NSDictionary)
@@ -499,7 +514,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
         }
         
-         AppointmentContent()
+        // AppointmentContent()
     }
     
     func proceedAlertAction(action : UIAlertAction)
@@ -1913,6 +1928,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
+            
             self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
         }
     }
