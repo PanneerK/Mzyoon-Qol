@@ -45,7 +45,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         slideMenuButton.isHidden = true
         tabBar.isHidden = true
         
-        self.TrackingTableview.separatorStyle = UITableViewCell.SeparatorStyle.none
+      //  self.TrackingTableview.separatorStyle = UITableViewCell.SeparatorStyle.none
         
     }
     
@@ -219,16 +219,17 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
        // cell.roundLabel.frame = CGRect(x: (3 * x), y: ((cell.frame.height - (y)) / 2), width: y, height: y)
         
        
-        cell.TrackingDate.frame = CGRect(x: (3 * x), y: ((cell.frame.height - (y)) / 1.2), width: (10 * x), height: (1.5 * y))
+        cell.TrackingDate.frame = CGRect(x: x, y: ((cell.frame.height - (y)) / 1.2), width: (20 * x), height: (1.5 * y))
+        
+      //  cell.TrackingTime.frame = CGRect(x: (3 * x), y: cell.TrackingDate.frame.maxY, width: (6 * x), height: (3 * y))
         
         cell.roundLabel.frame = CGRect(x:  cell.TrackingDate.frame.maxX , y: ((cell.frame.height - (y))), width: y, height: y)
         cell.roundLabel.layer.cornerRadius = cell.roundLabel.frame.height / 2
         
         cell.TrackingDetails.frame = CGRect(x: cell.roundLabel.frame.maxX + (3 * x), y: ((cell.frame.height - (y)) / 1.2), width: cell.frame.width - (15 * x), height: (1.5 * y))
         
-        // cell.TrackingTime.frame = CGRect(x: x, y: cell.TrackingDate.frame.maxY, width: (6 * x), height: (3 * y))
         
-      //  cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
+       //  cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
       
         if(indexPath.row > 0)
         {

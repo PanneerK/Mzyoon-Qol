@@ -48,7 +48,7 @@ class TrackingTableViewCell: UITableViewCell
        // TrackingDate.backgroundColor = UIColor.lightGray
         TrackingDate.textColor = UIColor.black
         TrackingDate.textAlignment = .left
-        TrackingDate.font = UIFont(name: "Avenir Next", size: 12)
+        TrackingDate.font = UIFont(name: "Avenir Next", size: 14)
         contentSpace.addSubview(TrackingDate)
         
         TrackerImg = UIImageView()
@@ -59,14 +59,14 @@ class TrackingTableViewCell: UITableViewCell
         //TrackingTime.backgroundColor = UIColor.white
         TrackingTime.textColor = UIColor.black
         TrackingTime.textAlignment = .left
-        TrackingTime.font = UIFont(name: "Avenir Next", size: 12)
+        TrackingTime.font = UIFont(name: "Avenir Next", size: 14)
         contentSpace.addSubview(TrackingTime)
         
         TrackingDetails = UILabel()
        // TrackingDetails.backgroundColor = UIColor.lightGray
         TrackingDetails.textColor = UIColor.black
         TrackingDetails.textAlignment = .left
-        TrackingDetails.font = UIFont(name: "Avenir Next", size: 12)
+        TrackingDetails.font = UIFont(name: "Avenir Next", size: 14)
         contentSpace.addSubview(TrackingDetails)
         
         spaceView = UIView()
@@ -74,13 +74,14 @@ class TrackingTableViewCell: UITableViewCell
         contentView.addSubview(spaceView)
         
         roundLabel = UILabel()
-        roundLabel.backgroundColor = UIColor.lightGray
+        roundLabel.backgroundColor = UIColor(red:0.91, green:0.53, blue:0.18, alpha:1.0)
         roundLabel.layer.masksToBounds = true
         contentSpace.addSubview(roundLabel)
         
         lineLabel = UILabel()
-        lineLabel.backgroundColor = UIColor.lightGray
+        lineLabel.backgroundColor = UIColor(red:0.91, green:0.53, blue:0.18, alpha:1.0)
         contentSpace.addSubview(lineLabel)
+        
     }
     
     required init?(coder aDecoder: NSCoder)

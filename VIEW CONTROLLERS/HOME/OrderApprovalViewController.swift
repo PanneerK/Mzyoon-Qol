@@ -314,13 +314,20 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/DressSubType/\(imageName)"
             let apiurl = URL(string: api)
-            print("Image Of Dress", apiurl!)
+            
+            let dummyImageView = UIImageView()
+            dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
+            
+           // print("Image Of Dress", apiurl!)
+            
             if apiurl != nil
             {
-                DressImageView.dowloadFromServer(url: apiurl!)
+                dummyImageView.dowloadFromServer(url: apiurl!)
             }
+            dummyImageView.tag = -1
+            DressImageView.addSubview(dummyImageView)
         }
-        DressDetView.addSubview(DressImageView)
+         DressDetView.addSubview(DressImageView)
        }
       else
        {

@@ -34,6 +34,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
     var OrderId = NSArray()
     var OrderDt = NSArray()
     var Product_Name = NSArray()
+    var ServiceType = NSArray()
     var qty = NSArray()
     
     // ProductPrice Array..
@@ -41,6 +42,8 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
     var Price = NSArray()
     var Tax = NSArray()
     var Total = NSArray()
+    
+    var ShippingCharges = NSArray()
     
     var OrderID:Int!
     var OrderDate = String()
@@ -126,6 +129,9 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
             qty = OrderDetail.value(forKey: "qty") as! NSArray
             print("qty:",qty)
             
+            ServiceType = OrderDetail.value(forKey: "ServiceType") as! NSArray
+            print("ServiceType:",ServiceType)
+            
             
             let ProductPrice = Result.value(forKey: "ProductPrice") as! NSArray
             //print("ProductPrice:", ProductPrice)
@@ -141,6 +147,12 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
             
             Total = ProductPrice.value(forKey: "Total") as! NSArray
             print("Total:", Total)
+            
+            
+            let Shipping_Charges = Result.value(forKey: "Shipping_Charges") as! NSArray
+            
+            ShippingCharges = Shipping_Charges.value(forKey: "Shipping_Charges") as! NSArray
+            print("ShippingCharges:", ShippingCharges)
             
             
             //  orderDetailsContent()
@@ -311,8 +323,19 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/DressSubType/\(imageName)"
                 let apiurl = URL(string: api)
-                print("Image Of Dress", apiurl!)
-                DressImageView.dowloadFromServer(url: apiurl!)
+              //  print("Image Of Dress", apiurl!)
+                
+                let dummyImageView = UIImageView()
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
+                
+                if apiurl != nil
+                {
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
+                dummyImageView.tag = -1
+                DressImageView.addSubview(dummyImageView)
+                
+               // DressImageView.dowloadFromServer(url: apiurl!)
             }
         }
         else
@@ -456,8 +479,10 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
-            let TaxNum : Int = Tax[0] as! Int
-            TaxPriceLabel.text = "\(TaxNum)"
+            // let TaxNum : Int = Tax[0] as! Int
+           //  TaxPriceLabel.text = "\(TaxNum)"
+            
+            TaxPriceLabel.text = Tax[0] as? String
         }
         else
         {

@@ -114,7 +114,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     }
     override func viewDidAppear(_ animated: Bool)
     {
-        
+       
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -126,18 +126,20 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
-            // Material Dates from Tailor..
-            self.serviceCall.API_GetAppointmentDateForMaterail    (OrderId: order_Id, delegate: self)
-            
-            // Measurement Dates from Tailor..
-            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
-            
+          
             // Material Details like image,Heading etc..
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
             
             // Measurement Details like image,Heading etc..
             self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
             
+            // Material Dates from Tailor..
+            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+            
+            // Measurement Dates from Tailor..
+            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
+            
+           
         }
         
         TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
@@ -256,6 +258,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
     }
     
+    // Material Details API...
     func API_CALLBACK_GetAppointmentMaterial(getAppointmentMaterial: NSDictionary)
     {
         let ResponseMsg = getAppointmentMaterial.object(forKey: "ResponseMsg") as! String
@@ -325,6 +328,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
     }
     
+    // Measurement Details API...
     func API_CALLBACK_GetAppointmentMeasurement(getAppointmentMeasure: NSDictionary)
     {
         let ResponseMsg = getAppointmentMeasure.object(forKey: "ResponseMsg") as! String
@@ -366,6 +370,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasurementPayment = Result.value(forKey:"Payment") as! NSArray
             print("MeasurementPayment:",MeasurementPayment)
             
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -387,7 +392,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
         }
         
-         AppointmentContent()
+          AppointmentContent()
     }
     
     func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial: NSDictionary)
@@ -449,6 +454,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
     }
     
+    // Material Dates API...
     func API_CALLBACK_GetAppointmentDateForMaterail(MaterialDate: NSDictionary)
     {
         let ResponseMsg = MaterialDate.object(forKey: "ResponseMsg") as! String
@@ -466,6 +472,24 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
             MaterialAppointTimeArr = Result.value(forKey: "AppointmentTime") as! NSArray
             print("MaterialAppointTimeArr:",MaterialAppointTimeArr)
+          
+                
+           if MaterialInEnglish.contains("Own Material-Direct Delivery")
+           {
+             if let date = MaterialFromDtArr[0] as? String
+             {
+                MaterialFromDate = String(date.prefix(10))
+             }
+             From_MaterialType_TF.text = MaterialFromDate
+          
+             if let date = MaterialToDtArr[0] as? String
+             {
+                MaterialToDate = String(date.prefix(10))
+             }
+             TO_MaterialType_TF.text = MaterialToDate
+           
+             SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
+           }
             
         }
         else if ResponseMsg == "Failure"
@@ -483,6 +507,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
       //  AppointmentContent()
         
     }
+    
+    // Measurement Dates API...
     func API_CALLBACK_GetAppointmentDateForMeasurement(MeasurementDate: NSDictionary)
     {
         let ResponseMsg = MeasurementDate.object(forKey: "ResponseMsg") as! String
@@ -501,6 +527,25 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasureAppointTimeArr = Result.value(forKey: "AppointmentTime") as! NSArray
             print("MeasureAppointTimeArr:",MeasureAppointTimeArr)
             
+           if MeasurementInEnglish.contains("Go to Tailor Shop")
+           {
+              if let date = MeasureFromDtArr[0] as? String
+              {
+                 MeasureFromDate = String(date.prefix(10))
+              }
+               From_MeasurementType_TF.text = MeasureFromDate
+           
+            
+              if let date = MeasureToDtArr[0] as? String
+              {
+                MeasureToDate = String(date.prefix(10))
+              }
+              TO_MeasurementType_TF.text = MeasureToDate
+          
+          
+              SLOT_MeasurementType_TF.text = MeasureAppointTimeArr[0] as? String
+          }
+         
         }
         else if ResponseMsg == "Failure"
         {
@@ -774,19 +819,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
            From_MaterialType_TF.isUserInteractionEnabled = false
-           
-           if(MaterialFromDtArr.count > 0)
-           {
-              if let date = MaterialFromDtArr[0] as? String
-              {
-                 MaterialFromDate = String(date.prefix(10))
-              }
-               From_MaterialType_TF.text = MaterialFromDate
-            }
-            else
-            {
-            
-            }
         }
         else
         {
@@ -830,19 +862,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
             TO_MaterialType_TF.isUserInteractionEnabled = false
-            
-           if(MaterialToDtArr.count > 0)
-           {
-              if let date = MaterialToDtArr[0] as? String
-              {
-                 MaterialToDate = String(date.prefix(10))
-              }
-                TO_MaterialType_TF.text = MaterialToDate
-            }
-            else
-            {
-            
-            }
         }
         else
         {
@@ -898,10 +917,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             SLOT_MaterialType_TF.isUserInteractionEnabled = false
             
-           if(MaterialAppointTimeArr.count > 0)
-           {
-              SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
-           }
         }
         else
         {
@@ -1168,19 +1183,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
            From_MeasurementType_TF.isUserInteractionEnabled = false
-            
-           if(MeasureFromDtArr.count > 0)
-           {
-             if let date = MeasureFromDtArr[0] as? String
-             {
-                MeasureFromDate = String(date.prefix(10))
-             }
-             From_MeasurementType_TF.text = MeasureFromDate
-           }
-           else
-           {
-            
-           }
         }
         else
         {
@@ -1224,19 +1226,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
             TO_MeasurementType_TF.isUserInteractionEnabled = false
-            
-          if(MeasureToDtArr.count > 0)
-          {
-            if let date = MeasureToDtArr[0] as? String
-            {
-                MeasureToDate = String(date.prefix(10))
-            }
-            TO_MeasurementType_TF.text = MeasureToDate
-          }
-          else
-          {
-            
-          }
         }
         else
         {
@@ -1293,15 +1282,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
             SLOT_MeasurementType_TF.isUserInteractionEnabled = false
-           
-           if(MeasureAppointTimeArr.count > 0)
-           {
-             SLOT_MeasurementType_TF.text = MeasureAppointTimeArr[0] as? String
-           }
-           else
-           {
-            
-           }
+
         }
         else
         {

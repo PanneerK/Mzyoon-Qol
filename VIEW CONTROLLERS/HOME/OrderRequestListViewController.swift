@@ -246,11 +246,12 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             {
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/DressSubType/\(imageName)"
-                print("SMALL ICON", api)
+                print("Image Of Dress", api)
                 let apiurl = URL(string: api)
                 
                 let dummyImageView = UIImageView()
                 dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
+                
                 if apiurl != nil
                 {
                     dummyImageView.dowloadFromServer(url: apiurl!)
