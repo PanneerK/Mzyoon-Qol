@@ -366,6 +366,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasurementPayment = Result.value(forKey:"Payment") as! NSArray
             print("MeasurementPayment:",MeasurementPayment)
             
+            AppointmentContent()
+            
         }
         else if ResponseMsg == "Failure"
         {
@@ -386,8 +388,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             view.addSubview(emptyLabel)
             
         }
-        
-         AppointmentContent()
     }
     
     func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial: NSDictionary)
@@ -578,8 +578,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         AppointmentScrollview.frame = CGRect(x: 0, y: AppointmentNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (12 * y))
         AppointmentScrollview.backgroundColor = UIColor.clear
         view.addSubview(AppointmentScrollview)
-        
-          
         
  //----------------------------------------OrderType View---------------------------------------------------------------
         

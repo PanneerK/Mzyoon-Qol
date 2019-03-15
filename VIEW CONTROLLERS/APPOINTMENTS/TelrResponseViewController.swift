@@ -26,7 +26,12 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
      var TransCa_valid:String!
      var TransTraceNum:String!
     
-     let PaymentNavigationBar = UIView()
+     let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let TransactionView = UIView()
+    let TransLabel = UILabel()
+    let DoneButton = UIButton()
+
      var dictionaryData = NSDictionary()
     
     // Error PAram...
@@ -210,15 +215,55 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         }
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "ملخص المعاملات"
+        TransactionView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        TransLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        if(self.TransMessage == "Authorised")
+        {
+            TransLabel.text = "الدفع الناجح ، رقم مرجع المعاملة الخاص بك هو  : \(TransRef!)"
+        }
+        else if(self.TransMessage == "Cancelled")
+        {
+            TransLabel.text = "فشلت العملية .. يرجى المحاولة مرة أخرى .."
+        }
+        DoneButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        DoneButton.setTitle("لكى يفعل", for: .normal)
+
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "TRANSACTION SUMMARY"
+        TransactionView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        TransLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        if(self.TransMessage == "Authorised")
+        {
+            TransLabel.text = "Payment Success, Your Transaction Reference Number is  : \(TransRef!)"
+        }
+        else if(self.TransMessage == "Cancelled")
+        {
+            TransLabel.text = "Transaction Failed.. Please Try Again.."
+        }
+        DoneButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        DoneButton.setTitle("Done", for: .normal)
+
+    }
+    
 
     func ResponseContent()
     {
         stopActivity()
         
         // let PaymentNavigationBar = UIView()
-        PaymentNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        PaymentNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(PaymentNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
@@ -227,24 +272,21 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         //PaymentNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: PaymentNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "TRANSACTION SUMMARY"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        PaymentNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "TRANSACTION SUMMARY"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         
         // Payment View..
         
-        let TransactionView = UIView()
         TransactionView.frame = CGRect(x: (3 * x), y: ((view.frame.height - (10 * y)) / 2), width: view.frame.width - (6 * x), height: (10 * y))
         TransactionView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         view.addSubview(TransactionView)
         
         // Transaction Label..
-        let TransLabel = UILabel()
         TransLabel.frame = CGRect(x: x, y: (y / 2), width: TransactionView.frame.width - (2 * x), height: (5 * y))
         // TransLabel.backgroundColor = UIColor.gray
         TransLabel.font = UIFont.boldSystemFont(ofSize: 16)
@@ -265,7 +307,6 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         
      
         // Done Button
-        let DoneButton = UIButton()
         DoneButton.frame = CGRect(x: ((TransactionView.frame.width - (15 * x)) / 2), y: TransLabel.frame.maxY + y, width: (15 * x), height: (3 * y))
         DoneButton.backgroundColor = UIColor.orange
         DoneButton.setTitle("Done", for: .normal)
@@ -277,6 +318,22 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         TransactionView.addSubview(DoneButton)
         
         self.view.bringSubviewToFront(DoneButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     
@@ -322,13 +379,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
             navigationScreen.isNavigationBarHidden = true
             window?.rootViewController = navigationScreen
             window?.makeKeyAndVisible()
-            
         }
-        
-        
-        
-       
-        
     }
     
     func DeviceError()

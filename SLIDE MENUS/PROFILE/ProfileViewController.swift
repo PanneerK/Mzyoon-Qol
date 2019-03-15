@@ -200,7 +200,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 {
                     if let date = dob[0] as? String
                     {
-                        getDOB = String(date.prefix(10))
+                        getDOB = String(date.prefix(11))
                     }
                 }
                 

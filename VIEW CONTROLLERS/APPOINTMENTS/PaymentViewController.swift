@@ -84,8 +84,12 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
    // var paymentRequest:PaymentRequest?
 
-    let PaymentNavigationBar = UIView()
-    
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let BillingView = UIView()
+    let PayButton = UIButton()
+
+
     // Error PAram...
     var DeviceNumStr:String!
     var UserType:String!
@@ -96,6 +100,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
    // var x = CGFloat()
   //  var y = CGFloat()
+    
+    var foundViewTagArray = [Int]()
     
     var applicationDelegate = AppDelegate()
 
@@ -133,9 +139,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
          self.Amount_TF.text = TotalAmount!
        }
         
-         PaymentContent()
-        
-         self.addDoneButtonOnKeyboard()
+        self.addDoneButtonOnKeyboard()
         
          //   KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
          //   STOREID = "21552"
@@ -268,44 +272,43 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             
             if Result.count > 0
             {
-            
-            let Floor = Result.value(forKey: "Floor") as? NSArray
-            Line1Str = Floor![0] as? String
-            print("Line1Str", Line1Str)
-            
-            let Building = Result.value(forKey: "Building") as? NSArray
-            Line2Str = Building![0] as? String
-            print("Line2Str", Line2Str)
-            
-            let Landmark = Result.value(forKey: "Landmark") as? NSArray
-            Line3Str = Landmark![0] as? String
-            print("Line3Str", Line3Str)
-            
-            let Area = Result.value(forKey: "Area") as? NSArray
-            CityStr = Area![0] as? String
-            print("CityStr", CityStr)
-            
-            let StateName = Result.value(forKey: "StateName") as? NSArray
-            StateStr = StateName![0] as? String
-            print("StateStr", StateStr)
-            
-            let CountryName = Result.value(forKey: "CountryName") as? NSArray
-            CountryStr = CountryName![0] as? String
-            print("CountryStr", CountryStr)
-            
-            let Email = Result.value(forKey: "Email") as? NSArray
-            EmailStr = Email![0] as? String
-            print("EmailStr", EmailStr)
-            
-            
-            self.Line1_TF.text = Line1Str
-            self.Line2_TF.text = Line2Str
-            self.Line3_TF.text = Line3Str
-            self.City_TF.text = CityStr
-            self.State_TF.text = StateStr
-            self.Country_TF.text = CountryStr
-            self.Email_TF.text = EmailStr
+                let Floor = Result.value(forKey: "Floor") as? NSArray
+                Line1Str = Floor![0] as? String
+                print("Line1Str", Line1Str)
                 
+                let Building = Result.value(forKey: "Building") as? NSArray
+                Line2Str = Building![0] as? String
+                print("Line2Str", Line2Str)
+                
+                let Landmark = Result.value(forKey: "Landmark") as? NSArray
+                Line3Str = Landmark![0] as? String
+                print("Line3Str", Line3Str)
+                
+                let Area = Result.value(forKey: "Area") as? NSArray
+                CityStr = Area![0] as? String
+                print("CityStr", CityStr)
+                
+                let StateName = Result.value(forKey: "StateName") as? NSArray
+                StateStr = StateName![0] as? String
+                print("StateStr", StateStr)
+                
+                let CountryName = Result.value(forKey: "CountryName") as? NSArray
+                CountryStr = CountryName![0] as? String
+                print("CountryStr", CountryStr)
+                
+                let Email = Result.value(forKey: "Email") as? NSArray
+                EmailStr = Email![0] as? String
+                print("EmailStr", EmailStr)
+                
+                self.Line1_TF.text = Line1Str
+                self.Line2_TF.text = Line2Str
+                self.Line3_TF.text = Line3Str
+                self.City_TF.text = CityStr
+                self.State_TF.text = StateStr
+                self.Country_TF.text = CountryStr
+                self.Email_TF.text = EmailStr
+                
+                PaymentContent()
             }
         }
         else if ResponseMsg == "Failure"
@@ -655,54 +658,191 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         }
         
     }
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "ملخص الدفع"
+        
+        BillingView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PayButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PayButton.setTitle("دفع", for: .normal)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "PAYMENT SUMMARY"
+        
+        BillingView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PayButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PayButton.setTitle("Pay", for: .normal)
+    }
+    
     func PaymentContent()
     {
           stopActivity()
         
         // let PaymentNavigationBar = UIView()
-        PaymentNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        PaymentNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(PaymentNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        PaymentNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: PaymentNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "PAYMENT SUMMARY"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        PaymentNavigationBar.addSubview(navigationTitle)
-        
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "PAYMENT SUMMARY"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
     
         // Billing Details View..
         
-        let BillingView = UIView()
-        BillingView.frame = CGRect(x: (3 * x), y: PaymentNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: (42 * y))
+        BillingView.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         BillingView.backgroundColor = UIColor.clear
         view.addSubview(BillingView)
         
         //BILLINGLabel..
         let BILLINGLabel = UILabel()
-        BILLINGLabel.frame = CGRect(x: (2 * x), y: y, width: (15 * x), height: (2.5 * y))
+        BILLINGLabel.frame = CGRect(x: 0, y: y, width: (15 * x), height: (2.5 * y))
         BILLINGLabel.text = "BILLING ADDRESS"
         BILLINGLabel.font = UIFont(name: "Avenir Next", size: (1.4 * x))
         BILLINGLabel.textColor =  UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        //RatingsLabel.backgroundColor = UIColor.lightGray
+        BILLINGLabel.textAlignment = .left
         BillingView.addSubview(BILLINGLabel)
         
         // UnderLine..
         let BillingUnderline = UILabel()
-        BillingUnderline.frame = CGRect(x: (2 * x), y: BILLINGLabel.frame.maxY - 5, width: (12 * x), height: 0.5)
+        BillingUnderline.frame = CGRect(x: 0, y: BILLINGLabel.frame.maxY, width: (12 * x), height: 0.5)
         BillingUnderline.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         BillingView.addSubview(BillingUnderline)
         
-        // Line1Label..
+        var y3:CGFloat = BillingUnderline.frame.maxY + (2 * y)
+        
+        var headingLabelEnglishArray = ["Line 1", "Line 2", "Line 3", "City", "State", "Country", "Zip Code", "Email", "Amount"]
+        var headingLabelArabicArray = ["خط 1", "خط 2", "الخط 3", "مدينة", "دولة", "بلد", "الكود البريدى", "البريد الإلكتروني", "كمية"]
+        
+        let count = 9
+        
+        for i in 0..<count
+        {
+            let headingLabel = UILabel()
+            headingLabel.frame = CGRect(x: 0, y: y3, width: (11 * x), height: (3 * y))
+            headingLabel.text = headingLabelEnglishArray[i]
+            headingLabel.textAlignment = .left
+            headingLabel.textColor = UIColor.black
+            BillingView.addSubview(headingLabel)
+            
+            let colonLabel = UILabel()
+            colonLabel.frame = CGRect(x: headingLabel.frame.maxX, y: y3, width: x / 2, height: (3 * y))
+            colonLabel.text = ":"
+            colonLabel.textColor = UIColor.black
+            BillingView.addSubview(colonLabel)
+            
+            let valuesTextField = UITextField()
+            valuesTextField.frame = CGRect(x: colonLabel.frame.maxX + x, y: y3, width: BillingView.frame.width - (headingLabel.frame.width + colonLabel.frame.width + x), height: (3 * y))
+            valuesTextField.backgroundColor = UIColor.white
+            valuesTextField.textAlignment = .left
+            valuesTextField.keyboardType = .default
+            valuesTextField.returnKeyType = .done
+            valuesTextField.delegate = self
+            valuesTextField.tag = (i * 1) + 500
+            
+            if i == 0
+            {
+                valuesTextField.text = Line1Str
+            }
+            else if i == 1
+            {
+                valuesTextField.text = Line2Str
+            }
+            else if i == 2
+            {
+                valuesTextField.text = Line3Str
+            }
+            else if i == 3
+            {
+                valuesTextField.text = CityStr
+            }
+            else if i == 4
+            {
+                valuesTextField.text = StateStr
+            }
+            else if i == 5
+            {
+                valuesTextField.text = CountryStr
+            }
+            else if i == 6
+            {
+                valuesTextField.text = ""
+            }
+            else if i == 7
+            {
+                valuesTextField.text = EmailStr
+            }
+            else if i == 8
+            {
+                if(TotalAmount == nil)
+                {
+                    valuesTextField.text = "1"
+                }
+                else
+                {
+                    valuesTextField.text = TotalAmount
+                }
+            }
+            
+            print("I VALUES-\(i) ->", count - 1)
+            if i == count - 1
+            {
+                valuesTextField.isUserInteractionEnabled = false
+            }
+            else
+            {
+                valuesTextField.isUserInteractionEnabled = true
+            }
+            BillingView.addSubview(valuesTextField)
+            
+            y3 = headingLabel.frame.maxY + y
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    headingLabel.text = headingLabelEnglishArray[i]
+                    headingLabel.textAlignment = .left
+                    valuesTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    valuesTextField.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    headingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    headingLabel.text = headingLabelArabicArray[i]
+                    headingLabel.textAlignment = .right
+                    valuesTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    valuesTextField.textAlignment = .right
+                }
+            }
+            else
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                headingLabel.text = headingLabelEnglishArray[i]
+                headingLabel.textAlignment = .left
+                valuesTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                valuesTextField.textAlignment = .left
+            }
+        }
+        
+        /*// Line1Label..
         let Line1Label = UILabel()
         Line1Label.frame = CGRect(x: (2 * x), y: BillingUnderline.frame.maxY + (2 * y), width: (8 * x), height: (3 * y))
         // FNameLabel.backgroundColor = UIColor.gray
@@ -960,24 +1100,46 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         //Amount_TF.layer.borderWidth = 0.5
         Amount_TF.textAlignment = .left
         Amount_TF.isUserInteractionEnabled = false
-        BillingView.addSubview(Amount_TF)
+        BillingView.addSubview(Amount_TF)*/
         
         
         //PayButton
-        let PayButton = UIButton()
-        PayButton.frame = CGRect(x: (12 * x), y: BillingView.frame.maxY + y, width: (15 * x), height: (3 * y))
+        PayButton.frame = CGRect(x: ((BillingView.frame.width - (15 * x)) / 2), y: BillingView.frame.height - (10 * y), width: (15 * x), height: (4 * y))
         PayButton.backgroundColor = UIColor.orange
         PayButton.setTitle("Pay", for: .normal)
         PayButton.setTitleColor(UIColor.white, for: .normal)
-        PayButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: 10)
-        PayButton.layer.cornerRadius = 10;  // this value vary as per your desire
+        PayButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: 20)
+        PayButton.layer.cornerRadius = 5;  // this value vary as per your desire
         PayButton.clipsToBounds = true;
         PayButton.addTarget(self, action: #selector(self.PayButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(PayButton)
+        BillingView.addSubview(PayButton)
         
-     
-        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+                BILLINGLabel.text = "BILLING ADDRESS"
+                BILLINGLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                BILLINGLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+                BILLINGLabel.text = "عنوان وصول الفواتير"
+                BILLINGLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                BILLINGLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+            BILLINGLabel.text = "BILLING ADDRESS"
+            BILLINGLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            BILLINGLabel.textAlignment = .left
+        }
     }
+    
     func addDoneButtonOnKeyboard()
     {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -1029,7 +1191,234 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
     @objc func PayButtonAction(sender : UIButton)
     {
-       
+        for views in BillingView.subviews
+        {
+            if let foundView = views as? UITextField
+            {
+                if foundView.text?.isEmpty == true || foundView.text == ""
+                {
+                    alertFunctionCall()
+                    return
+                }
+                else
+                {
+                    if foundViewTagArray.contains(foundView.tag)
+                    {
+                        if foundView.tag == 500
+                        {
+                            AddLine1 = foundView.text!
+                        }
+                        else if foundView.tag == 501
+                        {
+                            AddLine2 = foundView.text!
+                        }
+                        else if foundView.tag == 502
+                        {
+                            AddLine3 = foundView.text!
+                        }
+                        else if foundView.tag == 503
+                        {
+                            City = foundView.text!
+                        }
+                        else if foundView.tag == 504
+                        {
+                            State = foundView.text!
+                        }
+                        else if foundView.tag == 505
+                        {
+                            Country = foundView.text!
+                        }
+                        else if foundView.tag == 506
+                        {
+                            Zipcode = foundView.text!
+                        }
+                        else if foundView.tag == 507
+                        {
+                            EMAIL = foundView.text!
+                        }
+                        else if foundView.tag == 508
+                        {
+                            TotalAmount = foundView.text!
+                        }
+                    }
+                    else
+                    {
+                        if foundView.tag == 500
+                        {
+                            AddLine1 = foundView.text!
+                        }
+                        else if foundView.tag == 501
+                        {
+                            AddLine2 = foundView.text!
+                        }
+                        else if foundView.tag == 502
+                        {
+                            AddLine3 = foundView.text!
+                        }
+                        else if foundView.tag == 503
+                        {
+                            City = foundView.text!
+                        }
+                        else if foundView.tag == 504
+                        {
+                            State = foundView.text!
+                        }
+                        else if foundView.tag == 505
+                        {
+                            Country = foundView.text!
+                        }
+                        else if foundView.tag == 506
+                        {
+                            Zipcode = foundView.text!
+                        }
+                        else if foundView.tag == 507
+                        {
+                            EMAIL = foundView.text!
+                        }
+                        else if foundView.tag == 508
+                        {
+                            TotalAmount = foundView.text!
+                        }
+                        
+                        foundViewTagArray.append(foundView.tag)
+                    }
+                }
+                /*if foundView.tag == 500
+                {
+                    if foundView.text?.isEmpty == true || foundView.text == ""
+                    {
+                        alertFunctionCall()
+                        return
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                else if foundView.tag == 501
+                {
+                    if foundView.text?.isEmpty == true || foundView.text == ""
+                    {
+                        alertFunctionCall()
+                        return
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                else if foundView.tag == 502
+                {
+                    if foundView.text?.isEmpty == true || foundView.text == ""
+                    {
+                        alertFunctionCall()
+                        return
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                else if foundView.tag == 503
+                {
+                    if foundView.text?.isEmpty == true || foundView.text == ""
+                    {
+                        alertFunctionCall()
+                        return
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                else if foundView.tag == 504
+                {
+                    if foundView.text?.isEmpty == true || foundView.text == ""
+                    {
+                        alertFunctionCall()
+                        return
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                else if foundView.tag == 505
+                {
+                    if foundView.text?.isEmpty == true || foundView.text == ""
+                    {
+                        alertFunctionCall()
+                        return
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                else if foundView.tag == 506
+                {
+                    if foundView.text?.isEmpty == true || foundView.text == ""
+                    {
+                        alertFunctionCall()
+                        return
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                else if foundView.tag == 507
+                {
+                    if foundView.text?.isEmpty == true || foundView.text == ""
+                    {
+                        alertFunctionCall()
+                        return
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+                else if foundView.tag == 508
+                {
+                    if (TotalAmount != "0")
+                    {
+//                        PayPageRequest()
+                    }
+                    else
+                    {
+                        let alert = UIAlertController(title: "Alert", message: "Amount Should Not Be Zero or Empty" , preferredStyle:.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }*/
+            }
+        }
+        
+        if foundViewTagArray.count == 9
+        {
+            UserName = UserDefaults.standard.value(forKey: "userName") as? String
+            
+            if Country == "UNITED ARAB EMIRATES"
+            {
+                Country = "UAE"
+            }
+            else if Country == "INDIA"
+            {
+                Country = "IN"
+            }
+            RequestId = String(arc4random())
+            
+            print("ALL VALUES BEFORE SENDING", AddLine1, AddLine2, AddLine3, City, State, Country, Zipcode, EMAIL, TotalAmount)
+            
+            PayPageRequest()
+        }
+        else
+        {
+            alertFunctionCall()
+        }
+    }
+    /*{
         AddLine1 = self.Line1_TF.text
         AddLine2 = self.Line2_TF.text
         AddLine3 = self.Line3_TF.text
@@ -1078,37 +1467,80 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
       //  PaymentRequest()
       
-       if (EMAIL.isEmpty)
-       {
+    if (EMAIL.isEmpty)
+    {
+        var alert = UIAlertController()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                alert = UIAlertController(title: "Message", message: "Please Enter Your Email Id..!" , preferredStyle:.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            }
+            else if language == "ar"
+            {
+                alert = UIAlertController(title: "رسالة", message: "الرجاء إدخال اسم المستخدم الخاص بك البريد الإلكتروني ..!" , preferredStyle:.alert)
+                alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertAction.Style.default, handler: nil))
+            }
+        }
+        else
+        {
+            alert = UIAlertController(title: "Message", message: "Please Enter Your Email Id..!" , preferredStyle:.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        }
         
-        let alert = UIAlertController(title: "Message", message: "Please Enter Your Email Id..!" , preferredStyle:.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-       }
-       else
-       {
-         if (TotalAmount != "0")
-         {
+        
+            self.present(alert, animated: true, completion: nil)
+    }
+    else
+    {
+        if (TotalAmount != "0")
+        {
             PayPageRequest()
-         }
-         else
-         {
+        }
+        else
+        {
             let alert = UIAlertController(title: "Alert", message: "Amount Should Not Be Zero or Empty" , preferredStyle:.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-         }
-       }
+        }
+    }
         
-  }
+  }*/
+    
+    func alertFunctionCall()
+    {
+        var alert = UIAlertController()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                alert = UIAlertController(title: "Message", message: "Please fill all the fields to proceed" , preferredStyle:.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            }
+            else if language == "ar"
+            {
+                alert = UIAlertController(title: "رسالة", message: "يرجى ملء جميع الحقول للمتابعة" , preferredStyle:.alert)
+                alert.addAction(UIAlertAction(title: "حسنا", style: UIAlertAction.Style.default, handler: nil))
+            }
+        }
+        else
+        {
+            alert = UIAlertController(title: "Message", message: "Please fill all the fields to proceed" , preferredStyle:.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        }
+        
+        self.present(alert, animated: true, completion: nil)
+    }
   
     // UITextfield Move upward & Downward Code..
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
-        animateViewMoving(up: true, moveValue: 170)
+        animateViewMoving(up: true, moveValue: 90)
     }
     func textFieldDidEndEditing(_ textField: UITextField)
     {
-        animateViewMoving(up: false, moveValue: 170)
+        animateViewMoving(up: false, moveValue: 90)
     }
     
     func animateViewMoving (up:Bool, moveValue :CGFloat)

@@ -228,6 +228,18 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
     }
     
+    func changeViewToArabicInSelf()
+    {
+        self.navigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        self.navigationTitle.text = "LIST OF ORDERS"
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        self.navigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        self.navigationTitle.text = "LIST OF ORDERS"
+    }
+    
     func ListOfOrdersContent()
     {
         self.stopActivity()
@@ -235,7 +247,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
        // let ListOfOrdersNavigationBar = UIView()
         ListOfOrdersNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         ListOfOrdersNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(ListOfOrdersNavigationBar)
+//        view.addSubview(ListOfOrdersNavigationBar)
     
      /*
         let backButton = UIButton()
@@ -252,7 +264,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        ListOfOrdersNavigationBar.addSubview(navigationTitle)
+//        ListOfOrdersNavigationBar.addSubview(navigationTitle)
         
      
         PendingButton.frame = CGRect(x: 0, y: ListOfOrdersNavigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: (4 * y))
@@ -275,9 +287,24 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         DeliveredButton.backgroundColor = UIColor.lightGray
         DeliveredButton.setTitleColor(UIColor.black, for: .normal)
         
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
+        
         PendingViewContents(isHidden: false)
         DeliveredViewContents(isHidden: true)
-        
     }
  
     

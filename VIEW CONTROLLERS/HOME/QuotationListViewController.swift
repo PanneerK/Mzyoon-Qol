@@ -17,6 +17,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     //SCREEN PARAMETERS
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
+    let backDrop = UIView()
 
     let tailorListScrollView = UIScrollView()
    // var selectedTailorListArray = [Int]()
@@ -171,6 +172,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.text = "قائمة الاقتباس"
+        
+        backDrop.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglishInSelf()
@@ -178,6 +181,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.text = "QUOTATION LIST"
+        
+        backDrop.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
   
     
@@ -231,8 +236,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     
     func TailorListView()
     {
-        let backDrop = UIView()
-        backDrop.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
+        backDrop.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height))
         backDrop.backgroundColor = UIColor.clear
         view.addSubview(backDrop)
         
@@ -243,7 +247,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         sortButton.setTitleColor(UIColor.white, for: .normal)
         sortButton.tag = 0
         //        sortButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        backDrop.addSubview(sortButton)
+//        backDrop.addSubview(sortButton)
         
         tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (48 * y))
         backDrop.addSubview(tailorListScrollView)
@@ -326,7 +330,6 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(tailorName)
             
-            
             //
             let ShopName_Icon = UIImageView()
             ShopName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: Name_Icon.frame.maxY + y, width: x, height: y)
@@ -349,7 +352,6 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
             tailorViewButton.addSubview(shopName)
-            
             
             //
             let Price_Icon = UIImageView()
@@ -374,7 +376,6 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ordersCountLabel.adjustsFontSizeToFitWidth = true
             tailorViewButton.addSubview(ordersCountLabel)
-            
             
             //
             let Days_Icon = UIImageView()
@@ -401,7 +402,107 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             tailorViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
-           y1 = tailorViewButton.frame.maxY + y
+            y1 = tailorViewButton.frame.maxY + y
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    
+                    nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.text = "Name : "
+                    nameLabel.textAlignment = .left
+                    
+                    tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    tailorName.textAlignment = .left
+                    
+                    shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopLabel.text = "Shop Name : "
+                    shopLabel.textAlignment = .left
+                    
+                    shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopName.textAlignment = .left
+                    
+                    ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersLabel.text = "Price : "
+                    ordersLabel.textAlignment = .left
+                    
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersCountLabel.textAlignment = .left
+                    
+                    ratingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ratingLabel.text = "No. of Days : "
+                    ratingLabel.textAlignment = .left
+                    
+                    ratingCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ratingCountLabel.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    tailorImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    
+                    nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    nameLabel.text = "الاسم : "
+                    nameLabel.textAlignment = .right
+                    
+                    tailorName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    tailorName.textAlignment = .right
+                    
+                    shopLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopLabel.text = "اسم المحل : "
+                    shopLabel.textAlignment = .right
+                    
+                    shopName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopName.textAlignment = .right
+                    
+                    ordersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersLabel.text = "السعر : "
+                    ordersLabel.textAlignment = .right
+                    
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersCountLabel.textAlignment = .right
+                    
+                    ratingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ratingLabel.text = "عدد الايام : "
+                    ratingLabel.textAlignment = .right
+                    
+                    ratingCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ratingCountLabel.textAlignment = .right
+                }
+            }
+            else
+            {
+                tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                nameLabel.text = "Name : "
+                nameLabel.textAlignment = .left
+                
+                tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                tailorName.textAlignment = .left
+                
+                shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopLabel.text = "Shop Name : "
+                shopLabel.textAlignment = .left
+                
+                shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopName.textAlignment = .left
+                
+                ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersLabel.text = "Price : "
+                ordersLabel.textAlignment = .left
+                
+                ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersCountLabel.textAlignment = .left
+                
+                ratingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ratingLabel.text = "No. of Days : "
+                ratingLabel.textAlignment = .left
+                
+                ratingCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ratingCountLabel.textAlignment = .left
+            }
         }
         
       /*

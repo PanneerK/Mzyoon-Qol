@@ -56,17 +56,20 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 if language == "en"
                 {
                     self.navigationTitle.text = "HOME"
+                    self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     self.checkContent()
                 }
                 else if language == "ar"
                 {
                     self.navigationTitle.text = "الصفحة الرئيسية"
+                    self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                     self.checkContentInArabic()
                 }
             }
             else
             {
                 self.navigationTitle.text = "HOME"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.checkContent()
             }
         }
@@ -291,17 +294,20 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             if language == "en"
             {
                 self.navigationTitle.text = "HOME"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.checkContent()
             }
             else if language == "ar"
             {
                 self.navigationTitle.text = "الصفحة الرئيسية"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 self.checkContentInArabic()
             }
         }
         else
         {
             self.navigationTitle.text = "HOME"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             self.checkContent()
         }
     }

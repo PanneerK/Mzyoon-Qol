@@ -11,6 +11,10 @@ import UIKit
 class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
 {
     
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    
     let PricingButton = UIButton()
     let DeliveryDetailsButton = UIButton()
     let ProceedToPayButton = UIButton()
@@ -233,10 +237,31 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             }
             else
             {
-               let appointmentAlert = UIAlertController(title: "Info!", message: "Please Book An Appointment Before Proceed to Pay", preferredStyle: .alert)
-               appointmentAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
-               appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-               self.present(appointmentAlert, animated: true, completion: nil)
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        let appointmentAlert = UIAlertController(title: "Info!", message: "Please Book An Appointment Before Proceed to Pay", preferredStyle: .alert)
+                        appointmentAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
+                        appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                        self.present(appointmentAlert, animated: true, completion: nil)
+
+                    }
+                    else if language == "ar"
+                    {
+                        let appointmentAlert = UIAlertController(title: "المعلومات!", message: "يرجى حجز موعد قبل الاستمرار في الدفع", preferredStyle: .alert)
+                        appointmentAlert.addAction(UIAlertAction(title: "استمر", style: .default, handler: proceedAlertAction(action:)))
+                        appointmentAlert.addAction(UIAlertAction(title: "إلغاء", style: .default, handler: nil))
+                        self.present(appointmentAlert, animated: true, completion: nil)
+                    }
+                }
+                else
+                {
+                    let appointmentAlert = UIAlertController(title: "Info!", message: "Please Book An Appointment Before Proceed to Pay", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Proceed", style: .default, handler: proceedAlertAction(action:)))
+                    appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
             }
             
         }
@@ -268,35 +293,70 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             AppointmentScreen.TailorID = TailorID
         
            self.navigationController?.pushViewController(AppointmentScreen, animated: true)
-     
+    }
+    
+    func changeViewToArabicInSelf()
+    {
+        view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "طلب موافقة"
+        
+        QtyNumTF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PricingButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PricingButton.setTitle("تفاصيل السعر", for: .normal)
+        DeliveryDetailsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        DeliveryDetailsButton.setTitle("تفاصيل التسليم", for: .normal)
+        
+        CurrencyButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        ProceedToPayButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        ProceedToPayButton.setTitle("المضي قدما في الدفع", for: .normal)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "ORDER APPROVAL"
+        
+        QtyNumTF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PricingButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PricingButton.setTitle("Price Details", for: .normal)
+        DeliveryDetailsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        DeliveryDetailsButton.setTitle("Delivery Details", for: .normal)
+        
+        CurrencyButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        ProceedToPayButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ProceedToPayButton.setTitle("PROCEED TO PAY", for: .normal)
     }
     
     func orderApprovalContent()
     {
         self.stopActivity()
         
-        let orderApprovalNavigationBar = UIView()
-        orderApprovalNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        orderApprovalNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(orderApprovalNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        orderApprovalNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderApprovalNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ORDER APPROVAL"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        orderApprovalNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "ORDER APPROVAL"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         let DressDetView = UIView()
-        DressDetView.frame = CGRect(x: x + 15 , y: orderApprovalNavigationBar.frame.maxY + y, width: view.frame.width - (5 * x), height: (10 * y))
+        DressDetView.frame = CGRect(x: x + 15 , y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (5 * x), height: (10 * y))
         DressDetView.layer.cornerRadius = 5
         DressDetView.layer.borderWidth = 1
         DressDetView.layer.backgroundColor = UIColor.orange.cgColor
@@ -390,9 +450,47 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         DeliveryDetailsButton.backgroundColor = UIColor.lightGray
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
         
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                DressImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DressTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DressTypeLabel.textAlignment = .left
+                QtyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                QtyLabel.text = "Qty   : "
+                QtyLabel.textAlignment = .left
+                
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                DressImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DressTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DressTypeLabel.textAlignment = .right
+                QtyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                QtyLabel.text = "كمية   : "
+                QtyLabel.textAlignment = .right
+                
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            DressImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DressTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DressTypeLabel.textAlignment = .left
+            QtyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            QtyLabel.text = "Qty   : "
+            QtyLabel.textAlignment = .left
+            
+            changeViewToEnglishInSelf()
+        }
+        
         PricingViewContents(isHidden: false)
         DeliveryDetailsViewContents(isHidden: true)
     }
+    
     func addDoneButtonOnKeyboard()
     {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -588,8 +686,6 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         AppointmentChargesLabel.textAlignment = .left
         AppointmentChargesLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(AppointmentChargesLabel)
-        
- 
         
         let AppointmentRupeeValueLBL = UILabel()
         AppointmentRupeeValueLBL.frame = CGRect(x: StichingChargesLabel.frame.maxX + x , y: StichingChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
@@ -870,6 +966,184 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         ApprovalListScrollView.contentSize.height = OrderTotalValueLBL.frame.maxY + (2 * y)
         
          ProceedToPayButton.isHidden = true
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                MeasurementChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                MeasurementChargesLabel.text = "Measurement Charges"
+                MeasurementChargesLabel.textAlignment = .left
+                MeasureRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                CurrencyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                StichingChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                StichingChargesLabel.text = "Customization and Stitching Charges"
+                StichingChargesLabel.textAlignment = .left
+                StichingRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                StichingCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                AppointmentChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                AppointmentChargesLabel.text = "Appointment Charges"
+                AppointmentChargesLabel.textAlignment = .left
+                AppointmentRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                AppointmentCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                MaterialDeliveryChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                MaterialDeliveryChargesLabel.text = "Material Delivery Charges"
+                MaterialDeliveryChargesLabel.textAlignment = .left
+                MaterialRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                MaterialCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                UrgentStichChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                UrgentStichChargesLabel.text = "Urgent Stitching Charges"
+                UrgentStichChargesLabel.textAlignment = .left
+                UrgentStichValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                UrgentCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                DeliveryChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DeliveryChargesLabel.text = "Delivery Charges"
+                DeliveryChargesLabel.textAlignment = .left
+                DeliveryRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DeliveryCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                ServiceChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ServiceChargesLabel.text = "Service Charges"
+                ServiceChargesLabel.textAlignment = .left
+                ServiceRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ServiceCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                TaxChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TaxChargesLabel.text = "Tax"
+                TaxChargesLabel.textAlignment = .left
+                TaxRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TaxCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                OrderTotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                OrderTotalLabel.text = "ORDER TOTAL"
+                OrderTotalLabel.textAlignment = .left
+                OrderTotalValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TotalCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                MeasurementChargesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                MeasurementChargesLabel.text = "رسوم القياس"
+                MeasurementChargesLabel.textAlignment = .right
+                MeasureRupeeValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                CurrencyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                StichingChargesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                StichingChargesLabel.text = "التخصيص وخياطة الرسوم"
+                StichingChargesLabel.textAlignment = .right
+                StichingRupeeValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                StichingCurrLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                AppointmentChargesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                AppointmentChargesLabel.text = "رسوم التعيين"
+                AppointmentChargesLabel.textAlignment = .right
+                AppointmentRupeeValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                AppointmentCurrLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                MaterialDeliveryChargesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                MaterialDeliveryChargesLabel.text = "رسوم تسليم المواد"
+                MaterialDeliveryChargesLabel.textAlignment = .right
+                MaterialRupeeValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                MaterialCurrLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                UrgentStichChargesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                UrgentStichChargesLabel.text = "رسوم الخياطة العاجلة"
+                UrgentStichChargesLabel.textAlignment = .right
+                UrgentStichValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                UrgentCurrLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                DeliveryChargesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DeliveryChargesLabel.text = "رسوم التوصيل"
+                DeliveryChargesLabel.textAlignment = .right
+                DeliveryRupeeValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DeliveryCurrLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                ServiceChargesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                ServiceChargesLabel.text = "رسوم الخدمة"
+                ServiceChargesLabel.textAlignment = .right
+                ServiceRupeeValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                ServiceCurrLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                TaxChargesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TaxChargesLabel.text = "ضريبة"
+                TaxChargesLabel.textAlignment = .right
+                TaxRupeeValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TaxCurrLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                OrderTotalLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                OrderTotalLabel.text = "إجمالي الطلب"
+                OrderTotalLabel.textAlignment = .right
+                OrderTotalValueLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TotalCurrLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            MeasurementChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            MeasurementChargesLabel.text = "Measurement Charges"
+            MeasurementChargesLabel.textAlignment = .left
+            MeasureRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            CurrencyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            StichingChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            StichingChargesLabel.text = "Customization and Stiching Charges"
+            StichingChargesLabel.textAlignment = .left
+            StichingRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            StichingCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            AppointmentChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            AppointmentChargesLabel.text = "Appointment Charges"
+            AppointmentChargesLabel.textAlignment = .left
+            AppointmentRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            AppointmentCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            MaterialDeliveryChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            MaterialDeliveryChargesLabel.text = "Material Delivery Charges"
+            MaterialDeliveryChargesLabel.textAlignment = .left
+            MaterialRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            MaterialCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            UrgentStichChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            UrgentStichChargesLabel.text = "Urgent Stiching Charges"
+            UrgentStichChargesLabel.textAlignment = .left
+            UrgentStichValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            UrgentCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            DeliveryChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DeliveryChargesLabel.text = "Delivery Charges"
+            DeliveryChargesLabel.textAlignment = .left
+            DeliveryRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DeliveryCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            ServiceChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            ServiceChargesLabel.text = "Service Charges"
+            ServiceChargesLabel.textAlignment = .left
+            ServiceRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            ServiceCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            TaxChargesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TaxChargesLabel.text = "Tax"
+            TaxChargesLabel.textAlignment = .left
+            TaxRupeeValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TaxCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            OrderTotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            OrderTotalLabel.text = "ORDER TOTAL"
+            OrderTotalLabel.textAlignment = .left
+            OrderTotalValueLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TotalCurrLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            changeViewToEnglishInSelf()
+        }
     }
     
     func DeliveryDetailsViewContents(isHidden : Bool)
@@ -942,6 +1216,25 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         AppointmentsView.addSubview(AppointmentValueLabel)
         
         y1 = AppointmentValueLabel.frame.maxY + 1
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                AppointmentValueLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                AppointmentValueLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                AppointmentValueLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                AppointmentValueLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            AppointmentValueLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            AppointmentValueLabel.textAlignment = .left
+        }
      }
         
         // DeliveryTypeView :-
@@ -1083,7 +1376,98 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         ProceedToPayButton.addTarget(self, action: #selector(self.ProccedToPayButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(ProceedToPayButton)
         
-       ProceedToPayButton.isHidden = isHidden
+        ProceedToPayButton.isHidden = isHidden
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                AppointmentsLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                AppointmentsLabels.text = "Appointments"
+                AppointmentsLabels.textAlignment = .left
+                
+                DeliveryTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DeliveryTypeLabel.text = "Delivery Type"
+                DeliveryTypeLabel.textAlignment = .left
+                
+                DeliveryValueLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DeliveryValueLabel.textAlignment = .left
+                
+                StichTimeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                StichTimeLabel.text = "Stiching time required for stiches"
+                StichTimeLabel.textAlignment = .left
+                
+                StichValueLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                StichValueLabel.textAlignment = .left
+                
+                DeliveryDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DeliveryDateLabel.text = "Approximate delivery date"
+                DeliveryDateLabel.textAlignment = .left
+                
+                DateValueLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DateValueLabel.textAlignment = .left
+                
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                AppointmentsLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                AppointmentsLabels.text = "المواعيد"
+                AppointmentsLabels.textAlignment = .right
+                
+                DeliveryTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DeliveryTypeLabel.text = "نوع التوصيل"
+                DeliveryTypeLabel.textAlignment = .right
+                
+                DeliveryValueLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DeliveryValueLabel.textAlignment = .right
+                
+                StichTimeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                StichTimeLabel.text = "الوقت المتوقع للخياطة والتفصيل"
+                StichTimeLabel.textAlignment = .right
+                
+                StichValueLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                StichValueLabel.textAlignment = .right
+                
+                DeliveryDateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DeliveryDateLabel.text = "الوقت المتوقع للتوصيل"
+                DeliveryDateLabel.textAlignment = .right
+                
+                DateValueLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DateValueLabel.textAlignment = .right
+                
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            AppointmentsLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            AppointmentsLabels.text = "Appointments"
+            AppointmentsLabels.textAlignment = .left
+            
+            DeliveryTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DeliveryTypeLabel.text = "Delivery Type"
+            DeliveryTypeLabel.textAlignment = .left
+            
+            DeliveryValueLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DeliveryValueLabel.textAlignment = .left
+            
+            StichTimeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            StichTimeLabel.text = "Stiching time required for stiches"
+            StichTimeLabel.textAlignment = .left
+            
+            StichValueLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            StichValueLabel.textAlignment = .left
+            
+            DeliveryDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DeliveryDateLabel.text = "Approximate delivery date"
+            DeliveryDateLabel.textAlignment = .left
+            
+            DateValueLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DateValueLabel.textAlignment = .left
+            
+            changeViewToEnglishInSelf()
+        }
    
     }
     

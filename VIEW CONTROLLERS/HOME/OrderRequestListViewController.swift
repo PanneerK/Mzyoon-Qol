@@ -55,15 +55,18 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             if language == "en"
             {
                 navigationTitle.text = "ORDER REQUEST LIST"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             }
             else if language == "ar"
             {
                 navigationTitle.text = "طلب قائمة الطلب"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             }
         }
         else
         {
             navigationTitle.text = "ORDER REQUEST LIST"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }
         
         selectedButton(tag: 1)
@@ -176,7 +179,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 RequestListView()
             }
             
-            OrderRequestListContent()
+//            OrderRequestListContent()
         }
         else if ResponseMsg == "Failure"
         {

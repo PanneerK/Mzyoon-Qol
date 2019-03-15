@@ -3630,6 +3630,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 measurementValues.updateValue(convertToInt!, forKey: measurerTag)
             }
         }
+        
+        print("measurementValues in save button action", measurementValues)
     }
     
     func rulerContents()
@@ -3837,6 +3839,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             keys.append(keyss)
             values.append(valuess)
         }
+        
+        print("nextButtonAction", keys)
+        print("nextButtonAction", values)
         
         if values.contains(0.0)
         {
