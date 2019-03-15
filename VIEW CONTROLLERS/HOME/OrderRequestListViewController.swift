@@ -35,6 +35,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     var OrderIdArray = NSArray()
     var ProductImageArray = NSArray()
     var ProductNameArray = NSArray()
+    var productNameArabicArray = NSArray()
     var RequestDtArray = NSArray()
     
     let emptyLabel = UILabel()
@@ -47,7 +48,24 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         super.viewDidLoad()
         
 //         self.tab2Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-        navigationBar.isHidden = true
+        navigationBar.isHidden = false
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                navigationTitle.text = "ORDER REQUEST LIST"
+            }
+            else if language == "ar"
+            {
+                navigationTitle.text = "طلب قائمة الطلب"
+            }
+        }
+        else
+        {
+            navigationTitle.text = "ORDER REQUEST LIST"
+        }
+        
         selectedButton(tag: 1)
         
     //  self.serviceCall.API_GetOrderRequest(RequestId: 1070, delegate: self)
@@ -124,6 +142,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             if Result.count == 0 || Result == nil
             {
+                stopActivity()
+                
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
                 emptyLabel.text = "You don't have any order request"
                 emptyLabel.textColor = UIColor.black
@@ -146,10 +166,14 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 ProductNameArray = Result.value(forKey: "Product_NameInEnglish") as! NSArray
                 print("ProductNameArray", ProductNameArray)
                 
+                productNameArabicArray = Result.value(forKey: "Product_NameInArabic") as! NSArray
+                print("productNameArabicArray", productNameArabicArray)
+                
                 RequestDtArray = Result.value(forKey: "RequestDt") as! NSArray
                 print("RequestDtArray", RequestDtArray)
                 
-               // OrderRequestListContent()
+//               OrderRequestListContent()
+                RequestListView()
             }
             
             OrderRequestListContent()
@@ -162,6 +186,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             MethodName = "/GetOrderRequest"
             ErrorStr = Result
             DeviceError()
+            
+            stopActivity()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
             emptyLabel.text = "You don't have any order request"
@@ -178,8 +204,6 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     
     func OrderRequestListContent()
     {
-        self.stopActivity()
-        
         //let RequestListNavigationBar = UIView()
         RequestListNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         RequestListNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -200,10 +224,12 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     
     func RequestListView()
     {
+        self.stopActivity()
+        
         let backDrop = UIView()
-        backDrop.frame = CGRect(x: (3 * x), y: RequestListNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
-        backDrop.backgroundColor = UIColor.clear
-        view.addSubview(backDrop)
+        backDrop.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height))
+        backDrop.backgroundColor = UIColor.red
+//        view.addSubview(backDrop)
      
     /*
         let sortButton = UIButton()
@@ -216,9 +242,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         backDrop.addSubview(sortButton)
       */
         
-        RequestListScrollView.frame = CGRect(x: 0, y: y, width: backDrop.frame.width, height: (52 * y))
-        // RequestListScrollView.backgroundColor = UIColor.gray
-        backDrop.addSubview(RequestListScrollView)
+        RequestListScrollView.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height + (2 * y)))
+        RequestListScrollView.backgroundColor = UIColor.clear
+        view.addSubview(RequestListScrollView)
         
         for views in RequestListScrollView.subviews
         {
@@ -270,7 +296,6 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             let nameLabel = UILabel()
             nameLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: 0, width: (10 * x), height: (2 * y))
-            nameLabel.text = "Request Date :"
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
@@ -282,7 +307,6 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             {
                 RequestDate = String(date.prefix(10))
             }
-            tailorName.text = RequestDate
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -296,7 +320,6 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             let shopLabel = UILabel()
             shopLabel.frame = CGRect(x: ProductName_Icon.frame.maxX + x, y: nameLabel.frame.maxY, width: (10 * x), height: (2 * y))
-            shopLabel.text = "Product Name :"
             shopLabel.textColor = UIColor.blue
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -304,7 +327,6 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             let shopName = UILabel()
             shopName.frame = CGRect(x: shopLabel.frame.maxX - x, y: nameLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
-            shopName.text =  ProductNameArray[i] as? String
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -319,7 +341,6 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: Tailor_Icon.frame.maxX + x, y: shopLabel.frame.maxY, width: (12 * x), height: (2 * y))
-            ordersLabel.text = "Total No of Tailors :"
             ordersLabel.textColor = UIColor.blue
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -361,6 +382,91 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             RequestViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
             y1 = RequestViewButton.frame.maxY + y
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    RequestViewButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.text = "Request Date : "
+                    nameLabel.textAlignment = .left
+                    
+                    tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    tailorName.text = RequestDate
+                    tailorName.textAlignment = .left
+
+                    shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopLabel.text = "Product Name : "
+                    shopLabel.textAlignment = .left
+                    
+                    shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopName.text =  ProductNameArray[i] as? String
+                    shopName.textAlignment = .left
+                    
+                    ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersLabel.text = "Total No of Tailors :"
+                    ordersLabel.textAlignment = .left
+                    
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersCountLabel.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    RequestViewButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    tailorImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    nameLabel.text = "تاريخ الطلب : "
+                    nameLabel.textAlignment = .right
+                    
+                    tailorName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    tailorName.text = RequestDate
+                    tailorName.textAlignment = .right
+                    
+                    shopLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopLabel.text = "اسم المنتج :"
+                    shopLabel.textAlignment = .right
+                    
+                    shopName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopName.text =  productNameArabicArray[i] as? String
+                    shopName.textAlignment = .right
+                    
+                    ordersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersLabel.text = "إجمالي عدد الخياطين:"
+                    ordersLabel.textAlignment = .right
+                    
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersCountLabel.textAlignment = .right
+                }
+            }
+            else
+            {
+                RequestViewButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                nameLabel.text = "Request Date : "
+                nameLabel.textAlignment = .left
+                
+                tailorName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                tailorName.text = RequestDate
+                tailorName.textAlignment = .left
+                
+                shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopLabel.text = "Product Name : "
+                shopLabel.textAlignment = .left
+                
+                shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopName.text =  ProductNameArray[i] as? String
+                shopName.textAlignment = .left
+                
+                ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersLabel.text = "Total No of Tailors :"
+                ordersLabel.textAlignment = .left
+                
+                ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersCountLabel.textAlignment = .left
+            }
         }
         
         RequestListScrollView.contentSize.height = y1 + (2 * y)
@@ -369,7 +475,6 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
-        
         let QuotationListScreen = QuotationListViewController()
         QuotationListScreen.OrderId = sender.tag
         self.navigationController?.pushViewController(QuotationListScreen, animated: true)

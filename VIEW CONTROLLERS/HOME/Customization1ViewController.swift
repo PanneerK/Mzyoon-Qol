@@ -1246,19 +1246,28 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         var selectedIndustryNameArray = [String]()
         var selectedBrandNameArray = [String]()
         
+        print("selectedSeasonNameArray", seasonalTagIntArray)
+        
         let custom2Screen = Customization2ViewController()
         
         if seasonalTagIntArray.count != 0
         {
-            for i in 0..<seasonalIdArray.count
+            if seasonalTagIntArray.contains(1)
             {
-                for j in 0..<seasonalTagIntArray.count
+                selectedSeasonNameArray.append("All Season")
+            }
+            else
+            {
+                for i in 0..<seasonalIdArray.count
                 {
-                    if let id = seasonalIdArray[i] as? Int
+                    for j in 0..<seasonalTagIntArray.count
                     {
-                        if id == seasonalTagIntArray[j]
+                        if let id = seasonalIdArray[i] as? Int
                         {
-                            selectedSeasonNameArray.append(seasonalNameEnglishArray[i] as! String)
+                            if id == seasonalTagIntArray[j]
+                            {
+                                selectedSeasonNameArray.append(seasonalNameEnglishArray[i] as! String)
+                            }
                         }
                     }
                 }
@@ -1273,15 +1282,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         if industryTagIntArray.count != 0
         {
-            for i in 0..<industryIdArray.count
+            if industryTagIntArray.contains(1)
             {
-                for j in 0..<industryTagIntArray.count
+                selectedIndustryNameArray.append("All Industry")
+            }
+            else
+            {
+                for i in 0..<industryIdArray.count
                 {
-                    if let id = industryIdArray[i] as? Int
+                    for j in 0..<industryTagIntArray.count
                     {
-                        if id == industryTagIntArray[j]
+                        if let id = industryIdArray[i] as? Int
                         {
-                            selectedIndustryNameArray.append(industryNameEnglishArray[i] as! String)
+                            if id == industryTagIntArray[j]
+                            {
+                                selectedIndustryNameArray.append(industryNameEnglishArray[i] as! String)
+                            }
                         }
                     }
                 }
@@ -1296,15 +1312,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         
         if brandTagIntArray.count != 0
         {
-            for i in 0..<brandIdArray.count
+            if brandTagIntArray.contains(1)
             {
-                for j in 0..<brandTagIntArray.count
+                selectedBrandNameArray.append("All Brand")
+            }
+            else
+            {
+                for i in 0..<brandIdArray.count
                 {
-                    if let id = brandIdArray[i] as? Int
+                    for j in 0..<brandTagIntArray.count
                     {
-                        if id == brandTagIntArray[j]
+                        if let id = brandIdArray[i] as? Int
                         {
-                            selectedBrandNameArray.append(brandNameEnglishArray[i] as! String)
+                            if id == brandTagIntArray[j]
+                            {
+                                selectedBrandNameArray.append(brandNameEnglishArray[i] as! String)
+                            }
                         }
                     }
                 }

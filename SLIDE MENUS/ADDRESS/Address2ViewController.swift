@@ -970,11 +970,11 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         shippingNotesTextField.textAlignment = .left
         
         countryButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        countryButton.contentHorizontalAlignment = .right
+        countryButton.contentHorizontalAlignment = .left
         stateButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        stateButton.contentHorizontalAlignment = .right
+        stateButton.contentHorizontalAlignment = .left
         areaButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        areaButton.contentHorizontalAlignment = .right
+        areaButton.contentHorizontalAlignment = .left
         
         titleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         titleLabel.text = "Please select your country"
