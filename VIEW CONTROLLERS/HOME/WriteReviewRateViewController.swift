@@ -85,11 +85,11 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
            
            if(Result == "1")
            {
-            
-            let alert = UIAlertController(title: "", message: "Thank You for FeedBack", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: OkAction(action:)))
-            self.present(alert, animated: true, completion: nil)
-            
+              DispatchQueue.main.async (execute: { () -> Void in
+                let alert = UIAlertController(title: "", message: "Thank You for FeedBack", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: self.OkAction(action:)))
+                self.present(alert, animated: true, completion: nil)
+              })
            }
           
         }
@@ -478,6 +478,19 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
    // print("Category:",CategoryID)
     print("Order ID:",OrderID)
     print("Tailor Id",TailorID!)
+    
+    if(OnTimeServiceRatingNum == nil)
+    {
+        OnTimeServiceRatingNum = 0
+    }
+    if(StitchingQualityRatingNum == nil)
+    {
+        StitchingQualityRatingNum = 0
+    }
+    if(CustomerServiceRatingNum == nil)
+    {
+        CustomerServiceRatingNum = 0
+    }
     
     if (reviewStr == nil || reviewStr.isEmpty)
     {

@@ -347,14 +347,27 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/DressSubType/\(imageName)"
             let apiurl = URL(string: api)
-            print("Image Of Dress", apiurl!)
-            DressImageView.dowloadFromServer(url: apiurl!)
+            
+          //  print("Image Of Dress", apiurl!)
+            
+            let dummyImageView = UIImageView()
+            dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
+            
+            if apiurl != nil
+            {
+                dummyImageView.dowloadFromServer(url: apiurl!)
+            }
+            dummyImageView.tag = -1
+            DressImageView.addSubview(dummyImageView)
+            
+          //  DressImageView.dowloadFromServer(url: apiurl!)
         }
      }
      else
      {
         DressImageView.backgroundColor = UIColor.lightGray
      }
+        
         PaymentInfoView.addSubview(DressImageView)
         
         // DressType Label..
@@ -464,7 +477,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         ShippingLabel.textAlignment = .left
         ShippingLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         ShippingLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
-        //PaymentInfoView.addSubview(ShippingLabel)
+        PaymentInfoView.addSubview(ShippingLabel)
         
         
         let ShippingPriceLabel = UILabel()
@@ -474,7 +487,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         ShippingPriceLabel.textAlignment = .right
         ShippingPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         ShippingPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
-        //PaymentInfoView.addSubview(ShippingPriceLabel)
+        PaymentInfoView.addSubview(ShippingPriceLabel)
         
         
         // Tax Label
@@ -492,8 +505,9 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
-          let TaxNum : Int = Tax[0] as! Int
-          TaxPriceLabel.text = "\(TaxNum)"
+          // let TaxNum : Int = Tax[0] as! Int
+          // TaxPriceLabel.text = "\(TaxNum)"
+            TaxPriceLabel.text = Tax[0] as? String
         }
         else
         {

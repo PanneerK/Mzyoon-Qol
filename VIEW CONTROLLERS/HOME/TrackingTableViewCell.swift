@@ -17,6 +17,9 @@ class TrackingTableViewCell: UITableViewCell
     let TrackingTime = UILabel()
     */
     
+    var x = CGFloat()
+    var y = CGFloat()
+    
     var contentSpace : UIView!
     var spaceView : UIView!
     
@@ -25,22 +28,27 @@ class TrackingTableViewCell: UITableViewCell
     var TrackingDate : UILabel!
     var TrackingTime : UILabel!
     
+    var roundLabel:UILabel!
+    var lineLabel:UILabel!
+    
+    
    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        
        //  TrackerImg.backgroundColor = UIColor.blue
         
         contentSpace = UIView()
-        contentSpace.backgroundColor =  UIColor.white //UIColor(red: 0.9451, green: 0.9373, blue: 0.9373, alpha: 1.0)
+        contentSpace.backgroundColor = UIColor.white   //UIColor(red: 0.9451, green: 0.9373, blue: 0.9373, alpha: 1.0)
         contentView.addSubview(contentSpace)
         
         TrackingDate = UILabel()
-        //TrackingDate.backgroundColor = UIColor.cyan
+       // TrackingDate.backgroundColor = UIColor.lightGray
         TrackingDate.textColor = UIColor.black
         TrackingDate.textAlignment = .left
-        TrackingDate.font = UIFont(name: "Avenir Next", size: 15)
+        TrackingDate.font = UIFont(name: "Avenir Next", size: 14)
         contentSpace.addSubview(TrackingDate)
         
         TrackerImg = UIImageView()
@@ -51,20 +59,29 @@ class TrackingTableViewCell: UITableViewCell
         //TrackingTime.backgroundColor = UIColor.white
         TrackingTime.textColor = UIColor.black
         TrackingTime.textAlignment = .left
-        TrackingTime.font = UIFont(name: "Avenir Next", size: 15)
+        TrackingTime.font = UIFont(name: "Avenir Next", size: 14)
         contentSpace.addSubview(TrackingTime)
         
         TrackingDetails = UILabel()
-        //TrackingDetails.backgroundColor = UIColor.white
+       // TrackingDetails.backgroundColor = UIColor.lightGray
         TrackingDetails.textColor = UIColor.black
         TrackingDetails.textAlignment = .left
-        TrackingDetails.font = UIFont(name: "Avenir Next", size: 15)
+        TrackingDetails.font = UIFont(name: "Avenir Next", size: 14)
         contentSpace.addSubview(TrackingDetails)
         
         spaceView = UIView()
         spaceView.backgroundColor = UIColor.clear
         contentView.addSubview(spaceView)
-    
+        
+        roundLabel = UILabel()
+        roundLabel.backgroundColor = UIColor(red:0.91, green:0.53, blue:0.18, alpha:1.0)
+        roundLabel.layer.masksToBounds = true
+        contentSpace.addSubview(roundLabel)
+        
+        lineLabel = UILabel()
+        lineLabel.backgroundColor = UIColor(red:0.91, green:0.53, blue:0.18, alpha:1.0)
+        contentSpace.addSubview(lineLabel)
+        
     }
     
     required init?(coder aDecoder: NSCoder)
@@ -79,6 +96,7 @@ class TrackingTableViewCell: UITableViewCell
     
     override func layoutSubviews()
     {
+        
         super.layoutSubviews()
         
     }

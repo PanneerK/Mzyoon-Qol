@@ -45,6 +45,8 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         slideMenuButton.isHidden = true
         tabBar.isHidden = true
         
+      //  self.TrackingTableview.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -212,25 +214,54 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
        
         cell.backgroundColor = UIColor.white
         
-        cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (5 * y))
+        cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (3 * y))
         
-        cell.TrackingDate.frame = CGRect(x: x, y: 0, width: (10 * x), height: (5 * y))
+       // cell.roundLabel.frame = CGRect(x: (3 * x), y: ((cell.frame.height - (y)) / 2), width: y, height: y)
+        
        
-        cell.TrackerImg.frame = CGRect(x: cell.TrackingDate.frame.maxX + x, y: 0, width: x, height: (5 * y))
+        cell.TrackingDate.frame = CGRect(x: x, y: ((cell.frame.height - (y)) / 1.2), width: (20 * x), height: (1.5 * y))
         
-        cell.TrackingDetails.frame = CGRect(x: cell.TrackerImg.frame.maxX + x, y: 0, width: cell.frame.width - (15 * x), height: (5 * y))
+      //  cell.TrackingTime.frame = CGRect(x: (3 * x), y: cell.TrackingDate.frame.maxY, width: (6 * x), height: (3 * y))
+        
+        cell.roundLabel.frame = CGRect(x:  cell.TrackingDate.frame.maxX , y: ((cell.frame.height - (y))), width: y, height: y)
+        cell.roundLabel.layer.cornerRadius = cell.roundLabel.frame.height / 2
+        
+        cell.TrackingDetails.frame = CGRect(x: cell.roundLabel.frame.maxX + (3 * x), y: ((cell.frame.height - (y)) / 1.2), width: cell.frame.width - (15 * x), height: (1.5 * y))
+        
+        
+       //  cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
+      
+        if(indexPath.row > 0)
+        {
+            cell.lineLabel.frame = CGRect(x: (cell.TrackingDate.frame.maxX) + ((cell.roundLabel.frame.width - 1) / 2), y: 0, width: 1, height: (cell.frame.height - cell.roundLabel.frame.height))
+        }
        
-       // cell.TrackingTime.frame = CGRect(x: x, y: cell.TrackingDate.frame.maxY, width: (6 * x), height: (3 * y))
-        
-          cell.spaceView.frame = CGRect(x: 0, y: cell.frame.height - y, width: cell.frame.width, height: y)
-        
-        
         cell.TrackingDetails.text = StatusArray[indexPath.row] as? String
         if let date = DateArray[indexPath.row] as? String
         {
             TrackingDate = String(date.prefix(10))
         }
         cell.TrackingDate.text = TrackingDate
+        
+        /*
+        if (indexPath.row % 2) == 0
+        {
+            cell.lineLabel.frame = CGRect(x: (3 * x) + ((cell.roundLabel.frame.width - 1) / 2), y: cell.roundLabel.frame.maxY, width: 1, height:(cell.frame.height - cell.roundLabel.frame.height))
+        }
+         else if (indexPath.row % 2) != 0
+         {
+         cell.lineLabel.frame = CGRect(x: (3 * x) + ((cell.roundLabel.frame.width - 1) / 2), y: 0, width: 1, height: (cell.frame.height - cell.roundLabel.frame.height))
+         }
+        else
+        {
+            cell.lineLabel.frame = CGRect(x: (3 * x) + ((cell.roundLabel.frame.width - 1) / 2), y: 0, width: 1, height: (cell.frame.height - cell.roundLabel.frame.height))
+        }
+     */
+        
+     
+        
+        
+       
         
        //  cell.TrackerImg.image = UIImage(named: "TrackingStatus")
         
@@ -241,7 +272,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return (5 * y)
+        return (3 * y)
     }
 
 }

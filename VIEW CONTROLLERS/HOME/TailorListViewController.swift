@@ -11,7 +11,8 @@ import CoreData
 import CoreLocation
 import GoogleMaps
 import GooglePlaces
-
+import Alamofire
+import AlamofireDomain
 
 class TailorListViewController: CommonViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate,UIGestureRecognizerDelegate
 {
@@ -791,7 +792,33 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
         }
         
-        //  serviceCall.API_DirectionRequest(origin: "\(currentLocation.coordinate.latitude)", destination: "\(currentLocation.coordinate.longitude)", delegate: self)
+      //  serviceCall.API_DirectionRequest(origin: "\(currentLocation.coordinate.latitude)", destination: "\(currentLocation.coordinate.longitude)", delegate: self)
+   
+        /*
+        let origin = "\(37.778483),\(-122.513960)"
+        let destination = "\(37.706753),\(-122.418677)"
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(origin)&destination=\(destination)&mode=driving&key=[YOUR-API-KEY]"
+        
+        
+        Alamofire.request(url).responseJSON { response in
+            let json = JSON(data: response.data!)
+            let routes = json["routes"].arrayValue
+            
+            for route in routes
+            {
+                let routeOverviewPolyline = route["overview_polyline"].dictionary
+                let points = routeOverviewPolyline?["points"]?.stringValue
+                let path = GMSPath.init(fromEncodedPath: points!)
+                
+                let polyline = GMSPolyline(path: path)
+                polyline.strokeColor = .black
+                polyline.strokeWidth = 10.0
+                polyline.map = mapViewX
+                
+            }
+        }
+   */
+        
     }
     
     func directionViewContents(isHidden : Bool)
