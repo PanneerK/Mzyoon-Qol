@@ -107,26 +107,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
      //  AppointmentContent()
         
         print("TailorID:",TailorID)
+        print("View DidLoad")
         
-      //  MeasureSucessStr = ""
-     //   MaterialSucessStr = ""
+         UserDefaults.standard.set(TailorID, forKey: "TailorID")
         
-    }
-    override func viewDidAppear(_ animated: Bool)
-    {
-       
-    }
-    
-    override func viewWillAppear(_ animated: Bool)
-    {
-        
-        UserDefaults.standard.set(TailorID, forKey: "TailorID")
-        
-       // print("order ID:", OrderID)
+        // print("order ID:", OrderID)
         
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
-          
+            
             // Material Details like image,Heading etc..
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
             
@@ -139,14 +128,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             // Measurement Dates from Tailor..
             self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
             
-           
+            
         }
         
         TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
         
         MeasureSucessStr = ""
         MaterialSucessStr = ""
+        
     }
+ 
+    override func viewWillAppear(_ animated: Bool)
+    {
+         print("View WillAppear")
+        
+     }
     
     func DeviceError() 
     {
@@ -634,13 +630,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Companies-Material")
         {
             OrderTypeView.removeFromSuperview()
-            //  OrderTypeView.isHidden = true
             MaterialSucessStr = "True"
+        }
+        else if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            OrderTypeView.frame = CGRect(x: x/2, y: y2, width: view.frame.width - x, height: (40 * y))
+//          OrderTypeView.backgroundColor = UIColor.lightGray
+            OrderTypeView.layer.borderWidth = 1
+            OrderTypeView.layer.borderColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
+            AppointmentScrollview.addSubview(OrderTypeView)
+            y2 = OrderTypeView.frame.maxY + y/2
         }
         else
         {
             OrderTypeView.frame = CGRect(x: x/2, y: y2, width: view.frame.width - x, height: (40 * y))
-//          OrderTypeView.backgroundColor = UIColor.lightGray
+            //          OrderTypeView.backgroundColor = UIColor.lightGray
             OrderTypeView.layer.borderWidth = 1
             OrderTypeView.layer.borderColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
             AppointmentScrollview.addSubview(OrderTypeView)
@@ -940,8 +944,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_ApproveButton.addTarget(self, action: #selector(self.MaterialApproveButtonAction(sender:)), for: .touchUpInside)
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
+            if MaterialStatus.contains("Approved")
+            {}
+            else
+            {
              OrderTypeView.addSubview(Material_ApproveButton)
-            // MaterialSucessStr = "True"
+            }
         }
         else
         {
@@ -965,7 +973,13 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_RejectButton.addTarget(self, action: #selector(self.MaterialRejectButtonAction(sender:)), for: .touchUpInside)
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
-             OrderTypeView.addSubview(Material_RejectButton)
+            if MaterialStatus.contains("Approved")
+            {
+            }
+            else
+            {
+              OrderTypeView.addSubview(Material_RejectButton)
+            }
         }
         else
         {
@@ -984,7 +998,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
            // MaterialSucessStr = "True"
-           
         }
         else
         {
@@ -1006,7 +1019,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasurementTypeView.removeFromSuperview()
              MeasureSucessStr = "True"
         }
-        else
+        else if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
             MeasurementTypeView.frame = CGRect(x: x/2, y: y2, width: view.frame.width - x, height: (40 * y))
             //MeasurementTypeView.backgroundColor = UIColor.darkGray
@@ -1015,6 +1028,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             AppointmentScrollview.addSubview(MeasurementTypeView)
             
            // y2 = OrderTypeView.frame.maxY + y
+        }
+        else
+        {
+            MeasurementTypeView.frame = CGRect(x: x/2, y: y2, width: view.frame.width - x, height: (40 * y))
+            //MeasurementTypeView.backgroundColor = UIColor.darkGray
+            MeasurementTypeView.layer.borderWidth = 1
+            MeasurementTypeView.layer.borderColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
+            AppointmentScrollview.addSubview(MeasurementTypeView)
         }
         
       
@@ -1308,12 +1329,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_ApproveButton.addTarget(self, action: #selector(self.MeasureApproveButtonAction(sender:)), for: .touchUpInside)
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-            MeasurementTypeView.addSubview(Measure_ApproveButton)
+            if MeasureStatus.contains("Approved")
+            { }
+            else
+            {
+              MeasurementTypeView.addSubview(Measure_ApproveButton)
+            }
         }
-        else
-        {
-           
-        }
+      
+        
         
        // let RejectButton = UIButton()
         Measure_RejectButton.frame = CGRect(x: Measure_ApproveButton.frame.maxX + (2 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (2 * y))
@@ -1327,13 +1351,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_RejectButton.addTarget(self, action: #selector(self.MeasureRejectButtonAction(sender:)), for: .touchUpInside)
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-            MeasurementTypeView.addSubview(Measure_RejectButton)
+            if MeasureStatus.contains("Approved")
+            { }
+            else
+            {
+              MeasurementTypeView.addSubview(Measure_RejectButton)
+            }
         }
-        else
-        {
+      
         
-        }
-       
         let Measure_SaveButton = UIButton()
         Measure_SaveButton.frame = CGRect(x: TailorImageView.frame.width - (5 * x), y: Measure_RejectButton.frame.minY + (4 * y) , width: (8 * x), height: (2 * y))
         Measure_SaveButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)

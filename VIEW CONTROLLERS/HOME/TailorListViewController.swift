@@ -1175,7 +1175,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     ratingImageView.image = UIImage(named: "\(ratingArray[i])")
                     
                    // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
-                     reviewsButton.setTitle("(\(ratingArray[i]) reviews)", for: .normal)
+                    // reviewsButton.setTitle("(\(ratingArray[i]) reviews)", for: .normal)
                      ordersCountLabel.text = "\(orderCountArray[i])"
                     
                       TailorID = IdArray[i] as? Int

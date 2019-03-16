@@ -34,6 +34,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     var OrderId = NSArray()
     var OrderDt = NSArray()
     var Product_Name = NSArray()
+    var ServiceType = NSArray()
     var qty = NSArray()
     
     // ProductPrice Array..
@@ -41,6 +42,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     var Price = NSArray()
     var Tax = NSArray()
     var Total = NSArray()
+    
+     var ShippingCharges = NSArray()
     
      var OrderID:Int!
     var OrderDate = String()
@@ -70,7 +73,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     override func viewWillAppear(_ animated: Bool)
     {
          self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
-         self.serviceCall.API_GetTrackingDetails(OrderId: OrderID, delegate: self)
+        
+        // self.serviceCall.API_GetTrackingDetails(OrderId: OrderID, delegate: self)
         
     }
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -129,6 +133,9 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             qty = OrderDetail.value(forKey: "qty") as! NSArray
             print("qty:",qty)
             
+            ServiceType = OrderDetail.value(forKey: "ServiceType") as! NSArray
+            print("ServiceType:",ServiceType)
+            
             
             let ProductPrice = Result.value(forKey: "ProductPrice") as! NSArray
             //print("ProductPrice:", ProductPrice)
@@ -144,6 +151,12 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             
             Total = ProductPrice.value(forKey: "Total") as! NSArray
             print("Total:", Total)
+            
+            
+            let Shipping_Charges = Result.value(forKey: "Shipping_Charges") as! NSArray
+            
+            ShippingCharges = Shipping_Charges.value(forKey: "Shipping_Charges") as! NSArray
+            print("ShippingCharges:", ShippingCharges)
             
             
           //  orderDetailsContent()
@@ -321,7 +334,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         // PaymentInfo View..
         let PaymentInfoView = UIView()
-        PaymentInfoView.frame = CGRect(x: (3 * x), y: orderIdView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (36 * y))
+        PaymentInfoView.frame = CGRect(x: (3 * x), y: orderIdView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (40 * y))
         PaymentInfoView.backgroundColor = UIColor.groupTableViewBackground
         OrderDetailsScrollView.addSubview(PaymentInfoView)
         
@@ -477,22 +490,29 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         ShippingLabel.textAlignment = .left
         ShippingLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         ShippingLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
-       // PaymentInfoView.addSubview(ShippingLabel)
+        PaymentInfoView.addSubview(ShippingLabel)
         
         
         let ShippingPriceLabel = UILabel()
         ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
-        ShippingPriceLabel.text = ""
+        if(ShippingCharges.count > 0)
+        {
+            ShippingPriceLabel.text = ShippingCharges[0] as? String
+        }
+        else
+        {
+            ShippingPriceLabel.text = ""
+        }
         ShippingPriceLabel.textColor = UIColor.black
         ShippingPriceLabel.textAlignment = .right
         ShippingPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         ShippingPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
-       // PaymentInfoView.addSubview(ShippingPriceLabel)
+        PaymentInfoView.addSubview(ShippingPriceLabel)
         
         
         // Tax Label
         let TaxLabel = UILabel()
-        TaxLabel.frame = CGRect(x:x, y: SubTotalLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        TaxLabel.frame = CGRect(x:x, y: ShippingLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         TaxLabel.text = "Tax"
         TaxLabel.textColor = UIColor.black
         TaxLabel.textAlignment = .left
@@ -502,7 +522,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
     
         let TaxPriceLabel = UILabel()
-        TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
           // let TaxNum : Int = Tax[0] as! Int
