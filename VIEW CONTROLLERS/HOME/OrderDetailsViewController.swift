@@ -254,7 +254,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         for views in OrderDetailsScrollView.subviews
         {
-                views.removeFromSuperview()
+            views.removeFromSuperview()
         }
         
         // OrderId View..
@@ -477,7 +477,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         ShippingLabel.textAlignment = .left
         ShippingLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         ShippingLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
-        PaymentInfoView.addSubview(ShippingLabel)
+       // PaymentInfoView.addSubview(ShippingLabel)
         
         
         let ShippingPriceLabel = UILabel()
@@ -487,7 +487,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         ShippingPriceLabel.textAlignment = .right
         ShippingPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         ShippingPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
-        PaymentInfoView.addSubview(ShippingPriceLabel)
+       // PaymentInfoView.addSubview(ShippingPriceLabel)
         
         
         // Tax Label

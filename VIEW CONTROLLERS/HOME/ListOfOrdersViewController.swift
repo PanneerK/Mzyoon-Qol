@@ -12,6 +12,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
 {
     let serviceCall = ServerAPI()
     
+    let selfScreenContents = UIView()
     let DeliveredButton = UIButton()
     let PendingButton = UIButton()
     
@@ -65,7 +66,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         // Do any additional setup after loading the view.
         
       //  self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-        navigationBar.isHidden = true
+        navigationBar.isHidden = false
         selectedButton(tag: 2)
  
       //  ListOfOrdersContent()
@@ -131,7 +132,25 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             if Result == nil || Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((PendingViewBackDrop.frame.height - (3 * y)) / 2), width: PendingViewBackDrop.frame.width, height: (3 * y))
-                emptyLabel.text = "You Dont Have Pending Orders"
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        emptyLabel.text = "You Dont Have Pending Orders"
+                    }
+                    else if language == "ar"
+                    {
+                        emptyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        emptyLabel.text = "ليس لديك أي طلبات معلقة"
+                    }
+                }
+                else
+                {
+                    emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    emptyLabel.text = "You Dont Have Pending Orders"
+                }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -184,7 +203,25 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             if Result == nil || Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((DeliveredViewBackDrop.frame.height - (3 * y)) / 2), width: DeliveredViewBackDrop.frame.width, height: (3 * y))
-                emptyLabel.text = "You Dont Have Delivered orders"
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        emptyLabel.text = "You Dont Have Delivered orders"
+                    }
+                    else if language == "ar"
+                    {
+                        emptyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        emptyLabel.text = "ليس لديك أي طلبات يتم تسليمها"
+                    }
+                }
+                else
+                {
+                    emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    emptyLabel.text = "You Dont Have Delivered orders"
+                }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
@@ -228,6 +265,32 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
     }
     
+    func changeViewToArabicInSelf()
+    {
+        self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        self.navigationTitle.text = "قائمة من أوامر"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        PendingButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PendingButton.setTitle("قيد الانتظار", for: .normal)
+        DeliveredButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        DeliveredButton.setTitle("تم التوصيل", for: .normal)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        self.navigationTitle.text = "LIST OF ORDERS"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        PendingButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PendingButton.setTitle("PENDING", for: .normal)
+        DeliveredButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        DeliveredButton.setTitle("DELIVERED", for: .normal)
+    }
+    
     func ListOfOrdersContent()
     {
         self.stopActivity()
@@ -235,7 +298,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
        // let ListOfOrdersNavigationBar = UIView()
         ListOfOrdersNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         ListOfOrdersNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(ListOfOrdersNavigationBar)
+//        view.addSubview(ListOfOrdersNavigationBar)
     
      /*
         let backButton = UIButton()
@@ -252,32 +315,53 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        ListOfOrdersNavigationBar.addSubview(navigationTitle)
+//        ListOfOrdersNavigationBar.addSubview(navigationTitle)
         
+        selfScreenContents.frame = CGRect(x: 0, y: navigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + navigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+//        slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
+//        self.view.addSubview(slideMenuButton)
+        slideMenuButton.bringSubviewToFront(slideMenuButton)
      
-        PendingButton.frame = CGRect(x: 0, y: ListOfOrdersNavigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: (4 * y))
+        PendingButton.frame = CGRect(x: 0, y: 0, width: ((view.frame.width / 2) - 1), height: (4 * y))
         PendingButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PendingButton.setTitle("PENDING", for: .normal)
         PendingButton.setTitleColor(UIColor.white, for: .normal)
         PendingButton.tag = 0
         PendingButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(PendingButton)
-        
+        selfScreenContents.addSubview(PendingButton)
     
-        DeliveredButton.frame = CGRect(x: PendingButton.frame.maxX + 1, y: ListOfOrdersNavigationBar.frame.maxY, width: view.frame.width / 2, height: (4 * y))
+        DeliveredButton.frame = CGRect(x: PendingButton.frame.maxX + 1, y: 0, width: view.frame.width / 2, height: (4 * y))
         DeliveredButton.backgroundColor = UIColor.lightGray
         DeliveredButton.setTitle("DELIVERED", for: .normal)
         DeliveredButton.setTitleColor(UIColor.black, for: .normal)
         DeliveredButton.tag = 1
         DeliveredButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(DeliveredButton)
+        selfScreenContents.addSubview(DeliveredButton)
         
         DeliveredButton.backgroundColor = UIColor.lightGray
         DeliveredButton.setTitleColor(UIColor.black, for: .normal)
         
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
+        
         PendingViewContents(isHidden: false)
         DeliveredViewContents(isHidden: true)
-        
     }
  
     
@@ -312,7 +396,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
        // let PendingViewBackDrop = UIView()
         PendingViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
         PendingViewBackDrop.backgroundColor = UIColor.clear
-        view.addSubview(PendingViewBackDrop)
+        selfScreenContents.addSubview(PendingViewBackDrop)
         
         PendingViewBackDrop.isHidden = isHidden
         
@@ -385,7 +469,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(orderId_Icon)
             
             let nameLabel = UILabel()
-            nameLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: 0, width: (10 * x), height: (2 * y))
+            nameLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: 0, width: (12 * x), height: (2 * y))
             nameLabel.text = "Order Id : "
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
@@ -401,7 +485,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             PendingViewButton.addSubview(tailorName)
-            
             
             let TailorName_Icon = UIImageView()
             TailorName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
@@ -425,7 +508,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             shopName.adjustsFontSizeToFitWidth = true
             PendingViewButton.addSubview(shopName)
             
-            
             let ShopName_Icon = UIImageView()
             ShopName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
             ShopName_Icon.image = UIImage(named: "ShopName")
@@ -447,7 +529,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ordersCountLabel.adjustsFontSizeToFitWidth = true
             PendingViewButton.addSubview(ordersCountLabel)
-            
             
             let ProductName_Icon = UIImageView()
             ProductName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
@@ -501,6 +582,97 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
            PendingViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
             y1 = PendingViewButton.frame.maxY + y
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.text = "Order Id : "
+                    nameLabel.textAlignment = .left
+                    tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    tailorName.textAlignment = .left
+                    shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopLabel.text = "Tailor Name : "
+                    shopLabel.textAlignment = .left
+                    shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopName.textAlignment = .left
+                    ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersLabel.text = "Shop Name : "
+                    ordersLabel.textAlignment = .left
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersCountLabel.textAlignment = .left
+                    ProductLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ProductLabel.text = "Product Name : "
+                    ProductLabel.textAlignment = .left
+                    ProductNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ProductNameLabel.textAlignment = .left
+                    OrderDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    OrderDateLabel.text = "Order Date/Time : "
+                    OrderDateLabel.textAlignment = .left
+                    OrderDatesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    OrderDatesLabel.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    tailorImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    nameLabel.text = "معرف الطلب الخاص بك : "
+                    nameLabel.textAlignment = .right
+                    tailorName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    tailorName.textAlignment = .right
+                    shopLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopLabel.text = "اسم الخياط: "
+                    shopLabel.textAlignment = .right
+                    shopName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopName.textAlignment = .right
+                    ordersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersLabel.text = "اسم المحل : "
+                    ordersLabel.textAlignment = .right
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersCountLabel.textAlignment = .right
+                    ProductLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ProductLabel.text = "اسم المنتج : "
+                    ProductLabel.textAlignment = .right
+                    ProductNameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ProductNameLabel.textAlignment = .right
+                    OrderDateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    OrderDateLabel.text = "تاريخ الطلب / الوقت: "
+                    OrderDateLabel.textAlignment = .right
+                    OrderDatesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    OrderDatesLabel.textAlignment = .right
+                }
+            }
+            else
+            {
+                tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                nameLabel.text = "Order Id : "
+                nameLabel.textAlignment = .left
+                tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                tailorName.textAlignment = .left
+                shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopLabel.text = "Tailor Name : "
+                shopLabel.textAlignment = .left
+                shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopName.textAlignment = .left
+                ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersLabel.text = "Shop Name : "
+                ordersLabel.textAlignment = .left
+                ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersCountLabel.textAlignment = .left
+                ProductLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ProductLabel.text = "Product Name : "
+                ProductLabel.textAlignment = .left
+                ProductNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ProductNameLabel.textAlignment = .left
+                OrderDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                OrderDateLabel.text = "Order Date/Time : "
+                OrderDateLabel.textAlignment = .left
+                OrderDatesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                OrderDatesLabel.textAlignment = .left
+            }
          }
         }
       else
@@ -517,7 +689,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         // let DeliveredViewBackDrop = UIView()
         DeliveredViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
         DeliveredViewBackDrop.backgroundColor = UIColor.clear
-        view.addSubview(DeliveredViewBackDrop)
+        selfScreenContents.addSubview(DeliveredViewBackDrop)
         
         DeliveredViewBackDrop.isHidden = isHidden
         

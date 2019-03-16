@@ -239,8 +239,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        self.view.bringSubviewToFront(slideMenuButton)
-        
         var x1:CGFloat = (3 * x)
         var y1:CGFloat =  (10.65 * y)
         
@@ -433,6 +431,8 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         {
             changeViewToEnglishInSelf()
         }
+        
+        
     }
     
     func changeViewToEnglishInSelf()

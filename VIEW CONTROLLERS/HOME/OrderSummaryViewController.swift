@@ -62,7 +62,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     var measurementBy = String()
     var measurementName = String()
     var measurementId = NSArray()
-    var measurementValues = [Float]()
+    var measurementValues = [Double]()
     var units = "CM"
     var orderCustomization = [[String: Int]]()
     var tailorId = [[String: Any]]()
@@ -466,7 +466,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressSubViews.addSubview(dressTypeImages)
             
             let dressTypeLabels = UILabel()
-            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (18 * x), height: (3 * y))
+            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
             dressTypeLabels.backgroundColor = UIColor.clear
             dressTypeLabels.text = premiumArray[i]
             dressTypeLabels.textColor = UIColor.white
@@ -476,7 +476,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressSubViews.addSubview(dressTypeLabels)
             
             let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX, y: (y / 2), width: (7.5 * x), height: (3 * y))
+            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX, y: (y / 2), width: (12 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             
             if let type = UserDefaults.standard.value(forKey: "serviceType") as? Int
@@ -973,7 +973,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             measurementId = partsId
         }
         
-        if let dictValues = UserDefaults.standard.value(forKey: "measurementValues") as? [Float]
+        if let dictValues = UserDefaults.standard.value(forKey: "measurementValues") as? [Double]
         {
             measurementValues = dictValues
         }
@@ -1140,6 +1140,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                     }
                     else
                     {
+                        print("CALL OF CHECK", measurementId, measurementValues)
                         let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
                         print("FINALIZED USER MEASUREMENT", userMeasurement)
                         

@@ -370,7 +370,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasurementPayment = Result.value(forKey:"Payment") as! NSArray
             print("MeasurementPayment:",MeasurementPayment)
             
-            
+        
         }
         else if ResponseMsg == "Failure"
         {

@@ -96,7 +96,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-      //  fetchingCurrentLocation()
+        fetchingCurrentLocation()
 
          super.viewDidLoad()
         
@@ -107,7 +107,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     override func viewWillAppear(_ animated: Bool)
     {
          navigationBar.isHidden = true
-         fetchingCurrentLocation()
+//         fetchingCurrentLocation()
         
     }
     override func viewDidAppear(_ animated: Bool)

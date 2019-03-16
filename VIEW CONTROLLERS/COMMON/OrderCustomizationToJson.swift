@@ -108,7 +108,7 @@ class OrderCustomizationToJson
         return checkList
     }
     
-    func userMeasurementRequest(id : [Int], values : [Float]) -> [[String: Any]]
+    func userMeasurementRequest(id : [Int], values : [Double]) -> [[String: Any]]
     {
         var List1 = [[String: Any]]()
         

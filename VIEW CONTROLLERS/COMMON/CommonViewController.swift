@@ -18,6 +18,8 @@ class CommonViewController: UIViewController
     var x = CGFloat()
     var y = CGFloat()
     
+    let selfScreenContents1 = UIView()
+    
     let backgroundImage = UIImageView()
     let navigationBar = UIView()
     let navigationTitle = UILabel()
@@ -58,26 +60,27 @@ class CommonViewController: UIViewController
         
         self.activityContents()
         
+        selfScreenContents1.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        selfScreenContents1.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents1)
+        
+        navigationContents()
+        tabContents()
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
             {
                 slideMenu()
-                navigationContents()
-                tabContents()
             }
             else if language == "ar"
             {
                 slideMenuRight()
-                navigationContentsInArabic()
-                tabContentsInArabic()
             }
         }
         else
         {
             slideMenu()
-            navigationContents()
-            tabContents()
         }
         
         super.viewDidLoad()
@@ -85,28 +88,25 @@ class CommonViewController: UIViewController
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
+    override func viewWillAppear(_ animated: Bool)
+    {
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
             {
                 slideMenu()
-                navigationContents()
-                tabContents()
+                changeViewToEnglish()
             }
             else if language == "ar"
             {
                 slideMenuRight()
-                navigationContentsInArabic()
-                tabContentsInArabic()
+                changeViewToArabic()
             }
         }
         else
         {
             slideMenu()
-            navigationContents()
-            tabContents()
+            changeViewToEnglish()
         }
     }
     
@@ -153,7 +153,7 @@ class CommonViewController: UIViewController
     {
         backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         backgroundImage.image = UIImage(named: "background")
-        view.addSubview(backgroundImage)
+        selfScreenContents1.addSubview(backgroundImage)
         
         let testImage = UIImageView()
         testImage.frame = CGRect(x: 50, y: 100, width: view.frame.width - 100, height: 200)
@@ -162,7 +162,7 @@ class CommonViewController: UIViewController
         
         navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-        view.addSubview(navigationBar)
+        selfScreenContents1.addSubview(navigationBar)
         
         navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
         navigationTitle.textColor = UIColor.white
@@ -182,54 +182,71 @@ class CommonViewController: UIViewController
         notificationButton.setImage(UIImage(named: "notification"), for: .normal)
         //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
 //        navigationBar.addSubview(notificationButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            changeViewToEnglish()
+        }
     }
     
     func changeViewToEnglish()
     {
-        self.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenContents1.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
-        navigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+//        navigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+
+//        tabBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
-        tabBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        slideMenuButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        tab1ImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tab1Text.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tab1Text.text = "Home"
+        tab2ImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tab2Text.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tab2Text.text = "Request"
+        tab3ImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tab3Text.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tab3Text.text = "Orders"
+        tab4ImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tab4Text.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tab4Text.text = "Cart"
     }
     
     func changeViewToArabic()
     {
-        self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenContents1.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        navigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        
-        tabBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//        navigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
 
-    }
-    
-    func navigationContentsInArabic()
-    {
-        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        backgroundImage.image = UIImage(named: "background")
-        view.addSubview(backgroundImage)
+//        tabBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-        view.addSubview(navigationBar)
+        slideMenuButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        navigationTitle.frame = CGRect(x: 0, y: (3 * y), width: navigationBar.frame.width, height: (3 * y))
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        navigationBar.addSubview(navigationTitle)
-        
-        userImage.frame = CGRect(x: navigationBar.frame.width - (6 * x), y: (2 * y), width: (4 * y), height: (4 * y))
-        userImage.image = FileHandler().getImageFromDocumentDirectory()
-        userImage.layer.cornerRadius = userImage.frame.height / 2
-        userImage.layer.borderWidth = 1
-        userImage.layer.masksToBounds = true
-        navigationBar.addSubview(userImage)
-        
-        notificationButton.frame = CGRect(x: (2 * x), y: navigationTitle.frame.minY, width: (4 * x), height: (4 * y))
-        notificationButton.setImage(UIImage(named: "notification"), for: .normal)
-        //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
-//        navigationBar.addSubview(notificationButton)
+        tab1ImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tab1Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tab1Text.text = "منزل"
+        tab2ImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tab2Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tab2Text.text = "طلب"
+        tab3ImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tab3Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tab3Text.text = "أوامر"
+        tab4ImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tab4Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tab4Text.text = "كارة"
+
     }
     
     func tabContents()
@@ -239,12 +256,12 @@ class CommonViewController: UIViewController
         slideMenuButton.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
         slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(slideMenuButton)
+        selfScreenContents1.addSubview(slideMenuButton)
         
         // let tabBar = UIView()
         tabBar.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
         tabBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-        view.addSubview(tabBar)
+        selfScreenContents1.addSubview(tabBar)
         
         tab1Button.frame = CGRect(x: 0, y: 0, width: (9.37 * x), height: (5 * y))
         tab1Button.tag = 0
@@ -313,84 +330,22 @@ class CommonViewController: UIViewController
         tab4Text.textAlignment = .center
         tab4Text.font = tab4Text.font.withSize(10)
         tab4Button.addSubview(tab4Text)
-    }
-    
-    func tabContentsInArabic()
-    {
-        slideMenuButton.frame = CGRect(x: view.frame.width - (2.5 * x), y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
-        slideMenuButton.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-        slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
-        slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(slideMenuButton)
         
-        // let tabBar = UIView()
-        tabBar.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
-        tabBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
-        view.addSubview(tabBar)
-        
-        tab1Button.frame = CGRect(x: 0, y: 0, width: (9.37 * x), height: (5 * y))
-        tab1Button.tag = 3
-        tab1Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
-        tabBar.addSubview(tab1Button)
-        
-        tab1ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
-        tab1ImageView.image = UIImage(named: "cart")
-        tab1Button.addSubview(tab1ImageView)
-        
-        tab1Text.frame = CGRect(x: 0, y: tab1ImageView.frame.maxY, width: (9.37 * x), height: y)
-        tab1Text.text = "عربة التسوق"
-        tab1Text.textColor = UIColor.white
-        tab1Text.textAlignment = .center
-        tab1Text.font = tab1Text.font.withSize(15)
-        tab1Button.addSubview(tab1Text)
-        
-        tab2Button.frame = CGRect(x: tab1Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
-        tab2Button.tag = 2
-        tab2Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
-        tabBar.addSubview(tab2Button)
-        
-        tab2ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
-        tab2ImageView.image = UIImage(named: "order")
-        tab2Button.addSubview(tab2ImageView)
-        
-        tab2Text.frame = CGRect(x: 0, y: tab2ImageView.frame.maxY, width: (9.37 * x), height: y)
-        tab2Text.text = "طلب"
-        tab2Text.textColor = UIColor.white
-        tab2Text.textAlignment = .center
-        tab2Text.font = tab2Text.font.withSize(10)
-        tab2Button.addSubview(tab2Text)
-        
-        tab3Button.frame = CGRect(x: tab2Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
-        tab3Button.tag = 1
-        tab3Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
-        tabBar.addSubview(tab3Button)
-        
-        tab3ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
-        tab3ImageView.image = UIImage(named: "request")
-        tab3Button.addSubview(tab3ImageView)
-        
-        tab3Text.frame = CGRect(x: 0, y: tab3ImageView.frame.maxY, width: (9.37 * x), height: y)
-        tab3Text.text = "طلب"
-        tab3Text.textColor = UIColor.white
-        tab3Text.textAlignment = .center
-        tab3Text.font = tab3Text.font.withSize(10)
-        tab3Button.addSubview(tab3Text)
-        
-        tab4Button.frame = CGRect(x: tab3Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
-        tab4Button.tag = 0
-        tab4Button.addTarget(self, action: #selector(self.tabBarButtonAction(sender:)), for: .touchUpInside)
-        tabBar.addSubview(tab4Button)
-        
-        tab4ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
-        tab4ImageView.image = UIImage(named: "home")
-        tab4Button.addSubview(tab4ImageView)
-        
-        tab4Text.frame = CGRect(x: 0, y: tab4ImageView.frame.maxY, width: (9.37 * x), height: y)
-        tab4Text.text = "الصفحة الرئيسية"
-        tab4Text.textColor = UIColor.orange
-        tab4Text.textAlignment = .center
-        tab4Text.font = tab4Text.font.withSize(10)
-        tab4Button.addSubview(tab4Text)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            changeViewToEnglish()
+        }
     }
     
     @objc func slideMenuButtonAction(sender : UIButton)
