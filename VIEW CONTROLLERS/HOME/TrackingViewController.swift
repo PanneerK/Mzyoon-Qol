@@ -45,7 +45,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         slideMenuButton.isHidden = true
         tabBar.isHidden = true
         
-      //  self.TrackingTableview.separatorStyle = UITableViewCell.SeparatorStyle.none
+        self.TrackingTableview.separatorStyle = UITableViewCell.SeparatorStyle.none
         
     }
     

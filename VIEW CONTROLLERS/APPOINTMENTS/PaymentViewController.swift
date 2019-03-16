@@ -1536,7 +1536,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     // UITextfield Move upward & Downward Code..
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
-        animateViewMoving(up: true, moveValue: 90)
+       animateViewMoving(up: true, moveValue: 90)
     }
     func textFieldDidEndEditing(_ textField: UITextField)
     {
