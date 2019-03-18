@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/HOME/TrackingViewController.swift"
-            timestampString = "574578439.230998"
+            filePath = "VIEW CONTROLLERS/HOME/ReviewsViewController.swift"
+            timestampString = "574610948.6201"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "API_CALLBACK_GetTrackingDetails(getTrackingDetails:)"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "reviewsContent()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -35,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/APPOINTMENTS/TelrResponseViewController.swift"
-            timestampString = "574583107.884596"
+            filePath = "VIEW CONTROLLERS/HOME/ReviewsViewController.swift"
+            timestampString = "574610948.62023"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
-            landmarkName = "DoneButtonAction(sender:)"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
+            landmarkName = "reviewsContent()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -51,13 +51,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/APPOINTMENTS/PaymentViewController.swift"
-            timestampString = "574583107.884663"
+            filePath = "VIEW CONTROLLERS/HOME/WriteReviewRateViewController.swift"
+            timestampString = "574610948.620321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1400"
-            endingLineNumber = "1400"
-            landmarkName = "PayButtonAction(sender:)"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "API_CALLBACK_InsertRating(insertRating:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VIEW CONTROLLERS/HOME/WriteReviewRateViewController.swift"
+            timestampString = "574610948.620398"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "502"
+            endingLineNumber = "502"
+            landmarkName = "SubmitButtonAction(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

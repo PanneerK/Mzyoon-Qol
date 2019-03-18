@@ -131,10 +131,13 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
             //
             let RatingStatus = Result.value(forKey: "RatingStatus") as! NSArray
             
-            Based_On_ReviewsArr = RatingStatus.value(forKey: "Based_On_Reviews") as! NSArray
-            print("Based_On_ReviewsArr :", Based_On_ReviewsArr)
+            Based_On_ReviewsArr = RatingStatus.value(forKey: "ReviewCount") as! NSArray
+            print("ReviewCount :", Based_On_ReviewsArr)
             
-            FullStatusArr = RatingStatus.value(forKey: "FullStatus") as! NSArray
+            //
+            let FullStatus = Result.value(forKey: "FullStatus") as! NSArray
+            
+            FullStatusArr = FullStatus.value(forKey: "FullStatus") as! NSArray
             print("FullStatusArr :", FullStatusArr)
             
             //
@@ -215,9 +218,11 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     StarImageView.frame = CGRect(x: x/2, y: y/2, width: (7 * x), height:(6 * y))
     //StarImageView.backgroundColor = UIColor.lightGray
     StarImageView.image = UIImage(named: "star")
+    RatingsView.addSubview(StarImageView)
+    
     if(FullStatusArr.count > 0)
     {
-      RatingsView.addSubview(StarImageView)
+      // RatingsView.addSubview(StarImageView)
     }
     else
     {
@@ -228,13 +233,15 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     RatingNumLabel.frame = CGRect(x: (2 * x), y: (2 * y), width: (3 * x), height: (2 * y))
     if(FullStatusArr.count > 0)
     {
-      let rateNum : Int = Int(FullStatusArr[0] as! Double)
-      RatingNumLabel.text = "\(rateNum)/5"
+        let rateNum : Int = Int(FullStatusArr[0] as! Double)
+        RatingNumLabel.text = "\(rateNum)/5"
     }
     else
     {
-        RatingNumLabel.text = ""
+        RatingNumLabel.text = "0/5"
     }
+   
+    
     RatingNumLabel.textColor = UIColor.white
     //RatingNumLabel.backgroundColor = UIColor.gray
     RatingNumLabel.textAlignment = .center
@@ -250,7 +257,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     }
     else
     {
-        RatingStatusLabel.text = "GOOD"
+        RatingStatusLabel.text = "POOR"
     }
     RatingStatusLabel.textColor = UIColor.black
     //RatingStatusLabel.backgroundColor = UIColor.gray
@@ -263,12 +270,12 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     ReviewStatusLabel.frame = CGRect(x: x/2, y: RatingStatusLabel.frame.maxY, width: (8 * x), height: (5 * y))
     if(Based_On_ReviewsArr.count > 0)
     {
-       let StatusNum : Int = Based_On_ReviewsArr[0] as! Int
-       ReviewStatusLabel.text = "(Based on \(StatusNum) Reviews)"
+       let StatusNum  = Based_On_ReviewsArr[0] as? String
+       ReviewStatusLabel.text = "(Based on \(StatusNum!) Reviews)"
     }
     else
     {
-       ReviewStatusLabel.text = ""
+       ReviewStatusLabel.text = "(Based on 0 Reviews)"
     }
     ReviewStatusLabel.textColor = UIColor.black
    // ReviewStatusLabel.backgroundColor = UIColor.gray

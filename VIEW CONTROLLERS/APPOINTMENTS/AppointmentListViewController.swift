@@ -49,10 +49,14 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
 
         // Do any additional setup after loading the view.
    
+        
   }
     
     override func viewWillAppear(_ animated: Bool)
     {
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
+        
         if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
             self.serviceCall.API_GetAppointmentList(BuyerId:userId, delegate:self)

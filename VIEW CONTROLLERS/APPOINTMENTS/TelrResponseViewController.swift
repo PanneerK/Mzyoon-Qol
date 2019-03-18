@@ -55,6 +55,8 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     {
         super.viewDidLoad()
 
+         navigationBar.isHidden = true
+        
         // Do any additional setup after loading the view.
         
       //  KEY = "XZCQ~9wRvD^prrJx" //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
@@ -66,7 +68,8 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         
        // ResponseContent()
         
-       
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
         
     }
     func API_CALLBACK_GetPaymentStore(StoreDetails: NSDictionary)
@@ -351,12 +354,11 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         let TotalAmt = UserDefaults.standard.value(forKey: "TotalAmount") as? String
         
        
-       
         if(self.TransMessage == "Authorised")
         {
             print("orderId :",orderId!)
             print("TailorId :",TailorId!)
-         //   print("Total Amt :",TotalAmt!)
+            print("Total Amt :",TotalAmt!)
             
             self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
             self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)

@@ -65,13 +65,18 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         // Do any additional setup after loading the view.
 //        self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         
-        selectedButton(tag: 2)
+         navigationBar.isHidden = true
+        
+         selectedButton(tag: 2)
   
        
         //orderDetailsContent()
     }
     override func viewWillAppear(_ animated: Bool)
     {
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
+        
          self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
         
         // self.serviceCall.API_GetTrackingDetails(OrderId: OrderID, delegate: self)

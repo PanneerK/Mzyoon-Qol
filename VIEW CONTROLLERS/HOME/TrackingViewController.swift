@@ -46,6 +46,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         
         slideMenuButton.isHidden = true
         tabBar.isHidden = true
+        navigationBar.isHidden = true
         
         self.TrackingTableview.separatorStyle = UITableViewCell.SeparatorStyle.none
         
@@ -54,6 +55,9 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     
     override func viewWillAppear(_ animated: Bool)
     {
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
+        
         self.ServiceCall.API_GetTrackingDetails(OrderId: OrderID, delegate: self)
     }
     

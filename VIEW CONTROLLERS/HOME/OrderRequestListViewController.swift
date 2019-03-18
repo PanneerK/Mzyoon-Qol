@@ -91,6 +91,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     override func viewWillAppear(_ animated: Bool)
     {
         
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
+        
         if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
             self.serviceCall.API_GetOrderRequest(RequestId: userId, delegate: self)

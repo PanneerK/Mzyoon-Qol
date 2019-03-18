@@ -50,6 +50,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     {
         super.viewDidLoad()
 
+         navigationBar.isHidden = true
+        
         // Do any additional setup after loading the view.
         
          selectedButton(tag: 1)
@@ -65,6 +67,9 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool)
     {
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
+        
         print("request Order ID :",OrderId)
         UserDefaults.standard.set(OrderId, forKey: "OrderID")
         

@@ -62,6 +62,8 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
     {
         super.viewDidLoad()
 
+         navigationBar.isHidden = true
+        
         // Do any additional setup after loading the view.
         
         selectedButton(tag: 2)
@@ -70,6 +72,8 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool)
     {
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
         
        // TailorID = UserDefaults.standard.value(forKey: "TailorID") as? Int
         

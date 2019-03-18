@@ -94,6 +94,14 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
                 self.present(alert, animated: true, completion: nil)
               })
            }
+           else
+           {
+            DispatchQueue.main.async (execute: { () -> Void in
+                let alert = UIAlertController(title: "Alert", message: Result, preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: self.OkAction(action:)))
+                self.present(alert, animated: true, completion: nil)
+            })
+           }
           
         }
         else if ResponseMsg == "Failure"
@@ -605,12 +613,20 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     if (reviewStr == nil || reviewStr.isEmpty)
     {
-        reviewStr = ""
+        // reviewStr = ""
+        
+        DispatchQueue.main.async (execute: { () -> Void in
+            let alert = UIAlertController(title: "Message!", message: "Please Write a Review..!", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        })
     }
+    else
+    {
     
    //  self.serviceCall.API_InsertRatings(OrderId:OrderID!, Category:CategoryID, Review:reviewStr, TailorId:TailorId!, delegate: self)
     
-   self.serviceCall.API_InsertRatings(OrderId: OrderID, CategoryId0: 1, CategoryRating0: OnTimeServiceRatingNum, CategoryId1: 2, CategoryRating1: StitchingQualityRatingNum, CategoryId2: 3, CategoryRating2: CustomerServiceRatingNum, Review: reviewStr, TailorId: TailorID!, delegate: self)
-    
+    self.serviceCall.API_InsertRatings(OrderId: OrderID, CategoryId0: 1, CategoryRating0: OnTimeServiceRatingNum, CategoryId1: 2, CategoryRating1: StitchingQualityRatingNum, CategoryId2: 3, CategoryRating2: CustomerServiceRatingNum, Review: reviewStr, TailorId: TailorID!, delegate: self)
+    }
   }
 }

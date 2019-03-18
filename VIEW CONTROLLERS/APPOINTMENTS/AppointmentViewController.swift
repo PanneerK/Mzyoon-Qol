@@ -102,6 +102,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     {
         super.viewDidLoad()
  
+        navigationBar.isHidden = true
         // Do any additional setup after loading the view.
        
      //  AppointmentContent()
@@ -120,16 +121,17 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             self.serviceCall.API_GetAppointmentMaterial(OrderId: order_Id, delegate: self)
             
             // Measurement Details like image,Heading etc..
-            self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
+           // self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
             
             // Material Dates from Tailor..
-            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+           // self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
             
             // Measurement Dates from Tailor..
-            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
+           // self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
             
             
         }
+        
         
         TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
         
@@ -142,6 +144,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     {
          print("View WillAppear")
         
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
      }
     
     func DeviceError() 
@@ -296,7 +300,13 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MaterialPayment = Result.value(forKey:"Payment") as! NSArray
             print("MaterialPayment:",MaterialPayment)
             
-            
+            if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
+            {
+             // Measurement Details like image,Heading etc..
+             self.serviceCall.API_GetAppointmentMeasurement(OrderId: order_Id, delegate: self)
+                
+             self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
+            }
          //   AppointmentContent()
             
         }
@@ -366,7 +376,13 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasurementPayment = Result.value(forKey:"Payment") as! NSArray
             print("MeasurementPayment:",MeasurementPayment)
             
-        
+            if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
+            {
+            // Measurement Dates from Tailor..
+              self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
+                
+            }
+             AppointmentContent()
         }
         else if ResponseMsg == "Failure"
         {
@@ -388,7 +404,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
         }
         
-          AppointmentContent()
+      //  AppointmentContent()
     }
     
     func API_CALLBACK_IsApproveAptMaterial(IsApproveMaterial: NSDictionary)
