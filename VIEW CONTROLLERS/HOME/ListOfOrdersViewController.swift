@@ -52,6 +52,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     var DelivTailorNameEngArray = NSArray()
     var DelivTailorIdArray = NSArray()
     
+    var checkEmptyLabel = Bool()
     let emptyLabel = UILabel()
     var OrderPendDate = String()
     var OrderDelvDate = String()
@@ -70,9 +71,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         selectedButton(tag: 2)
  
       //  ListOfOrdersContent()
-        
-      
-        
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -131,6 +129,9 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             if Result == nil || Result.count == 0
             {
+                emptyLabel.removeFromSuperview()
+                checkEmptyLabel = true
+                
                 emptyLabel.frame = CGRect(x: 0, y: ((PendingViewBackDrop.frame.height - (3 * y)) / 2), width: PendingViewBackDrop.frame.width, height: (3 * y))
                 
                 if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -202,6 +203,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             if Result == nil || Result.count == 0
             {
+                emptyLabel.removeFromSuperview()
+                checkEmptyLabel = true
                 emptyLabel.frame = CGRect(x: 0, y: ((DeliveredViewBackDrop.frame.height - (3 * y)) / 2), width: DeliveredViewBackDrop.frame.width, height: (3 * y))
                 
                 if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -222,6 +225,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                     emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     emptyLabel.text = "You Dont Have Delivered orders"
                 }
+                
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
@@ -374,6 +378,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     {
         if sender.tag == 0
         {
+            if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+            {
+                self.serviceCall.API_ListOfOrdersPending(BuyerId: userId, delegate: self)
+            }
+            else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+            {
+                self.serviceCall.API_ListOfOrdersPending(BuyerId: "\(userId)", delegate: self)
+            }
             DeliveredButton.backgroundColor = UIColor.lightGray
             DeliveredButton.setTitleColor(UIColor.black, for: .normal)
             PendingViewContents(isHidden: false)
@@ -381,6 +393,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
         else if sender.tag == 1
         {
+            emptyLabel.removeFromSuperview()
             PendingButton.backgroundColor = UIColor.lightGray
             PendingButton.setTitleColor(UIColor.black, for: .normal)
             PendingViewContents(isHidden: true)
@@ -882,6 +895,97 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addTarget(self, action: #selector(self.DeliveredDetailsButtonAction(sender:)), for: .touchUpInside)
             
             y2 = DeliveredViewButton.frame.maxY + y
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.text = "Order Id : "
+                    nameLabel.textAlignment = .left
+                    tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    tailorName.textAlignment = .left
+                    shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopLabel.text = "Tailor Name : "
+                    shopLabel.textAlignment = .left
+                    shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    shopName.textAlignment = .left
+                    ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersLabel.text = "Shop Name : "
+                    ordersLabel.textAlignment = .left
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ordersCountLabel.textAlignment = .left
+                    ProductLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ProductLabel.text = "Product Name : "
+                    ProductLabel.textAlignment = .left
+                    ProductNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    ProductNameLabel.textAlignment = .left
+                    OrderDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    OrderDateLabel.text = "Order Date/Time : "
+                    OrderDateLabel.textAlignment = .left
+                    OrderDatesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    OrderDatesLabel.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    tailorImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    nameLabel.text = "معرف الطلب الخاص بك : "
+                    nameLabel.textAlignment = .right
+                    tailorName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    tailorName.textAlignment = .right
+                    shopLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopLabel.text = "اسم الخياط: "
+                    shopLabel.textAlignment = .right
+                    shopName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopName.textAlignment = .right
+                    ordersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersLabel.text = "اسم المحل : "
+                    ordersLabel.textAlignment = .right
+                    ordersCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ordersCountLabel.textAlignment = .right
+                    ProductLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ProductLabel.text = "اسم المنتج : "
+                    ProductLabel.textAlignment = .right
+                    ProductNameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    ProductNameLabel.textAlignment = .right
+                    OrderDateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    OrderDateLabel.text = "تاريخ الطلب / الوقت: "
+                    OrderDateLabel.textAlignment = .right
+                    OrderDatesLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    OrderDatesLabel.textAlignment = .right
+                }
+            }
+            else
+            {
+                tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                nameLabel.text = "Order Id : "
+                nameLabel.textAlignment = .left
+                tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                tailorName.textAlignment = .left
+                shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopLabel.text = "Tailor Name : "
+                shopLabel.textAlignment = .left
+                shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                shopName.textAlignment = .left
+                ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersLabel.text = "Shop Name : "
+                ordersLabel.textAlignment = .left
+                ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ordersCountLabel.textAlignment = .left
+                ProductLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ProductLabel.text = "Product Name : "
+                ProductLabel.textAlignment = .left
+                ProductNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ProductNameLabel.textAlignment = .left
+                OrderDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                OrderDateLabel.text = "Order Date/Time : "
+                OrderDateLabel.textAlignment = .left
+                OrderDatesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                OrderDatesLabel.textAlignment = .left
+            }
         }
       }
     else
@@ -890,7 +994,6 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
        // alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
        // self.present(alert, animated: true, completion: nil)
     }
-        
   }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)

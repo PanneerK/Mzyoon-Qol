@@ -13,6 +13,11 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
 
     let serviceCall = ServerAPI()
     
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+
+    
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -199,34 +204,50 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
             print("Result", Result)
         }
     }
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "تفاصيل التسليم للنظام"
+        
+        OrderDetailsScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "DELIVERED ORDER DETAILS"
+        
+        OrderDetailsScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
   
     func orderDetailsContent()
     {
         self.stopActivity()
         
-        let orderDetailsNavigationBar = UIView()
-        orderDetailsNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        orderDetailsNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(orderDetailsNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        orderDetailsNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderDetailsNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "DELIVERED ORDER DETAILS"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        orderDetailsNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "DELIVERED ORDER DETAILS"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         // Scrollview...
         // let OrderDetailsScrollView = UIScrollView()
-        OrderDetailsScrollView.frame = CGRect(x: 0, y: orderDetailsNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
+        OrderDetailsScrollView.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
         OrderDetailsScrollView.backgroundColor = UIColor.clear
         OrderDetailsScrollView.contentSize.height = (1.75 * view.frame.height)
         view.addSubview(OrderDetailsScrollView)
@@ -251,6 +272,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         orderIdLabel.text = "ORDER ID : "
         orderIdLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderIdLabel.textColor = UIColor.black
+        orderIdLabel.textAlignment = .left
         orderIdView.addSubview(orderIdLabel)
         
         let orderIdNumLabel = UILabel()
@@ -268,6 +290,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         }
         orderIdNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderIdNumLabel.textColor = UIColor.black
+        orderIdNumLabel.textAlignment = .left
         orderIdView.addSubview(orderIdNumLabel)
         
         // Order Placed Label..
@@ -277,6 +300,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         orderPlacedLabel.text = "Order Placed On :"
         orderPlacedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderPlacedLabel.textColor = UIColor.black
+        orderPlacedLabel.textAlignment = .left
         orderIdView.addSubview(orderPlacedLabel)
         
         
@@ -297,6 +321,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         orderPlacedDateLabel.text = OrderDate
         orderPlacedDateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderPlacedDateLabel.textColor = UIColor.black
+        orderPlacedDateLabel.textAlignment = .left
         orderIdView.addSubview(orderPlacedDateLabel)
         
         // PaymentInfo View..
@@ -596,6 +621,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         let OrderStatusLabel = UILabel()
         OrderStatusLabel.frame = CGRect(x: 0, y: 0, width: OrderStatusView.frame.width, height: (4 * x))
         OrderStatusLabel.text = " RATE US"
+        OrderStatusLabel.textAlignment = .left
         OrderStatusLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         OrderStatusLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
         OrderStatusLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
@@ -617,6 +643,220 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         
         
         OrderDetailsScrollView.contentSize.height = OrderStatusView.frame.maxY + (2 * y)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                orderIdView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderIdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderIdLabel.text = "ORDER ID : "
+                orderIdLabel.textAlignment = .left
+                orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderIdNumLabel.textAlignment = .left
+                orderPlacedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderPlacedLabel.text = "Order Placed On :"
+                orderPlacedLabel.textAlignment = .left
+                orderPlacedDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderPlacedDateLabel.textAlignment = .left
+                PaymentInfoLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                PaymentInfoLabel.text = " PAYMENT INFORMATION"
+                PaymentInfoLabel.textAlignment = .left
+                PaymentInfoView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DressImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DressTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DressTypeLabel.textAlignment = .left
+                QtyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                QtyLabel.text = "Qty : "
+                QtyLabel.textAlignment = .left
+                QtyNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                QtyNumLabel.textAlignment = .left
+                PriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                PriceLabel.text = "Price : "
+                PriceLabel.textAlignment = .left
+                PriceNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                PriceNumLabel.textAlignment = .left
+                SubTotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                SubTotalLabel.text = "Sub Total"
+                SubTotalLabel.textAlignment = .left
+                SubTotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                SubTotalPriceLabel.textAlignment = .right
+                ShippingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ShippingLabel.text = "Shipping & Handling"
+                ShippingLabel.textAlignment = .left
+                ShippingPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ShippingPriceLabel.textAlignment = .right
+                TaxLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TaxLabel.text = "Tax"
+                TaxLabel.textAlignment = .left
+                TaxPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TaxPriceLabel.textAlignment = .right
+                AppointmentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                AppointmentLabel.text = "Appointment Charges"
+                AppointmentLabel.textAlignment = .left
+                AppointmentPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                AppointmentPriceLabel.textAlignment = .right
+                TotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TotalLabel.text = "Total"
+                TotalLabel.textAlignment = .left
+                TotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TotalPriceLabel.textAlignment = .right
+                PaymentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                PaymentLabel.text = "Payment Type"
+                PaymentLabel.textAlignment = .left
+                PaymentTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                PaymentTypeLabel.text = "(Card)"
+                PaymentTypeLabel.textAlignment = .right
+                OrderStatusView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                OrderStatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                OrderStatusLabel.text = " RATE US"
+                OrderStatusLabel.textAlignment = .left
+                TrackingButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TrackingButton.setTitle("RATE AND WRITE A REVIEW", for: .normal)
+                
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                orderIdView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                orderIdLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                orderIdLabel.text = "معرف الطلبية : "
+                orderIdLabel.textAlignment = .right
+                orderIdNumLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                orderIdNumLabel.textAlignment = .right
+                orderPlacedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                orderPlacedLabel.text = "تم تقديم الطلب بتاريخ : "
+                orderPlacedLabel.textAlignment = .right
+                orderPlacedDateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                orderPlacedDateLabel.textAlignment = .right
+                PaymentInfoLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                PaymentInfoLabel.text = " معلومات الدفع"
+                PaymentInfoLabel.textAlignment = .right
+                PaymentInfoView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DressImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DressTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DressTypeLabel.textAlignment = .right
+                QtyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                QtyLabel.text = "كمية : "
+                QtyLabel.textAlignment = .right
+                QtyNumLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                QtyNumLabel.textAlignment = .right
+                PriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                PriceLabel.text = "السعر : "
+                PriceLabel.textAlignment = .right
+                PriceNumLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                PriceNumLabel.textAlignment = .right
+                SubTotalLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                SubTotalLabel.text = "حاصل الجمع"
+                SubTotalLabel.textAlignment = .right
+                SubTotalPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                SubTotalPriceLabel.textAlignment = .left
+                ShippingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                ShippingLabel.text = "الشحن والتسليم"
+                ShippingLabel.textAlignment = .right
+                ShippingPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                ShippingPriceLabel.textAlignment = .left
+                TaxLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TaxLabel.text = "ضريبة"
+                TaxLabel.textAlignment = .right
+                TaxPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TaxPriceLabel.textAlignment = .left
+                AppointmentLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                AppointmentLabel.text = "رسوم التعيين"
+                AppointmentLabel.textAlignment = .right
+                AppointmentPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                AppointmentPriceLabel.textAlignment = .left
+                TotalLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TotalLabel.text = "مجموع"
+                TotalLabel.textAlignment = .right
+                TotalPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TotalPriceLabel.textAlignment = .left
+                PaymentLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                PaymentLabel.text = "نوع الدفع"
+                PaymentLabel.textAlignment = .right
+                PaymentTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                PaymentTypeLabel.text = "(بطاقة)"
+                PaymentTypeLabel.textAlignment = .left
+                OrderStatusView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                OrderStatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                OrderStatusLabel.text = " قيمنا"
+                OrderStatusLabel.textAlignment = .right
+                TrackingButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TrackingButton.setTitle("معدل وكتابة مراجعة", for: .normal)
+                
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            orderIdView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            orderIdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            orderIdLabel.text = "ORDER ID : "
+            orderIdLabel.textAlignment = .left
+            orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            orderIdNumLabel.textAlignment = .left
+            orderPlacedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            orderPlacedLabel.text = "Order Placed On :"
+            orderPlacedLabel.textAlignment = .left
+            orderPlacedDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            orderPlacedDateLabel.textAlignment = .left
+            PaymentInfoLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            PaymentInfoLabel.text = " PAYMENT INFORMATION"
+            PaymentInfoLabel.textAlignment = .left
+            PaymentInfoView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DressImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DressTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DressTypeLabel.textAlignment = .left
+            QtyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            QtyLabel.text = "Qty : "
+            QtyLabel.textAlignment = .left
+            QtyNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            QtyNumLabel.textAlignment = .left
+            PriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            PriceLabel.text = "Price : "
+            PriceLabel.textAlignment = .left
+            PriceNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            PriceNumLabel.textAlignment = .left
+            SubTotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            SubTotalLabel.text = "Sub Total"
+            SubTotalLabel.textAlignment = .left
+            SubTotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            SubTotalPriceLabel.textAlignment = .right
+            ShippingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            ShippingLabel.text = "Shipping & Handling"
+            ShippingLabel.textAlignment = .left
+            ShippingPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            ShippingPriceLabel.textAlignment = .right
+            TaxLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TaxLabel.text = "Tax"
+            TaxLabel.textAlignment = .left
+            TaxPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TaxPriceLabel.textAlignment = .right
+            AppointmentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            AppointmentLabel.text = "Appointment Charges"
+            AppointmentLabel.textAlignment = .left
+            AppointmentPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            AppointmentPriceLabel.textAlignment = .right
+            TotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TotalLabel.text = "Total"
+            TotalLabel.textAlignment = .left
+            TotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TotalPriceLabel.textAlignment = .right
+            PaymentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            PaymentLabel.text = "Payment Type"
+            PaymentLabel.textAlignment = .left
+            PaymentTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            PaymentTypeLabel.text = "(Card)"
+            PaymentTypeLabel.textAlignment = .right
+            OrderStatusView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            OrderStatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            OrderStatusLabel.text = " RATE US"
+            OrderStatusLabel.textAlignment = .left
+            TrackingButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TrackingButton.setTitle("RATE AND WRITE A REVIEW", for: .normal)
+            
+            changeViewToEnglishInSelf()
+        }
         
     }
     
