@@ -472,19 +472,29 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 
            if MaterialInEnglish.contains("Own Material-Direct Delivery")
            {
-             if let date = MaterialFromDtArr[0] as? String
-             {
-                MaterialFromDate = String(date.prefix(10))
-             }
-             From_MaterialType_TF.text = MaterialFromDate
-          
-             if let date = MaterialToDtArr[0] as? String
-             {
-                MaterialToDate = String(date.prefix(10))
-             }
-             TO_MaterialType_TF.text = MaterialToDate
-           
-             SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
+              if(MaterialFromDtArr.count > 0)
+              {
+                if let date = MaterialFromDtArr[0] as? String
+                {
+                  MaterialFromDate = String(date.prefix(10))
+                }
+                From_MaterialType_TF.text = MaterialFromDate
+              }
+            
+            if(MaterialToDtArr.count > 0)
+            {
+              if let date = MaterialToDtArr[0] as? String
+              {
+                 MaterialToDate = String(date.prefix(10))
+              }
+              TO_MaterialType_TF.text = MaterialToDate
+            }
+            
+            if(MaterialAppointTimeArr.count > 0)
+            {
+              SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
+            }
+            
            }
             
         }
@@ -525,21 +535,28 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
            if MeasurementInEnglish.contains("Go to Tailor Shop")
            {
-              if let date = MeasureFromDtArr[0] as? String
-              {
-                 MeasureFromDate = String(date.prefix(10))
-              }
-               From_MeasurementType_TF.text = MeasureFromDate
-           
+             if(MeasureFromDtArr.count > 0)
+             {
+               if let date = MeasureFromDtArr[0] as? String
+               {
+                  MeasureFromDate = String(date.prefix(10))
+               }
+                From_MeasurementType_TF.text = MeasureFromDate
+             }
             
+            if(MeasureToDtArr.count > 0)
+            {
               if let date = MeasureToDtArr[0] as? String
               {
                 MeasureToDate = String(date.prefix(10))
               }
               TO_MeasurementType_TF.text = MeasureToDate
+            }
           
-          
+            if(MeasureAppointTimeArr.count > 0)
+            {
               SLOT_MeasurementType_TF.text = MeasureAppointTimeArr[0] as? String
+            }
           }
          
         }

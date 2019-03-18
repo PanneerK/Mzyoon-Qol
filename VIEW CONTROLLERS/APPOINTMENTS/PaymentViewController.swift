@@ -1399,6 +1399,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         {
             UserName = UserDefaults.standard.value(forKey: "userName") as? String
             
+            print("Total Amount:",TotalAmount)
+            UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
+            
             if Country == "UNITED ARAB EMIRATES"
             {
                 Country = "UAE"
@@ -1418,6 +1421,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             alertFunctionCall()
         }
     }
+    
     /*{
         AddLine1 = self.Line1_TF.text
         AddLine2 = self.Line2_TF.text

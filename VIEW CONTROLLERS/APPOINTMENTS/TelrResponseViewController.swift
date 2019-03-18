@@ -356,7 +356,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         {
             print("orderId :",orderId!)
             print("TailorId :",TailorId!)
-            print("Total Amt :",TotalAmt!)
+         //   print("Total Amt :",TotalAmt!)
             
             self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
             self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
