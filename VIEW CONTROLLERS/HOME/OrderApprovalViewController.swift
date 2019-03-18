@@ -1320,7 +1320,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let StichValueLabel = UILabel()
         StichValueLabel.frame = CGRect(x: StichColonLabel.frame.maxX + x, y: 0, width: (15 * x), height: (6 * y))
         // StichValueLabel.backgroundColor = UIColor.gray
-        StichValueLabel.text = StichingTimesArray[0] as? String
+        let date = StichingTimesArray[0] as? String
+        StichValueLabel.text = "\(date!) Days"
         StichValueLabel.textColor = UIColor.white
         StichValueLabel.textAlignment = .left
         StichValueLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)

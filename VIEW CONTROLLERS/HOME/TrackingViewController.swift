@@ -30,11 +30,13 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     let TrackingTableview = UITableView()
    
     var TrackingDate = String()
-    
+    var TrackingTime = String()
+
     let emptyLabel = UILabel()
     
     var applicationDelegate = AppDelegate()
 
+    var TrackingStatusArray = NSArray()
     
     override func viewDidLoad()
     {
@@ -47,6 +49,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         
         self.TrackingTableview.separatorStyle = UITableViewCell.SeparatorStyle.none
         
+       
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -92,9 +95,8 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         if ResponseMsg == "Success"
         {
             let Result = getTrackingDetails.object(forKey: "Result") as! NSArray
-           // print("Result", Result)
             
-            if Result.count == 0 || Result == nil
+            if Result.count == 0  // || Result == nil
             {
                 TrackingTableview.removeFromSuperview()
                 
@@ -116,6 +118,16 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
             
             TrackingStatusIdArray = Result.value(forKey: "TrackingStatusId") as! NSArray
             print("TrackingStatusIdArray:",TrackingStatusIdArray)
+            
+            print("Tracking Array :",TrackingStatusArray)
+            
+            for i in 0..<StatusArray.count
+            {
+                let status = StatusArray[i]
+                TrackingStatusArray.addingObjects(from:[status])
+            }
+            
+            print("Tracking Array :",TrackingStatusArray)
             
             TrackingView()
             
@@ -214,14 +226,14 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
        
         cell.backgroundColor = UIColor.white
         
-        cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (3 * y))
+        cell.contentSpace.frame = CGRect(x: 0, y: 0, width: cell.frame.width, height: (5 * y))
         
        // cell.roundLabel.frame = CGRect(x: (3 * x), y: ((cell.frame.height - (y)) / 2), width: y, height: y)
         
        
-        cell.TrackingDate.frame = CGRect(x: x, y: ((cell.frame.height - (y)) / 1.2), width: (20 * x), height: (1.5 * y))
+        cell.TrackingDate.frame = CGRect(x: (3 * x), y: ((cell.frame.height - (y)) / 2.5) , width: (10 * x), height: (1.5 * y))
         
-      //  cell.TrackingTime.frame = CGRect(x: (3 * x), y: cell.TrackingDate.frame.maxY, width: (6 * x), height: (3 * y))
+        cell.TrackingTime.frame = CGRect(x: (5 * x), y: ((cell.frame.height - (y)) / 1.2), width: (10 * x), height: (1.5 * y))
         
         cell.roundLabel.frame = CGRect(x:  cell.TrackingDate.frame.maxX , y: ((cell.frame.height - (y))), width: y, height: y)
         cell.roundLabel.layer.cornerRadius = cell.roundLabel.frame.height / 2
@@ -236,12 +248,63 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
             cell.lineLabel.frame = CGRect(x: (cell.TrackingDate.frame.maxX) + ((cell.roundLabel.frame.width - 1) / 2), y: 0, width: 1, height: (cell.frame.height - cell.roundLabel.frame.height))
         }
        
+        
         cell.TrackingDetails.text = StatusArray[indexPath.row] as? String
+        
+       // cell.TrackingDate.text = DateArray[indexPath.row] as? String
+        
+       
         if let date = DateArray[indexPath.row] as? String
         {
-            TrackingDate = String(date.prefix(10))
+            print("Date:",date)
+            //TrackingDate = String(date.prefix(10))
+          
+            
+            let dateComponent = date.components(separatedBy: "T")
+            
+            TrackingDate = dateComponent[0]
+            
+            let SplitTime = dateComponent[1]
+            
+            TrackingTime = String(SplitTime.prefix(5))
+            
+            print("Date:",TrackingDate)
+            print("Time:",TrackingTime)
+            
+            /*
+             
+             // var ConvertDate : String = ""
+             //  var ConvertTime : String = ""
+             
+             let dateFormatter = DateFormatter()
+             dateFormatter.dateFormat = "yyyy-MM-dd"
+             let NewDateFormatter = DateFormatter()
+             NewDateFormatter.dateFormat = "MMM d"
+             
+             let TimeFormatter = DateFormatter()
+             TimeFormatter.dateFormat = "HH-mm-ss"
+             let NewTimeFormatter = DateFormatter()
+             NewTimeFormatter.dateFormat = "h:mm a"
+             
+             // let SplitDate = dateComponent[0]
+             // let SplitTime = dateComponent[1]
+             
+            if let NewDate = dateFormatter.date(from: SplitDate)
+            {
+                TrackingDate = NewDateFormatter.string(from: NewDate)
+                print("Date:",TrackingDate)
+            }
+            
+            if let NewTime = TimeFormatter.date(from: SplitTime)
+            {
+                TrackingTime = NewTimeFormatter.string(from: NewTime)
+                print("Time:",TrackingTime)
+            }
+            */
+            
         }
         cell.TrackingDate.text = TrackingDate
+        cell.TrackingTime.text = TrackingTime
         
         /*
         if (indexPath.row % 2) == 0
@@ -258,21 +321,13 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         }
      */
         
-     
-        
-        
-       
-        
-       //  cell.TrackerImg.image = UIImage(named: "TrackingStatus")
-        
-      //  cell.TrackingTime.text = DateFormatter.localizedString(from: NSDate() as Date, dateStyle: .short, timeStyle: .short)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return (3 * y)
+        return (5 * y)
     }
 
 }
