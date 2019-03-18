@@ -190,7 +190,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     //RatingsLabel..
     let RatingsLabel = UILabel()
     RatingsLabel.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: (2.5 * y))
-    RatingsLabel.text = "GIVE A RATINGS"
+    RatingsLabel.text = "GIVE RATINGS"
     RatingsLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
     RatingsLabel.textColor =  UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     //RatingsLabel.backgroundColor = UIColor.lightGray
@@ -485,6 +485,10 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
         {
             changeViewToEnglishInSelf()
             
+            RatingsLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            RatingsLabel.text = "GIVE RATINGS"
+            RatingsLabel.textAlignment = .left
+            
             OnTimeServiceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             OnTimeServiceLabel.text = "ON TIME SERVICE"
             
@@ -508,6 +512,10 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
         else if language == "ar"
         {
             changeViewToArabicInSelf()
+            
+            RatingsLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            RatingsLabel.text = "إعطاء تقييمات"
+            RatingsLabel.textAlignment = .right
             
             OnTimeServiceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             OnTimeServiceLabel.text = "في وقت الخدمة"
@@ -533,6 +541,30 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     else
     {
         changeViewToEnglishInSelf()
+        
+        RatingsLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        RatingsLabel.text = "GIVE RATINGS"
+        RatingsLabel.textAlignment = .left
+        
+        OnTimeServiceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        OnTimeServiceLabel.text = "ON TIME SERVICE"
+        
+        StitchingQualityLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        StitchingQualityLabel.text = "STICHING QUALITY"
+        
+        CustomerServiceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        CustomerServiceLabel.text = "CUSTOMER SERVICE"
+        
+        ReviewLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ReviewLabel.text = "WRITE A REVIEW"
+        ReviewLabel.textAlignment = .left
+        
+        Review_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Review_TF.placeholder = "      Write a review..   "
+        Review_TF.textAlignment = .left
+        
+        SubmitButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        SubmitButton.setTitle("Submit", for: .normal)
     }
    }
     

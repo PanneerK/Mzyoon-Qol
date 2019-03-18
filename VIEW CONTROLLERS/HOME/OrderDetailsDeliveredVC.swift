@@ -211,7 +211,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.text = "تفاصيل التسليم للنظام"
         
-        OrderDetailsScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//        OrderDetailsScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglishInSelf()
@@ -220,7 +220,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.text = "DELIVERED ORDER DETAILS"
         
-        OrderDetailsScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+//        OrderDetailsScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
   
     func orderDetailsContent()
