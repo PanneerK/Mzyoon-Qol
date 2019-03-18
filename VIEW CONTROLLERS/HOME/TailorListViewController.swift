@@ -331,6 +331,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         sortButton.setTitle("فرز", for: .normal)
         confirmSelectionButton.setTitle("تأكيد التحديد", for: .normal)
+        
+        mapView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglishInSelf()
@@ -361,6 +363,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         sortButton.setTitle("SORT", for: .normal)
         confirmSelectionButton.setTitle("Confirm Selection", for: .normal)
+        
+        mapView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     func orderSummaryContent()
@@ -642,7 +646,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             #if targetEnvironment(simulator)
             // your simulator code
             print("APP IS RUNNING ON SIMULATOR")
-            let coordinate1 = CLLocation(latitude: 41.92296, longitude: -87.63892)
+            let coordinate1 = CLLocation(latitude: 13.0168, longitude: 80.2269)
 
             #else
             // your real device code
@@ -956,7 +960,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         #if targetEnvironment(simulator)
         // your simulator code
         print("APP IS RUNNING ON SIMULATOR")
-        let camera = GMSCameraPosition.camera(withLatitude: 41.92296, longitude: -87.63892, zoom: 17.0)
+        let camera = GMSCameraPosition.camera(withLatitude: 13.0168, longitude: 80.2269, zoom: 17.0)
 
         #else
         // your real device code
@@ -1125,7 +1129,20 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         ordersCountLabel.adjustsFontSizeToFitWidth = true
         tailorDeatiledView.addSubview(ordersCountLabel)
         
+        #if targetEnvironment(simulator)
+        // your simulator code
+        print("APP IS RUNNING ON SIMULATOR")
+        let coordinate1 = CLLocation(latitude: 13.0168, longitude: 80.2269)
+        
+        #else
+        // your real device code
+        print("APP IS RUNNING ON DEVICE")
+        
         let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+        
+        #endif
+        
+//        let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
         let coordinate2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
         
         let distanceInMeters = coordinate1.distance(from: coordinate2)

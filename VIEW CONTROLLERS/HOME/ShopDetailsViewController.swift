@@ -13,6 +13,12 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
    
     let serviceCall = ServerAPI()
     
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let selfScreenContents = UIView()
+
+    
     let shopName = UILabel()
     let ratingImageView = UIImageView()
     let ratingCountLabel = UILabel()
@@ -256,51 +262,69 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         self.ShopDetailsContent()
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
   func ShopDetailsContent()
   {
      self.stopActivity()
     
-     let ShopDetailsNavigationBar = UIView()
-     ShopDetailsNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width,  height: (6.4 * y))
-     ShopDetailsNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-    view.addSubview(ShopDetailsNavigationBar)
+     selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width,  height: (6.4 * y))
+     selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+    view.addSubview(selfScreenNavigationBar)
     
     let backButton = UIButton()
     backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
     backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
     backButton.tag = 4
     backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-    ShopDetailsNavigationBar.addSubview(backButton)
+    selfScreenNavigationBar.addSubview(backButton)
     
-    let navigationTitle = UILabel()
-    navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: ShopDetailsNavigationBar.frame.width, height: (3 * y))
+    selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
     if(ShopNameArray.count > 0)
     {
-      navigationTitle.text = ShopNameArray[0] as? String
+      selfScreenNavigationTitle.text = ShopNameArray[0] as? String
     }
     else
     {
-         navigationTitle.text = "SHOP DETAILS"
+         selfScreenNavigationTitle.text = "SHOP DETAILS"
     }
-    navigationTitle.textColor = UIColor.white
-    navigationTitle.textAlignment = .center
-    navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-    ShopDetailsNavigationBar.addSubview(navigationTitle)
+    selfScreenNavigationTitle.textColor = UIColor.white
+    selfScreenNavigationTitle.textAlignment = .center
+    selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+    selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
+    
+    selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+    selfScreenContents.backgroundColor = UIColor.clear
+    view.addSubview(selfScreenContents)
     
     // let shopName = UILabel()
-    shopName.frame = CGRect(x: (3 * x), y: ShopDetailsNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: (3 * y))
+    shopName.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: (3 * y))
   //  shopName.text = ShopNameInEnglish   // marker.title?.uppercased()
     shopName.textColor = UIColor.blue
     shopName.textAlignment = .left
     shopName.font = UIFont(name: "Avenir Next", size: (1.5 * x))
     shopName.adjustsFontSizeToFitWidth = true
-    view.addSubview(shopName)
+    selfScreenContents.addSubview(shopName)
     
    // print("SHOP NAME", shopName.text!)
   //  shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
     
     let ratingLabel = UILabel()
-    ratingLabel.frame = CGRect(x: (3 * x), y: shopName.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
+    ratingLabel.frame = CGRect(x: selfScreenContents.frame.minX, y: shopName.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
     ratingLabel.text = "Rating : "
     ratingLabel.textColor = UIColor.blue
     ratingLabel.textAlignment = .left
@@ -308,8 +332,8 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     //view.addSubview(ratingLabel)
     
     //let ratingImageView = UIImageView()
-    ratingImageView.frame = CGRect(x: (3 * x), y: shopName.frame.maxY + (y / 2), width: view.frame.width / 4, height: (1.5 * y))
-    view.addSubview(ratingImageView)
+    ratingImageView.frame = CGRect(x: 0, y: shopName.frame.maxY + (y / 2), width: view.frame.width / 4, height: (1.5 * y))
+    selfScreenContents.addSubview(ratingImageView)
     
     
    // let reviewsButton = UIButton()
@@ -318,7 +342,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     reviewsButton.setTitleColor(UIColor.blue, for: .normal)
     reviewsButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
     reviewsButton.addTarget(self, action: #selector(self.ReviewsButtonAction(sender:)), for: .touchUpInside)
-    view.addSubview(reviewsButton)
+    selfScreenContents.addSubview(reviewsButton)
     
     //let ratingCountLabel = UILabel()
     ratingCountLabel.frame = CGRect(x: ratingImageView.frame.maxX, y: shopName.frame.maxY + (y / 2), width: view.frame.width / 2.5, height: (2 * y))
@@ -334,12 +358,12 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
    // view.addSubview(Name_Icon)
     
     let nameLabel = UILabel()
-    nameLabel.frame = CGRect(x: (3 * x), y: ratingImageView.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
+    nameLabel.frame = CGRect(x: 0, y: ratingImageView.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
     nameLabel.text = "Name : "
     nameLabel.textColor = UIColor.blue
     nameLabel.textAlignment = .left
     nameLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
-    view.addSubview(nameLabel)
+    selfScreenContents.addSubview(nameLabel)
     
    // let tailorName = UILabel()
     tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: ratingImageView.frame.maxY + (y / 2), width: view.frame.width / 2, height: (2 * y))
@@ -347,15 +371,15 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     tailorName.textColor = UIColor.black
     tailorName.textAlignment = .left
     tailorName.font = UIFont(name: "Avenir Next", size: (1.2 * x))
-    view.addSubview(tailorName)
+    selfScreenContents.addSubview(tailorName)
     
     let ordersLabel = UILabel()
-    ordersLabel.frame = CGRect(x: (3 * x), y: nameLabel.frame.maxY, width: (9 * x), height: (2 * y))
+    ordersLabel.frame = CGRect(x: 0, y: nameLabel.frame.maxY, width: (9 * x), height: (2 * y))
     ordersLabel.text = "No. of Orders : "
     ordersLabel.textColor = UIColor.blue
     ordersLabel.textAlignment = .left
     ordersLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
-    view.addSubview(ordersLabel)
+    selfScreenContents.addSubview(ordersLabel)
     
     //let ordersCountLabel = UILabel()
     ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: nameLabel.frame.maxY, width: view.frame.width / 2.5, height: (2 * y))
@@ -363,15 +387,15 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     ordersCountLabel.textAlignment = .left
     ordersCountLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
     ordersCountLabel.adjustsFontSizeToFitWidth = true
-    view.addSubview(ordersCountLabel)
+    selfScreenContents.addSubview(ordersCountLabel)
     
     
     let DetailsView = UIView()
-    DetailsView.frame = CGRect(x: (3 * x), y: ordersCountLabel.frame.maxY + y, width: view.frame.width - (6 * x), height: (11 * y))
+    DetailsView.frame = CGRect(x: 0, y: ordersCountLabel.frame.maxY + y, width: view.frame.width - (6 * x), height: (11 * y))
     DetailsView.backgroundColor = UIColor.white
     DetailsView.layer.borderWidth = 1
     DetailsView.layer.borderColor = UIColor.lightGray.cgColor
-    view.addSubview(DetailsView)
+    selfScreenContents.addSubview(DetailsView)
     
     let Addr_Icon = UIImageView()
     Addr_Icon.frame = CGRect(x: x, y: y, width: (1.5 * x), height: (1.5 * y))
@@ -427,11 +451,9 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Link_Label.font = UIFont(name: "Avenir Next", size: (1.3 * x))
     DetailsView.addSubview(Link_Label)
     
-
-    
     // Directions Button..
     let Direction_Btn = UIButton()
-    Direction_Btn.frame = CGRect(x: (6 * x), y: DetailsView.frame.maxY + (2 * y), width: (5 * x), height: (4.8 * y))
+    Direction_Btn.frame = CGRect(x: (3 * x), y: DetailsView.frame.maxY + (2 * y), width: (5 * x), height: (4.8 * y))
     Direction_Btn.backgroundColor = UIColor.white
    // Direction_Btn.layer.shadowColor = UIColor.black.cgColor
     Direction_Btn.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
@@ -443,16 +465,16 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Direction_Btn.layer.borderWidth = 1.0
     Direction_Btn.setImage(UIImage(named: "Directions"), for: .normal)
     Direction_Btn.addTarget(self, action: #selector(self.DirectionButtonAction(sender:)), for: .touchUpInside)
-    view.addSubview(Direction_Btn)
+    selfScreenContents.addSubview(Direction_Btn)
     
     let Directions_LBL = UILabel()
-    Directions_LBL.frame = CGRect(x: (4 * x), y: Direction_Btn.frame.maxY + y, width: (8 * x), height: y)
+    Directions_LBL.frame = CGRect(x: (2 * x), y: Direction_Btn.frame.maxY + y, width: (8 * x), height: y)
    // Directions_LBL.backgroundColor = UIColor.lightGray
     Directions_LBL.text = "DIRECTIONS"
     Directions_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     Directions_LBL.font = UIFont(name: "Avenir Next", size: y)
     Directions_LBL.textAlignment = .center
-    view.addSubview(Directions_LBL)
+    selfScreenContents.addSubview(Directions_LBL)
     
     // Call Button..
     let Call_Btn = UIButton()
@@ -468,7 +490,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Call_Btn.layer.borderWidth = 1.0
     Call_Btn.setImage(UIImage(named: "mobile-number"), for: .normal)
     Call_Btn.addTarget(self, action: #selector(self.CallButtonAction(sender:)), for: .touchUpInside)
-    view.addSubview(Call_Btn)
+    selfScreenContents.addSubview(Call_Btn)
     
     //let Call_LBL = UILabel()
     Call_LBL.frame = CGRect(x: Directions_LBL.frame.maxX + (2 * x), y: Direction_Btn.frame.maxY + y, width: (10 * x), height: y)
@@ -477,7 +499,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Call_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     Call_LBL.font = UIFont(name: "Avenir Next", size: y)
     Call_LBL.textAlignment = .center
-    view.addSubview(Call_LBL)
+    selfScreenContents.addSubview(Call_LBL)
     
     // Share Button..
     let Share_Btn = UIButton()
@@ -493,7 +515,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Share_Btn.layer.borderWidth = 1.0
     Share_Btn.setImage(UIImage(named: "Share"), for: .normal)
     Share_Btn.addTarget(self, action: #selector(self.ShareButtonAction(sender:)), for: .touchUpInside)
-    view.addSubview(Share_Btn)
+    selfScreenContents.addSubview(Share_Btn)
     
     let Share_LBL = UILabel()
     Share_LBL.frame = CGRect(x: Call_LBL.frame.maxX + (3 * x), y: Direction_Btn.frame.maxY + y, width: (6 * x), height: y)
@@ -502,12 +524,12 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Share_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     Share_LBL.font = UIFont(name: "Avenir Next", size: y)
     Share_LBL.textAlignment = .center
-    view.addSubview(Share_LBL)
+    selfScreenContents.addSubview(Share_LBL)
     
     
     // Order Type..
     let Photos_Label = UILabel()
-    Photos_Label.frame = CGRect(x: ((view.frame.width - (14 * x)) / 2), y: Call_LBL.frame.maxY + (2 * y), width: (16 * x), height: (3 * y))
+    Photos_Label.frame = CGRect(x: 0, y: Call_LBL.frame.maxY + (2 * y), width: selfScreenContents.frame.width, height: (3 * y))
     Photos_Label.backgroundColor = UIColor.white
     Photos_Label.text = "SHOP PHOTOS"
     Photos_Label.layer.borderColor = UIColor.lightGray.cgColor
@@ -515,14 +537,13 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     Photos_Label.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     Photos_Label.textAlignment = .center
     Photos_Label.font = UIFont(name: "Avenir Next", size: 1.3 * x)
-    view.addSubview(Photos_Label)
+    selfScreenContents.addSubview(Photos_Label)
     
     let PhotosScrollview = UIScrollView()
-    PhotosScrollview.frame = CGRect(x: (3 * x), y: Photos_Label.frame.maxY + y, width: view.frame.width - (6 * x), height: (12 * x))
+    PhotosScrollview.frame = CGRect(x: 0, y: Photos_Label.frame.maxY + y, width: selfScreenContents.frame.width, height: (12 * x))
     PhotosScrollview.backgroundColor = UIColor.white
     PhotosScrollview.layer.borderColor = UIColor.lightGray.cgColor
-    view.addSubview(PhotosScrollview)
-    
+    selfScreenContents.addSubview(PhotosScrollview)
     
     for i in 0..<ShopNameArray.count
     {
@@ -621,6 +642,22 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     }
     
      PhotosScrollview.contentSize.width = x3 + x
+    
+    if let language = UserDefaults.standard.value(forKey: "language") as? String
+    {
+        if language == "en"
+        {
+            changeViewToEnglishInSelf()
+        }
+        else if language == "ar"
+        {
+            changeViewToArabicInSelf()
+        }
+    }
+    else
+    {
+        changeViewToEnglishInSelf()
+    }
   }
 
   @objc func otpBackButtonAction(sender : UIButton)
