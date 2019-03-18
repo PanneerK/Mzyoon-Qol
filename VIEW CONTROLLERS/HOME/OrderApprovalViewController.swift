@@ -75,6 +75,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     override func viewWillAppear(_ animated: Bool)
     {
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
+        
          self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
     }
      

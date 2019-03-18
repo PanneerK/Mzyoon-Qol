@@ -115,10 +115,12 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
     override func viewDidLoad()
     {
+        super.viewDidLoad()
+      
         print("TailorId",TailorId)
         UserDefaults.standard.set(TailorId, forKey: "TailorID")
         
-        super.viewDidLoad()
+        navigationBar.isHidden = true
 
         // Do any additional setup after loading the view.
         
@@ -184,6 +186,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     }
     override func viewWillAppear(_ animated: Bool)
     {
+        
+        let navigationArray = self.navigationController?.viewControllers
+        print("viewControllers Aray:",navigationArray!)
         
         // UITextfield Move upward & Downward Code..
         
