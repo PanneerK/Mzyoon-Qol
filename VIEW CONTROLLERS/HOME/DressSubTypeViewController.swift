@@ -320,7 +320,15 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             dressTypeNameLabel.font = dressTypeNameLabel.font.withSize(15)
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
-        dressSubTypeScrollView.contentSize.height = y1 + (2 * y)
+        
+        if getNameArray.count % 2 == 0
+        {
+            dressSubTypeScrollView.contentSize.height = y1 + (2 * y)
+        }
+        else
+        {
+            dressSubTypeScrollView.contentSize.height = y1 + (18 * y)
+        }
     }
     
     func changeViewToArabicInSelf()

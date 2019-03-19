@@ -268,6 +268,17 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        shopName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        shopName.textAlignment = .right
+        
+        reviewsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        tailorName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        tailorName.textAlignment = .right
+        
+        ordersCountLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        ordersCountLabel.textAlignment = .right
     }
     
     func changeViewToEnglishInSelf()
@@ -276,6 +287,17 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        shopName.textAlignment = .left
+        
+        reviewsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        tailorName.textAlignment = .left
+        
+        ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ordersCountLabel.textAlignment = .left
     }
     
   func ShopDetailsContent()
@@ -414,7 +436,6 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
      underLine1.backgroundColor = UIColor.lightGray
      DetailsView.addSubview(underLine1)
     
-    
     let Time_Icon = UIImageView()
     Time_Icon.frame = CGRect(x: x, y: underLine1.frame.maxY + y, width: (1.5 * x), height: (1.5 * y))
     Time_Icon.image = UIImage(named: "ShopTime")
@@ -437,7 +458,6 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     underLine2.frame = CGRect(x: 0, y: Time_Label.frame.maxY + y, width: DetailsView.frame.width, height: 0.5)
     underLine2.backgroundColor = UIColor.lightGray
     DetailsView.addSubview(underLine2)
-    
     
     let Link_Icon = UIImageView()
     Link_Icon.frame = CGRect(x: x, y: underLine2.frame.maxY + y, width: (1.5 * x), height: (1.5 * y))
@@ -647,15 +667,99 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     {
         if language == "en"
         {
+            nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            nameLabel.text = "Name : "
+            nameLabel.textAlignment = .left
+            
+            ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            ordersLabel.text = "No. of Orders : "
+            ordersLabel.textAlignment = .left
+            
+            Address_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Address_Label.textAlignment = .left
+            
+            Time_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Time_Label.textAlignment = .left
+            
+            Link_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Link_Label.textAlignment = .left
+            
+            Direction_Btn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Directions_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Directions_LBL.text = "DIRECTIONS"
+            Call_Btn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Call_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Share_Btn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Share_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Share_LBL.text = "SHARE"
+            Photos_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Photos_Label.text = "SHOP PHOTOS"
+            
             changeViewToEnglishInSelf()
         }
         else if language == "ar"
         {
+            nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            nameLabel.text = "الاسم : "
+            nameLabel.textAlignment = .right
+            
+            ordersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            ordersLabel.text = "No. of Orders : "
+            ordersLabel.textAlignment = .right
+            
+            Address_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Address_Label.textAlignment = .right
+            
+            Time_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Time_Label.textAlignment = .right
+            
+            Link_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Link_Label.textAlignment = .right
+            
+            Direction_Btn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Directions_LBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Directions_LBL.text = "اتجاه"
+            Call_Btn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Call_LBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Share_Btn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Share_LBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Share_LBL.text = "شارك"
+            Photos_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Photos_Label.text = "صور التسوق"
+            
             changeViewToArabicInSelf()
         }
     }
     else
     {
+        nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        nameLabel.text = "Name : "
+        nameLabel.textAlignment = .left
+        
+        ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ordersLabel.text = "No. of Orders : "
+        ordersLabel.textAlignment = .left
+        
+        Address_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Address_Label.textAlignment = .left
+        
+        Time_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Time_Label.textAlignment = .left
+        
+        Link_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Link_Label.textAlignment = .left
+        
+        Direction_Btn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Directions_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Directions_LBL.text = "DIRECTIONS"
+        Call_Btn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Call_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Share_Btn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Share_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Share_LBL.text = "SHARE"
+        Photos_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Photos_Label.text = "SHOP PHOTOS"
+        
         changeViewToEnglishInSelf()
     }
   }

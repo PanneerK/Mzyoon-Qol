@@ -198,6 +198,27 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }*/
     }
     
+    func activitySubContents()
+    {
+        activeViewSub.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        activeViewSub.backgroundColor = UIColor.black.withAlphaComponent(0.25)
+        view.addSubview(activeViewSub)
+        
+        self.view.bringSubviewToFront(activeViewSub)
+        
+        activityIndicatorSub.frame = CGRect(x: ((activeViewSub.frame.width - 50) / 2), y: ((activeViewSub.frame.height - 50) / 2), width: 50, height: 50)
+        activityIndicatorSub.style = .whiteLarge
+        activityIndicatorSub.color = UIColor.white
+        activityIndicatorSub.startAnimating()
+        activeViewSub.addSubview(activityIndicatorSub)
+    }
+    
+    func stopSubActivity()
+    {
+        activeViewSub.removeFromSuperview()
+        activityIndicatorSub.stopAnimating()
+    }
+    
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR MESSAGE", errorMessage)
@@ -3392,6 +3413,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     @objc func measurementButtonAction(sender : UIButton)
     {
+        activitySubContents()
+        
         if sender.tag == 1
         {
             measurerImage = "Head"
@@ -3524,6 +3547,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     self.selectedconvertedPartsImageArray.append(emptyImage!)
                 }
             }
+            
+            stopSubActivity()
             
             if type == "table"
             {
@@ -4098,13 +4123,15 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
+        activitySubContents()
+        
         let selectedInt = PartsIdArray[indexPath.row] as! Int
         
         type = "table"
         
         measurerTag = selectedInt
         
-        self.view.bringSubviewToFront(activeView)
+        self.view.bringSubviewToFront(activeViewSub)
         self.serviceCall.API_GetMeasurementParts(MeasurementParts: selectedInt, delegate: self)
     }
     

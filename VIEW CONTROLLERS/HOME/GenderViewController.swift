@@ -235,7 +235,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationContents()
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -335,11 +335,11 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             
             if i == 0 || i == 2
             {
-                genderButton.frame = CGRect(x: selfScreenContents.frame.maxX, y: buttonYPos, width: selfScreenContents.frame.width - (6 * x), height: (12 * y))
+                genderButton.frame = CGRect(x: selfScreenContents.frame.maxX, y: buttonYPos, width: selfScreenContents.frame.width, height: (12 * y))
             }
             else
             {
-                genderButton.frame = CGRect(x: -(selfScreenContents.frame.width - (6 * x)), y: buttonYPos, width: selfScreenContents.frame.width - (6 * x), height: (12 * y))
+                genderButton.frame = CGRect(x: -(selfScreenContents.frame.width - (6 * x)), y: buttonYPos, width: selfScreenContents.frame.width, height: (12 * y))
             }
             
             genderButton.backgroundColor = UIColor.blue
@@ -405,7 +405,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             
             UIView.animate(withDuration: 1.0, animations: {
                 //self.viewTrack.frame.origin.y = UIScreen.main.bounds.size.height
-                genderButton.frame.origin.x = (3 * self.x)
+                genderButton.frame.origin.x = 0
                 
             }, completion: { finished in
                 if finished{
@@ -431,8 +431,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         {
             changeViewToEnglishInSelf()
         }
-        
-        
     }
     
     func changeViewToEnglishInSelf()

@@ -455,7 +455,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
         
-        print("CHECKING COUNT", inputTextArray.count % 2)
+        print("CHECKING COUNT", inputTextArray.count % 2, inputTextArray)
         
         if inputTextArray.count % 2 == 0
         {

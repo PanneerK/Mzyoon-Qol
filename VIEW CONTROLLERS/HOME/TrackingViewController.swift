@@ -151,6 +151,16 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         }
     }
     
+    func changeViewToArabicInSelf()
+    {
+        
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        
+    }
+    
     func TrackingView()
     {
         self.stopActivity()
@@ -200,6 +210,34 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         
         
         view.addSubview(TrackingTableview)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                TrackingDetailsNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                navigationTitle.text = "TRACKING DETAILS"
+                
+                TrackingTableview.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                TrackingDetailsNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                navigationTitle.text = "تفاصيل المسار"
+                
+                TrackingTableview.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            TrackingDetailsNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            navigationTitle.text = "TRACKING DETAILS"
+            
+            TrackingTableview.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
     }
     
@@ -325,6 +363,37 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
         }
      */
         
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                cell.TrackingDate.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.TrackingDate.textAlignment = .left
+                cell.TrackingTime.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.TrackingTime.textAlignment = .left
+                cell.TrackingDetails.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.TrackingDetails.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                cell.TrackingDate.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.TrackingDate.textAlignment = .right
+                cell.TrackingTime.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.TrackingTime.textAlignment = .right
+                cell.TrackingDetails.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.TrackingDetails.textAlignment = .right
+            }
+        }
+        else
+        {
+            cell.TrackingDate.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.TrackingDate.textAlignment = .left
+            cell.TrackingTime.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.TrackingTime.textAlignment = .left
+            cell.TrackingDetails.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.TrackingDetails.textAlignment = .left
+        }
         
         return cell
     }

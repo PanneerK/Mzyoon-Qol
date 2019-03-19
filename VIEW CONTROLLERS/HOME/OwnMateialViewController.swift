@@ -132,13 +132,13 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
         self.view.bringSubviewToFront(slideMenuButton)
         
-        addReferenceImage.frame = CGRect(x: (3 * x), y: (3 * y), width: view.frame.width - (6 * x), height: (30 * y))
+        addReferenceImage.frame = CGRect(x: 0, y: (3 * y), width: selfScreenContents.frame.width, height: (30 * y))
         addReferenceImage.layer.borderWidth = 1
         addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
         addReferenceImage.backgroundColor = UIColor.white
@@ -154,14 +154,14 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             addReferenceImage.addSubview(notifyLabel)
         }
         
-        addMaterialLabel.frame = CGRect(x: (2 * x), y: addReferenceImage.frame.maxY + (2 * x), width: view.frame.width, height: (2 * y))
+        addMaterialLabel.frame = CGRect(x: 0, y: addReferenceImage.frame.maxY + (2 * x), width: selfScreenContents.frame.width, height: (2 * y))
         addMaterialLabel.text = "Add material image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         selfScreenContents.addSubview(addMaterialLabel)
         
-        addReferenceScrolView.frame = CGRect(x: x, y: addMaterialLabel.frame.maxY, width: view.frame.width - (13 * x), height: (12 * y))
+        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: selfScreenContents.frame.width - (11 * x), height: (12 * y))
         addReferenceScrolView.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(addReferenceScrolView)
         
@@ -173,7 +173,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialButton.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(addMaterialButton)
         
-        addMaterialNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
+        addMaterialNextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = addMaterialNextButton.frame.height / 2
         addMaterialNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         addMaterialNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)

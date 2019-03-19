@@ -13,7 +13,9 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
    
      let serviceCall = ServerAPI()
     
-    let AppointmentListNavigationBar = UIView()
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+
     let AppointmentListScrollView = UIScrollView()
     
    //  let AppointmentViewButton = UIButton()
@@ -147,41 +149,74 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
+    
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "قائمة المواعيد"
+        
+        AppointmentListScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "APPOINTMENT LIST"
+        
+        AppointmentListScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+    }
+    
     func AppointmentListContent()
     {
         self.stopActivity()
         
         //let RequestListNavigationBar = UIView()
-        AppointmentListNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        AppointmentListNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(AppointmentListNavigationBar)
-     
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
       
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        AppointmentListNavigationBar.addSubview(backButton)
-     
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: AppointmentListNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "APPOINTMENT LIST"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        AppointmentListNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "APPOINTMENT LIST"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         AppointmentListView()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     func AppointmentListView()
     {
         let backDrop = UIView()
-        backDrop.frame = CGRect(x: (3 * x), y: AppointmentListNavigationBar.frame.maxY + y, width: view.frame.width - (4 * x), height: view.frame.height - (13 * y))
-        backDrop.backgroundColor = UIColor.clear
-        view.addSubview(backDrop)
+        backDrop.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + y + tabBar.frame.height))
+        backDrop.backgroundColor = UIColor.red
+//        view.addSubview(backDrop)
         
         /*
          let sortButton = UIButton()
@@ -194,9 +229,11 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
          backDrop.addSubview(sortButton)
          */
         
-        AppointmentListScrollView.frame = CGRect(x: 0, y: y, width: backDrop.frame.width, height: (52 * y))
-        // RequestListScrollView.backgroundColor = UIColor.gray
-        backDrop.addSubview(AppointmentListScrollView)
+        AppointmentListScrollView.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height + (2 * y)))
+        AppointmentListScrollView.backgroundColor = UIColor.clear
+        view.addSubview(AppointmentListScrollView)
+        
+        print("FINDING WIDTH", view.frame.width, AppointmentListScrollView.frame.width, x)
         
         AppointmentListScrollView.contentSize.height = (12 * y * CGFloat(IdArray.count))
         
@@ -257,7 +294,12 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             
             let OR_DateLabel = UILabel()
             OR_DateLabel.frame = CGRect(x: O_DateLabel.frame.maxX - x, y: 0, width: AppointmentViewButton.frame.width / 2, height: (2 * y))
-            OR_DateLabel.text = CreatedOnArray[i] as? String
+            if let date = CreatedOnArray[i] as? String
+            {
+                let dateSimplify = date.prefix(10)
+                print("SIMPLIFIED DATE", dateSimplify)
+                OR_DateLabel.text = "\(dateSimplify)"
+            }
             OR_DateLabel.textColor = UIColor.black
             OR_DateLabel.textAlignment = .left
             OR_DateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -359,6 +401,74 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             
             AppointmentViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             y1 = AppointmentViewButton.frame.maxY + y
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    DressImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    
+                    O_DateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    O_DateLabel.text = "Order Date :"
+                    O_DateLabel.textAlignment = .left
+                    OR_DateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    OR_DateLabel.textAlignment = .left
+                    O_IdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    O_IdLabel.text = "Order ID :"
+                    O_IdLabel.textAlignment = .left
+                    OR_IdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    OR_IdLabel.textAlignment = .left
+                    T_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    T_NameLabel.text = "Tailor Name :"
+                    T_NameLabel.textAlignment = .left
+                    TR_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    TR_NameLabel.textAlignment = .left
+                    S_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    S_NameLabel.text = "Shop Name :"
+                    S_NameLabel.textAlignment = .left
+                    SH_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    SH_NameLabel.textAlignment = .left
+                    P_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    P_NameLabel.text = "Product Name :"
+                    P_NameLabel.textAlignment = .left
+                    PR_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    PR_NameLabel.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    DressImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    
+                    O_DateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    O_DateLabel.text = "تاريخ الطلبية :"
+                    O_DateLabel.textAlignment = .right
+                    OR_DateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    OR_DateLabel.textAlignment = .right
+                    O_IdLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    O_IdLabel.text = "رقم الطلبية :"
+                    O_IdLabel.textAlignment = .right
+                    OR_IdLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    OR_IdLabel.textAlignment = .right
+                    T_NameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    T_NameLabel.text = "اسم الخياط :"
+                    T_NameLabel.textAlignment = .right
+                    TR_NameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    TR_NameLabel.textAlignment = .right
+                    S_NameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    S_NameLabel.text = "اسم المحل :"
+                    S_NameLabel.textAlignment = .right
+                    SH_NameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    SH_NameLabel.textAlignment = .right
+                    P_NameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    P_NameLabel.text = "اسم المنتج :"
+                    P_NameLabel.textAlignment = .right
+                    PR_NameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    PR_NameLabel.textAlignment = .right
+                }
+            }
+            else
+            {
+                changeViewToEnglishInSelf()
+            }
             
         }
         

@@ -12,7 +12,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
 {
      let serviceCall = ServerAPI()
     
-      let AppointmentNavigationBar = UIView()
+      let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+
       let AppointmentScrollview = UIScrollView()
     
        let OrderTypeView = UIView()
@@ -618,29 +620,58 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        
     }
     
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "موعد"
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "APPOINTMENT"
+    }
+    
     func AppointmentContent()
     {
         self.stopActivity()
         
        // let AppointmentNavigationBar = UIView()
-        AppointmentNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        AppointmentNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(AppointmentNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
          backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
          backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
          backButton.tag = 4
          backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-         AppointmentNavigationBar.addSubview(backButton)
+         selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: AppointmentNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "APPOINTMENT"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        AppointmentNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "APPOINTMENT"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
         
         AppointmentTypeView()
     }
@@ -651,7 +682,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         //ScrollView..
         
         //let AppointmentScrollview = UIScrollView()
-        AppointmentScrollview.frame = CGRect(x: 0, y: AppointmentNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (12 * y))
+        AppointmentScrollview.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (12 * y))
         AppointmentScrollview.backgroundColor = UIColor.clear
         view.addSubview(AppointmentScrollview)
         
