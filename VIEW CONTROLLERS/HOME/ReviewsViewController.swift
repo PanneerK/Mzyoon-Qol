@@ -17,6 +17,16 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
    let ReviewsScrollView = UIScrollView()
     var RequestDate = String()
     
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
+    let RatingsView = UIView()
+    let RatingNumLabel = UILabel()
+    let RatingStatusLabel = UILabel()
+    let ReviewStatusLabel = UILabel()
+    let WriteReviewButton = UIButton()
+
+
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -70,6 +80,8 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     override func viewWillAppear(_ animated: Bool)
     {
         print("Tailor Id:",TailorID)
+        
+        TailorID = 203
         
         if(TailorID != nil)
         {
@@ -181,33 +193,71 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         print("UUID", UIDevice.current.identifierForVendor?.uuidString as Any)
         self.serviceCall.API_InsertErrorDevice(DeviceId: DeviceNum, PageName: PageNumStr, MethodName: MethodName, Error: ErrorStr, ApiVersion: AppVersion, Type: UserType, delegate: self)
     }
+    
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "الاستعراضات والتقييمات"
+        
+        RatingsView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        RatingNumLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        RatingStatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        ReviewStatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+//        WriteReviewButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        WriteReviewButton.setTitle("التعليقات", for: .normal)
+
+        ReviewsScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        emptyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        emptyLabel.text = "لا توجد مراجعات لهذا المتجر"
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "REVIEWS AND RATINGS"
+        
+         RatingsView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        RatingNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        RatingStatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ReviewStatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+//        WriteReviewButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        WriteReviewButton.setTitle("REVIEWS", for: .normal)
+
+        ReviewsScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        emptyLabel.text = "No Reviews For this Shop"
+    }
+    
   func reviewsContent()
   {
-    
     self.stopActivity()
-    
-    let ratingsNavigationBar = UIView()
-    ratingsNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-    ratingsNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-    view.addSubview(ratingsNavigationBar)
+
+    selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+    selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+    view.addSubview(selfScreenNavigationBar)
     
     let backButton = UIButton()
     backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
     backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
     backButton.tag = 4
     backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-    ratingsNavigationBar.addSubview(backButton)
+    selfScreenNavigationBar.addSubview(backButton)
     
-    let navigationTitle = UILabel()
-    navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: ratingsNavigationBar.frame.width, height: (3 * y))
-    navigationTitle.text = "REVIEWS AND RATINGS"
-    navigationTitle.textColor = UIColor.white
-    navigationTitle.textAlignment = .center
-    navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-    ratingsNavigationBar.addSubview(navigationTitle)
+    selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+    selfScreenNavigationTitle.text = "REVIEWS AND RATINGS"
+    selfScreenNavigationTitle.textColor = UIColor.white
+    selfScreenNavigationTitle.textAlignment = .center
+    selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+    selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
     
-    let RatingsView = UIView()
-    RatingsView.frame = CGRect(x: x , y: ratingsNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: (15 * y))
+    RatingsView.frame = CGRect(x: x , y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: (15 * y))
     //RatingsView.layer.cornerRadius = 5
     RatingsView.layer.borderWidth = 1
     RatingsView.layer.backgroundColor = UIColor.white.cgColor
@@ -229,7 +279,6 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         
     }
    
-    let RatingNumLabel = UILabel()
     RatingNumLabel.frame = CGRect(x: (2 * x), y: (2 * y), width: (3 * x), height: (2 * y))
     if(FullStatusArr.count > 0)
     {
@@ -249,7 +298,6 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     StarImageView.addSubview(RatingNumLabel)
     
     
-    let RatingStatusLabel = UILabel()
     RatingStatusLabel.frame = CGRect(x: x/2, y: StarImageView.frame.maxY, width: (8 * x), height: (2 * y))
     if(PerformenceStatusArr.count > 0)
     {
@@ -266,7 +314,6 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     RatingsView.addSubview(RatingStatusLabel)
     
     
-    let ReviewStatusLabel = UILabel()
     ReviewStatusLabel.frame = CGRect(x: x/2, y: RatingStatusLabel.frame.maxY, width: (8 * x), height: (5 * y))
     if(Based_On_ReviewsArr.count > 0)
     {
@@ -433,11 +480,32 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         RatingTypeView.addSubview(RatingValLBL)
         
         y1 = RatingTypeView.frame.maxY + (2 * y)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                RatingsTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                RatingCountLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                RatingValLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                RatingsTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                RatingCountLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                RatingValLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            RatingsTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            RatingCountLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            RatingValLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
     }
  
     
     // Rate And Write A Review.. Button Action..
-    let WriteReviewButton = UIButton()
     WriteReviewButton.frame = CGRect(x: (3 * x), y: RatingsView.frame.maxY + (2 * y) , width: view.frame.width - (6 * x), height: (3 * y))
     WriteReviewButton.backgroundColor =  UIColor.orange  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     WriteReviewButton.setTitle("REVIEWS", for: .normal)
@@ -474,16 +542,13 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     }
     else
     {
-        
       for i in 0..<CustomerNameArray.count
       {
-        
         let ReviewsView = UIView()
         ReviewsView.frame = CGRect(x: 0, y: y2, width: ReviewsScrollView.frame.width, height: (12 * y))
         ReviewsView.backgroundColor = UIColor.white
         ReviewsScrollView.addSubview(ReviewsView)
         
-       
         let userImageView = UIImageView()
         userImageView.frame = CGRect(x: x/2, y: y/2, width: (5 * x), height: (5 * y))
         userImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -494,7 +559,6 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         userImageView.clipsToBounds = true
         userImageView.image = UIImage(named: "TailorName")
         userImageView.layer.borderColor = UIColor.lightGray.cgColor
-        
         
       /*
         if let imageName = ImageArray[i] as? String
@@ -604,9 +668,56 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         
          y2 = ReviewsView.frame.maxY + y
         
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                UserNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                UserNameLabel.textAlignment = .left
+                RatingDate_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                RatingDate_LBL.textAlignment = .left
+                Review_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Review_LBL.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                UserNameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                UserNameLabel.textAlignment = .right
+                RatingDate_LBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                RatingDate_LBL.textAlignment = .right
+                Review_LBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Review_LBL.textAlignment = .right
+            }
+        }
+        else
+        {
+            UserNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            UserNameLabel.textAlignment = .left
+            RatingDate_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            RatingDate_LBL.textAlignment = .left
+            Review_LBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Review_LBL.textAlignment = .left
+        }
+        
      }
          ReviewsScrollView.contentSize.height = y2 + (2 * y)
    }
+    
+    if let language = UserDefaults.standard.value(forKey: "language") as? String
+    {
+        if language == "en"
+        {
+            changeViewToEnglishInSelf()
+        }
+        else if language == "ar"
+        {
+            changeViewToArabicInSelf()
+        }
+    }
+    else
+    {
+        changeViewToEnglishInSelf()
+    }
  }
     
    

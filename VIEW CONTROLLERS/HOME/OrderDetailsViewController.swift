@@ -11,7 +11,37 @@ import UIKit
 class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
 {
     let serviceCall = ServerAPI()
+    
+    //SCREEN PARAMETERS
+    let selfScreenNavigationBar = UIView()
+    let selfScreenNavigationTitle = UILabel()
 
+    let orderIdLabel = UILabel()
+    let orderIdNumLabel = UILabel()
+    let orderPlacedLabel = UILabel()
+    let orderPlacedDateLabel = UILabel()
+
+    let PaymentInfoLabel = UILabel()
+
+    let DressTypeLabel = UILabel()
+    let QtyLabel = UILabel()
+    let QtyNumLabel = UILabel()
+    let PriceLabel = UILabel()
+    let PriceNumLabel = UILabel()
+
+    let SubTotalLabel = UILabel()
+    let SubTotalPriceLabel = UILabel()
+    let ShippingLabel = UILabel()
+    let ShippingPriceLabel = UILabel()
+    let TaxLabel = UILabel()
+    let TaxPriceLabel = UILabel()
+    let AppointmentLabel = UILabel()
+    let AppointmentPriceLabel = UILabel()
+    let TotalLabel = UILabel()
+    let TotalPriceLabel = UILabel()
+    let PaymentLabel = UILabel()
+    let PaymentTypeLabel = UILabel()
+    
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -76,6 +106,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     {
         let navigationArray = self.navigationController?.viewControllers
         print("viewControllers Aray:",navigationArray!)
+        
+        OrderID = 33
         
          self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
         
@@ -238,33 +270,172 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
        // orderDetailsContent()
     }
+    
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "تفاصيل الطلبية"
+        
+        OrderDetailsScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        orderIdLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        orderIdLabel.text = "معرف الطلبية : "
+        orderIdLabel.textAlignment = .right
+        orderIdNumLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        orderIdNumLabel.textAlignment = .right
+        
+        orderPlacedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        orderPlacedLabel.text = "تم تقديم الطلب بتاريخ : "
+        orderPlacedLabel.textAlignment = .right
+        orderPlacedDateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        orderPlacedDateLabel.textAlignment = .right
+        
+        PaymentInfoLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PaymentInfoLabel.text = " معلومات الدفع"
+        PaymentInfoLabel.textAlignment = .right
+        
+        DressTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        DressTypeLabel.textAlignment = .right
+        QtyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        QtyLabel.text = "كمية : "
+        QtyLabel.textAlignment = .right
+        QtyNumLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        QtyNumLabel.textAlignment = .right
+        PriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PriceLabel.text = "السعر : "
+        PriceLabel.textAlignment = .right
+        PriceNumLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PriceNumLabel.textAlignment = .right
+        
+        SubTotalLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        SubTotalLabel.text = "حاصل الجمع"
+        SubTotalPriceLabel.textAlignment = .right
+        SubTotalPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        SubTotalPriceLabel.textAlignment = .right
+        ShippingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        ShippingLabel.text = "الشحن والتسليم"
+        ShippingLabel.textAlignment = .right
+        ShippingPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        ShippingPriceLabel.textAlignment = .right
+        TaxLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        TaxLabel.text = "ضريبة"
+        TaxLabel.textAlignment = .right
+        TaxPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        TaxPriceLabel.textAlignment = .right
+        AppointmentLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        AppointmentLabel.text = "رسوم التعيين"
+        AppointmentLabel.textAlignment = .right
+        AppointmentPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        AppointmentPriceLabel.textAlignment = .right
+        TotalLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        TotalLabel.text = "مجموع"
+        TotalLabel.textAlignment = .right
+        TotalPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        TotalPriceLabel.textAlignment = .right
+        PaymentLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PaymentLabel.text = "نوع الدفع"
+        PaymentLabel.textAlignment = .right
+        PaymentTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PaymentTypeLabel.text = "(بطاقة)"
+        PaymentTypeLabel.textAlignment = .right
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "ORDER DETAILS"
+        
+        OrderDetailsScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        orderIdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        orderIdLabel.text = "ORDER ID : "
+        orderIdLabel.textAlignment = .left
+        orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        orderIdNumLabel.textAlignment = .left
+        
+        orderPlacedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        orderPlacedLabel.text = "Order Placed On :"
+        orderPlacedLabel.textAlignment = .left
+        orderPlacedDateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        orderPlacedDateLabel.textAlignment = .left
+        
+        PaymentInfoLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PaymentInfoLabel.text = " PAYMENT INFORMATION"
+        PaymentInfoLabel.textAlignment = .left
+        
+        DressTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        DressTypeLabel.textAlignment = .left
+        QtyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        QtyLabel.text = "Qty : "
+        QtyLabel.textAlignment = .left
+        QtyNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        QtyNumLabel.textAlignment = .left
+        PriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PriceLabel.text = "Price : "
+        PriceLabel.textAlignment = .left
+        PriceNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PriceNumLabel.textAlignment = .left
+        
+        SubTotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        SubTotalLabel.text = "Sub Total"
+        SubTotalPriceLabel.textAlignment = .left
+        SubTotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        SubTotalPriceLabel.textAlignment = .left
+        ShippingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ShippingLabel.text = "Shipping & Handling"
+        ShippingLabel.textAlignment = .left
+        ShippingPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ShippingPriceLabel.textAlignment = .left
+        TaxLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        TaxLabel.text = "Tax"
+        TaxLabel.textAlignment = .left
+        TaxPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        TaxPriceLabel.textAlignment = .left
+        AppointmentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        AppointmentLabel.text = "Appointment Charges"
+        AppointmentLabel.textAlignment = .left
+        AppointmentPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        AppointmentPriceLabel.textAlignment = .left
+        TotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        TotalLabel.text = "Total"
+        TotalLabel.textAlignment = .left
+        TotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        TotalPriceLabel.textAlignment = .left
+        PaymentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PaymentLabel.text = "Payment Type"
+        PaymentLabel.textAlignment = .left
+        PaymentTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        PaymentTypeLabel.text = "(Card)"
+        PaymentTypeLabel.textAlignment = .left
+    }
+    
     func orderDetailsContent()
     {
         self.stopActivity()
         
-        let orderDetailsNavigationBar = UIView()
-        orderDetailsNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        orderDetailsNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(orderDetailsNavigationBar)
+        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        view.addSubview(selfScreenNavigationBar)
         
         let backButton = UIButton()
         backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        orderDetailsNavigationBar.addSubview(backButton)
+        selfScreenNavigationBar.addSubview(backButton)
         
-        let navigationTitle = UILabel()
-        navigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: orderDetailsNavigationBar.frame.width, height: (3 * y))
-        navigationTitle.text = "ORDER DETAILS"
-        navigationTitle.textColor = UIColor.white
-        navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        orderDetailsNavigationBar.addSubview(navigationTitle)
+        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        selfScreenNavigationTitle.text = "ORDER DETAILS"
+        selfScreenNavigationTitle.textColor = UIColor.white
+        selfScreenNavigationTitle.textAlignment = .center
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
        // Scrollview...
         // let OrderDetailsScrollView = UIScrollView()
-        OrderDetailsScrollView.frame = CGRect(x: 0, y: orderDetailsNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
+        OrderDetailsScrollView.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
         OrderDetailsScrollView.backgroundColor = UIColor.clear
         OrderDetailsScrollView.contentSize.height = (1.75 * view.frame.height)
         view.addSubview(OrderDetailsScrollView)
@@ -277,21 +448,20 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         // OrderId View..
         let orderIdView = UIView()
-        orderIdView.frame = CGRect(x: (3 * x), y: y, width: OrderDetailsScrollView.frame.width - (6 * x), height: (8 * y))
+        orderIdView.frame = CGRect(x: 0, y: y, width: OrderDetailsScrollView.frame.width, height: (8 * y))
         orderIdView.backgroundColor = UIColor.white
         OrderDetailsScrollView.addSubview(orderIdView)
         
         // Order Id Label..
-        let orderIdLabel = UILabel()
         orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (10 * x), height: (2 * x))
        // orderIdLabel.backgroundColor = UIColor.gray
         orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
         orderIdLabel.text = "ORDER ID : "
         orderIdLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderIdLabel.textColor = UIColor.black
+        orderIdLabel.textAlignment = .left
         orderIdView.addSubview(orderIdLabel)
         
-        let orderIdNumLabel = UILabel()
         orderIdNumLabel.frame = CGRect(x: orderIdLabel.frame.maxX, y: orderIdView.frame.minY, width: (15 * x), height: (2 * x))
        // orderIdNumLabel.backgroundColor = UIColor.gray
         orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: 16)
@@ -306,10 +476,10 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         }
         orderIdNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
          orderIdNumLabel.textColor = UIColor.black
+        orderIdNumLabel.textAlignment = .left
         orderIdView.addSubview(orderIdNumLabel)
         
         // Order Placed Label..
-        let orderPlacedLabel = UILabel()
         orderPlacedLabel.frame = CGRect(x: x, y: orderIdLabel.frame.maxY + y, width: (13 * x), height: (2 * x))
        // orderPlacedLabel.backgroundColor = UIColor.gray
         orderPlacedLabel.text = "Order Placed On :"
@@ -318,7 +488,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         orderIdView.addSubview(orderPlacedLabel)
         
         
-        let orderPlacedDateLabel = UILabel()
         orderPlacedDateLabel.frame = CGRect(x: orderPlacedLabel.frame.maxX , y: orderIdLabel.frame.maxY + y, width: (17 * x), height: (2 * x))
        // orderPlacedDateLabel.backgroundColor = UIColor.gray
        if(OrderDt.count > 0)
@@ -339,15 +508,15 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         // PaymentInfo View..
         let PaymentInfoView = UIView()
-        PaymentInfoView.frame = CGRect(x: (3 * x), y: orderIdView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (40 * y))
+        PaymentInfoView.frame = CGRect(x: 0, y: orderIdView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width, height: (40 * y))
         PaymentInfoView.backgroundColor = UIColor.groupTableViewBackground
         OrderDetailsScrollView.addSubview(PaymentInfoView)
         
         
          // PaymentInfo Label..
-         let PaymentInfoLabel = UILabel()
          PaymentInfoLabel.frame = CGRect(x: 0, y: 0, width: PaymentInfoView.frame.width, height: (4 * x))
          PaymentInfoLabel.text = " PAYMENT INFORMATION"
+        PaymentInfoLabel.textAlignment = .left
          PaymentInfoLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
          PaymentInfoLabel.font = UIFont(name: "Avenir Next", size: 16)
          PaymentInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
@@ -389,7 +558,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(DressImageView)
         
         // DressType Label..
-        let DressTypeLabel = UILabel()
         DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: PaymentInfoLabel.frame.maxY + (3 * y) , width: (20 * x), height: (2 * y))
        if(Product_Name.count > 0)
        {
@@ -407,7 +575,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(DressTypeLabel)
         
         // Qty Label..
-        let QtyLabel = UILabel()
         QtyLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (6 * x), height: (2 * y))
         QtyLabel.text = "Qty : "
         QtyLabel.textColor = UIColor.black
@@ -415,7 +582,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         QtyLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         PaymentInfoView.addSubview(QtyLabel)
         
-        let QtyNumLabel = UILabel()
         QtyNumLabel.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (4 * x), height: (2 * y))
         if(qty.count > 0)
         {
@@ -432,7 +598,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(QtyNumLabel)
         
         // Price Label..
-        let PriceLabel = UILabel()
         PriceLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: QtyLabel.frame.minY + (3 * y), width: (6 * x), height: (2 * y))
         PriceLabel.text = "Price : "
         PriceLabel.textColor = UIColor.black
@@ -440,7 +605,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         PaymentInfoView.addSubview(PriceLabel)
         
-        let PriceNumLabel = UILabel()
         PriceNumLabel.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: QtyLabel.frame.minY + (3 * y), width: (8 * x), height: (2 * y))
         if(Price.count > 0)
         {
@@ -459,7 +623,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Sub-Total Label
-        let SubTotalLabel = UILabel()
         SubTotalLabel.frame = CGRect(x:x, y: DressImageView.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
         SubTotalLabel.text = "Sub Total"
         SubTotalLabel.textColor = UIColor.black
@@ -469,7 +632,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(SubTotalLabel)
         
         
-        let SubTotalPriceLabel = UILabel()
         SubTotalPriceLabel.frame = CGRect(x:SubTotalLabel.frame.maxX + (12 * x), y: DressImageView.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
         if(Price.count > 0)
         {
@@ -488,7 +650,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Shipping Label
-        let ShippingLabel = UILabel()
         ShippingLabel.frame = CGRect(x:x, y: SubTotalLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         ShippingLabel.text = "Shipping & Handling"
         ShippingLabel.textColor = UIColor.black
@@ -498,7 +659,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(ShippingLabel)
         
         
-        let ShippingPriceLabel = UILabel()
         ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(ShippingCharges.count > 0)
         {
@@ -516,7 +676,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Tax Label
-        let TaxLabel = UILabel()
         TaxLabel.frame = CGRect(x:x, y: ShippingLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         TaxLabel.text = "Tax"
         TaxLabel.textColor = UIColor.black
@@ -526,7 +685,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(TaxLabel)
         
     
-        let TaxPriceLabel = UILabel()
         TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
@@ -546,7 +704,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Appointment Label
-        let AppointmentLabel = UILabel()
         AppointmentLabel.frame = CGRect(x:x, y: TaxLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         AppointmentLabel.text = "Appointment Charges"
         AppointmentLabel.textColor = UIColor.black
@@ -555,8 +712,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         AppointmentLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(AppointmentLabel)
         
-       
-        let AppointmentPriceLabel = UILabel()
         AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Appoinment.count > 0)
         {
@@ -575,7 +730,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Total Label
-        let TotalLabel = UILabel()
         TotalLabel.frame = CGRect(x:x, y: AppointmentLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         TotalLabel.text = "Total"
         TotalLabel.textColor = UIColor.black
@@ -584,8 +738,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TotalLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(TotalLabel)
         
-       
-        let TotalPriceLabel = UILabel()
         TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Total.count > 0)
         {
@@ -604,7 +756,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Payment Type Label
-        let PaymentLabel = UILabel()
         PaymentLabel.frame = CGRect(x:x, y: TotalLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         PaymentLabel.text = "Payment Type"
         PaymentLabel.textColor = UIColor.blue
@@ -614,7 +765,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(PaymentLabel)
         
         
-        let PaymentTypeLabel = UILabel()
         PaymentTypeLabel.frame = CGRect(x:PaymentLabel.frame.maxX - (2 * x), y: TotalPriceLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         PaymentTypeLabel.text = "(Card)"
         PaymentTypeLabel.textColor = UIColor.blue
@@ -623,13 +773,11 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentTypeLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(PaymentTypeLabel)
         
-        
         // Order Status View..
         let OrderStatusView = UIView()
-        OrderStatusView.frame = CGRect(x: (3 * x), y: PaymentInfoView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (18 * y))
+        OrderStatusView.frame = CGRect(x: 0, y: PaymentInfoView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width, height: (18 * y))
         OrderStatusView.backgroundColor = UIColor.white
         OrderDetailsScrollView.addSubview(OrderStatusView)
-        
         
         // Order status Label..
         let OrderStatusLabel = UILabel()
@@ -648,7 +796,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TrackImageView.backgroundColor = UIColor.white
         TrackImageView.image = UIImage(named: "TrackingStatus")
         OrderStatusView.addSubview(TrackImageView)
-        
         
         //orderedLabel..
         let orderedLabel = UILabel()
@@ -707,7 +854,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         // Delivery Info View..
         let DeliveryInfoView = UIView()
-        DeliveryInfoView.frame = CGRect(x: (3 * x), y: OrderStatusView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width - (6 * x), height: (24 * y))
+        DeliveryInfoView.frame = CGRect(x: 0, y: OrderStatusView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width, height: (24 * y))
         DeliveryInfoView.backgroundColor = UIColor.white
         OrderDetailsScrollView.addSubview(DeliveryInfoView)
         
@@ -837,6 +984,23 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         DeliveryInfoView.addSubview(PhoneNumLabel)
         
         OrderDetailsScrollView.contentSize.height = DeliveryInfoView.frame.maxY + (2 * y)
+        
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
         
     }
     

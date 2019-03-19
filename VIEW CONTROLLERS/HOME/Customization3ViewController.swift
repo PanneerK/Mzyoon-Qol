@@ -338,13 +338,13 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
         self.view.bringSubviewToFront(slideMenuButton)
         
-        viewDesignLabel.frame = CGRect(x: (3 * x), y: y, width: (25 * x), height: (4 * y))
+        viewDesignLabel.frame = CGRect(x: 0, y: y, width: (25 * x), height: (4 * y))
         viewDesignLabel.layer.cornerRadius = 10
         viewDesignLabel.layer.masksToBounds = true
         viewDesignLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -354,7 +354,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         viewDesignLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         selfScreenContents.addSubview(viewDesignLabel)
         
-        customedImageView.frame = CGRect(x: (3 * x), y: viewDesignLabel.frame.maxY + y, width: (25 * x), height: (25 * y))
+        customedImageView.frame = CGRect(x: 0, y: viewDesignLabel.frame.maxY + y, width: (25 * x), height: (25 * y))
         customedImageView.layer.borderWidth = 1
         customedImageView.layer.borderColor = UIColor.lightGray.cgColor
         customedImageView.backgroundColor = UIColor.white
@@ -419,7 +419,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedBackButton.addTarget(self, action: #selector(self.dressSelectionButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(customedBackButton)
         
-        dropDownButton.frame = CGRect(x: (3 * x), y: customedImageView.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (4 * y))
+        dropDownButton.frame = CGRect(x: 0, y: customedImageView.frame.maxY + (2 * y), width: selfScreenContents.frame.width, height: (4 * y))
         dropDownButton.layer.cornerRadius = 5
         dropDownButton.layer.masksToBounds = true
         dropDownButton.backgroundColor = UIColor.lightGray
@@ -464,7 +464,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     func subcCustomization3Content(inputArray : NSArray)
     {
-        customizationScrollView.frame = CGRect(x: 0, y: dropDownButton.frame.maxY + y, width: view.frame.width, height: (12 * y))
+        customizationScrollView.frame = CGRect(x: 0, y: dropDownButton.frame.maxY + y, width: selfScreenContents.frame.width, height: (12 * y))
         selfScreenContents.addSubview(customizationScrollView)
         
         for views in customizationScrollView.subviews
@@ -547,7 +547,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customizationScrollView.contentSize.width = x3
         
         let customization3NextButton = UIButton()
-        customization3NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * y))
+        customization3NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * y))
         customization3NextButton.layer.cornerRadius = customization3NextButton.frame.height / 2
         customization3NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization3NextButton.layer.masksToBounds = true

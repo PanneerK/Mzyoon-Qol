@@ -86,6 +86,10 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     let sortButton = UIButton()
     let confirmSelectionButton = UIButton()
     let tailorListTableView = UITableView()
+    
+    //LOCATION PARAMETERS
+    var coordinate1 = CLLocation()
+    var coordinate2 = CLLocation()
 
     var applicationDelegate = AppDelegate()
     
@@ -592,16 +596,28 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             shopLabel.font = nameLabel.font.withSize(1.2 * x)
             tailorView.addSubview(shopLabel)
             
-            let shopName = UILabel()
+            /*let shopName = UILabel()
             shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
             shopName.text = (ShopNameArray[i] as? String)?.uppercased()
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = tailorName.font.withSize(1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
+            tailorView.addSubview(shopName)*/
+            
+            let shopName = UIButton()
+            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
+            if let nameString = ShopNameArray[i] as? String
+            {
+                shopName.setTitle(nameString.uppercased(), for: .normal)
+            }
+            shopName.setTitleColor(UIColor.black, for: .normal)
+            shopName.tag = (IdArray[i] as? Int)!
+            shopName.contentHorizontalAlignment = .left
+            shopName.addTarget(self, action: #selector(self.ShopButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(shopName)
             
-            shopName.attributedText = NSAttributedString(string: ((ShopNameArray[i] as? String)?.uppercased())!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+//            shopName.attributedText = NSAttributedString(string: ((ShopNameArray[i] as? String)?.uppercased())!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: shopLabel.frame.maxY, width: (9 * x), height: (2 * y))
@@ -644,19 +660,31 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             tailorView.addSubview(ratingImageView)
             
             #if targetEnvironment(simulator)
-            // your simulator code
+            // your simulator code  
             print("APP IS RUNNING ON SIMULATOR")
-            let coordinate1 = CLLocation(latitude: 13.0168, longitude: 80.2269)
+            coordinate1 = CLLocation(latitude: 13.0168, longitude: 80.2269)
 
             #else
             // your real device code
             print("APP IS RUNNING ON DEVICE")
             
-            let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            if CLLocationManager.locationServicesEnabled() {
+                switch CLLocationManager.authorizationStatus() {
+                case .notDetermined, .restricted, .denied:
+                    print("No access")
+                    enableLocationServicesAlert()
+                case .authorizedAlways, .authorizedWhenInUse:
+                    print("Access")
+                    coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+                }
+            } else {
+                print("Location services are not enabled")
+                enableLocationServicesAlert()
+            }
             
             #endif
             
-            let coordinate2 = CLLocation(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
+            coordinate2 = CLLocation(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             
             let distanceInMeters = coordinate1.distance(from: coordinate2)
             
@@ -721,8 +749,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     shopLabel.textAlignment = .right
                     
 //                    shopName.text = ""
-                    shopName.textAlignment = .right
+//                    shopName.textAlignment = .right
                     shopName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    shopName.contentHorizontalAlignment = .right
                     
                     ordersLabel.text = "عدد الطلبات" + ":"
                     ordersLabel.textAlignment = .right
@@ -945,6 +974,13 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
     }
     
+    func enableLocationServicesAlert()
+    {
+        let locationAlert = UIAlertController(title: "Alert", message: "Please enable the location and proceed", preferredStyle: .alert)
+        locationAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(locationAlert, animated: true, completion: nil)
+    }
+    
     func mapViewContents(isHidden : Bool)
     {
         mapView.clear()
@@ -957,16 +993,30 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         self.view.bringSubviewToFront(slideMenuButton)
         
+        var camera = GMSCameraPosition()
+        
         #if targetEnvironment(simulator)
         // your simulator code
         print("APP IS RUNNING ON SIMULATOR")
-        let camera = GMSCameraPosition.camera(withLatitude: 13.0168, longitude: 80.2269, zoom: 17.0)
+        camera = GMSCameraPosition.camera(withLatitude: 13.0168, longitude: 80.2269, zoom: 17.0)
 
         #else
         // your real device code
         print("APP IS RUNNING ON DEVICE")
         
-        let camera = GMSCameraPosition.camera(withLatitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, zoom: 17.0)
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                print("No access")
+                enableLocationServicesAlert()
+            case .authorizedAlways, .authorizedWhenInUse:
+                print("Access")
+                camera = GMSCameraPosition.camera(withLatitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, zoom: 17.0)
+            }
+        } else {
+            print("Location services are not enabled")
+            enableLocationServicesAlert()
+        }
 
         #endif
         
@@ -1132,18 +1182,30 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         #if targetEnvironment(simulator)
         // your simulator code
         print("APP IS RUNNING ON SIMULATOR")
-        let coordinate1 = CLLocation(latitude: 13.0168, longitude: 80.2269)
+        coordinate1 = CLLocation(latitude: 13.0168, longitude: 80.2269)
         
         #else
         // your real device code
         print("APP IS RUNNING ON DEVICE")
         
-        let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                print("No access")
+                enableLocationServicesAlert()
+            case .authorizedAlways, .authorizedWhenInUse:
+                print("Access")
+                coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+            }
+        } else {
+            print("Location services are not enabled")
+            enableLocationServicesAlert()
+        }
         
         #endif
         
 //        let coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-        let coordinate2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
+        coordinate2 = CLLocation(latitude: marker.position.latitude, longitude: marker.position.longitude)
         
         let distanceInMeters = coordinate1.distance(from: coordinate2)
         
@@ -1196,7 +1258,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                      ordersCountLabel.text = "\(orderCountArray[i])"
                     
                       TailorID = IdArray[i] as? Int
-             
+                    shopNameBtn.tag = (IdArray[i] as? Int)!
                 }
             }
         }
@@ -1225,7 +1287,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     @objc func ShopButtonAction(sender : UIButton)
     {
         let ShopDetailsScreen = ShopDetailsViewController()
-        ShopDetailsScreen.TailorID = TailorID!
+        ShopDetailsScreen.TailorID = sender.tag
         self.navigationController?.pushViewController(ShopDetailsScreen, animated: true)
 }
     

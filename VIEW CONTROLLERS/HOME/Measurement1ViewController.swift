@@ -224,20 +224,20 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
         self.view.bringSubviewToFront(slideMenuButton)
 
-        manualTitleLabel.frame = CGRect(x: (4 * x), y: y, width: view.frame.width - (8 * x), height: (3 * y))
+        manualTitleLabel.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: (3 * y))
         manualTitleLabel.text = Measure1NameEngArray[0] as! String
         manualTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         manualTitleLabel.textAlignment = .left
         selfScreenContents.addSubview(manualTitleLabel)
         
         let manualButton = UIButton()
-        manualButton.frame = CGRect(x: (4 * x), y: manualTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
+        manualButton.frame = CGRect(x: 0, y: manualTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        manualButton.backgroundColor = UIColor.red
         //        manualButton.setImage(convertedMeasure1BodyImageArray[0], for: .normal)
         manualButton.tag = Measure1IdArray[0] as! Int
@@ -273,14 +273,14 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         downArrowImageView.image = UIImage(named: "downArrow")
         forWhomButton.addSubview(downArrowImageView)
         
-        goTitleLabel.frame = CGRect(x: (4 * x), y: manualButton.frame.maxY + (2 * y), width: view.frame.width - (8 * x), height: (3 * y))
+        goTitleLabel.frame = CGRect(x: 0, y: manualButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width, height: (3 * y))
         goTitleLabel.text = Measure1NameEngArray[1] as! String
         goTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         goTitleLabel.textAlignment = .left
         selfScreenContents.addSubview(goTitleLabel)
         
         let goButton = UIButton()
-        goButton.frame = CGRect(x: (4 * x), y: goTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
+        goButton.frame = CGRect(x: 0, y: goTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        goButton.backgroundColor = UIColor.red
         //        goButton.setImage(convertedMeasure1BodyImageArray[1], for: .normal)
         goButton.tag = Measure1IdArray[1] as! Int
@@ -302,14 +302,14 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             goButton.addSubview(dummyImageView)
         }
         
-        comeTitleLabel.frame = CGRect(x: (4 * x), y: goButton.frame.maxY + (2 * y), width: view.frame.width - (8 * x), height: (3 * y))
+        comeTitleLabel.frame = CGRect(x: 0, y: goButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width, height: (3 * y))
         comeTitleLabel.text = Measure1NameEngArray[2] as! String
         comeTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         comeTitleLabel.textAlignment = .left
         selfScreenContents.addSubview(comeTitleLabel)
         
         let comeButton = UIButton()
-        comeButton.frame = CGRect(x: (4 * x), y: comeTitleLabel.frame.maxY, width: view.frame.width - (8 * x), height: (13 * y))
+        comeButton.frame = CGRect(x: 0, y: comeTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        comeButton.backgroundColor = UIColor.red
         //        comeButton.setImage(convertedMeasure1BodyImageArray[2], for: .normal)
         comeButton.tag = Measure1IdArray[2] as! Int

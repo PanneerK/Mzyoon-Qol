@@ -364,7 +364,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -413,7 +413,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             patternContent(getInputArray: patternsArrayInEnglish)
         }
         
-        customization2NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))
+        customization2NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))
         customization2NextButton.layer.cornerRadius = customization2NextButton.frame.height / 2
         customization2NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
@@ -450,13 +450,13 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         materialTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         selfScreenContents.addSubview(materialTitleLabel)
         
-        materialScrollView.frame = CGRect(x: (3 * x), y: materialTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
+        materialScrollView.frame = CGRect(x: 0, y: materialTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
         selfScreenContents.addSubview(materialScrollView)
         
         let buttonTitleText = ["All Material Type", "Fabric", "Synthetic", "Coton"]
         let imageName = ["All Color", "Red", "Green", "Black"]
         
-        var x1:CGFloat = (2 * x)
+        var x1:CGFloat = x
         
         for i in 0..<getInputArray.count
         {
@@ -529,7 +529,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         colorTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         selfScreenContents.addSubview(colorTitleLabel)
         
-        colorScrollView.frame = CGRect(x: (3 * x), y: colorTitleLabel.frame.maxY, width: view.frame.width - (3 * x), height: (12 * y))
+        colorScrollView.frame = CGRect(x: 0, y: colorTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
         selfScreenContents.addSubview(colorScrollView)
         
         for views in colorScrollView.subviews
@@ -538,7 +538,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         
         let buttonTitleText2 = ["All Color", "Red", "Green", "Black"]
-        var x2:CGFloat = (2 * x)
+        
+        var x2:CGFloat = x
         for i in 0..<getInputArray.count
         {
             let colorButton = UIButton()
@@ -608,7 +609,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         patternTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         selfScreenContents.addSubview(patternTitleLabel)
         
-        patternScrollView.frame = CGRect(x: (3 * x), y: patternTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
+        patternScrollView.frame = CGRect(x: 0, y: patternTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
         selfScreenContents.addSubview(patternScrollView)
         
         for views in patternScrollView.subviews
@@ -618,7 +619,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
         let buttonTitleText3 = ["All Pattern", "Checked", "Houndstooth", "Twill"]
         
-        var x3:CGFloat = (2 * x)
+        var x3:CGFloat = x
         
         for i in 0..<getInputArray.count
         {

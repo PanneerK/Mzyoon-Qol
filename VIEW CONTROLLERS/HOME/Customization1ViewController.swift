@@ -360,7 +360,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -388,7 +388,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             self.brandContents(getInputArray: brandNameEnglishArray)
         }
         
-        customization1NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: brandScrollView.frame.maxY, width: (4 * x), height: (4 * y))
+        customization1NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: brandScrollView.frame.maxY, width: (4 * x), height: (4 * y))
         customization1NextButton.layer.cornerRadius = customization1NextButton.frame.height / 2
         customization1NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization1NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
@@ -423,10 +423,10 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         seasonTitleLabel.textAlignment = .center
         selfScreenContents.addSubview(seasonTitleLabel)
         
-        seasonalScrollView.frame = CGRect(x: (3 * x), y: seasonTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
+        seasonalScrollView.frame = CGRect(x: 0, y: seasonTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
         selfScreenContents.addSubview(seasonalScrollView)
         
-        var x1:CGFloat = (2 * x)
+        var x1:CGFloat = x
         
         for views in seasonalScrollView.subviews
         {
@@ -501,7 +501,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         industryTitleLabel.textAlignment = .center
         selfScreenContents.addSubview(industryTitleLabel)
         
-        industryScrollView.frame = CGRect(x: (3 * x), y: industryTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
+        industryScrollView.frame = CGRect(x: 0, y: industryTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
         selfScreenContents.addSubview(industryScrollView)
         
         for views in industryScrollView.subviews
@@ -509,7 +509,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             views.removeFromSuperview()
         }
         
-        var x3:CGFloat = (2 * x)
+        var x3:CGFloat = x
         for i in 0..<getInputArray.count
         {
             let industryButton = UIButton()
@@ -577,7 +577,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         brandTitleLabel.textAlignment = .center
         selfScreenContents.addSubview(brandTitleLabel)
         
-        brandScrollView.frame = CGRect(x: (3 * x), y: brandTitleLabel.frame.maxY, width: view.frame.width, height: (12 * y))
+        brandScrollView.frame = CGRect(x: 0, y: brandTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
         selfScreenContents.addSubview(brandScrollView)
         
         for views in brandScrollView.subviews
@@ -585,7 +585,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             views.removeFromSuperview()
         }
         
-        var x2:CGFloat = (2 * x)
+        var x2:CGFloat = x
         for i in 0..<getInputArray.count
         {
             let brandButton = UIButton()

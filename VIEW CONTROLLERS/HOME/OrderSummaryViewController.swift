@@ -177,13 +177,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        orderSummaryScrollView.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width, height: view.frame.height - (13 * y))
+        orderSummaryScrollView.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
         orderSummaryScrollView.backgroundColor = UIColor.clear
         view.addSubview(orderSummaryScrollView)
         
         self.view.bringSubviewToFront(slideMenuButton)
         
-        dressTypeHeadingLabel.frame = CGRect(x: (3 * x), y: y, width: view.frame.width, height: (3 * y))
+        dressTypeHeadingLabel.frame = CGRect(x: 0, y: y, width: orderSummaryScrollView.frame.width, height: (3 * y))
         dressTypeHeadingLabel.text = "DRESS TYPE"
         dressTypeHeadingLabel.textColor = UIColor.black
         dressTypeHeadingLabel.textAlignment = .left
@@ -191,7 +191,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         orderSummaryScrollView.addSubview(dressTypeHeadingLabel)
         
         let dressTypeView = UIView()
-        dressTypeView.frame = CGRect(x: (3 * x), y: dressTypeHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (15 * x))
+        dressTypeView.frame = CGRect(x: 0, y: dressTypeHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width, height: (15 * x))
         dressTypeView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(dressTypeView)
         
@@ -310,7 +310,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             }
         }
         
-        customizationHeadingLabel.frame = CGRect(x: (3 * x), y: yPos, width: view.frame.width, height: (3 * y))
+        customizationHeadingLabel.frame = CGRect(x: 0, y: yPos, width: orderSummaryScrollView.frame.width, height: (3 * y))
         customizationHeadingLabel.text = "CUSTOMIZATION 3"
         customizationHeadingLabel.textColor = UIColor.black
         customizationHeadingLabel.textAlignment = .left
@@ -324,7 +324,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         
         let customizationView = UIView()
-        customizationView.frame = CGRect(x: (3 * x), y: customizationHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (5 * x * CGFloat(customization3.count)))
+        customizationView.frame = CGRect(x: 0, y: customizationHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width, height: (5 * x * CGFloat(customization3.count)))
         customizationView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(customizationView)
         
@@ -428,7 +428,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             }
         }
         
-        premiumServicesHeadingLabel.frame = CGRect(x: (3 * x), y: customizationView.frame.maxY + y, width: view.frame.width, height: (3 * y))
+        premiumServicesHeadingLabel.frame = CGRect(x: 0, y: customizationView.frame.maxY + y, width: orderSummaryScrollView.frame.width, height: (3 * y))
         premiumServicesHeadingLabel.text = "PREMIUM SERVICES"
         premiumServicesHeadingLabel.textColor = UIColor.black
         premiumServicesHeadingLabel.textAlignment = .left
@@ -436,7 +436,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         orderSummaryScrollView.addSubview(premiumServicesHeadingLabel)
         
         let premiumServicesView = UIView()
-        premiumServicesView.frame = CGRect(x: (3 * x), y: premiumServicesHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (11 * x))
+        premiumServicesView.frame = CGRect(x: 0, y: premiumServicesHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width, height: (11 * x))
         premiumServicesView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(premiumServicesView)
         
@@ -550,7 +550,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         
         let noteView = UIView()
-        noteView.frame = CGRect(x: (3 * x), y: premiumServicesView.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (5 * x))
+        noteView.frame = CGRect(x: 0, y: premiumServicesView.frame.maxY, width: orderSummaryScrollView.frame.width, height: (5 * x))
         noteView.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         orderSummaryScrollView.addSubview(noteView)
         
@@ -562,7 +562,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         noteLabel.numberOfLines = 2
         noteView.addSubview(noteLabel)
         
-        tailorListHeadingLabel.frame = CGRect(x: (3 * x), y: noteView.frame.maxY + y, width: view.frame.width, height: (3 * y))
+        tailorListHeadingLabel.frame = CGRect(x: 0, y: noteView.frame.maxY + y, width: orderSummaryScrollView.frame.width, height: (3 * y))
         tailorListHeadingLabel.text = "TOTAL NUMBER OF TAILORS"
         tailorListHeadingLabel.textColor = UIColor.black
         tailorListHeadingLabel.textAlignment = .left
@@ -576,7 +576,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         }
         
         let tailorView = UIView()
-        tailorView.frame = CGRect(x: (3 * x), y: tailorListHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (5 * x * CGFloat(selectedTailors.count)) + y)
+        tailorView.frame = CGRect(x: 0, y: tailorListHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width, height: (5 * x * CGFloat(selectedTailors.count)) + y)
         tailorView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(tailorView)
         
@@ -686,7 +686,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     func custom1AndCustom2Content()
     {
-        customization1HeadingLabel.frame = CGRect(x: (3 * x), y: yPos, width: view.frame.width, height: (3 * y))
+        customization1HeadingLabel.frame = CGRect(x: 0, y: yPos, width: orderSummaryScrollView.frame.width, height: (3 * y))
         customization1HeadingLabel.text = "CUSTOMIZATION 1 AND CUSTOMIZATION 2"
         customization1HeadingLabel.textColor = UIColor.black
         customization1HeadingLabel.textAlignment = .left
@@ -694,7 +694,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         orderSummaryScrollView.addSubview(customization1HeadingLabel)
         
         let customization1View = UIView()
-        customization1View.frame = CGRect(x: (3 * x), y: customization1HeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width - (6 * x), height: (28.5 * y))
+        customization1View.frame = CGRect(x: 0, y: customization1HeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width, height: (28.5 * y))
         customization1View.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(customization1View)
         
