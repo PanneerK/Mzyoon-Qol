@@ -205,7 +205,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     // RatingsView..
     let RatingsView = UIView()
-    RatingsView.frame = CGRect(x: 0, y: RatingsUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (12 * y))
+    RatingsView.frame = CGRect(x: 0, y: RatingsUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (14 * y))
     RatingsView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     selfScreenContents.addSubview(RatingsView)
     
@@ -282,24 +282,24 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     //OnTimeServiceView..
     let OnTimeServiceView = UIView()
-    OnTimeServiceView.frame = CGRect(x: (2 * x), y: y, width: RatingsView.frame.width - (4 * x), height: (2.5 * y))
+    OnTimeServiceView.frame = CGRect(x: (2 * x), y: y, width: RatingsView.frame.width - (4 * x), height: (3 * y))
     OnTimeServiceView.backgroundColor = UIColor.white
     RatingsView.addSubview(OnTimeServiceView)
     
     //RatingsTypeLabel
     let OnTimeServiceLabel = UILabel()
-    OnTimeServiceLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (2.5 * y))
+    OnTimeServiceLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (3 * y))
     OnTimeServiceLabel.textColor = UIColor.black
     // OnTimeServiceLabel.backgroundColor = UIColor.lightGray
     OnTimeServiceLabel.text = "ON TIME SERVICE"
     OnTimeServiceLabel.textAlignment = .center
-    OnTimeServiceLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    OnTimeServiceLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
     OnTimeServiceLabel.adjustsFontSizeToFitWidth = true
     OnTimeServiceView.addSubview(OnTimeServiceLabel)
     
     // ColonLabel :-
     let ColonLabel1 = UILabel()
-    ColonLabel1.frame = CGRect(x: OnTimeServiceLabel.frame.maxX, y: 0, width: (2 * x), height: (2.5 * y))
+    ColonLabel1.frame = CGRect(x: OnTimeServiceLabel.frame.maxX, y: 0, width: (2 * x), height: (3 * y))
     //ColonLabel1.backgroundColor = UIColor.gray
     ColonLabel1.text = "-"
     ColonLabel1.textColor = UIColor.black
@@ -309,7 +309,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     // Ratings....
     let OnTimeServiceRating = CosmosView()
-    OnTimeServiceRating.frame = CGRect(x: ColonLabel1.frame.maxX, y: y/2, width: (12 * x), height:(2.5 * y))
+    OnTimeServiceRating.frame = CGRect(x: ColonLabel1.frame.maxX, y: y/2, width: (12 * x), height:(3 * y))
     //OnTimeServiceRating.settings.updateOnTouch = false
     OnTimeServiceRating.settings.fillMode = .half
     OnTimeServiceRating.settings.starSize = 20
@@ -319,6 +319,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     OnTimeServiceRating.settings.filledBorderColor = UIColor.orange
     OnTimeServiceRating.settings.filledImage = UIImage(named: "GoldStarFull")?.withRenderingMode(.alwaysOriginal)
     OnTimeServiceRating.settings.emptyImage = UIImage(named: "GoldStarEmpty")?.withRenderingMode(.alwaysOriginal)
+    OnTimeServiceRating.rating = 0
     OnTimeServiceView.addSubview(OnTimeServiceRating)
     
     
@@ -332,24 +333,24 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     //StichingQualityView..
     let StichingQualityView = UIView()
-    StichingQualityView.frame = CGRect(x: (2 * x), y: OnTimeServiceView.frame.maxY + y, width: RatingsView.frame.width - (4 * x), height: (2.5 * y))
+    StichingQualityView.frame = CGRect(x: (2 * x), y: OnTimeServiceView.frame.maxY + y, width: RatingsView.frame.width - (4 * x), height: (3 * y))
     StichingQualityView.backgroundColor = UIColor.white
     RatingsView.addSubview(StichingQualityView)
     
     //StitchingQualityLabel
     let StitchingQualityLabel = UILabel()
-    StitchingQualityLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (2.5 * y))
+    StitchingQualityLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (3 * y))
     StitchingQualityLabel.textColor = UIColor.black
     // StitchingQualityLabel.backgroundColor = UIColor.lightGray
     StitchingQualityLabel.text = "STICHING QUALITY"
     StitchingQualityLabel.textAlignment = .center
-    StitchingQualityLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    StitchingQualityLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
     StitchingQualityLabel.adjustsFontSizeToFitWidth = true
     StichingQualityView.addSubview(StitchingQualityLabel)
     
     // ColonLabel :-
     let ColonLabel2 = UILabel()
-    ColonLabel2.frame = CGRect(x: StitchingQualityLabel.frame.maxX, y: 0, width: (2 * x), height: (2.5 * y))
+    ColonLabel2.frame = CGRect(x: StitchingQualityLabel.frame.maxX, y: 0, width: (2 * x), height: (3 * y))
     //ColonLabel2.backgroundColor = UIColor.gray
     ColonLabel2.text = "-"
     ColonLabel2.textColor = UIColor.black
@@ -359,7 +360,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     // Ratings....
     let StichingQualityRating = CosmosView()
-    StichingQualityRating.frame = CGRect(x: ColonLabel2.frame.maxX, y: y/2, width: (12 * x), height:(2.5 * y))
+    StichingQualityRating.frame = CGRect(x: ColonLabel2.frame.maxX, y: y/2, width: (12 * x), height:(3 * y))
     //StichingQualityRating.settings.updateOnTouch = false
     StichingQualityRating.settings.fillMode = .half
     StichingQualityRating.settings.starSize = 20
@@ -369,6 +370,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     StichingQualityRating.settings.filledBorderColor = UIColor.orange
     StichingQualityRating.settings.filledImage = UIImage(named: "GoldStarFull")?.withRenderingMode(.alwaysOriginal)
     StichingQualityRating.settings.emptyImage = UIImage(named: "GoldStarEmpty")?.withRenderingMode(.alwaysOriginal)
+    StichingQualityRating.rating = 0
     StichingQualityView.addSubview(StichingQualityRating)
     
     
@@ -382,24 +384,24 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     //CustomerServiceView..
     let CustomerServiceView = UIView()
-    CustomerServiceView.frame = CGRect(x: (2 * x), y: StichingQualityView.frame.maxY + y, width: RatingsView.frame.width - (4 * x), height: (2.5 * y))
+    CustomerServiceView.frame = CGRect(x: (2 * x), y: StichingQualityView.frame.maxY + y, width: RatingsView.frame.width - (4 * x), height: (3 * y))
     CustomerServiceView.backgroundColor = UIColor.white
     RatingsView.addSubview(CustomerServiceView)
     
     //CustomerServiceLabel
     let CustomerServiceLabel = UILabel()
-    CustomerServiceLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (2.5 * y))
+    CustomerServiceLabel.frame = CGRect(x: x/2, y: 0, width: (12 * x), height: (3 * y))
     CustomerServiceLabel.textColor = UIColor.black
     // CustomerServiceLabel.backgroundColor = UIColor.lightGray
     CustomerServiceLabel.text = "CUSTOMER SERVICE"
     CustomerServiceLabel.textAlignment = .center
-    CustomerServiceLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+    CustomerServiceLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
     CustomerServiceLabel.adjustsFontSizeToFitWidth = true
     CustomerServiceView.addSubview(CustomerServiceLabel)
     
     // ColonLabel :-
     let ColonLabel3 = UILabel()
-    ColonLabel3.frame = CGRect(x: CustomerServiceLabel.frame.maxX, y: 0, width: (2 * x), height: (2.5 * y))
+    ColonLabel3.frame = CGRect(x: CustomerServiceLabel.frame.maxX, y: 0, width: (2 * x), height: (3 * y))
     //ColonLabel3.backgroundColor = UIColor.gray
     ColonLabel3.text = "-"
     ColonLabel3.textColor = UIColor.black
@@ -409,7 +411,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     // Ratings....
     let CustomerServiceRating = CosmosView()
-    CustomerServiceRating.frame = CGRect(x: ColonLabel3.frame.maxX, y: y/2, width: (12 * x), height:(2.5 * y))
+    CustomerServiceRating.frame = CGRect(x: ColonLabel3.frame.maxX, y: y/2, width: (12 * x), height:(3 * y))
     //CustomerServiceRating.settings.updateOnTouch = false
     CustomerServiceRating.settings.fillMode = .half
     CustomerServiceRating.settings.starSize = 20
@@ -419,14 +421,14 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     CustomerServiceRating.settings.filledBorderColor = UIColor.orange
     CustomerServiceRating.settings.filledImage = UIImage(named: "GoldStarFull")?.withRenderingMode(.alwaysOriginal)
     CustomerServiceRating.settings.emptyImage = UIImage(named: "GoldStarEmpty")?.withRenderingMode(.alwaysOriginal)
+    CustomerServiceRating.rating = 0
     CustomerServiceView.addSubview(CustomerServiceRating)
     
     
     CustomerServiceRating.didTouchCosmos = { rating in
         print("CustomerServiceRating :", "\(rating)")
-        
+   
         self.CustomerServiceRatingNum = Int(rating)
-        
     }
     
     
@@ -471,7 +473,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     let SubmitButton = UIButton()
     SubmitButton.frame = CGRect(x: (selfScreenContents.frame.width - (16 * x)), y: Review_TF.frame.maxY + (3 * y) , width: (15 * x), height: (3 * y))
     SubmitButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-    SubmitButton.setTitle("Submit", for: .normal)
+    SubmitButton.setTitle("SUBMIT", for: .normal)
     SubmitButton.setTitleColor(UIColor.white, for: .normal)
     SubmitButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: 1.3 * x)
     SubmitButton.layer.borderWidth = 1.0
@@ -507,7 +509,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
             Review_TF.textAlignment = .left
             
             SubmitButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            SubmitButton.setTitle("Submit", for: .normal)
+            SubmitButton.setTitle("SUBMIT", for: .normal)
         }
         else if language == "ar"
         {
@@ -564,7 +566,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
         Review_TF.textAlignment = .left
         
         SubmitButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        SubmitButton.setTitle("Submit", for: .normal)
+        SubmitButton.setTitle("SUBMIT", for: .normal)
     }
    }
     
