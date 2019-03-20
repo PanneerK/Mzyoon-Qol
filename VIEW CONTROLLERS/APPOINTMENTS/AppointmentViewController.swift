@@ -684,8 +684,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         AppointmentScrollview.backgroundColor = UIColor.clear
         view.addSubview(AppointmentScrollview)
         
-          
-        
  //----------------------------------------OrderType View---------------------------------------------------------------
         
         // OrderType View..

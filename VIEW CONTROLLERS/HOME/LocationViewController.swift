@@ -12,8 +12,10 @@ import CoreLocation
 import GoogleMaps
 import GooglePlaces
 
-class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate
+
+class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UISearchBarDelegate, UISearchControllerDelegate, GMSAutocompleteViewControllerDelegate
 {
+  
     var x = CGFloat()
     var y = CGFloat()
     
@@ -186,6 +188,16 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         addressLabel.numberOfLines = 3
         mapView.addSubview(addressLabel)
         
+        let searchButton = UIButton()
+        searchButton.frame = CGRect(x: (x / 2), y: mapView.frame.height - (5.5 * y), width: (5 * x), height: (5 * x))
+        searchButton.layer.cornerRadius = searchButton.frame.height / 2
+        searchButton.layer.borderWidth = 0.5
+        searchButton.layer.borderColor = UIColor.lightGray.cgColor
+        searchButton.backgroundColor = UIColor.white
+        searchButton.setImage(UIImage(named: "search"), for: .normal)
+        searchButton.addTarget(self, action: #selector(self.searchButtonAction(sender:)), for: .touchUpInside)
+        mapView.addSubview(searchButton)
+        
         addAddressButton.isEnabled = false
         addAddressButton.frame = CGRect(x: 0, y: mapView.frame.maxY, width: view.frame.width, height: (5 * y))
         addAddressButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -220,6 +232,42 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func searchButtonAction(sender : UIButton)
+    {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+        
+        // Specify the place data types to return.
+//        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
+//            UInt(GMSPlaceField.placeID.rawValue))!
+//        autocompleteController.placeFields = fields
+        
+        // Specify a filter.
+        let filter = GMSAutocompleteFilter()
+        filter.type = .address
+        autocompleteController.autocompleteFilter = filter
+        
+        // Display the autocomplete view controller.
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print("didAutocompleteWith")
+        print("Place name: \(place.name)")
+        print("Place ID: \(place.placeID)")
+        print("Place attributions: \(place.attributions)")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("didFailAutocompleteWithError")
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        print("GMSAutocompleteViewController")
+        dismiss(animated: true, completion: nil)
     }
     
     
