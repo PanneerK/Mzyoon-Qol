@@ -56,13 +56,11 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         
          selectedButton(tag: 1)
 
-          print("request Order ID :",OrderId)
-     //   UserDefaults.standard.set(OrderId, forKey: "OrderID")
+         print("request Order ID :",OrderId)
+      //  UserDefaults.standard.set(OrderId, forKey: "OrderID")
         
-        
-         //  self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
-        
-       // quotationListContent()
+      //  self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
+      // quotationListContent()
     }
     
     override func viewWillAppear(_ animated: Bool)
