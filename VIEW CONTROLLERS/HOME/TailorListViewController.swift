@@ -391,6 +391,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))

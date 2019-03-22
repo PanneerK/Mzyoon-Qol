@@ -168,6 +168,7 @@ class CommonViewController: UIViewController
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        navigationTitle.font = navigationTitle.font.withSize(2 * x)
         navigationBar.addSubview(navigationTitle)
         
         userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: (4 * y), height: (4 * y))

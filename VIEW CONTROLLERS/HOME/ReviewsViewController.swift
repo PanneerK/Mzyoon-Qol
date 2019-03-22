@@ -255,6 +255,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     selfScreenNavigationTitle.textColor = UIColor.white
     selfScreenNavigationTitle.textAlignment = .center
     selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+    selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
     selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
     
     RatingsView.frame = CGRect(x: x , y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: (15 * y))

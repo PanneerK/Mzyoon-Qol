@@ -273,6 +273,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         searchTextField.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: (4 * y))

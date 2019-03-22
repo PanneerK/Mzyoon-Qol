@@ -545,6 +545,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         imageButton.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: (5 * y))

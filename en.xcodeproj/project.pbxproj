@@ -37,6 +37,7 @@
 		FD0785D9220964E1001B9FC9 /* ConversionToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0785D8220964E1001B9FC9 /* ConversionToJson.swift */; };
 		FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */; };
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
+		FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0DD42C2242192800F7AF38 /* TestingViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
 		FD0F977F22255E40003744ED /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F977E22255E40003744ED /* Variables.swift */; };
 		FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */; };
@@ -152,6 +153,7 @@
 		FD0785D8220964E1001B9FC9 /* ConversionToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionToJson.swift; sourceTree = "<group>"; };
 		FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
+		FD0DD42C2242192800F7AF38 /* TestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingViewController.swift; sourceTree = "<group>"; };
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
 		FD0F977E22255E40003744ED /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCustomizationToJson.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 		FD2ADFAB2175A5480033025B = {
 			isa = PBXGroup;
 			children = (
+				FD0DD42C2242192800F7AF38 /* TestingViewController.swift */,
 				FD0785DA2209A464001B9FC9 /* SLIDE MENUS */,
 				FDFE07332189E47E0056E773 /* VIEW */,
 				FD2ADFEA2175C0160033025B /* SERVER */,
@@ -745,6 +748,7 @@
 				FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */,
 				FD5774B0219AB2F30026DBF8 /* GenderTableViewCell.swift in Sources */,
 				DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */,
+				FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */,
 				FDC9BB922186F6F7003BA5C9 /* CartViewController.swift in Sources */,
 				FDC9BB8E2186F6CD003BA5C9 /* ProfileViewController.swift in Sources */,
 				FDC9BB872186F30D003BA5C9 /* HomeViewController.swift in Sources */,
@@ -946,7 +950,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -974,7 +978,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Mzyoon/Mzyoon-Bridging-Header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -629,6 +629,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.text = "موعد"
+        
+        AppointmentScrollview.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglishInSelf()
@@ -636,6 +638,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.text = "APPOINTMENT"
+        
+        AppointmentScrollview.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     func AppointmentContent()
@@ -658,7 +662,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         selfScreenNavigationTitle.text = "APPOINTMENT"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -1437,7 +1442,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
              // MeasureSucessStr = "True"
-          
         }
         else
         {
@@ -1445,6 +1449,107 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         
         AppointmentScrollview.contentSize.height = MeasurementTypeView.frame.maxY
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                MaterialTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                MaterialTypeLabel.text = "MEASUREMENT_1"
+                
+                Material_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_StatusLabel.text = "Appointment Status:"
+                Material_StatusLabel.textAlignment = .left
+                
+                Measure_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_StatusLabel.text = "Appointment Status:"
+                Measure_StatusLabel.textAlignment = .left
+                
+                Measure_StatusBtn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                TailorTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TailorTypeLabel.textAlignment = .left
+                
+                TailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                From_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MaterialTypeLBL.text = "FROM"
+                From_MaterialTypeLBL.textAlignment = .left
+                
+                TO_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TO_MaterialTypeLBL.text = "TO"
+                TO_MaterialTypeLBL.textAlignment = .left
+
+                From_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                Slot_MeasureTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Slot_MeasureTypeLBL.text = "TIME SLOT"
+                Slot_MeasureTypeLBL.textAlignment = .left
+                
+                SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                SLOT_MeasurementType_TF.placeholder = "Time"
+                SLOT_MeasurementType_TF.textAlignment = .left
+                
+                Measure_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_SaveButton.setTitle("Save", for: .normal)
+
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                MaterialTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                MaterialTypeLabel.text = "قياس_1"
+                
+                Material_StatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_StatusLabel.text = "حالة التعيين : "
+                Material_StatusLabel.textAlignment = .right
+                
+                Measure_StatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_StatusLabel.text = "حالة التعيين : "
+                Measure_StatusLabel.textAlignment = .right
+                
+                Measure_StatusBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                TailorTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TailorTypeLabel.textAlignment = .right
+                
+                TailorImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                From_MaterialTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_MaterialTypeLBL.text = "من عند"
+                From_MaterialTypeLBL.textAlignment = .right
+                
+                TO_MaterialTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_MaterialTypeLBL.text = "حتى"
+                TO_MaterialTypeLBL.textAlignment = .right
+                
+                From_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "تاريخ"
+                TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_MeasurementType_TF.placeholder = "تاريخ"
+                
+                Slot_MeasureTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Slot_MeasureTypeLBL.text = "فسحة زمنية"
+                Slot_MeasureTypeLBL.textAlignment = .right
+                
+                SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                SLOT_MeasurementType_TF.placeholder = "زمن"
+                SLOT_MeasurementType_TF.textAlignment = .right
+                
+                Measure_SaveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_SaveButton.setTitle("حفظ", for: .normal)
+
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            MaterialTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            MaterialTypeLabel.text = "MEASUREMENT_1"
+
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
