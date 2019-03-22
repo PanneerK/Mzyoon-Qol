@@ -192,7 +192,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                     UserDefaults.standard.set(getName, forKey: "userName")
                 }
                 
-                
                 let dob = result.value(forKey: "Dob") as! NSArray
                 print("DOB", dob)
                 
@@ -203,7 +202,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                         getDOB = String(date.prefix(11))
                     }
                 }
-                
                 
                 //            UserDefaults.standard.set(dob[0], forKey: "dob")
                 
@@ -241,6 +239,11 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 
                 //            UserDefaults.standard.set(email[0], forKey: "email")
                 
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/Images/BuyerImages/\(imageName[0])"
+                
+//                self.downloadImage(url: NSURL(string: api) as! URL , tag: 1)
+
                 screenContents()
             }
             else
@@ -431,6 +434,32 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         activityIndicator.stopAnimating()
     }
     
+    func getDataFromUrl(url: URL, completion: @escaping (_ data: Data?, _  response: URLResponse?, _ error: Error?) -> Void) {
+        URLSession.shared.dataTask(with: url) {
+            (data, response, error) in
+            completion(data, response, error)
+            }.resume()
+    }
+    
+    func downloadImage(url: URL , tag : Int) {
+        //        print("Download Started")
+        getDataFromUrl(url: url) { (data, response, error)  in
+            guard let data = data, error == nil else { return }
+            //            print(response?.suggestedFilename ?? url.lastPathComponent)
+            //            print("Download Finished")
+            DispatchQueue.main.async() { () -> Void in
+                
+                self.userImage.image = UIImage(data: data)
+
+                if let temp : UIImageView = self.view.viewWithTag(tag) as? UIImageView{
+                }
+                else{
+                    //                    print("ff")
+                }
+            }
+        }
+    }
+    
     func changeViewToArabicInSelf()
     {
         self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -500,12 +529,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         userImage.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: selfScreenNavigationBar.frame.maxY + y, width: (15 * x), height: (15 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.backgroundColor = UIColor.white
         userImage.layer.masksToBounds = true
+
         if let imageName = imageName[0] as? String
         {
             let urlString = serviceCall.baseURL
@@ -514,11 +545,11 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
           //  userImage.
-            if apiurl != nil 
+            if apiurl != nil
             {
                 userImage.dowloadFromServer(url: apiurl!)
+                activeStop()
             }
-            activeStop()
         }
 
         userImage.autoresizingMask = UIView.AutoresizingMask(rawValue: UIView.AutoresizingMask.flexibleBottomMargin.rawValue | UIView.AutoresizingMask.flexibleHeight.rawValue | UIView.AutoresizingMask.flexibleRightMargin.rawValue | UIView.AutoresizingMask.flexibleLeftMargin.rawValue | UIView.AutoresizingMask.flexibleTopMargin.rawValue | UIView.AutoresizingMask.flexibleWidth.rawValue)

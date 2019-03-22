@@ -22,9 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     {
         // Override point for customization after application launch.
         
-        GMSServices.provideAPIKey("AIzaSyDzbSJiihL4mPGX4J23kHxm-1swwYWIStA")
+        GMSServices.provideAPIKey("AIzaSyBeDuAraL0aQgpbr2dGw3bqBywv-R3gQOM")
         
-        GMSPlacesClient.provideAPIKey("AIzaSyDzbSJiihL4mPGX4J23kHxm-1swwYWIStA")
+        GMSPlacesClient.provideAPIKey("AIzaSyBeDuAraL0aQgpbr2dGw3bqBywv-R3gQOM")
         
         UserDefaults.standard.set(0, forKey: "screenValue")
         
@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = LocationViewController()
+                let loginScreen = HomeViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen
