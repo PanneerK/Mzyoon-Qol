@@ -709,7 +709,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             locationButton.layer.borderColor = UIColor.lightGray.cgColor
             locationButton.setImage(UIImage(named: "locationMarker"), for: .normal)
             locationButton.tag = IdArray[i] as! Int
-//            locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
+            locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(locationButton)
             
             if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -810,7 +810,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     @objc func directionButtonAction(sender : UIButton)
     {
-        listViewContents(isHidden: true)
+        listViewContents(isHidden: false)
         mapViewContents(isHidden: true)
         
         for i in 0..<IdArray.count
@@ -820,9 +820,30 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                 if sender.tag == id
                 {
                     destinationLocation = CLLocationCoordinate2D(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
-                    directionViewContents(isHidden: false)
+//                    directionViewContents(isHidden: false)
                 }
             }
+        }
+        
+//        let lat = 37.7
+//        let lon = -122.4
+//        if (UIApplication.shared.canOpenURL(NSURL(string:"https://maps.google.com")! as URL))
+//        {
+//            UIApplication.shared.openURL(NSURL(string:
+//                "https://maps.google.com/?q=@\(destinationLocation.latitude),\(destinationLocation.longitude)")! as URL)
+//        }
+        
+        let strLat : String = "\(currentLocation.coordinate.latitude)"
+        let strLong : String = "\(currentLocation.coordinate.longitude)"
+        
+        let strLat1 : String = "\(destinationLocation.latitude)"
+        let strLong2 : String = "\(destinationLocation.longitude)"
+        
+        if (UIApplication.shared.canOpenURL(URL(string:"https://maps.google.com")!)) {
+            UIApplication.shared.openURL(URL(string:"https://maps.google.com/?saddr=\(strLat),\(strLong)&daddr=\(strLat1),\(strLong2)&directionsmode=driving&zoom=14&views=traffic")!)
+        }
+        else {
+            print("Can't use comgooglemaps://");
         }
         
       //  serviceCall.API_DirectionRequest(origin: "\(currentLocation.coordinate.latitude)", destination: "\(currentLocation.coordinate.longitude)", delegate: self)
@@ -1232,7 +1253,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         locationButton.setTitle("DIRECTIONS", for: .normal)
         locationButton.setTitleColor(UIColor.white, for: .normal)
         locationButton.tag = 0
-//        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
+        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
         tailorDeatiledView.addSubview(locationButton)
       
         /*

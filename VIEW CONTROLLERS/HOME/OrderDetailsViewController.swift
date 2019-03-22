@@ -355,13 +355,13 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         orderIdNumLabel.textAlignment = .left
         
-        orderPlacedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        orderPlacedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         orderPlacedLabel.text = "Order Placed On :"
         orderPlacedLabel.textAlignment = .left
-        orderPlacedDateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        orderPlacedDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         orderPlacedDateLabel.textAlignment = .left
         
-        PaymentInfoLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        PaymentInfoLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         PaymentInfoLabel.text = " PAYMENT INFORMATION"
         PaymentInfoLabel.textAlignment = .left
         

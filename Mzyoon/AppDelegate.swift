@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         GMSServices.provideAPIKey("AIzaSyDzbSJiihL4mPGX4J23kHxm-1swwYWIStA")
         
+        GMSPlacesClient.provideAPIKey("AIzaSyDzbSJiihL4mPGX4J23kHxm-1swwYWIStA")
+        
         UserDefaults.standard.set(0, forKey: "screenValue")
         
         checkLogin()
@@ -47,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = HomeViewController()
+                let loginScreen = LocationViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen
