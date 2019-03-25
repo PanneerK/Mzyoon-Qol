@@ -876,7 +876,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         let dateFormatter1 = DateFormatter()
         dateFormatter1.dateStyle = .medium
         dateFormatter1.timeStyle = .none
-        dateFormatter1.dateFormat = "MM/dd/yyyy"
+        dateFormatter1.dateFormat = "dd MMM yyyy"
         dob.text = dateFormatter1.string(from: datePick.date)
         dob.resignFirstResponder()
     }

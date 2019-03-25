@@ -13,7 +13,7 @@ import GoogleMaps
 import GooglePlaces
 
 
-class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate
+class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate
 {
   
     var x = CGFloat()
@@ -238,7 +238,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     @objc func searchButtonAction(sender : UIButton)
     {
         let autocompleteController = GMSAutocompleteViewController()
-//        autocompleteController.delegate = self
+        autocompleteController.delegate = self
         
         // Specify the place data types to return.
 //        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
@@ -254,22 +254,22 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         present(autocompleteController, animated: true, completion: nil)
     }
     
-//    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-//        print("didAutocompleteWith")
-//        print("Place name: \(place.name)")
-//        print("Place ID: \(place.placeID)")
-//        print("Place attributions: \(place.attributions)")
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-//        print("didFailAutocompleteWithError")
-//    }
-//
-//    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
-//        print("GMSAutocompleteViewController")
-//        dismiss(animated: true, completion: nil)
-//    }
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print("didAutocompleteWith")
+        print("Place name: \(place.name)")
+        print("Place ID: \(place.placeID)")
+        print("Place attributions: \(place.attributions)")
+        dismiss(animated: true, completion: nil)
+    }
+
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("didFailAutocompleteWithError")
+    }
+
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        print("GMSAutocompleteViewController")
+        dismiss(animated: true, completion: nil)
+    }
     
     
     @objc func addAddressButtonAction(sender : UIButton)

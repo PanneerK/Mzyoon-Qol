@@ -1310,6 +1310,22 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     {
         let ShopDetailsScreen = ShopDetailsViewController()
         ShopDetailsScreen.TailorID = sender.tag
+        
+        for i in 0..<IdArray.count
+        {
+            if let forId = IdArray[i] as? Int
+            {
+                if forId == sender.tag
+                {
+                    ShopDetailsScreen.getDestinationLatitude = latitudeArray[i] as! Double
+                    ShopDetailsScreen.getDestinationLongitude = longitudeArray[i] as! Double
+                }
+            }
+        }
+        
+        ShopDetailsScreen.getSourceLatitude = currentLocation.coordinate.latitude
+        ShopDetailsScreen.getSourceLongitude = currentLocation.coordinate.longitude
+        
         self.navigationController?.pushViewController(ShopDetailsScreen, animated: true)
 }
     

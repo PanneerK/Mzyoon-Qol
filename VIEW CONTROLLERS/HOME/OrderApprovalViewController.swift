@@ -1169,7 +1169,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     {
         
        // let deliveryDetailsView = UIView()
-        deliveryDetailsView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (4 * x), height: (35 * y))
+        deliveryDetailsView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (6 * x), height: (35 * y))
         //deliveryDetailsView.backgroundColor = UIColor.cyan
         view.addSubview(deliveryDetailsView)
    

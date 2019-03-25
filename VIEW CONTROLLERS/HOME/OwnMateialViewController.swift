@@ -32,6 +32,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     let addReferenceScrolView = UIScrollView()
     let addMaterialButton = UIButton()
     var imageArray = [UIImage]()
+    var removeTag = Int()
     
     var selectedImage = UIImage()
     var selectedTag = Int()
@@ -426,8 +427,17 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
                 x1 = selectMaterialImageButton.frame.maxX + x
             }
             
+            print("REMOVE TAG", removeTag)
             addReferenceScrolView.contentSize.width = x1
-            self.addReferenceImage.image = imageArray[imageArray.count - 1]
+//            self.addReferenceImage.image = imageArray[imageArray.count - 1]
+            if removeTag != 0
+            {
+                self.addReferenceImage.image = imageArray[removeTag - 1]
+            }
+            else
+            {
+                self.addReferenceImage.image = imageArray[0]
+            }
         }
         else
         {
@@ -465,7 +475,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     func deleteAlertAction(action : UIAlertAction)
     {
-        let removeTag = self.selectedTag - 200
+        removeTag = self.selectedTag - 200
         imageArray.remove(at: removeTag)
         
         /*for views in addReferenceScrolView.subviews

@@ -43,6 +43,7 @@
 		FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */; };
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
+		FD19896A2244ED5300D19469 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1989692244ED5200D19469 /* SearchResultsController.swift */; };
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
@@ -159,6 +160,7 @@
 		FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCustomizationToJson.swift; sourceTree = "<group>"; };
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
+		FD1989692244ED5200D19469 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultsController.swift; path = "../../../../../Downloads/AutoCompleteAddressMaps-master/AutoCompleteAddress/SearchResultsController.swift"; sourceTree = "<group>"; };
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			children = (
 				FD60980121A2B27600DCCF58 /* AddressViewController.swift */,
 				FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */,
+				FD1989692244ED5200D19469 /* SearchResultsController.swift */,
 			);
 			path = ADDRESS;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 				FDFE07352189E49F0056E773 /* ActivityView.swift in Sources */,
 				FD60980221A2B27600DCCF58 /* AddressViewController.swift in Sources */,
 				FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */,
+				FD19896A2244ED5300D19469 /* SearchResultsController.swift in Sources */,
 				FD5774B0219AB2F30026DBF8 /* GenderTableViewCell.swift in Sources */,
 				DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */,
 				FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */,

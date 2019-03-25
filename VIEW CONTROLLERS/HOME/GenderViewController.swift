@@ -343,7 +343,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
                 genderButton.frame = CGRect(x: -(selfScreenContents.frame.width - (6 * x)), y: buttonYPos, width: selfScreenContents.frame.width, height: (12 * y))
             }
             
-            genderButton.backgroundColor = UIColor.blue
+            genderButton.backgroundColor = UIColor.clear
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: genderButton.frame.width, height: genderButton.frame.height)
             //            buttonImage.image = convertedSeasonalImageArray[i]

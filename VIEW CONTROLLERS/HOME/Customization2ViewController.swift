@@ -926,6 +926,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func colorButtonAction(sender : UIButton)
     {
+        selectedPatternId = 0
+        
         updatingId = 2
         
         if sender.tag == 1
