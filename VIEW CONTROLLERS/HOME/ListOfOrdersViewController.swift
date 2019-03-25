@@ -12,6 +12,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
 {
     let serviceCall = ServerAPI()
     
+    let screenButtonView = UIView()
     let selfScreenContents = UIView()
     let DeliveredButton = UIButton()
     let PendingButton = UIButton()
@@ -321,29 +322,29 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
 //        ListOfOrdersNavigationBar.addSubview(navigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: navigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + navigationBar.frame.maxY))
-        selfScreenContents.backgroundColor = UIColor.clear
-        view.addSubview(selfScreenContents)
-        
 //        slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
 //        self.view.addSubview(slideMenuButton)
         slideMenuButton.bringSubviewToFront(slideMenuButton)
      
-        PendingButton.frame = CGRect(x: 0, y: 0, width: ((view.frame.width / 2) - 1), height: (4 * y))
+        PendingButton.frame = CGRect(x: 0, y: navigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: (4 * y))
         PendingButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PendingButton.setTitle("PENDING", for: .normal)
         PendingButton.setTitleColor(UIColor.white, for: .normal)
         PendingButton.tag = 0
         PendingButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        selfScreenContents.addSubview(PendingButton)
+        view.addSubview(PendingButton)
     
-        DeliveredButton.frame = CGRect(x: PendingButton.frame.maxX + 1, y: 0, width: view.frame.width / 2, height: (4 * y))
+        DeliveredButton.frame = CGRect(x: PendingButton.frame.maxX + 1, y: navigationBar.frame.maxY, width: view.frame.width / 2, height: (4 * y))
         DeliveredButton.backgroundColor = UIColor.lightGray
         DeliveredButton.setTitle("DELIVERED", for: .normal)
         DeliveredButton.setTitleColor(UIColor.black, for: .normal)
         DeliveredButton.tag = 1
         DeliveredButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        selfScreenContents.addSubview(DeliveredButton)
+        view.addSubview(DeliveredButton)
+        
+        selfScreenContents.frame = CGRect(x: (3 * x), y: PendingButton.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + PendingButton.frame.height))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
         
         DeliveredButton.backgroundColor = UIColor.lightGray
         DeliveredButton.setTitleColor(UIColor.black, for: .normal)
@@ -393,11 +394,58 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         }
         else if sender.tag == 1
         {
-            emptyLabel.removeFromSuperview()
-            PendingButton.backgroundColor = UIColor.lightGray
-            PendingButton.setTitleColor(UIColor.black, for: .normal)
-            PendingViewContents(isHidden: true)
-            DeliveredViewContents(isHidden: false)
+//            emptyLabel.removeFromSuperview()
+            
+//            if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+//            {
+//                self.serviceCall.API_ListOfOrdersDelivered(BuyerId: userId, delegate: self)
+//            }
+//            else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+//            {
+//                self.serviceCall.API_ListOfOrdersDelivered(BuyerId: "\(userId)", delegate: self)
+//            }
+            
+            if DelivOrderIdArray.count == 0
+            {
+                emptyLabel.frame = CGRect(x: 0, y: ((DeliveredViewBackDrop.frame.height - (3 * y)) / 2), width: DeliveredViewBackDrop.frame.width, height: (3 * y))
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        emptyLabel.text = "You Dont Have Delivered orders"
+                    }
+                    else if language == "ar"
+                    {
+                        emptyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        emptyLabel.text = "ليس لديك أي طلبات يتم تسليمها"
+                    }
+                }
+                else
+                {
+                    emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    emptyLabel.text = "You Dont Have Delivered orders"
+                }
+                
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                DeliveredViewBackDrop.addSubview(emptyLabel)
+                
+                PendingButton.backgroundColor = UIColor.lightGray
+                PendingButton.setTitleColor(UIColor.black, for: .normal)
+                PendingViewContents(isHidden: true)
+                DeliveredViewContents(isHidden: false)
+            }
+            else
+            {
+                PendingButton.backgroundColor = UIColor.lightGray
+                PendingButton.setTitleColor(UIColor.black, for: .normal)
+                PendingViewContents(isHidden: true)
+                DeliveredViewContents(isHidden: false)
+            }
         }
         
         sender.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -407,7 +455,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func PendingViewContents(isHidden : Bool)
     {
        // let PendingViewBackDrop = UIView()
-        PendingViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
+        PendingViewBackDrop.frame = CGRect(x: 0, y: y , width: selfScreenContents.frame.width, height: view.frame.height - (16 * y))
         PendingViewBackDrop.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(PendingViewBackDrop)
         
@@ -700,7 +748,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func DeliveredViewContents(isHidden : Bool)
     {
         // let DeliveredViewBackDrop = UIView()
-        DeliveredViewBackDrop.frame = CGRect(x: (3 * x), y: DeliveredButton.frame.maxY , width: view.frame.width - (6 * x), height: view.frame.height - (16 * y))
+        DeliveredViewBackDrop.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: view.frame.height - (16 * y))
         DeliveredViewBackDrop.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(DeliveredViewBackDrop)
         

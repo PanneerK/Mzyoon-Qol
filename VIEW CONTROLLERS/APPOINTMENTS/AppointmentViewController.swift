@@ -55,6 +55,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     var MaterialStatus = NSArray()
     var MaterialInEnglish = NSArray()
+    var materialInArabic = NSArray()
     var MaterailHeaderImage = NSArray()
     var MaterialBodyImage = NSArray()
     var MaterialAppointID = NSArray()
@@ -78,6 +79,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     var MeasureStatus = NSArray()
     var MeasurementInEnglish = NSArray()
+    var measurementInArabic = NSArray()
     var MeasurementHeaderImage = NSArray()
     var MeasurementBodyImage = NSArray()
     var MeasurementAppointID = NSArray()
@@ -295,6 +297,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MaterialInEnglish = Result.value(forKey:"HeaderInEnglish") as! NSArray
              print("Header Name:",MaterialInEnglish)
             
+            materialInArabic = Result.value(forKey: "HeaderInArabic") as! NSArray
+            print("materialInArabic", materialInArabic)
+            
             MaterialOrderID = Result.value(forKey:"OrderId") as! NSArray
              print("Order ID:",MaterialOrderID)
             
@@ -370,6 +375,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
             MeasurementInEnglish = Result.value(forKey:"MeasurementInEnglish") as! NSArray
             print("Header Name:",MeasurementInEnglish)
+            
+            measurementInArabic = Result.value(forKey: "MeasurementInArabic") as! NSArray
+            print("measurementInArabic", measurementInArabic)
             
             MeasurementOrderID = Result.value(forKey:"OrderId") as! NSArray
             print("Order ID:",MeasurementOrderID)
@@ -760,9 +768,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
            if(MaterialStatus.contains("Not Approved"))
            {
-              Material_StatusBtn.setTitle("Pending", for: .normal)
-           }
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    Material_StatusBtn.setTitle("Pending", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    Material_StatusBtn.setTitle("قيد الانتظار", for: .normal)
+                }
+            }
             else
+            {
+                Material_StatusBtn.setTitle("Pending", for: .normal)
+            }
+           }
+           else
            {
              Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
            }
@@ -801,7 +823,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: Material_AppointmentStatusView.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
         if(MaterialInEnglish.count > 0)
         {
-            couriertDeliveryLabel.text = MaterialInEnglish[0] as? String
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    couriertDeliveryLabel.text = MaterialInEnglish[0] as? String
+                }
+                else if language == "ar"
+                {
+                    couriertDeliveryLabel.text = materialInArabic[0] as? String
+                }
+            }
+            else
+            {
+                couriertDeliveryLabel.text = MaterialInEnglish[0] as? String
+            }
         }
         else
         {
@@ -884,7 +920,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         //let From_MaterialType_TF = UITextField()
         From_MaterialType_TF.frame = CGRect(x: FromDateMatrl_Icon.frame.maxX, y: (y/2) - 4, width: (10 * x) , height: (3.5 * y))
        // From_MaterialType_TF.placeholder = "dd/mm/yyyy"
-        From_MaterialType_TF.text = "Date"
+        From_MaterialType_TF.placeholder = "Date"
         From_MaterialType_TF.textColor = UIColor.white
         From_MaterialType_TF.textAlignment = .center
         From_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -928,7 +964,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // let TO_MaterialType_TF = UITextField()
         TO_MaterialType_TF.frame = CGRect(x: ToDateMatrl_Icon.frame.maxX , y: (y/2) - 4, width: (10 * x), height: (3.5 * y))
         //TO_MaterialType_TF.placeholder = "dd/mm/yyyy"
-        TO_MaterialType_TF.text = "Date"
+        TO_MaterialType_TF.placeholder = "Date"
         TO_MaterialType_TF.textColor = UIColor.white
         TO_MaterialType_TF.textAlignment = .center
         TO_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -983,7 +1019,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // let SLOT_MaterialType_TF.frame = UITextField()
         SLOT_MaterialType_TF.frame = CGRect(x: TimeMatrl_Icon.frame.maxX, y: (y/2) - 4, width: (20 * x), height: (3.5 * y))
        // SLOT_MaterialType_TF.placeholder = "Select Time Slot"
-        SLOT_MaterialType_TF.text = "Time"
+        SLOT_MaterialType_TF.placeholder = "Time"
         SLOT_MaterialType_TF.textColor = UIColor.white
         SLOT_MaterialType_TF.textAlignment = .left
         SLOT_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -1150,7 +1186,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             if(MeasureStatus.contains("Not Approved"))
             {
-                Measure_StatusBtn.setTitle("Pending", for: .normal)
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        Measure_StatusBtn.setTitle("Pending", for: .normal)
+                    }
+                    else if language == "ar"
+                    {
+                        Measure_StatusBtn.setTitle("قيد الانتظار", for: .normal)
+                    }
+                }
+                else
+                {
+                    Measure_StatusBtn.setTitle("Pending", for: .normal)
+                }
             }
             else
             {
@@ -1188,7 +1238,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         TailorTypeLabel.frame = CGRect(x: TailorShopIcon.frame.maxX, y: Measurement_AppointmentStatusView.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
         if(MeasurementInEnglish.count > 0)
         {
-            TailorTypeLabel.text = MeasurementInEnglish[0] as? String
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    TailorTypeLabel.text = MeasurementInEnglish[0] as? String
+                }
+                else if language == "ar"
+                {
+                    TailorTypeLabel.text = measurementInArabic[0] as? String
+                }
+            }
+            else
+            {
+                TailorTypeLabel.text = MeasurementInEnglish[0] as? String
+            }
         }
         else
         {
@@ -1401,7 +1465,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
             if MeasureStatus.contains("Approved")
-            { }
+            {
+                
+            }
             else
             {
                MeasurementTypeView.addSubview(Measure_ApproveButton)
@@ -1460,6 +1526,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 Material_StatusLabel.text = "Appointment Status:"
                 Material_StatusLabel.textAlignment = .left
                 
+                Material_StatusBtn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
                 Measure_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 Measure_StatusLabel.text = "Appointment Status:"
                 Measure_StatusLabel.textAlignment = .left
@@ -1480,7 +1548,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 TO_MaterialTypeLBL.textAlignment = .left
 
                 From_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "Date"
                 TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "Date"
+
                 
                 Slot_MeasureTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 Slot_MeasureTypeLBL.text = "TIME SLOT"
@@ -1490,8 +1561,46 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 SLOT_MeasurementType_TF.placeholder = "Time"
                 SLOT_MeasurementType_TF.textAlignment = .left
                 
+                Measure_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_ApproveButton.setTitle("Approve", for: .normal)
+                
+                Measure_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_RejectButton.setTitle("Reject", for: .normal)
+                
                 Measure_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 Measure_SaveButton.setTitle("Save", for: .normal)
+                
+                orderTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderTypeLabel.text = "ORDER TYPE"
+                
+                From_OrderTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_OrderTypeLBL.text = "FROM"
+                From_OrderTypeLBL.textAlignment = .left
+                TO_OrderTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TO_OrderTypeLBL.text = "TO"
+                TO_OrderTypeLBL.textAlignment = .left
+
+                From_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MaterialType_TF.placeholder = "Date"
+                TO_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TO_MaterialType_TF.placeholder = "Date"
+                
+                Slot_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Slot_MaterialTypeLBL.text = "TIME SLOT"
+                Slot_MaterialTypeLBL.textAlignment = .left
+                
+                SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                SLOT_MaterialType_TF.placeholder = "Time"
+                SLOT_MaterialType_TF.textAlignment = .left
+                
+                Material_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_ApproveButton.setTitle("Approve", for: .normal)
+                
+                Material_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_RejectButton.setTitle("Reject", for: .normal)
+                
+                Material_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_SaveButton.setTitle("Save", for: .normal)
 
                 changeViewToEnglishInSelf()
             }
@@ -1503,6 +1612,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 Material_StatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 Material_StatusLabel.text = "حالة التعيين : "
                 Material_StatusLabel.textAlignment = .right
+                
+                Material_StatusBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 
                 Measure_StatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 Measure_StatusLabel.text = "حالة التعيين : "
@@ -1518,6 +1629,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 From_MaterialTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 From_MaterialTypeLBL.text = "من عند"
                 From_MaterialTypeLBL.textAlignment = .right
+            
                 
                 TO_MaterialTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 TO_MaterialTypeLBL.text = "حتى"
@@ -1536,8 +1648,46 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 SLOT_MeasurementType_TF.placeholder = "زمن"
                 SLOT_MeasurementType_TF.textAlignment = .right
                 
+                Measure_ApproveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_ApproveButton.setTitle("يوافق", for: .normal)
+                
+                Measure_RejectButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_RejectButton.setTitle("رفض", for: .normal)
+                
                 Measure_SaveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 Measure_SaveButton.setTitle("حفظ", for: .normal)
+                
+                orderTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                orderTypeLabel.text = "نوع الطلبية"
+                
+                From_OrderTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_OrderTypeLBL.text = "من عند"
+                From_OrderTypeLBL.textAlignment = .right
+                TO_OrderTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_OrderTypeLBL.text = "حتى"
+                TO_OrderTypeLBL.textAlignment = .right
+                
+                From_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_MaterialType_TF.placeholder = "تاريخ"
+                TO_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_MaterialType_TF.placeholder = "تاريخ"
+                
+                Slot_MaterialTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Slot_MaterialTypeLBL.text = "فسحة زمنية"
+                Slot_MaterialTypeLBL.textAlignment = .right
+                
+                SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                SLOT_MaterialType_TF.placeholder = "زمن"
+                SLOT_MaterialType_TF.textAlignment = .right
+                
+                Material_ApproveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_ApproveButton.setTitle("يوافق", for: .normal)
+                
+                Material_RejectButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_RejectButton.setTitle("رفض", for: .normal)
+                
+                Material_SaveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_SaveButton.setTitle("حفظ", for: .normal)
 
                 changeViewToArabicInSelf()
             }

@@ -788,6 +788,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         OrderStatusLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
         OrderStatusLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
         OrderStatusLabel.textColor = UIColor.white
+        OrderStatusLabel.textAlignment = .left
         OrderStatusView.addSubview(OrderStatusLabel)
         
         
@@ -842,7 +843,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         //TrackingButton
         let TrackingButton = UIButton()
-        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (2 * y))
+        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: PackedLabel.frame.maxY + (2 * y), width: (15 * x), height: (3 * y))
         TrackingButton.backgroundColor = UIColor.orange
         TrackingButton.setTitle("Tracking Details", for: .normal)
         TrackingButton.setTitleColor(UIColor.white, for: .normal)
@@ -991,10 +992,40 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         {
             if language == "en"
             {
+                OrderStatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                OrderStatusLabel.text = " ORDER STATUS"
+                OrderStatusLabel.textAlignment = .left
+                
+                orderedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderedLabel.text = "Ordered"
+                orderedLabel.textAlignment = .left
+                
+                PackedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                PackedLabel.text = "Cloth Recieved"
+                PackedLabel.textAlignment = .left
+                
+                TrackingButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TrackingButton.setTitle("Tracking Details", for: .normal)
+
                 changeViewToEnglishInSelf()
             }
             else if language == "ar"
             {
+                OrderStatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                OrderStatusLabel.text = " حالة الطلب"
+                OrderStatusLabel.textAlignment = .right
+                
+                orderedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                orderedLabel.text = "وصف دواء"
+                orderedLabel.textAlignment = .right
+                
+                PackedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                PackedLabel.text = "تلقى القماش"
+                PackedLabel.textAlignment = .right
+                
+                TrackingButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TrackingButton.setTitle("تفاصيل المسار", for: .normal)
+                
                 changeViewToArabicInSelf()
             }
         }

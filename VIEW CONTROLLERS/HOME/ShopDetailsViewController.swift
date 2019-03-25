@@ -7,11 +7,21 @@
 //
 
 import UIKit
+import CoreData
+import CoreLocation
+import GoogleMaps
+import GooglePlaces
+
 
 class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITableViewDataSource,ServerAPIDelegate
 {
    
     let serviceCall = ServerAPI()
+    
+    var getSourceLatitude = CLLocationDegrees()
+    var getSourceLongitude = CLLocationDegrees()
+    var getDestinationLatitude = Double()
+    var getDestinationLongitude = Double()
     
     //SCREEN PARAMETERS
     let selfScreenNavigationBar = UIView()
@@ -79,7 +89,10 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     
     override func viewDidLoad()
     {
+        print("GET LOCATIONS COORDINATE", getDestinationLatitude, getDestinationLongitude)
         super.viewDidLoad()
+        navigationBar.isHidden = true
+        selectedButton(tag: 0)
 
         // Do any additional setup after loading the view.
         
@@ -291,7 +304,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         shopName.textAlignment = .left
         
-        reviewsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        reviewsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         tailorName.textAlignment = .left
@@ -318,7 +331,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
     if(ShopNameArray.count > 0)
     {
-      selfScreenNavigationTitle.text = ShopNameArray[0] as? String
+      selfScreenNavigationTitle.text = (ShopNameArray[0] as? String)?.uppercased()
     }
     else
     {
@@ -570,7 +583,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     {
         if(ShopNameArray.count > 0)
         {
-            shopName.text = ShopNameArray[i] as? String
+            shopName.text = (ShopNameArray[i] as? String)?.uppercased()
             shopName.attributedText = NSAttributedString(string: shopName.text!, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
         }
        else
@@ -826,6 +839,19 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
   @objc func DirectionButtonAction(sender : UIButton)
   {
       print("Directions Button..Click..!")
+    
+    let strLat : String = "\(getSourceLatitude)"
+    let strLong : String = "\(getSourceLongitude)"
+    
+    let strLat1 : String = "\(getDestinationLatitude)"
+    let strLong2 : String = "\(getDestinationLongitude)"
+    
+    if (UIApplication.shared.canOpenURL(URL(string:"https://maps.google.com")!)) {
+        UIApplication.shared.openURL(URL(string:"https://maps.google.com/?saddr=\(strLat),\(strLong)&daddr=\(strLat1),\(strLong2)&directionsmode=driving&zoom=14&views=traffic")!)
+    }
+    else {
+        print("Can't use comgooglemaps://");
+    }
   }
     
    @objc func CallButtonAction(sender : UIButton)
