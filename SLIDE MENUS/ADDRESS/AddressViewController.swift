@@ -430,7 +430,6 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 {
                     addressSelectButton.frame = CGRect(x: 0, y: y1, width: addressScrollView.frame.width, height: (21 * y))
                 }*/
-                
                
                 addressSelectButton.backgroundColor = UIColor.white
                 addressSelectButton.tag = Id[i] as! Int
