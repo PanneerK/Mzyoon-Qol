@@ -123,6 +123,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             self.serviceCall.API_GetAppointmentMaterial(OrderId: OrderID, delegate: self)
         }
      
+        
      /*
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
@@ -604,7 +605,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if (MaterialSucessStr == "True" && MeasureSucessStr == "True")
         {
-            if (MaterialPayment.contains("Not Paid") || MeasurementPayment.contains("Not Paid"))
+            if (MaterialPayment.contains("Not Paid") && MeasurementPayment.contains("Not Paid"))
             {
                 let PayScreen = PaymentViewController()
                 PayScreen.TailorId = TailorID
@@ -2102,6 +2103,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let FMaterial : String = self.From_MaterialType_TF.text!
         let TMaterial : String = self.TO_MaterialType_TF.text!
         
+        print("From_Material:",FMaterial)
+        print("To_Material:",TMaterial)
         
         if (FMaterial.isEmpty || TMaterial.isEmpty || SlotStr.isEmpty)
         {
@@ -2150,6 +2153,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let FMeasure : String = self.From_MeasurementType_TF.text!
         let TMeasure : String = self.TO_MeasurementType_TF.text!
         
+         print("From_Measure:",FMeasure)
+         print("To_Measure:",TMeasure)
+        
+        
         if (FMeasure.isEmpty || TMeasure.isEmpty || SlotStr.isEmpty)
         {
             print("Dates are Empty")
@@ -2159,6 +2166,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
+            
             if (FMeasure.compare(TMeasure) == .orderedAscending || FMeasure.compare(TMeasure) == .orderedSame)
             {
                 print("From-Date is smaller then To-Date")

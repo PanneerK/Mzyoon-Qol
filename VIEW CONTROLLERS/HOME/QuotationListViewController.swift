@@ -57,10 +57,11 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
          selectedButton(tag: 1)
 
          print("request Order ID :",OrderId)
-      //  UserDefaults.standard.set(OrderId, forKey: "OrderID")
         
-      //  self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
-      // quotationListContent()
+       //  UserDefaults.standard.set(OrderId, forKey: "OrderID")
+        
+       //  self.ServiceCall.API_GetQuotationList(OrderId: 2, delegate: self)
+       // quotationListContent()
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -116,7 +117,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
            let QuotationList = Result.object(forKey: "QuotationList") as! NSArray
              // print("QuotationList:",QuotationList)
-            if QuotationList.count == 0 || QuotationList == nil
+            if QuotationList.count == 0
             {
                 
                 emptyLabel.frame = CGRect(x: (4 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (8 * x), height: (6 * y))
@@ -273,11 +274,11 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorListScrollView.addSubview(tailorViewButton)
             
             let tailorImageView = UIImageView()
-            tailorImageView.frame = CGRect(x: 0, y: 0, width: (8 * x), height: tailorViewButton.frame.height)
+            tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: tailorViewButton.frame.height)
             tailorImageView.backgroundColor = UIColor.white
-            //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            tailorImageView.layer.borderWidth = 1.0
-            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+          //  tailorImageView.layer.borderWidth = 1.0
+          //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+            
           //  tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
          
@@ -319,16 +320,17 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorViewButton.addSubview(Name_Icon)
             
             let nameLabel = UILabel()
-            nameLabel.frame = CGRect(x: Name_Icon.frame.maxX + x, y: 0, width: (5 * x), height: (2 * y))
-            nameLabel.text = "Name : "
+            nameLabel.frame = CGRect(x: Name_Icon.frame.maxX + x, y: 0, width: (10 * x), height: (2 * y))
+            nameLabel.text = "Name      :"
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
             tailorViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: tailorViewButton.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX - (2 * x), y: 0, width: tailorViewButton.frame.width / 2, height: (2 * y))
             tailorName.text = TailorNameArray[i] as? String
+            
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -341,15 +343,15 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorViewButton.addSubview(ShopName_Icon)
             
             let shopLabel = UILabel()
-            shopLabel.frame = CGRect(x: ShopName_Icon.frame.maxX + x, y: nameLabel.frame.maxY, width: (8 * x), height: (2 * y))
-            shopLabel.text = "Shop Name : "
+            shopLabel.frame = CGRect(x: ShopName_Icon.frame.maxX + x, y: nameLabel.frame.maxY, width: (10 * x), height: (2 * y))
+            shopLabel.text = "Shop Name :"
             shopLabel.textColor = UIColor.blue
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(shopLabel)
             
             let shopName = UILabel()
-            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
+            shopName.frame = CGRect(x: shopLabel.frame.maxX - (2 * x), y: nameLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
             shopName.text =  ShopNameArray[i] as? String
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
@@ -364,15 +366,15 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorViewButton.addSubview(Price_Icon)
             
             let ordersLabel = UILabel()
-            ordersLabel.frame = CGRect(x: Price_Icon.frame.maxX + x, y: shopLabel.frame.maxY, width: (5 * x), height: (2 * y))
-            ordersLabel.text = "Price : "
+            ordersLabel.frame = CGRect(x: Price_Icon.frame.maxX + x, y: shopLabel.frame.maxY, width: (10 * x), height: (2 * y))
+            ordersLabel.text = "Price      :"
             ordersLabel.textColor = UIColor.blue
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(ordersLabel)
             
             let ordersCountLabel = UILabel()
-            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
+            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX - (2 * x), y: shopLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
             let orderPrice : Int = TotalAmountArray[i] as! Int
             ordersCountLabel.text =  "\(orderPrice)"
             ordersCountLabel.textColor = UIColor.black
@@ -388,15 +390,15 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorViewButton.addSubview(Days_Icon)
             
             let ratingLabel = UILabel()
-            ratingLabel.frame = CGRect(x: Days_Icon.frame.maxX + x, y: ordersLabel.frame.maxY, width: (8 * x), height: (2 * y))
-            ratingLabel.text = "No Of Days : "
+            ratingLabel.frame = CGRect(x: Days_Icon.frame.maxX + x, y: ordersLabel.frame.maxY, width: (10 * x), height: (2 * y))
+            ratingLabel.text = "No Of Days  :"
             ratingLabel.textColor = UIColor.blue
             ratingLabel.textAlignment = .left
             ratingLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(ratingLabel)
             
             let ratingCountLabel = UILabel()
-            ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
+            ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX - (2 * x), y: ordersLabel.frame.maxY, width: tailorViewButton.frame.width / 2.5, height: (2 * y))
             ratingCountLabel.text = StichTimeArray[i] as? String
             ratingCountLabel.textColor = UIColor.black
             ratingCountLabel.textAlignment = .left
@@ -415,28 +417,28 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
                     tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     
                     nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    nameLabel.text = "Name : "
+                    nameLabel.text = "Name            :"
                     nameLabel.textAlignment = .left
                     
                     tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     tailorName.textAlignment = .left
                     
                     shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    shopLabel.text = "Shop Name : "
+                    shopLabel.text = "Shop Name  :"
                     shopLabel.textAlignment = .left
                     
                     shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     shopName.textAlignment = .left
                     
                     ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    ordersLabel.text = "Price : "
+                    ordersLabel.text = "Price              :"
                     ordersLabel.textAlignment = .left
                     
                     ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     ordersCountLabel.textAlignment = .left
                     
                     ratingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    ratingLabel.text = "No. of Days : "
+                    ratingLabel.text = "No. of Days  :"
                     ratingLabel.textAlignment = .left
                     
                     ratingCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -480,28 +482,28 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
                 tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 
                 nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                nameLabel.text = "Name : "
+                nameLabel.text = "Name           :"
                 nameLabel.textAlignment = .left
                 
                 tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 tailorName.textAlignment = .left
                 
                 shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                shopLabel.text = "Shop Name : "
+                shopLabel.text = "Shop Name :"
                 shopLabel.textAlignment = .left
                 
                 shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 shopName.textAlignment = .left
                 
                 ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                ordersLabel.text = "Price : "
+                ordersLabel.text = "Price             :"
                 ordersLabel.textAlignment = .left
                 
                 ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 ordersCountLabel.textAlignment = .left
                 
                 ratingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                ratingLabel.text = "No. of Days : "
+                ratingLabel.text = "No. of Days  :"
                 ratingLabel.textAlignment = .left
                 
                 ratingCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
