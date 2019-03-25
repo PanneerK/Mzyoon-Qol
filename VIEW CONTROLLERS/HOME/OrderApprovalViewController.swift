@@ -28,6 +28,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     var TailorResponseID : Int!
     var TailorID : Int!
     var DeliveryDate:String!
+    var OrderId : Int!
     
     let serviceCall = ServerAPI()
     
@@ -64,6 +65,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         navigationBar.isHidden = true
         
+        Variables.sharedManager.ApprovalQty = "1"
+        
         self.selectedButton(tag: 1)
         
         self.addDoneButtonOnKeyboard()
@@ -71,6 +74,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+          self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool)
@@ -78,7 +83,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         let navigationArray = self.navigationController?.viewControllers
         print("viewControllers Aray:",navigationArray!)
         
-         self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
+        // self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
     }
      
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -294,6 +299,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
              AppointmentScreen.TotalAmount = "1"
          }
             AppointmentScreen.TailorID = TailorID
+           AppointmentScreen.OrderID = OrderId
         
            self.navigationController?.pushViewController(AppointmentScreen, animated: true)
     }
@@ -428,7 +434,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         QtyNumTF.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (4 * x), height: (2 * y))
         QtyNumTF.backgroundColor = UIColor.white
         QtyNumTF.placeholder = "Qty"
-        QtyNumTF.text = "1"
+        QtyNumTF.text = "1" // Variables.sharedManager.ApprovalQty
         QtyNumTF.textColor = UIColor.black
         QtyNumTF.textAlignment = .center
         QtyNumTF.font = QtyNumTF.font!.withSize(14)
@@ -437,6 +443,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         QtyNumTF.clearsOnBeginEditing = false
         QtyNumTF.returnKeyType = .done
         QtyNumTF.delegate = self
+        QtyNumTF.isUserInteractionEnabled = false
         DressDetView.addSubview(QtyNumTF)
         
         
@@ -522,6 +529,8 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     @objc func doneButtonAction()
     {
+        
+        Variables.sharedManager.ApprovalQty = self.QtyNumTF.text!
         self.view.endEditing(true)
     }
     
@@ -541,7 +550,6 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
             PricingViewContents(isHidden: false)
             DeliveryDetailsViewContents(isHidden: true)
             
-           
         }
         else if sender.tag == 1
         {
@@ -1490,6 +1498,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         print("Qty:",qtyNum)
         let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         print("order_Id:",order_Id!)
+        OrderId = order_Id
         
       if qtyNum != nil
       {

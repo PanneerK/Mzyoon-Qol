@@ -12,13 +12,15 @@ class ActivityView: UIView
 {
     let activity = UIActivityIndicatorView()
 
-    override init(frame: CGRect) {
+    override init(frame: CGRect)
+    {
         super.init(frame: frame)
         self.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         addCustomView()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     

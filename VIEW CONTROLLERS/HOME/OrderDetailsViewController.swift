@@ -107,7 +107,6 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         let navigationArray = self.navigationController?.viewControllers
         print("viewControllers Aray:",navigationArray!)
         
-        OrderID = 33
         
          self.serviceCall.API_GetOrderDetails(OrderId: OrderID, delegate: self)
         
@@ -843,7 +842,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         //TrackingButton
         let TrackingButton = UIButton()
-        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: PackedLabel.frame.maxY + (2 * y), width: (15 * x), height: (3 * y))
+        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (3 * y))
         TrackingButton.backgroundColor = UIColor.orange
         TrackingButton.setTitle("Tracking Details", for: .normal)
         TrackingButton.setTitleColor(UIColor.white, for: .normal)

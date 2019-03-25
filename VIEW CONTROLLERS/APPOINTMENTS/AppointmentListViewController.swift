@@ -236,7 +236,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         
         print("FINDING WIDTH", view.frame.width, AppointmentListScrollView.frame.width, x)
         
-        AppointmentListScrollView.contentSize.height = (12 * y * CGFloat(IdArray.count))
+       
         
         for views in AppointmentListScrollView.subviews
         {
@@ -472,6 +472,9 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             }
             
         }
+        
+         AppointmentListScrollView.contentSize.height = y1 + (2 * y)
+        
         
     }
     

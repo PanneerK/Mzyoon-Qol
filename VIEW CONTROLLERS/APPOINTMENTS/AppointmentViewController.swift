@@ -118,8 +118,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
          UserDefaults.standard.set(TailorID, forKey: "TailorID")
         
-        // print("order ID:", OrderID)
+         print("order ID:", OrderID)
         
+        if(OrderID != nil)
+        {
+            self.serviceCall.API_GetAppointmentMaterial(OrderId: OrderID, delegate: self)
+        }
+     
+     /*
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
             
@@ -135,9 +141,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             // Measurement Dates from Tailor..
            // self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
             
-            
         }
-        
+    */
         
         TimeSlotArray = ["6.00 A.M  to  8.00 A.M","8.00 A.M  to  10.00 A.M","10.00 A.M  to  12.00 P.M","12.00 P.M  to  2.00 P.M","2.00 A.M  to  4.00 P.M","4.00 P.M  to  6.00 P.M","6.00 P.M  to  8.00 P.M","8.00 P.M  to  10.00 P.M","10.00 P.M  to  12.00 P.M"]
         
@@ -274,7 +279,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = getAppointmentMaterial.object(forKey: "Result") as! NSArray
             print("Result", Result)
             
-            if Result.count == 0 || Result == nil
+            if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
                 emptyLabel.text = "You don't have any Appointment request"
@@ -309,6 +314,13 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MaterialPayment = Result.value(forKey:"Payment") as! NSArray
             print("MaterialPayment:",MaterialPayment)
             
+            if(OrderID != nil)
+            {
+                self.serviceCall.API_GetAppointmentMeasurement(OrderId: OrderID, delegate: self)
+                
+                self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: OrderID, delegate: self)
+            }
+            /*
             if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
             {
              // Measurement Details like image,Heading etc..
@@ -316,6 +328,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 
              self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: order_Id, delegate: self)
             }
+          */
          //   AppointmentContent()
             
         }
@@ -353,7 +366,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = getAppointmentMeasure.object(forKey: "Result") as! NSArray
             print("Result", Result)
            
-            if Result.count == 0 || Result == nil
+            if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
                 emptyLabel.text = "You don't have any Appointment request"
@@ -388,12 +401,20 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasurementPayment = Result.value(forKey:"Payment") as! NSArray
             print("MeasurementPayment:",MeasurementPayment)
             
-            if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
+            
+            if(OrderID != nil)
             {
-            // Measurement Dates from Tailor..
-              self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
-                
+                self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: OrderID, delegate: self)
             }
+           
+           /*
+             if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
+             {
+              // Measurement Dates from Tailor..
+               self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: order_Id, delegate: self)
+             }
+           */
+            
              AppointmentContent()
         }
         else if ResponseMsg == "Failure"
@@ -502,25 +523,17 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
            {
               if(MaterialFromDtArr.count > 0)
               {
-                if let date = MaterialFromDtArr[0] as? String
-                {
-                  MaterialFromDate = String(date.prefix(10))
-                }
-                From_MaterialType_TF.text = MaterialFromDate
+                 From_MaterialType_TF.text = MaterialFromDtArr[0] as? String
               }
             
             if(MaterialToDtArr.count > 0)
             {
-              if let date = MaterialToDtArr[0] as? String
-              {
-                 MaterialToDate = String(date.prefix(10))
-              }
-              TO_MaterialType_TF.text = MaterialToDate
+                TO_MaterialType_TF.text = MaterialToDtArr[0] as? String
             }
             
             if(MaterialAppointTimeArr.count > 0)
             {
-              SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
+               SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
             }
             
            }
@@ -565,20 +578,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
            {
              if(MeasureFromDtArr.count > 0)
              {
-               if let date = MeasureFromDtArr[0] as? String
-               {
-                  MeasureFromDate = String(date.prefix(10))
-               }
-                From_MeasurementType_TF.text = MeasureFromDate
+                From_MeasurementType_TF.text = MeasureFromDtArr[0] as? String
              }
             
             if(MeasureToDtArr.count > 0)
             {
-              if let date = MeasureToDtArr[0] as? String
-              {
-                MeasureToDate = String(date.prefix(10))
-              }
-              TO_MeasurementType_TF.text = MeasureToDate
+              TO_MeasurementType_TF.text = MeasureToDtArr[0] as? String
             }
           
             if(MeasureAppointTimeArr.count > 0)
@@ -597,7 +602,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             ErrorStr = Result
             
             DeviceError()
-            
         }
         
         // AppointmentContent()
@@ -919,8 +923,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         //let From_MaterialType_TF = UITextField()
         From_MaterialType_TF.frame = CGRect(x: FromDateMatrl_Icon.frame.maxX, y: (y/2) - 4, width: (10 * x) , height: (3.5 * y))
-       // From_MaterialType_TF.placeholder = "dd/mm/yyyy"
-        From_MaterialType_TF.placeholder = "Date"
+        From_MaterialType_TF.attributedPlaceholder = NSAttributedString(string: "Date",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         From_MaterialType_TF.textColor = UIColor.white
         From_MaterialType_TF.textAlignment = .center
         From_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -963,8 +966,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
        // let TO_MaterialType_TF = UITextField()
         TO_MaterialType_TF.frame = CGRect(x: ToDateMatrl_Icon.frame.maxX , y: (y/2) - 4, width: (10 * x), height: (3.5 * y))
-        //TO_MaterialType_TF.placeholder = "dd/mm/yyyy"
-        TO_MaterialType_TF.placeholder = "Date"
+        TO_MaterialType_TF.attributedPlaceholder = NSAttributedString(string: "Date",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         TO_MaterialType_TF.textColor = UIColor.white
         TO_MaterialType_TF.textAlignment = .center
         TO_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -1018,8 +1020,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         // let SLOT_MaterialType_TF.frame = UITextField()
         SLOT_MaterialType_TF.frame = CGRect(x: TimeMatrl_Icon.frame.maxX, y: (y/2) - 4, width: (20 * x), height: (3.5 * y))
-       // SLOT_MaterialType_TF.placeholder = "Select Time Slot"
-        SLOT_MaterialType_TF.placeholder = "Time"
+        SLOT_MaterialType_TF.attributedPlaceholder = NSAttributedString(string: "Time",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         SLOT_MaterialType_TF.textColor = UIColor.white
         SLOT_MaterialType_TF.textAlignment = .left
         SLOT_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -1052,7 +1053,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_ApproveButton.addTarget(self, action: #selector(self.MaterialApproveButtonAction(sender:)), for: .touchUpInside)
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
-            if MaterialStatus.contains("Approved")
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
             {}
             else
             {
@@ -1081,7 +1082,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Material_RejectButton.addTarget(self, action: #selector(self.MaterialRejectButtonAction(sender:)), for: .touchUpInside)
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
-            if MaterialStatus.contains("Approved")
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
             {
             }
             else
@@ -1186,21 +1187,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             if(MeasureStatus.contains("Not Approved"))
             {
-                if let language = UserDefaults.standard.value(forKey: "language") as? String
-                {
-                    if language == "en"
-                    {
-                        Measure_StatusBtn.setTitle("Pending", for: .normal)
-                    }
-                    else if language == "ar"
-                    {
-                        Measure_StatusBtn.setTitle("قيد الانتظار", for: .normal)
-                    }
-                }
-                else
-                {
-                    Measure_StatusBtn.setTitle("Pending", for: .normal)
-                }
+                Measure_StatusBtn.setTitle("Pending", for: .normal)
             }
             else
             {
@@ -1238,21 +1225,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         TailorTypeLabel.frame = CGRect(x: TailorShopIcon.frame.maxX, y: Measurement_AppointmentStatusView.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
         if(MeasurementInEnglish.count > 0)
         {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    TailorTypeLabel.text = MeasurementInEnglish[0] as? String
-                }
-                else if language == "ar"
-                {
-                    TailorTypeLabel.text = measurementInArabic[0] as? String
-                }
-            }
-            else
-            {
-                TailorTypeLabel.text = MeasurementInEnglish[0] as? String
-            }
+            TailorTypeLabel.text = MeasurementInEnglish[0] as? String
         }
         else
         {
@@ -1331,7 +1304,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         //let From_MeasurementType_TF = UITextField()
         From_MeasurementType_TF.frame = CGRect(x: FromDateMeasure_Icon.frame.maxX, y: (y/2) - 4, width: (10 * x) , height: (3.5 * y))
-        From_MeasurementType_TF.placeholder = "Date"
+        From_MeasurementType_TF.attributedPlaceholder = NSAttributedString(string: "Date",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         From_MeasurementType_TF.textColor = UIColor.white
         From_MeasurementType_TF.textAlignment = .center
         From_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -1374,7 +1347,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         // let TO_MeasurementType_TF = UITextField()
         TO_MeasurementType_TF.frame = CGRect(x: ToDateMeasure_Icon.frame.maxX , y: (y/2) - 4, width: (10 * x), height: (3.5 * y))
-        TO_MeasurementType_TF.placeholder = "Date"
+        TO_MeasurementType_TF.attributedPlaceholder = NSAttributedString(string: "Date",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         TO_MeasurementType_TF.textColor = UIColor.white
         TO_MeasurementType_TF.textAlignment = .center
         TO_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.3 * x)
@@ -1430,7 +1403,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         // let SLOT_MeasurementType_TF = UITextField()
         SLOT_MeasurementType_TF.frame = CGRect(x: TimeMeasure_Icon.frame.maxX + x, y: (y/2) - 4, width: (20 * x), height: (3.5 * y))
-        SLOT_MeasurementType_TF.placeholder = "Time"
+        SLOT_MeasurementType_TF.attributedPlaceholder = NSAttributedString(string: "Time",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         SLOT_MeasurementType_TF.textColor = UIColor.white
         SLOT_MeasurementType_TF.textAlignment = .left
         SLOT_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.4 * x)
@@ -1449,7 +1422,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_TimeSlotView.addSubview(SLOT_MeasurementType_TF)
  
 
-    // ----------------------------------------------------
+     // -------------------------------------------------------------
         
         
        // let ApproveButton = UIButton()
@@ -1464,10 +1437,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_ApproveButton.addTarget(self, action: #selector(self.MeasureApproveButtonAction(sender:)), for: .touchUpInside)
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-            if MeasureStatus.contains("Approved")
-            {
-                
-            }
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            { }
             else
             {
                MeasurementTypeView.addSubview(Measure_ApproveButton)
@@ -1488,7 +1459,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         Measure_RejectButton.addTarget(self, action: #selector(self.MeasureRejectButtonAction(sender:)), for: .touchUpInside)
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
-            if MeasureStatus.contains("Approved")
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
             { }
             else
             {
@@ -2162,10 +2133,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     @objc func SlotMaterial_DoneClick()
     {
         SLOT_MaterialType_TF.resignFirstResponder()
+        SLOT_MaterialType_TF.text = TimeSlotArray[0] as? String
     }
     @objc func SlotMeasure_DoneClick()
     {
         SLOT_MeasurementType_TF.resignFirstResponder()
+        SLOT_MeasurementType_TF.text = TimeSlotArray[0] as? String
     }
     @objc func FMeasurement_DoneClick()
     {
@@ -2250,9 +2223,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let TMaterial : String = self.TO_MaterialType_TF.text!
         
         
-        if (FMaterial.isEmpty || TMaterial.isEmpty)
+        if (FMaterial.isEmpty || TMaterial.isEmpty || SlotStr.isEmpty)
         {
-            print("Dates are Empty")
+            print("Date/Time are Empty")
+            let appointmentAlert = UIAlertController(title: "Alert..!", message: "Date/Time is Empty..!", preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(appointmentAlert, animated: true, completion: nil)
         }
         else
         {
@@ -2294,10 +2270,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let FMeasure : String = self.From_MeasurementType_TF.text!
         let TMeasure : String = self.TO_MeasurementType_TF.text!
         
-        
-        if (FMeasure.isEmpty || TMeasure.isEmpty)
+        if (FMeasure.isEmpty || TMeasure.isEmpty || SlotStr.isEmpty)
         {
             print("Dates are Empty")
+            let appointmentAlert = UIAlertController(title: "Alert..!", message: "Date/Time is Empty..!", preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(appointmentAlert, animated: true, completion: nil)
         }
         else
         {
@@ -2305,7 +2283,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             {
                 print("From-Date is smaller then To-Date")
                 
-              self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime:  SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
+               self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime: SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
             }
             else
             {
