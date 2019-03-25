@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VIEW CONTROLLERS/HOME/ReviewsViewController.swift"
-            timestampString = "574613688.017089"
+            timestampString = "575188220.402229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "233"
             endingLineNumber = "233"
-            landmarkName = "reviewsContent()"
+            landmarkName = "changeViewToEnglishInSelf()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -36,60 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VIEW CONTROLLERS/HOME/ReviewsViewController.swift"
-            timestampString = "574613688.017207"
+            timestampString = "575188220.4022959"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "233"
             endingLineNumber = "233"
-            landmarkName = "reviewsContent()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/HOME/OrderDetailsViewController.swift"
-            timestampString = "574956437.531906"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "viewWillAppear(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/HOME/OrderDetailsViewController.swift"
-            timestampString = "574956437.532024"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "API_CALLBACK_GetOrderDetails(getOrderDetails:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/HOME/OrderApprovalViewController.swift"
-            timestampString = "574959226.689986"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
-            landmarkName = "proceedAlertAction(action:)"
+            landmarkName = "changeViewToEnglishInSelf()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

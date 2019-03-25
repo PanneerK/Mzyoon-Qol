@@ -277,7 +277,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = getAppointmentMaterial.object(forKey: "Result") as! NSArray
             print("Result", Result)
             
-            if Result.count == 0 || Result == nil
+            if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
                 emptyLabel.text = "You don't have any Appointment request"
@@ -361,7 +361,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             let Result = getAppointmentMeasure.object(forKey: "Result") as! NSArray
             print("Result", Result)
            
-            if Result.count == 0 || Result == nil
+            if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
                 emptyLabel.text = "You don't have any Appointment request"
@@ -2013,10 +2013,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     @objc func SlotMaterial_DoneClick()
     {
         SLOT_MaterialType_TF.resignFirstResponder()
+        SLOT_MaterialType_TF.text = TimeSlotArray[0] as? String
     }
     @objc func SlotMeasure_DoneClick()
     {
         SLOT_MeasurementType_TF.resignFirstResponder()
+        SLOT_MeasurementType_TF.text = TimeSlotArray[0] as? String
     }
     @objc func FMeasurement_DoneClick()
     {

@@ -81,7 +81,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     {
         print("Tailor Id:",TailorID)
         
-        TailorID = 203
+       // TailorID = 203
         
         if(TailorID != nil)
         {
