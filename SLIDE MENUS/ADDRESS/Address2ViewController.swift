@@ -223,9 +223,29 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     {
         if (mobileTextField.text?.count)! > 20 || (mobileTextField.text?.count)! < 6
         {
-            let alert = UIAlertController(title: "Alert", message: "Please enter a valid mobile number", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            var mobileAlert = UIAlertController()
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    mobileAlert = UIAlertController(title: "Alert", message: "Please enter a valid mobile number", preferredStyle: .alert)
+                    mobileAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                else if language == "ar"
+                {
+                    mobileAlert = UIAlertController(title: "تنبيه", message: "الرجاء إدخال رقم جوال صحيح", preferredStyle: .alert)
+                    mobileAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                }
+            }
+            else
+            {
+                mobileAlert = UIAlertController(title: "Alert", message: "Please enter a valid mobile number", preferredStyle: .alert)
+                mobileAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            }
+            
+            self.present(mobileAlert, animated: true, completion: nil)
+
         }
         else
         {
@@ -520,15 +540,54 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 Variables.sharedManager.areaId = 0
                 Variables.sharedManager.checkDefaultId = 0
                 
-                let alert = UIAlertController(title: "Alert", message: "Saved Sucessfully", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
-                self.present(alert, animated: true, completion: nil)
+                var saveAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        saveAlert = UIAlertController(title: "Alert", message: "Saved Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                        saveAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        saveAlert = UIAlertController(title: "تنبيه", message: "حفظ بنجاح", preferredStyle: UIAlertController.Style.alert)
+                        saveAlert.addAction(UIAlertAction(title: "حسنا", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                    }
+                }
+                else
+                {
+                    saveAlert = UIAlertController(title: "Alert", message: "Saved Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                    saveAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                }
+                
+                self.present(saveAlert, animated: true, completion: nil)
+
             }
             else
             {
-                let alert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                var saveAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        saveAlert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: UIAlertController.Style.alert)
+                        saveAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        saveAlert = UIAlertController(title: "تنبيه", message: "يرجى المحاولة مرة أخرى بعد فترة من الوقت", preferredStyle: UIAlertController.Style.alert)
+                        saveAlert.addAction(UIAlertAction(title: "حسنا", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                    }
+                }
+                else
+                {
+                    saveAlert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: UIAlertController.Style.alert)
+                    saveAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                }
+                
+                self.present(saveAlert, animated: true, completion: nil)
             }
             
         }
@@ -847,9 +906,29 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 Variables.sharedManager.areaId = 0
                 Variables.sharedManager.checkDefaultId = 0
                 
-                let alert = UIAlertController(title: "Alert", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
-                self.present(alert, animated: true, completion: nil)
+                var updateAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        updateAlert = UIAlertController(title: "Alert", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                        updateAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        updateAlert = UIAlertController(title: "تنبيه", message: "تحديث بنجاح", preferredStyle: UIAlertController.Style.alert)
+                        updateAlert.addAction(UIAlertAction(title: "حسنا", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                    }
+                }
+                else
+                {
+                    updateAlert = UIAlertController(title: "Alert", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                    updateAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: apiSuccessResponseAlertOkAction(action:)))
+                }
+                
+                self.present(updateAlert, animated: true, completion: nil)
+
             }
             
         }
@@ -883,7 +962,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         address1Label.textAlignment = .right
         
         editLocationButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        editLabel.text = "تصحيح"
+        editLabel.text = "تعديل"
         
         addressDefaultLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         addressDefaultLabel.text = "اجعله افتراضيًا"
@@ -892,12 +971,19 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressInfoHeadingLabel.text = "معلومات العنوان"
         
         firstNameEnglishTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        firstNameEnglishTextField.placeholder = "الاسم الاول"
         secondNameEnglishTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        secondNameEnglishTextField.placeholder = "الاسم الثاني"
         floorTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        floorTextField.placeholder = "الطابق"
         landMarkTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        landMarkTextField.placeholder = "نقطة استدلال"
         locationTypeTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        locationTypeTextField.placeholder = "نوع الموقع"
         mobileTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        mobileTextField.placeholder = "رقم الموبايل"
         shippingNotesTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        shippingNotesTextField.placeholder = "ملاحظات الشحن"
         
         firstNameEnglishTextField.textAlignment = .right
         secondNameEnglishTextField.textAlignment = .right
@@ -954,12 +1040,19 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressInfoHeadingLabel.text = "Address Info"
         
         firstNameEnglishTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        firstNameEnglishTextField.placeholder = "First Name"
         secondNameEnglishTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        secondNameEnglishTextField.placeholder = "Second Name"
         floorTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        floorTextField.placeholder = "Floor"
         landMarkTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        landMarkTextField.placeholder = "Land Mark"
         locationTypeTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        locationTypeTextField.placeholder = "Location Type"
         mobileTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        mobileTextField.placeholder = "Mobile Number"
         shippingNotesTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        shippingNotesTextField.placeholder = "Shipping Notes"
         
         firstNameEnglishTextField.textAlignment = .left
         secondNameEnglishTextField.textAlignment = .left
@@ -1201,7 +1294,21 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            countryButton.setTitle("Country", for: .normal)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    countryButton.setTitle("Country", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    countryButton.setTitle("الدولة", for: .normal)
+                }
+            }
+            else
+            {
+                countryButton.setTitle("Country", for: .normal)
+            }
         }
         countryButton.setTitleColor(UIColor.black, for: .normal)
         countryButton.contentHorizontalAlignment = .left
@@ -1304,7 +1411,21 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            stateButton.setTitle("State", for: .normal)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    stateButton.setTitle("State", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    stateButton.setTitle("الامارة", for: .normal)
+                }
+            }
+            else
+            {
+                stateButton.setTitle("State", for: .normal)
+            }
         }
         stateButton.setTitleColor(UIColor.black, for: .normal)
         stateButton.contentHorizontalAlignment = .left
@@ -1427,7 +1548,21 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            areaButton.setTitle("Area", for: .normal)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    areaButton.setTitle("Area", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    areaButton.setTitle("المنطقة", for: .normal)
+                }
+            }
+            else
+            {
+                areaButton.setTitle("Area", for: .normal)
+            }
         }
         
         areaButton.setTitleColor(UIColor.black, for: .normal)
@@ -1827,15 +1962,54 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         {
             if checkAreaName == 0
             {
-                let alert = UIAlertController(title: "Alert", message: "Area not available in this State", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.navigationController?.present(alert, animated: true, completion: nil)
+                var emptyAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyAlert = UIAlertController(title: "Alert", message: "Area not available in this State", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    }
+                    else if language == "ar"
+                    {
+                        emptyAlert = UIAlertController(title: "تنبيه", message: "المنطقة غير متوفرة في هذه الحالة", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    }
+                }
+                else
+                {
+                    emptyAlert = UIAlertController(title: "Alert", message: "Area not available in this State", preferredStyle: .alert)
+                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                
+                self.navigationController?.present(emptyAlert, animated: true, completion: nil)
+
             }
             else
             {
-                let alert = UIAlertController(title: "Alert", message: "Please select your state first", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.navigationController?.present(alert, animated: true, completion: nil)
+                var emptyAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyAlert = UIAlertController(title: "Alert", message: "Please select your state first", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    }
+                    else if language == "ar"
+                    {
+                        emptyAlert = UIAlertController(title: "تنبيه", message: "الرجاء اختيار ولايتك أولاً", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    }
+                }
+                else
+                {
+                    emptyAlert = UIAlertController(title: "Alert", message: "Please select your state first", preferredStyle: .alert)
+                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                
+                self.navigationController?.present(emptyAlert, animated: true, completion: nil)
             }
         }
         else
@@ -1951,6 +2125,37 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         maskLayer1.path = path1.cgPath
         
         areaCancelButton.layer.mask = maskLayer1
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                headingLabel.text = "Alert"
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please choose your area"
+                areaCancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                areaCancelButton.setTitle("Cancel", for: .normal)
+            }
+            else if language == "ar"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                headingLabel.text = "تنبيه"
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى اختيار منطقتك"
+                areaCancelButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                areaCancelButton.setTitle("الغاء", for: .normal)
+            }
+        }
+        else
+        {
+            headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            headingLabel.text = "Alert"
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please choose your area"
+            areaCancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            areaCancelButton.setTitle("Cancel", for: .normal)
+        }
     }
     
     @objc func areaCancelButtonAction(sender : UIButton)
@@ -2206,28 +2411,100 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         {
             if checkStateName == 0
             {
-                let alert = UIAlertController(title: "Alert", message: "States not available in this country", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.navigationController?.present(alert, animated: true, completion: nil)
+                var emptyAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyAlert = UIAlertController(title: "Alert", message: "States not available in this country", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    }
+                    else if language == "ar"
+                    {
+                        emptyAlert = UIAlertController(title: "تنبيه", message: "الدول غير متوفرة في هذا البلد", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    }
+                }
+                else
+                {
+                    emptyAlert = UIAlertController(title: "Alert", message: "States not available in this country", preferredStyle: .alert)
+                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                
+                self.navigationController?.present(emptyAlert, animated: true, completion: nil)
             }
             else
             {
-                let alert = UIAlertController(title: "Alert", message: "Please select your country first", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.navigationController?.present(alert, animated: true, completion: nil)
+                var emptyAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyAlert = UIAlertController(title: "Alert", message: "Please select your country first", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    }
+                    else if language == "ar"
+                    {
+                        emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى اختيار بلدك أولا", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    }
+                }
+                else
+                {
+                    emptyAlert = UIAlertController(title: "Alert", message: "Please select your country first", preferredStyle: .alert)
+                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                
+                self.navigationController?.present(emptyAlert, animated: true, completion: nil)
             }
         }
         else
         {
-            let stateAlert = UIAlertController(title: "State", message: "Please choose your state", preferredStyle: .alert)
-            for i in 0..<stateNameArray.count
+            var stateAlert = UIAlertController()
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
-                if let state = stateNameArray[i] as? String
+                if language == "en"
                 {
-                    stateAlert.addAction(UIAlertAction(title: "\(state)", style: .default, handler: stateAlertAction(action:)))
+                    stateAlert = UIAlertController(title: "State", message: "Please choose your state", preferredStyle: .alert)
+                    for i in 0..<stateNameArray.count
+                    {
+                        if let state = stateNameArray[i] as? String
+                        {
+                            stateAlert.addAction(UIAlertAction(title: "\(state)", style: .default, handler: stateAlertAction(action:)))
+                        }
+                    }
+                    stateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                }
+                else if language == "ar"
+                {
+                    stateAlert = UIAlertController(title: "المدينة", message: "الرجاء اختيار ولايتك", preferredStyle: .alert)
+                    for i in 0..<stateNameArray.count
+                    {
+                        if let state = stateNameArray[i] as? String
+                        {
+                            stateAlert.addAction(UIAlertAction(title: "\(state)", style: .default, handler: stateAlertAction(action:)))
+                        }
+                    }
+                    stateAlert.addAction(UIAlertAction(title: "الغاء", style: .cancel, handler: nil))
                 }
             }
-            stateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            else
+            {
+                stateAlert = UIAlertController(title: "State", message: "Please choose your state", preferredStyle: .alert)
+                for i in 0..<stateNameArray.count
+                {
+                    if let state = stateNameArray[i] as? String
+                    {
+                        stateAlert.addAction(UIAlertAction(title: "\(state)", style: .default, handler: stateAlertAction(action:)))
+                    }
+                }
+                stateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            }
+            
+            
             self.present(stateAlert, animated: true, completion: nil)
         }
     }
@@ -2325,64 +2602,217 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                                         }
                                         else
                                         {
-                                            emptyAlert = UIAlertController(title: "Alert", message: "Please fill mobile number to proceed", preferredStyle: .alert)
-                                            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                            if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                            {
+                                                if language == "en"
+                                                {
+                                                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill mobile number to proceed", preferredStyle: .alert)
+                                                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                                }
+                                                else if language == "ar"
+                                                {
+                                                    emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى ملء رقم هاتفك المحمول للمتابعة", preferredStyle: .alert)
+                                                    emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                                                }
+                                            }
+                                            else
+                                            {
+                                                emptyAlert = UIAlertController(title: "Alert", message: "Please fill mobile number to proceed", preferredStyle: .alert)
+                                                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                            }
+                                            
                                             self.present(emptyAlert, animated: true, completion: nil)
                                         }
                                     }
                                     else
                                     {
-                                        emptyAlert = UIAlertController(title: "Alert", message: "Please select location type to proceed", preferredStyle: .alert)
-                                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                        {
+                                            if language == "en"
+                                            {
+                                                emptyAlert = UIAlertController(title: "Alert", message: "Please select location type to proceed", preferredStyle: .alert)
+                                                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                            }
+                                            else if language == "ar"
+                                            {
+                                                emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى تحديد نوع الموقع للمتابعة", preferredStyle: .alert)
+                                                emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                                            }
+                                        }
+                                        else
+                                        {
+                                            emptyAlert = UIAlertController(title: "Alert", message: "Please select location type to proceed", preferredStyle: .alert)
+                                            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        }
+                                        
                                         self.present(emptyAlert, animated: true, completion: nil)
                                     }
                                 }
                                 else
                                 {
-                                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill landmark details to proceed", preferredStyle: .alert)
-                                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                    {
+                                        if language == "en"
+                                        {
+                                            emptyAlert = UIAlertController(title: "Alert", message: "Please fill landmark details to proceed", preferredStyle: .alert)
+                                            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        }
+                                        else if language == "ar"
+                                        {
+                                            emptyAlert = UIAlertController(title: "تنبيه", message: "تفاصيل علامة الأرض فارغة", preferredStyle: .alert)
+                                            emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                                        }
+                                    }
+                                    else
+                                    {
+                                        emptyAlert = UIAlertController(title: "Alert", message: "Please fill landmark details to proceed", preferredStyle: .alert)
+                                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    }
+                                    
                                     self.present(emptyAlert, animated: true, completion: nil)
                                 }
                             }
                             else
                             {
-                                emptyAlert = UIAlertController(title: "Alert", message: "Please fill floor details to proceed", preferredStyle: .alert)
-                                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        emptyAlert = UIAlertController(title: "Alert", message: "Please fill floor details to proceed", preferredStyle: .alert)
+                                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى ملء تفاصيل الكلمة للمضي قدما", preferredStyle: .alert)
+                                        emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                                    }
+                                }
+                                else
+                                {
+                                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill floor details to proceed", preferredStyle: .alert)
+                                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                }
+                                
                                 self.present(emptyAlert, animated: true, completion: nil)
                             }
                         }
                         else
                         {
-                            emptyAlert = UIAlertController(title: "Alert", message: "Please select your area to proceed", preferredStyle: .alert)
-                            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            if let language = UserDefaults.standard.value(forKey: "language") as? String
+                            {
+                                if language == "en"
+                                {
+                                    emptyAlert = UIAlertController(title: "Alert", message: "Please select your area to proceed", preferredStyle: .alert)
+                                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                }
+                                else if language == "ar"
+                                {
+                                    emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى اختيار منطقتك للمتابعة", preferredStyle: .alert)
+                                    emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                                }
+                            }
+                            else
+                            {
+                                emptyAlert = UIAlertController(title: "Alert", message: "Please select your area to proceed", preferredStyle: .alert)
+                                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            }
+                            
                             self.present(emptyAlert, animated: true, completion: nil)
                         }
                     }
                     else
                     {
-                        emptyAlert = UIAlertController(title: "Alert", message: "Please select your state to proceed", preferredStyle: .alert)
-                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                emptyAlert = UIAlertController(title: "Alert", message: "Please select your state to proceed", preferredStyle: .alert)
+                                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            }
+                            else if language == "ar"
+                            {
+                                emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى تحديد ولايتك للمتابعة", preferredStyle: .alert)
+                                emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                            }
+                        }
+                        else
+                        {
+                            emptyAlert = UIAlertController(title: "Alert", message: "Please select your state to proceed", preferredStyle: .alert)
+                            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        }
+                        
                         self.present(emptyAlert, animated: true, completion: nil)
                     }
                 }
                 else
                 {
-                    emptyAlert = UIAlertController(title: "Alert", message: "Please select your country to proceed", preferredStyle: .alert)
-                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                    {
+                        if language == "en"
+                        {
+                            emptyAlert = UIAlertController(title: "Alert", message: "Please select your country to proceed", preferredStyle: .alert)
+                            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        }
+                        else if language == "ar"
+                        {
+                            emptyAlert = UIAlertController(title: "تنبيه", message: "الرجاء اختيار بلدك للمتابعة", preferredStyle: .alert)
+                            emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                        }
+                    }
+                    else
+                    {
+                        emptyAlert = UIAlertController(title: "Alert", message: "Please select your country to proceed", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    }
+                    
                     self.present(emptyAlert, animated: true, completion: nil)
                 }
             }
             else
             {
-                emptyAlert = UIAlertController(title: "Alert", message: "Please fill second name to proceed", preferredStyle: .alert)
-                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyAlert = UIAlertController(title: "Alert", message: "Please fill second name to proceed", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    }
+                    else if language == "ar"
+                    {
+                        emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى ملء الاسم الثاني للمتابعة", preferredStyle: .alert)
+                        emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    }
+                }
+                else
+                {
+                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill second name to proceed", preferredStyle: .alert)
+                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                
                 self.present(emptyAlert, animated: true, completion: nil)
             }
         }
         else
         {
-            emptyAlert = UIAlertController(title: "Alert", message: "Please fill first name to proceed", preferredStyle: .alert)
-            emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill first name to proceed", preferredStyle: .alert)
+                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                else if language == "ar"
+                {
+                    emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى ملء الاسم الأول للمتابعة", preferredStyle: .alert)
+                    emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                }
+            }
+            else
+            {
+                emptyAlert = UIAlertController(title: "Alert", message: "Please fill first name to proceed", preferredStyle: .alert)
+                emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            }
+            
             self.present(emptyAlert, animated: true, completion: nil)
         }
         
@@ -2540,6 +2970,25 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                 let convertedString = country.split(separator: "(")
                 cell.countryName.text = "\(convertedString[0])"
             }
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    cell.countryName.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    cell.countryName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    cell.countryName.textAlignment = .right
+                }
+            }
+            else
+            {
+                cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.countryName.textAlignment = .left
+            }
         }
         else
         {
@@ -2672,17 +3121,42 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     func locationTypeContents()
     {
-        let emptyAlert = UIAlertController(title: "Alert", message: "Choose your location type", preferredStyle: .alert)
-        emptyAlert.addAction(UIAlertAction(title: "Home", style: .default, handler: emptyAlertActions(action:)))
-        emptyAlert.addAction(UIAlertAction(title: "Work", style: .default, handler: emptyAlertActions(action:)))
-        emptyAlert.addAction(UIAlertAction(title: "Others", style: .default, handler: emptyAlertActions(action:)))
-        emptyAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(emptyAlert, animated: true, completion: nil)
+        var locationAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                locationAlert = UIAlertController(title: "Alert", message: "Choose your location type", preferredStyle: .alert)
+                locationAlert.addAction(UIAlertAction(title: "Home", style: .default, handler: emptyAlertActions(action:)))
+                locationAlert.addAction(UIAlertAction(title: "Work", style: .default, handler: emptyAlertActions(action:)))
+                locationAlert.addAction(UIAlertAction(title: "Others", style: .default, handler: emptyAlertActions(action:)))
+                locationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            }
+            else if language == "ar"
+            {
+                locationAlert = UIAlertController(title: "تنبيه", message: "اختر نوع موقعك", preferredStyle: .alert)
+                locationAlert.addAction(UIAlertAction(title: "موقع المنزل", style: .default, handler: emptyAlertActions(action:)))
+                locationAlert.addAction(UIAlertAction(title: "مكان العمل", style: .default, handler: emptyAlertActions(action:)))
+                locationAlert.addAction(UIAlertAction(title: "الآخرين", style: .default, handler: emptyAlertActions(action:)))
+                locationAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+            }
+        }
+        else
+        {
+            locationAlert = UIAlertController(title: "Alert", message: "Choose your location type", preferredStyle: .alert)
+            locationAlert.addAction(UIAlertAction(title: "Home", style: .default, handler: emptyAlertActions(action:)))
+            locationAlert.addAction(UIAlertAction(title: "Work", style: .default, handler: emptyAlertActions(action:)))
+            locationAlert.addAction(UIAlertAction(title: "Others", style: .default, handler: emptyAlertActions(action:)))
+            locationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        }
+        
+        self.present(locationAlert, animated: true, completion: nil)
     }
     
     func emptyAlertActions(action : UIAlertAction)
     {
-        if action.title == "Home"
+        /*if action.title == "Home"
         {
             locationTypeTextField.text = "Home"
         }
@@ -2693,7 +3167,9 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         else if action.title == "Others"
         {
             locationTypeTextField.text = "Others"
-        }
+        }*/
+        
+        locationTypeTextField.text = action.title
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

@@ -336,7 +336,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        addressScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+//        addressScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         addNewAddressButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         addNewAddressButton.setTitle("إضافة عنوان جديد", for: .normal)
@@ -350,7 +350,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
-        addressScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+//        addressScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         addNewAddressButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         addNewAddressButton.setTitle("ADD NEW ADDRESS", for: .normal)
@@ -398,8 +398,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             locationEmptyText.text = "Add an address so we can get tracking on the delivery!"
             locationEmptyText.textAlignment = .center
             locationEmptyText.textColor = UIColor.gray
-            locationEmptyText.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
-            locationEmptyText.font = locationEmptyText.font.withSize((1.5 * x))
+            locationEmptyText.font = UIFont(name: "AvenirNext-Bold", size: (1 * x))
+            locationEmptyText.font = locationEmptyText.font.withSize((1.25 * x))
             locationEmptyText.numberOfLines = 2
             selfScreenContents.addSubview(locationEmptyText)
             
@@ -655,11 +655,132 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                     }
                     defaultSwitch.isUserInteractionEnabled = false
                     //                    addressSelectButton.addSubview(defaultSwitch)
+                    
+                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                    {
+                        if language == "en"
+                        {
+                            defaultAddressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                            defaultAddressLabel.text = "Default Address"
+                            defaultAddressLabel.textAlignment = .left
+                        }
+                        else if language == "ar"
+                        {
+                            defaultAddressLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                            defaultAddressLabel.text = "العنوان الافتراضي"
+                            defaultAddressLabel.textAlignment = .right
+                        }
+                    }
+                    else
+                    {
+                        defaultAddressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        defaultAddressLabel.text = "Default Address"
+                        defaultAddressLabel.textAlignment = .left
+                    }
+                }
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        addressTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        addressTitle.textAlignment = .left
+                        
+                        addressEditButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        addressEditButton.setTitle("Edit", for: .normal)
+                        
+                        addressDeleteButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        addressDeleteButton.setTitle("Delete", for: .normal)
+                        
+                        nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        nameLabel.text = "Name"
+                        nameLabel.textAlignment = .left
+                        
+                        getNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        getNameLabel.textAlignment = .left
+                        
+                        addressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        addressLabel.text = "Address"
+                        addressLabel.textAlignment = .left
+                        
+                        getAddressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        getAddressLabel.textAlignment = .left
+                        
+                        mobileLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        mobileLabel.text = "Phone Number"
+                        mobileLabel.textAlignment = .left
+                        
+                        getMobileLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        getMobileLabel.textAlignment = .left
+                    }
+                    else if language == "ar"
+                    {
+                        addressTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        addressTitle.textAlignment = .right
+                        
+                        addressEditButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        addressEditButton.setTitle("تعديل", for: .normal)
+                        
+                        addressDeleteButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        addressDeleteButton.setTitle("حذف", for: .normal)
+                        
+                        nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        nameLabel.text = "الاسم"
+                        nameLabel.textAlignment = .right
+                        
+                        getNameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        getNameLabel.textAlignment = .right
+                        
+                        addressLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        addressLabel.text = "العنوان"
+                        addressLabel.textAlignment = .right
+                        
+                        getAddressLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        getAddressLabel.textAlignment = .right
+                        
+                        mobileLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        mobileLabel.text = "رقم الموبايل"
+                        mobileLabel.textAlignment = .right
+                        
+                        getMobileLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                        getMobileLabel.textAlignment = .right
+                    }
+                }
+                else
+                {
+                    addressTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    addressTitle.textAlignment = .left
+                    
+                    addressEditButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    addressEditButton.setTitle("Edit", for: .normal)
+                    
+                    addressDeleteButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    addressDeleteButton.setTitle("Delete", for: .normal)
+                    
+                    nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    nameLabel.text = "Name"
+                    nameLabel.textAlignment = .left
+                    
+                    getNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    getNameLabel.textAlignment = .left
+                    
+                    addressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    addressLabel.text = "Address"
+                    addressLabel.textAlignment = .left
+                    
+                    getAddressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    getAddressLabel.textAlignment = .left
+                    
+                    mobileLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    mobileLabel.text = "Phone Number"
+                    mobileLabel.textAlignment = .left
+                    
+                    getMobileLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    getMobileLabel.textAlignment = .left
                 }
             }
             
             addressScrollView.contentSize.height = y1
-            
         }
         
         addNewAddressButton.frame = CGRect(x: 0, y: selfScreenContents.frame.height - (5 * y), width: selfScreenContents.frame.width, height: (5 * y))
