@@ -349,13 +349,13 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         OrderDetailsScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         orderIdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        orderIdLabel.text = "ORDER ID : "
+        orderIdLabel.text = "ORDER ID              :"
         orderIdLabel.textAlignment = .left
         orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         orderIdNumLabel.textAlignment = .left
         
         orderPlacedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        orderPlacedLabel.text = "Order Placed On :"
+        orderPlacedLabel.text = "Order Placed On  :"
         orderPlacedLabel.textAlignment = .left
         orderPlacedDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         orderPlacedDateLabel.textAlignment = .left
@@ -453,10 +453,10 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         OrderDetailsScrollView.addSubview(orderIdView)
         
         // Order Id Label..
-        orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (10 * x), height: (2 * x))
+        orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (13 * x), height: (2 * x))
        // orderIdLabel.backgroundColor = UIColor.gray
         orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        orderIdLabel.text = "ORDER ID : "
+        orderIdLabel.text = "ORDER ID              :"
         orderIdLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderIdLabel.textColor = UIColor.black
         orderIdLabel.textAlignment = .left
