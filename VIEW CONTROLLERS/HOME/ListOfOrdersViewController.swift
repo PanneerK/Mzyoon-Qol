@@ -128,7 +128,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             let Result = PendingOrdersList.object(forKey: "Result") as! NSArray
             print("Pending Result:", Result)
             
-            if Result == nil || Result.count == 0
+            if Result.count == 0
             {
                 emptyLabel.removeFromSuperview()
                 checkEmptyLabel = true
@@ -202,7 +202,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             let Result = DeliverOrdersList.object(forKey: "Result") as! NSArray
             print("Delivered Result:", Result)
             
-            if Result == nil || Result.count == 0
+            if Result.count == 0
             {
                 emptyLabel.removeFromSuperview()
                 checkEmptyLabel = true
