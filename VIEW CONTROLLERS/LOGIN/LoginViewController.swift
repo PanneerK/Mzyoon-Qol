@@ -1142,6 +1142,14 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otpId = 2
         secs = 30
         act.startAnimating()
+        
+        self.otp1Letter.text = ""
+        self.otp2Letter.text = ""
+        self.otp3Letter.text = ""
+        self.otp4Letter.text = ""
+        self.otp5Letter.text = ""
+        self.otp6Letter.text = ""
+        
         secTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.timerCall(timer:)), userInfo: nil, repeats: true)
         resendButton.backgroundColor = UIColor(red: 0.2353, green: 0.4, blue: 0.4471, alpha: 1.0).withAlphaComponent(0.5)
         resendButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
@@ -1159,6 +1167,13 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.secTimer.invalidate()
             self.act.stopAnimating()
             self.secs = 30
+            self.otp1Letter.text = ""
+            self.otp2Letter.text = ""
+            self.otp3Letter.text = ""
+            self.otp4Letter.text = ""
+            self.otp5Letter.text = ""
+            self.otp6Letter.text = ""
+            
         }, completion: { finished in
             if finished{
                 

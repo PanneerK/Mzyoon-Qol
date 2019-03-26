@@ -141,8 +141,6 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
          self.Amount_TF.text = TotalAmount!
        }
         
-        self.addDoneButtonOnKeyboard()
-        
          //   KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
          //   STOREID = "21552"
         
@@ -757,7 +755,6 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             valuesTextField.frame = CGRect(x: colonLabel.frame.maxX + x, y: y3, width: BillingView.frame.width - (headingLabel.frame.width + colonLabel.frame.width + x), height: (3 * y))
             valuesTextField.backgroundColor = UIColor.white
             valuesTextField.textAlignment = .left
-            valuesTextField.keyboardType = .default
             valuesTextField.returnKeyType = .done
             valuesTextField.delegate = self
             valuesTextField.tag = (i * 1) + 500
@@ -765,34 +762,42 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             if i == 0
             {
                 valuesTextField.text = Line1Str
+                valuesTextField.keyboardType = .default
             }
             else if i == 1
             {
                 valuesTextField.text = Line2Str
+                valuesTextField.keyboardType = .default
             }
             else if i == 2
             {
                 valuesTextField.text = Line3Str
+                valuesTextField.keyboardType = .default
             }
             else if i == 3
             {
                 valuesTextField.text = CityStr
+                valuesTextField.keyboardType = .default
             }
             else if i == 4
             {
                 valuesTextField.text = StateStr
+                valuesTextField.keyboardType = .default
             }
             else if i == 5
             {
                 valuesTextField.text = CountryStr
+                valuesTextField.keyboardType = .default
             }
             else if i == 6
             {
                 valuesTextField.text = ""
+                valuesTextField.keyboardType = .numberPad
             }
             else if i == 7
             {
                 valuesTextField.text = EmailStr
+                valuesTextField.keyboardType = .default
             }
             else if i == 8
             {
@@ -847,6 +852,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
                 valuesTextField.textAlignment = .left
             }
         }
+        
+        self.addDoneButtonOnKeyboard()
         
         /*// Line1Label..
         let Line1Label = UILabel()
@@ -1162,8 +1169,15 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         doneToolbar.sizeToFit()
         
       //  self.Amount_TF.inputAccessoryView = doneToolbar
-        self.ZipCode_TF.inputAccessoryView = doneToolbar
         
+        if let foundView = view.viewWithTag(506)
+        {
+            if let text = foundView as? UITextField
+            {
+                text.inputAccessoryView = doneToolbar
+            }
+        }
+        self.ZipCode_TF.inputAccessoryView = doneToolbar
     }
     
     @objc func DoneAction()
