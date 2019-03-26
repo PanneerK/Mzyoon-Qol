@@ -495,7 +495,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingScrollView.addSubview(PendingViewButton)
             
             let tailorImageView = UIImageView()
-            tailorImageView.frame = CGRect(x: 0, y: 0, width: (8 * x), height: PendingViewButton.frame.height)
+            tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: PendingViewButton.frame.height)
             tailorImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             tailorImageView.layer.borderWidth = 1.0
             tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
@@ -538,7 +538,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: 0, width: PendingViewButton.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX - (3 * x), y: 0, width: PendingViewButton.frame.width / 2, height: (2 * y))
             let orderNum:Int = PendOrderIdArray[i] as! Int
             tailorName.text = "\(orderNum)"
             PendingViewButton.tag = PendOrderIdArray[i] as! Int
@@ -621,14 +621,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let OrderDateLabel = UILabel()
             OrderDateLabel.frame = CGRect(x: OrderDT_Icon.frame.maxX + x, y: ProductLabel.frame.maxY, width: (12 * x), height: (2 * y))
-            OrderDateLabel.text = "Order Date/Time : "
+            OrderDateLabel.text = "Order Date : "
             OrderDateLabel.textColor = UIColor.blue
             OrderDateLabel.textAlignment = .left
             OrderDateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             PendingViewButton.addSubview(OrderDateLabel)
             
             let OrderDatesLabel = UILabel()
-            OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX - x, y: ProductLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
+            OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX - (3 * x), y: ProductLabel.frame.maxY, width: PendingViewButton.frame.width / 2.5, height: (2 * y))
             if let date = PendOrderDateArray[i] as? String
             {
                 OrderPendDate = String(date.prefix(10))
@@ -650,27 +650,27 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                 {
                     tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    nameLabel.text = "Order Id : "
+                    nameLabel.text = "Order Id            : "
                     nameLabel.textAlignment = .left
                     tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     tailorName.textAlignment = .left
                     shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    shopLabel.text = "Tailor Name : "
+                    shopLabel.text = "Tailor Name      : "
                     shopLabel.textAlignment = .left
                     shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     shopName.textAlignment = .left
                     ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    ordersLabel.text = "Shop Name : "
+                    ordersLabel.text = "Shop Name      : "
                     ordersLabel.textAlignment = .left
                     ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     ordersCountLabel.textAlignment = .left
                     ProductLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    ProductLabel.text = "Product Name : "
+                    ProductLabel.text = "Product Name  : "
                     ProductLabel.textAlignment = .left
                     ProductNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     ProductNameLabel.textAlignment = .left
                     OrderDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    OrderDateLabel.text = "Order Date/Time : "
+                    OrderDateLabel.text = "Order Date       : "
                     OrderDateLabel.textAlignment = .left
                     OrderDatesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     OrderDatesLabel.textAlignment = .left
@@ -709,32 +709,32 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             {
                 tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                nameLabel.text = "Order Id : "
+                nameLabel.text = "Order Id               : "
                 nameLabel.textAlignment = .left
                 tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 tailorName.textAlignment = .left
                 shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                shopLabel.text = "Tailor Name : "
+                shopLabel.text = "Tailor Name      : "
                 shopLabel.textAlignment = .left
                 shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 shopName.textAlignment = .left
                 ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                ordersLabel.text = "Shop Name : "
+                ordersLabel.text = "Shop Name      : "
                 ordersLabel.textAlignment = .left
                 ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 ordersCountLabel.textAlignment = .left
                 ProductLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                ProductLabel.text = "Product Name : "
+                ProductLabel.text = "Product Name  : "
                 ProductLabel.textAlignment = .left
                 ProductNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 ProductNameLabel.textAlignment = .left
                 OrderDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                OrderDateLabel.text = "Order Date/Time : "
+                OrderDateLabel.text = "Order Date      : "
                 OrderDateLabel.textAlignment = .left
                 OrderDatesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 OrderDatesLabel.textAlignment = .left
             }
-         }
+          }
         }
       else
       {
@@ -743,6 +743,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
           // self.present(alert, animated: true, completion: nil)
 
       }
+        
+         PendingScrollView.contentSize.height = y1 + (2 * y)
     }
     
     func DeliveredViewContents(isHidden : Bool)
@@ -769,7 +771,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         // tailorListScrollView.backgroundColor = UIColor.gray
         DeliveredViewBackDrop.addSubview(DeliveredScrollView)
         
-        DeliveredScrollView.contentSize.height = (12 * y * CGFloat(DelivOrderIdArray.count))
+        
         
         for views in DeliveredScrollView.subviews
         {
@@ -789,7 +791,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredScrollView.addSubview(DeliveredViewButton)
             
             let tailorImageView = UIImageView()
-            tailorImageView.frame = CGRect(x: 0, y: 0, width: (8 * x), height: DeliveredViewButton.frame.height)
+            tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: DeliveredViewButton.frame.height)
             tailorImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             tailorImageView.layer.borderWidth = 1.0
             tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
@@ -917,14 +919,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             let OrderDateLabel = UILabel()
             OrderDateLabel.frame = CGRect(x: OrderDT_Icon.frame.maxX + x, y: ProductLabel.frame.maxY, width: (12 * x), height: (2 * y))
-            OrderDateLabel.text = "Order Date/Time : "
+            OrderDateLabel.text = "Order Date : "
             OrderDateLabel.textColor = UIColor.blue
             OrderDateLabel.textAlignment = .left
             OrderDateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             DeliveredViewButton.addSubview(OrderDateLabel)
             
             let OrderDatesLabel = UILabel()
-            OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX - x, y: ProductLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
+            OrderDatesLabel.frame = CGRect(x: OrderDateLabel.frame.maxX - (3 * x), y: ProductLabel.frame.maxY, width: DeliveredViewButton.frame.width / 2.5, height: (2 * y))
             if let date = DelivOrderDateArray[i] as? String
             {
                 OrderDelvDate = String(date.prefix(10))
@@ -950,27 +952,27 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                 {
                     tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    nameLabel.text = "Order Id : "
+                    nameLabel.text = "Order Id            : "
                     nameLabel.textAlignment = .left
                     tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     tailorName.textAlignment = .left
                     shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    shopLabel.text = "Tailor Name : "
+                    shopLabel.text = "Tailor Name      : "
                     shopLabel.textAlignment = .left
                     shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     shopName.textAlignment = .left
                     ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    ordersLabel.text = "Shop Name : "
+                    ordersLabel.text = "Shop Name      : "
                     ordersLabel.textAlignment = .left
                     ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     ordersCountLabel.textAlignment = .left
                     ProductLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    ProductLabel.text = "Product Name : "
+                    ProductLabel.text = "Product Name  : "
                     ProductLabel.textAlignment = .left
                     ProductNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     ProductNameLabel.textAlignment = .left
                     OrderDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    OrderDateLabel.text = "Order Date/Time : "
+                    OrderDateLabel.text = "Order Date       : "
                     OrderDateLabel.textAlignment = .left
                     OrderDatesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     OrderDatesLabel.textAlignment = .left
@@ -1009,27 +1011,27 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             {
                 tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                nameLabel.text = "Order Id : "
+                nameLabel.text = "Order Id            : "
                 nameLabel.textAlignment = .left
                 tailorName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 tailorName.textAlignment = .left
                 shopLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                shopLabel.text = "Tailor Name : "
+                shopLabel.text = "Tailor Name      : "
                 shopLabel.textAlignment = .left
                 shopName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 shopName.textAlignment = .left
                 ordersLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                ordersLabel.text = "Shop Name : "
+                ordersLabel.text = "Shop Name      : "
                 ordersLabel.textAlignment = .left
                 ordersCountLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 ordersCountLabel.textAlignment = .left
                 ProductLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                ProductLabel.text = "Product Name : "
+                ProductLabel.text = "Product Name  : "
                 ProductLabel.textAlignment = .left
                 ProductNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 ProductNameLabel.textAlignment = .left
                 OrderDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                OrderDateLabel.text = "Order Date/Time : "
+                OrderDateLabel.text = "Order Date       : "
                 OrderDateLabel.textAlignment = .left
                 OrderDatesLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 OrderDatesLabel.textAlignment = .left
@@ -1042,6 +1044,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
        // alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
        // self.present(alert, animated: true, completion: nil)
     }
+        
+        DeliveredScrollView.contentSize.height = y2 + (2 * y)
   }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)

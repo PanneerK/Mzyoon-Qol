@@ -267,10 +267,10 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         
         // Order Id Label..
         let orderIdLabel = UILabel()
-        orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (10 * x), height: (2 * x))
+        orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (13 * x), height: (2 * x))
         // orderIdLabel.backgroundColor = UIColor.gray
         orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        orderIdLabel.text = "ORDER ID : "
+        orderIdLabel.text = "ORDER ID              :"
         orderIdLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderIdLabel.textColor = UIColor.black
         orderIdLabel.textAlignment = .left
@@ -651,7 +651,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
             {
                 orderIdView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 orderIdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                orderIdLabel.text = "ORDER ID : "
+                orderIdLabel.text = "ORDER ID              :"
                 orderIdLabel.textAlignment = .left
                 orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 orderIdNumLabel.textAlignment = .left
