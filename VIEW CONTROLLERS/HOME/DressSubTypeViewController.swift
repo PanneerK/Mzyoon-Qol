@@ -195,6 +195,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         searchButton.layer.borderWidth = 1
         searchButton.layer.borderColor = UIColor.orange.cgColor
         searchButton.setImage(UIImage(named: "search"), for: .normal)
+        searchButton.addTarget(self, action: #selector(self.searchButtonAction(sender:)), for: .touchUpInside)
         searchTextField.addSubview(searchButton)
         
         sortButton.frame = CGRect(x: view.frame.width - (view.frame.width / 2.75), y: searchTextField.frame.maxY + y, width: (view.frame.width / 3), height: (4 * y))
@@ -223,6 +224,11 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             changeViewToEnglishInSelf()
             self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
         }
+    }
+    
+    @objc func searchButtonAction(sender : UIButton)
+    {
+        searchTextField.becomeFirstResponder()
     }
     
     func subTypeContents(getNameArray : NSArray, getIdArray : NSArray, getImageArray : NSArray)

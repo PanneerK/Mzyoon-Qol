@@ -265,7 +265,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
              if let imageName = countryFlagArray[i] as? String
              {
              //                server.API_FlagImages(imageName: imageName, delegate: self)
-             let urlString = serviceCall.baseURL
+             let urlString = serviceCall.baseURL
              let api = "\(urlString)/images/flags/\(imageName)"
              let apiurl = URL(string: api)
              //                load(url: apiurl!)
@@ -1291,17 +1291,41 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 break
             }
         }
-        
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
+        print("textFieldDidBeginEditing")
+        /*let  char = textField.text!.cString(using: String.Encoding.utf8)!
+        let isBackSpace = strcmp(char, "\\b")
         
+        let text = textField.text
+
+        if (isBackSpace == -92) {
+            if (text?.utf16.count)! == 0
+            {
+                switch textField{
+                case otp6Letter:
+                    otp5Letter.becomeFirstResponder()
+                case otp5Letter:
+                    otp4Letter.becomeFirstResponder()
+                case otp4Letter:
+                    otp3Letter.becomeFirstResponder()
+                case otp3Letter:
+                    otp2Letter.becomeFirstResponder()
+                case otp2Letter:
+                    otp1Letter.becomeFirstResponder()
+                default:
+                    break
+                }
+            }
+        }*/
+
     }
     
-    func textFieldShouldReturn(_ scoreText: UITextField) -> Bool
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
-        if scoreText == otp6Letter
+        if textField == otp6Letter
         {
             if let string1 = otp1Letter.text, let string2 = otp2Letter.text, let string3 = otp3Letter.text, let string4 = otp4Letter.text, let string5 = otp5Letter.text, let string6 = otp6Letter.text
             {
@@ -1311,12 +1335,14 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         UserDefaults.standard.set(mobileTextField.text!, forKey: "Phone")
         self.view.endEditing(true)
-        return false
+        return true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let  char = string.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
+        
+        print("KEY FINDER", isBackSpace)
         
         let text = textField.text
         
@@ -1367,6 +1393,24 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                     break
                 }
             }
+            else if (text?.utf16.count)! == 0
+            {
+                switch textField{
+                case otp6Letter:
+                    otp5Letter.becomeFirstResponder()
+                case otp5Letter:
+                    otp4Letter.becomeFirstResponder()
+                case otp4Letter:
+                    otp3Letter.becomeFirstResponder()
+                case otp3Letter:
+                    otp2Letter.becomeFirstResponder()
+                case otp2Letter:
+                    otp1Letter.becomeFirstResponder()
+                default:
+                    break
+                }
+            }
+            
         }
         return true
     }

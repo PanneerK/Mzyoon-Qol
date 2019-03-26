@@ -230,12 +230,22 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         view.addSubview(selfScreenContents)
         
         self.view.bringSubviewToFront(slideMenuButton)
+        
+        let manualIcon = UIImageView()
+        manualIcon.frame = CGRect(x: 0, y: y, width: (3 * x), height: (3 * y))
+        manualIcon.image = UIImage(named: "Manually")
+        selfScreenContents.addSubview(manualIcon)
 
-        manualTitleLabel.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: (3 * y))
+        manualTitleLabel.frame = CGRect(x: manualIcon.frame.maxX + x, y: y, width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
         manualTitleLabel.text = Measure1NameEngArray[0] as! String
         manualTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         manualTitleLabel.textAlignment = .left
         selfScreenContents.addSubview(manualTitleLabel)
+        
+        let underLine1 = UILabel()
+        underLine1.frame = CGRect(x: 0, y: manualTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: 0.5)
+        underLine1.backgroundColor = UIColor.lightGray
+        selfScreenContents.addSubview(underLine1)
         
         let manualButton = UIButton()
         manualButton.frame = CGRect(x: 0, y: manualTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
@@ -274,11 +284,21 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         downArrowImageView.image = UIImage(named: "downArrow")
         forWhomButton.addSubview(downArrowImageView)
         
-        goTitleLabel.frame = CGRect(x: 0, y: manualButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width, height: (3 * y))
+        let goToIcon = UIImageView()
+        goToIcon.frame = CGRect(x: 0, y: manualButton.frame.maxY + (2 * y), width: (3 * x), height: (3 * y))
+        goToIcon.image = UIImage(named: "Go_to_tailor_shop")
+        selfScreenContents.addSubview(goToIcon)
+        
+        goTitleLabel.frame = CGRect(x: goToIcon.frame.maxX + x, y: manualButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
         goTitleLabel.text = Measure1NameEngArray[1] as! String
         goTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         goTitleLabel.textAlignment = .left
         selfScreenContents.addSubview(goTitleLabel)
+        
+        let underLine2 = UILabel()
+        underLine2.frame = CGRect(x: 0, y: goTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: 0.5)
+        underLine2.backgroundColor = UIColor.lightGray
+        selfScreenContents.addSubview(underLine2)
         
         let goButton = UIButton()
         goButton.frame = CGRect(x: 0, y: goTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
@@ -303,11 +323,21 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             goButton.addSubview(dummyImageView)
         }
         
-        comeTitleLabel.frame = CGRect(x: 0, y: goButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width, height: (3 * y))
+        let comeToIcon = UIImageView()
+        comeToIcon.frame = CGRect(x: 0, y: goButton.frame.maxY + (2 * y), width: (3 * x), height: (3 * y))
+        comeToIcon.image = UIImage(named: "Tailor_come_to_your_place")
+        selfScreenContents.addSubview(comeToIcon)
+        
+        comeTitleLabel.frame = CGRect(x: comeToIcon.frame.maxX + x, y: goButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
         comeTitleLabel.text = Measure1NameEngArray[2] as! String
         comeTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         comeTitleLabel.textAlignment = .left
         selfScreenContents.addSubview(comeTitleLabel)
+        
+        let underLine3 = UILabel()
+        underLine3.frame = CGRect(x: 0, y: comeTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: 0.5)
+        underLine3.backgroundColor = UIColor.lightGray
+        selfScreenContents.addSubview(underLine3)
         
         let comeButton = UIButton()
         comeButton.frame = CGRect(x: 0, y: comeTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))

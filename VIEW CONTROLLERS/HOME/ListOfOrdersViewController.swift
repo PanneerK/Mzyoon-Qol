@@ -455,7 +455,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func PendingViewContents(isHidden : Bool)
     {
        // let PendingViewBackDrop = UIView()
-        PendingViewBackDrop.frame = CGRect(x: 0, y: y , width: selfScreenContents.frame.width, height: view.frame.height - (16 * y))
+        PendingViewBackDrop.frame = CGRect(x: 0, y: y , width: selfScreenContents.frame.width, height: selfScreenContents.frame.height - (2 * y))
         PendingViewBackDrop.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(PendingViewBackDrop)
         
@@ -472,7 +472,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
          backDrop.addSubview(sortButton)
          */
         
-        PendingScrollView.frame = CGRect(x: 0, y: y, width: PendingViewBackDrop.frame.width, height: (50 * y))
+        PendingScrollView.frame = CGRect(x: 0, y: y, width: PendingViewBackDrop.frame.width, height: PendingViewBackDrop.frame.height - (2 * y))
        // PendingScrollView.backgroundColor = UIColor.gray
         PendingViewBackDrop.addSubview(PendingScrollView)
         
@@ -748,7 +748,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func DeliveredViewContents(isHidden : Bool)
     {
         // let DeliveredViewBackDrop = UIView()
-        DeliveredViewBackDrop.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: view.frame.height - (16 * y))
+        DeliveredViewBackDrop.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: selfScreenContents.frame.height - (2 * y))
         DeliveredViewBackDrop.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(DeliveredViewBackDrop)
         
@@ -765,7 +765,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
          backDrop.addSubview(sortButton)
        */
         
-        DeliveredScrollView.frame = CGRect(x: 0, y: y, width: DeliveredViewBackDrop.frame.width, height: (50 * y))
+        DeliveredScrollView.frame = CGRect(x: 0, y: y, width: DeliveredViewBackDrop.frame.width, height: DeliveredViewBackDrop.frame.height - (2 * y))
         // tailorListScrollView.backgroundColor = UIColor.gray
         DeliveredViewBackDrop.addSubview(DeliveredScrollView)
         

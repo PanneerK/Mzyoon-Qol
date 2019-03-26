@@ -389,12 +389,12 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     view.addSubview(ratingCountLabel)
     
     let Name_Icon = UIImageView()
-    Name_Icon.frame = CGRect(x: (3 * x), y: ratingImageView.frame.maxY + (y / 2), width: x, height: y)
+    Name_Icon.frame = CGRect(x: 0, y: ratingImageView.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
     Name_Icon.image = UIImage(named: "TailorName")
-   // view.addSubview(Name_Icon)
+    selfScreenContents.addSubview(Name_Icon)
     
     let nameLabel = UILabel()
-    nameLabel.frame = CGRect(x: 0, y: ratingImageView.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
+    nameLabel.frame = CGRect(x: Name_Icon.frame.maxX + (x / 3), y: ratingImageView.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
     nameLabel.text = "Name : "
     nameLabel.textColor = UIColor.blue
     nameLabel.textAlignment = .left
@@ -409,8 +409,13 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     tailorName.font = UIFont(name: "Avenir Next", size: (1.2 * x))
     selfScreenContents.addSubview(tailorName)
     
+    let Order_Icon = UIImageView()
+    Order_Icon.frame = CGRect(x: 0, y: nameLabel.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
+    Order_Icon.image = UIImage(named: "No_of_orders")
+    selfScreenContents.addSubview(Order_Icon)
+    
     let ordersLabel = UILabel()
-    ordersLabel.frame = CGRect(x: 0, y: nameLabel.frame.maxY, width: (9 * x), height: (2 * y))
+    ordersLabel.frame = CGRect(x: Order_Icon.frame.maxX + (x / 3), y: nameLabel.frame.maxY  + (y / 2), width: (9 * x), height: (2 * y))
     ordersLabel.text = "No. of Orders : "
     ordersLabel.textColor = UIColor.blue
     ordersLabel.textAlignment = .left
@@ -418,7 +423,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     selfScreenContents.addSubview(ordersLabel)
     
     //let ordersCountLabel = UILabel()
-    ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: nameLabel.frame.maxY, width: view.frame.width / 2.5, height: (2 * y))
+    ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: nameLabel.frame.maxY  + (y / 2), width: view.frame.width / 2.5, height: (2 * y))
     ordersCountLabel.textColor = UIColor.black
     ordersCountLabel.textAlignment = .left
     ordersCountLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))

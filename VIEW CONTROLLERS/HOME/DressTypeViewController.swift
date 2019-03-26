@@ -298,6 +298,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         searchButton.layer.borderWidth = 1
         searchButton.layer.borderColor = UIColor.orange.cgColor
         searchButton.setImage(UIImage(named: "search"), for: .normal)
+        searchButton.addTarget(self, action: #selector(self.searchButtonAction(sender:)), for: .touchUpInside)
         searchTextField.addSubview(searchButton)
         
         filterButton.frame = CGRect(x: 0, y: searchTextField.frame.maxY, width: (view.frame.width / 2) - 1, height: 40)
@@ -360,6 +361,11 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             changeViewToEnglishInSelf()
             dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
         }
+    }
+    
+    @objc func searchButtonAction(sender : UIButton)
+    {
+        searchTextField.becomeFirstResponder()
     }
     
     func dressTypeSubContents(inputTextArray : NSArray, inputIdArray : NSArray, inputImageArray : NSArray)

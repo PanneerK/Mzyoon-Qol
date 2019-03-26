@@ -868,11 +868,11 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         DeliveryInfoLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
         DeliveryInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
         DeliveryInfoLabel.textColor = UIColor.white
+        DeliveryInfoLabel.textAlignment = .left
         DeliveryInfoView.addSubview(DeliveryInfoLabel)
         
-        
         let MapImageView = UIImageView()
-        MapImageView.frame = CGRect(x: x, y: DeliveryInfoLabel.frame.maxY + (2 * y), width: (5 * x), height:(4 * y))
+        MapImageView.frame = CGRect(x: x, y: DeliveryInfoLabel.frame.maxY + (2 * y), width: (4 * x), height:(4 * y))
         MapImageView.backgroundColor = UIColor.white
         MapImageView.image = UIImage(named: "locationMarker")
         DeliveryInfoView.addSubview(MapImageView)
@@ -1005,6 +1005,30 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
                 
                 TrackingButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 TrackingButton.setTitle("Tracking Details", for: .normal)
+                
+                DeliveryInfoLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                DeliveryInfoLabel.text = " DELIVERY INFORMATION"
+                DeliveryInfoLabel.textAlignment = .left
+                
+                MapImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                NameLabel.textAlignment = .left
+                
+                FloorLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                FloorLabel.textAlignment = .left
+
+                AreaLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                AreaLabel.textAlignment = .left
+
+                StateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                StateLabel.textAlignment = .left
+
+                CountryLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                CountryLabel.textAlignment = .left
+
+                PhoneNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                PhoneNumLabel.textAlignment = .left
 
                 changeViewToEnglishInSelf()
             }
@@ -1025,11 +1049,74 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
                 TrackingButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 TrackingButton.setTitle("تفاصيل المسار", for: .normal)
                 
+                DeliveryInfoLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                DeliveryInfoLabel.text = " معلومات التوصيل"
+                DeliveryInfoLabel.textAlignment = .right
+                
+                MapImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                NameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                NameLabel.textAlignment = .right
+                
+                FloorLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                FloorLabel.textAlignment = .right
+                
+                AreaLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                AreaLabel.textAlignment = .right
+                
+                StateLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                StateLabel.textAlignment = .right
+                
+                CountryLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                CountryLabel.textAlignment = .right
+                
+                PhoneNumLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                PhoneNumLabel.textAlignment = .right
+                
                 changeViewToArabicInSelf()
             }
         }
         else
         {
+            OrderStatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            OrderStatusLabel.text = " ORDER STATUS"
+            OrderStatusLabel.textAlignment = .left
+            
+            orderedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            orderedLabel.text = "Ordered"
+            orderedLabel.textAlignment = .left
+            
+            PackedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            PackedLabel.text = "Cloth Recieved"
+            PackedLabel.textAlignment = .left
+            
+            TrackingButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TrackingButton.setTitle("Tracking Details", for: .normal)
+            
+            DeliveryInfoLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            DeliveryInfoLabel.text = " DELIVERY INFORMATION"
+            DeliveryInfoLabel.textAlignment = .left
+            
+            MapImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            NameLabel.textAlignment = .left
+            
+            FloorLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            FloorLabel.textAlignment = .left
+            
+            AreaLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            AreaLabel.textAlignment = .left
+            
+            StateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            StateLabel.textAlignment = .left
+            
+            CountryLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            CountryLabel.textAlignment = .left
+            
+            PhoneNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            PhoneNumLabel.textAlignment = .left
+            
             changeViewToEnglishInSelf()
         }
         

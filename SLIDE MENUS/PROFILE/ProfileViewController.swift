@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITextFieldDelegate, ServerAPIDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate
 {
@@ -814,6 +815,20 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     func cameraAlertAction(action : UIAlertAction)
     {
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+            //already authorized
+        } else {
+            AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+                if granted {
+                    //access allowed
+                    print("ALLOWED")
+                } else {
+                    //access denied
+                    print("DENIED")
+                }
+            })
+        }
+        
         if UIImagePickerController.isSourceTypeAvailable(.camera){
             print("Button capture")
             
