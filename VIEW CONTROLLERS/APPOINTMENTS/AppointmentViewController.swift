@@ -109,6 +109,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         navigationBar.isHidden = true
         slideMenuButton.isHidden = true
         
+        selectedButton(tag: 1)
+        
         // Do any additional setup after loading the view.
        
      //  AppointmentContent()
@@ -1188,7 +1190,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             if(MeasureStatus.contains("Not Approved"))
             {
-                Measure_StatusBtn.setTitle("Pending", for: .normal)
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        Measure_StatusBtn.setTitle("Pending", for: .normal)
+                    }
+                    else if language == "ar"
+                    {
+                        Measure_StatusBtn.setTitle("قيد الانتظار", for: .normal)
+                    }
+                }
+                else
+                {
+                    Measure_StatusBtn.setTitle("Pending", for: .normal)
+                }
             }
             else
             {
@@ -1226,7 +1242,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         TailorTypeLabel.frame = CGRect(x: TailorShopIcon.frame.maxX, y: Measurement_AppointmentStatusView.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
         if(MeasurementInEnglish.count > 0)
         {
-            TailorTypeLabel.text = MeasurementInEnglish[0] as? String
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    TailorTypeLabel.text = MeasurementInEnglish[0] as? String
+                }
+                else if language == "ar"
+                {
+                    TailorTypeLabel.text = measurementInArabic[0] as? String
+                }
+            }
+            else
+            {
+                TailorTypeLabel.text = MeasurementInEnglish[0] as? String
+            }
         }
         else
         {

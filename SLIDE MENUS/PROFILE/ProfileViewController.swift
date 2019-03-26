@@ -32,7 +32,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     let femaleButton = UIButton()
     let updateButton = UIButton()
     let genderTableView = UITableView()
-    let genders = ["Male", "Female"]
+    let gendersArrayInEnglish = ["Male", "Female"]
+    let gendersArrayInArabic = ["ذكر", "انثى"]
     
     let cancelButton = UIButton()
     let saveButton = UIButton()
@@ -290,9 +291,28 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             
             if Result == "1"
             {
-                let alert = UIAlertController(title: "", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: savedAlertAction(action:)))
-                self.present(alert, animated: true, completion: nil)
+                var updateAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        updateAlert = UIAlertController(title: "Alert", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                        updateAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: savedAlertAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        updateAlert = UIAlertController(title: "تنبيه", message: "تم التحديث بنجاح", preferredStyle: UIAlertController.Style.alert)
+                        updateAlert.addAction(UIAlertAction(title: "حسنا", style: UIAlertAction.Style.default, handler: savedAlertAction(action:)))
+                    }
+                }
+                else
+                {
+                    updateAlert = UIAlertController(title: "Alert", message: "Updated Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                    updateAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: savedAlertAction(action:)))
+                }
+                
+                self.present(updateAlert, animated: true, completion: nil)
             }
             
         }
@@ -467,6 +487,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.text = "الملف الشخصي"
         
+        userImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
         userName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         userName.textAlignment = .right
         
@@ -492,6 +514,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.text = "PROFILE"
+        
+        userImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         userName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         userName.textAlignment = .left
@@ -770,15 +794,24 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         {
             if language == "en"
             {
+                genderLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                genderLabel.textAlignment = .left
+
                 changeViewToEnglishInSelf()
             }
             else if language == "ar"
             {
+                genderLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                genderLabel.textAlignment = .right
+
                 changeViewToArabicInSelf()
             }
         }
         else
         {
+            genderLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            genderLabel.textAlignment = .left
+
             changeViewToEnglishInSelf()
         }
     }
@@ -806,11 +839,34 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     @objc func cameraButtonAction(sender : UIButton)
     {
-        let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
-        cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
-        cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
-        cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(cameraAlert, animated: true, completion: nil)
+        var imageAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                imageAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+                imageAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+                imageAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+                imageAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            }
+            else if language == "ar"
+            {
+                imageAlert = UIAlertController(title: "تنبيه", message: "اختيار صورة من", preferredStyle: .alert)
+                imageAlert.addAction(UIAlertAction(title: "الة تصوير", style: .default, handler: cameraAlertAction(action:)))
+                imageAlert.addAction(UIAlertAction(title: "صالة عرض", style: .default, handler: galleryAlertAction(action:)))
+                imageAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+            }
+        }
+        else
+        {
+            imageAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+            imageAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+            imageAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+            imageAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        }
+        
+        self.present(imageAlert, animated: true, completion: nil)
     }
     
     func cameraAlertAction(action : UIAlertAction)
@@ -968,6 +1024,31 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.addTarget(self, action: #selector(self.saveButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(saveButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cancelButton.setTitle("Cancel", for: .normal)
+                saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                saveButton.setTitle("Save", for: .normal)
+            }
+            else if language == "ar"
+            {
+                cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cancelButton.setTitle("إلغاء", for: .normal)
+                saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                saveButton.setTitle("حفظ", for: .normal)
+            }
+        }
+        else
+        {
+            cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cancelButton.setTitle("Cancel", for: .normal)
+            saveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            saveButton.setTitle("Save", for: .normal)
+        }
     }
     
     @objc func cancelButtonAction(sender : UIButton)
@@ -1113,7 +1194,29 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self), for: indexPath as IndexPath)
-        cell.textLabel?.text = genders[indexPath.row]
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                cell.textLabel?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.textLabel?.text = gendersArrayInEnglish[indexPath.row]
+                cell.textLabel?.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                cell.textLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.textLabel?.text = gendersArrayInArabic[indexPath.row]
+                cell.textLabel?.textAlignment = .right
+            }
+        }
+        else
+        {
+            cell.textLabel?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.textLabel?.text = gendersArrayInEnglish[indexPath.row]
+            cell.textLabel?.textAlignment = .left
+        }
+        
         print("WELCOME")
         return cell
     }
@@ -1123,7 +1226,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        genderLabel.text = genders[indexPath.row]
+        genderLabel.text = gendersArrayInEnglish[indexPath.row]
         print("WELCOME TO DID SELECT")
         GenderStr = genderLabel.text!
         genderTableView.removeFromSuperview()

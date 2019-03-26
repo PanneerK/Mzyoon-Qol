@@ -104,11 +104,34 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @objc func languageFunction()
     {
-        let alert = UIAlertController(title: "Alert", message: "Please choose your language", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
-        alert.addAction(UIAlertAction(title: "Arabic", style: .default, handler: languageAlertAction(action:)))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        var languageAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                languageAlert = UIAlertController(title: "Alert", message: "Please choose your language", preferredStyle: .alert)
+                languageAlert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
+                languageAlert.addAction(UIAlertAction(title: "عربى", style: .default, handler: languageAlertAction(action:)))
+                languageAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            }
+            else if language == "ar"
+            {
+                languageAlert = UIAlertController(title: "تنبيه", message: "يرجى اختيار لغتك", preferredStyle: .alert)
+                languageAlert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
+                languageAlert.addAction(UIAlertAction(title: "عربى", style: .default, handler: languageAlertAction(action:)))
+                languageAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+            }
+        }
+        else
+        {
+            languageAlert = UIAlertController(title: "Alert", message: "Please choose your language", preferredStyle: .alert)
+            languageAlert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
+            languageAlert.addAction(UIAlertAction(title: "عربى", style: .default, handler: languageAlertAction(action:)))
+            languageAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        }
+        
+        self.present(languageAlert, animated: true, completion: nil)
     }
     
     func languageAlertAction(action : UIAlertAction)
@@ -118,7 +141,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             UserDefaults.standard.set("en", forKey: "language")
             changeViewToEnglish()
         }
-        else if action.title == "Arabic"
+        else if action.title == "Arabic" || action.title == "عربى"
         {
             UserDefaults.standard.set("ar", forKey: "language")
             changeViewToArabic()

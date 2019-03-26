@@ -8,12 +8,14 @@
 
 import UIKit
 
-class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
+class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITextFieldDelegate
 {
     
     //SCREEN PARAMETERS
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
+    
+    let selfScreenContents = UIView()
     
     let PricingButton = UIButton()
     let DeliveryDetailsButton = UIButton()
@@ -67,22 +69,20 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         Variables.sharedManager.ApprovalQty = "1"
         
-        self.selectedButton(tag: 1)
+        selectedButton(tag: 1)
+        
+        self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
         
         self.addDoneButtonOnKeyboard()
         
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-          self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
-        let navigationArray = self.navigationController?.viewControllers
-        print("viewControllers Aray:",navigationArray!)
-        
+        selectedButton(tag: 1)
         // self.serviceCall.API_OrderApprovalPrice(TailorResponseId: self.TailorResponseID, delegate: self)
     }
      
@@ -306,10 +306,12 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     func changeViewToArabicInSelf()
     {
-        view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.text = "طلب موافقة"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         QtyNumTF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         PricingButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -325,10 +327,12 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     func changeViewToEnglishInSelf()
     {
-        view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.text = "ORDER APPROVAL"
+        
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         QtyNumTF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         PricingButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -365,13 +369,17 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
+        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
         let DressDetView = UIView()
-        DressDetView.frame = CGRect(x: x + 15 , y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (5 * x), height: (10 * y))
+        DressDetView.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: (10 * y))
         DressDetView.layer.cornerRadius = 5
         DressDetView.layer.borderWidth = 1
         DressDetView.layer.backgroundColor = UIColor.orange.cgColor
         DressDetView.layer.borderColor = UIColor.black.cgColor
-        view.addSubview(DressDetView)
+        selfScreenContents.addSubview(DressDetView)
         
         let DressImageView = UIImageView()
         DressImageView.frame = CGRect(x: x, y: y, width: (8 * x), height:(8 * y))
@@ -379,34 +387,34 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
        if(DressImageArray.count != 0)
        {
-        if let imageName = DressImageArray[0] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/DressSubType/\(imageName)"
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
-            
-           // print("Image Of Dress", apiurl!)
-            
-            if apiurl != nil
+            if let imageName = DressImageArray[0] as? String
             {
-                dummyImageView.dowloadFromServer(url: apiurl!)
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/DressSubType/\(imageName)"
+                let apiurl = URL(string: api)
+            
+                let dummyImageView = UIImageView()
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
+            
+                // print("Image Of Dress", apiurl!)
+            
+                if apiurl != nil
+                {
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
+                dummyImageView.tag = -1
+                DressImageView.addSubview(dummyImageView)
             }
-            dummyImageView.tag = -1
-            DressImageView.addSubview(dummyImageView)
-        }
          DressDetView.addSubview(DressImageView)
        }
-      else
+       else
        {
           DressImageView.backgroundColor = UIColor.lightGray
           DressDetView.addSubview(DressImageView)
         }
         
         let DressTypeLabel = UILabel()
-        DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: DressDetView.frame.minY - (6 * y), width: (20 * x), height: (2 * y))
+        DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: y, width: (20 * x), height: (2 * y))
         if(DressNameArray.count != 0)
         {
           DressTypeLabel.text = DressNameArray[0] as? String
@@ -447,23 +455,23 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         DressDetView.addSubview(QtyNumTF)
         
         
-        PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((view.frame.width / 2) - 1), height: 40)
+        PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((selfScreenContents.frame.width / 2) - 1), height: (4 * y))
         PricingButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PricingButton.setTitle("PRICE DETAILS", for: .normal)
         PricingButton.setTitleColor(UIColor.white, for: .normal)
         PricingButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 1.5 * x)
         PricingButton.tag = 0
         PricingButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(PricingButton)
+        selfScreenContents.addSubview(PricingButton)
         
-        DeliveryDetailsButton.frame = CGRect(x: PricingButton.frame.maxX + 1, y: DressDetView.frame.maxY + y, width: view.frame.width / 2, height: 40)
+        DeliveryDetailsButton.frame = CGRect(x: PricingButton.frame.maxX + 1, y: DressDetView.frame.maxY + y, width: selfScreenContents.frame.width / 2, height: (4 * y))
         DeliveryDetailsButton.backgroundColor = UIColor.lightGray
         DeliveryDetailsButton.setTitle("DELIVERY DETAILS", for: .normal)
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
         DeliveryDetailsButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 1.5 * x)
         DeliveryDetailsButton.tag = 1
         DeliveryDetailsButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
-        view.addSubview(DeliveryDetailsButton)
+        selfScreenContents.addSubview(DeliveryDetailsButton)
         
         DeliveryDetailsButton.backgroundColor = UIColor.lightGray
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
@@ -569,9 +577,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     
     func PricingViewContents(isHidden : Bool)
     {
-        ApprovalListScrollView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (6 * x), height: (37 * y))
+        ApprovalListScrollView.frame = CGRect(x: 0, y: DeliveryDetailsButton.frame.maxY + y, width: selfScreenContents.frame.width, height: (37 * y))
         ApprovalListScrollView.backgroundColor = UIColor.clear
-        view.addSubview(ApprovalListScrollView)
+        selfScreenContents.addSubview(ApprovalListScrollView)
        
         
 //        for views in ApprovalListScrollView.subviews
@@ -597,7 +605,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         ApprovalListScrollView.isHidden = isHidden
        
         // Currency Button:-
-        CurrencyButton.frame = CGRect(x: (22 * x), y: ApprovalListScrollView.frame.minY - (22 * y), width: (8 * x), height: (2 * y))
+        CurrencyButton.frame = CGRect(x: (22 * x), y: y, width: (8 * x), height: (2 * y))
         CurrencyButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         CurrencyButton.setTitle("AED", for: .normal)
         CurrencyButton.setTitleColor(UIColor.white, for: .normal)
@@ -1169,9 +1177,9 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
     {
         
        // let deliveryDetailsView = UIView()
-        deliveryDetailsView.frame = CGRect(x: (3 * x), y: DeliveryDetailsButton.frame.maxY + y , width: view.frame.width - (6 * x), height: (35 * y))
-        //deliveryDetailsView.backgroundColor = UIColor.cyan
-        view.addSubview(deliveryDetailsView)
+        deliveryDetailsView.frame = CGRect(x: 0, y: DeliveryDetailsButton.frame.maxY + y , width: selfScreenContents.frame.width, height: (29 * y))
+        deliveryDetailsView.backgroundColor = UIColor.white
+        selfScreenContents.addSubview(deliveryDetailsView)
    
         let backgroundImage = UIImageView()
         backgroundImage.frame = CGRect(x: 0, y: 0, width: deliveryDetailsView.frame.width, height: deliveryDetailsView.frame.height)
@@ -1184,7 +1192,7 @@ class OrderApprovalViewController: CommonViewController,ServerAPIDelegate,UIText
         
         // AppointmentView :-
             let AppointmentsView = UIView()
-            AppointmentsView.frame = CGRect(x: x, y: deliveryDetailsView.frame.minY - (22 * y), width: deliveryDetailsView.frame.width - (2 * x), height: (8 * y))
+            AppointmentsView.frame = CGRect(x: x, y: y, width: deliveryDetailsView.frame.width - (2 * x), height: (8 * y))
             AppointmentsView.layer.cornerRadius = 10
             AppointmentsView.layer.masksToBounds = true
             AppointmentsView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)

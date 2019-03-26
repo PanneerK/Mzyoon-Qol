@@ -420,11 +420,28 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                     if sender.tag == id
                     {
                         print("NAVIGATION CONTENTS", id, dressSubTypeArray[i])
-                        UserDefaults.standard.set(dressSubTypeArray[i], forKey: "dressSubType")
                         UserDefaults.standard.set(id, forKey: "dressSubTypeId")
+                        
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                UserDefaults.standard.set(dressSubTypeArray[i], forKey: "dressSubType")
+                            }
+                            else if language == "ar"
+                            {
+                                UserDefaults.standard.set(dressSubTypeArrayInArabic[i], forKey: "dressSubType")
+                            }
+                        }
+                        else
+                        {
+                            UserDefaults.standard.set(dressSubTypeArray[i], forKey: "dressSubType")
+                        }
                     }
                 }
             }
+            print("CHECK LANGUAGE", UserDefaults.standard.value(forKey: "dressSubType"))
+
             self.navigationController?.pushViewController(dressSubScreen, animated: true)
         }
         else

@@ -241,6 +241,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeArray.append(dressSubType)
         }
         
+        print("getDressTypeArray", getDressTypeArray)
+        
         var y1:CGFloat = y
         
         for i in 0..<dressTypeArray.count

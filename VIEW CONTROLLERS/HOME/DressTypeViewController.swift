@@ -643,21 +643,24 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                             if language == "en"
                             {
                                 dressSubScreen.headingTitle = dressTypeArray[i] as! String
+                                UserDefaults.standard.set(dressTypeArray[i], forKey: "dressType")
                             }
                             else if language == "ar"
                             {
                                 dressSubScreen.headingTitle = dressTypeArrayInArabic[i] as! String
+                                UserDefaults.standard.set(dressTypeArrayInArabic[i], forKey: "dressType")
                             }
                         }
                         else
                         {
                             dressSubScreen.headingTitle = dressTypeArray[i] as! String
+                            UserDefaults.standard.set(dressTypeArray[i], forKey: "dressType")
+
                         }
-                        
-                        UserDefaults.standard.set(dressTypeArray[i], forKey: "dressType")
                     }
                 }
             }
+            
             self.navigationController?.pushViewController(dressSubScreen, animated: true)
 
         }
