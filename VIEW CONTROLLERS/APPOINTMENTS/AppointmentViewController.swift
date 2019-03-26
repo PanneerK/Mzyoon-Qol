@@ -791,7 +791,18 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
            }
            else
            {
-             Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
+             if(MaterialStatus.count == 1)
+             {
+               Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
+             }
+             else if(MaterialStatus.count == 2)
+             {
+               Material_StatusBtn.setTitle("\(MaterialStatus[1])", for: .normal)
+             }
+             else if(MaterialStatus.count == 3)
+             {
+                Material_StatusBtn.setTitle("\(MaterialStatus[2])", for: .normal)
+             }
            }
         }
         else
@@ -1055,7 +1066,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
             if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
-            {}
+            {
+                
+            }
             else
             {
              OrderTypeView.addSubview(Material_ApproveButton)
@@ -1192,7 +1205,18 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             }
             else
             {
-                Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
+                if(MeasureStatus.count == 1)
+                {
+                    Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
+                }
+                else if(MeasureStatus.count == 2)
+                {
+                    Measure_StatusBtn.setTitle("\(MeasureStatus[1])", for: .normal)
+                }
+                else if(MeasureStatus.count == 3)
+                {
+                    Measure_StatusBtn.setTitle("\(MeasureStatus[2])", for: .normal)
+                }
             }
         }
         else
@@ -1708,11 +1732,26 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         print("Material Approve Status Page..")
         
         if (MaterialAppointID.count != 0)
-       {
-         let AppointID = MaterialAppointID[0] as! Int
+        {
+           var AppointID : Int!
+        
+            if(MaterialAppointID.count == 1)
+            {
+                AppointID = MaterialAppointID[0] as? Int
+            }
+            else if(MaterialAppointID.count == 2)
+            {
+                AppointID = MaterialAppointID[1] as? Int
+            }
+            else if(MaterialAppointID.count == 3)
+            {
+                AppointID = MaterialAppointID[2] as? Int
+            }
+      
+        // let AppointID = MaterialAppointID[0] as! Int
          let Msg = ""
-         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
-      }
+         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID!, IsApproved: 1, Reason: Msg, delegate: self)
+       }
        else
        {
         
@@ -1731,7 +1770,22 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         print("Measure Approve Status Page..")
         if (MeasurementAppointID.count != 0)
         {
-            let AppointID : Int = MeasurementAppointID[0] as! Int
+            var AppointID : Int!
+            
+            if(MeasurementAppointID.count == 1)
+            {
+                AppointID = MeasurementAppointID[0] as? Int
+            }
+            else if(MeasurementAppointID.count == 2)
+            {
+                AppointID = MeasurementAppointID[1] as? Int
+            }
+            else if(MeasurementAppointID.count == 3)
+            {
+                AppointID = MeasurementAppointID[2] as? Int
+            }
+            
+           // let AppointID : Int = MeasurementAppointID[0] as! Int
             let Msg = ""
             self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
         
@@ -1912,7 +1966,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
       if(MaterialAppointID.count != 0)
       {
-        let AppointID = MaterialAppointID[0] as! Int
+        
+        var AppointID : Int!
+        
+        if(MaterialAppointID.count == 1)
+        {
+            AppointID = MaterialAppointID[0] as? Int
+        }
+        else if(MaterialAppointID.count == 2)
+        {
+            AppointID = MaterialAppointID[1] as? Int
+        }
+        else if(MaterialAppointID.count == 3)
+        {
+            AppointID = MaterialAppointID[2] as? Int
+        }
+        
+       // let AppointID = MaterialAppointID[0] as! Int
         let Msg : String = self.Material_rejectReason_TF.text!
         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 2, Reason: Msg, delegate: self)
       }
@@ -1924,7 +1994,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if(MeasurementAppointID.count != 0)
         {
-        let AppointID = MeasurementAppointID[0] as! Int
+            
+            var AppointID : Int!
+            
+            if(MeasurementAppointID.count == 1)
+            {
+                AppointID = MeasurementAppointID[0] as? Int
+            }
+            else if(MeasurementAppointID.count == 2)
+            {
+                AppointID = MeasurementAppointID[1] as? Int
+            }
+            else if(MeasurementAppointID.count == 3)
+            {
+                AppointID = MeasurementAppointID[2] as? Int
+            }
+            
+       // let AppointID = MeasurementAppointID[0] as! Int
         let Msg : String = self.Measure_rejectReason_TF.text!
         self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 2, Reason: Msg, delegate: self)
         }
@@ -2134,12 +2220,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     @objc func SlotMaterial_DoneClick()
     {
         SLOT_MaterialType_TF.resignFirstResponder()
-        SLOT_MaterialType_TF.text = TimeSlotArray[0] as? String
+       // SLOT_MaterialType_TF.text = TimeSlotArray[0] as? String
     }
     @objc func SlotMeasure_DoneClick()
     {
         SLOT_MeasurementType_TF.resignFirstResponder()
-        SLOT_MeasurementType_TF.text = TimeSlotArray[0] as? String
+       // SLOT_MeasurementType_TF.text = TimeSlotArray[0] as? String
     }
     @objc func FMeasurement_DoneClick()
     {

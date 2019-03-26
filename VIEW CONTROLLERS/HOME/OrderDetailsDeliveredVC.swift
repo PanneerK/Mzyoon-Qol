@@ -287,7 +287,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         }
         else
         {
-            orderIdNumLabel.text =  "#"
+            orderIdNumLabel.text =  "#0"
         }
         orderIdNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderIdNumLabel.textColor = UIColor.black
@@ -298,7 +298,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         let orderPlacedLabel = UILabel()
         orderPlacedLabel.frame = CGRect(x: x, y: orderIdLabel.frame.maxY + y, width: (13 * x), height: (2 * x))
         // orderPlacedLabel.backgroundColor = UIColor.gray
-        orderPlacedLabel.text = "Order Placed On :"
+        orderPlacedLabel.text = "Order Placed On  :"
         orderPlacedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
         orderPlacedLabel.textColor = UIColor.black
         orderPlacedLabel.textAlignment = .left
@@ -317,7 +317,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         }
         else
         {
-            OrderDate = ""
+            OrderDate = "0"
         }
         orderPlacedDateLabel.text = OrderDate
         orderPlacedDateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
@@ -410,7 +410,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         }
         else
         {
-            QtyNumLabel.text = ""
+            QtyNumLabel.text = "0"
         }
         QtyNumLabel.textColor = UIColor.black
         QtyNumLabel.textAlignment = .left
@@ -431,11 +431,11 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         if(Price.count > 0)
         {
             let PriceNum : Int = Price[0] as! Int
-            PriceNumLabel.text = "\(PriceNum)"
+            PriceNumLabel.text = "\(PriceNum) AED"
         }
         else
         {
-            PriceNumLabel.text = ""
+            PriceNumLabel.text = "0 AED"
         }
         
         PriceNumLabel.textColor = UIColor.black
@@ -460,11 +460,11 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         if(Price.count > 0)
         {
             let SubPriceNum : Int = Price[0] as! Int
-            SubTotalPriceLabel.text = "\(SubPriceNum)"
+            SubTotalPriceLabel.text = "\(SubPriceNum) AED"
         }
         else
         {
-            SubTotalPriceLabel.text = ""
+            SubTotalPriceLabel.text = "0 AED"
         }
         SubTotalPriceLabel.textColor = UIColor.black
         SubTotalPriceLabel.textAlignment = .right
@@ -488,11 +488,11 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(ShippingCharges.count > 0)
         {
-            ShippingPriceLabel.text = ShippingCharges[0] as? String
+            ShippingPriceLabel.text = "0 AED" //ShippingCharges[0] as? String
         }
         else
         {
-            ShippingPriceLabel.text = ""
+            ShippingPriceLabel.text = "0 AED"
         }
         ShippingPriceLabel.textColor = UIColor.black
         ShippingPriceLabel.textAlignment = .right
@@ -516,14 +516,12 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
-            // let TaxNum : Int = Tax[0] as! Int
-           //  TaxPriceLabel.text = "\(TaxNum)"
-            
-            TaxPriceLabel.text = Tax[0] as? String
+           // TaxPriceLabel.text = Tax[0] as? String
+             TaxPriceLabel.text = "0 AED"
         }
         else
         {
-            TaxPriceLabel.text = ""
+            TaxPriceLabel.text = "0 AED"
         }
         TaxPriceLabel.textColor = UIColor.black
         TaxPriceLabel.textAlignment = .right
@@ -547,12 +545,15 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Appoinment.count > 0)
         {
-            let AppointNum : Int = Appoinment[0] as! Int
-            AppointmentPriceLabel.text = "\(AppointNum)"
+            /*
+              let AppointNum : Int = Appoinment[0] as! Int
+              AppointmentPriceLabel.text = "\(AppointNum)"
+            */
+            AppointmentPriceLabel.text = "0 AED"
         }
         else
         {
-            AppointmentPriceLabel.text = ""
+            AppointmentPriceLabel.text = "0 AED"
         }
         AppointmentPriceLabel.textColor = UIColor.black
         AppointmentPriceLabel.textAlignment = .right
@@ -576,12 +577,16 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Total.count > 0)
         {
-            let TotalNum : Int = Total[0] as! Int
-            TotalPriceLabel.text = "\(TotalNum)"
+            /*
+              let TotalNum : Int = Total[0] as! Int
+              TotalPriceLabel.text = "\(TotalNum)"
+            */
+            let SubPriceNum : Int = Price[0] as! Int
+            TotalPriceLabel.text = "\(SubPriceNum) AED"
         }
         else
         {
-            TotalPriceLabel.text = ""
+            TotalPriceLabel.text = "0 AED"
         }
         TotalPriceLabel.textColor = UIColor.black
         TotalPriceLabel.textAlignment = .right
@@ -656,7 +661,7 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
                 orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 orderIdNumLabel.textAlignment = .left
                 orderPlacedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                orderPlacedLabel.text = "Order Placed On :"
+                orderPlacedLabel.text = "Order Placed On  :"
                 orderPlacedLabel.textAlignment = .left
                 orderPlacedDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 orderPlacedDateLabel.textAlignment = .left
@@ -668,12 +673,12 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
                 DressTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 DressTypeLabel.textAlignment = .left
                 QtyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                QtyLabel.text = "Qty : "
+                QtyLabel.text = "Qty    : "
                 QtyLabel.textAlignment = .left
                 QtyNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 QtyNumLabel.textAlignment = .left
                 PriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                PriceLabel.text = "Price : "
+                PriceLabel.text = "Price  : "
                 PriceLabel.textAlignment = .left
                 PriceNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 PriceNumLabel.textAlignment = .left
@@ -792,12 +797,12 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
         {
             orderIdView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             orderIdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            orderIdLabel.text = "ORDER ID : "
+            orderIdLabel.text = "ORDER ID              :"
             orderIdLabel.textAlignment = .left
             orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             orderIdNumLabel.textAlignment = .left
             orderPlacedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            orderPlacedLabel.text = "Order Placed On :"
+            orderPlacedLabel.text = "Order Placed On  :"
             orderPlacedLabel.textAlignment = .left
             orderPlacedDateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             orderPlacedDateLabel.textAlignment = .left
@@ -809,12 +814,12 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
             DressTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             DressTypeLabel.textAlignment = .left
             QtyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            QtyLabel.text = "Qty : "
+            QtyLabel.text = "Qty     : "
             QtyLabel.textAlignment = .left
             QtyNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             QtyNumLabel.textAlignment = .left
             PriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            PriceLabel.text = "Price : "
+            PriceLabel.text = "Price  : "
             PriceLabel.textAlignment = .left
             PriceNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             PriceNumLabel.textAlignment = .left
