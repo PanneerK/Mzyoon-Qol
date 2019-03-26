@@ -430,14 +430,14 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             print("REMOVE TAG", removeTag)
             addReferenceScrolView.contentSize.width = x1
 //            self.addReferenceImage.image = imageArray[imageArray.count - 1]
-            if removeTag != 0
-            {
-                self.addReferenceImage.image = imageArray[removeTag - 1]
-            }
-            else
-            {
-                self.addReferenceImage.image = imageArray[0]
-            }
+//            if removeTag != 0
+//            {
+//                self.addReferenceImage.image = imageArray[removeTag - 1]
+//            }
+//            else
+//            {
+//                self.addReferenceImage.image = imageArray[0]
+//            }
         }
         else
         {
@@ -477,6 +477,15 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     {
         removeTag = self.selectedTag - 200
         imageArray.remove(at: removeTag)
+        
+        if removeTag != 0
+        {
+            self.addReferenceImage.image = imageArray[removeTag - 1]
+        }
+        else
+        {
+            self.addReferenceImage.image = imageArray[0]
+        }
         
         /*for views in addReferenceScrolView.subviews
          {

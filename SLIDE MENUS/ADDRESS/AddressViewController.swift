@@ -389,12 +389,54 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         if addressCount == 0
         {
             let addressImageView = UIImageView()
-            addressImageView.frame = CGRect(x: (2 * x), y: ((view.frame.height - (25 * y)) / 2), width: view.frame.width - (4 * x), height: (25 * y))
+            addressImageView.frame = CGRect(x: (2 * x), y: ((selfScreenContents.frame.height - (25 * y)) / 2), width: selfScreenContents.frame.width - (4 * x), height: (25 * y))
             addressImageView.image = UIImage(named: "locatingImage")
-            view.addSubview(addressImageView)
+            selfScreenContents.addSubview(addressImageView)
+            
+            let locationEmptyText = UILabel()
+            locationEmptyText.frame = CGRect(x: 0, y: addressImageView.frame.maxY, width: selfScreenContents.frame.width, height: (4 * y))
+            locationEmptyText.text = "Add an address so we can get tracking on the delivery!"
+            locationEmptyText.textAlignment = .center
+            locationEmptyText.textColor = UIColor.gray
+            locationEmptyText.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
+            locationEmptyText.font = locationEmptyText.font.withSize((1.5 * x))
+            locationEmptyText.numberOfLines = 2
+            selfScreenContents.addSubview(locationEmptyText)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    locationEmptyText.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    locationEmptyText.text = "Add an address so we can get tracking on the delivery!"
+                    locationEmptyText.numberOfLines = 2
+                }
+                else if language == "ar"
+                {
+                    locationEmptyText.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    locationEmptyText.text = "إضافة عنوان حتى نتمكن من الحصول على تتبع عند التسليم!"
+                    locationEmptyText.numberOfLines = 2
+                }
+            }
+            else
+            {
+                locationEmptyText.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                locationEmptyText.text = "Add an address so we can get tracking on the delivery!"
+                locationEmptyText.numberOfLines = 2
+            }
+            
+            for allViews in addressScrollView.subviews
+            {
+                allViews.removeFromSuperview()
+            }
         }
         else
         {
+            for allViews in selfScreenContents.subviews
+            {
+                allViews.removeFromSuperview()
+            }
+            
             addressScrollView.frame = CGRect(x: x, y: (2 * y), width: view.frame.width - (2 * x), height: view.frame.height - (14 * y))
             addressScrollView.backgroundColor = UIColor.clear
             selfScreenContents.addSubview(addressScrollView)
@@ -493,7 +535,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 addressDeleteButton.addSubview(addressDeleteIcon)
                 
                 let underLine = UILabel()
-                underLine.frame = CGRect(x: x, y: addressEditButton.frame.maxY, width: addressSelectButton.frame.width - (2 * x), height: 1)
+                underLine.frame = CGRect(x: 0, y: addressEditButton.frame.maxY, width: addressSelectButton.frame.width, height: 1)
                 underLine.backgroundColor = UIColor.lightGray
                 addressSelectButton.addSubview(underLine)
                 
@@ -514,8 +556,13 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getNameLabel.font = getNameLabel.font.withSize(15)
                 addressSelectButton.addSubview(getNameLabel)
                 
+                let underLine2 = UILabel()
+                underLine2.frame = CGRect(x: 0, y: getNameLabel.frame.maxY, width: addressSelectButton.frame.width, height: 1)
+                underLine2.backgroundColor = UIColor.lightGray
+                addressSelectButton.addSubview(underLine2)
+                
                 let addressLabel = UILabel()
-                addressLabel.frame = CGRect(x: x, y: nameLabel.frame.maxY + y, width: (7 * x), height: (2 * x))
+                addressLabel.frame = CGRect(x: x, y: underLine2.frame.maxY + y, width: (7 * x), height: (2 * x))
                 addressLabel.text = "Address"
                 addressLabel.textColor = UIColor.black
                 addressLabel.textAlignment = .left
@@ -528,12 +575,12 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 {
                     if addressList.characters.count > 50
                     {
-                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (5 * y))
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: underLine2.frame.maxY + y, width: (18.5 * x), height: (5 * y))
                         getAddressLabel.numberOfLines = 3
                     }
                     else
                     {
-                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: nameLabel.frame.maxY + y, width: (18.5 * x), height: (4 * y))
+                        getAddressLabel.frame = CGRect(x: getNameLabel.frame.minX, y: underLine2.frame.maxY + y, width: (18.5 * x), height: (4 * y))
                         getAddressLabel.numberOfLines = 2
                     }
                 }
@@ -549,8 +596,13 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getAddressLabel.adjustsFontSizeToFitWidth = true
                 addressSelectButton.addSubview(getAddressLabel)
                 
+                let underLine3 = UILabel()
+                underLine3.frame = CGRect(x: 0, y: getAddressLabel.frame.maxY, width: addressSelectButton.frame.width, height: 1)
+                underLine3.backgroundColor = UIColor.lightGray
+                addressSelectButton.addSubview(underLine3)
+                
                 let mobileLabel = UILabel()
-                mobileLabel.frame = CGRect(x: x, y: getAddressLabel.frame.maxY + y, width: (12 * x), height: (2 * x))
+                mobileLabel.frame = CGRect(x: x, y: underLine3.frame.maxY + y, width: (12 * x), height: (2 * x))
                 mobileLabel.text = "Phone Number"
                 mobileLabel.textColor = UIColor.black
                 mobileLabel.textAlignment = .left
@@ -558,13 +610,18 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 addressSelectButton.addSubview(mobileLabel)
                 
                 let getMobileLabel = UILabel()
-                getMobileLabel.frame = CGRect(x: getNameLabel.frame.minX, y: getAddressLabel.frame.maxY + y, width: (18.5 * x), height: (2 * x))
+                getMobileLabel.frame = CGRect(x: getNameLabel.frame.minX, y: underLine3.frame.maxY + y, width: (18.5 * x), height: (2 * x))
                 getMobileLabel.text = PhoneNo[i] as? String
                 getMobileLabel.textColor = UIColor.black
                 getMobileLabel.textAlignment = .left
                 getMobileLabel.font = UIFont(name: "Avenir Next Regular", size: (1.5 * x))
                 getMobileLabel.font = getMobileLabel.font.withSize(15)
                 addressSelectButton.addSubview(getMobileLabel)
+                
+                let verticalLine1 = UILabel()
+                verticalLine1.frame = CGRect(x: mobileLabel.frame.maxX, y: underLine.frame.maxY, width: 1, height: getMobileLabel.frame.maxY - y)
+                verticalLine1.backgroundColor = UIColor.lightGray
+                addressSelectButton.addSubview(verticalLine1)
                 
                 if let defaultString = isDefault[i] as? Int
                 {

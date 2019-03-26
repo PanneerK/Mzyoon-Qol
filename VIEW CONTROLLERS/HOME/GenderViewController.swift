@@ -352,6 +352,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/\(imageName)"
                 let apiurl = URL(string: api)
+                print("GENDER IMAGE API", apiurl)
                 if apiurl != nil
                 {
                     buttonImage.dowloadFromServer(url: apiurl!)
@@ -383,7 +384,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
                 genderButtonLabel.frame = CGRect(x: genderButton.frame.width - (7 * x), y: ((genderButton.frame.height - (2 * y)) / 2), width: (7 * x), height: (2 * y))
             }
             genderButtonLabel.backgroundColor = UIColor.darkGray
-            genderButtonLabel.text = getInputArray[i] as? String
+            genderButtonLabel.text = (getInputArray[i] as? String)?.uppercased()
             genderButtonLabel.textColor = UIColor.white
             genderButtonLabel.textAlignment = .center
             genderButton.addSubview(genderButtonLabel)
@@ -459,33 +460,27 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     
     @objc func genderButtonAction(sender : UIButton)
     {
+        let dressTypeScreen = DressTypeViewController()
+
         if sender.tag == 1
         {
             UserDefaults.standard.set("Male", forKey: "gender")
-            let dressTypeScreen = DressTypeViewController()
             dressTypeScreen.tag = sender.tag
-            self.navigationController?.pushViewController(dressTypeScreen, animated: true)
         }
         else if sender.tag == 2
         {
             UserDefaults.standard.set("Female", forKey: "gender")
-            let dressTypeScreen = DressTypeViewController()
             dressTypeScreen.tag = sender.tag
-            self.navigationController?.pushViewController(dressTypeScreen, animated: true)
         }
         else if sender.tag == 3
         {
             UserDefaults.standard.set("Boy", forKey: "gender")
-            let dressTypeScreen = DressTypeViewController()
             dressTypeScreen.tag = sender.tag
-            self.navigationController?.pushViewController(dressTypeScreen, animated: true)
         }
         else if sender.tag == 4
         {
             UserDefaults.standard.set("Girl", forKey: "gender")
-            let dressTypeScreen = DressTypeViewController()
             dressTypeScreen.tag = sender.tag
-            self.navigationController?.pushViewController(dressTypeScreen, animated: true)
         }
         else
         {
@@ -493,6 +488,10 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(emptyAlert, animated: true, completion: nil)
         }
+        
+        self.navigationController?.pushViewController(dressTypeScreen, animated: true)
+
+        
 //        else if sender.tag == 2
 //        {
 //            UserDefaults.standard.set("women", forKey: "Gender")

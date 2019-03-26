@@ -67,6 +67,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     var orderCustomization = [[String: Int]]()
     var tailorId = [[String: Any]]()
     
+    //ACTIVITY CONTROLLER
+    let spinnerBackView = UIView()
+    let spinner = UIActivityIndicatorView()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -82,6 +86,27 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func spinnerOn()
+    {
+        spinnerBackView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        spinnerBackView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.addSubview(spinnerBackView)
+        
+        self.view.bringSubviewToFront(spinnerBackView)
+        
+        spinner.frame = CGRect(x: ((activeView.frame.width - (5 * x)) / 2), y: ((activeView.frame.height - (5 * y)) / 2), width: (5 * x), height: (5 * y))
+        spinner.color = UIColor.white
+        spinner.style = .whiteLarge
+        spinner.startAnimating()
+        spinnerBackView.addSubview(spinner)
+    }
+    
+    func spinnerOff()
+    {
+        spinnerBackView.removeFromSuperview()
+        spinner.stopAnimating()
     }
     
     func changeViewToEnglishInSelf()
@@ -198,8 +223,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         let dressTypeArray = ["Gender", "Dress Type", "Dress Sub Type"]
         let dressTypeImageArray = ["Gender-3", "Dress_types", "Dress_subtypes"]
-        var getDressTypeArray = ["Men"]
+        var getDressTypeArray = [String]()
         let dressTypeArabicArray = ["جنس", "نوع الفستان", "اللباس النوع الفرعي"]
+        
+        if let gender = UserDefaults.standard.value(forKey: "gender") as? String
+        {
+            getDressTypeArray.append(gender)
+        }
         
         if let dressType = UserDefaults.standard.value(forKey: "dressType") as? String
         {
@@ -238,8 +268,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
+            let lineLabel = UILabel()
+            lineLabel.frame = CGRect(x: dressTypeLabels.frame.maxX, y: ((dressSubViews.frame.height - 1) / 2), width: (x / 3), height: 1)
+            lineLabel.backgroundColor = UIColor.white
+            dressSubViews.addSubview(lineLabel)
+            
             let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
+            getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             getDressTypeLabels.text = getDressTypeArray[i]
             getDressTypeLabels.textAlignment = .left
@@ -256,7 +291,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 if language == "en"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    dressTypeLabels.text = dressTypeArray[i] + "-"
+                    dressTypeLabels.text = dressTypeArray[i]
                     dressTypeLabels.textAlignment = .left
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -266,7 +301,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 else if language == "ar"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    dressTypeLabels.text = dressTypeArabicArray[i] + "-"
+                    dressTypeLabels.text = dressTypeArabicArray[i]
                     dressTypeLabels.textAlignment = .right
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -277,7 +312,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             else
             {
                 dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                dressTypeLabels.text = dressTypeArray[i] + "-"
+                dressTypeLabels.text = dressTypeArray[i]
                 dressTypeLabels.textAlignment = .left
                 
                 getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -369,8 +404,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
+            let lineLabel = UILabel()
+            lineLabel.frame = CGRect(x: dressTypeLabels.frame.maxX, y: ((dressSubViews.frame.height - 1) / 2), width: (x / 3), height: 1)
+            lineLabel.backgroundColor = UIColor.white
+            dressSubViews.addSubview(lineLabel)
+            
             let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
+            getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             getDressTypeLabels.text = customvalues[i]
             getDressTypeLabels.textColor = UIColor.white
@@ -399,7 +439,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 if language == "en"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    dressTypeLabels.text = "\(customKeys[i])" + "-"
+                    dressTypeLabels.text = "\(customKeys[i])"
                     dressTypeLabels.textAlignment = .left
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -409,7 +449,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 else if language == "ar"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    dressTypeLabels.text = "\(customKeys[i])" + "-"
+                    dressTypeLabels.text = "\(customKeys[i])"
                     dressTypeLabels.textAlignment = .right
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -420,7 +460,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             else
             {
                 dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                dressTypeLabels.text = "\(customKeys[i])" + "-"
+                dressTypeLabels.text = "\(customKeys[i])"
                 dressTypeLabels.textAlignment = .left
                 
                 getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -476,8 +516,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
+            let lineLabel = UILabel()
+            lineLabel.frame = CGRect(x: dressTypeLabels.frame.maxX, y: ((dressSubViews.frame.height - 1) / 2), width: (x / 3), height: 1)
+            lineLabel.backgroundColor = UIColor.white
+            dressSubViews.addSubview(lineLabel)
+            
             let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX, y: (y / 2), width: (12 * x), height: (3 * y))
+            getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (12 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             
             if let type = UserDefaults.standard.value(forKey: "serviceType") as? Int
@@ -523,7 +568,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 if language == "en"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    dressTypeLabels.text = premiumArray[i] + "-"
+                    dressTypeLabels.text = premiumArray[i]
                     dressTypeLabels.textAlignment = .left
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -532,7 +577,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 else if language == "ar"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    dressTypeLabels.text = premiumArabicArray[i] + "-"
+                    dressTypeLabels.text = premiumArabicArray[i]
                     dressTypeLabels.textAlignment = .right
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -542,7 +587,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             else
             {
                 dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                dressTypeLabels.text = premiumArray[i] + "-"
+                dressTypeLabels.text = premiumArray[i]
                 dressTypeLabels.textAlignment = .left
                 
                 getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -610,8 +655,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
+            let lineLabel = UILabel()
+            lineLabel.frame = CGRect(x: dressTypeLabels.frame.maxX, y: ((dressSubViews.frame.height - 1) / 2), width: (x / 3), height: 1)
+            lineLabel.backgroundColor = UIColor.white
+            dressSubViews.addSubview(lineLabel)
+            
             let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (14 * x), height: (3 * y))
+            getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (14 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             getDressTypeLabels.text = selectedTailors[i]
             getDressTypeLabels.textColor = UIColor.white
@@ -628,7 +678,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 if language == "en"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    dressTypeLabels.text = "Tailor_\(i)" + "-"
+                    dressTypeLabels.text = "Tailor_\(i)"
                     dressTypeLabels.textAlignment = .left
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -638,7 +688,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 else if language == "ar"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    dressTypeLabels.text = "خياط_\(i)" + "-"
+                    dressTypeLabels.text = "خياط_\(i)"
                     dressTypeLabels.textAlignment = .right
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -649,7 +699,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             else
             {
                 dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                dressTypeLabels.text = "Tailor_\(i)" + "-"
+                dressTypeLabels.text = "Tailor_\(i)"
                 dressTypeLabels.textAlignment = .left
                 
                 getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -821,8 +871,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
             dressSubViews.addSubview(dressTypeLabels)
             
+            let lineLabel = UILabel()
+            lineLabel.frame = CGRect(x: dressTypeLabels.frame.maxX, y: ((dressSubViews.frame.height - 1) / 2), width: (x / 3), height: 1)
+            lineLabel.backgroundColor = UIColor.white
+            dressSubViews.addSubview(lineLabel)
+            
             let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: dressTypeLabels.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
+            getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             if let custom = getCustomizationOfAll[i] as? String
             {
@@ -846,7 +901,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 if language == "en"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    dressTypeLabels.text = customization1Array[i] + "-"
+                    dressTypeLabels.text = customization1Array[i]
                     dressTypeLabels.textAlignment = .left
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -856,7 +911,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 else if language == "ar"
                 {
                     dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    dressTypeLabels.text = customizationArabicArray[i] + "-"
+                    dressTypeLabels.text = customizationArabicArray[i]
                     dressTypeLabels.textAlignment = .right
                     
                     getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -867,7 +922,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             else
             {
                 dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                dressTypeLabels.text = customization1Array[i] + "-"
+                dressTypeLabels.text = customization1Array[i]
                 dressTypeLabels.textAlignment = .left
                 
                 getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -1044,6 +1099,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                     }
                 }
                 activityContents()
+                spinnerOn()
 
                 self.serviceCall.API_MaterialImageUpload(materialImages: getImageArray, delegate: self)
             }
@@ -1062,6 +1118,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                         }
                         
                         activityContents()
+                        spinnerOn()
 
                         serviceCall.API_ReferenceImageUpload(referenceImages: getImageArray, delegate: self)
                     }
@@ -1078,6 +1135,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             //                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
                             
                             activityContents()
+                            spinnerOn()
                             
                             self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
                         }
@@ -1089,6 +1147,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             //                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
                             
                             activityContents()
+                            spinnerOn()
                             
                              self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
                         }
@@ -1271,6 +1330,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         let ResponseMsg = insertOrder.object(forKey: "ResponseMsg") as! String
      
         stopActivity()
+        spinnerOff()
         
         if ResponseMsg == "Success"
         {

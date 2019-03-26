@@ -817,10 +817,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 if index == 0
                 {
                     let headLabel = UILabel()
-                    headLabel.frame = CGRect(x: (10.8 * x), y: (y / 2), width: (10.8 * x), height: (2 * y))
+                    headLabel.frame = CGRect(x: (10.8 * x), y: (y / 2), width: subView.frame.width - (19.8 * x), height: (2 * y))
                     headLabel.text = "Head"
                     headLabel.textColor = UIColor.black
-                    headLabel.textAlignment = .center
+                    headLabel.textAlignment = .right
                     headLabel.font = headLabel.font.withSize(15)
                     headLabel.tag = ((1 * 1) + 300)
                     subView.addSubview(headLabel)
@@ -848,10 +848,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHeadLabel)
                     
                     let neckLabel = UILabel()
-                    neckLabel.frame = CGRect(x: (11.8 * x), y: (6 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
+                    neckLabel.frame = CGRect(x: (11.8 * x), y: (6 * y), width: subView.frame.width - (20.8 * x), height: (2 * y))
                     neckLabel.text = "Neck"
                     neckLabel.textColor = UIColor.black
-                    neckLabel.textAlignment = .center
+                    neckLabel.textAlignment = .right
                     neckLabel.font = headLabel.font.withSize(15)
                     neckLabel.tag = ((2 * 1) + 300)
                     subView.addSubview(neckLabel)
@@ -872,10 +872,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getNeckLabel)
                     
                     let chestLabel = UILabel()
-                    chestLabel.frame = CGRect(x: (13.2 * x), y: (10.9 * y), width: subView.frame.width - (19.2 * x), height: (2 * y))
+                    chestLabel.frame = CGRect(x: (13.2 * x), y: (10.9 * y), width: subView.frame.width - (22.2 * x), height: (2 * y))
                     chestLabel.text = "Chest"
                     chestLabel.textColor = UIColor.black
-                    chestLabel.textAlignment = .center
+                    chestLabel.textAlignment = .right
                     chestLabel.font = headLabel.font.withSize(15)
                     chestLabel.tag = ((3 * 1) + 300)
                     subView.addSubview(chestLabel)
@@ -896,10 +896,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getChestLabel)
                     
                     let waistLabel = UILabel()
-                    waistLabel.frame = CGRect(x: (12.5 * x), y: (14.5 * y), width: subView.frame.width - (18.5 * x), height: (2 * y))
+                    waistLabel.frame = CGRect(x: (12.5 * x), y: (14.5 * y), width: subView.frame.width - (21.5 * x), height: (2 * y))
                     waistLabel.text = "Waist"
                     waistLabel.textColor = UIColor.black
-                    waistLabel.textAlignment = .center
+                    waistLabel.textAlignment = .right
                     waistLabel.font = headLabel.font.withSize(15)
                     waistLabel.tag = ((4 * 1) + 300)
                     subView.addSubview(waistLabel)
@@ -920,10 +920,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getWaistLabel)
                     
                     let thighLabel = UILabel()
-                    thighLabel.frame = CGRect(x: (13 * x), y: (25.6 * y), width: subView.frame.width - (19 * x), height: (2 * y))
+                    thighLabel.frame = CGRect(x: (13 * x), y: (25.6 * y), width: subView.frame.width - (22 * x), height: (2 * y))
                     thighLabel.text = "Thigh"
                     thighLabel.textColor = UIColor.black
-                    thighLabel.textAlignment = .center
+                    thighLabel.textAlignment = .right
                     thighLabel.font = headLabel.font.withSize(15)
                     thighLabel.tag = ((5 * 1) + 300)
                     subView.addSubview(thighLabel)
@@ -944,10 +944,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getThighLabel)
                     
                     let kneeLabel = UILabel()
-                    kneeLabel.frame = CGRect(x: (11.8 * x), y: (30.6 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
+                    kneeLabel.frame = CGRect(x: (11.8 * x), y: (30.6 * y), width: subView.frame.width - (20.8 * x), height: (2 * y))
                     kneeLabel.text = "Knee"
                     kneeLabel.textColor = UIColor.black
-                    kneeLabel.textAlignment = .center
+                    kneeLabel.textAlignment = .right
                     kneeLabel.font = headLabel.font.withSize(15)
                     kneeLabel.tag = ((6 * 1) + 300)
                     subView.addSubview(kneeLabel)
@@ -968,10 +968,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getKneeLabel)
                     
                     let ankleLabel = UILabel()
-                    ankleLabel.frame = CGRect(x: (11.2 * x), y: (39.9 * y), width: subView.frame.width - (17.2 * x), height: (2 * y))
+                    ankleLabel.frame = CGRect(x: (11.2 * x), y: (39.9 * y), width: subView.frame.width - (20.2 * x), height: (2 * y))
                     ankleLabel.text = "Ankle"
                     ankleLabel.textColor = UIColor.black
-                    ankleLabel.textAlignment = .center
+                    ankleLabel.textAlignment = .right
                     ankleLabel.font = headLabel.font.withSize(15)
                     ankleLabel.tag = ((7 * 1) + 300)
                     subView.addSubview(ankleLabel)
@@ -994,10 +994,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 1
                 {
                     let totalheightLabel = UILabel()
-                    totalheightLabel.frame = CGRect(x: x, y: (14.5 * y), width: subView.frame.width - (7 * x), height: (2 * y))
+                    totalheightLabel.frame = CGRect(x: x, y: (14.5 * y), width: subView.frame.width - (10 * x), height: (2 * y))
                     totalheightLabel.text = "Height"
                     totalheightLabel.textColor = UIColor.black
-                    totalheightLabel.textAlignment = .center
+                    totalheightLabel.textAlignment = .right
                     totalheightLabel.font = totalheightLabel.font.withSize(15)
                     totalheightLabel.tag = ((8 * 1) + 300)
                     subView.addSubview(totalheightLabel)
@@ -1019,10 +1019,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(gettotalheightLabel)
                     
                     let hipHeightLabel = UILabel()
-                    hipHeightLabel.frame = CGRect(x: (4.3 * x), y: (39.5 * y), width: subView.frame.width - (10.3 * x), height: (2 * y))
+                    hipHeightLabel.frame = CGRect(x: (4.3 * x), y: (39.5 * y), width: subView.frame.width - (13.3 * x), height: (2 * y))
                     hipHeightLabel.text = "Shorts"
                     hipHeightLabel.textColor = UIColor.black
-                    hipHeightLabel.textAlignment = .center
+                    hipHeightLabel.textAlignment = .right
                     hipHeightLabel.font = hipHeightLabel.font.withSize(15)
                     hipHeightLabel.tag = ((9 * 1) + 300)
                     subView.addSubview(hipHeightLabel)
@@ -1043,10 +1043,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHipheightLabel)
                     
                     let bottomheightLabel = UILabel()
-                    bottomheightLabel.frame = CGRect(x: (8.2 * x), y: (34.5 * y), width: subView.frame.width - (14.2 * x), height: (2 * y))
+                    bottomheightLabel.frame = CGRect(x: (8.2 * x), y: (34.5 * y), width: subView.frame.width - (17.2 * x), height: (2 * y))
                     bottomheightLabel.text = "Out Seam"
                     bottomheightLabel.textColor = UIColor.black
-                    bottomheightLabel.textAlignment = .center
+                    bottomheightLabel.textAlignment = .right
                     bottomheightLabel.font = totalheightLabel.font.withSize(15)
                     bottomheightLabel.tag = ((10 * 1) + 300)
                     subView.addSubview(bottomheightLabel)
@@ -1067,10 +1067,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getBottomheightLabel)
                     
                     let kneeheightLabel = UILabel()
-                    kneeheightLabel.frame = CGRect(x: (11.6 * x), y: (27.3 * y), width: subView.frame.width - (17.6 * x), height: (2 * y))
+                    kneeheightLabel.frame = CGRect(x: (11.6 * x), y: (27.3 * y), width: subView.frame.width - (20.6 * x), height: (2 * y))
                     kneeheightLabel.text = "Inseam"
                     kneeheightLabel.textColor = UIColor.black
-                    kneeheightLabel.textAlignment = .center
+                    kneeheightLabel.textAlignment = .right
                     kneeheightLabel.font = totalheightLabel.font.withSize(15)
                     kneeheightLabel.tag = ((11 * 1) + 300)
                     subView.addSubview(kneeheightLabel)
@@ -1093,10 +1093,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 2
                 {
                     let shoulderLabel = UILabel()
-                    shoulderLabel.frame = CGRect(x: (13.6 * x), y: (7 * y), width: subView.frame.width - (19.6 * x), height: (2 * y))
+                    shoulderLabel.frame = CGRect(x: (13.6 * x), y: (7 * y), width: subView.frame.width - (22.6 * x), height: (2 * y))
                     shoulderLabel.text = "Shoulder"
                     shoulderLabel.textColor = UIColor.black
-                    shoulderLabel.textAlignment = .center
+                    shoulderLabel.textAlignment = .right
                     shoulderLabel.font = shoulderLabel.font.withSize(15)
                     shoulderLabel.tag = ((12 * 1) + 300)
                     subView.addSubview(shoulderLabel)
@@ -1117,10 +1117,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getShoulderLabel)
                     
                     let sleeveLabel = UILabel()
-                    sleeveLabel.frame = CGRect(x: (14.5 * x), y: (11 * y), width: subView.frame.width - (20.5 * x), height: (2 * y))
+                    sleeveLabel.frame = CGRect(x: (14.5 * x), y: (11 * y), width: subView.frame.width - (23.5 * x), height: (2 * y))
                     sleeveLabel.text = "HalfSleeve"
                     sleeveLabel.textColor = UIColor.black
-                    sleeveLabel.textAlignment = .center
+                    sleeveLabel.textAlignment = .right
                     sleeveLabel.font = sleeveLabel.font.withSize(15)
                     sleeveLabel.tag = ((13 * 1) + 300)
                     subView.addSubview(sleeveLabel)
@@ -1141,10 +1141,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getSleeveLabel)
                     
                     let bicepLabel = UILabel()
-                    bicepLabel.frame = CGRect(x: (15.7 * x), y: (14.1 * y), width: subView.frame.width - (21.7 * x), height: (2 * y))
+                    bicepLabel.frame = CGRect(x: (15.7 * x), y: (14.1 * y), width: subView.frame.width - (14.7 * x), height: (2 * y))
                     bicepLabel.text = "Bicep"
                     bicepLabel.textColor = UIColor.black
-                    bicepLabel.textAlignment = .center
+                    bicepLabel.textAlignment = .right
                     bicepLabel.font = bicepLabel.font.withSize(15)
                     bicepLabel.tag = ((14 * 1) + 300)
                     subView.addSubview(bicepLabel)
@@ -1165,10 +1165,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getBicepLabel)
                     
                     let hipLabel = UILabel()
-                    hipLabel.frame = CGRect(x: (12.4 * x), y: (16.8 * y), width: subView.frame.width - (18.4 * x), height: (2 * y))
+                    hipLabel.frame = CGRect(x: (12.4 * x), y: (16.8 * y), width: subView.frame.width - (21.4 * x), height: (2 * y))
                     hipLabel.text = "Hipbone"
                     hipLabel.textColor = UIColor.black
-                    hipLabel.textAlignment = .center
+                    hipLabel.textAlignment = .right
                     hipLabel.font = hipLabel.font.withSize(15)
                     hipLabel.tag = ((15 * 1) + 300)
                     subView.addSubview(hipLabel)
@@ -1189,10 +1189,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHipLabel)
                     
                     let backLabel = UILabel()
-                    backLabel.frame = CGRect(x: (12.9 * x), y: (20.5 * y), width: subView.frame.width - (18.9 * x), height: (2 * y))
+                    backLabel.frame = CGRect(x: (12.9 * x), y: (20.5 * y), width: subView.frame.width - (21.9 * x), height: (2 * y))
                     backLabel.text = "Bottom"
                     backLabel.textColor = UIColor.black
-                    backLabel.textAlignment = .center
+                    backLabel.textAlignment = .right
                     backLabel.font = backLabel.font.withSize(15)
                     backLabel.tag = ((16 * 1) + 300)
                     subView.addSubview(backLabel)
@@ -1215,10 +1215,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 3
                 {
                     let heightLabel = UILabel()
-                    heightLabel.frame = CGRect(x: (9.6 * x), y: (10.6 * y), width: subView.frame.width - (15.6 * x), height: (2 * y))
+                    heightLabel.frame = CGRect(x: (9.6 * x), y: (10.6 * y), width: subView.frame.width - (18.6 * x), height: (2 * y))
                     heightLabel.text = "Top Length"
                     heightLabel.textColor = UIColor.black
-                    heightLabel.textAlignment = .center
+                    heightLabel.textAlignment = .right
                     heightLabel.font = heightLabel.font.withSize(15)
                     heightLabel.tag = ((17 * 1) + 300)
                     subView.addSubview(heightLabel)
@@ -1239,10 +1239,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHeightLabel)
                     
                     let fullSleeveLabel = UILabel()
-                    fullSleeveLabel.frame = CGRect(x: (14.6 * x), y: (15.1 * y), width: subView.frame.width - (20.6 * x), height: (2 * y))
+                    fullSleeveLabel.frame = CGRect(x: (14.6 * x), y: (15.1 * y), width: subView.frame.width - (13.6 * x), height: (2 * y))
                     fullSleeveLabel.text = "Sleeve"
                     fullSleeveLabel.textColor = UIColor.black
-                    fullSleeveLabel.textAlignment = .center
+                    fullSleeveLabel.textAlignment = .right
                     fullSleeveLabel.font = heightLabel.font.withSize(15)
                     fullSleeveLabel.tag = ((18 * 1) + 300)
                     subView.addSubview(fullSleeveLabel)
@@ -1263,10 +1263,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getFullSleeveLabel)
                     
                     let handKneeLabel = UILabel()
-                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (19.9 * y), width: subView.frame.width - (21.5 * x), height: (2 * y))
+                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (19.9 * y), width: subView.frame.width - (14.5 * x), height: (2 * y))
                     handKneeLabel.text = "Wrist"
                     handKneeLabel.textColor = UIColor.black
-                    handKneeLabel.textAlignment = .center
+                    handKneeLabel.textAlignment = .right
                     handKneeLabel.font = handKneeLabel.font.withSize(15)
                     handKneeLabel.tag = ((19 * 1) + 300)
                     subView.addSubview(handKneeLabel)
@@ -1307,10 +1307,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 if index == 0
                 {
                     let headLabel = UILabel()
-                    headLabel.frame = CGRect(x: (10.8 * x), y: y, width: (10.8 * x), height: (2 * y))
+                    headLabel.frame = CGRect(x: (10.8 * x), y: y, width: subView.frame.width - (19.8 * x), height: (2 * y))
                     headLabel.text = "Head"
                     headLabel.textColor = UIColor.black
-                    headLabel.textAlignment = .center
+                    headLabel.textAlignment = .right
                     headLabel.font = headLabel.font.withSize(15)
                     headLabel.tag = ((20 * 1) + 300)
                     subView.addSubview(headLabel)
@@ -1338,10 +1338,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHeadLabel)
                     
                     let overBustLabel = UILabel()
-                    overBustLabel.frame = CGRect(x: (11.8 * x), y: (10.1 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
+                    overBustLabel.frame = CGRect(x: (11.8 * x), y: (10.1 * y), width: subView.frame.width - (20.8 * x), height: (2 * y))
                     overBustLabel.text = "OverBust"
                     overBustLabel.textColor = UIColor.black
-                    overBustLabel.textAlignment = .center
+                    overBustLabel.textAlignment = .right
                     overBustLabel.font = overBustLabel.font.withSize(15)
                     overBustLabel.tag = ((21 * 1) + 300)
                     subView.addSubview(overBustLabel)
@@ -1363,10 +1363,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getOverBustLabel)
                     
                     let underBustLabel = UILabel()
-                    underBustLabel.frame = CGRect(x: (11.8 * x), y: (13.4 * y), width: subView.frame.width - (18.2 * x), height: (2 * y))
+                    underBustLabel.frame = CGRect(x: (11.8 * x), y: (13.4 * y), width: subView.frame.width - (20.2 * x), height: (2 * y))
                     underBustLabel.text = "Underbust"
                     underBustLabel.textColor = UIColor.black
-                    underBustLabel.textAlignment = .center
+                    underBustLabel.textAlignment = .right
                     underBustLabel.font = underBustLabel.font.withSize(15)
                     underBustLabel.tag = ((22 * 1) + 300)
                     subView.addSubview(underBustLabel)
@@ -1388,10 +1388,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getUnderBustLabel)
                     
                     let hipBoneLabel = UILabel()
-                    hipBoneLabel.frame = CGRect(x: (12 * x), y: (16.4 * y), width: subView.frame.width - (18 * x), height: (2 * y))
+                    hipBoneLabel.frame = CGRect(x: (12 * x), y: (16.4 * y), width: subView.frame.width - (21 * x), height: (2 * y))
                     hipBoneLabel.text = "Hip Bone"
                     hipBoneLabel.textColor = UIColor.black
-                    hipBoneLabel.textAlignment = .center
+                    hipBoneLabel.textAlignment = .right
                     hipBoneLabel.font = hipBoneLabel.font.withSize(15)
                     hipBoneLabel.tag = ((23 * 1) + 300)
                     subView.addSubview(hipBoneLabel)
@@ -1413,10 +1413,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHipBoneButton)
                     
                     let thighLabel = UILabel()
-                    thighLabel.frame = CGRect(x: (13 * x), y: (23.6 * y), width: subView.frame.width - (19 * x), height: (2 * y))
+                    thighLabel.frame = CGRect(x: (13 * x), y: (23.6 * y), width: subView.frame.width - (22 * x), height: (2 * y))
                     thighLabel.text = "Thigh"
                     thighLabel.textColor = UIColor.black
-                    thighLabel.textAlignment = .center
+                    thighLabel.textAlignment = .right
                     thighLabel.font = headLabel.font.withSize(15)
                     thighLabel.tag = ((24 * 1) + 300)
                     subView.addSubview(thighLabel)
@@ -1437,10 +1437,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getThighLabel)
                     
                     let kneeLabel = UILabel()
-                    kneeLabel.frame = CGRect(x: (11.8 * x), y: (29.7 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
+                    kneeLabel.frame = CGRect(x: (11.8 * x), y: (29.7 * y), width: subView.frame.width - (20.8 * x), height: (2 * y))
                     kneeLabel.text = "Knee"
                     kneeLabel.textColor = UIColor.black
-                    kneeLabel.textAlignment = .center
+                    kneeLabel.textAlignment = .right
                     kneeLabel.font = headLabel.font.withSize(15)
                     kneeLabel.tag = ((25 * 1) + 300)
                     subView.addSubview(kneeLabel)
@@ -1461,10 +1461,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getKneeLabel)
                     
                     let calfLabel = UILabel()
-                    calfLabel.frame = CGRect(x: (12 * x), y: (33.6 * y), width: subView.frame.width - (18 * x), height: (2 * y))
+                    calfLabel.frame = CGRect(x: (12 * x), y: (33.6 * y), width: subView.frame.width - (21 * x), height: (2 * y))
                     calfLabel.text = "Calf"
                     calfLabel.textColor = UIColor.black
-                    calfLabel.textAlignment = .center
+                    calfLabel.textAlignment = .right
                     calfLabel.font = headLabel.font.withSize(15)
                     calfLabel.tag = ((26 * 1) + 300)
                     subView.addSubview(calfLabel)
@@ -1486,10 +1486,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getCalfLabel)
                     
                     let ankleLabel = UILabel()
-                    ankleLabel.frame = CGRect(x: (10.7 * x), y: (39 * y), width: subView.frame.width - (16.7 * x), height: (2 * y))
+                    ankleLabel.frame = CGRect(x: (10.7 * x), y: (39 * y), width: subView.frame.width - (19.7 * x), height: (2 * y))
                     ankleLabel.text = "Ankle"
                     ankleLabel.textColor = UIColor.black
-                    ankleLabel.textAlignment = .center
+                    ankleLabel.textAlignment = .right
                     ankleLabel.font = headLabel.font.withSize(15)
                     ankleLabel.tag = ((27 * 1) + 300)
                     subView.addSubview(ankleLabel)
@@ -1512,10 +1512,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 1
                 {
                     let neckLabel = UILabel()
-                    neckLabel.frame = CGRect(x: (10.3 * x), y: (6.3 * y), width: subView.frame.width - (16.3 * x), height: (2 * y))
+                    neckLabel.frame = CGRect(x: (10.3 * x), y: (6.3 * y), width: subView.frame.width - (19.3 * x), height: (2 * y))
                     neckLabel.text = "Neck"
                     neckLabel.textColor = UIColor.black
-                    neckLabel.textAlignment = .center
+                    neckLabel.textAlignment = .right
                     neckLabel.font = neckLabel.font.withSize(15)
                     neckLabel.tag = ((28 * 1) + 300)
                     subView.addSubview(neckLabel)
@@ -1536,10 +1536,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getNeckLabel)
                     
                     let bustLabel = UILabel()
-                    bustLabel.frame = CGRect(x: (12.4 * x), y: (11.2 * y), width: subView.frame.width - (18.4 * x), height: (2 * y))
+                    bustLabel.frame = CGRect(x: (12.4 * x), y: (11.2 * y), width: subView.frame.width - (21.4 * x), height: (2 * y))
                     bustLabel.text = "Bust"
                     bustLabel.textColor = UIColor.black
-                    bustLabel.textAlignment = .center
+                    bustLabel.textAlignment = .right
                     bustLabel.font = bustLabel.font.withSize(15)
                     bustLabel.tag = ((29 * 1) + 300)
                     subView.addSubview(bustLabel)
@@ -1561,10 +1561,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getBustLabel)
                     
                     let waistLabel = UILabel()
-                    waistLabel.frame = CGRect(x: (11.5 * x), y: (14.2 * y), width: subView.frame.width - (17.5 * x), height: (2 * y))
+                    waistLabel.frame = CGRect(x: (11.5 * x), y: (14.2 * y), width: subView.frame.width - (20.5 * x), height: (2 * y))
                     waistLabel.text = "Waist"
                     waistLabel.textColor = UIColor.black
-                    waistLabel.textAlignment = .center
+                    waistLabel.textAlignment = .right
                     waistLabel.font = waistLabel.font.withSize(15)
                     waistLabel.tag = ((30 * 1) + 300)
                     subView.addSubview(waistLabel)
@@ -1585,10 +1585,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getWaistLabel)
                     
                     let fullHipLabel = UILabel()
-                    fullHipLabel.frame = CGRect(x: (13.2 * x), y: (20.2 * y), width: subView.frame.width - (19.2 * x), height: (2 * y))
+                    fullHipLabel.frame = CGRect(x: (13.2 * x), y: (20.2 * y), width: subView.frame.width - (22.2 * x), height: (2 * y))
                     fullHipLabel.text = "Full Hip"
                     fullHipLabel.textColor = UIColor.black
-                    fullHipLabel.textAlignment = .center
+                    fullHipLabel.textAlignment = .right
                     fullHipLabel.font = fullHipLabel.font.withSize(15)
                     fullHipLabel.tag = ((31 * 1) + 300)
                     subView.addSubview(fullHipLabel)
@@ -1612,10 +1612,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 2
                 {
                     let totalheightLabel = UILabel()
-                    totalheightLabel.frame = CGRect(x: 0, y: y, width: subView.frame.width - (6 * x), height: (2 * y))
+                    totalheightLabel.frame = CGRect(x: 0, y: y, width: subView.frame.width - (9 * x), height: (2 * y))
                     totalheightLabel.text = "Over all height"
                     totalheightLabel.textColor = UIColor.black
-                    totalheightLabel.textAlignment = .center
+                    totalheightLabel.textAlignment = .right
                     totalheightLabel.font = totalheightLabel.font.withSize(15)
                     totalheightLabel.tag = ((32 * 1) + 300)
                     subView.addSubview(totalheightLabel)
@@ -1636,10 +1636,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(gettotalheightLabel)
                     
                     let stwHeightLabel = UILabel()
-                    stwHeightLabel.frame = CGRect(x: (11.3 * x), y: (7 * y), width: subView.frame.width - (17.3 * x), height: (2 * y))
+                    stwHeightLabel.frame = CGRect(x: (11.3 * x), y: (7 * y), width: subView.frame.width - (20.3 * x), height: (2 * y))
                     stwHeightLabel.text = "STW"
                     stwHeightLabel.textColor = UIColor.black
-                    stwHeightLabel.textAlignment = .center
+                    stwHeightLabel.textAlignment = .right
                     stwHeightLabel.font = stwHeightLabel.font.withSize(15)
                     stwHeightLabel.tag = ((33 * 1) + 300)
                     subView.addSubview(stwHeightLabel)
@@ -1661,10 +1661,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getstwHeightLabel)
                     
                     let nltcHeightLabel = UILabel()
-                    nltcHeightLabel.frame = CGRect(x: (7.5 * x), y: (9.6 * y), width: subView.frame.width - (13.5 * x), height: (2 * y))
+                    nltcHeightLabel.frame = CGRect(x: (7.5 * x), y: (9.6 * y), width: subView.frame.width - (16.5 * x), height: (2 * y))
                     nltcHeightLabel.text = "NLTC"
                     nltcHeightLabel.textColor = UIColor.black
-                    nltcHeightLabel.textAlignment = .center
+                    nltcHeightLabel.textAlignment = .right
                     nltcHeightLabel.font = totalheightLabel.font.withSize(15)
                     nltcHeightLabel.tag = ((34 * 1) + 300)
                     subView.addSubview(nltcHeightLabel)
@@ -1686,10 +1686,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getnltcHeightLabel)
                     
                     let nltbHeightLabel = UILabel()
-                    nltbHeightLabel.frame = CGRect(x: (8.2 * x), y: (12.2 * y), width: subView.frame.width - (14.2 * x), height: (2 * y))
+                    nltbHeightLabel.frame = CGRect(x: (8.2 * x), y: (12.2 * y), width: subView.frame.width - (17.2 * x), height: (2 * y))
                     nltbHeightLabel.text = "NLTB"
                     nltbHeightLabel.textColor = UIColor.black
-                    nltbHeightLabel.textAlignment = .center
+                    nltbHeightLabel.textAlignment = .right
                     nltbHeightLabel.font = totalheightLabel.font.withSize(15)
                     nltbHeightLabel.tag = ((35 * 1) + 300)
                     subView.addSubview(nltbHeightLabel)
@@ -1711,10 +1711,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getnltbHeightLabel)
                     
                     let sthbHeightLabel = UILabel()
-                    sthbHeightLabel.frame = CGRect(x: (10 * x), y: (14.5 * y), width: subView.frame.width - (16 * x), height: (2 * y))
+                    sthbHeightLabel.frame = CGRect(x: (10 * x), y: (14.5 * y), width: subView.frame.width - (19 * x), height: (2 * y))
                     sthbHeightLabel.text = "STHB"
                     sthbHeightLabel.textColor = UIColor.black
-                    sthbHeightLabel.textAlignment = .center
+                    sthbHeightLabel.textAlignment = .right
                     sthbHeightLabel.font = totalheightLabel.font.withSize(15)
                     sthbHeightLabel.tag = ((36 * 1) + 300)
                     subView.addSubview(sthbHeightLabel)
@@ -1736,10 +1736,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getsthbHeightLabel)
                     
                     let wthbHeightLabel = UILabel()
-                    wthbHeightLabel.frame = CGRect(x: (6 * x), y: (17.2 * y), width: subView.frame.width - (12 * x), height: (2 * y))
+                    wthbHeightLabel.frame = CGRect(x: (6 * x), y: (17.2 * y), width: subView.frame.width - (15 * x), height: (2 * y))
                     wthbHeightLabel.text = "WTHB"
                     wthbHeightLabel.textColor = UIColor.black
-                    wthbHeightLabel.textAlignment = .center
+                    wthbHeightLabel.textAlignment = .right
                     wthbHeightLabel.font = wthbHeightLabel.font.withSize(15)
                     wthbHeightLabel.tag = ((37 * 1) + 300)
                     subView.addSubview(wthbHeightLabel)
@@ -1761,10 +1761,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getwthbHeightLabel)
                     
                     let hthheightLabel = UILabel()
-                    hthheightLabel.frame = CGRect(x: (10.7 * x), y: (26.3 * y), width: subView.frame.width - (16.7 * x), height: (2 * y))
+                    hthheightLabel.frame = CGRect(x: (10.7 * x), y: (26.3 * y), width: subView.frame.width - (19.7 * x), height: (2 * y))
                     hthheightLabel.text = "HTH"
                     hthheightLabel.textColor = UIColor.black
-                    hthheightLabel.textAlignment = .center
+                    hthheightLabel.textAlignment = .right
                     hthheightLabel.font = hthheightLabel.font.withSize(15)
                     hthheightLabel.tag = ((38 * 1) + 300)
                     subView.addSubview(hthheightLabel)
@@ -1786,10 +1786,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(geththHeightLabel)
                     
                     let inseamheightLabel = UILabel()
-                    inseamheightLabel.frame = CGRect(x: (8.1 * x), y: (32.5 * y), width: subView.frame.width - (14.1 * x), height: (2 * y))
+                    inseamheightLabel.frame = CGRect(x: (8.1 * x), y: (32.5 * y), width: subView.frame.width - (17.1 * x), height: (2 * y))
                     inseamheightLabel.text = "INSEAM"
                     inseamheightLabel.textColor = UIColor.black
-                    inseamheightLabel.textAlignment = .center
+                    inseamheightLabel.textAlignment = .right
                     inseamheightLabel.font = inseamheightLabel.font.withSize(15)
                     inseamheightLabel.tag = ((39 * 1) + 300)
                     subView.addSubview(inseamheightLabel)
@@ -1811,10 +1811,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getinseamHeightLabel)
                     
                     let outSteamHeightLabel = UILabel()
-                    outSteamHeightLabel.frame = CGRect(x: (6.5 * x), y: (39.5 * y), width: subView.frame.width - (12.5 * x), height: (2 * y))
+                    outSteamHeightLabel.frame = CGRect(x: (6.5 * x), y: (39.5 * y), width: subView.frame.width - (15.5 * x), height: (2 * y))
                     outSteamHeightLabel.text = "OUTSTEAM"
                     outSteamHeightLabel.textColor = UIColor.black
-                    outSteamHeightLabel.textAlignment = .center
+                    outSteamHeightLabel.textAlignment = .right
                     outSteamHeightLabel.font = outSteamHeightLabel.font.withSize(15)
                     outSteamHeightLabel.tag = ((40 * 1) + 300)
                     subView.addSubview(outSteamHeightLabel)
@@ -1838,10 +1838,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 3
                 {
                     let shoulderLabel = UILabel()
-                    shoulderLabel.frame = CGRect(x: (13.1 * x), y: (7.4 * y), width: subView.frame.width - (19.1 * x), height: (2 * y))
+                    shoulderLabel.frame = CGRect(x: (13.1 * x), y: (7.4 * y), width: subView.frame.width - (22.1 * x), height: (2 * y))
                     shoulderLabel.text = "Shoulder"
                     shoulderLabel.textColor = UIColor.black
-                    shoulderLabel.textAlignment = .center
+                    shoulderLabel.textAlignment = .right
                     shoulderLabel.font = shoulderLabel.font.withSize(15)
                     shoulderLabel.tag = ((41 * 1) + 300)
                     subView.addSubview(shoulderLabel)
@@ -1862,10 +1862,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getShoulderLabel)
                     
                     let bicepLabel = UILabel()
-                    bicepLabel.frame = CGRect(x: (14 * x), y: (11.8 * y), width: subView.frame.width - (20 * x), height: (2 * y))
+                    bicepLabel.frame = CGRect(x: (14 * x), y: (11.8 * y), width: subView.frame.width - (23 * x), height: (2 * y))
                     bicepLabel.text = "Bicep"
                     bicepLabel.textColor = UIColor.black
-                    bicepLabel.textAlignment = .center
+                    bicepLabel.textAlignment = .right
                     bicepLabel.font = bicepLabel.font.withSize(15)
                     bicepLabel.tag = ((42 * 1) + 300)
                     subView.addSubview(bicepLabel)
@@ -1886,10 +1886,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getBicepLabel)
                     
                     let handKneeLabel = UILabel()
-                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (20 * y), width: subView.frame.width - (21.5 * x), height: (2 * y))
+                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (20 * y), width: subView.frame.width - (24.5 * x), height: (2 * y))
                     handKneeLabel.text = "Hand Cuf"
                     handKneeLabel.textColor = UIColor.black
-                    handKneeLabel.textAlignment = .center
+                    handKneeLabel.textAlignment = .right
                     handKneeLabel.font = handKneeLabel.font.withSize(15)
                     handKneeLabel.tag = ((43 * 1) + 300)
                     subView.addSubview(handKneeLabel)
@@ -1912,10 +1912,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 4
                 {
                     let sleeveHeightLabel = UILabel()
-                    sleeveHeightLabel.frame = CGRect(x: (14 * x), y: (15 * y), width: subView.frame.width - (20 * x), height: (2 * y))
+                    sleeveHeightLabel.frame = CGRect(x: (14 * x), y: (15 * y), width: subView.frame.width - (23 * x), height: (2 * y))
                     sleeveHeightLabel.text = "Sleeve"
                     sleeveHeightLabel.textColor = UIColor.black
-                    sleeveHeightLabel.textAlignment = .center
+                    sleeveHeightLabel.textAlignment = .right
                     sleeveHeightLabel.font = sleeveHeightLabel.font.withSize(15)
                     sleeveHeightLabel.tag = ((44 * 1) + 300)
                     subView.addSubview(sleeveHeightLabel)
@@ -1957,10 +1957,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 if index == 0
                 {
                     let headLabel = UILabel()
-                    headLabel.frame = CGRect(x: (11.5 * x), y: 0, width: (10.8 * x), height: (2 * y))
+                    headLabel.frame = CGRect(x: (11.5 * x), y: 0, width: subView.frame.width - (20.5 * x), height: (2 * y))
                     headLabel.text = "Head"
                     headLabel.textColor = UIColor.black
-                    headLabel.textAlignment = .center
+                    headLabel.textAlignment = .right
                     headLabel.font = headLabel.font.withSize(15)
                     headLabel.tag = ((45 * 1) + 300)
                     subView.addSubview(headLabel)
@@ -1988,10 +1988,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHeadLabel)
                     
                     let neckLabel = UILabel()
-                    neckLabel.frame = CGRect(x: (11.4 * x), y: (7.4 * y), width: subView.frame.width - (17.4 * x), height: (2 * y))
+                    neckLabel.frame = CGRect(x: (11.4 * x), y: (7.4 * y), width: subView.frame.width - (20.4 * x), height: (2 * y))
                     neckLabel.text = "Neck"
                     neckLabel.textColor = UIColor.black
-                    neckLabel.textAlignment = .center
+                    neckLabel.textAlignment = .right
                     neckLabel.font = headLabel.font.withSize(15)
                     neckLabel.tag = ((46 * 1) + 300)
                     subView.addSubview(neckLabel)
@@ -2012,10 +2012,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getNeckLabel)
                     
                     let chestLabel = UILabel()
-                    chestLabel.frame = CGRect(x: (13.2 * x), y: (11.6 * y), width: subView.frame.width - (19.2 * x), height: (2 * y))
+                    chestLabel.frame = CGRect(x: (13.2 * x), y: (11.6 * y), width: subView.frame.width - (22.2 * x), height: (2 * y))
                     chestLabel.text = "Chest"
                     chestLabel.textColor = UIColor.black
-                    chestLabel.textAlignment = .center
+                    chestLabel.textAlignment = .right
                     chestLabel.font = headLabel.font.withSize(15)
                     chestLabel.tag = ((47 * 1) + 300)
                     subView.addSubview(chestLabel)
@@ -2036,10 +2036,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getChestLabel)
                     
                     let waistLabel = UILabel()
-                    waistLabel.frame = CGRect(x: (13 * x), y: (15 * y), width: subView.frame.width - (19 * x), height: (2 * y))
+                    waistLabel.frame = CGRect(x: (13 * x), y: (15 * y), width: subView.frame.width - (22 * x), height: (2 * y))
                     waistLabel.text = "Waist"
                     waistLabel.textColor = UIColor.black
-                    waistLabel.textAlignment = .center
+                    waistLabel.textAlignment = .right
                     waistLabel.font = headLabel.font.withSize(15)
                     waistLabel.tag = ((48 * 1) + 300)
                     subView.addSubview(waistLabel)
@@ -2060,10 +2060,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getWaistLabel)
                     
                     let thighLabel = UILabel()
-                    thighLabel.frame = CGRect(x: (13.3 * x), y: (27.1 * y), width: subView.frame.width - (19.3 * x), height: (2 * y))
+                    thighLabel.frame = CGRect(x: (13.3 * x), y: (27.1 * y), width: subView.frame.width - (22.3 * x), height: (2 * y))
                     thighLabel.text = "Thigh"
                     thighLabel.textColor = UIColor.black
-                    thighLabel.textAlignment = .center
+                    thighLabel.textAlignment = .right
                     thighLabel.font = headLabel.font.withSize(15)
                     thighLabel.tag = ((49 * 1) + 300)
                     subView.addSubview(thighLabel)
@@ -2084,10 +2084,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getThighLabel)
                     
                     let kneeLabel = UILabel()
-                    kneeLabel.frame = CGRect(x: (12.8 * x), y: (31 * y), width: subView.frame.width - (18.8 * x), height: (2 * y))
+                    kneeLabel.frame = CGRect(x: (12.8 * x), y: (31 * y), width: subView.frame.width - (21.8 * x), height: (2 * y))
                     kneeLabel.text = "Knee"
                     kneeLabel.textColor = UIColor.black
-                    kneeLabel.textAlignment = .center
+                    kneeLabel.textAlignment = .right
                     kneeLabel.font = headLabel.font.withSize(15)
                     kneeLabel.tag = ((50 * 1) + 300)
                     subView.addSubview(kneeLabel)
@@ -2108,10 +2108,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getKneeLabel)
                     
                     let ankleLabel = UILabel()
-                    ankleLabel.frame = CGRect(x: (11.8 * x), y: (40.5 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
+                    ankleLabel.frame = CGRect(x: (11.8 * x), y: (40.5 * y), width: subView.frame.width - (20.8 * x), height: (2 * y))
                     ankleLabel.text = "Ankle"
                     ankleLabel.textColor = UIColor.black
-                    ankleLabel.textAlignment = .center
+                    ankleLabel.textAlignment = .right
                     ankleLabel.font = headLabel.font.withSize(15)
                     ankleLabel.tag = ((51 * 1) + 300)
                     subView.addSubview(ankleLabel)
@@ -2134,10 +2134,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 1
                 {
                     let totalheightLabel = UILabel()
-                    totalheightLabel.frame = CGRect(x: x, y: (14.5 * y), width: subView.frame.width - (7 * x), height: (2 * y))
+                    totalheightLabel.frame = CGRect(x: x, y: (14.5 * y), width: subView.frame.width - (10 * x), height: (2 * y))
                     totalheightLabel.text = "Over all height"
                     totalheightLabel.textColor = UIColor.black
-                    totalheightLabel.textAlignment = .center
+                    totalheightLabel.textAlignment = .right
                     totalheightLabel.font = totalheightLabel.font.withSize(15)
                     totalheightLabel.tag = ((52 * 1) + 300)
                     subView.addSubview(totalheightLabel)
@@ -2159,10 +2159,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(gettotalheightLabel)
                     
                     let hipHeightLabel = UILabel()
-                    hipHeightLabel.frame = CGRect(x: (4.3 * x), y: (39.5 * y), width: subView.frame.width - (10.3 * x), height: (2 * y))
+                    hipHeightLabel.frame = CGRect(x: (4.3 * x), y: (39.5 * y), width: subView.frame.width - (13.3 * x), height: (2 * y))
                     hipHeightLabel.text = "Hip height"
                     hipHeightLabel.textColor = UIColor.black
-                    hipHeightLabel.textAlignment = .center
+                    hipHeightLabel.textAlignment = .right
                     hipHeightLabel.font = hipHeightLabel.font.withSize(15)
                     hipHeightLabel.tag = ((53 * 1) + 300)
                     subView.addSubview(hipHeightLabel)
@@ -2183,10 +2183,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHipheightLabel)
                     
                     let bottomheightLabel = UILabel()
-                    bottomheightLabel.frame = CGRect(x: (7.8 * x), y: (34.5 * y), width: subView.frame.width - (13.8 * x), height: (2 * y))
+                    bottomheightLabel.frame = CGRect(x: (7.8 * x), y: (34.5 * y), width: subView.frame.width - (16.8 * x), height: (2 * y))
                     bottomheightLabel.text = "Bottom height"
                     bottomheightLabel.textColor = UIColor.black
-                    bottomheightLabel.textAlignment = .center
+                    bottomheightLabel.textAlignment = .right
                     bottomheightLabel.font = totalheightLabel.font.withSize(15)
                     bottomheightLabel.tag = ((54 * 1) + 300)
                     subView.addSubview(bottomheightLabel)
@@ -2207,10 +2207,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getBottomheightLabel)
                     
                     let kneeheightLabel = UILabel()
-                    kneeheightLabel.frame = CGRect(x: (12.6 * x), y: (27.3 * y), width: subView.frame.width - (18.6 * x), height: (2 * y))
+                    kneeheightLabel.frame = CGRect(x: (12.6 * x), y: (27.3 * y), width: subView.frame.width - (21.6 * x), height: (2 * y))
                     kneeheightLabel.text = "Knee height"
                     kneeheightLabel.textColor = UIColor.black
-                    kneeheightLabel.textAlignment = .center
+                    kneeheightLabel.textAlignment = .right
                     kneeheightLabel.font = totalheightLabel.font.withSize(15)
                     kneeheightLabel.tag = ((55 * 1) + 300)
                     subView.addSubview(kneeheightLabel)
@@ -2233,10 +2233,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 2
                 {
                     let shoulderLabel = UILabel()
-                    shoulderLabel.frame = CGRect(x: (13.6 * x), y: (8 * y), width: subView.frame.width - (19.6 * x), height: (2 * y))
+                    shoulderLabel.frame = CGRect(x: (13.6 * x), y: (8 * y), width: subView.frame.width - (22.6 * x), height: (2 * y))
                     shoulderLabel.text = "Shoulder"
                     shoulderLabel.textColor = UIColor.black
-                    shoulderLabel.textAlignment = .center
+                    shoulderLabel.textAlignment = .right
                     shoulderLabel.font = shoulderLabel.font.withSize(15)
                     shoulderLabel.tag = ((56 * 1) + 300)
                     subView.addSubview(shoulderLabel)
@@ -2257,10 +2257,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getShoulderLabel)
                     
                     let sleeveLabel = UILabel()
-                    sleeveLabel.frame = CGRect(x: (14 * x), y: (11 * y), width: subView.frame.width - (20 * x), height: (2 * y))
+                    sleeveLabel.frame = CGRect(x: (14 * x), y: (11 * y), width: subView.frame.width - (23 * x), height: (2 * y))
                     sleeveLabel.text = "Half Sleeve"
                     sleeveLabel.textColor = UIColor.black
-                    sleeveLabel.textAlignment = .center
+                    sleeveLabel.textAlignment = .right
                     sleeveLabel.font = sleeveLabel.font.withSize(15)
                     sleeveLabel.tag = ((57 * 1) + 300)
                     subView.addSubview(sleeveLabel)
@@ -2281,10 +2281,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getSleeveLabel)
                     
                     let bicepLabel = UILabel()
-                    bicepLabel.frame = CGRect(x: (15 * x), y: (16 * y), width: subView.frame.width - (21 * x), height: (2 * y))
+                    bicepLabel.frame = CGRect(x: (15 * x), y: (16 * y), width: subView.frame.width - (24 * x), height: (2 * y))
                     bicepLabel.text = "Bicep"
                     bicepLabel.textColor = UIColor.black
-                    bicepLabel.textAlignment = .center
+                    bicepLabel.textAlignment = .right
                     bicepLabel.font = bicepLabel.font.withSize(15)
                     bicepLabel.tag = ((58 * 1) + 300)
                     subView.addSubview(bicepLabel)
@@ -2305,10 +2305,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getBicepLabel)
                     
                     let hipLabel = UILabel()
-                    hipLabel.frame = CGRect(x: (13 * x), y: (18.8 * y), width: subView.frame.width - (19 * x), height: (2 * y))
+                    hipLabel.frame = CGRect(x: (13 * x), y: (18.8 * y), width: subView.frame.width - (22 * x), height: (2 * y))
                     hipLabel.text = "Hip"
                     hipLabel.textColor = UIColor.black
-                    hipLabel.textAlignment = .center
+                    hipLabel.textAlignment = .right
                     hipLabel.font = hipLabel.font.withSize(15)
                     hipLabel.tag = ((59 * 1) + 300)
                     subView.addSubview(hipLabel)
@@ -2329,10 +2329,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHipLabel)
                     
                     let backLabel = UILabel()
-                    backLabel.frame = CGRect(x: (12.9 * x), y: (21.8 * y), width: subView.frame.width - (18.9 * x), height: (2 * y))
+                    backLabel.frame = CGRect(x: (12.9 * x), y: (21.8 * y), width: subView.frame.width - (21.9 * x), height: (2 * y))
                     backLabel.text = "Back"
                     backLabel.textColor = UIColor.black
-                    backLabel.textAlignment = .center
+                    backLabel.textAlignment = .right
                     backLabel.font = backLabel.font.withSize(15)
                     backLabel.tag = ((60 * 1) + 300)
                     subView.addSubview(backLabel)
@@ -2355,10 +2355,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 3
                 {
                     let heightLabel = UILabel()
-                    heightLabel.frame = CGRect(x: (7.6 * x), y: (10.6 * y), width: subView.frame.width - (13.6 * x), height: (2 * y))
+                    heightLabel.frame = CGRect(x: (7.6 * x), y: (10.6 * y), width: subView.frame.width - (16.6 * x), height: (2 * y))
                     heightLabel.text = "Height"
                     heightLabel.textColor = UIColor.black
-                    heightLabel.textAlignment = .center
+                    heightLabel.textAlignment = .right
                     heightLabel.font = heightLabel.font.withSize(15)
                     heightLabel.tag = ((61 * 1) + 300)
                     subView.addSubview(heightLabel)
@@ -2379,10 +2379,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHeightLabel)
                     
                     let fullSleeveLabel = UILabel()
-                    fullSleeveLabel.frame = CGRect(x: (14.6 * x), y: (15.1 * y), width: subView.frame.width - (20.6 * x), height: (2 * y))
+                    fullSleeveLabel.frame = CGRect(x: (14.6 * x), y: (15.1 * y), width: subView.frame.width - (23.6 * x), height: (2 * y))
                     fullSleeveLabel.text = "Sleeve Height"
                     fullSleeveLabel.textColor = UIColor.black
-                    fullSleeveLabel.textAlignment = .center
+                    fullSleeveLabel.textAlignment = .right
                     fullSleeveLabel.font = heightLabel.font.withSize(15)
                     fullSleeveLabel.tag = ((62 * 1) + 300)
                     subView.addSubview(fullSleeveLabel)
@@ -2403,10 +2403,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getFullSleeveLabel)
                     
                     let handKneeLabel = UILabel()
-                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (22.5 * y), width: subView.frame.width - (21.5 * x), height: (2 * y))
+                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (22.5 * y), width: subView.frame.width - (24.5 * x), height: (2 * y))
                     handKneeLabel.text = "Hand Cuf"
                     handKneeLabel.textColor = UIColor.black
-                    handKneeLabel.textAlignment = .center
+                    handKneeLabel.textAlignment = .right
                     handKneeLabel.font = handKneeLabel.font.withSize(15)
                     handKneeLabel.tag = ((63 * 1) + 300)
                     subView.addSubview(handKneeLabel)
@@ -2447,10 +2447,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 if index == 0
                 {
                     let headLabel = UILabel()
-                    headLabel.frame = CGRect(x: (10.8 * x), y: y, width: (10.8 * x), height: (2 * y))
+                    headLabel.frame = CGRect(x: (10.8 * x), y: y, width: subView.frame.width - (19.8 * x), height: (2 * y))
                     headLabel.text = "Head"
                     headLabel.textColor = UIColor.black
-                    headLabel.textAlignment = .center
+                    headLabel.textAlignment = .right
                     headLabel.font = headLabel.font.withSize(15)
                     headLabel.tag = ((64 * 1) + 300)
                     subView.addSubview(headLabel)
@@ -2478,10 +2478,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHeadLabel)
                     
                     let neckLabel = UILabel()
-                    neckLabel.frame = CGRect(x: (12.5 * x), y: (10 * y), width: subView.frame.width - (18.5 * x), height: (2 * y))
+                    neckLabel.frame = CGRect(x: (12.5 * x), y: (10 * y), width: subView.frame.width - (21.5 * x), height: (2 * y))
                     neckLabel.text = "Over Bust"
                     neckLabel.textColor = UIColor.black
-                    neckLabel.textAlignment = .center
+                    neckLabel.textAlignment = .right
                     neckLabel.font = headLabel.font.withSize(15)
                     neckLabel.tag = ((65 * 1) + 300)
                     subView.addSubview(neckLabel)
@@ -2502,10 +2502,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getNeckLabel)
                     
                     let chestLabel = UILabel()
-                    chestLabel.frame = CGRect(x: (11.8 * x), y: (13 * y), width: subView.frame.width - (18.2 * x), height: (2 * y))
+                    chestLabel.frame = CGRect(x: (11.8 * x), y: (13 * y), width: subView.frame.width - (20.8 * x), height: (2 * y))
                     chestLabel.text = "Under Bust"
                     chestLabel.textColor = UIColor.black
-                    chestLabel.textAlignment = .center
+                    chestLabel.textAlignment = .right
                     chestLabel.font = headLabel.font.withSize(15)
                     chestLabel.tag = ((66 * 1) + 300)
                     subView.addSubview(chestLabel)
@@ -2526,10 +2526,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getChestLabel)
                     
                     let waistLabel = UILabel()
-                    waistLabel.frame = CGRect(x: (12 * x), y: (15.8 * y), width: subView.frame.width - (18 * x), height: (2 * y))
+                    waistLabel.frame = CGRect(x: (12 * x), y: (15.8 * y), width: subView.frame.width - (21 * x), height: (2 * y))
                     waistLabel.text = "Hip Bone"
                     waistLabel.textColor = UIColor.black
-                    waistLabel.textAlignment = .center
+                    waistLabel.textAlignment = .right
                     waistLabel.font = headLabel.font.withSize(15)
                     waistLabel.tag = ((67 * 1) + 300)
                     subView.addSubview(waistLabel)
@@ -2550,10 +2550,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getWaistLabel)
                     
                     let thighLabel = UILabel()
-                    thighLabel.frame = CGRect(x: (13 * x), y: (23.6 * y), width: subView.frame.width - (19 * x), height: (2 * y))
+                    thighLabel.frame = CGRect(x: (13 * x), y: (23.6 * y), width: subView.frame.width - (22 * x), height: (2 * y))
                     thighLabel.text = "Thigh"
                     thighLabel.textColor = UIColor.black
-                    thighLabel.textAlignment = .center
+                    thighLabel.textAlignment = .right
                     thighLabel.font = headLabel.font.withSize(15)
                     thighLabel.tag = ((68 * 1) + 300)
                     subView.addSubview(thighLabel)
@@ -2574,10 +2574,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getThighLabel)
                     
                     let kneeLabel = UILabel()
-                    kneeLabel.frame = CGRect(x: (11.8 * x), y: (29.7 * y), width: subView.frame.width - (17.8 * x), height: (2 * y))
+                    kneeLabel.frame = CGRect(x: (11.8 * x), y: (29.7 * y), width: subView.frame.width - (20.8 * x), height: (2 * y))
                     kneeLabel.text = "Knee"
                     kneeLabel.textColor = UIColor.black
-                    kneeLabel.textAlignment = .center
+                    kneeLabel.textAlignment = .right
                     kneeLabel.font = headLabel.font.withSize(15)
                     kneeLabel.tag = ((69 * 1) + 300)
                     subView.addSubview(kneeLabel)
@@ -2598,10 +2598,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getKneeLabel)
                     
                     let ankleLabel1 = UILabel()
-                    ankleLabel1.frame = CGRect(x: (12.5 * x), y: (34.1 * y), width: subView.frame.width - (18.5 * x), height: (2 * y))
+                    ankleLabel1.frame = CGRect(x: (12.5 * x), y: (34.1 * y), width: subView.frame.width - (21.5 * x), height: (2 * y))
                     ankleLabel1.text = "Calf"
                     ankleLabel1.textColor = UIColor.black
-                    ankleLabel1.textAlignment = .center
+                    ankleLabel1.textAlignment = .right
                     ankleLabel1.font = headLabel.font.withSize(15)
                     ankleLabel1.tag = ((70 * 1) + 300)
                     subView.addSubview(ankleLabel1)
@@ -2623,10 +2623,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getAnkleLabel1)
                     
                     let ankleLabel = UILabel()
-                    ankleLabel.frame = CGRect(x: (11.4 * x), y: (40 * y), width: subView.frame.width - (17.4 * x), height: (2 * y))
+                    ankleLabel.frame = CGRect(x: (11.4 * x), y: (40 * y), width: subView.frame.width - (20.4 * x), height: (2 * y))
                     ankleLabel.text = "Ankle"
                     ankleLabel.textColor = UIColor.black
-                    ankleLabel.textAlignment = .center
+                    ankleLabel.textAlignment = .right
                     ankleLabel.font = headLabel.font.withSize(15)
                     ankleLabel.tag = ((71 * 1) + 300)
                     subView.addSubview(ankleLabel)
@@ -2649,10 +2649,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 1
                 {
                     let shoulderLabel = UILabel()
-                    shoulderLabel.frame = CGRect(x: (10.3 * x), y: (6.3 * y), width: subView.frame.width - (16.3 * x), height: (2 * y))
+                    shoulderLabel.frame = CGRect(x: (10.3 * x), y: (6.3 * y), width: subView.frame.width - (19.3 * x), height: (2 * y))
                     shoulderLabel.text = "Neck"
                     shoulderLabel.textColor = UIColor.black
-                    shoulderLabel.textAlignment = .center
+                    shoulderLabel.textAlignment = .right
                     shoulderLabel.font = shoulderLabel.font.withSize(15)
                     shoulderLabel.tag = ((72 * 1) + 300)
                     subView.addSubview(shoulderLabel)
@@ -2673,10 +2673,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getShoulderLabel)
                     
                     let sleeveLabel = UILabel()
-                    sleeveLabel.frame = CGRect(x: (12.4 * x), y: (11.8 * y), width: subView.frame.width - (18.4 * x), height: (2 * y))
+                    sleeveLabel.frame = CGRect(x: (12.4 * x), y: (11.8 * y), width: subView.frame.width - (21.4 * x), height: (2 * y))
                     sleeveLabel.text = "Bust"
                     sleeveLabel.textColor = UIColor.black
-                    sleeveLabel.textAlignment = .center
+                    sleeveLabel.textAlignment = .right
                     sleeveLabel.font = sleeveLabel.font.withSize(15)
                     sleeveLabel.tag = ((73 * 1) + 300)
                     subView.addSubview(sleeveLabel)
@@ -2697,10 +2697,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getSleeveLabel)
                     
                     let bicepLabel = UILabel()
-                    bicepLabel.frame = CGRect(x: (12 * x), y: (14.8 * y), width: subView.frame.width - (18 * x), height: (2 * y))
+                    bicepLabel.frame = CGRect(x: (12 * x), y: (14.8 * y), width: subView.frame.width - (21 * x), height: (2 * y))
                     bicepLabel.text = "Waist"
                     bicepLabel.textColor = UIColor.black
-                    bicepLabel.textAlignment = .center
+                    bicepLabel.textAlignment = .right
                     bicepLabel.font = bicepLabel.font.withSize(15)
                     bicepLabel.tag = ((74 * 1) + 300)
                     subView.addSubview(bicepLabel)
@@ -2721,10 +2721,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getBicepLabel)
                     
                     let backLabel = UILabel()
-                    backLabel.frame = CGRect(x: (13 * x), y: (20.5 * y), width: subView.frame.width - (19 * x), height: (2 * y))
+                    backLabel.frame = CGRect(x: (13 * x), y: (20.5 * y), width: subView.frame.width - (22 * x), height: (2 * y))
                     backLabel.text = "Full Hip"
                     backLabel.textColor = UIColor.black
-                    backLabel.textAlignment = .center
+                    backLabel.textAlignment = .right
                     backLabel.font = backLabel.font.withSize(15)
                     backLabel.tag = ((75 * 1) + 300)
                     subView.addSubview(backLabel)
@@ -2747,10 +2747,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 2
                 {
                     let totalheightLabel = UILabel()
-                    totalheightLabel.frame = CGRect(x: 0, y: y, width: subView.frame.width - (6 * x), height: (2 * y))
+                    totalheightLabel.frame = CGRect(x: 0, y: y, width: subView.frame.width - (9 * x), height: (2 * y))
                     totalheightLabel.text = "Over all height"
                     totalheightLabel.textColor = UIColor.black
-                    totalheightLabel.textAlignment = .center
+                    totalheightLabel.textAlignment = .right
                     totalheightLabel.font = totalheightLabel.font.withSize(15)
                     totalheightLabel.tag = ((76 * 1) + 300)
                     subView.addSubview(totalheightLabel)
@@ -2771,10 +2771,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(gettotalheightLabel)
                     
                     let stwHeightLabel = UILabel()
-                    stwHeightLabel.frame = CGRect(x: (11.7 * x), y: (7.7 * y), width: subView.frame.width - (17.7 * x), height: (2 * y))
+                    stwHeightLabel.frame = CGRect(x: (11.7 * x), y: (7.7 * y), width: subView.frame.width - (20.7 * x), height: (2 * y))
                     stwHeightLabel.text = "STW"
                     stwHeightLabel.textColor = UIColor.black
-                    stwHeightLabel.textAlignment = .center
+                    stwHeightLabel.textAlignment = .right
                     stwHeightLabel.font = stwHeightLabel.font.withSize(15)
                     stwHeightLabel.tag = ((77 * 1) + 300)
                     subView.addSubview(stwHeightLabel)
@@ -2796,10 +2796,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getstwHeightLabel)
                     
                     let nltcHeightLabel = UILabel()
-                    nltcHeightLabel.frame = CGRect(x: (7.5 * x), y: (9.6 * y), width: subView.frame.width - (13.5 * x), height: (2 * y))
+                    nltcHeightLabel.frame = CGRect(x: (7.5 * x), y: (9.6 * y), width: subView.frame.width - (16.5 * x), height: (2 * y))
                     nltcHeightLabel.text = "NLTC"
                     nltcHeightLabel.textColor = UIColor.black
-                    nltcHeightLabel.textAlignment = .center
+                    nltcHeightLabel.textAlignment = .right
                     nltcHeightLabel.font = totalheightLabel.font.withSize(15)
                     nltcHeightLabel.tag = ((78 * 1) + 300)
                     subView.addSubview(nltcHeightLabel)
@@ -2821,10 +2821,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getnltcHeightLabel)
                     
                     let nltbHeightLabel = UILabel()
-                    nltbHeightLabel.frame = CGRect(x: (10.2 * x), y: (12.2 * y), width: subView.frame.width - (16.2 * x), height: (2 * y))
+                    nltbHeightLabel.frame = CGRect(x: (10.2 * x), y: (12.2 * y), width: subView.frame.width - (19.2 * x), height: (2 * y))
                     nltbHeightLabel.text = "NLTB"
                     nltbHeightLabel.textColor = UIColor.black
-                    nltbHeightLabel.textAlignment = .center
+                    nltbHeightLabel.textAlignment = .right
                     nltbHeightLabel.font = totalheightLabel.font.withSize(15)
                     nltbHeightLabel.tag = ((79 * 1) + 300)
                     subView.addSubview(nltbHeightLabel)
@@ -2846,10 +2846,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getnltbHeightLabel)
                     
                     let sthbHeightLabel = UILabel()
-                    sthbHeightLabel.frame = CGRect(x: (11 * x), y: (14.5 * y), width: subView.frame.width - (17 * x), height: (2 * y))
+                    sthbHeightLabel.frame = CGRect(x: (11 * x), y: (14.5 * y), width: subView.frame.width - (20 * x), height: (2 * y))
                     sthbHeightLabel.text = "STHB"
                     sthbHeightLabel.textColor = UIColor.black
-                    sthbHeightLabel.textAlignment = .center
+                    sthbHeightLabel.textAlignment = .right
                     sthbHeightLabel.font = totalheightLabel.font.withSize(15)
                     sthbHeightLabel.tag = ((80 * 1) + 300)
                     subView.addSubview(sthbHeightLabel)
@@ -2871,10 +2871,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getsthbHeightLabel)
                     
                     let wthbHeightLabel = UILabel()
-                    wthbHeightLabel.frame = CGRect(x: (5 * x), y: (16.8 * y), width: subView.frame.width - (11 * x), height: (2 * y))
+                    wthbHeightLabel.frame = CGRect(x: (5 * x), y: (16.8 * y), width: subView.frame.width - (14 * x), height: (2 * y))
                     wthbHeightLabel.text = "WTHB"
                     wthbHeightLabel.textColor = UIColor.black
-                    wthbHeightLabel.textAlignment = .center
+                    wthbHeightLabel.textAlignment = .right
                     wthbHeightLabel.font = wthbHeightLabel.font.withSize(15)
                     wthbHeightLabel.tag = ((81 * 1) + 300)
                     subView.addSubview(wthbHeightLabel)
@@ -2896,10 +2896,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getwthbHeightLabel)
                     
                     let hthheightLabel = UILabel()
-                    hthheightLabel.frame = CGRect(x: (10.9 * x), y: (26.3 * y), width: subView.frame.width - (16.9 * x), height: (2 * y))
+                    hthheightLabel.frame = CGRect(x: (10.9 * x), y: (26.3 * y), width: subView.frame.width - (19.9 * x), height: (2 * y))
                     hthheightLabel.text = "HTH"
                     hthheightLabel.textColor = UIColor.black
-                    hthheightLabel.textAlignment = .center
+                    hthheightLabel.textAlignment = .right
                     hthheightLabel.font = hthheightLabel.font.withSize(15)
                     hthheightLabel.tag = ((82 * 1) + 300)
                     subView.addSubview(hthheightLabel)
@@ -2921,10 +2921,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(geththHeightLabel)
                     
                     let inseamheightLabel = UILabel()
-                    inseamheightLabel.frame = CGRect(x: (7.6 * x), y: (32.5 * y), width: subView.frame.width - (13.6 * x), height: (2 * y))
+                    inseamheightLabel.frame = CGRect(x: (7.6 * x), y: (32.5 * y), width: subView.frame.width - (16.6 * x), height: (2 * y))
                     inseamheightLabel.text = "INSEAM"
                     inseamheightLabel.textColor = UIColor.black
-                    inseamheightLabel.textAlignment = .center
+                    inseamheightLabel.textAlignment = .right
                     inseamheightLabel.font = inseamheightLabel.font.withSize(15)
                     inseamheightLabel.tag = ((83 * 1) + 300)
                     subView.addSubview(inseamheightLabel)
@@ -2946,10 +2946,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getinseamHeightLabel)
                     
                     let outSteamHeightLabel = UILabel()
-                    outSteamHeightLabel.frame = CGRect(x: (5.5 * x), y: (39.5 * y), width: subView.frame.width - (11.5 * x), height: (2 * y))
+                    outSteamHeightLabel.frame = CGRect(x: (5.5 * x), y: (39.5 * y), width: subView.frame.width - (14.5 * x), height: (2 * y))
                     outSteamHeightLabel.text = "OUTSTEAM"
                     outSteamHeightLabel.textColor = UIColor.black
-                    outSteamHeightLabel.textAlignment = .center
+                    outSteamHeightLabel.textAlignment = .right
                     outSteamHeightLabel.font = outSteamHeightLabel.font.withSize(15)
                     outSteamHeightLabel.tag = ((84 * 1) + 300)
                     subView.addSubview(outSteamHeightLabel)
@@ -2973,10 +2973,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 3
                 {
                     let shoulderLabel = UILabel()
-                    shoulderLabel.frame = CGRect(x: (12 * x), y: (7.5 * y), width: subView.frame.width - (18 * x), height: (2 * y))
+                    shoulderLabel.frame = CGRect(x: (12 * x), y: (7.5 * y), width: subView.frame.width - (21 * x), height: (2 * y))
                     shoulderLabel.text = "Shoulder"
                     shoulderLabel.textColor = UIColor.black
-                    shoulderLabel.textAlignment = .center
+                    shoulderLabel.textAlignment = .right
                     shoulderLabel.font = shoulderLabel.font.withSize(15)
                     shoulderLabel.tag = ((85 * 1) + 300)
                     subView.addSubview(shoulderLabel)
@@ -2997,10 +2997,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getShoulderLabel)
                     
                     let bicepLabel = UILabel()
-                    bicepLabel.frame = CGRect(x: (14.7 * x), y: (13.2 * y), width: subView.frame.width - (20.7 * x), height: (2 * y))
+                    bicepLabel.frame = CGRect(x: (14.7 * x), y: (13.2 * y), width: subView.frame.width - (23.7 * x), height: (2 * y))
                     bicepLabel.text = "Bicep"
                     bicepLabel.textColor = UIColor.black
-                    bicepLabel.textAlignment = .center
+                    bicepLabel.textAlignment = .right
                     bicepLabel.font = bicepLabel.font.withSize(15)
                     bicepLabel.tag = ((86 * 1) + 300)
                     subView.addSubview(bicepLabel)
@@ -3021,10 +3021,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getBicepLabel)
                     
                     let handKneeLabel = UILabel()
-                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (21.2 * y), width: subView.frame.width - (21.5 * x), height: (2 * y))
+                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (21.2 * y), width: subView.frame.width - (24.5 * x), height: (2 * y))
                     handKneeLabel.text = "Hand Cuf"
                     handKneeLabel.textColor = UIColor.black
-                    handKneeLabel.textAlignment = .center
+                    handKneeLabel.textAlignment = .right
                     handKneeLabel.font = handKneeLabel.font.withSize(15)
                     handKneeLabel.tag = ((87 * 1) + 300)
                     subView.addSubview(handKneeLabel)
@@ -3047,10 +3047,10 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 else if index == 4
                 {
                     let sleeveHeightLabel = UILabel()
-                    sleeveHeightLabel.frame = CGRect(x: (14 * x), y: (15 * y), width: subView.frame.width - (20 * x), height: (2 * y))
+                    sleeveHeightLabel.frame = CGRect(x: (14 * x), y: (15 * y), width: subView.frame.width - (23 * x), height: (2 * y))
                     sleeveHeightLabel.text = "Sleeve"
                     sleeveHeightLabel.textColor = UIColor.black
-                    sleeveHeightLabel.textAlignment = .center
+                    sleeveHeightLabel.textAlignment = .right
                     sleeveHeightLabel.font = sleeveHeightLabel.font.withSize(15)
                     sleeveHeightLabel.tag = ((88 * 1) + 300)
                     subView.addSubview(sleeveHeightLabel)

@@ -359,7 +359,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedImageView.layer.borderWidth = 1
         customedImageView.layer.borderColor = UIColor.lightGray.cgColor
         customedImageView.backgroundColor = UIColor.white
-        if let imageName = customImagesArray[1] as? String
+        if let imageName = customImagesArray[0] as? String
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Customazation3/\(imageName)"
@@ -376,7 +376,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedFrontButton.layer.borderWidth = 1
         customedFrontButton.layer.borderColor = UIColor.lightGray.cgColor
         customedFrontButton.backgroundColor = UIColor.white
-        if let imageName = customImagesArray[1] as? String
+        if let imageName = customImagesArray[0] as? String
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/Customazation3/\(imageName)"
@@ -390,7 +390,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             }
             customedFrontButton.addSubview(dummyImageView)
         }
-        customedFrontButton.tag = 1
+        customedFrontButton.tag = 0
         customedFrontButton.addTarget(self, action: #selector(self.dressSelectionButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(customedFrontButton)
         
@@ -402,23 +402,32 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customedBackButton.layer.borderWidth = 1
         customedBackButton.layer.borderColor = UIColor.lightGray.cgColor
         customedBackButton.backgroundColor = UIColor.white
-        if let imageName = customImagesArray[0] as? String
+        
+        if customImagesArray.count > 1
         {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/Customazation3/\(imageName)"
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: customedBackButton.frame.width, height: customedBackButton.frame.height)
-            if apiurl != nil
+            if let imageName = customImagesArray[1] as? String
             {
-                dummyImageView.dowloadFromServer(url: apiurl!)
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Customazation3/\(imageName)"
+                let apiurl = URL(string: api)
+                
+                let dummyImageView = UIImageView()
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: customedBackButton.frame.width, height: customedBackButton.frame.height)
+                if apiurl != nil
+                {
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
+                customedBackButton.addSubview(dummyImageView)
             }
-            customedBackButton.addSubview(dummyImageView)
         }
-        customedBackButton.tag = 0
+        
+        customedBackButton.tag = 1
         customedBackButton.addTarget(self, action: #selector(self.dressSelectionButtonAction(sender:)), for: .touchUpInside)
-        selfScreenContents.addSubview(customedBackButton)
+        
+        if customImagesArray.count > 1
+        {
+            selfScreenContents.addSubview(customedBackButton)
+        }
         
         dropDownButton.frame = CGRect(x: 0, y: customedImageView.frame.maxY + (2 * y), width: selfScreenContents.frame.width, height: (4 * y))
         dropDownButton.layer.cornerRadius = 5
@@ -571,16 +580,34 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selectionImage.image = UIImage(named: "selectionImage")
         sender.addSubview(selectionImage)
         
-        if let imageName = customImagesArray[sender.tag] as? String
+        if customImagesArray.count > 1
         {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/Customazation3/\(imageName)"
-            let apiurl = URL(string: api)
-            if apiurl != nil
+            if let imageName = customImagesArray[sender.tag] as? String
             {
-                customedImageView.dowloadFromServer(url: apiurl!)
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Customazation3/\(imageName)"
+                let apiurl = URL(string: api)
+                if apiurl != nil
+                {
+                    customedImageView.dowloadFromServer(url: apiurl!)
+                }
             }
         }
+        else
+        {
+            if let imageName = customImagesArray[0] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Customazation3/\(imageName)"
+                let apiurl = URL(string: api)
+                if apiurl != nil
+                {
+                    customedImageView.dowloadFromServer(url: apiurl!)
+                }
+            }
+        }
+        
+        
     }
     
     @objc func dropDownButtonAction(sender : UIButton)
