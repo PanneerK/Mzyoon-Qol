@@ -27,6 +27,7 @@
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8F54D12211ACCA00CCA501 /* XMLReader.m */; };
+		DA9F66592249EC6E00969B34 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F66582249EC6E00969B34 /* SearchResultsController.swift */; };
 		DAA737BD2215D1BC00B4B573 /* TelrResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */; };
 		DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */; };
 		DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */; };
@@ -43,7 +44,6 @@
 		FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */; };
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
-		FD19896A2244ED5300D19469 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1989692244ED5200D19469 /* SearchResultsController.swift */; };
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
@@ -143,6 +143,7 @@
 		DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mzyoon-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA8F54D02211ACCA00CCA501 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		DA8F54D12211ACCA00CCA501 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		DA9F66582249EC6E00969B34 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
 		DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelrResponseViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentViewController.swift; sourceTree = "<group>"; };
@@ -160,7 +161,6 @@
 		FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCustomizationToJson.swift; sourceTree = "<group>"; };
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
-		FD1989692244ED5200D19469 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResultsController.swift; path = "../../../../../Downloads/AutoCompleteAddressMaps-master/AutoCompleteAddress/SearchResultsController.swift"; sourceTree = "<group>"; };
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 			children = (
 				FD60980121A2B27600DCCF58 /* AddressViewController.swift */,
 				FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */,
-				FD1989692244ED5200D19469 /* SearchResultsController.swift */,
+				DA9F66582249EC6E00969B34 /* SearchResultsController.swift */,
 			);
 			path = ADDRESS;
 			sourceTree = "<group>";
@@ -749,7 +749,6 @@
 				FDFE07352189E49F0056E773 /* ActivityView.swift in Sources */,
 				FD60980221A2B27600DCCF58 /* AddressViewController.swift in Sources */,
 				FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */,
-				FD19896A2244ED5300D19469 /* SearchResultsController.swift in Sources */,
 				FD5774B0219AB2F30026DBF8 /* GenderTableViewCell.swift in Sources */,
 				DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */,
 				FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */,
@@ -760,6 +759,7 @@
 				DA06108721E4C4D1005BB29D /* ServiceTypeViewController.swift in Sources */,
 				FD2ADFED2175C0230033025B /* ServerAPI.swift in Sources */,
 				FD71D25E219EF24200FFC067 /* OrderTypeViewController.swift in Sources */,
+				DA9F66592249EC6E00969B34 /* SearchResultsController.swift in Sources */,
 				FD0785D9220964E1001B9FC9 /* ConversionToJson.swift in Sources */,
 				FD0F977F22255E40003744ED /* Variables.swift in Sources */,
 				FD53A3D521A809450097B4D9 /* TailorListViewController.swift in Sources */,
