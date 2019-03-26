@@ -464,22 +464,82 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
 
         if sender.tag == 1
         {
-            UserDefaults.standard.set("Male", forKey: "gender")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("Male", forKey: "gender")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("ذكر", forKey: "gender")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("Male", forKey: "gender")
+            }
+            
             dressTypeScreen.tag = sender.tag
         }
         else if sender.tag == 2
         {
-            UserDefaults.standard.set("Female", forKey: "gender")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("Female", forKey: "gender")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("انثى", forKey: "gender")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("Female", forKey: "gender")
+            }
+            
             dressTypeScreen.tag = sender.tag
         }
         else if sender.tag == 3
         {
-            UserDefaults.standard.set("Boy", forKey: "gender")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("Boy", forKey: "gender")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("صبي", forKey: "gender")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("Boy", forKey: "gender")
+            }
+            
             dressTypeScreen.tag = sender.tag
         }
         else if sender.tag == 4
         {
-            UserDefaults.standard.set("Girl", forKey: "gender")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("Girl", forKey: "gender")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("فتاة", forKey: "gender")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("Girl", forKey: "gender")
+            }
+            
             dressTypeScreen.tag = sender.tag
         }
         else

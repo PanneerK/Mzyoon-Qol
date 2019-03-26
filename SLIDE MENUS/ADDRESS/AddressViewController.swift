@@ -296,16 +296,54 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             
             if Result == "1"
             {
-                let alert = UIAlertController(title: "", message: "Deleted Sucessfully", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: deletedSuccessAlertOkAction(action:)))
-                self.present(alert, animated: true, completion: nil)
+                var deletedAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        deletedAlert = UIAlertController(title: "Alert", message: "Deleted Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                        deletedAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: deletedSuccessAlertOkAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        deletedAlert = UIAlertController(title: "تنبيه", message: "تم الحذف بنجاح", preferredStyle: UIAlertController.Style.alert)
+                        deletedAlert.addAction(UIAlertAction(title: "حسنا", style: UIAlertAction.Style.default, handler: deletedSuccessAlertOkAction(action:)))
+                    }
+                }
+                else
+                {
+                    deletedAlert = UIAlertController(title: "Alert", message: "Deleted Sucessfully", preferredStyle: UIAlertController.Style.alert)
+                    deletedAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: deletedSuccessAlertOkAction(action:)))
+                }
+                
+                self.present(deletedAlert, animated: true, completion: nil)
             }
         }
         else if ResponseMsg == "Failure"
         {
-            let alert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            var networkAlert = UIAlertController()
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    networkAlert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: UIAlertController.Style.alert)
+                    networkAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                }
+                else if language == "ar"
+                {
+                    networkAlert = UIAlertController(title: "تنبيه", message: "يرجى المحاولة مرة أخرى بعد فترة من الوقت", preferredStyle: UIAlertController.Style.alert)
+                    networkAlert.addAction(UIAlertAction(title: "حسنا", style: UIAlertAction.Style.default, handler: nil))
+                }
+            }
+            else
+            {
+                networkAlert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: UIAlertController.Style.alert)
+                networkAlert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            }
+            
+            self.present(networkAlert, animated: true, completion: nil)
             
             let Result = deleteAddr.object(forKey: "Result") as! String
             print("Result", Result)
@@ -885,11 +923,32 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     @objc func deleteButtonAction(sender : UIButton)
     {
         deleteInt = sender.tag
-
-        let alert = UIAlertController(title: "Alert", message: "Are you sure want to delete the address", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: deleteAddressAction(action:)))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        
+        var deleteAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                deleteAlert = UIAlertController(title: "Alert", message: "Are you sure want to delete the address", preferredStyle: .alert)
+                deleteAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: deleteAddressAction(action:)))
+                deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            }
+            else if language == "ar"
+            {
+                deleteAlert = UIAlertController(title: "تنبيه", message: "هل أنت متأكد أنك تريد حذف العنوان؟", preferredStyle: .alert)
+                deleteAlert.addAction(UIAlertAction(title: "حذف", style: .default, handler: deleteAddressAction(action:)))
+                deleteAlert.addAction(UIAlertAction(title: "إلغاء", style: .default, handler: nil))
+            }
+        }
+        else
+        {
+            deleteAlert = UIAlertController(title: "Alert", message: "Are you sure want to delete the address", preferredStyle: .alert)
+            deleteAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: deleteAddressAction(action:)))
+            deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        }
+        
+        self.present(deleteAlert, animated: true, completion: nil)
     }
     
     func deleteAddressAction(action : UIAlertAction)

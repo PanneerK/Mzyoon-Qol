@@ -1267,7 +1267,21 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if id == seasonalTagIntArray[j]
                             {
-                                selectedSeasonNameArray.append(seasonalNameEnglishArray[i] as! String)
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedSeasonNameArray.append(seasonalNameEnglishArray[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedSeasonNameArray.append(seasonalNameArabicArray[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedSeasonNameArray.append(seasonalNameEnglishArray[i] as! String)
+                                }
                             }
                         }
                     }
@@ -1278,7 +1292,21 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            UserDefaults.standard.set("All Season", forKey: "season")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("All Season", forKey: "season")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("كل فصل", forKey: "season")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("All Season", forKey: "season")
+            }
         }
         
         if industryTagIntArray.count != 0
@@ -1297,7 +1325,21 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if id == industryTagIntArray[j]
                             {
-                                selectedIndustryNameArray.append(industryNameEnglishArray[i] as! String)
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedIndustryNameArray.append(industryNameEnglishArray[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedIndustryNameArray.append(industryNameArabicArray[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedIndustryNameArray.append(industryNameEnglishArray[i] as! String)
+                                }
                             }
                         }
                     }
@@ -1308,7 +1350,21 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            UserDefaults.standard.set("All Industry", forKey: "industry")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("All Industry", forKey: "industry")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("كل الصناعة", forKey: "industry")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("All Industry", forKey: "industry")
+            }
         }
         
         if brandTagIntArray.count != 0
@@ -1327,7 +1383,21 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if id == brandTagIntArray[j]
                             {
-                                selectedBrandNameArray.append(brandNameEnglishArray[i] as! String)
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedBrandNameArray.append(brandNameEnglishArray[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedBrandNameArray.append(brandNameArabicArray[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedBrandNameArray.append(brandNameEnglishArray[i] as! String)
+                                }
                             }
                         }
                     }
@@ -1338,7 +1408,21 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            UserDefaults.standard.set("All Brand", forKey: "brand")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("All Brand", forKey: "brand")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("جميع العلامات التجارية", forKey: "brand")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("All Brand", forKey: "brand")
+            }
         }
         
         if brandTagIntArray.count == 0
