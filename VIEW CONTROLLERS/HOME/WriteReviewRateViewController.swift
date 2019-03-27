@@ -465,6 +465,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     Review_TF.adjustsFontSizeToFitWidth = true
     Review_TF.keyboardType = .default
     Review_TF.clearsOnBeginEditing = false
+    
     Review_TF.returnKeyType = .done
     // Review_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
     Review_TF.delegate = self

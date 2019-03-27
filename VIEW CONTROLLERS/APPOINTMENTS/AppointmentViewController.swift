@@ -285,7 +285,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any Appointment request"
+                emptyLabel.text = "You Don't Have Any Appointments"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -346,7 +346,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             DeviceError()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You don't have any Appointment request"
+            emptyLabel.text = "You Don't Have Any Appointments"
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
             emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -372,7 +372,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any Appointment request"
+                emptyLabel.text = "You Don't Have Any Appointments"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -431,7 +431,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             DeviceError()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You don't have any Appointment request"
+            emptyLabel.text = "You Don't Have Any Appointments"
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
             emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -522,24 +522,25 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             print("MaterialAppointTimeArr:",MaterialAppointTimeArr)
           
                 
-           if MaterialInEnglish.contains("Own Material-Direct Delivery")
-           {
+         //  if MaterialInEnglish.contains("Own Material-Direct Delivery")
+         //  {
+            
               if(MaterialFromDtArr.count > 0)
               {
                  From_MaterialType_TF.text = MaterialFromDtArr[0] as? String
               }
             
-            if(MaterialToDtArr.count > 0)
-            {
+              if(MaterialToDtArr.count > 0)
+              {
                 TO_MaterialType_TF.text = MaterialToDtArr[0] as? String
-            }
+              }
             
-            if(MaterialAppointTimeArr.count > 0)
-            {
-               SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
-            }
+              if(MaterialAppointTimeArr.count > 0)
+              {
+                 SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
+              }
             
-           }
+         //  }
             
         }
         else if ResponseMsg == "Failure"
@@ -577,8 +578,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasureAppointTimeArr = Result.value(forKey: "AppointmentTime") as! NSArray
             print("MeasureAppointTimeArr:",MeasureAppointTimeArr)
             
-           if MeasurementInEnglish.contains("Go to Tailor Shop")
-           {
+        //   if MeasurementInEnglish.contains("Go to Tailor Shop")
+         //  {
              if(MeasureFromDtArr.count > 0)
              {
                 From_MeasurementType_TF.text = MeasureFromDtArr[0] as? String
@@ -593,7 +594,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             {
               SLOT_MeasurementType_TF.text = MeasureAppointTimeArr[0] as? String
             }
-          }
+         // }
          
         }
         else if ResponseMsg == "Failure"
@@ -773,6 +774,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // Material_StatusBtn.backgroundColor = UIColor.gray
         if(MaterialStatus.count > 0)
         {
+            
+          /*
            if(MaterialStatus.contains("Not Approved"))
            {
             if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -793,6 +796,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
            }
            else
            {
+          */
              if(MaterialStatus.count == 1)
              {
                Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
@@ -805,7 +809,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
              {
                 Material_StatusBtn.setTitle("\(MaterialStatus[2])", for: .normal)
              }
-           }
+            
+          // }
         }
         else
         {
@@ -1201,6 +1206,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // Measure_StatusBtn.backgroundColor = UIColor.gray
         if(MeasureStatus.count > 0)
         {
+          /*
             if(MeasureStatus.contains("Not Approved"))
             {
                 if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -1221,6 +1227,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             }
             else
             {
+          */
                 if(MeasureStatus.count == 1)
                 {
                     Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
@@ -1233,7 +1240,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 {
                     Measure_StatusBtn.setTitle("\(MeasureStatus[2])", for: .normal)
                 }
-            }
+           // }
         }
         else
         {
@@ -2351,6 +2358,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
+            self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
+            
+          /*
             if (FMaterial.compare(TMaterial) == .orderedAscending || FMaterial.compare(TMaterial) == .orderedSame)
             {
                 print("From-Date is smaller than To-Date")
@@ -2365,8 +2375,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
                 self.present(appointmentAlert, animated: true, completion: nil)
-                
             }
+          */
             
         }
     }
@@ -2402,7 +2412,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
+            self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime: SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
             
+          /*
             if (FMeasure.compare(TMeasure) == .orderedAscending || FMeasure.compare(TMeasure) == .orderedSame)
             {
                 print("From-Date is smaller then To-Date")
@@ -2418,6 +2430,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
                 self.present(appointmentAlert, animated: true, completion: nil)
             }
+            */
         }
     }
     

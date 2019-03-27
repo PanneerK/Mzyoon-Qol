@@ -174,10 +174,10 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             let Result = orderApprovalDelivery.object(forKey: "Result") as! NSDictionary
             print("Result", Result)
             
-            if Result.count == 0 || Result == nil
+            if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any order request"
+                emptyLabel.text = "You Don't Have Any Orders For Approval"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -1341,7 +1341,14 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         StichValueLabel.frame = CGRect(x: StichColonLabel.frame.maxX + x, y: 0, width: (15 * x), height: (6 * y))
         // StichValueLabel.backgroundColor = UIColor.gray
         let date = StichingTimesArray[0] as? String
-        StichValueLabel.text = "\(date!) Days"
+        if(date == "1")
+        {
+           StichValueLabel.text = "\(date!) Day"
+        }
+        else
+        {
+            StichValueLabel.text = "\(date!) Days"
+        }
         StichValueLabel.textColor = UIColor.white
         StichValueLabel.textAlignment = .left
         StichValueLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)

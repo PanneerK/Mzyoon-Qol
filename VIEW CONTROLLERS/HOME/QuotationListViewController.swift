@@ -276,8 +276,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: tailorViewButton.frame.height)
             tailorImageView.backgroundColor = UIColor.white
-          //  tailorImageView.layer.borderWidth = 1.0
-          //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+            tailorImageView.layer.borderWidth = 1.0
+            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
             
           //  tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
@@ -292,11 +292,13 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
                 
                 let dummyImageView = UIImageView()
                 dummyImageView.frame = CGRect(x: 0, y: 0, width: tailorImageView.frame.width, height: tailorImageView.frame.height)
+                
                 if apiurl != nil
                 {
                     dummyImageView.dowloadFromServer(url: apiurl!)
                 }
                 dummyImageView.tag = -1
+                dummyImageView.contentMode = .scaleToFill
                 tailorImageView.addSubview(dummyImageView)
             }
              tailorViewButton.addSubview(tailorImageView)

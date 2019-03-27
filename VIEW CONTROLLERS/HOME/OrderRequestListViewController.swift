@@ -150,11 +150,13 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             {
                 stopActivity()
                 
-                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any order request"
+                emptyLabel.frame = CGRect(x: (3 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (6 * x), height: (4 * y))
+                emptyLabel.text = "Tailor Yet To Accept Your Request.,Please Come Back After Sometime..!" // "You Don't Have Any Order Request"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
-                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.numberOfLines = 2
+                emptyLabel.adjustsFontSizeToFitWidth = true
+                emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
                 emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
                 view.addSubview(emptyLabel)
             }
@@ -195,11 +197,13 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             stopActivity()
             
-            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You don't have any order request"
+            emptyLabel.frame = CGRect(x: (3 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (6 * x), height: (4 * y))
+            emptyLabel.text = "Tailor Yet To Accept Your Request.,Please Come Back After Sometime..!"
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
-            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.numberOfLines = 2
+            emptyLabel.adjustsFontSizeToFitWidth = true
+            emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
             emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
             view.addSubview(emptyLabel)
         }

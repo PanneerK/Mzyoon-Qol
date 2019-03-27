@@ -85,10 +85,10 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             let Result = getAppointmentList.object(forKey: "Result") as! NSArray
             print(Result)
      
-            if Result.count == 0 || Result == nil
+            if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any order request"
+                emptyLabel.text = "You Don't Have Any Appointment List"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -128,7 +128,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             DeviceError()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You don't have any order request"
+            emptyLabel.text = "You Don't Have Any Appointment List"
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
             emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -255,7 +255,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let DressImageView = UIImageView()
-            DressImageView.frame = CGRect(x: 0, y: 0, width: (8 * x), height: AppointmentViewButton.frame.height)
+            DressImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: AppointmentViewButton.frame.height)
             DressImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             DressImageView.layer.borderWidth = 1.0
             DressImageView.layer.borderColor = UIColor.lightGray.cgColor
@@ -273,13 +273,13 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
                 dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
                 dummyImageView.dowloadFromServer(url: apiurl!)
                 dummyImageView.tag = -1
+                // dummyImageView.contentMode = .scaleToFill
                 DressImageView.addSubview(dummyImageView)
             }
         
             AppointmentViewButton.addSubview(DressImageView)
             
             //
-            
             let orderDate_Icon = UIImageView()
             orderDate_Icon.frame = CGRect(x: DressImageView.frame.maxX + x, y: y/2, width: x, height: y)
             orderDate_Icon.image = UIImage(named: "OrderDate")
@@ -410,22 +410,22 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
                     DressImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     
                     O_DateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    O_DateLabel.text = "Order Date :"
+                    O_DateLabel.text = "Order Date          :"
                     O_DateLabel.textAlignment = .left
                     OR_DateLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     OR_DateLabel.textAlignment = .left
                     O_IdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    O_IdLabel.text = "Order ID :"
+                    O_IdLabel.text = "Order ID           :"
                     O_IdLabel.textAlignment = .left
                     OR_IdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     OR_IdLabel.textAlignment = .left
                     T_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    T_NameLabel.text = "Tailor Name :"
+                    T_NameLabel.text = "Tailor Name     :"
                     T_NameLabel.textAlignment = .left
                     TR_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     TR_NameLabel.textAlignment = .left
                     S_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    S_NameLabel.text = "Shop Name :"
+                    S_NameLabel.text = "Shop Name     :"
                     S_NameLabel.textAlignment = .left
                     SH_NameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     SH_NameLabel.textAlignment = .left
