@@ -954,7 +954,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            From_MaterialType_TF.isUserInteractionEnabled = true
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                From_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                From_MaterialType_TF.isUserInteractionEnabled = true
+            }
+           //  From_MaterialType_TF.isUserInteractionEnabled = true
+            
         }
         From_MaterialType_TF.addTarget(self, action: #selector(self.FMaterial_calendarAction), for: .allEditingEvents)
         From_MaterialType_TF.delegate = self as? UITextFieldDelegate
@@ -997,7 +1006,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            TO_MaterialType_TF.isUserInteractionEnabled = true
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                TO_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                TO_MaterialType_TF.isUserInteractionEnabled = true
+            }
+            
+           // TO_MaterialType_TF.isUserInteractionEnabled = true
         }
         TO_MaterialType_TF.addTarget(self, action: #selector(self.TMaterial_calendarAction), for: .allEditingEvents)
         TO_MaterialType_TF.delegate = self as? UITextFieldDelegate
@@ -1052,7 +1070,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            SLOT_MaterialType_TF.isUserInteractionEnabled = true
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                SLOT_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                SLOT_MaterialType_TF.isUserInteractionEnabled = true
+            }
+           // SLOT_MaterialType_TF.isUserInteractionEnabled = true
         }
         SLOT_MaterialType_TF.addTarget(self, action: #selector(self.SlotMaterial_calendarAction), for: .allEditingEvents)
         SLOT_MaterialType_TF.delegate = self as? UITextFieldDelegate
@@ -1078,7 +1104,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             }
             else
             {
-             OrderTypeView.addSubview(Material_ApproveButton)
+               OrderTypeView.addSubview(Material_ApproveButton)
             }
         }
         else
@@ -1131,7 +1157,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            OrderTypeView.addSubview(Material_SaveButton)
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                OrderTypeView.addSubview(Material_SaveButton)
+            }
+            
         }
         
      
@@ -1378,7 +1412,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            From_MeasurementType_TF.isUserInteractionEnabled = true
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                From_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                From_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+           // From_MeasurementType_TF.isUserInteractionEnabled = true
         }
         From_MeasurementType_TF.addTarget(self, action: #selector(self.FMeasurement_calendarAction), for: .allEditingEvents)
         From_MeasurementType_TF.delegate = self as? UITextFieldDelegate
@@ -1421,7 +1463,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            TO_MeasurementType_TF.isUserInteractionEnabled = true
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                TO_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                TO_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+            // TO_MeasurementType_TF.isUserInteractionEnabled = true
         }
         TO_MeasurementType_TF.addTarget(self, action: #selector(self.TMeasurement_calendarAction), for: .allEditingEvents)
         TO_MeasurementType_TF.delegate = self as? UITextFieldDelegate
@@ -1477,7 +1527,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            SLOT_MeasurementType_TF.isUserInteractionEnabled = true
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                SLOT_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                SLOT_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+           // SLOT_MeasurementType_TF.isUserInteractionEnabled = true
         }
         SLOT_MeasurementType_TF.addTarget(self, action: #selector(self.SlotMeasure_calendarAction), for: .allEditingEvents)
         SLOT_MeasurementType_TF.delegate = self as? UITextFieldDelegate
@@ -1543,7 +1601,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-           MeasurementTypeView.addSubview(Measure_SaveButton)
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                MeasurementTypeView.addSubview(Measure_SaveButton)
+            }
+           
         }
         
         AppointmentScrollview.contentSize.height = MeasurementTypeView.frame.maxY
