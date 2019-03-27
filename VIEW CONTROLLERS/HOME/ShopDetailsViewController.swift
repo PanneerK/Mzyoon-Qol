@@ -233,8 +233,12 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
           //  OrderCount = OrderCountArray[0] as? String
            // print("OrderCount:",OrderCount)
             
-            RatingArray = OrderCounts.value(forKey: "Rating") as! NSArray
+            let Ratings = Result.object(forKey: "Rating") as! NSArray
+            print("Ratings:",Ratings)
+            
+            RatingArray = Ratings.value(forKey: "Rating") as! NSArray
             print("RatingArray:",RatingArray)
+            
           //  Rating = RatingArray[0] as? String
           //  print("Rating:",Rating)
             
@@ -242,7 +246,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
             let ReviewCount = Result.object(forKey: "ReviewCount") as! NSArray
             print("ReviewCount:",ReviewCount)
             
-            ReviewArray = ReviewCount.value(forKey: "Review") as! NSArray
+            ReviewArray = ReviewCount.value(forKey: "ReviewCount") as! NSArray
             print("ReviewArray:",ReviewArray)
           //  Review = ReviewArray[0] as? String
            // print("Review:",Review)

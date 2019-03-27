@@ -9,7 +9,7 @@
 import UIKit
 import Cosmos
 
-class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
+class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate,UITextViewDelegate
 {
     let serviceCall = ServerAPI()
     
@@ -18,7 +18,8 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     let selfScreenContents = UIView()
 
     var RatingTypeArray = NSArray()
-    var Review_TF = UITextField()
+   // var Review_TF = UITextField()
+    var Review_TF = UITextView()
     
     var reviewStr:String!
     var OnTimeServiceRatingNum:Int!
@@ -449,6 +450,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     ReviewUnderline.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     selfScreenContents.addSubview(ReviewUnderline)
     
+    /*
     // REviewsTF..
     // let Review_TF = UITextField()
     Review_TF.frame = CGRect(x: 0, y: ReviewUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (10 * y))
@@ -470,6 +472,25 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     // Review_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
     Review_TF.delegate = self
     selfScreenContents.addSubview(Review_TF)
+    */
+    
+    // ReviewsTF..
+    // let Review_TF = UITextField()
+    Review_TF.frame = CGRect(x: 0, y: ReviewUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (10 * y))
+    Review_TF.backgroundColor = UIColor.white
+    Review_TF.textColor = UIColor.black
+    Review_TF.textAlignment = .left
+    Review_TF.layer.borderColor = UIColor.lightGray.cgColor
+    Review_TF.layer.borderWidth = 1.0
+    //Review_TF.layer.cornerRadius = 10
+    Review_TF.font = UIFont(name: "Avenir Next", size: 1.5 * x)
+    Review_TF.keyboardType = .default
+    //Review_TF.addTarget(self, action: #selector(self.DoneAction), for: .allEditingEvents)
+    selfScreenContents.addSubview(Review_TF)
+    
+    let myGesture = UITapGestureRecognizer(target: self, action: #selector(self.DoneAction))
+    selfScreenContents.addGestureRecognizer(myGesture)
+   
     
     
     let SubmitButton = UIButton()
@@ -507,7 +528,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
             ReviewLabel.textAlignment = .left
             
             Review_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            Review_TF.placeholder = "      Write a review..   "
+           // Review_TF.placeholder = "      Write a review..   "
             Review_TF.textAlignment = .left
             
             SubmitButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -535,7 +556,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
             ReviewLabel.textAlignment = .right
             
             Review_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            Review_TF.placeholder = "      أكتب مراجعة..   "
+           // Review_TF.placeholder = "      أكتب مراجعة..   "
             Review_TF.textAlignment = .right
             
             SubmitButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -564,7 +585,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
         ReviewLabel.textAlignment = .left
         
         Review_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        Review_TF.placeholder = "      Write a review..   "
+       // Review_TF.placeholder = "      Write a review..   "
         Review_TF.textAlignment = .left
         
         SubmitButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -577,11 +598,15 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     self.navigationController?.popViewController(animated: true)
   }
     
+    
   @objc func DoneAction()
   {
-    
+    /*
      Review_TF.resignFirstResponder()
      reviewStr = self.Review_TF.text
+    */
+    view.endEditing(true)
+    reviewStr = self.Review_TF.text
     
   }
   func textFieldShouldReturn(_ textField: UITextField) -> Bool
