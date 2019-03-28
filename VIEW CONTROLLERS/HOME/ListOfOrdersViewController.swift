@@ -140,7 +140,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                     if language == "en"
                     {
                         emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                        emptyLabel.text = "You Dont Have Pending Orders"
+                        emptyLabel.text = "You Don't Have Pending Orders"
                     }
                     else if language == "ar"
                     {
@@ -151,7 +151,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                 else
                 {
                     emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    emptyLabel.text = "You Dont Have Pending Orders"
+                    emptyLabel.text = "You Don't Have Pending Orders"
                 }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
@@ -213,7 +213,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                     if language == "en"
                     {
                         emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                        emptyLabel.text = "You Dont Have Delivered orders"
+                        emptyLabel.text = "You Don't Have Delivered orders"
                     }
                     else if language == "ar"
                     {
@@ -224,7 +224,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                 else
                 {
                     emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    emptyLabel.text = "You Dont Have Delivered orders"
+                    emptyLabel.text = "You Don't Have Delivered orders"
                 }
                 
                 emptyLabel.textColor = UIColor.black

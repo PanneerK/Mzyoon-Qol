@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VIEW CONTROLLERS/APPOINTMENTS/AppointmentViewController.swift"
-            timestampString = "575473941.173511"
+            timestampString = "575475579.062748"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "637"
@@ -36,44 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VIEW CONTROLLERS/APPOINTMENTS/TelrResponseViewController.swift"
-            timestampString = "575473941.173948"
+            timestampString = "575475579.062833"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "351"
             endingLineNumber = "351"
             landmarkName = "DoneButtonAction(sender:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/HOME/OrderApprovalViewController.swift"
-            timestampString = "575473941.174006"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "API_CALLBACK_UpdateQtyOrderApproval(updateQtyOA:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VIEW CONTROLLERS/HOME/OrderApprovalViewController.swift"
-            timestampString = "575473941.174058"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
-            landmarkName = "proceedAlertAction(action:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -121,7 +121,21 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             {
                 
                 emptyLabel.frame = CGRect(x: (4 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (8 * x), height: (6 * y))
-                emptyLabel.text = "Tailors Yet to Accept Request.,Please Come Back After Some time..!"
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyLabel.text = "Tailors Yet to Accept Request.,Please Come Back After Sometime..!"
+                    }
+                    else if language == "ar"
+                    {
+                        emptyLabel.text = "خياط حتى الآن لقبول الطلب. ، يرجى العودة بعد وقت ما ..!"
+                    }
+                }
+                else
+                {
+                    emptyLabel.text = "Tailor Yet to Accept Request.,Please Come Back After Sometime..!"
+                }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
@@ -167,6 +181,31 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             MethodName = "GetQuotationList"
             ErrorStr = Result
             DeviceError()
+            
+            emptyLabel.frame = CGRect(x: (4 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (8 * x), height: (6 * y))
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    emptyLabel.text = "Tailors Yet to Accept Request.,Please Come Back After Sometime..!"
+                }
+                else if language == "ar"
+                {
+                    emptyLabel.text = "خياط حتى الآن لقبول الطلب. ، يرجى العودة بعد وقت ما ..!"
+                }
+            }
+            else
+            {
+                emptyLabel.text = "Tailor Yet to Accept Request.,Please Come Back After Sometime..!"
+            }
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            emptyLabel.textAlignment = .left
+            emptyLabel.lineBreakMode = .byWordWrapping
+            emptyLabel.numberOfLines = 4
+            view.addSubview(emptyLabel)
         }
         
     }

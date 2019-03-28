@@ -92,11 +92,11 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
                 {
                     if language == "en"
                     {
-                        emptyLabel.text = "You don't have any order request"
+                        emptyLabel.text = "You Don't Have Any Appointment List"
                     }
                     else if language == "ar"
                     {
-                        emptyLabel.text = "ليس لديك أي طلب"
+                        emptyLabel.text = "ليس لديك أي قائمة مواعيد"
                     }
                 }
                 else
@@ -146,20 +146,20 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             {
                 if language == "en"
                 {
-                    emptyLabel.text = "You don't have any order request"
+                    emptyLabel.text = "You Don't Have Any Appointment List"
                 }
                 else if language == "ar"
                 {
-                    emptyLabel.text = "ليس لديك أي طلب"
+                    emptyLabel.text = "ليس لديك أي قائمة مواعيد"
                 }
             }
             else
             {
-                emptyLabel.text = "You don't have any order request"
+                emptyLabel.text = "You Don't Have Any Appointment List"
             }
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
-            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
             emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
             view.addSubview(emptyLabel)
         }

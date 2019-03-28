@@ -155,7 +155,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 {
                     if language == "en"
                     {
-                        emptyLabel.text = "You don't have any order request"
+                        emptyLabel.text = "You Don't have Any Order Request"
                     }
                     else if language == "ar"
                     {
@@ -164,7 +164,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 }
                 else
                 {
-                    emptyLabel.text = "You don't have any order request"
+                    emptyLabel.text = "You Don't have Any Order Requests"
                 }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
@@ -216,7 +216,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             {
                 if language == "en"
                 {
-                    emptyLabel.text = "You don't have any order request"
+                    emptyLabel.text = "You Don't have Any Order Request"
                 }
                 else if language == "ar"
                 {
@@ -225,7 +225,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             }
             else
             {
-                emptyLabel.text = "You don't have any order request"
+                emptyLabel.text = "You Don't have Any Order Request"
             }
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
