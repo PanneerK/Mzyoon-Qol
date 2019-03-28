@@ -643,6 +643,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         brandScrollView.contentSize.width = x2 + (3 * x)
         
         self.stopActivity()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

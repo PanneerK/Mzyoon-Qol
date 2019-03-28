@@ -204,10 +204,27 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
             MaterialSucessStr = "True"
             
-            let appointmentAlert = UIAlertController(title: "Sucess..!", message: "Appointment: \(Result)", preferredStyle:  .alert)
-            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
-           // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            self.present(appointmentAlert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let appointmentAlert = UIAlertController(title: "Success..!", message: "Appointment: \(Result)", preferredStyle:  .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let appointmentAlert = UIAlertController(title: "نجاح..!", message: "موعد:\(Result)", preferredStyle:  .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: proceedAlertAction(action:)))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let appointmentAlert = UIAlertController(title: "Success..!", message: "Appointment: \(Result)", preferredStyle:  .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
             
             /*
              window = UIWindow(frame: UIScreen.main.bounds)
@@ -244,10 +261,27 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
             MeasureSucessStr = "True"
             
-            let appointmentAlert = UIAlertController(title: "Sucess..!", message: "Appointment: \(Result)", preferredStyle: .alert)
-            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
-           // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            self.present(appointmentAlert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let appointmentAlert = UIAlertController(title: "Success..!", message: "Appointment: \(Result)", preferredStyle:  .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let appointmentAlert = UIAlertController(title: "نجاح..!", message: "موعد:\(Result)", preferredStyle:  .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: proceedAlertAction(action:)))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let appointmentAlert = UIAlertController(title: "Success..!", message: "Appointment: \(Result)", preferredStyle:  .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
             
             /*
              window = UIWindow(frame: UIScreen.main.bounds)
@@ -454,10 +488,27 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
             MaterialSucessStr = "True"
             
-            let appointmentAlert = UIAlertController(title: "Sucess..!", message: "Appointment Approved", preferredStyle: .alert)
-            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
-            // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            self.present(appointmentAlert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let appointmentAlert = UIAlertController(title: "Success..!", message: "Appointment Approved", preferredStyle:  .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let appointmentAlert = UIAlertController(title: "نجاح..!", message: "تاريخ الموافقة", preferredStyle:  .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: proceedAlertAction(action:)))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let appointmentAlert = UIAlertController(title: "Success..!", message: "Appointment Approved", preferredStyle:  .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: proceedAlertAction(action:)))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
             
         }
         else if ResponseMsg == "Failure"
@@ -1919,7 +1970,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let reschedule_LBL = UILabel()
         reschedule_LBL.frame = CGRect(x: x, y: Rescheduleview.frame.minY, width: Rescheduleview.frame.width - x, height: (8 * y))
         //reschedule_LBL.backgroundColor = UIColor.gray
-        reschedule_LBL.text = "The Appointment for your time is not available, please reschedule your date and time for your appointment"
         reschedule_LBL.textColor = UIColor.white
         reschedule_LBL.textAlignment = .left
         reschedule_LBL.lineBreakMode = .byWordWrapping
@@ -1930,7 +1980,24 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let rescheduleButton = UIButton()
         rescheduleButton.frame = CGRect(x: x, y: reschedule_LBL.frame.maxY + y , width: (15 * x), height: (2 * y))
         rescheduleButton.backgroundColor = UIColor.blue
-        rescheduleButton.setTitle("Click Here to Reschedule", for: .normal)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                rescheduleButton.setTitle("Click Here to Reschedule", for: .normal)
+                reschedule_LBL.text = "The Appointment for your time is not available, please reschedule your date and time for your appointment"
+            }
+            else if language == "ar"
+            {
+                rescheduleButton.setTitle("انقر هنا لإعادة جدولة", for: .normal)
+                reschedule_LBL.text = "موعدك غير متاح ، يرجى إعادة جدولة تاريخ ووقت موعدك"
+            }
+        }
+        else
+        {
+            rescheduleButton.setTitle("Click Here to Reschedule", for: .normal)
+            reschedule_LBL.text = "The Appointment for your time is not available, please reschedule your date and time for your appointment"
+        }
         rescheduleButton.setTitleColor(UIColor.white, for: .normal)
         rescheduleButton.layer.borderColor = UIColor.lightGray.cgColor
         rescheduleButton.layer.borderWidth = 1.0
@@ -1967,7 +2034,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // let Material_rejectReason_TF = UITextField()
         Material_rejectReason_TF.frame = CGRect(x: x, y: RejectView.frame.minY, width: RejectView.frame.width - (2 * x), height: (6 * y))
        // Material_rejectReason_TF.backgroundColor = UIColor.gray
-        Material_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                Material_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+            }
+            else if language == "ar"
+            {
+                Material_rejectReason_TF.placeholder = "يرجى ذكر سبب رفضك."
+            }
+        }
+        else
+        {
+            Material_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+        }
         Material_rejectReason_TF.textColor = UIColor.black
         Material_rejectReason_TF.textAlignment = .left
         Material_rejectReason_TF.contentVerticalAlignment = .top
@@ -2014,7 +2095,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // let Measure_rejectReason_TF = UITextField()
         Measure_rejectReason_TF.frame = CGRect(x: x, y: RejectView.frame.minY, width: RejectView.frame.width - (2 * x), height: (6 * y))
         // Measure_rejectReason_TF.backgroundColor = UIColor.gray
-        Measure_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                Measure_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+            }
+            else if language == "ar"
+            {
+                Measure_rejectReason_TF.placeholder = "يرجى ذكر سبب رفضك."
+            }
+        }
+        else
+        {
+            Measure_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+        }
         Measure_rejectReason_TF.textColor = UIColor.black
         Measure_rejectReason_TF.textAlignment = .left
         Measure_rejectReason_TF.contentVerticalAlignment = .top
@@ -2418,9 +2513,28 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if (FMaterial.isEmpty || TMaterial.isEmpty || SlotStr.isEmpty)
         {
             print("Date/Time are Empty")
-            let appointmentAlert = UIAlertController(title: "Alert..!", message: "Date/Time is Empty..!", preferredStyle: .alert)
-            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(appointmentAlert, animated: true, completion: nil)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let appointmentAlert = UIAlertController(title: "Alert..!", message: "Date/Time is Empty..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let appointmentAlert = UIAlertController(title: "تنبيه..!", message: "التاريخ / الوقت فارغ ..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let appointmentAlert = UIAlertController(title: "Alert..!", message: "Date/Time is Empty..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
         }
         else
         {
@@ -2472,9 +2586,27 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if (FMeasure.isEmpty || TMeasure.isEmpty || SlotStr.isEmpty)
         {
             print("Dates are Empty")
-            let appointmentAlert = UIAlertController(title: "Alert..!", message: "Date/Time is Empty..!", preferredStyle: .alert)
-            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(appointmentAlert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let appointmentAlert = UIAlertController(title: "Alert..!", message: "Date/Time is Empty..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let appointmentAlert = UIAlertController(title: "تنبيه..!", message: "التاريخ / الوقت فارغ ..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let appointmentAlert = UIAlertController(title: "Alert..!", message: "Date/Time is Empty..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
         }
         else
         {

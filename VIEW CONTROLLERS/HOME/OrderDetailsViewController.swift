@@ -311,33 +311,33 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         SubTotalLabel.text = "حاصل الجمع"
         SubTotalPriceLabel.textAlignment = .right
         SubTotalPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        SubTotalPriceLabel.textAlignment = .right
+        SubTotalPriceLabel.textAlignment = .left
         ShippingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         ShippingLabel.text = "الشحن والتسليم"
         ShippingLabel.textAlignment = .right
         ShippingPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        ShippingPriceLabel.textAlignment = .right
+        ShippingPriceLabel.textAlignment = .left
         TaxLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         TaxLabel.text = "ضريبة"
         TaxLabel.textAlignment = .right
         TaxPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        TaxPriceLabel.textAlignment = .right
+        TaxPriceLabel.textAlignment = .left
         AppointmentLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         AppointmentLabel.text = "رسوم التعيين"
         AppointmentLabel.textAlignment = .right
         AppointmentPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        AppointmentPriceLabel.textAlignment = .right
+        AppointmentPriceLabel.textAlignment = .left
         TotalLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         TotalLabel.text = "مجموع"
         TotalLabel.textAlignment = .right
         TotalPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        TotalPriceLabel.textAlignment = .right
+        TotalPriceLabel.textAlignment = .left
         PaymentLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         PaymentLabel.text = "نوع الدفع"
         PaymentLabel.textAlignment = .right
         PaymentTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         PaymentTypeLabel.text = "(بطاقة)"
-        PaymentTypeLabel.textAlignment = .right
+        PaymentTypeLabel.textAlignment = .left
     }
     
     func changeViewToEnglishInSelf()
@@ -381,33 +381,33 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         SubTotalLabel.text = "Sub Total"
         SubTotalPriceLabel.textAlignment = .left
         SubTotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        SubTotalPriceLabel.textAlignment = .left
+        SubTotalPriceLabel.textAlignment = .right
         ShippingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         ShippingLabel.text = "Shipping & Handling"
         ShippingLabel.textAlignment = .left
         ShippingPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        ShippingPriceLabel.textAlignment = .left
+        ShippingPriceLabel.textAlignment = .right
         TaxLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         TaxLabel.text = "Tax"
         TaxLabel.textAlignment = .left
         TaxPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        TaxPriceLabel.textAlignment = .left
+        TaxPriceLabel.textAlignment = .right
         AppointmentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         AppointmentLabel.text = "Appointment Charges"
         AppointmentLabel.textAlignment = .left
         AppointmentPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        AppointmentPriceLabel.textAlignment = .left
+        AppointmentPriceLabel.textAlignment = .right
         TotalLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         TotalLabel.text = "Total"
         TotalLabel.textAlignment = .left
         TotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        TotalPriceLabel.textAlignment = .left
+        TotalPriceLabel.textAlignment = .right
         PaymentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         PaymentLabel.text = "Payment Type"
         PaymentLabel.textAlignment = .left
         PaymentTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         PaymentTypeLabel.text = "(Card)"
-        PaymentTypeLabel.textAlignment = .left
+        PaymentTypeLabel.textAlignment = .right
     }
     
     func orderDetailsContent()
@@ -623,7 +623,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Sub-Total Label
-        let SubTotalLabel = UILabel()
+//        let SubTotalLabel = UILabel()
         SubTotalLabel.frame = CGRect(x:x, y: DressImageView.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
         SubTotalLabel.text = "Sub Total"
         SubTotalLabel.textColor = UIColor.black
@@ -633,7 +633,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(SubTotalLabel)
         
         
-        let SubTotalPriceLabel = UILabel()
+//        let SubTotalPriceLabel = UILabel()
         SubTotalPriceLabel.frame = CGRect(x:SubTotalLabel.frame.maxX + (12 * x), y: DressImageView.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
         if(Price.count > 0)
         {
@@ -652,7 +652,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Shipping Label
-        let ShippingLabel = UILabel()
+//        let ShippingLabel = UILabel()
         ShippingLabel.frame = CGRect(x:x, y: SubTotalLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         ShippingLabel.text = "Shipping & Handling"
         ShippingLabel.textColor = UIColor.black
@@ -661,7 +661,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         ShippingLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(ShippingLabel)
         
-        let ShippingPriceLabel = UILabel()
+//        let ShippingPriceLabel = UILabel()
         ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(ShippingCharges.count > 0)
         {
@@ -679,7 +679,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Tax Label
-        let TaxLabel = UILabel()
+//        let TaxLabel = UILabel()
         TaxLabel.frame = CGRect(x:x, y: ShippingLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         TaxLabel.text = "Tax"
         TaxLabel.textColor = UIColor.black
@@ -688,7 +688,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TaxLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(TaxLabel)
         
-        let TaxPriceLabel = UILabel()
+//        let TaxPriceLabel = UILabel()
         TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
@@ -708,7 +708,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Appointment Label
-        let AppointmentLabel = UILabel()
+//        let AppointmentLabel = UILabel()
         AppointmentLabel.frame = CGRect(x:x, y: TaxLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         AppointmentLabel.text = "Appointment Charges"
         AppointmentLabel.textColor = UIColor.black
@@ -717,7 +717,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         AppointmentLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(AppointmentLabel)
         
-        let AppointmentPriceLabel = UILabel()
+//        let AppointmentPriceLabel = UILabel()
         AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Appoinment.count > 0)
         {
@@ -739,7 +739,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Total Label
-        let TotalLabel = UILabel()
+//        let TotalLabel = UILabel()
         TotalLabel.frame = CGRect(x:x, y: AppointmentLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         TotalLabel.text = "Total"
         TotalLabel.textColor = UIColor.black
@@ -748,7 +748,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TotalLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(TotalLabel)
         
-        let TotalPriceLabel = UILabel()
+//        let TotalPriceLabel = UILabel()
         TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
         if(Total.count > 0)
         {
@@ -772,7 +772,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // Payment Type Label
-        let PaymentLabel = UILabel()
+//        let PaymentLabel = UILabel()
         PaymentLabel.frame = CGRect(x:x, y: TotalLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         PaymentLabel.text = "Payment Type"
         PaymentLabel.textColor = UIColor.blue
@@ -781,7 +781,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
         PaymentInfoView.addSubview(PaymentLabel)
         
-        let PaymentTypeLabel = UILabel()
+//        let PaymentTypeLabel = UILabel()
         PaymentTypeLabel.frame = CGRect(x:PaymentLabel.frame.maxX - (2 * x), y: TotalPriceLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
         PaymentTypeLabel.text = "(Card)"
         PaymentTypeLabel.textColor = UIColor.blue

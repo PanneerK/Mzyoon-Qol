@@ -41,7 +41,7 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     
     var strPhoneNumber:String!
     
-     let TimingsTableView = UITableView()
+    let TimingsTableView = UITableView()
     let blurView = UIView()
     let alertView = UIView()
     let titleLabel = UILabel()

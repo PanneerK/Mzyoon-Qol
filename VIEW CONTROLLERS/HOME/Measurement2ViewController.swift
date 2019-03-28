@@ -485,6 +485,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     {
         view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
+        tabBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.text = "MEASUREMENT-2"
@@ -516,6 +518,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func changeViewToArabicInSelf()
     {
         view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        tabBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
 //        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)

@@ -795,6 +795,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             if language == "en"
             {
                 genderLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                genderLabel.text = "Gender"
                 genderLabel.textAlignment = .left
 
                 changeViewToEnglishInSelf()
@@ -802,6 +803,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             else if language == "ar"
             {
                 genderLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                genderLabel.text = "جنس"
                 genderLabel.textAlignment = .right
 
                 changeViewToArabicInSelf()
@@ -810,6 +812,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         else
         {
             genderLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            genderLabel.text = "Gender"
             genderLabel.textAlignment = .left
 
             changeViewToEnglishInSelf()
@@ -1226,7 +1229,21 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        genderLabel.text = gendersArrayInEnglish[indexPath.row]
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                genderLabel.text = gendersArrayInEnglish[indexPath.row]
+            }
+            else if language == "ar"
+            {
+                genderLabel.text = gendersArrayInArabic[indexPath.row]
+            }
+        }
+        else
+        {
+            genderLabel.text = gendersArrayInEnglish[indexPath.row]
+        }
         print("WELCOME TO DID SELECT")
         GenderStr = genderLabel.text!
         genderTableView.removeFromSuperview()

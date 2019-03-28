@@ -121,7 +121,21 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             {
                 
                 emptyLabel.frame = CGRect(x: (4 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (8 * x), height: (6 * y))
-                emptyLabel.text = "Tailors Yet to Accept Request.,Please Come Back After Some time..!"
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyLabel.text = "Tailors Yet to Accept Request.,Please Come Back After Some time..!"
+                    }
+                    else if language == "ar"
+                    {
+                        emptyLabel.text = "الخياطين الذين لم يقبلوا الطلب ، يرجى العودة بعد بعض الوقت ..!"
+                    }
+                }
+                else
+                {
+                    emptyLabel.text = "Tailors Yet to Accept Request.,Please Come Back After Some time..!"
+                }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
