@@ -68,35 +68,6 @@ class SlideViewController: UIViewController
         print("WELCOME TO DISAPPEAR")
     }
     
-    func sideMenuFunctions()
-    {
-        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: self)
-        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
-        
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
-        {
-            if language == "en"
-            {
-                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-                SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
-            }
-            else if language == "ar"
-            {
-                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-                SideMenuManager.default.menuRightNavigationController = menuRightNavigationController
-            }
-        }
-        else
-        {
-            let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-            SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
-        }
-
-        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-        SideMenuManager.default.menuFadeStatusBar = false
-    }
-    
     func screenContents()
     {
         userImage.frame = CGRect(x: ((slideViewWidth - (10 * x)) / 2), y: (5 * y), width: (10 * x), height: (10 * x))
@@ -265,9 +236,30 @@ class SlideViewController: UIViewController
         }
         else if sender.tag == 3
         {
-            let logoutAlert = UIAlertController(title: "Alert", message: "Are you sure want to logout", preferredStyle: .alert)
-            logoutAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: logoutAlertOkAction(action:)))
-            logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            var logoutAlert = UIAlertController()
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    logoutAlert = UIAlertController(title: "Alert", message: "Are you sure want to logout", preferredStyle: .alert)
+                    logoutAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: logoutAlertOkAction(action:)))
+                    logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                }
+                else if language == "ar"
+                {
+                    logoutAlert = UIAlertController(title: "تنبيه", message: "هل أنت متأكد أنك تريد الخروج؟", preferredStyle: .alert)
+                    logoutAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: logoutAlertOkAction(action:)))
+                    logoutAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+                }
+            }
+            else
+            {
+                logoutAlert = UIAlertController(title: "Alert", message: "Are you sure want to logout", preferredStyle: .alert)
+                logoutAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: logoutAlertOkAction(action:)))
+                logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            }
+            
             self.present(logoutAlert, animated: true, completion: nil)
         }
         /*else

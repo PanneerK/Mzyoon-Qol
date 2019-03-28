@@ -370,9 +370,29 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             else
             {
                 stopActivity()
-                let responseEmptyAlert = UIAlertController(title: "Alert", message: "Measurements are not available for this dress type", preferredStyle: .alert)
-                responseEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: responseEmptyAlertAction(action:)))
-                self.present(responseEmptyAlert, animated: true, completion: nil)
+                
+                var measurementAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        measurementAlert = UIAlertController(title: "Alert", message: "Measurements are not available for this dress type", preferredStyle: .alert)
+                        measurementAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: responseEmptyAlertAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        measurementAlert = UIAlertController(title: "تنبيه", message: "القياسات غير متوفرة لهذا النوع من الفساتين", preferredStyle: .alert)
+                        measurementAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: responseEmptyAlertAction(action:)))
+                    }
+                }
+                else
+                {
+                    measurementAlert = UIAlertController(title: "Alert", message: "Measurements are not available for this dress type", preferredStyle: .alert)
+                    measurementAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: responseEmptyAlertAction(action:)))
+                }
+                
+                self.present(measurementAlert, animated: true, completion: nil)
             }
         }
         else if ResponseMsg == "Failure"
@@ -812,7 +832,9 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             //            verticalLine2.backgroundColor = UIColor.red
             subView.addSubview(verticalLine2)
             
-            if gender == "Male"
+            print("GET GENDER ARRAY", gender)
+            
+            if gender == "Male" || gender == "ذكر"
             {
                 if index == 0
                 {
@@ -1302,7 +1324,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     }
                 }*/
             }
-            else if gender == "Female"
+            else if gender == "Female" || gender == "انثى"
             {
                 if index == 0
                 {
@@ -1952,7 +1974,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                  }
                  }*/
             }
-            else if gender == "Boy"
+            else if gender == "Boy" || gender == "ولد"
             {
                 if index == 0
                 {
@@ -2442,7 +2464,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                  }
                  }*/
             }
-            else if gender == "Girl"
+            else if gender == "Girl" || gender == "بنت"
             {
                 if index == 0
                 {
@@ -3192,20 +3214,24 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 if let foundView = views as? UILabel
                 {
+                    print("FOUND VIEW TEXT", foundView.text)
                     if let language = UserDefaults.standard.value(forKey: "language") as? String
                     {
                         if language == "en"
                         {
                             foundView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                            foundView.textAlignment = .right
                         }
                         else if language == "ar"
                         {
                             foundView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                            foundView.textAlignment = .left
                         }
                     }
                     else
                     {
                         foundView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        foundView.textAlignment = .right
                     }
                 }
             }

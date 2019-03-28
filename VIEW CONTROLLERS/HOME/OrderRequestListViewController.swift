@@ -150,8 +150,22 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             {
                 stopActivity()
                 
-                emptyLabel.frame = CGRect(x: (3 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (6 * x), height: (4 * y))
-                emptyLabel.text = "Tailor Yet To Accept Your Request.,Please Come Back After Sometime..!" // "You Don't Have Any Order Request"
+                emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyLabel.text = "You don't have any order request"
+                    }
+                    else if language == "ar"
+                    {
+                        emptyLabel.text = "ليس لديك أي طلب"
+                    }
+                }
+                else
+                {
+                    emptyLabel.text = "You don't have any order request"
+                }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.numberOfLines = 2
@@ -197,8 +211,22 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             stopActivity()
             
-            emptyLabel.frame = CGRect(x: (3 * x), y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (6 * x), height: (4 * y))
-            emptyLabel.text = "Tailor Yet To Accept Your Request.,Please Come Back After Sometime..!"
+            emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    emptyLabel.text = "You don't have any order request"
+                }
+                else if language == "ar"
+                {
+                    emptyLabel.text = "ليس لديك أي طلب"
+                }
+            }
+            else
+            {
+                emptyLabel.text = "You don't have any order request"
+            }
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
             emptyLabel.numberOfLines = 2

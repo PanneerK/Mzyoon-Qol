@@ -1233,7 +1233,21 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if id == materialTagIntArray[j]
                             {
-                                selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedMaterialNameArray.append(materialsArrayInArabic[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
+                                }
                             }
                         }
                     }
@@ -1244,7 +1258,21 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            UserDefaults.standard.set("All Material", forKey: "material")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("All Material", forKey: "material")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("مواد الكل", forKey: "material")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("All Material", forKey: "material")
+            }
         }
         
         if colorTagIntArray.count != 0
@@ -1263,7 +1291,21 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                         {
                             if id == colorTagIntArray[j]
                             {
-                                selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedColorNameArray.append(colorsArrayInArabic[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
+                                }
                             }
                         }
                     }
@@ -1275,7 +1317,21 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            UserDefaults.standard.set("All Colors", forKey: "color")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("All Colors", forKey: "color")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("جميع الالوان", forKey: "color")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("All Colors", forKey: "color")
+            }
         }
         
         if selectedPatternId != 0
@@ -1286,7 +1342,21 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if id == selectedPatternId
                     {
-                        selectedPatternNameArray.append(patternsArrayInEnglish[i] as! String)
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                selectedPatternNameArray.append(patternsArrayInEnglish[i] as! String)
+                            }
+                            else if language == "ar"
+                            {
+                                selectedPatternNameArray.append(patternsArrayInArabic[i] as! String)
+                            }
+                        }
+                        else
+                        {
+                            selectedPatternNameArray.append(patternsArrayInEnglish[i] as! String)
+                        }
                     }
                 }
             }
@@ -1295,7 +1365,21 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            UserDefaults.standard.set(patternsArrayInEnglish[0], forKey: "pattern")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set(patternsArrayInEnglish[0], forKey: "pattern")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set(patternsArrayInArabic[0], forKey: "pattern")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set(patternsArrayInEnglish[0], forKey: "pattern")
+            }
         }
         
         if selectedPatternId != 0

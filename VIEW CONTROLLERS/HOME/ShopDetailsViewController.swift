@@ -13,7 +13,7 @@ import GoogleMaps
 import GooglePlaces
 
 
-class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITableViewDataSource,ServerAPIDelegate
+class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITableViewDataSource, ServerAPIDelegate
 {
    
     let serviceCall = ServerAPI()
@@ -48,7 +48,9 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     let cancelButton = UIButton()
     
     var DaysArray = NSArray()
+    var dayArrayInArabic = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "يوم الجمعة", "يوم السبت"]
     var TimeArray = NSArray()
+    var timeArrayInArabic = ["مغلق", "9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM"]
     
      var TailorID:Int!
     
@@ -90,9 +92,11 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     override func viewDidLoad()
     {
         print("GET LOCATIONS COORDINATE", getDestinationLatitude, getDestinationLongitude)
-        super.viewDidLoad()
+        
         navigationBar.isHidden = true
         selectedButton(tag: 0)
+
+        super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
@@ -103,7 +107,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     
     override func viewWillAppear(_ animated: Bool)
     {
-        
+        selectedButton(tag: 0)
     //  prepareBackgroundView()
         
        if(TailorID != nil)
@@ -603,13 +607,42 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         if(RatingArray.count > 0)
         {
            ratingImageView.image = UIImage(named: "\(RatingArray[i])")
-           reviewsButton.setTitle("(\(ReviewArray[i]) reviews)", for: .normal)
-          // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    reviewsButton.setTitle("(\(ReviewArray[i]) reviews)", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    reviewsButton.setTitle("(\(ReviewArray[i]) التقييمات)", for: .normal)
+                }
+            }
+            else
+            {
+                reviewsButton.setTitle("(\(ReviewArray[i]) reviews)", for: .normal)
+            }
         }
         else
         {
             ratingImageView.image = UIImage(named: "0")
-            reviewsButton.setTitle("(0 reviews)", for: .normal)
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    reviewsButton.setTitle("(0 reviews)", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    reviewsButton.setTitle("(0 التقييمات)", for: .normal)
+                }
+            }
+            else
+            {
+                reviewsButton.setTitle("(0 reviews)", for: .normal)
+            }
         }
         
         if(TailorNameArray.count > 0)
@@ -702,6 +735,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
             Address_Label.textAlignment = .left
             
             Time_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Time_Label.text = "OPEN : Closes 09:00 PM"
             Time_Label.textAlignment = .left
             
             Link_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -727,13 +761,14 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
             nameLabel.textAlignment = .right
             
             ordersLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-            ordersLabel.text = "No. of Orders : "
+            ordersLabel.text = "عدد الطلبات : "
             ordersLabel.textAlignment = .right
             
             Address_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
             Address_Label.textAlignment = .right
             
             Time_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            Time_Label.text = "افتح : قريب 09:00 PM"
             Time_Label.textAlignment = .right
             
             Link_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -767,6 +802,7 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         Address_Label.textAlignment = .left
         
         Time_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        Time_Label.text = "OPEN : Closes 09:00 PM"
         Time_Label.textAlignment = .left
         
         Link_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -839,6 +875,34 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
     cancelButton.setTitleColor(UIColor.white, for: .normal)
     cancelButton.addTarget(self, action: #selector(self.CancelAction(sender:)), for: .touchUpInside)
     alertView.addSubview(cancelButton)
+    
+    if let language = UserDefaults.standard.value(forKey: "language") as? String
+    {
+        if language == "en"
+        {
+            alertView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            titleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            titleLabel.text = "SHOP TIMINGS"
+            cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cancelButton.setTitle("CANCEL", for: .normal)
+        }
+        else if language == "ar"
+        {
+            alertView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            titleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            titleLabel.text = "أوقات التسوق"
+            cancelButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            cancelButton.setTitle("إلغاء", for: .normal)
+        }
+    }
+    else
+    {
+        alertView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        titleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        titleLabel.text = "SHOP TIMINGS"
+        cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        cancelButton.setTitle("CANCEL", for: .normal)
+    }
   }
     @objc func CancelAction(sender : UIButton)
     {
@@ -899,12 +963,39 @@ class ShopDetailsViewController: CommonViewController,UITableViewDelegate,UITabl
         let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(ShopDetailsTableViewCell.self), for: indexPath as IndexPath) as! ShopDetailsTableViewCell
         
         cell.DaysName.frame = CGRect(x: (3 * x), y: y, width: (10 * x), height: (2 * y))
-        cell.DaysName.text = DaysArray[indexPath.row] as? String
         
         cell.ShopTime.frame = CGRect(x: cell.DaysName.frame.maxX + (2 * x), y: y, width: cell.frame.width - (15 * x), height: (2 * y))
         
-        cell.ShopTime.text = TimeArray[indexPath.row] as? String
-    
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                cell.DaysName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.DaysName.text = DaysArray[indexPath.row] as? String
+                cell.DaysName.textAlignment = .left
+                cell.ShopTime.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cell.ShopTime.text = TimeArray[indexPath.row] as? String
+                cell.ShopTime.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                cell.DaysName.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.DaysName.text = dayArrayInArabic[indexPath.row]
+                cell.DaysName.textAlignment = .right
+                cell.ShopTime.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cell.ShopTime.text = timeArrayInArabic[indexPath.row] as? String
+                cell.ShopTime.textAlignment = .right
+            }
+        }
+        else
+        {
+            cell.DaysName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.DaysName.text = DaysArray[indexPath.row] as? String
+            cell.DaysName.textAlignment = .left
+            cell.ShopTime.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cell.ShopTime.text = TimeArray[indexPath.row] as? String
+            cell.ShopTime.textAlignment = .left
+        }
         
         return cell
     }
