@@ -37,9 +37,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 
         selectedButton(tag: 0)
         
-//        sideMenuFunctions()
-        
-        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        /*if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
             serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
         }
@@ -72,7 +70,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.checkContent()
             }
-        }
+        }*/
         
         deviceDetails()
                 
@@ -162,35 +160,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 FileHandler().saveImageDocumentDirectory(image: UIImage(data: data)!)
             }
         }
-    }
-    
-    func sideMenuFunctions()
-    {
-        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: self)
-        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
-        
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
-        {
-            if language == "en"
-            {
-                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-                SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
-            }
-            else if language == "ar"
-            {
-                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-                SideMenuManager.default.menuRightNavigationController = menuRightNavigationController
-            }
-        }
-        else
-        {
-            let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-            SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
-        }
-        
-        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-        SideMenuManager.default.menuFadeStatusBar = false
     }
     
     func checkContent()

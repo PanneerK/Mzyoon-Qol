@@ -177,7 +177,21 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             if Result.count == 0 || Result == nil
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any order request"
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        emptyLabel.text = "You don't have any order request"
+                    }
+                    else if language == "ar"
+                    {
+                        emptyLabel.text = "ليس لديك أي طلب"
+                    }
+                }
+                else
+                {
+                    emptyLabel.text = "You don't have any order request"
+                }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))

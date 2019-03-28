@@ -92,8 +92,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func exitContents()
     {
-        let exitAlert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: .alert)
-        exitAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        var exitAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                exitAlert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: .alert)
+                exitAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            }
+            else if language == "ar"
+            {
+                exitAlert = UIAlertController(title: "تنبيه", message: "يرجى المحاولة مرة أخرى بعد فترة من الوقت", preferredStyle: .alert)
+                exitAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+            }
+        }
+        else
+        {
+            exitAlert = UIAlertController(title: "Alert", message: "Please try after some time", preferredStyle: .alert)
+            exitAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        }
         
         let alertWindow = UIWindow(frame: UIScreen.main.bounds)
         alertWindow.rootViewController = UIViewController()

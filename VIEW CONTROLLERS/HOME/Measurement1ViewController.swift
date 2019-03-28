@@ -647,9 +647,29 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             if text.isEmpty == true || text == ""
             {
                 print("VALUES IS EMPTY")
-                let alert = UIAlertController(title: "Alert", message: "Please enter a name and proceed", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyNameAlertAction(action:)))
-                self.present(alert, animated: true, completion: nil)
+                
+                var nameAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        nameAlert = UIAlertController(title: "Alert", message: "Please enter a name and proceed", preferredStyle: .alert)
+                        nameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyNameAlertAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        nameAlert = UIAlertController(title: "تنبيه", message: "الرجاء إدخال اسم ومتابعة", preferredStyle: .alert)
+                        nameAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: emptyNameAlertAction(action:)))
+                    }
+                }
+                else
+                {
+                    nameAlert = UIAlertController(title: "Alert", message: "Please enter a name and proceed", preferredStyle: .alert)
+                    nameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyNameAlertAction(action:)))
+                }
+                
+                self.present(nameAlert, animated: true, completion: nil)
             }
             else
             {

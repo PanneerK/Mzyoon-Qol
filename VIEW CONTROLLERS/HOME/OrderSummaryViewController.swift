@@ -533,21 +533,63 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 {
                     if i != 0
                     {
-                        getDressTypeLabels.text = "Appointment"
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Appointment"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "موعد"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Appointment"
+                        }
                     }
                 }
                 else if type == 2
                 {
                     if i != 0
                     {
-                        getDressTypeLabels.text = "Urgent"
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Urgent"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "العاجلة"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Urgent"
+                        }
                     }
                 }
                 else if type == 3
                 {
                     if i != 0
                     {
-                        getDressTypeLabels.text = "Normal"
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Normal"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "عادي"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Normal"
+                        }
                     }
                 }
             }
@@ -1341,9 +1383,26 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             
             UserDefaults.standard.set(Result, forKey: "requestId")
             
-            let alert = UIAlertController(title: "Ordered Placed Successfully", message: "Order Id = \(Result)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
-            self.present(alert, animated: true, completion: nil)
+            var successAlert = UIAlertController()
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    successAlert = UIAlertController(title: "Ordered Placed Successfully", message: "Order Id = \(Result)", preferredStyle: .alert)
+                    successAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
+                }
+                else if language == "ar"
+                {
+                    successAlert = UIAlertController(title: "رتبت بنجاح", message: "معرف الطلب = \(Result)", preferredStyle: .alert)
+                    successAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: navigateToHomeScreen(action:)))
+                }
+            }
+            else
+            {
+                successAlert = UIAlertController(title: "Ordered Placed Successfully", message: "Order Id = \(Result)", preferredStyle: .alert)
+                successAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: navigateToHomeScreen(action:)))
+            }
+            self.present(successAlert, animated: true, completion: nil)
         }
         else if ResponseMsg == "Failure"
         {

@@ -751,7 +751,21 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             {
                 if selectedCustomIntArray["\(selectedCustomInt)"] == "\(idInt)"
                 {
-                    selectedCustomStringArray[selectedCustomString] = subCustomAttEnglishNameArray[i] as? String
+                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                    {
+                        if language == "en"
+                        {
+                            selectedCustomStringArray[selectedCustomString] = subCustomAttEnglishNameArray[i] as? String
+                        }
+                        else if language == "ar"
+                        {
+                            selectedCustomStringArray[selectedCustomString] = subCustomAttArabicNameArray[i] as? String
+                        }
+                    }
+                    else
+                    {
+                        selectedCustomStringArray[selectedCustomString] = subCustomAttEnglishNameArray[i] as? String
+                    }
                 }
             }
         }

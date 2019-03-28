@@ -91,6 +91,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad()
     {
         UserDefaults.standard.set(0, forKey: "screenAppearance")
+        UserDefaults.standard.set("en", forKey: "language")
+
         
         x = 10 / 375 * 100
         x = x * view.frame.width / 100
@@ -470,7 +472,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             UserDefaults.standard.set(mobileCountryCodeLabel.text!, forKey: "countryCode")
             
-            UserDefaults.standard.set("en", forKey: "language")
+//            UserDefaults.standard.set("en", forKey: "language")
             
             if result == "Existing User"
             {
@@ -517,6 +519,18 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         cancelButton.setTitle("إلغاء", for: .normal)
         
         countryCodeTableView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        otp1Letter.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        otp2Letter.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        otp3Letter.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        otp4Letter.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        otp5Letter.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        otp6Letter.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        secButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        resendButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        resendButton.setTitle("إعادة إرسال OTP", for: .normal)
     }
     
     func changeViewToEnglish()
@@ -552,6 +566,18 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         cancelButton.setTitle("Cancel", for: .normal)
         
         countryCodeTableView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        otp1Letter.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        otp2Letter.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        otp3Letter.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        otp4Letter.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        otp5Letter.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        otp6Letter.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        secButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        resendButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        resendButton.setTitle("Resend OTP", for: .normal)
     }
     
     func screenContentsInEnglish()
@@ -684,11 +710,33 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @objc func languageButtonAction(sender : UIButton)
     {
-        let alert = UIAlertController(title: "Alert", message: "Please choose your language", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
-        alert.addAction(UIAlertAction(title: "Arabic", style: .default, handler: languageAlertAction(action:)))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                let alert = UIAlertController(title: "Alert", message: "Please choose your language", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
+                alert.addAction(UIAlertAction(title: "عربى", style: .default, handler: languageAlertAction(action:)))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                let alert = UIAlertController(title: "تنبيه", message: "يرجى اختيار لغتك", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
+                alert.addAction(UIAlertAction(title: "عربى", style: .default, handler: languageAlertAction(action:)))
+                alert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Alert", message: "Please choose your language", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "English", style: .default, handler: languageAlertAction(action:)))
+            alert.addAction(UIAlertAction(title: "عربى", style: .default, handler: languageAlertAction(action:)))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     func languageAlertAction(action : UIAlertAction)
@@ -699,13 +747,13 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             UserDefaults.standard.set("en", forKey: "language")
             selectedLanguage = "English"
-//            changeViewToEnglish()
+            changeViewToEnglish()
         }
-        else if action.title == "Arabic"
+        else if action.title == "Arabic" || action.title == "عربى"
         {
             UserDefaults.standard.set("ar", forKey: "language")
             selectedLanguage = "Arabic"
-//            changeViewToArabic()
+            changeViewToArabic()
         }
     }
     
@@ -843,9 +891,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 
                 alert = UIAlertController(title: "Alert", message: "OTP has sent to your \(mobileTextField.text!) mobile number", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: otpSendAlertAction(action:)))
-                self.navigationController?.present(alert, animated: true, completion: nil)
+//                self.navigationController?.present(alert, animated: true, completion: nil)
                 
-                /*if let language = UserDefaults.standard.value(forKey: "language") as? String
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
                 {
                     if language == "en"
                     {
@@ -855,7 +903,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                     }
                     else if language == "ar"
                     {
-                        alert = UIAlertController(title: "محزر", message: "لقد أرسل OTP إلى رقم هاتفك المحمول", preferredStyle: .alert)
+                        alert = UIAlertController(title: "محزر", message: "تم إرسال OTP إلى الرقم الذي أدخلته", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: otpSendAlertAction(action:)))
                         self.navigationController?.present(alert, animated: true, completion: nil)
                     }
@@ -865,7 +913,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                     alert = UIAlertController(title: "Alert", message: "OTP has sent to your \(mobileTextField.text!) mobile number", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: otpSendAlertAction(action:)))
                     self.navigationController?.present(alert, animated: true, completion: nil)
-                }*/
+                }
             }
         }
     }
@@ -1115,6 +1163,46 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         cancelButton.setTitleColor(UIColor.white, for: .normal)
         cancelButton.addTarget(self, action: #selector(self.cancelButtonAction(sender:)), for: .touchUpInside)
         otpView.addSubview(cancelButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                otpImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                otpEnterLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                otpEnterLabel.text = "Verify your phone number"
+                
+                cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                cancelButton.setTitle("Change Number", for: .normal)
+                
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                 otpImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                otpEnterLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                otpEnterLabel.text = "تأكيد رقم هاتفك"
+                
+                cancelButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                cancelButton.setTitle("تغيير رقم", for: .normal)
+                
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            otpImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            otpEnterLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            otpEnterLabel.text = "Verify your phone number"
+            
+            cancelButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            cancelButton.setTitle("Change Number", for: .normal)
+            
+            changeViewToEnglish()
+        }
     }
     
     @objc func timerCall(timer : Timer)
@@ -1210,7 +1298,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.countryName.frame = CGRect(x: cell.flagImage.frame.maxX + (2 * x), y: y, width: cell.frame.width - (4 * x), height: (2 * y))
         cell.countryName.text = countryNameArray[indexPath.row] as! String
         
-        /*if let language = UserDefaults.standard.value(forKey: "language") as? String
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "ar"
             {
@@ -1230,7 +1318,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             cell.flagImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             cell.countryName.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             cell.countryName.textAlignment = .left
-        }*/
+        }
         return cell
     }
     

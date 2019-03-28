@@ -228,6 +228,37 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         //        introProfileNextButton.setTitleColor(UIColor.white, for: .normal)
         introProfileNextButton.addTarget(self, action: #selector(self.introProfileNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(introProfileNextButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                navigationTitle.text = "PROFILE"
+                userImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                userNameTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                userNameTextField.placeholder = "Enter your name"
+                userNameTextField.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                self.view.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                navigationTitle.text = "ملفي الشخصي"
+                userImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                userNameTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                userNameTextField.placeholder = "أدخل أسمك"
+                userNameTextField.textAlignment = .right
+            }
+        }
+        else
+        {
+            self.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            navigationTitle.text = "PROFILE"
+            userImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            userNameTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            userNameTextField.placeholder = "Enter your name"
+            userNameTextField.textAlignment = .left
+        }
     }
     
     func active()
@@ -252,11 +283,35 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     @objc func cameraButtonAction(sender : UIButton)
     {
         view.endEditing(true)
-        let cameraAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
-        cameraAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
-        cameraAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
-        cameraAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(cameraAlert, animated: true, completion: nil)
+        
+        var galleryAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                galleryAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+                galleryAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+                galleryAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+                galleryAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            }
+            else if language == "ar"
+            {
+                galleryAlert = UIAlertController(title: "تنبيه", message: "اختيار صورة من", preferredStyle: .alert)
+                galleryAlert.addAction(UIAlertAction(title: "الة تصوير", style: .default, handler: cameraAlertAction(action:)))
+                galleryAlert.addAction(UIAlertAction(title: "صالة عرض", style: .default, handler: galleryAlertAction(action:)))
+                galleryAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
+            }
+        }
+        else
+        {
+            galleryAlert = UIAlertController(title: "Alert", message: "Choose image from", preferredStyle: .alert)
+            galleryAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: cameraAlertAction(action:)))
+            galleryAlert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: galleryAlertAction(action:)))
+            galleryAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        }
+        
+        self.present(galleryAlert, animated: true, completion: nil)
     }
     
     func cameraAlertAction(action : UIAlertAction)
@@ -299,13 +354,34 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     {
         if userNameTextField.text?.isEmpty == true
         {
-            let alert = UIAlertController(title: "Empty", message: "Please enter your name to proceed", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            var nameAlert = UIAlertController()
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    nameAlert = UIAlertController(title: "Alert", message: "Please enter your name to proceed", preferredStyle: .alert)
+                    nameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                else if language == "ar"
+                {
+                    nameAlert = UIAlertController(title: "تنبيه", message: "الرجاء إدخال اسمك للمتابعة", preferredStyle: .alert)
+                    nameAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                }
+            }
+            else
+            {
+                nameAlert = UIAlertController(title: "Alert", message: "Please enter your name to proceed", preferredStyle: .alert)
+                nameAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            }
+            
+            self.present(nameAlert, animated: true, completion: nil)
         }
         else
         {
             active()
+            
+            var imageAlert = UIAlertController()
             
             if userImage.image != UIImage(named: "emptyUser")
             {
@@ -315,14 +391,14 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
                     
                     serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
                     
-                    if let profId = UserDefaults.standard.value(forKey: "userId") as? String
+                    /*if let profId = UserDefaults.standard.value(forKey: "userId") as? String
                     {
                         serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
                     }
                     else if let profId = UserDefaults.standard.value(forKey: "userId") as? Int
                     {
                         serviceCall.API_ProfileImageUpload(buyerImages: userImage.image!, delegate: self)
-                    }
+                    }*/
                     
                     //                activeStop()
                     //                let homeScreen = HomeViewController()
@@ -330,15 +406,47 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
                 }
                 else
                 {
-                    let imageAlert = UIAlertController(title: "Alert", message: "Please choose profile image", preferredStyle: .alert)
-                    imageAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: imageAlertOkAction(action:)))
+                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                    {
+                        if language == "en"
+                        {
+                            imageAlert = UIAlertController(title: "Alert", message: "Please choose profile image", preferredStyle: .alert)
+                            imageAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: imageAlertOkAction(action:)))
+                        }
+                        else if language == "ar"
+                        {
+                            imageAlert = UIAlertController(title: "تنبيه", message: "يرجى اختيار صورة الملف الشخصي", preferredStyle: .alert)
+                            imageAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: imageAlertOkAction(action:)))
+                        }
+                    }
+                    else
+                    {
+                        imageAlert = UIAlertController(title: "Alert", message: "Please choose profile image", preferredStyle: .alert)
+                        imageAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: imageAlertOkAction(action:)))
+                    }
                     self.present(imageAlert, animated: true, completion: nil)
                 }
             }
             else
             {
-                let imageAlert = UIAlertController(title: "Alert", message: "Please choose profile image", preferredStyle: .alert)
-                imageAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: imageAlertOkAction(action:)))
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        imageAlert = UIAlertController(title: "Alert", message: "Please choose profile image", preferredStyle: .alert)
+                        imageAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: imageAlertOkAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        imageAlert = UIAlertController(title: "تنبيه", message: "يرجى اختيار صورة الملف الشخصي", preferredStyle: .alert)
+                        imageAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: imageAlertOkAction(action:)))
+                    }
+                }
+                else
+                {
+                    imageAlert = UIAlertController(title: "Alert", message: "Please choose profile image", preferredStyle: .alert)
+                    imageAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: imageAlertOkAction(action:)))
+                }
                 self.present(imageAlert, animated: true, completion: nil)
             }
         }

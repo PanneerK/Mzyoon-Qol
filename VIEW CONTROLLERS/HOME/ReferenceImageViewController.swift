@@ -397,10 +397,31 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         self.selectedImage = (sender.imageView?.image)!
         self.selectedTag = sender.tag
         
-        let alert = UIAlertController(title: "Alert", message: "Choose Image to", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "View", style: .default, handler: viewAlertAction(action:)))
-        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: deleteAlertAction(action:)))
-        self.present(alert, animated: true, completion: nil)
+        var imageAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                imageAlert = UIAlertController(title: "Alert", message: "Choose Image to", preferredStyle: .alert)
+                imageAlert.addAction(UIAlertAction(title: "View", style: .default, handler: viewAlertAction(action:)))
+                imageAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: deleteAlertAction(action:)))
+            }
+            else if language == "ar"
+            {
+                imageAlert = UIAlertController(title: "تنبيه", message: "اختيار صورة ل", preferredStyle: .alert)
+                imageAlert.addAction(UIAlertAction(title: "معاينة", style: .default, handler: viewAlertAction(action:)))
+                imageAlert.addAction(UIAlertAction(title: "حذف", style: .default, handler: deleteAlertAction(action:)))
+            }
+        }
+        else
+        {
+            imageAlert = UIAlertController(title: "Alert", message: "Choose Image to", preferredStyle: .alert)
+            imageAlert.addAction(UIAlertAction(title: "View", style: .default, handler: viewAlertAction(action:)))
+            imageAlert.addAction(UIAlertAction(title: "Delete", style: .default, handler: deleteAlertAction(action:)))
+        }
+        
+        self.present(imageAlert, animated: true, completion: nil)
     }
     
     @objc func removeMaterialButtonAction(sender : UIButton)

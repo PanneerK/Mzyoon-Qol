@@ -58,14 +58,8 @@ class CommonViewController: UIViewController
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
-        self.activityContents()
-        
-        selfScreenContents1.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        selfScreenContents1.backgroundColor = UIColor.clear
-        view.addSubview(selfScreenContents1)
-        
-        navigationContents()
-        tabContents()
+//        sideMenuFunctions()
+        declaringMenu()
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -82,6 +76,15 @@ class CommonViewController: UIViewController
         {
             slideMenu()
         }
+        
+        self.activityContents()
+        
+        selfScreenContents1.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        selfScreenContents1.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents1)
+        
+        navigationContents()
+        tabContents()
         
         super.viewDidLoad()
         
@@ -112,6 +115,42 @@ class CommonViewController: UIViewController
     
     override func viewWillDisappear(_ animated: Bool) {
         print("DISAPPEAR VIEW")
+    }
+    
+    func sideMenuFunctions()
+    {
+        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: self)
+        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
+                SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
+            }
+            else if language == "ar"
+            {
+                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
+                SideMenuManager.default.menuRightNavigationController = menuRightNavigationController
+            }
+        }
+        else
+        {
+            let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
+            SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
+        }
+        
+        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
+        SideMenuManager.default.menuFadeStatusBar = false
+    }
+    
+    func declaringMenu()
+    {
+        let slideScreen = SlideViewController()
+        let leftSlideScreen = UISideMenuNavigationController(rootViewController: slideScreen)
+        SideMenuManager.default.menuLeftNavigationController = leftSlideScreen        
     }
     
     func slideMenu()
@@ -359,6 +398,7 @@ class CommonViewController: UIViewController
         {
             if language == "en"
             {
+                self.dismiss(animated: true, completion: nil)
                 self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
             }
             else if language == "ar"
@@ -455,9 +495,9 @@ class CommonViewController: UIViewController
         if tag == 0
         {
             tab1Text.font = tab1Text.font.withSize(15)
-            tab1Text.textColor = UIColor.white
+            tab1Text.textColor = UIColor.orange
             
-            tab1ImageView.tintColor = UIColor.white
+            tab1ImageView.tintColor = UIColor.orange
             
             tab2Text.font = tab2Text.font.withSize(10)
             tab2Text.textColor = UIColor.white

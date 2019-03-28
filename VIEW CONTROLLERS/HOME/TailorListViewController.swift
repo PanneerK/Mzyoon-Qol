@@ -36,6 +36,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     var IdArray = NSArray()
     var TailorNameArray = NSArray()
+    var tailorNameInArabicArray = NSArray()
     var EmailIdArray = NSArray()
     var GenderArray = NSArray()
     var ModifiedOnArray = NSArray()
@@ -46,9 +47,11 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var CountryCodeArray = NSArray()
     var PhoneNumberArray = NSArray()
     var AddressArray = NSArray()
+    var addressInArabicArray = NSArray()
     var latitudeArray = NSArray()
     var longitudeArray = NSArray()
     var ShopNameArray = NSArray()
+    var shopNameInArabicArray = NSArray()
     var ShopOwnerImageArray = NSArray()
     var ConvertedShopOwnerImageArray = [UIImage]()
     var orderCountArray = NSArray()
@@ -206,8 +209,14 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             TailorNameArray = Result.value(forKey: "TailorNameInEnglish") as! NSArray
             print("TailorNameArray", TailorNameArray)
             
+            tailorNameInArabicArray = Result.value(forKey: "TailorNameInArabic") as! NSArray
+            print("tailorNameInArabicArray", tailorNameInArabicArray)
+            
             ShopNameArray = Result.value(forKey: "ShopNameInEnglish") as! NSArray
             print("ShopNameArray", ShopNameArray)
+            
+            shopNameInArabicArray = Result.value(forKey: "ShopNameInArabic") as! NSArray
+            print("shopNameInArabicArray", shopNameInArabicArray)
             
             orderCountArray = Result.value(forKey: "OrderCount") as! NSArray
             print("ORDER COUNT ARRAY", orderCountArray)
@@ -217,6 +226,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             AddressArray = Result.value(forKey: "AddressInEnglish") as! NSArray
             print("AddressArray", AddressArray)
+            
+            addressInArabicArray = Result.value(forKey: "AddressinArabic") as! NSArray
+            print("addressInArabicArray", addressInArabicArray)
             
             latitudeArray = Result.value(forKey: "Latitude") as! NSArray
             print("latitudeArray", latitudeArray)
@@ -583,7 +595,21 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             let tailorName = UILabel()
             tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: tailorView.frame.width / 2, height: (2 * y))
-            tailorName.text = TailorNameArray[i] as? String
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    tailorName.text = TailorNameArray[i] as? String
+                }
+                else if language == "ar"
+                {
+                    tailorName.text = tailorNameInArabicArray[i] as? String
+                }
+            }
+            else
+            {
+                tailorName.text = TailorNameArray[i] as? String
+            }
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = tailorName.font.withSize(1.2 * x)
@@ -608,9 +634,30 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             let shopName = UIButton()
             shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
-            if let nameString = ShopNameArray[i] as? String
+          
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
-                shopName.setTitle(nameString.uppercased(), for: .normal)
+                if language == "en"
+                {
+                    if let nameString = ShopNameArray[i] as? String
+                    {
+                        shopName.setTitle(nameString.uppercased(), for: .normal)
+                    }
+                }
+                else if language == "ar"
+                {
+                    if let nameString = shopNameInArabicArray[i] as? String
+                    {
+                        shopName.setTitle(nameString.uppercased(), for: .normal)
+                    }
+                }
+            }
+            else
+            {
+                if let nameString = ShopNameArray[i] as? String
+                {
+                    shopName.setTitle(nameString.uppercased(), for: .normal)
+                }
             }
             shopName.setTitleColor(UIColor.black, for: .normal)
             shopName.tag = (IdArray[i] as? Int)!
@@ -956,9 +1003,28 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     {
         if selectedTailorListArray.count == 0
         {
-            let alert = UIAlertController(title: "Alert", message: "Please select atleast any one tailor to proceed", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            var tailorAlert = UIAlertController()
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    tailorAlert = UIAlertController(title: "Alert", message: "Please select atleast any one tailor to proceed", preferredStyle: .alert)
+                    tailorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                }
+                else if language == "ar"
+                {
+                    tailorAlert = UIAlertController(title: "تنبيه", message: "يرجى اختيار أتلست أي خياط واحد للمتابعة", preferredStyle: .alert)
+                    tailorAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                }
+            }
+            else
+            {
+                tailorAlert = UIAlertController(title: "Alert", message: "Please select atleast any one tailor to proceed", preferredStyle: .alert)
+                tailorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            }
+
+            self.present(tailorAlert, animated: true, completion: nil)
         }
         else
         {
@@ -974,7 +1040,21 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                         {
                             if id1 == id2
                             {
-                                selectedTailorListNameArray.append(TailorNameArray[i] as! String)
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedTailorListNameArray.append(TailorNameArray[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedTailorListNameArray.append(tailorNameInArabicArray[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedTailorListNameArray.append(TailorNameArray[i] as! String)
+                                }
                             }
                         }
                     }
@@ -998,8 +1078,26 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func enableLocationServicesAlert()
     {
-        let locationAlert = UIAlertController(title: "Alert", message: "Please enable the location and proceed", preferredStyle: .alert)
-        locationAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        var locationAlert = UIAlertController()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                locationAlert = UIAlertController(title: "Alert", message: "Please enable the location and proceed", preferredStyle: .alert)
+                locationAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            }
+            else if language == "ar"
+            {
+                locationAlert = UIAlertController(title: "تنبيه", message: "يرجى تمكين الموقع والمتابعة", preferredStyle: .alert)
+                locationAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+            }
+        }
+        else
+        {
+            locationAlert = UIAlertController(title: "Alert", message: "Please enable the location and proceed", preferredStyle: .alert)
+            locationAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        }
+        
         self.present(locationAlert, animated: true, completion: nil)
     }
     
@@ -1053,8 +1151,24 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
-            marker.title = ShopNameArray[i] as? String
-            marker.snippet = TailorNameArray[i] as? String
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    marker.snippet = TailorNameArray[i] as? String
+                    marker.title = ShopNameArray[i] as? String
+                }
+                else if language == "ar"
+                {
+                    marker.snippet = tailorNameInArabicArray[i] as? String
+                    marker.title = shopNameInArabicArray[i] as? String
+                }
+            }
+            else
+            {
+                marker.snippet = TailorNameArray[i] as? String
+                marker.title = ShopNameArray[i] as? String
+            }
             marker.tracksInfoWindowChanges = true
             marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
             marker.map = mapView
@@ -1269,18 +1383,58 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         for i in 0..<ShopNameArray.count
         {
-            if let name = ShopNameArray[i] as? String
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
-                if name == marker.title
+                if language == "en"
                 {
-                    ratingImageView.image = UIImage(named: "\(ratingArray[i])")
-                    
-                   // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
-                    // reviewsButton.setTitle("(\(ratingArray[i]) reviews)", for: .normal)
-                     ordersCountLabel.text = "\(orderCountArray[i])"
-                    
-                      TailorID = IdArray[i] as? Int
-                    shopNameBtn.tag = (IdArray[i] as? Int)!
+                    if let name = ShopNameArray[i] as? String
+                    {
+                        if name == marker.title
+                        {
+                            ratingImageView.image = UIImage(named: "\(ratingArray[i])")
+                            
+                            // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
+                            // reviewsButton.setTitle("(\(ratingArray[i]) reviews)", for: .normal)
+                            ordersCountLabel.text = "\(orderCountArray[i])"
+                            
+                            TailorID = IdArray[i] as? Int
+                            shopNameBtn.tag = (IdArray[i] as? Int)!
+                        }
+                    }
+                }
+                else if language == "ar"
+                {
+                    if let name = shopNameInArabicArray[i] as? String
+                    {
+                        if name == marker.title
+                        {
+                            ratingImageView.image = UIImage(named: "\(ratingArray[i])")
+                            
+                            // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
+                            // reviewsButton.setTitle("(\(ratingArray[i]) reviews)", for: .normal)
+                            ordersCountLabel.text = "\(orderCountArray[i])"
+                            
+                            TailorID = IdArray[i] as? Int
+                            shopNameBtn.tag = (IdArray[i] as? Int)!
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if let name = ShopNameArray[i] as? String
+                {
+                    if name == marker.title
+                    {
+                        ratingImageView.image = UIImage(named: "\(ratingArray[i])")
+                        
+                        // ratingCountLabel.text = "(\(ratingArray[i]) reviews)"
+                        // reviewsButton.setTitle("(\(ratingArray[i]) reviews)", for: .normal)
+                        ordersCountLabel.text = "\(orderCountArray[i])"
+                        
+                        TailorID = IdArray[i] as? Int
+                        shopNameBtn.tag = (IdArray[i] as? Int)!
+                    }
                 }
             }
         }
@@ -1323,8 +1477,21 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
         }
         
+        #if targetEnvironment(simulator)
+        // your simulator code
+        print("APP IS RUNNING ON SIMULATOR")
+        
+        ShopDetailsScreen.getSourceLatitude = 13.0008
+        ShopDetailsScreen.getSourceLongitude = 80.009
+        
+        #else
+        // your real device code
+        print("APP IS RUNNING ON DEVICE")
+        
         ShopDetailsScreen.getSourceLatitude = currentLocation.coordinate.latitude
         ShopDetailsScreen.getSourceLongitude = currentLocation.coordinate.longitude
+        
+        #endif
         
         self.navigationController?.pushViewController(ShopDetailsScreen, animated: true)
 }
