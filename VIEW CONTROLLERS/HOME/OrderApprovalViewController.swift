@@ -59,6 +59,8 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
     
     var applicationDelegate = AppDelegate()
 
+    //Total Amount Label
+     var OrderTotalValueLBL = UILabel()
     
     override func viewDidLoad()
     {
@@ -241,6 +243,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
                 let TotalValue : Int = ChargesAmountArray[7] as! Int
                 PaymentScreen.TotalAmount = "\(TotalValue)"
                 PaymentScreen.TailorId = TailorID
+                Variables.sharedManager.TotalAmount = "\(TotalValue)"
                 self.navigationController?.pushViewController(PaymentScreen, animated: true)
             }
             else
@@ -293,6 +296,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
          {
             let TotalValue : Int = ChargesAmountArray[7] as! Int
             AppointmentScreen.TotalAmount = "\(TotalValue)"
+            Variables.sharedManager.TotalAmount = "\(TotalValue)"
          }
         else
          {
@@ -540,6 +544,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         
         Variables.sharedManager.ApprovalQty = self.QtyNumTF.text!
         self.view.endEditing(true)
+      
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -956,7 +961,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         OrderTotalLabel.font = UIFont(name: "Avenir Next", size: 1.5 * x)
         ApprovalListScrollView.addSubview(OrderTotalLabel)
         
-        let OrderTotalValueLBL = UILabel()
+        // let OrderTotalValueLBL = UILabel()
         OrderTotalValueLBL.frame = CGRect(x: OrderTotalLabel.frame.maxX + x , y: TaxChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
         OrderTotalValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         if(ChargesAmountArray.count != 0)

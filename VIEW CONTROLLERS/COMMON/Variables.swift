@@ -40,6 +40,7 @@ class Variables: NSObject
     public var EmailId:String = ""
     
     public var ApprovalQty:String = ""
+    public var TotalAmount:String = ""
     
     // Here is how you would get to it without there being a global collision of variables.
     // , or in other words, it is a globally accessable parameter that is specific to the

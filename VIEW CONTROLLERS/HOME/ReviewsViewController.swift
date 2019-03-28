@@ -40,6 +40,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     var CustomerRatingArray = NSArray()
     var CustomerReviewArray = NSArray()
     var CustomerNameArray = NSArray()
+    var ProfilePictureArray = NSArray()
     
     //PerformenceStatus Array..
     var PerformenceStatusArr = NSArray()
@@ -81,7 +82,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     {
         print("Tailor Id:",TailorID)
         
-      //  TailorID = 219
+         TailorID = 219
         
         if(TailorID != nil)
         {
@@ -127,6 +128,9 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
             
             CustomerNameArray = CustomerRating.value(forKey: "Name") as! NSArray
             print("CustomerNameArray :",CustomerNameArray)
+            
+            ProfilePictureArray = CustomerRating.value(forKey: "ProfilePicture") as! NSArray
+            print("ProfilePictureArray :",ProfilePictureArray)
             
             CustomerRatingArray = CustomerRating.value(forKey: "Rating") as! NSArray
             print("CustomerRatingArray :", CustomerRatingArray)
@@ -558,15 +562,14 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         userImageView.layer.borderColor = UIColor.black.cgColor
         userImageView.layer.cornerRadius = userImageView.frame.width/2
         userImageView.clipsToBounds = true
-        userImageView.image = UIImage(named: "TailorName")
+        // userImageView.image = UIImage(named: "TailorName")
         userImageView.layer.borderColor = UIColor.lightGray.cgColor
         
-      /*
-        if let imageName = ImageArray[i] as? String
+      
+        if let imageName = ProfilePictureArray[i] as? String
         {
-         // let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/DressSubType/\(imageName)"
-            let api = "http://192.168.0.21/TailorAPI/Images/BuyerImages/buyer.jpg"
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/BuyerImages/\(imageName)"
             print("SMALL ICON", api)
             let apiurl = URL(string: api)
             
@@ -574,9 +577,9 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
             dummyImageView.frame = CGRect(x: 0, y: 0, width: userImageView.frame.width, height: userImageView.frame.height)
             dummyImageView.dowloadFromServer(url: apiurl!)
             dummyImageView.tag = -1
+            dummyImageView.contentMode = .scaleToFill
             userImageView.addSubview(dummyImageView)
         }
-      */
         
         ReviewsView.addSubview(userImageView)
         

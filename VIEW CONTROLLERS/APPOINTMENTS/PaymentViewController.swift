@@ -132,19 +132,23 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         y = y * view.frame.height / 100
       */
         
+     /*
        if(TotalAmount == nil)
        {
          self.Amount_TF.text = "1"
        }
        else
        {
-         self.Amount_TF.text = TotalAmount!
+         self.Amount_TF.text = Variables.sharedManager.TotalAmount
+        // self.Amount_TF.text = TotalAmount!
        }
+     */
         
          //   KEY = "XZCQ~9wRvD^prrJx"  //"0d644cd3MsvS6r49sBDqdd29"  // "XZCQ~9wRvD^prrJx"
          //   STOREID = "21552"
         
      //   MerchantID = "12168"
+        
         
        // EMAIL = UserDefaults.standard.value(forKey: "Email") as? String
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
@@ -698,7 +702,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
         backButton.tag = 4
         backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        selfScreenNavigationBar.addSubview(backButton)
+       // selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
         selfScreenNavigationTitle.text = "PAYMENT SUMMARY"
@@ -709,7 +713,6 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
     
         // Billing Details View..
-        
         BillingView.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         BillingView.backgroundColor = UIColor.clear
         view.addSubview(BillingView)
@@ -803,14 +806,18 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             }
             else if i == 8
             {
+                /*
                 if(TotalAmount == nil)
                 {
                     valuesTextField.text = "1"
                 }
                 else
                 {
-                    valuesTextField.text = TotalAmount
+                  // valuesTextField.text = TotalAmount
+                    valuesTextField.text = Variables.sharedManager.TotalAmount
                 }
+                */
+                valuesTextField.text = Variables.sharedManager.TotalAmount
             }
             
             print("I VALUES-\(i) ->", count - 1)
@@ -1421,8 +1428,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         {
             UserName = UserDefaults.standard.value(forKey: "userName") as? String
             
-            print("Total Amount:",TotalAmount)
-            UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
+            print("Total Amount:",Variables.sharedManager.TotalAmount)
+            
+         //   UserDefaults.standard.set(TotalAmount, forKey: "TotalAmount")
             
             if Country == "UNITED ARAB EMIRATES"
             {

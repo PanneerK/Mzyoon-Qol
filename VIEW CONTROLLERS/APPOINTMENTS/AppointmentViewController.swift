@@ -116,6 +116,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
      //  AppointmentContent()
         
         print("TailorID:",TailorID)
+        print("Total Amount:",Variables.sharedManager.TotalAmount)
+        
         print("View DidLoad")
         
          UserDefaults.standard.set(TailorID, forKey: "TailorID")
@@ -620,7 +622,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             {
                 let PayScreen = PaymentViewController()
                 PayScreen.TailorId = TailorID
-                PayScreen.TotalAmount = TotalAmount
+               // PayScreen.TotalAmount = TotalAmount
+              //  Variables.sharedManager.TotalAmount = TotalAmount
                 self.navigationController?.pushViewController(PayScreen, animated: true)
             }
             else
@@ -1558,7 +1561,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
             if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
-            { }
+            {
+                
+            }
             else
             {
                MeasurementTypeView.addSubview(Measure_ApproveButton)
@@ -1580,7 +1585,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
             if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
-            { }
+            {
+                
+            }
             else
             {
                MeasurementTypeView.addSubview(Measure_RejectButton)
