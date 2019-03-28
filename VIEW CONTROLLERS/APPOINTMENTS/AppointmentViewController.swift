@@ -285,7 +285,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any Appointment request"
+                emptyLabel.text = "You Don't Have Any Appointments"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -346,7 +346,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             DeviceError()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You don't have any Appointment request"
+            emptyLabel.text = "You Don't Have Any Appointments"
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
             emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -372,7 +372,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             if Result.count == 0
             {
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-                emptyLabel.text = "You don't have any Appointment request"
+                emptyLabel.text = "You Don't Have Any Appointments"
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -431,7 +431,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             DeviceError()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
-            emptyLabel.text = "You don't have any Appointment request"
+            emptyLabel.text = "You Don't Have Any Appointments"
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
             emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -522,24 +522,25 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             print("MaterialAppointTimeArr:",MaterialAppointTimeArr)
           
                 
-           if MaterialInEnglish.contains("Own Material-Direct Delivery")
-           {
+         //  if MaterialInEnglish.contains("Own Material-Direct Delivery")
+         //  {
+            
               if(MaterialFromDtArr.count > 0)
               {
                  From_MaterialType_TF.text = MaterialFromDtArr[0] as? String
               }
             
-            if(MaterialToDtArr.count > 0)
-            {
+              if(MaterialToDtArr.count > 0)
+              {
                 TO_MaterialType_TF.text = MaterialToDtArr[0] as? String
-            }
+              }
             
-            if(MaterialAppointTimeArr.count > 0)
-            {
-               SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
-            }
+              if(MaterialAppointTimeArr.count > 0)
+              {
+                 SLOT_MaterialType_TF.text = MaterialAppointTimeArr[0] as? String
+              }
             
-           }
+         //  }
             
         }
         else if ResponseMsg == "Failure"
@@ -577,8 +578,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasureAppointTimeArr = Result.value(forKey: "AppointmentTime") as! NSArray
             print("MeasureAppointTimeArr:",MeasureAppointTimeArr)
             
-           if MeasurementInEnglish.contains("Go to Tailor Shop")
-           {
+        //   if MeasurementInEnglish.contains("Go to Tailor Shop")
+         //  {
              if(MeasureFromDtArr.count > 0)
              {
                 From_MeasurementType_TF.text = MeasureFromDtArr[0] as? String
@@ -593,7 +594,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             {
               SLOT_MeasurementType_TF.text = MeasureAppointTimeArr[0] as? String
             }
-          }
+         // }
          
         }
         else if ResponseMsg == "Failure"
@@ -773,6 +774,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // Material_StatusBtn.backgroundColor = UIColor.gray
         if(MaterialStatus.count > 0)
         {
+            
+          /*
            if(MaterialStatus.contains("Not Approved"))
            {
             if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -793,8 +796,21 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
            }
            else
            {
-             Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
-           }
+          */
+             if(MaterialStatus.count == 1)
+             {
+               Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
+             }
+             else if(MaterialStatus.count == 2)
+             {
+               Material_StatusBtn.setTitle("\(MaterialStatus[1])", for: .normal)
+             }
+             else if(MaterialStatus.count == 3)
+             {
+                Material_StatusBtn.setTitle("\(MaterialStatus[2])", for: .normal)
+             }
+            
+          // }
         }
         else
         {
@@ -938,7 +954,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            From_MaterialType_TF.isUserInteractionEnabled = true
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                From_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                From_MaterialType_TF.isUserInteractionEnabled = true
+            }
+           //  From_MaterialType_TF.isUserInteractionEnabled = true
+            
         }
         From_MaterialType_TF.addTarget(self, action: #selector(self.FMaterial_calendarAction), for: .allEditingEvents)
         From_MaterialType_TF.delegate = self as? UITextFieldDelegate
@@ -981,7 +1006,16 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            TO_MaterialType_TF.isUserInteractionEnabled = true
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                TO_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                TO_MaterialType_TF.isUserInteractionEnabled = true
+            }
+            
+           // TO_MaterialType_TF.isUserInteractionEnabled = true
         }
         TO_MaterialType_TF.addTarget(self, action: #selector(self.TMaterial_calendarAction), for: .allEditingEvents)
         TO_MaterialType_TF.delegate = self as? UITextFieldDelegate
@@ -1036,7 +1070,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            SLOT_MaterialType_TF.isUserInteractionEnabled = true
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                SLOT_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                SLOT_MaterialType_TF.isUserInteractionEnabled = true
+            }
+           // SLOT_MaterialType_TF.isUserInteractionEnabled = true
         }
         SLOT_MaterialType_TF.addTarget(self, action: #selector(self.SlotMaterial_calendarAction), for: .allEditingEvents)
         SLOT_MaterialType_TF.delegate = self as? UITextFieldDelegate
@@ -1057,10 +1099,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
             if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
-            {}
+            {
+                
+            }
             else
             {
-             OrderTypeView.addSubview(Material_ApproveButton)
+               OrderTypeView.addSubview(Material_ApproveButton)
             }
         }
         else
@@ -1113,7 +1157,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            OrderTypeView.addSubview(Material_SaveButton)
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                OrderTypeView.addSubview(Material_SaveButton)
+            }
+            
         }
         
      
@@ -1188,6 +1240,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // Measure_StatusBtn.backgroundColor = UIColor.gray
         if(MeasureStatus.count > 0)
         {
+          /*
             if(MeasureStatus.contains("Not Approved"))
             {
                 if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -1208,8 +1261,20 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             }
             else
             {
-                Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
-            }
+          */
+                if(MeasureStatus.count == 1)
+                {
+                    Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
+                }
+                else if(MeasureStatus.count == 2)
+                {
+                    Measure_StatusBtn.setTitle("\(MeasureStatus[1])", for: .normal)
+                }
+                else if(MeasureStatus.count == 3)
+                {
+                    Measure_StatusBtn.setTitle("\(MeasureStatus[2])", for: .normal)
+                }
+           // }
         }
         else
         {
@@ -1347,7 +1412,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            From_MeasurementType_TF.isUserInteractionEnabled = true
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                From_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                From_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+           // From_MeasurementType_TF.isUserInteractionEnabled = true
         }
         From_MeasurementType_TF.addTarget(self, action: #selector(self.FMeasurement_calendarAction), for: .allEditingEvents)
         From_MeasurementType_TF.delegate = self as? UITextFieldDelegate
@@ -1390,7 +1463,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            TO_MeasurementType_TF.isUserInteractionEnabled = true
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                TO_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                TO_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+            // TO_MeasurementType_TF.isUserInteractionEnabled = true
         }
         TO_MeasurementType_TF.addTarget(self, action: #selector(self.TMeasurement_calendarAction), for: .allEditingEvents)
         TO_MeasurementType_TF.delegate = self as? UITextFieldDelegate
@@ -1446,7 +1527,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            SLOT_MeasurementType_TF.isUserInteractionEnabled = true
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                SLOT_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                SLOT_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+           // SLOT_MeasurementType_TF.isUserInteractionEnabled = true
         }
         SLOT_MeasurementType_TF.addTarget(self, action: #selector(self.SlotMeasure_calendarAction), for: .allEditingEvents)
         SLOT_MeasurementType_TF.delegate = self as? UITextFieldDelegate
@@ -1512,7 +1601,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-           MeasurementTypeView.addSubview(Measure_SaveButton)
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                MeasurementTypeView.addSubview(Measure_SaveButton)
+            }
+           
         }
         
         AppointmentScrollview.contentSize.height = MeasurementTypeView.frame.maxY
@@ -1738,11 +1835,26 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         print("Material Approve Status Page..")
         
         if (MaterialAppointID.count != 0)
-       {
-         let AppointID = MaterialAppointID[0] as! Int
+        {
+           var AppointID : Int!
+        
+            if(MaterialAppointID.count == 1)
+            {
+                AppointID = MaterialAppointID[0] as? Int
+            }
+            else if(MaterialAppointID.count == 2)
+            {
+                AppointID = MaterialAppointID[1] as? Int
+            }
+            else if(MaterialAppointID.count == 3)
+            {
+                AppointID = MaterialAppointID[2] as? Int
+            }
+      
+        // let AppointID = MaterialAppointID[0] as! Int
          let Msg = ""
-         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
-      }
+         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID!, IsApproved: 1, Reason: Msg, delegate: self)
+       }
        else
        {
         
@@ -1761,7 +1873,22 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         print("Measure Approve Status Page..")
         if (MeasurementAppointID.count != 0)
         {
-            let AppointID : Int = MeasurementAppointID[0] as! Int
+            var AppointID : Int!
+            
+            if(MeasurementAppointID.count == 1)
+            {
+                AppointID = MeasurementAppointID[0] as? Int
+            }
+            else if(MeasurementAppointID.count == 2)
+            {
+                AppointID = MeasurementAppointID[1] as? Int
+            }
+            else if(MeasurementAppointID.count == 3)
+            {
+                AppointID = MeasurementAppointID[2] as? Int
+            }
+            
+           // let AppointID : Int = MeasurementAppointID[0] as! Int
             let Msg = ""
             self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
         
@@ -1942,7 +2069,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
       if(MaterialAppointID.count != 0)
       {
-        let AppointID = MaterialAppointID[0] as! Int
+        
+        var AppointID : Int!
+        
+        if(MaterialAppointID.count == 1)
+        {
+            AppointID = MaterialAppointID[0] as? Int
+        }
+        else if(MaterialAppointID.count == 2)
+        {
+            AppointID = MaterialAppointID[1] as? Int
+        }
+        else if(MaterialAppointID.count == 3)
+        {
+            AppointID = MaterialAppointID[2] as? Int
+        }
+        
+       // let AppointID = MaterialAppointID[0] as! Int
         let Msg : String = self.Material_rejectReason_TF.text!
         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 2, Reason: Msg, delegate: self)
       }
@@ -1954,7 +2097,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         if(MeasurementAppointID.count != 0)
         {
-        let AppointID = MeasurementAppointID[0] as! Int
+            
+            var AppointID : Int!
+            
+            if(MeasurementAppointID.count == 1)
+            {
+                AppointID = MeasurementAppointID[0] as? Int
+            }
+            else if(MeasurementAppointID.count == 2)
+            {
+                AppointID = MeasurementAppointID[1] as? Int
+            }
+            else if(MeasurementAppointID.count == 3)
+            {
+                AppointID = MeasurementAppointID[2] as? Int
+            }
+            
+       // let AppointID = MeasurementAppointID[0] as! Int
         let Msg : String = self.Measure_rejectReason_TF.text!
         self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 2, Reason: Msg, delegate: self)
         }
@@ -2164,12 +2323,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     @objc func SlotMaterial_DoneClick()
     {
         SLOT_MaterialType_TF.resignFirstResponder()
-        SLOT_MaterialType_TF.text = TimeSlotArray[0] as? String
+       // SLOT_MaterialType_TF.text = TimeSlotArray[0] as? String
     }
     @objc func SlotMeasure_DoneClick()
     {
         SLOT_MeasurementType_TF.resignFirstResponder()
-        SLOT_MeasurementType_TF.text = TimeSlotArray[0] as? String
+       // SLOT_MeasurementType_TF.text = TimeSlotArray[0] as? String
     }
     @objc func FMeasurement_DoneClick()
     {
@@ -2265,6 +2424,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
+            self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
+            
+          /*
             if (FMaterial.compare(TMaterial) == .orderedAscending || FMaterial.compare(TMaterial) == .orderedSame)
             {
                 print("From-Date is smaller than To-Date")
@@ -2279,8 +2441,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
                 self.present(appointmentAlert, animated: true, completion: nil)
-                
             }
+          */
             
         }
     }
@@ -2316,7 +2478,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
+            self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime: SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
             
+          /*
             if (FMeasure.compare(TMeasure) == .orderedAscending || FMeasure.compare(TMeasure) == .orderedSame)
             {
                 print("From-Date is smaller then To-Date")
@@ -2332,6 +2496,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
                 self.present(appointmentAlert, animated: true, completion: nil)
             }
+            */
         }
     }
     

@@ -155,7 +155,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                 }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
-                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
                 emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
                 PendingViewBackDrop.addSubview(emptyLabel)
             }
@@ -414,7 +414,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                     if language == "en"
                     {
                         emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                        emptyLabel.text = "You Dont Have Delivered orders"
+                        emptyLabel.text = "You Don't Have Delivered orders"
                     }
                     else if language == "ar"
                     {
@@ -425,7 +425,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                 else
                 {
                     emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    emptyLabel.text = "You Dont Have Delivered orders"
+                    emptyLabel.text = "You Don't Have Delivered orders"
                 }
                 
                 emptyLabel.textColor = UIColor.black

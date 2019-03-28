@@ -741,6 +741,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             let headingLabel = UILabel()
             headingLabel.frame = CGRect(x: 0, y: y3, width: (11 * x), height: (3 * y))
             headingLabel.text = headingLabelEnglishArray[i]
+            headingLabel.font = UIFont(name: "Avenir Next", size: 15)
             headingLabel.textAlignment = .left
             headingLabel.textColor = UIColor.black
             BillingView.addSubview(headingLabel)
@@ -754,6 +755,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             let valuesTextField = UITextField()
             valuesTextField.frame = CGRect(x: colonLabel.frame.maxX + x, y: y3, width: BillingView.frame.width - (headingLabel.frame.width + colonLabel.frame.width + x), height: (3 * y))
             valuesTextField.backgroundColor = UIColor.white
+            valuesTextField.font = UIFont(name: "Avenir Next", size: 14)
             valuesTextField.textAlignment = .left
             valuesTextField.returnKeyType = .done
             valuesTextField.delegate = self

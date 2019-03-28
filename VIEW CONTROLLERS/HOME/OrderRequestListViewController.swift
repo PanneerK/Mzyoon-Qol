@@ -168,7 +168,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 }
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
-                emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                emptyLabel.numberOfLines = 2
+                emptyLabel.adjustsFontSizeToFitWidth = true
+                emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
                 emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
                 view.addSubview(emptyLabel)
             }
@@ -227,7 +229,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             }
             emptyLabel.textColor = UIColor.black
             emptyLabel.textAlignment = .center
-            emptyLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            emptyLabel.numberOfLines = 2
+            emptyLabel.adjustsFontSizeToFitWidth = true
+            emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
             emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
             view.addSubview(emptyLabel)
         }

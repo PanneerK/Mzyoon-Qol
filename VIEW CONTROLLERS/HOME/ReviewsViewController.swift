@@ -81,7 +81,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     {
         print("Tailor Id:",TailorID)
         
-       // TailorID = 203
+      //  TailorID = 219
         
         if(TailorID != nil)
         {
@@ -636,11 +636,12 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         RatingDate_LBL.textAlignment = .left
         RatingDate_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
         ReviewsView.addSubview(RatingDate_LBL)
-        
+       
+        /*
         let Review_LBL = UILabel()
-        Review_LBL.frame = CGRect(x: x, y: CustomerRatingImageView.frame.maxY + y, width: ReviewsView.frame.width - (8 * x), height: (6 * y))
+        Review_LBL.frame = CGRect(x: x, y: CustomerRatingImageView.frame.maxY + y, width: ReviewsView.frame.width - (2 * x), height: (6 * y))
         Review_LBL.text = CustomerReviewArray[i] as? String
-       // Review_LBL.backgroundColor = UIColor.lightGray
+        Review_LBL.backgroundColor = UIColor.cyan
         Review_LBL.textColor = UIColor.black
         Review_LBL.textAlignment = .left
         Review_LBL.lineBreakMode = .byWordWrapping
@@ -649,7 +650,17 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         Review_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
         Review_LBL.adjustsFontSizeToFitWidth = true
         ReviewsView.addSubview(Review_LBL)
-      
+       */
+        
+        let Review_LBL = UITextView()
+        Review_LBL.frame = CGRect(x: x, y: CustomerRatingImageView.frame.maxY + y, width: ReviewsView.frame.width - (2 * x), height: (6 * y))
+        Review_LBL.text = CustomerReviewArray[i] as? String
+        // Review_LBL.backgroundColor = UIColor.cyan
+        Review_LBL.textColor = UIColor.black
+        Review_LBL.textAlignment = .left
+        Review_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        ReviewsView.addSubview(Review_LBL)
+        
         let ReviewUnderline_LBL = UILabel()
         ReviewUnderline_LBL.frame = CGRect(x: 0, y: Review_LBL.frame.maxY + y, width: ReviewsView.frame.width, height: 0.5)
         ReviewUnderline_LBL.backgroundColor = UIColor.lightGray
