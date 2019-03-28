@@ -64,7 +64,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
     
     override func viewDidLoad()
     {
-        print("Tailor ID:",TailorID)
+        print("Tailor ID:",Variables.sharedManager.TailorID)
         print("Tailor ResponseID:",TailorResponseID)
         
         navigationBar.isHidden = true
@@ -242,7 +242,8 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
                 let PaymentScreen = PaymentViewController()
                 let TotalValue : Int = ChargesAmountArray[7] as! Int
                 PaymentScreen.TotalAmount = "\(TotalValue)"
-                PaymentScreen.TailorId = TailorID
+               // PaymentScreen.TailorId = TailorID
+               // Variables.sharedManager.TailorID
                 Variables.sharedManager.TotalAmount = "\(TotalValue)"
                 self.navigationController?.pushViewController(PaymentScreen, animated: true)
             }
@@ -301,9 +302,14 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         else
          {
              AppointmentScreen.TotalAmount = "1"
+             Variables.sharedManager.TotalAmount = "1"
          }
-            AppointmentScreen.TailorID = TailorID
-           AppointmentScreen.OrderID = OrderId
+        
+          //  AppointmentScreen.TailorID = TailorID
+          // AppointmentScreen.OrderID = OrderId
+        
+         // Variables.sharedManager.OrderID = OrderId
+        
         
            self.navigationController?.pushViewController(AppointmentScreen, animated: true)
     }
@@ -1518,7 +1524,8 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         print("Qty:",qtyNum)
         let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         print("order_Id:",order_Id!)
-        OrderId = order_Id
+        // OrderId = order_Id
+        Variables.sharedManager.OrderID = order_Id!
         
       if qtyNum != nil
       {

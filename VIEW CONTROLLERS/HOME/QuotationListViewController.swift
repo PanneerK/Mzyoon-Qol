@@ -529,7 +529,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     {
         let orderApproveScreen = OrderApprovalViewController()
         orderApproveScreen.TailorResponseID = sender.tag
-        orderApproveScreen.TailorID = TailorId
+       // orderApproveScreen.TailorID = TailorId
+        Variables.sharedManager.TailorID = TailorId
         self.navigationController?.pushViewController(orderApproveScreen, animated: true)
     }
     

@@ -349,25 +349,28 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     @objc func DoneButtonAction(sender : UIButton)
     {
         
-      
-        let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
-        let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
-       // let TotalAmt = UserDefaults.standard.value(forKey: "TotalAmount") as? String
+        //  let orderId = UserDefaults.standard.value(forKey: "OrderID") as? Int
+         //   let TailorId = UserDefaults.standard.value(forKey: "TailorID") as? Int
+        // let TotalAmt = UserDefaults.standard.value(forKey: "TotalAmount") as? String
+        
+        let orderId = Variables.sharedManager.OrderID
+        let TailorId = Variables.sharedManager.TailorID
         let TotalAmt = Variables.sharedManager.TotalAmount
         
-       
         if(self.TransMessage == "Authorised")
         {
-            print("orderId :",orderId!)
-            print("TailorId :",TailorId!)
+            print("orderId :",orderId)
+            print("TailorId :",TailorId)
             print("Total Amt :",TotalAmt)
             
-            self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId!, delegate: self)
-            self.serviceCall.API_BuyerOrderApproval(OrderId: orderId!, ApprovedTailorId: TailorId!, delegate: self)
+            self.serviceCall.API_updatePaymentStatus(PaymentStatus: 1, OrderId: orderId, delegate: self)
+            self.serviceCall.API_BuyerOrderApproval(OrderId: orderId, ApprovedTailorId: TailorId, delegate: self)
             
-            self.serviceCall.API_InsertPaymentStatus(OrderId: orderId!, Transactionid: TransRef, Amount: TotalAmt, Status: TransStatus, Code: TransCode, message: TransMessage, cvv: TransCvv, avs: TransAvs, cardcode: TransCardcode, cardlast4: TransCardlast4, Trace: TransTraceNum, ca_Valid: TransCa_valid, delegate: self)
+            self.serviceCall.API_InsertPaymentStatus(OrderId: orderId, Transactionid: TransRef, Amount: TotalAmt, Status: TransStatus, Code: TransCode, message: TransMessage, cvv: TransCvv, avs: TransAvs, cardcode: TransCardcode, cardlast4: TransCardlast4, Trace: TransTraceNum, ca_Valid: TransCa_valid, delegate: self)
             
-            Variables.sharedManager.TotalAmount = ""
+         //   Variables.sharedManager.TotalAmount = ""
+        //    Variables.sharedManager.TailorID = 0
+         //   Variables.sharedManager.OrderID = 0
             
             window = UIWindow(frame: UIScreen.main.bounds)
             let HomeScreen = HomeViewController()

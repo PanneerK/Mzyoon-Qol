@@ -116,21 +116,24 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
      //  AppointmentContent()
         
         print("TailorID:",TailorID)
+        print("Global TailorID:",Variables.sharedManager.TailorID)
         print("Total Amount:",Variables.sharedManager.TotalAmount)
+        print("order ID:", Variables.sharedManager.OrderID)
         
         print("View DidLoad")
         
-         UserDefaults.standard.set(TailorID, forKey: "TailorID")
+       //  UserDefaults.standard.set(TailorID, forKey: "TailorID")
         
-         print("order ID:", OrderID)
+        // 1..Get MAterailList..
+        self.serviceCall.API_GetAppointmentMaterial(OrderId: Variables.sharedManager.OrderID, delegate: self)
         
+    /*
+         
         if(OrderID != nil)
         {
             self.serviceCall.API_GetAppointmentMaterial(OrderId: OrderID, delegate: self)
         }
      
-        
-     /*
         if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         {
             
@@ -319,13 +322,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MaterialPayment = Result.value(forKey:"Payment") as! NSArray
             print("MaterialPayment:",MaterialPayment)
             
+            // 2..Get MeasurementList..
+            self.serviceCall.API_GetAppointmentMeasurement(OrderId: Variables.sharedManager.OrderID, delegate: self)
+            
+            // 3..Get Material Dates..
+            self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: Variables.sharedManager.OrderID, delegate: self)
+            
+            /*
+             // New.......
+             
             if(OrderID != nil)
             {
                 self.serviceCall.API_GetAppointmentMeasurement(OrderId: OrderID, delegate: self)
                 
                 self.serviceCall.API_GetAppointmentDateForMaterail(OrderId: OrderID, delegate: self)
             }
-            /*
+          
+             //Existing
             if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
             {
              // Measurement Details like image,Heading etc..
@@ -406,13 +419,18 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             MeasurementPayment = Result.value(forKey:"Payment") as! NSArray
             print("MeasurementPayment:",MeasurementPayment)
             
+           
+            // 4..Get Measurement Dates..
+            self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId:  Variables.sharedManager.OrderID, delegate: self)
             
-            if(OrderID != nil)
+            /*
+             // New...
+             if(OrderID != nil)
             {
                 self.serviceCall.API_GetAppointmentDateForMeasurement(OrderId: OrderID, delegate: self)
             }
            
-           /*
+              // Existing..
              if let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
              {
               // Measurement Dates from Tailor..
@@ -621,7 +639,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             if (MaterialPayment.contains("Not Paid") && MeasurementPayment.contains("Not Paid"))
             {
                 let PayScreen = PaymentViewController()
-                PayScreen.TailorId = TailorID
+                 // PayScreen.TailorId = TailorID
                // PayScreen.TotalAmount = TotalAmount
               //  Variables.sharedManager.TotalAmount = TotalAmount
                 self.navigationController?.pushViewController(PayScreen, animated: true)

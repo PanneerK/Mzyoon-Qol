@@ -118,13 +118,16 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         super.viewDidLoad()
       
         print("TailorId",TailorId)
-        UserDefaults.standard.set(TailorId, forKey: "TailorID")
+        print("Global TailorID:",Variables.sharedManager.TailorID)
+      
         
         navigationBar.isHidden = true
 
         // Do any additional setup after loading the view.
         
       /*
+           UserDefaults.standard.set(TailorId, forKey: "TailorID")
+         
         x = 10 / 375 * 100
         x = x * view.frame.width / 100
         
@@ -1440,7 +1443,15 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             {
                 Country = "IN"
             }
-            RequestId = String(arc4random())
+            
+            if(RequestId == nil)
+            {
+                RequestId = String(arc4random())
+            }
+            else
+            {
+                RequestId = "\(Variables.sharedManager.OrderID)"
+            }
             
             print("ALL VALUES BEFORE SENDING", AddLine1, AddLine2, AddLine3, City, State, Country, Zipcode, EMAIL, TotalAmount)
             
