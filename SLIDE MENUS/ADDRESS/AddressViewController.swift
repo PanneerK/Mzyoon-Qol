@@ -701,12 +701,16 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                             defaultAddressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                             defaultAddressLabel.text = "Default Address"
                             defaultAddressLabel.textAlignment = .left
+                            
+                            defaultAddressImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                         }
                         else if language == "ar"
                         {
                             defaultAddressLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                             defaultAddressLabel.text = "العنوان الافتراضي"
                             defaultAddressLabel.textAlignment = .right
+                            
+                            defaultAddressImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                         }
                     }
                     else
@@ -714,6 +718,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                         defaultAddressLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                         defaultAddressLabel.text = "Default Address"
                         defaultAddressLabel.textAlignment = .left
+                        
+                        defaultAddressImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     }
                 }
                 

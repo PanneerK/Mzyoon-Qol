@@ -73,6 +73,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         selectedButton(tag: 0)
         
         self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+        self.customization2Content()
 
         super.viewDidLoad()
         
@@ -81,7 +82,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.customization2Content()
+//        self.customization2Content()
     }
     
     func serviceCallFunction(getMaterialId : [Int], getColorId : [Int])
@@ -596,6 +597,22 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         
         colorScrollView.contentSize.width = x2 + (2 * x)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     func patternContent(getInputArray: NSArray)
@@ -677,6 +694,22 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
         
         patternScrollView.contentSize.width = x3 + (2 * x)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

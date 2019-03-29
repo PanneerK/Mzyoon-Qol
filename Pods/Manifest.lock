@@ -15,6 +15,7 @@ PODS:
   - SidebarOverlay (4.2.2)
   - SideMenu (5.0.1)
   - SideMenuSwift (1.0.1)
+  - SlideOutMenu (0.1.2)
 
 DEPENDENCIES:
   - AlamofireDomain (~> 4.1)
@@ -26,6 +27,7 @@ DEPENDENCIES:
   - SidebarOverlay
   - SideMenu
   - SideMenuSwift
+  - SlideOutMenu
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -38,6 +40,7 @@ SPEC REPOS:
     - SidebarOverlay
     - SideMenu
     - SideMenuSwift
+    - SlideOutMenu
 
 SPEC CHECKSUMS:
   AlamofireDomain: 6a17c975e5fe8c10d8dbfdb1ab28e6dd0ae7cd41
@@ -49,7 +52,8 @@ SPEC CHECKSUMS:
   SidebarOverlay: a5365455a2f9d54f70d0765764ca1a2806b1b11d
   SideMenu: 87efd943737bb83aedf0358884d09fcf5576636d
   SideMenuSwift: a78d47182aa03b5c07570fe57d3ba22c4561f2ce
+  SlideOutMenu: b16a7202deddd632ae46141c4ed5ba54c5017110
 
-PODFILE CHECKSUM: 0a0b4665e8a1ba7505432021351a01e9b2d8f06e
+PODFILE CHECKSUM: 6d871b485a16b952737cc2fce15e1dfff1355c3e
 
 COCOAPODS: 1.5.3

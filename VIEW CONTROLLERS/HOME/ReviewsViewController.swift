@@ -285,10 +285,19 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     }
    
     RatingNumLabel.frame = CGRect(x: (2 * x), y: (2 * y), width: (3 * x), height: (2 * y))
+    
     if(FullStatusArr.count > 0)
     {
-        let rateNum : Int = Int(FullStatusArr[0] as! Double)
-        RatingNumLabel.text = "\(rateNum)/5"
+        if let number = FullStatusArr[0] as? Int
+        {
+            let rateNum : Int = number
+            RatingNumLabel.text = "\(rateNum)/5"
+        }
+        else if let number = FullStatusArr[0] as? Double
+        {
+            let rateNum : Double = number
+            RatingNumLabel.text = "\(rateNum)/5"
+        }
     }
     else
     {
@@ -306,11 +315,25 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     RatingStatusLabel.frame = CGRect(x: x/2, y: StarImageView.frame.maxY, width: (8 * x), height: (2 * y))
     if(PerformenceStatusArr.count > 0)
     {
-      RatingStatusLabel.text = PerformenceStatusArr[0] as? String
+        RatingStatusLabel.text = PerformenceStatusArr[0] as? String
     }
     else
     {
-        RatingStatusLabel.text = "POOR"
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                RatingStatusLabel.text = "POOR"
+            }
+            else if language == "ar"
+            {
+                RatingStatusLabel.text = "فقير"
+            }
+        }
+        else
+        {
+            RatingStatusLabel.text = "POOR"
+        }
     }
     RatingStatusLabel.textColor = UIColor.black
     //RatingStatusLabel.backgroundColor = UIColor.gray
@@ -323,11 +346,40 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     if(Based_On_ReviewsArr.count > 0)
     {
        let StatusNum  = Based_On_ReviewsArr[0] as? String
-       ReviewStatusLabel.text = "(Based on \(StatusNum!) Reviews)"
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                ReviewStatusLabel.text = "(Based on \(StatusNum!) Reviews)"
+            }
+            else if language == "ar"
+            {
+                ReviewStatusLabel.text = "(بناءً على \(StatusNum!) المراجعات)"
+            }
+        }
+        else
+        {
+            ReviewStatusLabel.text = "(Based on \(StatusNum!) Reviews)"
+        }
     }
     else
     {
-       ReviewStatusLabel.text = "(Based on 0 Reviews)"
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                ReviewStatusLabel.text = "(Based on 0 Reviews)"
+            }
+            else if language == "ar"
+            {
+                ReviewStatusLabel.text = "(على أساس 0 مراجعات)"
+            }
+        }
+        else
+        {
+            ReviewStatusLabel.text = "(Based on 0 Reviews)"
+        }
     }
     ReviewStatusLabel.textColor = UIColor.black
    // ReviewStatusLabel.backgroundColor = UIColor.gray

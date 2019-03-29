@@ -538,7 +538,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX - (3 * x), y: 0, width: PendingViewButton.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: PendingViewButton.frame.width / 2, height: (2 * y))
             let orderNum:Int = PendOrderIdArray[i] as! Int
             tailorName.text = "\(orderNum)"
             PendingViewButton.tag = PendOrderIdArray[i] as! Int
@@ -826,7 +826,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(orderId_Icon)
             
             let nameLabel = UILabel()
-            nameLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: 0, width: (10 * x), height: (2 * y))
+            nameLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: 0, width: (12 * x), height: (2 * y))
             nameLabel.text = "Order Id : "
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
@@ -834,7 +834,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: 0, width: DeliveredViewButton.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: DeliveredViewButton.frame.width / 2, height: (2 * y))
             let orderNum:Int = DelivOrderIdArray[i] as! Int
             tailorName.text = "\(orderNum)"
             DeliveredViewButton.tag = DelivOrderIdArray[i] as! Int

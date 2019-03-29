@@ -232,7 +232,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         self.view.bringSubviewToFront(slideMenuButton)
         
         let manualIcon = UIImageView()
-        manualIcon.frame = CGRect(x: 0, y: y, width: (3 * x), height: (3 * y))
+        manualIcon.frame = CGRect(x: 0, y: (1.5 * y), width: (2 * x), height: (2 * y))
         manualIcon.image = UIImage(named: "Manually")
         selfScreenContents.addSubview(manualIcon)
 
@@ -285,7 +285,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         forWhomButton.addSubview(downArrowImageView)
         
         let goToIcon = UIImageView()
-        goToIcon.frame = CGRect(x: 0, y: manualButton.frame.maxY + (2 * y), width: (3 * x), height: (3 * y))
+        goToIcon.frame = CGRect(x: 0, y: manualButton.frame.maxY + (2.5 * y), width: (2 * x), height: (2 * y))
         goToIcon.image = UIImage(named: "Go_to_tailor_shop")
         selfScreenContents.addSubview(goToIcon)
         
@@ -324,7 +324,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         let comeToIcon = UIImageView()
-        comeToIcon.frame = CGRect(x: 0, y: goButton.frame.maxY + (2 * y), width: (3 * x), height: (3 * y))
+        comeToIcon.frame = CGRect(x: 0, y: goButton.frame.maxY + (2.5 * y), width: (2 * x), height: (2 * y))
         comeToIcon.image = UIImage(named: "Tailor_come_to_your_place")
         selfScreenContents.addSubview(comeToIcon)
         

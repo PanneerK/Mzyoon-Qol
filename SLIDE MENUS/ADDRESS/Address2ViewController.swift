@@ -2399,7 +2399,21 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                     setOrHide = 0
                     let int = countryIdArray[i] as! Int
                     serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
-                    stateButton.setTitle("State", for: .normal)
+                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                    {
+                        if language == "en"
+                        {
+                            stateButton.setTitle("State", for: .normal)
+                        }
+                        else if language == "ar"
+                        {
+                            stateButton.setTitle("الامارة", for: .normal)
+                        }
+                    }
+                    else
+                    {
+                        stateButton.setTitle("State", for: .normal)
+                    }
                 }
             }
         }
@@ -2511,7 +2525,21 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     
     func stateAlertAction(action : UIAlertAction)
     {
-        areaButton.setTitle("Area", for: .normal)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                areaButton.setTitle("Area", for: .normal)
+            }
+            else if language == "ar"
+            {
+                areaButton.setTitle("المنطقة", for: .normal)
+            }
+        }
+        else
+        {
+            areaButton.setTitle("Area", for: .normal)
+        }
         
         stateButton.setTitle(action.title, for: .normal)
         
@@ -3072,8 +3100,24 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                             setOrHide = 0
                             let int = countryIdArray[i] as! Int
                             serviceCall.API_GetStateListByCountry(countryId: "\(int)", delegate: self)
-                            stateButton.setTitle("State", for: .normal)
-                            areaButton.setTitle("Area", for: .normal)
+                            if let language = UserDefaults.standard.value(forKey: "language") as? String
+                            {
+                                if language == "en"
+                                {
+                                    stateButton.setTitle("State", for: .normal)
+                                    areaButton.setTitle("Area", for: .normal)
+                                }
+                                else if language == "ar"
+                                {
+                                    stateButton.setTitle("الامارة", for: .normal)
+                                    areaButton.setTitle("المنطقة", for: .normal)
+                                }
+                            }
+                            else
+                            {
+                                stateButton.setTitle("State", for: .normal)
+                                areaButton.setTitle("Area", for: .normal)
+                            }
                             getCountryId = countryIdArray[i] as! Int
                         }
                         else

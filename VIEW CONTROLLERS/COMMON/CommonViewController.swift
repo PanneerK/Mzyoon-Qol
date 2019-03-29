@@ -10,11 +10,13 @@ import UIKit
 import SideMenu
 import SidebarOverlay
 import SideMenuSwift
+import SlideOutMenu
 
 class CommonViewController: UIViewController
 {
     var window: UIWindow?
-    
+    let blurBlackView = UIView()
+
     var x = CGFloat()
     var y = CGFloat()
     
@@ -49,7 +51,10 @@ class CommonViewController: UIViewController
     
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
-        
+    
+//    let slideScreen = SlideViewController()
+//    let selfScreen = CommonViewController()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -58,7 +63,6 @@ class CommonViewController: UIViewController
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
-//        sideMenuFunctions()
         declaringMenu()
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -115,35 +119,6 @@ class CommonViewController: UIViewController
     
     override func viewWillDisappear(_ animated: Bool) {
         print("DISAPPEAR VIEW")
-    }
-    
-    func sideMenuFunctions()
-    {
-        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: self)
-        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
-        
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
-        {
-            if language == "en"
-            {
-                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-                SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
-            }
-            else if language == "ar"
-            {
-                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-                SideMenuManager.default.menuRightNavigationController = menuRightNavigationController
-            }
-        }
-        else
-        {
-            let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
-            SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
-        }
-        
-        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-        SideMenuManager.default.menuFadeStatusBar = false
     }
     
     func declaringMenu()
@@ -250,6 +225,8 @@ class CommonViewController: UIViewController
         
         slideMenuButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
+        userImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
         tab1ImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         tab1Text.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         tab1Text.text = "Home"
@@ -274,6 +251,8 @@ class CommonViewController: UIViewController
         
         slideMenuButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
+        userImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
         tab1ImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         tab1Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         tab1Text.text = "منزل"
@@ -295,6 +274,7 @@ class CommonViewController: UIViewController
         slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
         slideMenuButton.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
+        slideMenuButton.tag = 0
         slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents1.addSubview(slideMenuButton)
         
@@ -392,7 +372,7 @@ class CommonViewController: UIViewController
     {
         UserDefaults.standard.set(1, forKey: "sideValue")
         
-        sender.setImage(UIImage(named: "closeMenu"), for: .normal)
+        SideMenuManager.default.menuLeftNavigationController?.dismiss(animated: true, completion: nil)
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -418,6 +398,51 @@ class CommonViewController: UIViewController
         
 //        self.sideMenuController?.cache(viewController: SlideViewController(), with: "true")
 //        self.sideMenuController?.setContentViewController(to: SlideViewController())
+        
+        /*if sender.tag == 0
+        {
+            sender.setImage(UIImage(named: "closeMenu"), for: .normal)
+
+            blurBlackView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+            blurBlackView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            view.addSubview(blurBlackView)
+            
+            self.view.bringSubviewToFront(sender)
+            window = UIWindow(frame: CGRect(x: 0, y: 0, width: view.frame.width - 100, height: view.frame.height))
+            let navigationScreen = UINavigationController(rootViewController: SlideViewController())
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+            
+            
+            sender.frame = CGRect(x: view.frame.width - 100, y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
+            sender.tag = 1
+            
+            blurBlackView.addSubview(sender)
+        }
+        else
+        {
+            sender.setImage(UIImage(named: "openMenu"), for: .normal)
+
+            blurBlackView.removeFromSuperview()
+            
+            view.addSubview(sender)
+            
+            let views = Variables()
+            
+            views.viewController.view.isUserInteractionEnabled = true
+            
+            print("VIEW CONTROLLER NAME", views.viewController)
+            
+            sender.frame = CGRect(x: 0, y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
+            sender.tag = 0
+            
+            window = UIWindow(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+            let navigationScreen = UINavigationController(rootViewController: views.viewController)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+        }*/
     }
     
     @objc func tabBarButtonAction(sender : UIButton)
@@ -425,8 +450,28 @@ class CommonViewController: UIViewController
         selectedButton(tag: sender.tag)
         
         var navigateScreen = UIViewController()
-        let alertControls = UIAlertController(title: "Message", message: "Cart is Empty", preferredStyle: .alert)
-        alertControls.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        var cartAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                cartAlert = UIAlertController(title: "Alert", message: "Cart is Empty", preferredStyle: .alert)
+                cartAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            }
+            else if language == "ar"
+            {
+                cartAlert = UIAlertController(title: "تنبيه", message: "السلة فارغة", preferredStyle: .alert)
+                cartAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+            }
+        }
+        else
+        {
+            cartAlert = UIAlertController(title: "Alert", message: "Cart is Empty", preferredStyle: .alert)
+            cartAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        }
+        
         // Home..
         if sender.tag == 0
         {
@@ -469,7 +514,7 @@ class CommonViewController: UIViewController
         else
         {
             stopActivity()
-            self.present(alertControls, animated: true, completion: nil)
+            self.present(cartAlert, animated: true, completion: nil)
         }
         /*  // Cart..
          else if sender.tag == 3

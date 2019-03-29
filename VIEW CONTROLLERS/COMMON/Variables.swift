@@ -45,6 +45,8 @@ class Variables: NSObject
     public var OrderID:Int = 0
     public var TailorID:Int = 0
     
+    public var viewController:UIViewController = UIViewController()
+    
     // Here is how you would get to it without there being a global collision of variables.
     // , or in other words, it is a globally accessable parameter that is specific to the
     // class.

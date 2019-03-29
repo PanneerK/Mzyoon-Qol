@@ -92,6 +92,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         updateId = 0
         
         self.serviceCallFunction(originIdArray: [1], seasonIdArray: [1])
+        customization1Content()
         
         super.viewDidLoad()
         
@@ -100,7 +101,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool)
     {
-        customization1Content()
+//        customization1Content()
     }
     
     func serviceCallFunction(originIdArray : [Int], seasonIdArray : [Int])
@@ -643,6 +644,22 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         brandScrollView.contentSize.width = x2 + (3 * x)
         
         self.stopActivity()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

@@ -27,6 +27,9 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
+        let views = Variables()
+        views.viewController = HomeViewController()
+        
         UserDefaults.standard.set(1, forKey: "screenAppearance")
         
         xPos = 10 / 375 * 100
@@ -37,16 +40,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 
         selectedButton(tag: 0)
         
-        /*if let userId = UserDefaults.standard.value(forKey: "userId") as? String
-        {
-            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
-        }
-        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
-        {
-            serviceCall.API_ExistingUserProfile(Id: "\(userId)", delegate: self)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 2 to desired number of seconds
             // Your code with delay
             
             if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -70,13 +64,77 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 self.checkContent()
             }
-        }*/
+        }
         
         deviceDetails()
                 
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
+        {
+            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
+        }
+        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            serviceCall.API_ExistingUserProfile(Id: "\(userId)", delegate: self)
+        }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "HOME"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                self.checkContent()
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "الصفحة الرئيسية"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                self.checkContentInArabic()
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "HOME"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            self.checkContent()
+        }
+    }
+    
+    func sideMenuFunctions()
+    {
+        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: self)
+        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
+                SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
+            }
+            else if language == "ar"
+            {
+                let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
+                SideMenuManager.default.menuRightNavigationController = menuRightNavigationController
+            }
+        }
+        else
+        {
+            let menuRightNavigationController = UISideMenuNavigationController(rootViewController: self)
+            SideMenuManager.default.menuLeftNavigationController = menuRightNavigationController
+        }
+        
+        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
+        SideMenuManager.default.menuFadeStatusBar = false
     }
     
     func deviceDetails()
@@ -142,6 +200,13 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                         
                         downloadImage(from: apiurl!)
                     }
+                }
+                
+                let userName = result.value(forKey: "Name") as! NSArray
+                
+                if let name = userName[0] as? String
+                {
+                    UserDefaults.standard.set(name, forKey: "userName")
                 }
             }
         }
@@ -245,42 +310,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         // slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
         slideMB.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-        if let userId = UserDefaults.standard.value(forKey: "userId") as? String
-        {
-            serviceCall.API_ExistingUserProfile(Id: userId, delegate: self)
-        }
-        else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
-        {
-            serviceCall.API_ExistingUserProfile(Id: "\(userId)", delegate: self)
-        }
-        
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
-        {
-            if language == "en"
-            {
-                self.navigationTitle.text = "HOME"
-                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                self.checkContent()
-            }
-            else if language == "ar"
-            {
-                self.navigationTitle.text = "الصفحة الرئيسية"
-                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                self.checkContentInArabic()
-            }
-        }
-        else
-        {
-            self.navigationTitle.text = "HOME"
-            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            self.checkContent()
-        }
-    }
-
     
     @objc func selectionButtonAction(sender : UIButton)
     {

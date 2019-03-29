@@ -54,6 +54,10 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         selectedButton(tag: 0)
         
         serviceCall.API_Gender(delegate: self)
+        
+        let views = Variables()
+        
+        views.viewController = self
 
         super.viewDidLoad()
 
