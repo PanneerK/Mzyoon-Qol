@@ -59,10 +59,12 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
     
     var applicationDelegate = AppDelegate()
 
+    //Total Amount Label
+     var OrderTotalValueLBL = UILabel()
     
     override func viewDidLoad()
     {
-        print("Tailor ID:",TailorID)
+        print("Tailor ID:",Variables.sharedManager.TailorID)
         print("Tailor ResponseID:",TailorResponseID)
         
         navigationBar.isHidden = true
@@ -254,7 +256,9 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
                 let PaymentScreen = PaymentViewController()
                 let TotalValue : Int = ChargesAmountArray[7] as! Int
                 PaymentScreen.TotalAmount = "\(TotalValue)"
-                PaymentScreen.TailorId = TailorID
+               // PaymentScreen.TailorId = TailorID
+               // Variables.sharedManager.TailorID
+                Variables.sharedManager.TotalAmount = "\(TotalValue)"
                 self.navigationController?.pushViewController(PaymentScreen, animated: true)
             }
             else
@@ -307,13 +311,19 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
          {
             let TotalValue : Int = ChargesAmountArray[7] as! Int
             AppointmentScreen.TotalAmount = "\(TotalValue)"
+            Variables.sharedManager.TotalAmount = "\(TotalValue)"
          }
         else
          {
              AppointmentScreen.TotalAmount = "1"
+             Variables.sharedManager.TotalAmount = "1"
          }
-            AppointmentScreen.TailorID = TailorID
-           AppointmentScreen.OrderID = OrderId
+        
+          //  AppointmentScreen.TailorID = TailorID
+          // AppointmentScreen.OrderID = OrderId
+        
+         // Variables.sharedManager.OrderID = OrderId
+        
         
            self.navigationController?.pushViewController(AppointmentScreen, animated: true)
     }
@@ -554,6 +564,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         
         Variables.sharedManager.ApprovalQty = self.QtyNumTF.text!
         self.view.endEditing(true)
+      
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -970,7 +981,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         OrderTotalLabel.font = UIFont(name: "Avenir Next", size: 1.5 * x)
         ApprovalListScrollView.addSubview(OrderTotalLabel)
         
-        let OrderTotalValueLBL = UILabel()
+        // let OrderTotalValueLBL = UILabel()
         OrderTotalValueLBL.frame = CGRect(x: OrderTotalLabel.frame.maxX + x , y: TaxChargesLabel.frame.minY + (4 * y), width: (10 * x), height: (3 * y))
         OrderTotalValueLBL.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         if(ChargesAmountArray.count != 0)
@@ -1527,7 +1538,8 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         print("Qty:",qtyNum)
         let order_Id = UserDefaults.standard.value(forKey: "OrderID") as? Int
         print("order_Id:",order_Id!)
-        OrderId = order_Id
+        // OrderId = order_Id
+        Variables.sharedManager.OrderID = order_Id!
         
       if qtyNum != nil
       {

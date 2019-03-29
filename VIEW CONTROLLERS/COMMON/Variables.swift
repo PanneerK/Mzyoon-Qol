@@ -39,7 +39,11 @@ class Variables: NSObject
     public var AddressZipcode:String = ""
     public var EmailId:String = ""
     
+    
     public var ApprovalQty:String = ""
+    public var TotalAmount:String = ""
+    public var OrderID:Int = 0
+    public var TailorID:Int = 0
     
     public var viewController:UIViewController = UIViewController()
     
