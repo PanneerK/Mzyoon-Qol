@@ -512,6 +512,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         
         let AppointmentScreen = AppointmentViewController()
         AppointmentScreen.OrderID = sender.tag
+        Variables.sharedManager.OrderID = sender.tag
         self.navigationController?.pushViewController(AppointmentScreen, animated: true)
         
     }
