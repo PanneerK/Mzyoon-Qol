@@ -509,7 +509,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
     @objc func confirmSelectionButtonAction(sender : UIButton)
     {
        // print("Tag Id:",OR_IdLabel.tag)
-        
+       
         let AppointmentScreen = AppointmentViewController()
         AppointmentScreen.OrderID = sender.tag
         Variables.sharedManager.OrderID = sender.tag
