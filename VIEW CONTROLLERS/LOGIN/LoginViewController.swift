@@ -34,10 +34,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     let titleLabel = UILabel()
     let cancelButton = UIButton()
 
-    
-    
     //OTP CONTENTS
     let otpView = UIView()
+    let otpEnterLabel = UILabel()
     let otp1Letter = UITextField()
     let otp2Letter = UITextField()
     let otp3Letter = UITextField()
@@ -337,9 +336,27 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
 
             if result == "No ACCESS Permission."
             {
-                let alert = UIAlertController(title: "Alert", message: "Server down please try after some time", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        let alert = UIAlertController(title: "Alert", message: "Server down please try after some time", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    else if language == "ar"
+                    {
+                        let alert = UIAlertController(title: "تنبيه", message: "خادم أسفل يرجى المحاولة بعد بعض الوقت", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+                else
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Server down please try after some time", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
             else
             {
@@ -365,9 +382,27 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         else
         {
-            let alert = UIAlertController(title: "Alert", message: "Please check your number", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Please check your number", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let alert = UIAlertController(title: "تنبيه", message: "يرجى التحقق من رقمك", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Please check your number", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
     
@@ -383,9 +418,27 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             if result == "No ACCESS Permission."
             {
-                let alert = UIAlertController(title: "Alert", message: "Server down please try after some time", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        let alert = UIAlertController(title: "Alert", message: "Server down please try after some time", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    else if language == "ar"
+                    {
+                        let alert = UIAlertController(title: "تنبيه", message: "خادم أسفل يرجى المحاولة بعد بعض الوقت", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+                else
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Server down please try after some time", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
             else
             {
@@ -411,9 +464,27 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         else
         {
-            let alert = UIAlertController(title: "Alert", message: "Please check your number", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Please check your number", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let alert = UIAlertController(title: "تنبيه", message: "يرجى التحقق من رقمك", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Please check your number", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
     
@@ -454,9 +525,27 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             ErrorStr = Result
             DeviceError()*/
             
-            let errorAlert = UIAlertController(title: "Alert", message: "Invalid OTP", preferredStyle: .alert)
-            errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(errorAlert, animated: true, completion: nil)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let errorAlert = UIAlertController(title: "Alert", message: "Invalid OTP", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let errorAlert = UIAlertController(title: "تنبيه", message: "OTP غير صالح", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let errorAlert = UIAlertController(title: "Alert", message: "Invalid OTP", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(errorAlert, animated: true, completion: nil)
+            }
         }
     }
     
@@ -829,7 +918,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         cancelButton.addTarget(self, action: #selector(self.countryCodeCancelAction(sender:)), for: .touchUpInside)
         alertView.addSubview(cancelButton)
         
-        /*if let language = UserDefaults.standard.value(forKey: "language") as? String
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
             {
@@ -843,7 +932,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         else
         {
             changeViewToEnglish()
-        }*/
+        }
     }
     
     @objc func mobileTextField(textField : UITextField)
@@ -881,9 +970,27 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if (mobileTextField.text?.count)! > 10 || (mobileTextField.text?.count)! < 5
             {
-                alert = UIAlertController(title: "Alert", message: "Unknown number", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.navigationController?.present(alert, animated: true, completion: nil)
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        alert = UIAlertController(title: "Alert", message: "Unknown number", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.navigationController?.present(alert, animated: true, completion: nil)
+                    }
+                    else if language == "ar"
+                    {
+                        alert = UIAlertController(title: "تنبيه", message: "رقم مجهول", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                        self.navigationController?.present(alert, animated: true, completion: nil)
+                    }
+                }
+                else
+                {
+                    alert = UIAlertController(title: "Alert", message: "Unknown number", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.navigationController?.present(alert, animated: true, completion: nil)
+                }
             }
             else
             {
@@ -983,7 +1090,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         titleLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
         //        otpView.addSubview(titleLabel)
         
-        let otpEnterLabel = UILabel()
         otpEnterLabel.frame = CGRect(x: 0, y: otpImageView.frame.maxY + y, width: otpView.frame.width, height: (2 * y))
         otpEnterLabel.text = "Verify your phone number"
         otpEnterLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -1399,6 +1505,105 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
         print("textFieldDidBeginEditing")
+        
+        if textField == otp1Letter
+        {
+            if otp1Letter.text?.isEmpty == true
+            {
+                otp1Letter.becomeFirstResponder()
+            }
+        }
+        else if textField == otp2Letter
+        {
+            if otp1Letter.text?.isEmpty == true
+            {
+                otp1Letter.becomeFirstResponder()
+            }
+            else
+            {
+                otp2Letter.becomeFirstResponder()
+            }
+        }
+        else if textField == otp3Letter
+        {
+            if otp2Letter.text?.isEmpty == true
+            {
+                otp2Letter.becomeFirstResponder()
+            }
+            else
+            {
+                otp3Letter.becomeFirstResponder()
+            }
+        }
+        else if textField == otp4Letter
+        {
+            if otp3Letter.text?.isEmpty == true
+            {
+                otp3Letter.becomeFirstResponder()
+            }
+            else
+            {
+                otp4Letter.becomeFirstResponder()
+            }
+        }
+        else if textField == otp5Letter
+        {
+            if otp4Letter.text?.isEmpty == true
+            {
+                otp4Letter.becomeFirstResponder()
+            }
+            else
+            {
+                otp5Letter.becomeFirstResponder()
+            }
+        }
+        else if textField == otp6Letter
+        {
+            if otp5Letter.text?.isEmpty == true
+            {
+                otp5Letter.becomeFirstResponder()
+            }
+            else
+            {
+                otp6Letter.becomeFirstResponder()
+            }
+        }
+        
+        /*if textField.text?.isEmpty == true
+        {
+            if textField == otp1Letter
+            {
+                
+            }
+            else if textField == otp2Letter
+            {
+                if otp1Letter.text?.isEmpty == false
+                {
+                    otp2Letter.becomeFirstResponder()
+                }
+                else
+                {
+                    otp1Letter.becomeFirstResponder()
+                }
+            }
+            else if textField == otp3Letter
+            {
+                otp2Letter.becomeFirstResponder()
+            }
+            else if textField == otp4Letter
+            {
+                otp3Letter.becomeFirstResponder()
+            }
+            else if textField == otp5Letter
+            {
+                otp4Letter.becomeFirstResponder()
+            }
+            else if textField == otp6Letter
+            {
+                otp5Letter.becomeFirstResponder()
+            }
+        }*/
+        
         /*let  char = textField.text!.cString(using: String.Encoding.utf8)!
         let isBackSpace = strcmp(char, "\\b")
         

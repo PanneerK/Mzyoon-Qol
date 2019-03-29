@@ -73,6 +73,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         selectedButton(tag: 0)
         
         self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
+        self.customization2Content()
 
         super.viewDidLoad()
         
@@ -81,7 +82,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.customization2Content()
+//        self.customization2Content()
     }
     
     func serviceCallFunction(getMaterialId : [Int], getColorId : [Int])

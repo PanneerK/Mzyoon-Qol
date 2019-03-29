@@ -795,7 +795,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             if language == "en"
             {
                 genderLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                genderLabel.text = "Gender"
+                if getGender.isEmpty == true
+                {
+                    genderLabel.text = "Gender"
+                }
+                else
+                {
+                    genderLabel.text = getGender
+                }
                 genderLabel.textAlignment = .left
 
                 changeViewToEnglishInSelf()
@@ -803,7 +810,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             else if language == "ar"
             {
                 genderLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                genderLabel.text = "جنس"
+                if getGender.isEmpty == true
+                {
+                    genderLabel.text = "Gender"
+                }
+                else
+                {
+                    genderLabel.text = getGender
+                }
                 genderLabel.textAlignment = .right
 
                 changeViewToArabicInSelf()
@@ -812,7 +826,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         else
         {
             genderLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            genderLabel.text = "Gender"
+            if getGender.isEmpty == true
+            {
+                genderLabel.text = "Gender"
+            }
+            else
+            {
+                genderLabel.text = getGender
+            }
             genderLabel.textAlignment = .left
 
             changeViewToEnglishInSelf()

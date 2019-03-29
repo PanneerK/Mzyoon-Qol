@@ -272,6 +272,10 @@ class SlideViewController: UIViewController
     
     func logoutAlertOkAction(action : UIAlertAction)
     {
+        
+        SideMenuManager.default.menuLeftNavigationController?.dismiss(animated: true, completion: nil)
+        SideMenuManager.default.menuRightNavigationController?.dismiss(animated: true, completion: nil)
+
         let navigateScreen = LoginViewController()
         navigateScreen.findString = "logout"
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -279,6 +283,7 @@ class SlideViewController: UIViewController
         navigationScreen.isNavigationBarHidden = true
         window?.rootViewController = navigationScreen
         window?.makeKeyAndVisible()
+        
     }
     
     @objc func slideMenuButtonAction(sender : UIButton)

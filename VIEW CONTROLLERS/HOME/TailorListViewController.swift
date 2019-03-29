@@ -509,7 +509,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         totalTailersSelectedCountLabel.layer.borderColor = UIColor.lightGray.cgColor
         totalTailersSelectedCountLabel.layer.masksToBounds = true
         totalTailersSelectedCountLabel.backgroundColor = UIColor.white
-        totalTailersSelectedCountLabel.text = "0"
+        
+        if selectedTailorListArray.count == 0
+        {
+            totalTailersSelectedCountLabel.text = "0"
+        }
+        else
+        {
+            totalTailersSelectedCountLabel.text = "\(selectedTailorListArray.count)"
+        }
         totalTailersSelectedCountLabel.textColor = UIColor.black
         totalTailersSelectedCountLabel.textAlignment = .center
         backDrop.addSubview(totalTailersSelectedCountLabel)
@@ -584,6 +592,25 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             tailorImageButton.tag = IdArray[i] as! Int
             tailorImageButton.addTarget(self, action: #selector(self.tailorSelectionButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(tailorImageButton)
+            
+            if selectedTailorListArray.count == 0
+            {
+                
+            }
+            else
+            {
+                if let id = IdArray[i] as? Int
+                {
+                    if selectedTailorListArray.contains(id)
+                    {
+                        let selectionImage = UIImageView()
+                        selectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+                        selectionImage.image = UIImage(named: "selectionImage")
+                        selectionImage.tag = id
+                        tailorImageButton.addSubview(selectionImage)
+                    }
+                }
+            }
             
             let nameLabel = UILabel()
             nameLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: 0, width: (5 * x), height: (2 * y))

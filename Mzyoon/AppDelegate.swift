@@ -11,6 +11,7 @@ import CoreData
 import CoreLocation
 import GoogleMaps
 import GooglePlaces
+import SideMenu
 
 
 @UIApplicationMain

@@ -10,6 +10,7 @@ import UIKit
 import SideMenu
 import SidebarOverlay
 import SideMenuSwift
+import SlideOutMenu
 
 class CommonViewController: UIViewController
 {
@@ -449,8 +450,28 @@ class CommonViewController: UIViewController
         selectedButton(tag: sender.tag)
         
         var navigateScreen = UIViewController()
-        let alertControls = UIAlertController(title: "Message", message: "Cart is Empty", preferredStyle: .alert)
-        alertControls.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        var cartAlert = UIAlertController()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                cartAlert = UIAlertController(title: "Alert", message: "Cart is Empty", preferredStyle: .alert)
+                cartAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            }
+            else if language == "ar"
+            {
+                cartAlert = UIAlertController(title: "تنبيه", message: "السلة فارغة", preferredStyle: .alert)
+                cartAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+            }
+        }
+        else
+        {
+            cartAlert = UIAlertController(title: "Alert", message: "Cart is Empty", preferredStyle: .alert)
+            cartAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        }
+        
         // Home..
         if sender.tag == 0
         {
@@ -493,7 +514,7 @@ class CommonViewController: UIViewController
         else
         {
             stopActivity()
-            self.present(alertControls, animated: true, completion: nil)
+            self.present(cartAlert, animated: true, completion: nil)
         }
         /*  // Cart..
          else if sender.tag == 3

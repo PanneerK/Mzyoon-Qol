@@ -11,5 +11,5 @@ target 'Mzyoon' do
   pod 'Cosmos', '~> 18.0'
   pod 'SideMenuSwift'
   pod 'SidebarOverlay'
-
+  pod 'SlideOutMenu'
 end

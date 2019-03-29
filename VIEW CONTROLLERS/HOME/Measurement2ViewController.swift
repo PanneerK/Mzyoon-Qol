@@ -1069,7 +1069,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHipheightLabel)
                     
                     let bottomheightLabel = UILabel()
-                    bottomheightLabel.frame = CGRect(x: (8.2 * x), y: (34.5 * y), width: subView.frame.width - (17.2 * x), height: (2 * y))
+                    bottomheightLabel.frame = CGRect(x: (8.2 * x), y: (34.5 * y), width: subView.frame.width - (18.2 * x), height: (2 * y))
                     bottomheightLabel.text = "Out Seam"
                     bottomheightLabel.textColor = UIColor.black
                     bottomheightLabel.textAlignment = .right
@@ -3446,7 +3446,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     {
         activitySubContents()
         
-        if sender.tag == 1
+        /*if sender.tag == 1
         {
             measurerImage = "Head"
         }
@@ -3521,6 +3521,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         else if sender.tag == 19
         {
             measurerImage = "Hand Cuf"
+        }*/
+        
+        if let label = view.viewWithTag(sender.tag + 300) as? UILabel
+        {
+            print("SENDER TITLE", label.text)
+            measurerImage = label.text!
         }
         
         measurerTag = sender.tag
@@ -3543,6 +3549,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         if ResponseMsg == "Success"
         {
             let Result = getParts.object(forKey: "Result") as! NSArray
+            
+            print("PARTS IMAGE ARRAY", Result)
             
             // Body Parts :
             selectedPartsIdArray = Result.value(forKey: "Id") as! NSArray
