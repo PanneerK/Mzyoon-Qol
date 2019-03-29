@@ -1,0 +1,6 @@
+framework module SlideOutMenu {
+  umbrella header "SlideOutMenu-umbrella.h"
+
+  export *
+  module * { export * }
+}
