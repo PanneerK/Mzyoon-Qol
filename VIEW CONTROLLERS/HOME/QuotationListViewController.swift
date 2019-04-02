@@ -315,8 +315,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: tailorViewButton.frame.height)
             tailorImageView.backgroundColor = UIColor.white
-            tailorImageView.layer.borderWidth = 1.0
-            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+          //  tailorImageView.layer.borderWidth = 1.0
+          //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
             
           //  tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
@@ -341,6 +341,12 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
                 tailorImageView.addSubview(dummyImageView)
             }
              tailorViewButton.addSubview(tailorImageView)
+            
+            // Straight Line..
+            let StraightLine = UILabel()
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x, y: 0, width: 0.3, height: tailorViewButton.frame.height)
+            StraightLine.backgroundColor = UIColor.lightGray
+            tailorViewButton.addSubview(StraightLine)
             
           /*
             tailorImageButton.tag = i
@@ -376,6 +382,12 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(tailorName)
+            
+            // UnderLine1..
+            let underLine1 = UILabel()
+            underLine1.frame = CGRect(x: StraightLine.frame.minX, y: nameLabel.frame.maxY, width: tailorViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine1.backgroundColor = UIColor.lightGray
+            tailorViewButton.addSubview(underLine1)
             
             //
             let ShopName_Icon = UIImageView()

@@ -286,8 +286,8 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             let DressImageView = UIImageView()
             DressImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: AppointmentViewButton.frame.height)
             DressImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            DressImageView.layer.borderWidth = 1.0
-            DressImageView.layer.borderColor = UIColor.lightGray.cgColor
+           // DressImageView.layer.borderWidth = 1.0
+           // DressImageView.layer.borderColor = UIColor.lightGray.cgColor
             // DressImageView.setImage(UIImage(named: "men"), for: .normal)
         
            
@@ -302,12 +302,18 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
                 dummyImageView.frame = CGRect(x: 0, y: 0, width: DressImageView.frame.width, height: DressImageView.frame.height)
                  dummyImageView.dowloadFromServer(url: apiurl!)
                 dummyImageView.tag = -1
-                dummyImageView.contentMode = .scaleToFill
+               // dummyImageView.contentMode = .scaleToFill
                 DressImageView.addSubview(dummyImageView)
  
             }
         
             AppointmentViewButton.addSubview(DressImageView)
+            
+            // Straight Line..
+            let StraightLine = UILabel()
+            StraightLine.frame = CGRect(x: DressImageView.frame.maxX, y: 0, width: 0.3, height: AppointmentViewButton.frame.height)
+            StraightLine.backgroundColor = UIColor.lightGray
+            AppointmentViewButton.addSubview(StraightLine)
             
             //
             let orderDate_Icon = UIImageView()
@@ -336,6 +342,13 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             OR_DateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             AppointmentViewButton.addSubview(OR_DateLabel)
             
+            
+            // UnderLine1..
+            let underLine1 = UILabel()
+            underLine1.frame = CGRect(x: StraightLine.frame.minX, y: O_DateLabel.frame.maxY, width: AppointmentViewButton.frame.width - (DressImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine1.backgroundColor = UIColor.lightGray
+            AppointmentViewButton.addSubview(underLine1)
+            
             //
             let orderId_Icon = UIImageView()
             orderId_Icon.frame = CGRect(x: DressImageView.frame.maxX + x, y: orderDate_Icon.frame.maxY + y, width: x, height: y)
@@ -361,6 +374,11 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             OR_IdLabel.adjustsFontSizeToFitWidth = true
             AppointmentViewButton.addSubview(OR_IdLabel)
             
+            // UnderLine2..
+            let underLine2 = UILabel()
+            underLine2.frame = CGRect(x: StraightLine.frame.minX, y: O_IdLabel.frame.maxY, width: AppointmentViewButton.frame.width - (DressImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine2.backgroundColor = UIColor.lightGray
+            AppointmentViewButton.addSubview(underLine2)
             
             //
             let TailorName_Icon = UIImageView()
@@ -385,6 +403,12 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             TR_NameLabel.adjustsFontSizeToFitWidth = true
             AppointmentViewButton.addSubview(TR_NameLabel)
             
+            // UnderLine3..
+            let underLine3 = UILabel()
+            underLine3.frame = CGRect(x: StraightLine.frame.minX, y: T_NameLabel.frame.maxY, width: AppointmentViewButton.frame.width - (DressImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine3.backgroundColor = UIColor.lightGray
+            AppointmentViewButton.addSubview(underLine3)
+            
             //
             let ShopName_Icon = UIImageView()
             ShopName_Icon.frame = CGRect(x: DressImageView.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
@@ -407,6 +431,12 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             SH_NameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             SH_NameLabel.adjustsFontSizeToFitWidth = true
             AppointmentViewButton.addSubview(SH_NameLabel)
+            
+            // UnderLine4..
+            let underLine4 = UILabel()
+            underLine4.frame = CGRect(x: StraightLine.frame.minX, y: S_NameLabel.frame.maxY, width: AppointmentViewButton.frame.width - (DressImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine4.backgroundColor = UIColor.lightGray
+            AppointmentViewButton.addSubview(underLine4)
             
             //
             let ProductName_Icon = UIImageView()
