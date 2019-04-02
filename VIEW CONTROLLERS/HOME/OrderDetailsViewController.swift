@@ -41,6 +41,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     let TotalPriceLabel = UILabel()
     let PaymentLabel = UILabel()
     let PaymentTypeLabel = UILabel()
+    let ServiceLabel = UILabel()
+    let ServiceTypeLabel = UILabel()
     
     // Error PAram...
     var DeviceNum:String!
@@ -349,7 +351,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         OrderDetailsScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         orderIdLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        orderIdLabel.text = "ORDER ID              :"
+        orderIdLabel.text = "ORDER ID      :"
         orderIdLabel.textAlignment = .left
         orderIdNumLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         orderIdNumLabel.textAlignment = .left
@@ -448,23 +450,27 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         // OrderId View..
         let orderIdView = UIView()
-        orderIdView.frame = CGRect(x: 0, y: y, width: OrderDetailsScrollView.frame.width, height: (8 * y))
+        orderIdView.frame = CGRect(x: 0, y: y, width: OrderDetailsScrollView.frame.width, height: (6 * y))
         orderIdView.backgroundColor = UIColor.white
+        orderIdView.layer.borderWidth = 1.0
+        orderIdView.layer.borderColor = UIColor.lightGray.cgColor
         OrderDetailsScrollView.addSubview(orderIdView)
         
         // Order Id Label..
         orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (13 * x), height: (2 * x))
        // orderIdLabel.backgroundColor = UIColor.gray
-        orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
+       // orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        orderIdLabel.font = UIFont.boldSystemFont(ofSize: orderIdLabel.font.pointSize)
         orderIdLabel.text = "ORDER ID              :"
-        orderIdLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
+        orderIdLabel.font = UIFont(name: "Avenir Next", size: (1.6 * x))
         orderIdLabel.textColor = UIColor.black
         orderIdLabel.textAlignment = .left
         orderIdView.addSubview(orderIdLabel)
         
         orderIdNumLabel.frame = CGRect(x: orderIdLabel.frame.maxX, y: orderIdView.frame.minY, width: (15 * x), height: (2 * x))
        // orderIdNumLabel.backgroundColor = UIColor.gray
-        orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: 16)
+      //  orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: orderIdNumLabel.font.pointSize)
        if (OrderId.count > 0)
        {
         let orderIdNum : Int = OrderId[0] as! Int
@@ -474,7 +480,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
        {
           orderIdNumLabel.text =  "#0"
         }
-        orderIdNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
+        orderIdNumLabel.font = UIFont(name: "Avenir Next", size: (1.6 * x))
          orderIdNumLabel.textColor = UIColor.black
         orderIdNumLabel.textAlignment = .left
         orderIdView.addSubview(orderIdNumLabel)
@@ -483,7 +489,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         orderPlacedLabel.frame = CGRect(x: x, y: orderIdLabel.frame.maxY + y, width: (13 * x), height: (2 * x))
        // orderPlacedLabel.backgroundColor = UIColor.gray
         orderPlacedLabel.text = "Order Placed On :"
-        orderPlacedLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
+        orderPlacedLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
         orderPlacedLabel.textColor = UIColor.black
         orderIdView.addSubview(orderPlacedLabel)
         
@@ -502,29 +508,45 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
           OrderDate = "0"
        }
         orderPlacedDateLabel.text = OrderDate
-        orderPlacedDateLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
+        orderPlacedDateLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
         orderPlacedDateLabel.textColor = UIColor.black
         orderIdView.addSubview(orderPlacedDateLabel)
         
+        
+        // PaymentInfo Label..
+        PaymentInfoLabel.frame = CGRect(x: 0, y: orderIdView.frame.maxY + y, width: orderIdView.frame.width, height: (2 * x))
+        PaymentInfoLabel.text = " PAYMENT INFORMATION"
+        PaymentInfoLabel.textAlignment = .left
+        PaymentInfoLabel.backgroundColor = UIColor.clear
+        PaymentInfoLabel.font = UIFont(name: "Avenir Next", size: 14)
+        PaymentInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
+        PaymentInfoLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        OrderDetailsScrollView.addSubview(PaymentInfoLabel)
+        
+        // PaymentUnderLine..
+        let PaymentUnderLine = UILabel()
+        PaymentUnderLine.frame = CGRect(x: 0, y: PaymentInfoLabel.frame.maxY, width: orderIdView.frame.width , height: 0.3)
+        PaymentUnderLine.backgroundColor = UIColor.lightGray
+        OrderDetailsScrollView.addSubview(PaymentUnderLine)
+        
         // PaymentInfo View..
         let PaymentInfoView = UIView()
-        PaymentInfoView.frame = CGRect(x: 0, y: orderIdView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width, height: (40 * y))
-        PaymentInfoView.backgroundColor = UIColor.groupTableViewBackground
+        PaymentInfoView.frame = CGRect(x: 0, y: PaymentUnderLine.frame.maxY + y, width: OrderDetailsScrollView.frame.width, height: (24 * y))
+        PaymentInfoView.backgroundColor = UIColor.white
+        PaymentInfoView.layer.borderWidth = 1.0
+        PaymentInfoView.layer.borderColor = UIColor.lightGray.cgColor
         OrderDetailsScrollView.addSubview(PaymentInfoView)
         
-        
-         // PaymentInfo Label..
-         PaymentInfoLabel.frame = CGRect(x: 0, y: 0, width: PaymentInfoView.frame.width, height: (4 * x))
-         PaymentInfoLabel.text = " PAYMENT INFORMATION"
-        PaymentInfoLabel.textAlignment = .left
-         PaymentInfoLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-         PaymentInfoLabel.font = UIFont(name: "Avenir Next", size: 16)
-         PaymentInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
-         PaymentInfoLabel.textColor = UIColor.white
-         PaymentInfoView.addSubview(PaymentInfoLabel)
-        
+        // PaymentInfo View..
+        let ProductInfoView = UIView()
+        ProductInfoView.frame = CGRect(x: x, y: y, width: OrderDetailsScrollView.frame.width - (2 * x), height: (8 * y))
+        ProductInfoView.backgroundColor = UIColor.white
+        ProductInfoView.layer.borderWidth = 1.0
+        ProductInfoView.layer.borderColor = UIColor.lightGray.cgColor
+        PaymentInfoView.addSubview(ProductInfoView)
+       
         let DressImageView = UIImageView()
-        DressImageView.frame = CGRect(x: x, y: PaymentInfoLabel.frame.maxY + (2 * y), width: (10 * x), height:(13 * y))
+        DressImageView.frame = CGRect(x: x, y: y, width: (6 * x), height:(6 * y))
         DressImageView.backgroundColor = UIColor.white
        
      if(Image.count > 0)
@@ -555,10 +577,17 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         DressImageView.backgroundColor = UIColor.lightGray
      }
         
-        PaymentInfoView.addSubview(DressImageView)
+        ProductInfoView.addSubview(DressImageView)
+        
+        // Straight Line..
+        let StraightLine = UILabel()
+        StraightLine.frame = CGRect(x: DressImageView.frame.maxX + x, y: 0, width: 0.3, height: ProductInfoView.frame.height)
+        StraightLine.backgroundColor = UIColor.lightGray
+        ProductInfoView.addSubview(StraightLine)
+        
         
         // DressType Label..
-        DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: PaymentInfoLabel.frame.maxY + (3 * y) , width: (20 * x), height: (2 * y))
+        DressTypeLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: y , width: (20 * x), height: (2 * y))
        if(Product_Name.count > 0)
        {
            DressTypeLabel.text = Product_Name[0] as? String
@@ -572,17 +601,17 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //  DressTypeLabel.backgroundColor = UIColor.gray
         DressTypeLabel.textAlignment = .left
         DressTypeLabel.font = UIFont(name: "Avenir Next", size: 16)
-        PaymentInfoView.addSubview(DressTypeLabel)
+        ProductInfoView.addSubview(DressTypeLabel)
         
         // Qty Label..
-        QtyLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (6 * x), height: (2 * y))
+        QtyLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: DressTypeLabel.frame.minY + (2 * y), width: (6 * x), height: (2 * y))
         QtyLabel.text = "Qty : "
         QtyLabel.textColor = UIColor.black
         QtyLabel.textAlignment = .left
         QtyLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        PaymentInfoView.addSubview(QtyLabel)
+        ProductInfoView.addSubview(QtyLabel)
         
-        QtyNumLabel.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (4 * x), height: (2 * y))
+        QtyNumLabel.frame = CGRect(x: QtyLabel.frame.maxX, y: DressTypeLabel.frame.minY + (2 * y), width: (4 * x), height: (2 * y))
         if(qty.count > 0)
         {
             let QtyNum : Int = qty[0] as! Int
@@ -595,17 +624,17 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         QtyNumLabel.textColor = UIColor.black
         QtyNumLabel.textAlignment = .left
         QtyNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        PaymentInfoView.addSubview(QtyNumLabel)
+        ProductInfoView.addSubview(QtyNumLabel)
         
         // Price Label..
-        PriceLabel.frame = CGRect(x: DressImageView.frame.maxX + (2 * x), y: QtyLabel.frame.minY + (3 * y), width: (6 * x), height: (2 * y))
+        PriceLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: QtyLabel.frame.minY + (2 * y), width: (6 * x), height: (2 * y))
         PriceLabel.text = "Price : "
         PriceLabel.textColor = UIColor.black
         PriceLabel.textAlignment = .left
         PriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        PaymentInfoView.addSubview(PriceLabel)
+        ProductInfoView.addSubview(PriceLabel)
         
-        PriceNumLabel.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: QtyLabel.frame.minY + (3 * y), width: (8 * x), height: (2 * y))
+        PriceNumLabel.frame = CGRect(x: PriceLabel.frame.maxX, y: QtyLabel.frame.minY + (2 * y), width: (8 * x), height: (2 * y))
         if(Price.count > 0)
         {
             let PriceNum : Int = Price[0] as! Int
@@ -619,22 +648,22 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PriceNumLabel.textColor = UIColor.black
         PriceNumLabel.textAlignment = .left
         PriceNumLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        PaymentInfoView.addSubview(PriceNumLabel)
+        ProductInfoView.addSubview(PriceNumLabel)
         
         
         // Sub-Total Label
 //        let SubTotalLabel = UILabel()
-        SubTotalLabel.frame = CGRect(x:x, y: DressImageView.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
+        SubTotalLabel.frame = CGRect(x: x, y: ProductInfoView.frame.maxY + y/2 , width: (8 * x), height: (2 * y))
         SubTotalLabel.text = "Sub Total"
         SubTotalLabel.textColor = UIColor.black
         SubTotalLabel.textAlignment = .left
-        SubTotalLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        SubTotalLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        SubTotalLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        SubTotalLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(SubTotalLabel)
         
         
 //        let SubTotalPriceLabel = UILabel()
-        SubTotalPriceLabel.frame = CGRect(x:SubTotalLabel.frame.maxX + (12 * x), y: DressImageView.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
+        SubTotalPriceLabel.frame = CGRect(x:SubTotalLabel.frame.maxX + (12 * x), y: ProductInfoView.frame.maxY + y/2, width: (8 * x), height: (2 * y))
         if(Price.count > 0)
         {
             let SubPriceNum : Int = Price[0] as! Int
@@ -646,23 +675,28 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         }
         SubTotalPriceLabel.textColor = UIColor.black
         SubTotalPriceLabel.textAlignment = .right
-        SubTotalPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        SubTotalPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        SubTotalPriceLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        SubTotalPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(SubTotalPriceLabel)
         
+        // UnderLine1..
+        let underLine1 = UILabel()
+        underLine1.frame = CGRect(x: 0, y: SubTotalLabel.frame.maxY, width: PaymentInfoView.frame.width, height: 0.3)
+        underLine1.backgroundColor = UIColor.lightGray
+        PaymentInfoView.addSubview(underLine1)
         
         // Shipping Label
 //        let ShippingLabel = UILabel()
-        ShippingLabel.frame = CGRect(x:x, y: SubTotalLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
+        ShippingLabel.frame = CGRect(x:x, y: SubTotalLabel.frame.maxY, width: (15 * x), height: (2 * y))
         ShippingLabel.text = "Shipping & Handling"
         ShippingLabel.textColor = UIColor.black
         ShippingLabel.textAlignment = .left
-        ShippingLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        ShippingLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        ShippingLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        ShippingLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(ShippingLabel)
         
 //        let ShippingPriceLabel = UILabel()
-        ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
         if(ShippingCharges.count > 0)
         {
             ShippingPriceLabel.text = "0 AED"  //ShippingCharges[0] as? String
@@ -673,23 +707,28 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         }
         ShippingPriceLabel.textColor = UIColor.black
         ShippingPriceLabel.textAlignment = .right
-        ShippingPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        ShippingPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        ShippingPriceLabel.font = UIFont(name: "Avenir Next", size: (2.3 * x))
+        ShippingPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(ShippingPriceLabel)
         
+        // UnderLine2..
+        let UnderLine2 = UILabel()
+        UnderLine2.frame = CGRect(x: 0, y: ShippingLabel.frame.maxY, width: PaymentInfoView.frame.width, height: 0.3)
+        UnderLine2.backgroundColor = UIColor.lightGray
+        PaymentInfoView.addSubview(UnderLine2)
         
         // Tax Label
 //        let TaxLabel = UILabel()
-        TaxLabel.frame = CGRect(x:x, y: ShippingLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        TaxLabel.frame = CGRect(x:x, y: ShippingLabel.frame.maxY, width: (8 * x), height: (2 * y))
         TaxLabel.text = "Tax"
         TaxLabel.textColor = UIColor.black
         TaxLabel.textAlignment = .left
-        TaxLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        TaxLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        TaxLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        TaxLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(TaxLabel)
         
 //        let TaxPriceLabel = UILabel()
-        TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
           // let TaxNum : Int = Tax[0] as! Int
@@ -702,23 +741,28 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         }
         TaxPriceLabel.textColor = UIColor.black
         TaxPriceLabel.textAlignment = .right
-        TaxPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        TaxPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        TaxPriceLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        TaxPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(TaxPriceLabel)
         
+        // UnderLine3..
+        let UnderLine3 = UILabel()
+        UnderLine3.frame = CGRect(x: 0, y: TaxLabel.frame.maxY, width: PaymentInfoView.frame.width, height: 0.3)
+        UnderLine3.backgroundColor = UIColor.lightGray
+        PaymentInfoView.addSubview(UnderLine3)
         
         // Appointment Label
 //        let AppointmentLabel = UILabel()
-        AppointmentLabel.frame = CGRect(x:x, y: TaxLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
+        AppointmentLabel.frame = CGRect(x:x, y: TaxLabel.frame.maxY, width: (15 * x), height: (2 * y))
         AppointmentLabel.text = "Appointment Charges"
         AppointmentLabel.textColor = UIColor.black
         AppointmentLabel.textAlignment = .left
-        AppointmentLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        AppointmentLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        AppointmentLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        AppointmentLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(AppointmentLabel)
         
 //        let AppointmentPriceLabel = UILabel()
-        AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
         if(Appoinment.count > 0)
         {
             /*
@@ -733,23 +777,28 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         }
         AppointmentPriceLabel.textColor = UIColor.black
         AppointmentPriceLabel.textAlignment = .right
-        AppointmentPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        AppointmentPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        AppointmentPriceLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        AppointmentPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(AppointmentPriceLabel)
         
+        // UnderLine4..
+        let UnderLine4 = UILabel()
+        UnderLine4.frame = CGRect(x: 0, y: AppointmentLabel.frame.maxY, width: PaymentInfoView.frame.width, height: 0.3)
+        UnderLine4.backgroundColor = UIColor.lightGray
+        PaymentInfoView.addSubview(UnderLine4)
         
         // Total Label
 //        let TotalLabel = UILabel()
-        TotalLabel.frame = CGRect(x:x, y: AppointmentLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
+        TotalLabel.frame = CGRect(x:x, y: AppointmentLabel.frame.maxY, width: (15 * x), height: (2 * y))
         TotalLabel.text = "Total"
         TotalLabel.textColor = UIColor.black
         TotalLabel.textAlignment = .left
-        TotalLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        TotalLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        TotalLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        TotalLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(TotalLabel)
         
 //        let TotalPriceLabel = UILabel()
-        TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY + y, width: (8 * x), height: (2 * y))
+        TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
         if(Total.count > 0)
         {
           /*
@@ -766,34 +815,74 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         }
         TotalPriceLabel.textColor = UIColor.black
         TotalPriceLabel.textAlignment = .right
-        TotalPriceLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        TotalPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        TotalPriceLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        TotalPriceLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(TotalPriceLabel)
         
+        // UnderLine5..
+        let UnderLine5 = UILabel()
+        UnderLine5.frame = CGRect(x: 0, y: TotalLabel.frame.maxY, width: PaymentInfoView.frame.width, height: 0.3)
+        UnderLine5.backgroundColor = UIColor.lightGray
+        PaymentInfoView.addSubview(UnderLine5)
+        
+        
+        // Service Type Label
+        //        let ServiceLabel = UILabel()
+        ServiceLabel.frame = CGRect(x:x, y: TotalLabel.frame.maxY, width: (15 * x), height: (2 * y))
+        ServiceLabel.text = "Service Type"
+        ServiceLabel.textColor = UIColor.black
+        ServiceLabel.textAlignment = .left
+        ServiceLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        ServiceLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
+        PaymentInfoView.addSubview(ServiceLabel)
+        
+        //        let ServiceTypeLabel = UILabel()
+        ServiceTypeLabel.frame = CGRect(x:ServiceLabel.frame.maxX - (2 * x), y: TotalPriceLabel.frame.maxY, width: (15 * x), height: (2 * y))
+        if(ServiceType.count > 0)
+        {
+            ServiceTypeLabel.text = ServiceType[0] as? String
+        }
+        else
+        {
+            ServiceTypeLabel.text = ""
+        }
+        ServiceTypeLabel.textColor = UIColor.black
+        ServiceTypeLabel.textAlignment = .right
+        ServiceTypeLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        ServiceTypeLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
+        PaymentInfoView.addSubview(ServiceTypeLabel)
+        
+        // UnderLine6..
+        let UnderLine6 = UILabel()
+        UnderLine6.frame = CGRect(x: 0, y: ServiceLabel.frame.maxY, width: PaymentInfoView.frame.width, height: 0.3)
+        UnderLine6.backgroundColor = UIColor.lightGray
+        PaymentInfoView.addSubview(UnderLine6)
         
         // Payment Type Label
 //        let PaymentLabel = UILabel()
-        PaymentLabel.frame = CGRect(x:x, y: TotalLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
+        PaymentLabel.frame = CGRect(x:x, y: ServiceLabel.frame.maxY, width: (15 * x), height: (2 * y))
         PaymentLabel.text = "Payment Type"
         PaymentLabel.textColor = UIColor.blue
         PaymentLabel.textAlignment = .left
-        PaymentLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        PaymentLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        PaymentLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        PaymentLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(PaymentLabel)
         
 //        let PaymentTypeLabel = UILabel()
-        PaymentTypeLabel.frame = CGRect(x:PaymentLabel.frame.maxX - (2 * x), y: TotalPriceLabel.frame.maxY + y, width: (15 * x), height: (2 * y))
+        PaymentTypeLabel.frame = CGRect(x:PaymentLabel.frame.maxX - (2 * x), y: ServiceTypeLabel.frame.maxY, width: (15 * x), height: (2 * y))
         PaymentTypeLabel.text = "(Card)"
         PaymentTypeLabel.textColor = UIColor.blue
         PaymentTypeLabel.textAlignment = .right
-        PaymentTypeLabel.font = UIFont(name: "Avenir Next", size: (1.3 * x))
-        PaymentTypeLabel.font = UIFont.boldSystemFont(ofSize: (1.3 * x))
+        PaymentTypeLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
+        PaymentTypeLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(PaymentTypeLabel)
         
         // Order Status View..
         let OrderStatusView = UIView()
         OrderStatusView.frame = CGRect(x: 0, y: PaymentInfoView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width, height: (18 * y))
         OrderStatusView.backgroundColor = UIColor.white
+        OrderStatusView.layer.borderWidth = 1.0
+        OrderStatusView.layer.borderColor = UIColor.lightGray.cgColor
         OrderDetailsScrollView.addSubview(OrderStatusView)
         
         // Order status Label..
@@ -874,6 +963,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         let DeliveryInfoView = UIView()
         DeliveryInfoView.frame = CGRect(x: 0, y: OrderStatusView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width, height: (24 * y))
         DeliveryInfoView.backgroundColor = UIColor.white
+        DeliveryInfoView.layer.borderWidth = 1.0
+        DeliveryInfoView.layer.borderColor = UIColor.lightGray.cgColor
         OrderDetailsScrollView.addSubview(DeliveryInfoView)
         
         
