@@ -111,7 +111,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var selectedconvertedPartsImageArray = [UIImage]()
     
     //SELETCTED
-    var measurerImage = String()
+    var measurerPartsName = String()
+    var measurePartsImage = String()
     var measurerTag = Int()
     
     var measurementValues = [Int : Double]()
@@ -221,7 +222,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
-        print("ERROR MESSAGE", errorMessage)
         stopActivity()
         applicationDelegate.exitContents()
     }
@@ -246,14 +246,13 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         if ResponseMsg == "Success"
         {
             let Result = deviceError.object(forKey: "Result") as! String
-            print("Result", Result)
         }
     }
     
     func API_CALLBACK_GetMeasurement2(GetMeasurement1val: NSDictionary)
     {
         let ResponseMsg = GetMeasurement1val.object(forKey: "ResponseMsg") as! String
-        print("GetMeasurement1Value", GetMeasurement1val)
+        print("GetMeasurement2Value", GetMeasurement1val)
         
         if ResponseMsg == "Success"
         {
@@ -265,7 +264,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             
             genderImagesIdArray = Image.value(forKey: "id") as! NSArray
             
-            for i in 0..<genderImageArray.count
+            /*for i in 0..<genderImageArray.count
             {
                 if let imageName = genderImageArray[i] as? String
                 {
@@ -276,8 +275,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
 
                     if apiurl != nil
                     {
-                        print("API IMAGE FOR GENDERS", apiurl!)
-
                         if let data = try? Data(contentsOf: apiurl!)
                         {
                             if let image = UIImage(data: data)
@@ -297,7 +294,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     let emptyImage = UIImage(named: "empty")
                     self.converetedGenderImagesArray.append(emptyImage!)
                 }
-            }
+            }*/
             
             // Body Parts :
             
@@ -667,7 +664,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         var x1:CGFloat = 0
         
-        for i in 0..<converetedGenderImagesArray.count
+        for i in 0..<genderImageArray.count
         {
             let pageNumberlabel = UILabel()
             pageNumberlabel.frame = CGRect(x: x1, y: 0, width: (2 * x), height: (2 * x))
@@ -693,7 +690,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             lineLabel.frame = CGRect(x: pageNumberlabel.frame.maxX, y: ((pageNumberlabel.frame.height - 1) / 2), width: (2 * x), height: 1)
             lineLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             
-            let checkCount = converetedGenderImagesArray.count - 1
+            let checkCount = genderImageArray.count - 1
             if i != checkCount
             {
                 numberView.addSubview(lineLabel)
@@ -733,7 +730,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         imageScrollView.delegate = self
         imageView.addSubview(imageScrollView)
         
-        imageScrollView.contentSize.width = (CGFloat(converetedGenderImagesArray.count) * imageScrollView.frame.width)
+        imageScrollView.contentSize.width = (CGFloat(genderImageArray.count) * imageScrollView.frame.width)
         
         for views in imageScrollView.subviews
         {
@@ -809,7 +806,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         var buttonTag = Int()
         
-        for index in 0..<converetedGenderImagesArray.count {
+        for index in 0..<genderImageArray.count {
             
             frame.origin.x = imageScrollView.frame.size.width * CGFloat(index)
             frame.size = imageScrollView.frame.size
@@ -823,7 +820,17 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             measurementImageView.frame = CGRect(x: x, y: y, width: subView.frame.width / 2, height: subView.frame.height - (2 * y))
             //            measurementImageView.backgroundColor = UIColor.cyan
 //            measurementImageView.image = UIImage(named: measureImages[index])
-            measurementImageView.image = converetedGenderImagesArray[index]
+//            measurementImageView.image = converetedGenderImagesArray[index]
+            if let imageName =  genderImageArray[index] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Measurement2/\(imageName)"
+                let apiurl = URL(string: api)
+                if apiurl != nil
+                {
+                    measurementImageView.dowloadFromServer(url: apiurl!)
+                }
+            }
             subView.addSubview(measurementImageView)
             
             let verticalLine = UILabel()
@@ -836,14 +843,12 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             //            verticalLine2.backgroundColor = UIColor.red
             subView.addSubview(verticalLine2)
             
-            print("GET GENDER ARRAY", gender)
-            
             if gender == "Male" || gender == "ذكر"
             {
                 if index == 0
                 {
                     let headLabel = UILabel()
-                    headLabel.frame = CGRect(x: (10.8 * x), y: (y / 2), width: subView.frame.width - (19.8 * x), height: (2 * y))
+                    headLabel.frame = CGRect(x: (10.6 * x), y: (y / 2), width: subView.frame.width - (19.6 * x), height: (2 * y))
                     headLabel.text = "Head"
                     headLabel.textColor = UIColor.black
                     headLabel.textAlignment = .right
@@ -852,7 +857,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(headLabel)
                     
                     let headButton = UIButton()
-                    headButton.frame = CGRect(x: (10.8 * x), y: (1.2 * y), width: subView.frame.width - (16.8 * x), height: (3 * y))
+                    headButton.frame = CGRect(x: (10.6 * x), y: (1.2 * y), width: subView.frame.width - (16.6 * x), height: (3 * y))
                     headButton.setImage(UIImage(named: "arrowMark"), for: .normal)
                     headButton.tag = 1
                     headButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
@@ -1045,18 +1050,18 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(gettotalheightLabel)
                     
                     let hipHeightLabel = UILabel()
-                    hipHeightLabel.frame = CGRect(x: (4.3 * x), y: (39.5 * y), width: subView.frame.width - (13.3 * x), height: (2 * y))
-                    hipHeightLabel.text = "Shorts"
+                    hipHeightLabel.frame = CGRect(x: (6.25 * x), y: (39.5 * y), width: subView.frame.width - (15.25  * x), height: (2 * y))
+                    hipHeightLabel.text = "OutSeam"
                     hipHeightLabel.textColor = UIColor.black
                     hipHeightLabel.textAlignment = .right
                     hipHeightLabel.font = hipHeightLabel.font.withSize(15)
-                    hipHeightLabel.tag = ((9 * 1) + 300)
+                    hipHeightLabel.tag = ((10 * 1) + 300)
                     subView.addSubview(hipHeightLabel)
                     
                     let hipHeightButton = UIButton()
-                    hipHeightButton.frame = CGRect(x: (4.3 * x), y: (40 * y), width: subView.frame.width - (10.3 * x), height: (3 * y))
-                    hipHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    hipHeightButton.tag = 9
+                    hipHeightButton.frame = CGRect(x: (6.25 * x), y: (40 * y), width: subView.frame.width - (12.25 * x), height: (3 * y))
+                    hipHeightButton.setImage(UIImage(named: "arrowMark1"), for: .normal)
+                    hipHeightButton.tag = 10
                     hipHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(hipHeightButton)
                     
@@ -1065,22 +1070,23 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getHipheightLabel.textColor = UIColor.blue
                     getHipheightLabel.textAlignment = .center
                     getHipheightLabel.font = getHipheightLabel.font.withSize(15)
-                    getHipheightLabel.tag = ((9 * 1) + 200)
+                    getHipheightLabel.tag = ((10 * 1) + 200)
                     subView.addSubview(getHipheightLabel)
                     
                     let bottomheightLabel = UILabel()
-                    bottomheightLabel.frame = CGRect(x: (8.2 * x), y: (34.5 * y), width: subView.frame.width - (18.2 * x), height: (2 * y))
-                    bottomheightLabel.text = "Out Seam"
+                    bottomheightLabel.frame = CGRect(x: (8 * x), y: (34.5 * y), width: subView.frame.width - (18 * x), height: (2 * y))
+                    bottomheightLabel.text = "InSeam"
                     bottomheightLabel.textColor = UIColor.black
                     bottomheightLabel.textAlignment = .right
                     bottomheightLabel.font = totalheightLabel.font.withSize(15)
-                    bottomheightLabel.tag = ((10 * 1) + 300)
+                    bottomheightLabel.tag = ((11 * 1) + 300)
                     subView.addSubview(bottomheightLabel)
                     
                     let bottomHeightButton = UIButton()
-                    bottomHeightButton.frame = CGRect(x: (8.2 * x), y: (35 * y), width: subView.frame.width - (14.2 * x), height: (3 * y))
+                    bottomHeightButton.frame = CGRect(x: (8 * x), y: (35 * y), width: subView.frame.width - (14 * x), height: (3 * y))
+//                    bottomHeightButton.backgroundColor = UIColor.red
                     bottomHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    bottomHeightButton.tag = 10
+                    bottomHeightButton.tag = 11
                     bottomHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(bottomHeightButton)
                     
@@ -1089,22 +1095,22 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getBottomheightLabel.textColor = UIColor.blue
                     getBottomheightLabel.textAlignment = .center
                     getBottomheightLabel.font = getBottomheightLabel.font.withSize(15)
-                    getBottomheightLabel.tag = ((10 * 1) + 200)
+                    getBottomheightLabel.tag = ((11 * 1) + 200)
                     subView.addSubview(getBottomheightLabel)
                     
                     let kneeheightLabel = UILabel()
                     kneeheightLabel.frame = CGRect(x: (11.6 * x), y: (27.3 * y), width: subView.frame.width - (20.6 * x), height: (2 * y))
-                    kneeheightLabel.text = "Inseam"
+                    kneeheightLabel.text = "Shorts"
                     kneeheightLabel.textColor = UIColor.black
                     kneeheightLabel.textAlignment = .right
                     kneeheightLabel.font = totalheightLabel.font.withSize(15)
-                    kneeheightLabel.tag = ((11 * 1) + 300)
+                    kneeheightLabel.tag = ((9 * 1) + 300)
                     subView.addSubview(kneeheightLabel)
                     
                     let kneeHeightButton = UIButton()
                     kneeHeightButton.frame = CGRect(x: (11.6 * x), y: (27.8 * y), width: subView.frame.width - (17.6 * x), height: (3 * y))
                     kneeHeightButton.setImage(UIImage(named: "arrowMark"), for: .normal)
-                    kneeHeightButton.tag = 11
+                    kneeHeightButton.tag = 9
                     kneeHeightButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
                     subView.addSubview(kneeHeightButton)
                     
@@ -1113,7 +1119,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     getKneeheightLabel.textColor = UIColor.blue
                     getKneeheightLabel.textAlignment = .center
                     getKneeheightLabel.font = getKneeheightLabel.font.withSize(15)
-                    getKneeheightLabel.tag = ((11 * 1) + 200)
+                    getKneeheightLabel.tag = ((9 * 1) + 200)
                     subView.addSubview(getKneeheightLabel)
                 }
                 else if index == 2
@@ -1167,7 +1173,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getSleeveLabel)
                     
                     let bicepLabel = UILabel()
-                    bicepLabel.frame = CGRect(x: (15.7 * x), y: (14.1 * y), width: subView.frame.width - (14.7 * x), height: (2 * y))
+                    bicepLabel.frame = CGRect(x: (15.7 * x), y: (14.1 * y), width: subView.frame.width - (24.7 * x), height: (2 * y))
                     bicepLabel.text = "Bicep"
                     bicepLabel.textColor = UIColor.black
                     bicepLabel.textAlignment = .right
@@ -1265,7 +1271,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getHeightLabel)
                     
                     let fullSleeveLabel = UILabel()
-                    fullSleeveLabel.frame = CGRect(x: (14.6 * x), y: (15.1 * y), width: subView.frame.width - (13.6 * x), height: (2 * y))
+                    fullSleeveLabel.frame = CGRect(x: (14.6 * x), y: (15.1 * y), width: subView.frame.width - (23.6 * x), height: (2 * y))
                     fullSleeveLabel.text = "Sleeve"
                     fullSleeveLabel.textColor = UIColor.black
                     fullSleeveLabel.textAlignment = .right
@@ -1289,7 +1295,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getFullSleeveLabel)
                     
                     let handKneeLabel = UILabel()
-                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (19.9 * y), width: subView.frame.width - (14.5 * x), height: (2 * y))
+                    handKneeLabel.frame = CGRect(x: (15.5 * x), y: (19.9 * y), width: subView.frame.width - (24.5 * x), height: (2 * y))
                     handKneeLabel.text = "Wrist"
                     handKneeLabel.textColor = UIColor.black
                     handKneeLabel.textAlignment = .right
@@ -3148,7 +3154,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                                 
                                 if let zzz = foundView as? UILabel
                                 {
-                                    print("LABEL TEXT wwww", zzz.text!, PartsNameArray[buttonTag - 1], PartsNameArray.count, buttonTag - 1, buttonTag)
                                     zzz.text = PartsNameArray[buttonTag] as? String
                                 }
                             }*/
@@ -3175,8 +3180,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 {
                     if PartsIdArray.contains(buttonTag)
                     {
-                        print("MEASUREMENT TITLE", buttonTag)
-                        
 //                        if let foundView = view.viewWithTag(labels.tag + 100)
 //                        {
 //                            if labels.tag == foundView.tag
@@ -3188,7 +3191,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                         
                         if let labelww = views.viewWithTag(((buttonTag * 1) + 300)) as? UILabel
                         {
-                            print("LABEL TAG TITLE", labelww.text!)
 
                         }
                         
@@ -3218,7 +3220,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 if let foundView = views as? UILabel
                 {
-                    print("FOUND VIEW TEXT", foundView.text)
                     if let language = UserDefaults.standard.value(forKey: "language") as? String
                     {
                         if language == "en"
@@ -3239,6 +3240,18 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     }
                 }
             }
+            
+            /*for views in subView.subviews
+            {
+                if let label1 = views as? UILabel
+                {
+                    label1.backgroundColor = UIColor.red
+                }
+                else if let button = views as? UIButton
+                {
+                    button.backgroundColor = UIColor.green
+                }
+            }*/
         }
         
         var getTag = Int()
@@ -3264,8 +3277,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     {
                         if headingPartsArray.contains(label1.tag)
                         {
-                            print("HEADING LABEL", increamentHeadingTag, headingPartsArray.count, views.tag)
-                            
                             if increamentHeadingTag < PartsNameArray.count
                             {
                                 if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -3289,8 +3300,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                         }
                         else if valuePartsArray.contains(label1.tag)
                         {
-                            print("measurementValues", measurementValues)
-                            if increamentValueTag < PartsNameArray.count
+                                if increamentValueTag < PartsNameArray.count
                             {
                                 let value = measurementValues[getTag]
                                 label1.text = "\(value!)"
@@ -3321,7 +3331,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         let page = imageScrollView.contentOffset.x / imageScrollView.frame.size.width
         
-        imageScrollView.contentSize = CGSize(width: imageScrollView.frame.size.width * CGFloat(converetedGenderImagesArray.count),height: imageScrollView.frame.size.height)
+        imageScrollView.contentSize = CGSize(width: imageScrollView.frame.size.width * CGFloat(genderImageArray.count),height: imageScrollView.frame.size.height)
         pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
         
         stopActivity()
@@ -3373,7 +3383,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             for (keys, values) in measurementValues
             {
                 let cmValue = values / 2.54
-                print("cmValue", cmValue)
                 measurementValues[keys] = cmValue
             }
             
@@ -3391,8 +3400,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             if let foundView = view.viewWithTag((keys * 1) + 200) {
                 if let label = foundView as? UILabel
                 {
-                    print("CONVERTED VALUES", values)
-                    
                     label.text = "\(values)"
                 }
             }
@@ -3446,94 +3453,28 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     {
         activitySubContents()
         
-        /*if sender.tag == 1
-        {
-            measurerImage = "Head"
-        }
-        else if sender.tag == 2
-        {
-            measurerImage = "Neck"
-        }
-        else if sender.tag == 3
-        {
-            measurerImage = "Chest"
-        }
-        else if sender.tag == 4
-        {
-            measurerImage = "Waist"
-        }
-        else if sender.tag == 5
-        {
-            measurerImage = "Thigh"
-        }
-        else if sender.tag == 6
-        {
-            measurerImage = "Bounce"
-        }
-        else if sender.tag == 7
-        {
-            measurerImage = "Knee"
-        }
-        else if sender.tag == 8
-        {
-            measurerImage = "Height"
-        }
-        else if sender.tag == 9
-        {
-            measurerImage = "Leg Height"
-        }
-        else if sender.tag == 10
-        {
-            measurerImage = "3 / 4 Height"
-        }
-        else if sender.tag == 11
-        {
-            measurerImage = "Short Height"
-        }
-        else if sender.tag == 12
-        {
-            measurerImage = "Shoulder"
-        }
-        else if sender.tag == 13
-        {
-            measurerImage = "Half Sleeve"
-        }
-        else if sender.tag == 14
-        {
-            measurerImage = "Bicep"
-        }
-        else if sender.tag == 15
-        {
-            measurerImage = "Hip"
-        }
-        else if sender.tag == 16
-        {
-            measurerImage = "Back"
-        }
-        else if sender.tag == 17
-        {
-            measurerImage = "Shirt Height"
-        }
-        else if sender.tag == 18
-        {
-            measurerImage = "Sleeve Height"
-        }
-        else if sender.tag == 19
-        {
-            measurerImage = "Hand Cuf"
-        }*/
-        
         if let label = view.viewWithTag(sender.tag + 300) as? UILabel
         {
-            print("SENDER TITLE", label.text)
-            measurerImage = label.text!
+            measurerPartsName = label.text!
         }
         
         measurerTag = sender.tag
         
         type = "button"
         
-        serviceCall.API_GetMeasurementParts(MeasurementParts: sender.tag, delegate: self)
+        for i in 0..<PartsIdArray.count
+        {
+            if let id = PartsIdArray[i] as? Int
+            {
+                if id == sender.tag
+                {
+                    measurePartsImage = PartsImagesArray[i] as! String
+                    self.measureScrollContents()
+                }
+            }
+        }
+        
+//        serviceCall.API_GetMeasurementParts(MeasurementParts: sender.tag, delegate: self)
     }
     
     func API_CALLBACK_GetMeasurementParts(getParts: NSDictionary)
@@ -3549,8 +3490,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         if ResponseMsg == "Success"
         {
             let Result = getParts.object(forKey: "Result") as! NSArray
-            
-            print("PARTS IMAGE ARRAY", Result)
             
             // Body Parts :
             selectedPartsIdArray = Result.value(forKey: "Id") as! NSArray
@@ -3602,7 +3541,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         else if ResponseMsg == "Failure"
         {
             let Result = getParts.object(forKey: "Result") as! String
-            print("Result", Result)
             
             MethodName = "GetMeasurementParts"
             ErrorStr = Result
@@ -3612,6 +3550,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func measureScrollContents()
     {
+        stopSubActivity()
+        
         imageBackView.frame = CGRect(x: 0, y: (6.4 * y), width: view.frame.width, height: view.frame.height - (11.4 * y))
         imageBackView.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         view.addSubview(imageBackView)
@@ -3625,11 +3565,21 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         partsImageView.frame = CGRect(x: rulerScroll.frame.maxX + (2 * y), y: (10 * y), width: (20 * x), height: (20 * y))
         partsImageView.backgroundColor = UIColor.white
-        partsImageView.image = selectedconvertedPartsImageArray[0]
+//        partsImageView.image = selectedconvertedPartsImageArray[0]
+        if let imageName =  measurePartsImage as? String
+        {
+            let urlString = serviceCall.baseURL
+            let api = "\(urlString)/images/Measurement2/\(imageName)"
+            let apiurl = URL(string: api)
+            if apiurl != nil
+            {
+                partsImageView.dowloadFromServer(url: apiurl!)
+            }
+        }
         imageBackView.addSubview(partsImageView)
         
         partsNameLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsImageView.frame.maxY + y, width: (10 * x), height: (3 * y))
-        partsNameLabel.text = measurerImage
+        partsNameLabel.text = measurerPartsName
         partsNameLabel.textColor = UIColor.white
         partsNameLabel.textAlignment = .center
         imageBackView.addSubview(partsNameLabel)
@@ -3694,8 +3644,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                 measurementValues.updateValue(convertToInt!, forKey: measurerTag)
             }
         }
-        
-        print("measurementValues in save button action", measurementValues)
     }
     
     func rulerContents()
@@ -3903,9 +3851,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             keys.append(keyss)
             values.append(valuess)
         }
-        
-        print("nextButtonAction", keys)
-        print("nextButtonAction", values)
         
         if values.contains(0.0)
         {

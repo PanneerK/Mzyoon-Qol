@@ -12,4 +12,6 @@ target 'Mzyoon' do
   pod 'SideMenuSwift'
   pod 'SidebarOverlay'
   pod 'SlideOutMenu'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 end

@@ -736,7 +736,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func measurement1NextButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set("Tailor", forKey: "measurementBy")
+        UserDefaults.standard.set("Customer", forKey: "measurementBy")
         UserDefaults.standard.set(sender.tag, forKey: "measurementType")
         UserDefaults.standard.set(0, forKey: "measurement2Response")
         let referencImageScreen = ReferenceImageViewController()

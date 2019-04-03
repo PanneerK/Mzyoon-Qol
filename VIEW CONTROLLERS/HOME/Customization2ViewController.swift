@@ -575,7 +575,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/Color/\(imageName)"
                 let apiurl = URL(string: api)
-                
+                print("API FOR COLOR", api, colorsImageArray[i])
                 if apiurl != nil{
                     buttonImage.dowloadFromServer(url: apiurl!)
                 }
