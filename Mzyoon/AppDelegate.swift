@@ -17,10 +17,13 @@ import Firebase
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
 {
     var window: UIWindow?
  
+    var locationManager = CLLocationManager()
+    var currentLocation: CLLocation!
+
     let gcmMessageIDKey = "gcm.message_id"
 
     
@@ -34,7 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate
         
         UserDefaults.standard.set(0, forKey: "screenValue")
         
-       /* FirebaseApp.configure()
+        fetchingCurrentLocation()
+        
+        FirebaseApp.configure()
         
         Messaging.messaging().delegate = self
 
@@ -52,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             application.registerUserNotificationSettings(settings)
         }
         
-        application.registerForRemoteNotifications()*/
+        application.registerForRemoteNotifications()
         
         
         checkLogin()
@@ -78,7 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = Customization1ViewController()
+                let loginScreen = HomeViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen
@@ -117,6 +122,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate
     
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func fetchingCurrentLocation()
+    {
+        locationManager.requestAlwaysAuthorization()
+        
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        currentLocation = locationManager.location
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.requestAlwaysAuthorization()
+            locationManager.delegate = self
+            locationManager.startUpdatingLocation()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        }
+            
+        else
+        {
+            
+        }
+        
+        #if targetEnvironment(simulator)
+        // your simulator code
+        print("APP IS RUNNING ON SIMULATOR")
+        
+        #else
+        // your real device code
+        print("APP IS RUNNING ON DEVICE")
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways)
+        {
+            
+            currentLocation = locationManager.location
+            print("Current Loc:",currentLocation.coordinate)
+        }
+        
+        #endif
     }
     
     func exitContents()

@@ -71,6 +71,10 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     let spinnerBackView = UIView()
     let spinner = UIActivityIndicatorView()
     
+    var customKeys = [String]()
+    var customvalues = [String]()
+    var customAttImage = NSArray()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -78,14 +82,116 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     {
         navigationBar.isHidden = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
-            // Your code with delay
-            self.orderSummaryContent()
+        if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
+        {
+            self.serviceCall.API_Customization3(DressTypeId: id, delegate: self)
         }
+        else if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
+        {
+            self.serviceCall.API_Customization3(DressTypeId: "\(id)", delegate: self)
+        }
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
+//            // Your code with delay
+//            self.orderSummaryContent()
+//        }
         
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func API_CALLBACK_Customization3(custom3: NSDictionary)
+    {
+        let ResponseMsg = custom3.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = custom3.object(forKey: "Result") as! NSDictionary
+            
+            let CustomizationImages = Result.object(forKey: "CustomizationImages") as! NSArray
+            
+            if CustomizationImages.count != 0
+            {
+                let CustomizationAttributes = Result.object(forKey: "CustomizationAttributes") as! NSArray
+                
+                customAttImage = CustomizationAttributes.value(forKey: "AttributeImage") as! NSArray
+                print("ATTRIBTE IMAGES", customAttImage)
+                
+                let AttributeNameInEnglish = CustomizationAttributes.value(forKey: "AttributeNameInEnglish") as! NSArray
+                print("AttributeNameInEnglish", AttributeNameInEnglish)
+                
+                let AttributeNameinArabic = CustomizationAttributes.value(forKey: "AttributeNameinArabic") as! NSArray
+                print("AttributeNameinArabic", AttributeNameinArabic)
+                
+//                print("WELCOME HAND", UserDefaults.standard.value(forKey: "custom3"))
+                
+                var selectedCustomStringArray = [String : String]()
+                
+                selectedCustomStringArray = UserDefaults.standard.value(forKey: "custom3") as! [String : String]
+                print("selectedCustomStringArray", selectedCustomStringArray)
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        for i in 0..<AttributeNameInEnglish.count
+                        {
+                            if let attName = AttributeNameInEnglish[i] as? String
+                            {
+                                for (keys, values) in selectedCustomStringArray
+                                {
+                                    if keys == attName
+                                    {
+                                        print("KEYS - \(keys), VALUES - \(values)")
+                                        customKeys.append(keys)
+                                        customvalues.append(values)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if language == "ar"
+                    {
+                        for i in 0..<AttributeNameinArabic.count
+                        {
+                            if let attName = AttributeNameinArabic[i] as? String
+                            {
+                                for (keys, values) in selectedCustomStringArray
+                                {
+                                    if keys == attName
+                                    {
+                                        print("KEYS - \(keys), VALUES - \(values)")
+                                        customKeys.append(keys)
+                                        customvalues.append(values)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for i in 0..<AttributeNameInEnglish.count
+                    {
+                        if let attName = AttributeNameInEnglish[i] as? String
+                        {
+                            for (keys, values) in selectedCustomStringArray
+                            {
+                                if keys == attName
+                                {
+                                    print("KEYS - \(keys), VALUES - \(values)")
+                                    customKeys.append(keys)
+                                    customvalues.append(values)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            self.orderSummaryContent()
+        }
     }
     
     func spinnerOn()
@@ -366,16 +472,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         customizationView.backgroundColor = UIColor.white
         orderSummaryScrollView.addSubview(customizationView)
         
-        print("CUSTOM 3 SELECTED", customization3)
+        print("CUSTOM 3 SELECTED", customization3.count)
         
-        var customKeys = [String]()
-        var customvalues = [String]()
-        
-        for (keys, values) in customization3
-        {
-            customKeys.append(keys as! String)
-            customvalues.append(values as! String)
-        }
+//        for (keys, values) in customization3
+//        {
+//            customKeys.append(keys as! String)
+//            customvalues.append(values as! String)
+//        }
         
         let customizationArray = ["Lapels - ", "Buttons - ", "Pockets - ", "Vents - "]
         let customizationImageArray = ["Lapels", "Buttons", "Pockets", "Vents"]
@@ -393,7 +496,18 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             let dressTypeImages = UIImageView()
             dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
             dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
-            dressTypeImages.image = UIImage(named: customizationImageArray[i])
+//            dressTypeImages.image = UIImage(named: customizationImageArray[i])
+            if let imageName = customAttImage[i] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Customazation3/\(imageName)"
+                let apiurl = URL(string: api)
+                print("GET API", apiurl)
+                if apiurl != nil
+                {
+                    dressTypeImages.dowloadFromServer(url: apiurl!)
+                }
+            }
             dressSubViews.addSubview(dressTypeImages)
             
             let dressTypeLabels = UILabel()

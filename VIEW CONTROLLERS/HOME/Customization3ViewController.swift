@@ -134,6 +134,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 
                 let CustomizationAttributes = Result.object(forKey: "CustomizationAttributes") as! NSArray
                 
+                let customAttImage = CustomizationAttributes.value(forKey: "AttributeImage") as! NSArray
+                print("ATTRIBTE IMAGES", customAttImage)
+                
                 customAttEnglishNameArray = CustomizationAttributes.value(forKey: "AttributeNameInEnglish") as! NSArray
                 
                 customAttArabicNameArray = CustomizationAttributes.value(forKey: "AttributeNameinArabic") as! NSArray
@@ -525,13 +528,14 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             
             
             let buttonImage = UIImageView()
-            buttonImage.frame = CGRect(x: (3 * x), y: 0, width: customizationButton.frame.width - (6 * x), height: customizationButton.frame.height - (2 * y))
+            buttonImage.frame = CGRect(x: 0, y: 0, width: customizationButton.frame.width, height: customizationButton.frame.height - (2 * y))
             buttonImage.backgroundColor = UIColor.white
             if let imageName = subCustomAttImageArray[i] as? String
             {
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/Customazation3/\(imageName)"
                 let apiurl = URL(string: api)
+                print("GET API", apiurl)
                 if apiurl != nil
                 {
                     buttonImage.dowloadFromServer(url: apiurl!)
