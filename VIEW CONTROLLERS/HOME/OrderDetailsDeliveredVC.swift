@@ -1143,6 +1143,11 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
                 TotalLabel.textAlignment = .left
                 TotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 TotalPriceLabel.textAlignment = .right
+                ServiceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ServiceLabel.text = "Service Type"
+                ServiceLabel.textAlignment = .left
+                ServiceTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ServiceTypeLabel.textAlignment = .right
                 PaymentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 PaymentLabel.text = "Payment Type"
                 PaymentLabel.textAlignment = .left
@@ -1213,6 +1218,11 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
                 TotalLabel.textAlignment = .right
                 TotalPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 TotalPriceLabel.textAlignment = .left
+                ServiceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ServiceLabel.text = "نوع الخدمة"
+                ServiceLabel.textAlignment = .right
+                ServiceTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                ServiceTypeLabel.textAlignment = .left
                 PaymentLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                 PaymentLabel.text = "نوع الدفع"
                 PaymentLabel.textAlignment = .right
@@ -1284,6 +1294,11 @@ class OrderDetailsDeliveredVC: CommonViewController,ServerAPIDelegate
             TotalLabel.textAlignment = .left
             TotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             TotalPriceLabel.textAlignment = .right
+            ServiceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            ServiceLabel.text = "Service Type"
+            ServiceLabel.textAlignment = .left
+            ServiceTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            ServiceTypeLabel.textAlignment = .right
             PaymentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             PaymentLabel.text = "Payment Type"
             PaymentLabel.textAlignment = .left
