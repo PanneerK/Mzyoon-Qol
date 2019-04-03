@@ -300,8 +300,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: RequestViewButton.frame.height)
-            tailorImageView.layer.borderWidth = 1.0
-            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+          //  tailorImageView.layer.borderWidth = 1.0
+          //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
             tailorImageView.backgroundColor = UIColor.white  // UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
@@ -323,8 +323,14 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 dummyImageView.tag = -1
                 tailorImageView.addSubview(dummyImageView)
             }
-         
             RequestViewButton.addSubview(tailorImageView)
+            
+           
+            // Straight Line..
+            let StraightLine = UILabel()
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX, y: 0, width: 0.3, height: RequestViewButton.frame.height)
+            StraightLine.backgroundColor = UIColor.lightGray
+            RequestViewButton.addSubview(StraightLine)
  
             //
             let orderId_Icon = UIImageView()
@@ -350,6 +356,12 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             RequestViewButton.addSubview(tailorName)
             
+            // UnderLine1..
+            let underLine1 = UILabel()
+            underLine1.frame = CGRect(x: StraightLine.frame.minX, y: nameLabel.frame.maxY, width: RequestViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine1.backgroundColor = UIColor.lightGray
+            RequestViewButton.addSubview(underLine1)
+            
             //
             let ProductName_Icon = UIImageView()
             ProductName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
@@ -370,6 +382,13 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
             RequestViewButton.addSubview(shopName)
+            
+            
+            // UnderLine2..
+            let underLine2 = UILabel()
+            underLine2.frame = CGRect(x: StraightLine.frame.minX, y: shopLabel.frame.maxY, width: RequestViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine2.backgroundColor = UIColor.lightGray
+            RequestViewButton.addSubview(underLine2)
             
             //
             let Tailor_Icon = UIImageView()

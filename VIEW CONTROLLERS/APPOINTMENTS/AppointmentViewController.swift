@@ -1988,12 +1988,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         view.addSubview(AppointmentSelectionView)
         
         let Rescheduleview = UIView()
-        Rescheduleview.frame = CGRect(x: 0, y: (AppointmentSelectionView.frame.height / 2 ) - (5 * y) , width: view.frame.width, height: (12 * y))
-        Rescheduleview.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        Rescheduleview.frame = CGRect(x: x/2, y: (AppointmentSelectionView.frame.height / 2 ) - (5 * y) , width: AppointmentSelectionView.frame.width - x, height: (12 * y))
+        Rescheduleview.backgroundColor = UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0)  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         AppointmentSelectionView.addSubview(Rescheduleview)
         
         let reschedule_LBL = UILabel()
-        reschedule_LBL.frame = CGRect(x: x, y: Rescheduleview.frame.minY, width: Rescheduleview.frame.width - x, height: (8 * y))
+        reschedule_LBL.frame = CGRect(x: x, y: Rescheduleview.frame.minY, width: Rescheduleview.frame.width - (2 * x), height: (8 * y))
         //reschedule_LBL.backgroundColor = UIColor.gray
         reschedule_LBL.textColor = UIColor.white
         reschedule_LBL.textAlignment = .left
@@ -2003,14 +2003,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         AppointmentSelectionView.addSubview(reschedule_LBL)
       
         let rescheduleButton = UIButton()
-        rescheduleButton.frame = CGRect(x: x, y: reschedule_LBL.frame.maxY + y , width: (15 * x), height: (2 * y))
-        rescheduleButton.backgroundColor = UIColor.blue
+        rescheduleButton.frame = CGRect(x:(2 * x), y: reschedule_LBL.frame.maxY , width: (15 * x), height: (3 * y))
+        rescheduleButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0) //UIColor.blue
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
             {
                 rescheduleButton.setTitle("Click Here to Reschedule", for: .normal)
-                reschedule_LBL.text = "The Appointment for your time is not available, please reschedule your date and time for your appointment"
+                reschedule_LBL.text = "  The Appointment for your time is not available., Please Re-schedule your date and time for your appointment"
             }
             else if language == "ar"
             {
@@ -2021,23 +2021,23 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         else
         {
             rescheduleButton.setTitle("Click Here to Reschedule", for: .normal)
-            reschedule_LBL.text = "The Appointment for your time is not available, please reschedule your date and time for your appointment"
+            reschedule_LBL.text = "  The Appointment for your time is not available., Please Reschedule your date and time for your appointment"
         }
         rescheduleButton.setTitleColor(UIColor.white, for: .normal)
         rescheduleButton.layer.borderColor = UIColor.lightGray.cgColor
-        rescheduleButton.layer.borderWidth = 1.0
+       // rescheduleButton.layer.borderWidth = 0.5
         rescheduleButton.layer.cornerRadius = 10
         rescheduleButton.addTarget(self, action: #selector(self.RescheduleButtonAction(sender:)), for: .touchUpInside)
         rescheduleButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         AppointmentSelectionView.addSubview(rescheduleButton)
         
         let okButton = UIButton()
-        okButton.frame = CGRect(x: rescheduleButton.frame.maxX + (8 * x), y: reschedule_LBL.frame.maxY + y, width: (10 * x), height: (2 * y))
-        okButton.backgroundColor = UIColor.blue
+        okButton.frame = CGRect(x: rescheduleButton.frame.maxX + (8 * x), y: reschedule_LBL.frame.maxY, width: (10 * x), height: (3 * y))
+        okButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0) // UIColor.blue
         okButton.setTitle("Ok", for: .normal)
         okButton.setTitleColor(UIColor.white, for: .normal)
         okButton.layer.borderColor = UIColor.lightGray.cgColor
-        okButton.layer.borderWidth = 1.0
+      //  okButton.layer.borderWidth = 1.0
         okButton.layer.cornerRadius = 10
         okButton.addTarget(self, action: #selector(self.RescheduleButtonAction(sender:)), for: .touchUpInside)
         okButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
@@ -2052,8 +2052,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         view.addSubview(MaterialRejectButtonView)
         
         let RejectView = UIView()
-        RejectView.frame = CGRect(x: 0, y: (MaterialRejectButtonView.frame.height / 2 ) - (5 * y) , width: view.frame.width, height: (10 * y))
-        RejectView.backgroundColor = UIColor.white
+        RejectView.frame = CGRect(x: x/2, y: (MaterialRejectButtonView.frame.height / 2 ) - (5 * y) , width: MaterialRejectButtonView.frame.width - x, height: (12 * y))
+        RejectView.backgroundColor = UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0) //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)  // UIColor.white
         MaterialRejectButtonView.addSubview(RejectView)
         
        // let Material_rejectReason_TF = UITextField()
@@ -2063,42 +2063,45 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             if language == "en"
             {
-                Material_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+               // Material_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+                Material_rejectReason_TF.attributedPlaceholder = NSAttributedString(string: "Please Mention your reason for rejecting..",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
             }
             else if language == "ar"
             {
-                Material_rejectReason_TF.placeholder = "يرجى ذكر سبب رفضك."
+              //  Material_rejectReason_TF.placeholder = "يرجى ذكر سبب رفضك."
+                Material_rejectReason_TF.attributedPlaceholder = NSAttributedString(string: "يرجى ذكر سبب رفضك.",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
             }
         }
         else
         {
-            Material_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+           // Material_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+            Material_rejectReason_TF.attributedPlaceholder = NSAttributedString(string: "Please Mention your reason for rejecting..",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         }
-        Material_rejectReason_TF.textColor = UIColor.black
+        Material_rejectReason_TF.textColor = UIColor.white
         Material_rejectReason_TF.textAlignment = .left
         Material_rejectReason_TF.contentVerticalAlignment = .top
         Material_rejectReason_TF.font = UIFont(name: "Avenir Next", size: 1.5 * x)
         MaterialRejectButtonView.addSubview(Material_rejectReason_TF)
         
         let CancelButton = UIButton()
-        CancelButton.frame = CGRect(x: (2 * x), y: Material_rejectReason_TF.frame.maxY + y , width: (10 * x), height: (2 * y))
+        CancelButton.frame = CGRect(x: (2 * x), y: Material_rejectReason_TF.frame.maxY + y , width: (10 * x), height: (3 * y))
         CancelButton.backgroundColor = UIColor.lightGray
         CancelButton.setTitle("Cancel", for: .normal)
         CancelButton.setTitleColor(UIColor.white, for: .normal)
         CancelButton.layer.borderColor = UIColor.lightGray.cgColor
-        CancelButton.layer.borderWidth = 1.0
+       // CancelButton.layer.borderWidth = 1.0
         CancelButton.layer.cornerRadius = 10
         CancelButton.addTarget(self, action: #selector(self.Material_CancelButtonAction(sender:)), for: .touchUpInside)
         CancelButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         MaterialRejectButtonView.addSubview(CancelButton)
         
         let saveButton = UIButton()
-        saveButton.frame = CGRect(x: CancelButton.frame.maxX + (12 * x), y: Material_rejectReason_TF.frame.maxY + y, width: (10 * x), height: (2 * y))
-        saveButton.backgroundColor = UIColor.blue
+        saveButton.frame = CGRect(x: CancelButton.frame.maxX + (12 * x), y: Material_rejectReason_TF.frame.maxY + y, width: (10 * x), height: (3 * y))
+        saveButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0) //UIColor.blue
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.layer.borderColor = UIColor.lightGray.cgColor
-        saveButton.layer.borderWidth = 1.0
+       // saveButton.layer.borderWidth = 1.0
         saveButton.layer.cornerRadius = 10
         saveButton.addTarget(self, action: #selector(self.Save_MaterialRejectAction(sender:)), for: .touchUpInside)
         saveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
@@ -2113,8 +2116,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         view.addSubview(MeasureRejectButtonView)
         
         let RejectView = UIView()
-        RejectView.frame = CGRect(x: 0, y: (MeasureRejectButtonView.frame.height / 2 ) - (5 * y) , width: view.frame.width, height: (10 * y))
-        RejectView.backgroundColor = UIColor.white
+        RejectView.frame = CGRect(x: x/2, y: (MeasureRejectButtonView.frame.height / 2 ) - (5 * y) , width: MeasureRejectButtonView.frame.width - x, height: (12 * y))
+        RejectView.backgroundColor = UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0) //UIColor.white
         MeasureRejectButtonView.addSubview(RejectView)
         
         // let Measure_rejectReason_TF = UITextField()
@@ -2124,42 +2127,45 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             if language == "en"
             {
-                Measure_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+               // Measure_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+                 Measure_rejectReason_TF.attributedPlaceholder = NSAttributedString(string: "Please Mention your reason for rejecting..",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
             }
             else if language == "ar"
             {
-                Measure_rejectReason_TF.placeholder = "يرجى ذكر سبب رفضك."
+               // Measure_rejectReason_TF.placeholder = "يرجى ذكر سبب رفضك."
+                 Measure_rejectReason_TF.attributedPlaceholder = NSAttributedString(string: "يرجى ذكر سبب رفضك.",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
             }
         }
         else
         {
-            Measure_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+          //  Measure_rejectReason_TF.placeholder = "please Mention your reason for rejecting.."
+             Measure_rejectReason_TF.attributedPlaceholder = NSAttributedString(string: "Please Mention your reason for rejecting..",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         }
-        Measure_rejectReason_TF.textColor = UIColor.black
+        Measure_rejectReason_TF.textColor = UIColor.white
         Measure_rejectReason_TF.textAlignment = .left
         Measure_rejectReason_TF.contentVerticalAlignment = .top
         Measure_rejectReason_TF.font = UIFont(name: "Avenir Next", size: 1.5 * x)
         MeasureRejectButtonView.addSubview(Measure_rejectReason_TF)
         
         let CancelButton = UIButton()
-        CancelButton.frame = CGRect(x: (2 * x), y: Measure_rejectReason_TF.frame.maxY + y , width: (10 * x), height: (2 * y))
+        CancelButton.frame = CGRect(x: (2 * x), y: Measure_rejectReason_TF.frame.maxY + y , width: (10 * x), height: (3 * y))
         CancelButton.backgroundColor = UIColor.lightGray
         CancelButton.setTitle("Cancel", for: .normal)
         CancelButton.setTitleColor(UIColor.white, for: .normal)
         CancelButton.layer.borderColor = UIColor.lightGray.cgColor
-        CancelButton.layer.borderWidth = 1.0
+      //  CancelButton.layer.borderWidth = 1.0
         CancelButton.layer.cornerRadius = 10
         CancelButton.addTarget(self, action: #selector(self.Measure_CancelButtonAction(sender:)), for: .touchUpInside)
         CancelButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         MeasureRejectButtonView.addSubview(CancelButton)
         
         let saveButton = UIButton()
-        saveButton.frame = CGRect(x: CancelButton.frame.maxX + (12 * x), y: Measure_rejectReason_TF.frame.maxY + y, width: (10 * x), height: (2 * y))
+        saveButton.frame = CGRect(x: CancelButton.frame.maxX + (12 * x), y: Measure_rejectReason_TF.frame.maxY + y, width: (10 * x), height: (3 * y))
         saveButton.backgroundColor = UIColor.blue
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.layer.borderColor = UIColor.lightGray.cgColor
-        saveButton.layer.borderWidth = 1.0
+       // saveButton.layer.borderWidth = 1.0
         saveButton.layer.cornerRadius = 10
         saveButton.addTarget(self, action: #selector(self.Save_MeasureRejectAction(sender:)), for: .touchUpInside)
         saveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!

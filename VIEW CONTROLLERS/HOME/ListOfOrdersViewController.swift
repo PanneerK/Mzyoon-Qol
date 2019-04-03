@@ -497,8 +497,9 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: PendingViewButton.frame.height)
             tailorImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            tailorImageView.layer.borderWidth = 1.0
-            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+           // tailorImageView.layer.borderWidth = 1.0
+           // tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+            
            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
             
@@ -523,6 +524,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             PendingViewButton.addSubview(tailorImageView)
             
+            // Straight Line..
+            let StraightLine = UILabel()
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX, y: 0, width: 0.3, height: PendingViewButton.frame.height)
+            StraightLine.backgroundColor = UIColor.lightGray
+            PendingViewButton.addSubview(StraightLine)
             
             let orderId_Icon = UIImageView()
             orderId_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y/2, width: x, height: y)
@@ -547,6 +553,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             PendingViewButton.addSubview(tailorName)
             
+            // UnderLine1..
+            let underLine1 = UILabel()
+            underLine1.frame = CGRect(x: StraightLine.frame.minX, y: nameLabel.frame.maxY, width: PendingViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine1.backgroundColor = UIColor.lightGray
+            PendingViewButton.addSubview(underLine1)
+            
             let TailorName_Icon = UIImageView()
             TailorName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
             TailorName_Icon.image = UIImage(named: "TailorName")
@@ -568,6 +580,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             shopName.adjustsFontSizeToFitWidth = true
             PendingViewButton.addSubview(shopName)
+            
+            // UnderLine2..
+            let underLine2 = UILabel()
+            underLine2.frame = CGRect(x: StraightLine.frame.minX, y: shopLabel.frame.maxY, width: PendingViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine2.backgroundColor = UIColor.lightGray
+            PendingViewButton.addSubview(underLine2)
             
             let ShopName_Icon = UIImageView()
             ShopName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
@@ -591,6 +609,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             ordersCountLabel.adjustsFontSizeToFitWidth = true
             PendingViewButton.addSubview(ordersCountLabel)
             
+            // UnderLine3..
+            let underLine3 = UILabel()
+            underLine3.frame = CGRect(x: StraightLine.frame.minX, y: ordersLabel.frame.maxY, width: PendingViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine3.backgroundColor = UIColor.lightGray
+            PendingViewButton.addSubview(underLine3)
+            
             let ProductName_Icon = UIImageView()
             ProductName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
             ProductName_Icon.image = UIImage(named: "ProductName")
@@ -613,6 +637,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             ProductNameLabel.adjustsFontSizeToFitWidth = true
             PendingViewButton.addSubview(ProductNameLabel)
             
+            // UnderLine4..
+            let underLine4 = UILabel()
+            underLine4.frame = CGRect(x: StraightLine.frame.minX, y: ProductLabel.frame.maxY, width: PendingViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine4.backgroundColor = UIColor.lightGray
+            PendingViewButton.addSubview(underLine4)
             
             let OrderDT_Icon = UIImageView()
             OrderDT_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
@@ -793,8 +822,9 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: DeliveredViewButton.frame.height)
             tailorImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            tailorImageView.layer.borderWidth = 1.0
-            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+          //  tailorImageView.layer.borderWidth = 1.0
+          //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+            
             // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
             
@@ -819,6 +849,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             DeliveredViewButton.addSubview(tailorImageView)
             
+           
+            // Straight Line..
+            let StraightLine = UILabel()
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX, y: 0, width: 0.3, height: DeliveredViewButton.frame.height)
+            StraightLine.backgroundColor = UIColor.lightGray
+            DeliveredViewButton.addSubview(StraightLine)
             
             let orderId_Icon = UIImageView()
             orderId_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y/2, width: x, height: y)
@@ -843,6 +879,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             DeliveredViewButton.addSubview(tailorName)
             
+            // UnderLine1..
+            let underLine1 = UILabel()
+            underLine1.frame = CGRect(x: StraightLine.frame.minX, y: nameLabel.frame.maxY, width: DeliveredViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine1.backgroundColor = UIColor.lightGray
+            DeliveredViewButton.addSubview(underLine1)
+            
             let TailorName_Icon = UIImageView()
             TailorName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
             TailorName_Icon.image = UIImage(named: "TailorName")
@@ -865,6 +907,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             shopName.adjustsFontSizeToFitWidth = true
             DeliveredViewButton.addSubview(shopName)
             
+            // UnderLine2..
+            let underLine2 = UILabel()
+            underLine2.frame = CGRect(x: StraightLine.frame.minX, y: shopLabel.frame.maxY, width: DeliveredViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine2.backgroundColor = UIColor.lightGray
+            DeliveredViewButton.addSubview(underLine2)
             
             let ShopName_Icon = UIImageView()
             ShopName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
@@ -888,6 +935,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             ordersCountLabel.adjustsFontSizeToFitWidth = true
             DeliveredViewButton.addSubview(ordersCountLabel)
             
+            // UnderLine3..
+            let underLine3 = UILabel()
+            underLine3.frame = CGRect(x: StraightLine.frame.minX, y: ordersLabel.frame.maxY, width: DeliveredViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine3.backgroundColor = UIColor.lightGray
+            DeliveredViewButton.addSubview(underLine3)
             
             let ProductName_Icon = UIImageView()
             ProductName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
@@ -911,6 +963,11 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             ProductNameLabel.adjustsFontSizeToFitWidth = true
             DeliveredViewButton.addSubview(ProductNameLabel)
             
+            // UnderLine4..
+            let underLine4 = UILabel()
+            underLine4.frame = CGRect(x: StraightLine.frame.minX, y: ProductLabel.frame.maxY, width: DeliveredViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine4.backgroundColor = UIColor.lightGray
+            DeliveredViewButton.addSubview(underLine4)
             
             let OrderDT_Icon = UIImageView()
             OrderDT_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)

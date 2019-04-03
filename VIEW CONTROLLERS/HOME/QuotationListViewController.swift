@@ -315,8 +315,8 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             let tailorImageView = UIImageView()
             tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: tailorViewButton.frame.height)
             tailorImageView.backgroundColor = UIColor.white
-            tailorImageView.layer.borderWidth = 1.0
-            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+          //  tailorImageView.layer.borderWidth = 1.0
+          //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
             
           //  tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
@@ -342,6 +342,12 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             }
              tailorViewButton.addSubview(tailorImageView)
             
+            // Straight Line..
+            let StraightLine = UILabel()
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x, y: 0, width: 0.3, height: tailorViewButton.frame.height)
+            StraightLine.backgroundColor = UIColor.lightGray
+            tailorViewButton.addSubview(StraightLine)
+            
           /*
             tailorImageButton.tag = i
             tailorImageButton.addTarget(self, action: #selector(self.tailorSelectionButtonAction(sender:)), for: .touchUpInside)
@@ -356,7 +362,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             print("TailorId:","\(String(describing: TailorId))")
             
             let Name_Icon = UIImageView()
-            Name_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y/2, width: x, height: y)
+            Name_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: y/2, width: x, height: y)
             Name_Icon.image = UIImage(named: "TailorName")
             tailorViewButton.addSubview(Name_Icon)
             
@@ -377,9 +383,15 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(tailorName)
             
+            // UnderLine1..
+            let underLine1 = UILabel()
+            underLine1.frame = CGRect(x: StraightLine.frame.minX, y: nameLabel.frame.maxY, width: tailorViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine1.backgroundColor = UIColor.lightGray
+            tailorViewButton.addSubview(underLine1)
+            
             //
             let ShopName_Icon = UIImageView()
-            ShopName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: Name_Icon.frame.maxY + y, width: x, height: y)
+            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: Name_Icon.frame.maxY + y, width: x, height: y)
             ShopName_Icon.image = UIImage(named: "ShopName")
             tailorViewButton.addSubview(ShopName_Icon)
             
@@ -400,9 +412,15 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             shopName.adjustsFontSizeToFitWidth = true
             tailorViewButton.addSubview(shopName)
             
+            // UnderLine2..
+            let underLine2 = UILabel()
+            underLine2.frame = CGRect(x: StraightLine.frame.minX, y: shopLabel.frame.maxY, width: tailorViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine2.backgroundColor = UIColor.lightGray
+            tailorViewButton.addSubview(underLine2)
+            
             //
             let Price_Icon = UIImageView()
-            Price_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
+            Price_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
             Price_Icon.image = UIImage(named: "ProductName")
             tailorViewButton.addSubview(Price_Icon)
             
@@ -424,9 +442,16 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             ordersCountLabel.adjustsFontSizeToFitWidth = true
             tailorViewButton.addSubview(ordersCountLabel)
             
+            // UnderLine3..
+            let underLine3 = UILabel()
+            underLine3.frame = CGRect(x: StraightLine.frame.minX, y: ordersLabel.frame.maxY, width: tailorViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine3.backgroundColor = UIColor.lightGray
+            tailorViewButton.addSubview(underLine3)
+            
+            
             //
             let Days_Icon = UIImageView()
-            Days_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: Price_Icon.frame.maxY + y, width: x, height: y)
+            Days_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: Price_Icon.frame.maxY + y, width: x, height: y)
             Days_Icon.image = UIImage(named: "OrderDate")
             tailorViewButton.addSubview(Days_Icon)
             
