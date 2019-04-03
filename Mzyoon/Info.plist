@@ -30,23 +30,13 @@
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your camera for profile and reference images</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-<<<<<<< HEAD
 	<string>$(PRODUCT_NAME) would like to access your location to fetch exact delivery address.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to access your location to fetch exact delivery address.</string>
-	<key>NSLocationUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to access your location to fetch exact delivery address.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to access your location to fetch exact delivery address.</string>
-=======
-	<string>$(PRODUCT_NAME) would like to access your location to fetch exact delivery address</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your location to fetch exact delivery address</string>
 	<key>NSLocationUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your location to fetch exact delivery address</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your location to fetch exact delivery address</string>
->>>>>>> master
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to access your photo for profile and reference images</string>
 	<key>UIBackgroundModes</key>
