@@ -31,6 +31,7 @@
 		DAA737BD2215D1BC00B4B573 /* TelrResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */; };
 		DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */; };
 		DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */; };
+		DABD2E482254E71800CDA5A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DABD2E472254E71800CDA5A9 /* GoogleService-Info.plist */; };
 		DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */; };
 		DAE1A10C21DCDD61009A612F /* TrackingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10B21DCDD61009A612F /* TrackingTableViewCell.swift */; };
 		DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */; };
@@ -83,7 +84,6 @@
 		FDC9BB922186F6F7003BA5C9 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9BB912186F6F7003BA5C9 /* CartViewController.swift */; };
 		FDC9BB942186F707003BA5C9 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9BB932186F707003BA5C9 /* ContactUsViewController.swift */; };
 		FDF7485421BFBF4E00F3BEFF /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7485321BFBF4700F3BEFF /* FileHandler.swift */; };
-		FDFBB5902254CB6100121D99 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDFBB58F2254CB6100121D99 /* GoogleService-Info.plist */; };
 		FDFE07352189E49F0056E773 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFE07342189E49F0056E773 /* ActivityView.swift */; };
 		FDFF309321898928002A1A27 /* SlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFF309221898928002A1A27 /* SlideViewController.swift */; };
 /* End PBXBuildFile section */
@@ -148,6 +148,7 @@
 		DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelrResponseViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentViewController.swift; sourceTree = "<group>"; };
+		DABD2E472254E71800CDA5A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		DAE1A10B21DCDD61009A612F /* TrackingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingTableViewCell.swift; sourceTree = "<group>"; };
 		DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApprovalViewController.swift; sourceTree = "<group>"; };
@@ -208,7 +209,6 @@
 		FDC9BB912186F6F7003BA5C9 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		FDC9BB932186F707003BA5C9 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		FDF7485321BFBF4700F3BEFF /* FileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
-		FDFBB58F2254CB6100121D99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FDFE07342189E49F0056E773 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		FDFF309221898928002A1A27 /* SlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -347,7 +347,7 @@
 				FD2ADFBE2175A5500033025B /* Assets.xcassets */,
 				FD2ADFC02175A5500033025B /* LaunchScreen.storyboard */,
 				FD2ADFC32175A5500033025B /* Info.plist */,
-				FDFBB58F2254CB6100121D99 /* GoogleService-Info.plist */,
+				DABD2E472254E71800CDA5A9 /* GoogleService-Info.plist */,
 				DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */,
 			);
 			path = Mzyoon;
@@ -606,7 +606,7 @@
 			files = (
 				FD2ADFC22175A5500033025B /* LaunchScreen.storyboard in Resources */,
 				FD2ADFBF2175A5500033025B /* Assets.xcassets in Resources */,
-				FDFBB5902254CB6100121D99 /* GoogleService-Info.plist in Resources */,
+				DABD2E482254E71800CDA5A9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1098169117036-06rrf5adok8qppa3fkr2m6th19okosnt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1098169117036-06rrf5adok8qppa3fkr2m6th19okosnt</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCLBLVSyzYGrj2uSAckqNTmEq7nHdt6yyg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1098169117036</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.qolsofts.Mzyoon</string>
+	<key>PROJECT_ID</key>
+	<string>mzyoon-1542623672094</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mzyoon-1542623672094.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1098169117036:ios:b36e8d21e91616af</string>
+	<key>DATABASE_URL</key>
+	<string>https://mzyoon-1542623672094.firebaseio.com</string>
+</dict>
+</plist>

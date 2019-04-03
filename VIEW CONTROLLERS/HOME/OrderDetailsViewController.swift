@@ -28,6 +28,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     let QtyNumLabel = UILabel()
     let PriceLabel = UILabel()
     let PriceNumLabel = UILabel()
+    
 
     let SubTotalLabel = UILabel()
     let SubTotalPriceLabel = UILabel()
@@ -66,8 +67,10 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     var OrderId = NSArray()
     var OrderDt = NSArray()
     var Product_Name = NSArray()
+    var Product_Name_Arabic = NSArray()
     var ServiceType = NSArray()
     var qty = NSArray()
+    var ServiceTypeinArabic = NSArray()
     
     // ProductPrice Array..
     var Appoinment = NSArray()
@@ -168,12 +171,17 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             Product_Name = OrderDetail.value(forKey: "Product_Name") as! NSArray
             print("Product_Name:",Product_Name)
             
+            Product_Name_Arabic = OrderDetail.value(forKey: "NameInArabic") as! NSArray
+            print("Product_Name_Arabic:",Product_Name_Arabic)
+            
             qty = OrderDetail.value(forKey: "qty") as! NSArray
             print("qty:",qty)
             
             ServiceType = OrderDetail.value(forKey: "ServiceType") as! NSArray
             print("ServiceType:",ServiceType)
             
+            ServiceTypeinArabic = OrderDetail.value(forKey: "ServiceTypeInArabic") as! NSArray
+            print("ServiceTypeinArabic:",ServiceTypeinArabic)
             
             let ProductPrice = Result.value(forKey: "ProductPrice") as! NSArray
             //print("ProductPrice:", ProductPrice)
@@ -334,6 +342,11 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TotalLabel.textAlignment = .right
         TotalPriceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         TotalPriceLabel.textAlignment = .left
+        ServiceLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        ServiceLabel.text = "نوع الخدمة"
+        ServiceLabel.textAlignment = .right
+        ServiceTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        ServiceTypeLabel.textAlignment = .left
         PaymentLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         PaymentLabel.text = "نوع الدفع"
         PaymentLabel.textAlignment = .right
@@ -404,6 +417,11 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TotalLabel.textAlignment = .left
         TotalPriceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         TotalPriceLabel.textAlignment = .right
+        ServiceLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ServiceLabel.text = "Service Type"
+        ServiceLabel.textAlignment = .left
+        ServiceTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        ServiceTypeLabel.textAlignment = .right
         PaymentLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         PaymentLabel.text = "Payment Type"
         PaymentLabel.textAlignment = .left
