@@ -41,7 +41,6 @@
 		FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0DD42C2242192800F7AF38 /* TestingViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
 		FD0F977F22255E40003744ED /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F977E22255E40003744ED /* Variables.swift */; };
-		FD10A4062253A81A00438A9D /* GoogleService-Info (2).plist in Resources */ = {isa = PBXBuildFile; fileRef = FD10A4052253A81A00438A9D /* GoogleService-Info (2).plist */; };
 		FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */; };
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
@@ -84,6 +83,7 @@
 		FDC9BB922186F6F7003BA5C9 /* CartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9BB912186F6F7003BA5C9 /* CartViewController.swift */; };
 		FDC9BB942186F707003BA5C9 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDC9BB932186F707003BA5C9 /* ContactUsViewController.swift */; };
 		FDF7485421BFBF4E00F3BEFF /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF7485321BFBF4700F3BEFF /* FileHandler.swift */; };
+		FDFBB5902254CB6100121D99 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FDFBB58F2254CB6100121D99 /* GoogleService-Info.plist */; };
 		FDFE07352189E49F0056E773 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFE07342189E49F0056E773 /* ActivityView.swift */; };
 		FDFF309321898928002A1A27 /* SlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFF309221898928002A1A27 /* SlideViewController.swift */; };
 /* End PBXBuildFile section */
@@ -160,7 +160,6 @@
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
 		FD0F977E22255E40003744ED /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		FD10A4022253657800438A9D /* Mzyoon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mzyoon.entitlements; sourceTree = "<group>"; };
-		FD10A4052253A81A00438A9D /* GoogleService-Info (2).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info (2).plist"; path = "../../../../Downloads/GoogleService-Info (2).plist"; sourceTree = "<group>"; };
 		FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCustomizationToJson.swift; sourceTree = "<group>"; };
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
@@ -209,6 +208,7 @@
 		FDC9BB912186F6F7003BA5C9 /* CartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewController.swift; sourceTree = "<group>"; };
 		FDC9BB932186F707003BA5C9 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		FDF7485321BFBF4700F3BEFF /* FileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
+		FDFBB58F2254CB6100121D99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FDFE07342189E49F0056E773 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		FDFF309221898928002A1A27 /* SlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -347,7 +347,7 @@
 				FD2ADFBE2175A5500033025B /* Assets.xcassets */,
 				FD2ADFC02175A5500033025B /* LaunchScreen.storyboard */,
 				FD2ADFC32175A5500033025B /* Info.plist */,
-				FD10A4052253A81A00438A9D /* GoogleService-Info (2).plist */,
+				FDFBB58F2254CB6100121D99 /* GoogleService-Info.plist */,
 				DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */,
 			);
 			path = Mzyoon;
@@ -605,8 +605,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD2ADFC22175A5500033025B /* LaunchScreen.storyboard in Resources */,
-				FD10A4062253A81A00438A9D /* GoogleService-Info (2).plist in Resources */,
 				FD2ADFBF2175A5500033025B /* Assets.xcassets in Resources */,
+				FDFBB5902254CB6100121D99 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
