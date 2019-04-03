@@ -459,8 +459,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         // Order Id Label..
         orderIdLabel.frame = CGRect(x: x, y: orderIdView.frame.minY, width: (13 * x), height: (2 * x))
        // orderIdLabel.backgroundColor = UIColor.gray
-       // orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        orderIdLabel.font = UIFont.boldSystemFont(ofSize: orderIdLabel.font.pointSize)
+        orderIdLabel.font = UIFont.boldSystemFont(ofSize: 16)
         orderIdLabel.text = "ORDER ID              :"
         orderIdLabel.font = UIFont(name: "Avenir Next", size: (1.6 * x))
         orderIdLabel.textColor = UIColor.black
@@ -469,8 +468,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         orderIdNumLabel.frame = CGRect(x: orderIdLabel.frame.maxX, y: orderIdView.frame.minY, width: (15 * x), height: (2 * x))
        // orderIdNumLabel.backgroundColor = UIColor.gray
-      //  orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: orderIdNumLabel.font.pointSize)
+        orderIdNumLabel.font = UIFont.boldSystemFont(ofSize: 16)
        if (OrderId.count > 0)
        {
         let orderIdNum : Int = OrderId[0] as! Int
@@ -514,12 +512,12 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
         // PaymentInfo Label..
-        PaymentInfoLabel.frame = CGRect(x: 0, y: orderIdView.frame.maxY + y, width: orderIdView.frame.width, height: (2 * x))
+        PaymentInfoLabel.frame = CGRect(x: 0, y: orderIdView.frame.maxY + (2 * y), width: orderIdView.frame.width, height: (2 * x))
         PaymentInfoLabel.text = " PAYMENT INFORMATION"
         PaymentInfoLabel.textAlignment = .left
         PaymentInfoLabel.backgroundColor = UIColor.clear
         PaymentInfoLabel.font = UIFont(name: "Avenir Next", size: 14)
-        PaymentInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
+        PaymentInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.4 * x))
         PaymentInfoLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         OrderDetailsScrollView.addSubview(PaymentInfoLabel)
         
@@ -531,13 +529,13 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         // PaymentInfo View..
         let PaymentInfoView = UIView()
-        PaymentInfoView.frame = CGRect(x: 0, y: PaymentUnderLine.frame.maxY + y, width: OrderDetailsScrollView.frame.width, height: (24 * y))
-        PaymentInfoView.backgroundColor = UIColor.white
+        PaymentInfoView.frame = CGRect(x: 0, y: PaymentUnderLine.frame.maxY + y/2, width: OrderDetailsScrollView.frame.width, height: (24 * y))
+        PaymentInfoView.backgroundColor = UIColor.groupTableViewBackground
         PaymentInfoView.layer.borderWidth = 1.0
         PaymentInfoView.layer.borderColor = UIColor.lightGray.cgColor
         OrderDetailsScrollView.addSubview(PaymentInfoView)
         
-        // PaymentInfo View..
+        // ProductInfo View..
         let ProductInfoView = UIView()
         ProductInfoView.frame = CGRect(x: x, y: y, width: OrderDetailsScrollView.frame.width - (2 * x), height: (8 * y))
         ProductInfoView.backgroundColor = UIColor.white
@@ -877,37 +875,44 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentTypeLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(PaymentTypeLabel)
         
+        
+        // Order status Label..
+        let OrderStatusLabel = UILabel()
+        OrderStatusLabel.frame = CGRect(x: 0, y: PaymentInfoView.frame.maxY + (2 * y), width: PaymentInfoView.frame.width, height: (2 * x))
+        OrderStatusLabel.text = " ORDER STATUS"
+        OrderStatusLabel.backgroundColor = UIColor.clear
+        OrderStatusLabel.font = UIFont(name: "Avenir Next", size: (1.4 * x))
+        OrderStatusLabel.font = UIFont.boldSystemFont(ofSize: (1.4 * x))
+        OrderStatusLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        OrderStatusLabel.textAlignment = .left
+        OrderDetailsScrollView.addSubview(OrderStatusLabel)
+        
+        // OrderUnderLine..
+        let OrderUnderLine = UILabel()
+        OrderUnderLine.frame = CGRect(x: 0, y: OrderStatusLabel.frame.maxY, width: PaymentInfoView.frame.width , height: 0.3)
+        OrderUnderLine.backgroundColor = UIColor.lightGray
+        OrderDetailsScrollView.addSubview(OrderUnderLine)
+        
         // Order Status View..
         let OrderStatusView = UIView()
-        OrderStatusView.frame = CGRect(x: 0, y: PaymentInfoView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width, height: (18 * y))
+        OrderStatusView.frame = CGRect(x: 0, y: OrderUnderLine.frame.maxY + y/2, width: OrderDetailsScrollView.frame.width, height: (12 * y))
         OrderStatusView.backgroundColor = UIColor.white
         OrderStatusView.layer.borderWidth = 1.0
         OrderStatusView.layer.borderColor = UIColor.lightGray.cgColor
         OrderDetailsScrollView.addSubview(OrderStatusView)
         
-        // Order status Label..
-        let OrderStatusLabel = UILabel()
-        OrderStatusLabel.frame = CGRect(x: 0, y: 0, width: OrderStatusView.frame.width, height: (4 * x))
-        OrderStatusLabel.text = " ORDER STATUS"
-        OrderStatusLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        OrderStatusLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
-        OrderStatusLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
-        OrderStatusLabel.textColor = UIColor.white
-        OrderStatusLabel.textAlignment = .left
-        OrderStatusView.addSubview(OrderStatusLabel)
-        
         
         // Imageview
         let TrackImageView = UIImageView()
-        TrackImageView.frame = CGRect(x: (2 * x), y: OrderStatusLabel.frame.maxY + (2 * y), width: x, height:(6 * y))
+        TrackImageView.frame = CGRect(x: (2 * x), y: (2 * y), width: x, height:(5 * y))
         TrackImageView.backgroundColor = UIColor.white
         TrackImageView.image = UIImage(named: "TrackingStatus")
         OrderStatusView.addSubview(TrackImageView)
         
         //orderedLabel..
         let orderedLabel = UILabel()
-        orderedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: OrderStatusLabel.frame.minY + (5 * y), width: (20 * x), height: (2 * y))
-        orderedLabel.text = "Ordered"
+        orderedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: (2 * y), width: (20 * x), height: y)
+        orderedLabel.text = "Order Placed"
         orderedLabel.textColor = UIColor.black
        // orderedLabel.backgroundColor = UIColor.gray
         orderedLabel.textAlignment = .left
@@ -916,7 +921,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         //DateLabel..
         let DateLabel = UILabel()
-        DateLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: orderedLabel.frame.maxY, width: (20 * x), height: (2 * y))
+        DateLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: orderedLabel.frame.maxY + y/2, width: (20 * x), height: y)
         
         if(OrderDt.count > 0)
         {
@@ -938,7 +943,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
   
         //PackedLabel..
          let PackedLabel = UILabel()
-         PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + y, width: (20 * x), height: (2 * y))
+         PackedLabel.frame = CGRect(x: TrackImageView.frame.maxX + (2 * x), y: DateLabel.frame.maxY + (2 * y), width: (20 * x), height: y)
          PackedLabel.text = "Cloth Recieved"
          PackedLabel.textColor = UIColor.black
         // PackedLabel.backgroundColor = UIColor.gray
@@ -948,7 +953,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         //TrackingButton
         let TrackingButton = UIButton()
-        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (3 * y))
+        TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (2.5 * y))
         TrackingButton.backgroundColor = UIColor.orange
         TrackingButton.setTitle("Tracking Details", for: .normal)
         TrackingButton.setTitleColor(UIColor.white, for: .normal)
@@ -958,36 +963,42 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TrackingButton.addTarget(self, action: #selector(self.TrackingButtonAction(sender:)), for: .touchUpInside)
         OrderStatusView.addSubview(TrackingButton)
   
+       
+        // Delivery Info Label..
+        let DeliveryInfoLabel = UILabel()
+        DeliveryInfoLabel.frame = CGRect(x: 0, y: OrderStatusView.frame.maxY + (2 * y), width: OrderStatusView.frame.width, height: (2 * x))
+        DeliveryInfoLabel.text = " DELIVERY INFORMATION"
+        DeliveryInfoLabel.backgroundColor = UIColor.clear
+        DeliveryInfoLabel.font = UIFont(name: "Avenir Next", size: (1.4 * x))
+        DeliveryInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.4 * x))
+        DeliveryInfoLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        DeliveryInfoLabel.textAlignment = .left
+        OrderDetailsScrollView.addSubview(DeliveryInfoLabel)
+        
+        // DeliveryUnderLine..
+        let DeliveryUnderLine = UILabel()
+        DeliveryUnderLine.frame = CGRect(x: 0, y: DeliveryInfoLabel.frame.maxY, width: OrderStatusView.frame.width , height: 0.3)
+        DeliveryUnderLine.backgroundColor = UIColor.lightGray
+        OrderDetailsScrollView.addSubview(DeliveryUnderLine)
         
         // Delivery Info View..
         let DeliveryInfoView = UIView()
-        DeliveryInfoView.frame = CGRect(x: 0, y: OrderStatusView.frame.maxY + (3 * y), width: OrderDetailsScrollView.frame.width, height: (24 * y))
+        DeliveryInfoView.frame = CGRect(x: 0, y: DeliveryUnderLine.frame.maxY + y/2, width: OrderDetailsScrollView.frame.width, height: (14 * y))
         DeliveryInfoView.backgroundColor = UIColor.white
         DeliveryInfoView.layer.borderWidth = 1.0
         DeliveryInfoView.layer.borderColor = UIColor.lightGray.cgColor
         OrderDetailsScrollView.addSubview(DeliveryInfoView)
         
         
-        // Delivery Info Label..
-        let DeliveryInfoLabel = UILabel()
-        DeliveryInfoLabel.frame = CGRect(x: 0, y: 0, width: DeliveryInfoView.frame.width, height: (4 * x))
-        DeliveryInfoLabel.text = " DELIVERY INFORMATION"
-        DeliveryInfoLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        DeliveryInfoLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
-        DeliveryInfoLabel.font = UIFont.boldSystemFont(ofSize: (1.5 * x))
-        DeliveryInfoLabel.textColor = UIColor.white
-        DeliveryInfoLabel.textAlignment = .left
-        DeliveryInfoView.addSubview(DeliveryInfoLabel)
-        
         let MapImageView = UIImageView()
-        MapImageView.frame = CGRect(x: x, y: DeliveryInfoLabel.frame.maxY + (2 * y), width: (4 * x), height:(4 * y))
+        MapImageView.frame = CGRect(x: x, y: (2 * y), width: (4 * x), height:(3 * y))
         MapImageView.backgroundColor = UIColor.white
         MapImageView.image = UIImage(named: "locationMarker")
         DeliveryInfoView.addSubview(MapImageView)
         
         // Name Label..
         let NameLabel = UILabel()
-        NameLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: DeliveryInfoLabel.frame.maxY + (2 * y) , width: (20 * x), height: (2 * y))
+        NameLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: y , width: (20 * x), height: (2 * y))
        if(FirstName.count > 0)
        {
           NameLabel.text = FirstName[0] as? String
@@ -1004,7 +1015,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         // Floor Label..
         let FloorLabel = UILabel()
-        FloorLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: NameLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
+        FloorLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: NameLabel.frame.maxY, width: (20 * x), height: (2 * y))
         if(Floor.count > 0)
         {
             FloorLabel.text = Floor[0] as? String
@@ -1022,7 +1033,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         //Area Label..
         let AreaLabel = UILabel()
-        AreaLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: FloorLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
+        AreaLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: FloorLabel.frame.maxY, width: (20 * x), height: (2 * y))
         if(Area.count > 0)
         {
              AreaLabel.text = Area[0] as? String
@@ -1040,7 +1051,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         //State Label..
         let StateLabel = UILabel()
-        StateLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: AreaLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
+        StateLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: AreaLabel.frame.maxY, width: (20 * x), height: (2 * y))
         if(StateName.count > 0)
         {
            StateLabel.text = StateName[0] as? String
@@ -1058,7 +1069,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         //Country Label..
         let CountryLabel = UILabel()
-        CountryLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: StateLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
+        CountryLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: StateLabel.frame.maxY, width: (20 * x), height: (2 * y))
         if(Country_Name.count > 0)
         {
             CountryLabel.text = Country_Name[0] as? String
@@ -1076,7 +1087,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         //PhoneNum Label..
         let PhoneNumLabel = UILabel()
-        PhoneNumLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: CountryLabel.frame.maxY + y , width: (20 * x), height: (2 * y))
+        PhoneNumLabel.frame = CGRect(x: MapImageView.frame.maxX + (2 * x), y: CountryLabel.frame.maxY, width: (20 * x), height: (2 * y))
         if(PhoneNo.count > 0)
         {
             PhoneNumLabel.text = PhoneNo[0] as? String
@@ -1104,7 +1115,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
                 OrderStatusLabel.textAlignment = .left
                 
                 orderedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                orderedLabel.text = "Ordered"
+                orderedLabel.text = "Order Placed"
                 orderedLabel.textAlignment = .left
                 
                 PackedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -1191,7 +1202,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
             OrderStatusLabel.textAlignment = .left
             
             orderedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            orderedLabel.text = "Ordered"
+            orderedLabel.text = "Order Placed"
             orderedLabel.textAlignment = .left
             
             PackedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
