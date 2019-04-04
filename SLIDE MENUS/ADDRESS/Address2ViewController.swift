@@ -261,7 +261,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         currentLocation = locationManager.location
         
-        if CLLocationManager.locationServicesEnabled() {
+        if CLLocationManager.locationServicesEnabled()
+        {
             locationManager.requestAlwaysAuthorization()
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
@@ -269,7 +270,20 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            
+            // initialise a pop up for using later
+            let alertController = UIAlertController(title: "TITLE", message: "Please go to Settings and turn on the permissions", preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                    return
+                }
+                if UIApplication.shared.canOpenURL(settingsUrl)
+                {
+                    UIApplication.shared.open(settingsUrl, completionHandler: { (success) in })
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(settingsAction)
         }
         
         #if targetEnvironment(simulator)
