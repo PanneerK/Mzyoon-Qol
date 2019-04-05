@@ -14,6 +14,8 @@ import GooglePlaces
 import SideMenu
 import UserNotifications
 import Firebase
+import FirebaseMessaging
+import FirebaseInstanceID
 
 
 @UIApplicationMain
@@ -85,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = HomeViewController()
+                let loginScreen = Customization3ViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen
@@ -280,7 +282,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // With swizzling disabled you must set the APNs token here.
         // Messaging.messaging().apnsToken = deviceToken
     }
-
     
 }
 
@@ -341,6 +342,11 @@ extension AppDelegate : MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         print("Received data message: \(remoteMessage.appData)")
     }
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        print(fcmToken)
+    }
+    
     // [END ios_10_data_message]
 }
 
