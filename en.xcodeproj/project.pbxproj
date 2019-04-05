@@ -18,12 +18,6 @@
 		DA0BC660222E49630061245B /* ShopDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0BC65F222E49630061245B /* ShopDetailsTableViewCell.swift */; };
 		DA0DB13A21F98D9C00C20299 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */; };
 		DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */; };
-		DA0DB14221FA0FF100C20299 /* TelrSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB13B21F9928200C20299 /* TelrSDK.framework */; };
-		DA0DB14321FA0FF100C20299 /* TelrSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB13B21F9928200C20299 /* TelrSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA0DB14621FA116C00C20299 /* SwiftyXMLParser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14521FA116C00C20299 /* SwiftyXMLParser.framework */; };
-		DA0DB14C21FA120D00C20299 /* AEXML.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14921FA117900C20299 /* AEXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA0DB14E21FA122E00C20299 /* SwiftyXMLParser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14521FA116C00C20299 /* SwiftyXMLParser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		DA0DB15021FA123300C20299 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA0DB14721FA117400C20299 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8F54D12211ACCA00CCA501 /* XMLReader.m */; };
@@ -104,23 +98,6 @@
 			remoteInfo = Mzyoon;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		DA0DB14421FA0FF100C20299 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				DA0DB14C21FA120D00C20299 /* AEXML.framework in Embed Frameworks */,
-				DA0DB14E21FA122E00C20299 /* SwiftyXMLParser.framework in Embed Frameworks */,
-				DA0DB14321FA0FF100C20299 /* TelrSDK.framework in Embed Frameworks */,
-				DA0DB15021FA123300C20299 /* Alamofire.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		84BA74E8AE7BBAB24B773756 /* Pods_Mzyoon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mzyoon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,8 +195,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA0DB14221FA0FF100C20299 /* TelrSDK.framework in Frameworks */,
-				DA0DB14621FA116C00C20299 /* SwiftyXMLParser.framework in Frameworks */,
 				7867C36215F8BE32510B3549 /* Pods_Mzyoon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -500,7 +475,6 @@
 				FD2ADFB22175A5480033025B /* Resources */,
 				58CDD0CE8F6FC333A2F3C656 /* [CP] Embed Pods Frameworks */,
 				3301460C5BDF78E1B9CE255D /* [CP] Copy Pods Resources */,
-				DA0DB14421FA0FF100C20299 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -662,15 +636,10 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AlamofireDomain/AlamofireDomain.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenuSwift/SideMenuSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/SidebarOverlay/SidebarOverlay.framework",
-				"${BUILT_PRODUCTS_DIR}/SlideOutMenu/SlideOutMenu.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -678,15 +647,10 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireDomain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenuSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SidebarOverlay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlideOutMenu.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

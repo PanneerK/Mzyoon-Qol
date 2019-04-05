@@ -2,7 +2,7 @@ use_frameworks!
 
 target 'Mzyoon' do
 
-  pod 'AlamofireDomain', '~> 4.1'
+  pod 'AlamofireDomain'
   pod 'ReachabilitySwift', '~> 4.3'
   pod 'NVActivityIndicatorView'
   pod 'SideMenu'
@@ -10,8 +10,6 @@ target 'Mzyoon' do
   pod 'GooglePlaces'
   pod 'Cosmos', '~> 18.0'
   pod 'SideMenuSwift'
-  pod 'SidebarOverlay'
-  pod 'SlideOutMenu'
-  pod 'Firebase/Core'
-  pod 'Firebase/Messaging'
+
+  
 end
