@@ -11,7 +11,7 @@ import CoreData
 import CoreLocation
 import GoogleMaps
 import GooglePlaces
-import Alamofire
+//import Alamofire
 import AlamofireDomain
 
 class TailorListViewController: CommonViewController, CLLocationManagerDelegate, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate,UIGestureRecognizerDelegate

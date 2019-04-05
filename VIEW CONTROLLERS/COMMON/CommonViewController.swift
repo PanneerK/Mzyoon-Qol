@@ -8,9 +8,7 @@
 
 import UIKit
 import SideMenu
-import SidebarOverlay
 import SideMenuSwift
-import SlideOutMenu
 
 class CommonViewController: UIViewController
 {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import TelrSDK
+//import TelrSDK
 
 class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
 {
