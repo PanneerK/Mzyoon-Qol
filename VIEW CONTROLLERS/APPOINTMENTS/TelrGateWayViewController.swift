@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TelrSDK
 import NVActivityIndicatorView
 import WebKit
 
