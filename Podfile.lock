@@ -1,43 +1,6 @@
 PODS:
   - AlamofireDomain (4.1)
   - Cosmos (18.0.1)
-  - Firebase/Core (5.17.0):
-    - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.6.0)
-  - Firebase/CoreOnly (5.17.0):
-    - FirebaseCore (= 5.3.0)
-  - Firebase/Messaging (5.17.0):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (= 3.3.1)
-  - FirebaseAnalytics (5.6.0):
-    - FirebaseCore (~> 5.3)
-    - FirebaseInstanceID (~> 3.5)
-    - GoogleAppMeasurement (= 5.6.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
-    - GoogleUtilities/MethodSwizzler (~> 5.2)
-    - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
-    - nanopb (~> 0.3)
-  - FirebaseAnalyticsInterop (1.2.0)
-  - FirebaseCore (5.3.0):
-    - GoogleUtilities/Logger (~> 5.2)
-  - FirebaseInstanceID (3.5.0):
-    - FirebaseCore (~> 5.3)
-    - GoogleUtilities/Environment (~> 5.3)
-    - GoogleUtilities/UserDefaults (~> 5.3)
-  - FirebaseMessaging (3.3.1):
-    - FirebaseAnalyticsInterop (~> 1.1)
-    - FirebaseCore (~> 5.2)
-    - FirebaseInstanceID (~> 3.4)
-    - GoogleUtilities/Environment (~> 5.2)
-    - GoogleUtilities/Reachability (~> 5.2)
-    - Protobuf (~> 3.1)
-  - GoogleAppMeasurement (5.6.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
-    - GoogleUtilities/MethodSwizzler (~> 5.2)
-    - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
-    - nanopb (~> 0.3)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
@@ -45,42 +8,16 @@ PODS:
     - GoogleMaps/Base
   - GooglePlaces (2.7.0):
     - GoogleMaps/Base (= 2.7.0)
-  - GoogleUtilities/AppDelegateSwizzler (5.3.7):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.3.7)
-  - GoogleUtilities/Logger (5.3.7):
-    - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.3.7):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.3.7):
-    - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
-    - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.3.7)"
-  - GoogleUtilities/Reachability (5.3.7):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (5.3.7):
-    - GoogleUtilities/Logger
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
   - NVActivityIndicatorView (4.4.0):
     - NVActivityIndicatorView/Presenter (= 4.4.0)
   - NVActivityIndicatorView/Presenter (4.4.0)
-  - Protobuf (3.6.1)
   - ReachabilitySwift (4.3.0)
   - SideMenu (5.0.1)
   - SideMenuSwift (1.0.1)
 
 DEPENDENCIES:
-  - AlamofireDomain (~> 4.1)
+  - AlamofireDomain
   - Cosmos (~> 18.0)
-  - Firebase/Core
-  - Firebase/Messaging
   - GoogleMaps
   - GooglePlaces
   - NVActivityIndicatorView
@@ -92,19 +29,9 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AlamofireDomain
     - Cosmos
-    - Firebase
-    - FirebaseAnalytics
-    - FirebaseAnalyticsInterop
-    - FirebaseCore
-    - FirebaseInstanceID
-    - FirebaseMessaging
-    - GoogleAppMeasurement
     - GoogleMaps
     - GooglePlaces
-    - GoogleUtilities
-    - nanopb
     - NVActivityIndicatorView
-    - Protobuf
     - ReachabilitySwift
     - SideMenu
     - SideMenuSwift
@@ -112,23 +39,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AlamofireDomain: 6a17c975e5fe8c10d8dbfdb1ab28e6dd0ae7cd41
   Cosmos: 7dfaa3f52584ca5f94ab74b5c2e264019cc9f7f5
-  Firebase: 59d557e064217fab6a03ff00baa73c06e73832e6
-  FirebaseAnalytics: 75e4bbc6417d190cc98ec1f17c41a4fad4c2c976
-  FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
-  FirebaseCore: c0c4befb82374d6aef64d800e569f47625352edc
-  FirebaseInstanceID: 4522aad88f69297622062c0e9ffccdee3dd9b151
-  FirebaseMessaging: 08289db05bdc71d91fe70916de95bb0c3c86ca9b
-  GoogleAppMeasurement: 008e04ecd8efedd97a693aea8634aefe220bd26e
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
-  GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
-  Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SideMenu: 87efd943737bb83aedf0358884d09fcf5576636d
   SideMenuSwift: a78d47182aa03b5c07570fe57d3ba22c4561f2ce
 
-PODFILE CHECKSUM: bfb16970c7bc2593bc4c60594030efa1980c386a
+PODFILE CHECKSUM: 3af7d2a91c4664fdd90e468252762a6d78ee1256
 
 COCOAPODS: 1.5.3
