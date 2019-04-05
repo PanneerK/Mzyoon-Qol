@@ -747,6 +747,27 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selectionImage1.tag = sender.tag
         sender.addSubview(selectionImage1)
         
+        for i in 0..<subCustomAttIdArray.count
+        {
+            if let id = subCustomAttIdArray[i] as? Int
+            {
+                if sender.tag == id
+                {
+                    if let imageName = subCustomAttImageArray[i] as? String
+                    {
+                        let urlString = serviceCall.baseURL
+                        let api = "\(urlString)/images/Customazation3/\(imageName)"
+                        let apiurl = URL(string: api)
+                        print("GET API", apiurl)
+                        if apiurl != nil
+                        {
+                            customedImageView.dowloadFromServer(url: apiurl!)
+                        }
+                    }
+                }
+            }
+        }
+        
         selectedCustomIntArray["\(selectedCustomInt)"] = "\(sender.tag)"
         
         for i in 0..<subCustomAttEnglishNameArray.count

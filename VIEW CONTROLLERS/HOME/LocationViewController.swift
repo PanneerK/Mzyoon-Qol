@@ -139,6 +139,75 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
+        if CLLocationManager.locationServicesEnabled()
+        {
+            switch CLLocationManager.authorizationStatus()
+            {
+            case .notDetermined, .restricted, .denied:
+                print("No access")
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        let alertController = UIAlertController(title: "Alert", message: "Please go to Settings and allow location access", preferredStyle: .alert)
+                        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                                return
+                            }
+                            if UIApplication.shared.canOpenURL(settingsUrl)
+                            {
+                                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in })
+                            }
+                        }
+                        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                        alertController.addAction(cancelAction)
+                        alertController.addAction(settingsAction)
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                    else if language == "ar"
+                    {
+                        let alertController = UIAlertController(title: "تنبيه", message: "يرجى الانتقال إلى الإعدادات والسماح بالوصول إلى الموقع", preferredStyle: .alert)
+                        let settingsAction = UIAlertAction(title: "الإعدادات", style: .default) { (_) -> Void in
+                            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                                return
+                            }
+                            if UIApplication.shared.canOpenURL(settingsUrl)
+                            {
+                                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in })
+                            }
+                        }
+                        let cancelAction = UIAlertAction(title: "إلغاء", style: .default, handler: nil)
+                        alertController.addAction(cancelAction)
+                        alertController.addAction(settingsAction)
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                }
+                else
+                {
+                    let alertController = UIAlertController(title: "Alert", message: "Please go to Settings and allow location access", preferredStyle: .alert)
+                    let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                            return
+                        }
+                        if UIApplication.shared.canOpenURL(settingsUrl)
+                        {
+                            UIApplication.shared.open(settingsUrl, completionHandler: { (success) in })
+                        }
+                    }
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                    alertController.addAction(cancelAction)
+                    alertController.addAction(settingsAction)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                
+            case .authorizedAlways, .authorizedWhenInUse:
+                print("Access")
+            }
+        } else {
+            print("Location services are not enabled")
+        }
+        
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestAlwaysAuthorization()
