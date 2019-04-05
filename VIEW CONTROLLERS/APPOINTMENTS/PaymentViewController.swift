@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import TelrSDK
 
 class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldDelegate
 {
@@ -31,7 +30,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     let ZipCode_TF = UITextField()
     let Email_TF = UITextField()
     
-    var TotalAmount:String!
+    var TotalAmount:String!                       
     
     // Parameters:
     var KEY:String!
