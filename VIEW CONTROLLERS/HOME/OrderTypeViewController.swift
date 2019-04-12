@@ -275,11 +275,13 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
+        
+        pageBar.image = UIImage(named: "MaterialBar")
 
-        directDeliveryIcon.frame = CGRect(x: 0, y: (2 * y), width: (2 * x), height: (2 * y))
+        directDeliveryIcon.frame = CGRect(x: 0, y: y, width: (2 * x), height: (2 * y))
 //        directDeliveryIcon.image = convertedOrderHeaderImageArray[0]
         if let imageName = orderTypeHeaderImage[0] as? String
         {
@@ -293,7 +295,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         }
         selfScreenContents.addSubview(directDeliveryIcon)
         
-        directDeliveryLabel.frame = CGRect(x: directDeliveryIcon.frame.maxX + x, y: (2 * y), width: view.frame.width, height: (2 * y))
+        directDeliveryLabel.frame = CGRect(x: directDeliveryIcon.frame.maxX + x, y: y, width: view.frame.width, height: (2 * y))
         directDeliveryLabel.text = (orderTypeNameArray[0] as! String)
         directDeliveryLabel.textColor = UIColor.black
         directDeliveryLabel.textAlignment = .left
@@ -325,7 +327,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         directDeliveryButton.addTarget(self, action: #selector(self.ownMaterialButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(directDeliveryButton)
         
-        courierDeliveryIcon.frame = CGRect(x: 0, y: directDeliveryButton.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
+        courierDeliveryIcon.frame = CGRect(x: 0, y: directDeliveryButton.frame.maxY + y, width: (2 * x), height: (2 * y))
 //        courierDeliveryIcon.image = convertedOrderHeaderImageArray[1]
         if let imageName = orderTypeHeaderImage[1] as? String
         {
@@ -339,7 +341,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         }
         selfScreenContents.addSubview(courierDeliveryIcon)
         
-        couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: directDeliveryButton.frame.maxY + (2 * y), width: view.frame.width - (21 * x), height: (2 * y))
+        couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: directDeliveryButton.frame.maxY + y, width: view.frame.width - (21 * x), height: (2 * y))
 //        couriertDeliveryLabel.backgroundColor = UIColor.red
         couriertDeliveryLabel.text = (orderTypeNameArray[1] as! String)
         couriertDeliveryLabel.textColor = UIColor.black
@@ -348,7 +350,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         couriertDeliveryLabel.adjustsFontSizeToFitWidth = true
         selfScreenContents.addSubview(couriertDeliveryLabel)
         
-        extraLabel.frame = CGRect(x: couriertDeliveryLabel.frame.maxX, y: directDeliveryButton.frame.maxY + (2 * y), width: (20 * x), height: (2 * y))
+        extraLabel.frame = CGRect(x: couriertDeliveryLabel.frame.maxX, y: directDeliveryButton.frame.maxY + y, width: (20 * x), height: (2 * y))
 //        extraLabel.backgroundColor = UIColor.red
         extraLabel.text = "(Extra charges applicable)"
         extraLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -382,7 +384,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         courierDeliveryButton.addTarget(self, action: #selector(self.ownMaterialButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(courierDeliveryButton)
         
-        companyIcon.frame = CGRect(x: 0, y: courierDeliveryButton.frame.maxY + (2 * y), width: (2 * x), height: (2 * y))
+        companyIcon.frame = CGRect(x: 0, y: courierDeliveryButton.frame.maxY + y, width: (2 * x), height: (2 * y))
 //        companyIcon.image = convertedOrderHeaderImageArray[2]
         if let imageName = orderTypeHeaderImage[2] as? String
         {
@@ -396,7 +398,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         }
         selfScreenContents.addSubview(companyIcon)
         
-        companyLabel.frame = CGRect(x: companyIcon.frame.maxX + x, y: courierDeliveryButton.frame.maxY + (2 * y), width: view.frame.width, height: (2 * y))
+        companyLabel.frame = CGRect(x: companyIcon.frame.maxX + x, y: courierDeliveryButton.frame.maxY + y, width: view.frame.width, height: (2 * y))
         companyLabel.text = (orderTypeNameArray[2] as! String)
         companyLabel.textColor = UIColor.black
         companyLabel.textAlignment = .left
@@ -448,6 +450,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         }
         
         self.view.bringSubviewToFront(slideMenuButton)
+        pageContent(tag: 3)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

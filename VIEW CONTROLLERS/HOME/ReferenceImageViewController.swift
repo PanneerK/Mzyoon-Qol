@@ -129,13 +129,15 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
+        pageBar.image = UIImage(named: "Measurement_wizard")
+        
         self.view.bringSubviewToFront(slideMenuButton)
         
-        addReferenceImage.frame = CGRect(x: 0, y: (3 * y), width: selfScreenContents.frame.width, height: (30 * y))
+        addReferenceImage.frame = CGRect(x: 0, y: (3 * y), width: selfScreenContents.frame.width, height: (27 * y))
         addReferenceImage.layer.borderWidth = 1
         addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
         addReferenceImage.backgroundColor = UIColor.white
@@ -151,7 +153,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
             addReferenceImage.addSubview(notifyLabel)
         }
         
-        addMaterialLabel.frame = CGRect(x: 0, y: addReferenceImage.frame.maxY + (2 * x), width: selfScreenContents.frame.width, height: (2 * y))
+        addMaterialLabel.frame = CGRect(x: 0, y: addReferenceImage.frame.maxY + y, width: selfScreenContents.frame.width, height: (2 * y))
         addMaterialLabel.text = "Add reference image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left

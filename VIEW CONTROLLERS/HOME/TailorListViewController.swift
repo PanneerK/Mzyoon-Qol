@@ -474,11 +474,13 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: 0, y: pageBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        listViewButton.frame = CGRect(x: 0, y: 0, width: ((view.frame.width / 2) - 1), height: 50)
+        pageBar.image = UIImage(named: "tailorlistBar")
+        
+        listViewButton.frame = CGRect(x: 0, y: 0, width: ((view.frame.width / 2) - 1), height: (5 * y))
         listViewButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         listViewButton.setTitle("LIST VIEW", for: .normal)
         listViewButton.setTitleColor(UIColor.white, for: .normal)
@@ -486,7 +488,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         listViewButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(listViewButton)
         
-        mapViewButton.frame = CGRect(x: listViewButton.frame.maxX + 1, y: 0, width: view.frame.width / 2, height: 50)
+        mapViewButton.frame = CGRect(x: listViewButton.frame.maxX + 1, y: 0, width: view.frame.width / 2, height: (5 * y))
         mapViewButton.backgroundColor = UIColor.lightGray
         mapViewButton.setTitle("MAP VIEW", for: .normal)
         mapViewButton.setTitleColor(UIColor.black, for: .normal)
@@ -544,7 +546,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func listViewContents(isHidden : Bool)
     {
-        backDrop.frame = CGRect(x: (3 * x), y: listViewButton.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (18 * y))
+        backDrop.frame = CGRect(x: (3 * x), y: listViewButton.frame.maxY + y, width: view.frame.width - (6 * x), height: selfScreenContents.frame.height - (7 * y))
         backDrop.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(backDrop)
         
@@ -615,7 +617,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         tailorListTableView.reloadData()
         
-        tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (35 * y))
+        tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (30 * y))
         backDrop.addSubview(tailorListScrollView)
         
         tailorListScrollView.contentSize.height = (12 * y * CGFloat(IdArray.count))
@@ -848,7 +850,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             let locationButton = UIButton()
             locationButton.frame = CGRect(x: tailorView.frame.width - (5 * x), y: tailorView.frame.height - (5 * y), width: (5 * x), height: (5 * y))
             //            locationButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            locationButton.layer.borderWidth = 1
+//            locationButton.layer.borderWidth = 1
             locationButton.layer.borderColor = UIColor.lightGray.cgColor
             locationButton.setImage(UIImage(named: "locationMarker"), for: .normal)
             locationButton.tag = IdArray[i] as! Int

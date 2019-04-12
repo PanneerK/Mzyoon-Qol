@@ -225,10 +225,12 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
+        pageBar.image = UIImage(named: "MeasurementBar")
+
         self.view.bringSubviewToFront(slideMenuButton)
         
         let manualIcon = UIImageView()
@@ -285,11 +287,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         forWhomButton.addSubview(downArrowImageView)
         
         let goToIcon = UIImageView()
-        goToIcon.frame = CGRect(x: 0, y: manualButton.frame.maxY + (2.5 * y), width: (2 * x), height: (2 * y))
+        goToIcon.frame = CGRect(x: 0, y: manualButton.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
         goToIcon.image = UIImage(named: "Go_to_tailor_shop")
         selfScreenContents.addSubview(goToIcon)
         
-        goTitleLabel.frame = CGRect(x: goToIcon.frame.maxX + x, y: manualButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
+        goTitleLabel.frame = CGRect(x: goToIcon.frame.maxX + x, y: manualButton.frame.maxY, width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
         goTitleLabel.text = Measure1NameEngArray[1] as! String
         goTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         goTitleLabel.textAlignment = .left
@@ -324,11 +326,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         let comeToIcon = UIImageView()
-        comeToIcon.frame = CGRect(x: 0, y: goButton.frame.maxY + (2.5 * y), width: (2 * x), height: (2 * y))
+        comeToIcon.frame = CGRect(x: 0, y: goButton.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
         comeToIcon.image = UIImage(named: "Tailor_come_to_your_place")
         selfScreenContents.addSubview(comeToIcon)
         
-        comeTitleLabel.frame = CGRect(x: comeToIcon.frame.maxX + x, y: goButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
+        comeTitleLabel.frame = CGRect(x: comeToIcon.frame.maxX + x, y: goButton.frame.maxY, width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
         comeTitleLabel.text = Measure1NameEngArray[2] as! String
         comeTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         comeTitleLabel.textAlignment = .left

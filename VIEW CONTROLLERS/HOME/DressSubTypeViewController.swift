@@ -173,7 +173,9 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        searchTextField.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: (4 * y))
+        pageBar.image = UIImage(named: "Dress typeBar")
+        
+        searchTextField.frame = CGRect(x: 0, y: pageBar.frame.maxY, width: view.frame.width, height: (4 * y))
         searchTextField.layer.borderWidth = 1
         searchTextField.layer.borderColor = UIColor.orange.cgColor
         searchTextField.placeholder = "Search"
@@ -224,6 +226,8 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             changeViewToEnglishInSelf()
             self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
         }
+        
+        pageContent(tag: 2)
     }
     
     @objc func searchButtonAction(sender : UIButton)

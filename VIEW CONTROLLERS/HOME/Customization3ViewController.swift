@@ -303,7 +303,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         selfScreenNavigationTitle.text = "التخصيص - 3"
-        viewDesignLabel.text = "عرض التصميم الخاص بك هنا"
+        viewDesignLabel.text = "معاينة"
     }
     
     func changeViewToEnglishInSelf()
@@ -318,7 +318,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         selfScreenNavigationTitle.text = "CUSTOMIZATION-3"
-        viewDesignLabel.text = "VIEW YOUR DESIGN HERE"
+        viewDesignLabel.text = "PREVIEW"
     }
     
     func customization3Content(inputArray : NSArray)
@@ -342,9 +342,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
+        
+        pageBar.image = UIImage(named: "CustomizationBar")
         
         self.view.bringSubviewToFront(slideMenuButton)
         
@@ -352,13 +354,13 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         viewDesignLabel.layer.cornerRadius = 10
         viewDesignLabel.layer.masksToBounds = true
         viewDesignLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        viewDesignLabel.text = "VIEW YOUR DESIGN HERE"
+        viewDesignLabel.text = "PREVIEW"
         viewDesignLabel.textColor = UIColor.white
         viewDesignLabel.textAlignment = .center
         viewDesignLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         selfScreenContents.addSubview(viewDesignLabel)
         
-        customedImageView.frame = CGRect(x: 0, y: viewDesignLabel.frame.maxY + y, width: (25 * x), height: (25 * y))
+        customedImageView.frame = CGRect(x: 0, y: viewDesignLabel.frame.maxY + y, width: (25 * x), height: (20 * y))
         customedImageView.layer.borderWidth = 1
         customedImageView.layer.borderColor = UIColor.lightGray.cgColor
         customedImageView.backgroundColor = UIColor.white
@@ -375,7 +377,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         }
         selfScreenContents.addSubview(customedImageView)
         
-        customedFrontButton.frame = CGRect(x: customedImageView.frame.maxX + x, y: customedImageView.frame.minY + (9 * y), width: (7.5 * x), height: (7.5 * y))
+        customedFrontButton.frame = CGRect(x: customedImageView.frame.maxX + x, y: customedImageView.frame.minY + y, width: (7.5 * x), height: (7.5 * y))
         customedFrontButton.layer.borderWidth = 1
         customedFrontButton.layer.borderColor = UIColor.lightGray.cgColor
         customedFrontButton.backgroundColor = UIColor.white
@@ -473,6 +475,36 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             changeViewToEnglishInSelf()
             subcCustomization3Content(inputArray: subCustomAttEnglishNameArray)
         }
+        
+        hintsViewContents()
+        hintsContents()
+    }
+    
+    func hintsContents()
+    {
+        let headingLabel = UILabel()
+        headingLabel.frame = CGRect(x: (2 * x), y: customedImageView.frame.maxY + (10 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
+        headingLabel.text = "Customizations"
+        headingLabel.textAlignment = .left
+        headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        hintsView.addSubview(headingLabel)
+       
+        let hintsImage = UIImageView()
+        hintsImage.frame = CGRect(x: (3 * x), y: customedImageView.frame.maxY + (14 * y), width: selfScreenContents.frame.width, height: (4 * y))
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "custom3Image")
+        hintsView.addSubview(hintsImage)
+        
+        let detailedLabel = UILabel()
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Click here to see available customizations for choosen dress type"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
     }
     
     func subcCustomization3Content(inputArray : NSArray)
