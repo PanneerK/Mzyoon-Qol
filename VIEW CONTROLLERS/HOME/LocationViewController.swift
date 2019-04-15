@@ -12,7 +12,7 @@ import CoreLocation
 import GoogleMaps
 import GooglePlaces
 
-class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate
+class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate,UISearchBarDelegate,LocateOnTheMap,GMSAutocompleteFetcherDelegate
 {
   
     var x = CGFloat()
@@ -47,6 +47,10 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     
     var applicationDelegate = AppDelegate()
 
+    // rohith - 9-4-2019
+    var searchResultController: SearchResultsController!
+    var resultsArray = [String]()
+    var gmsFetcher: GMSAutocompleteFetcher!
     
     override func viewDidLoad()
     {
@@ -64,8 +68,67 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        // rohith - 9-4-2019
+        searchResultController = SearchResultsController()
+        searchResultController.delegate = self
+        gmsFetcher = GMSAutocompleteFetcher()
+        gmsFetcher.delegate = self
     }
     
+    // rohith - 9-4-2019
+    
+    @IBAction func searchWithAddress(_ sender: AnyObject)
+    {
+        let searchController = UISearchController(searchResultsController: searchResultController)
+        searchController.searchBar.delegate = self
+        self.present(searchController, animated:true, completion: nil)
+    }
+    
+    func didAutocomplete(with predictions: [GMSAutocompletePrediction])
+    {
+        for prediction in predictions
+        {
+            
+            if let prediction = prediction as GMSAutocompletePrediction!
+            {
+                self.resultsArray.append(prediction.attributedFullText.string)
+            }
+        }
+        self.searchResultController.reloadDataWithArray(self.resultsArray)
+        //   self.searchResultsTable.reloadDataWithArray(self.resultsArray)
+        print(resultsArray)
+    }
+    
+    func didFailAutocompleteWithError(_ error: Error)
+    {
+        
+    }
+    
+    func locateWithLongitude(_ lon: Double, andLatitude lat: Double, andTitle title: String)
+    {
+        
+        DispatchQueue.main.async { () -> Void in
+            
+            let position = CLLocationCoordinate2DMake(lat, lon)
+            let marker = GMSMarker(position: position)
+            
+              let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 10)
+               self.mapView.camera = camera
+            
+            marker.title = "Address : \(title)"
+            marker.map = self.mapView
+            
+        }
+    }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
+    {
+        self.resultsArray.removeAll()
+        gmsFetcher?.sourceTextHasChanged(searchText)
+        
+    }
     func activityContents()
     {
         activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
@@ -305,6 +368,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     
     @objc func searchButtonAction(sender : UIButton)
     {
+        // Panneer... 
+   
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
         
@@ -320,6 +385,14 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         
         // Display the autocomplete view controller.
         present(autocompleteController, animated: true, completion: nil)
+ 
+        
+        // rohith - 9-4-2019
+       /*
+        let searchController = UISearchController(searchResultsController: searchResultController)
+        searchController.searchBar.delegate = self
+        self.present(searchController, animated:true, completion: nil)
+        */
     }
     
     @objc func addAddressButtonAction(sender : UIButton)
@@ -477,7 +550,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     
 }
 
-extension LocationViewController : GMSAutocompleteViewControllerDelegate {
+extension LocationViewController : GMSAutocompleteViewControllerDelegate
+{
     
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {

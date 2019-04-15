@@ -102,7 +102,7 @@ open class SideMenuController: UIViewController {
     open var isMenuRevealed = false
 
     private var shouldShowShadowOnContent: Bool {
-        return preferences.animation.shouldAddShadowWhenRevealing
+        return preferences.animation.shouldAddShadowWhenRevealing && preferences.basic.position != .under
     }
 
     /// States used in panning gesture
@@ -271,7 +271,6 @@ open class SideMenuController: UIViewController {
                 if reveal {
                     self.delegate?.sideMenuControllerDidRevealMenu(self)
                 } else {
-                    self.delegate?.sideMenuControllerDidHideMneu(self)
                     self.delegate?.sideMenuControllerDidHideMenu(self)
                 }
             }
@@ -346,16 +345,15 @@ open class SideMenuController: UIViewController {
             return
         }
 
-        let overlay = UIView()
-        overlay.bounds = contentContainerView.bounds
-        overlay.center = contentContainerView.center
+        let overlay = UIView(frame: contentContainerView.bounds)
+        overlay.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+
         if !shouldShowShadowOnContent {
             overlay.backgroundColor = .clear
         } else {
             overlay.backgroundColor = SideMenuController.preferences.animation.shadowColor
             overlay.alpha = 0
         }
-        overlay.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
         // UIKit can coordinate overlay's tap gesture and controller view's pan gesture correctly
         let tapToHideGesture = UITapGestureRecognizer()
@@ -445,7 +443,13 @@ open class SideMenuController: UIViewController {
             }
 
             if shouldShowShadowOnContent {
-                let shadowPercent = min(menuContainerView.frame.maxX / menuWidth, 1)
+                let movingDistance: CGFloat
+                if isLeft {
+                    movingDistance = menuContainerView.frame.maxX
+                } else {
+                    movingDistance = menuWidth - menuContainerView.frame.minX
+                }
+                let shadowPercent = min(movingDistance / menuWidth, 1)
                 contentContainerOverlay?.alpha = self.preferences.animation.shadowAlpha * shadowPercent
             }
         case .ended, .cancelled, .failed:
@@ -640,7 +644,7 @@ open class SideMenuController: UIViewController {
     ///
     /// - Returns: if not exist, returns nil.
     open func currentCacheIdentifier() -> String? {
-        guard let index = lazyCachedViewControllers.values.index(of: contentViewController) else {
+        guard let index = lazyCachedViewControllers.values.firstIndex(of: contentViewController) else {
             return nil
         }
         return lazyCachedViewControllers.keys[index]
@@ -752,7 +756,7 @@ extension SideMenuController: UIGestureRecognizerDelegate {
                 return false
         }
 
-        if let index = navigationController.viewControllers.index(of: viewController) {
+        if let index = navigationController.viewControllers.firstIndex(of: viewController) {
             return index > 0
         }
         return false

@@ -562,8 +562,16 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(ProductInfoView)
        
         let DressImageView = UIImageView()
-        DressImageView.frame = CGRect(x: x, y: y, width: (6 * x), height:(6 * y))
+        
+      //  DressImageView.frame = CGRect(x: x, y: y, width: (6 * x), height:(6 * y))
+        
+        DressImageView.frame = CGRect(x: x, y: y, width: (6 * y), height: (6 * y))
         DressImageView.backgroundColor = UIColor.white
+        DressImageView.layer.cornerRadius = DressImageView.frame.height / 2
+        DressImageView.layer.borderWidth = 1
+        DressImageView.layer.borderColor = UIColor.lightGray.cgColor
+        DressImageView.layer.masksToBounds = true
+       
        
      if(Image.count > 0)
      {

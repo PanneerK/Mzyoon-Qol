@@ -31,7 +31,7 @@ class NVActivityIndicatorAnimationCircleStrokeSpin: NVActivityIndicatorAnimation
 
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let beginTime: Double = 0.5
-        let strokeStartDuration: Double = 1.0
+        let strokeStartDuration: Double = 1.2
         let strokeEndDuration: Double = 0.7
 
         let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")

@@ -164,7 +164,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         serviceCall.API_InsertDeviceDetails(DeviceId: "", Os: systemVersion, Manufacturer: "Apple", CountryCode: countryCode, PhoneNumber: mobileNumber, Model: modelName, AppVersion: appVersion!, Type: "", delegate: self)
     }
     
-    func API_CALLBACK_DeviceDetails(deviceDet: NSDictionary) {
+    func API_CALLBACK_DeviceDetails(deviceDet: NSDictionary)
+    {
         print("API_CALLBACK_DeviceDetails", deviceDet)
     }
     

@@ -495,13 +495,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingScrollView.addSubview(PendingViewButton)
             
             let tailorImageView = UIImageView()
-            tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: PendingViewButton.frame.height)
-            tailorImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-           // tailorImageView.layer.borderWidth = 1.0
-           // tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
-            
-           // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
-            
+          //  tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: PendingViewButton.frame.height)
+          
+            tailorImageView.frame = CGRect(x: x/2, y: (2 * y), width: (6 * y), height: (6 * y))
+            tailorImageView.backgroundColor = UIColor.white
+            tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
+            tailorImageView.layer.borderWidth = 1
+            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+            tailorImageView.layer.masksToBounds = true
             
              if let imageName = PendImageArray[i] as? String
              {
@@ -526,7 +527,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             
             // Straight Line..
             let StraightLine = UILabel()
-            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX, y: 0, width: 0.3, height: PendingViewButton.frame.height)
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x/2, y: 0, width: 0.3, height: PendingViewButton.frame.height)
             StraightLine.backgroundColor = UIColor.lightGray
             PendingViewButton.addSubview(StraightLine)
             
@@ -820,13 +821,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredScrollView.addSubview(DeliveredViewButton)
             
             let tailorImageView = UIImageView()
-            tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: DeliveredViewButton.frame.height)
-            tailorImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-          //  tailorImageView.layer.borderWidth = 1.0
-          //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
-            
-            // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
-            
+           // tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: DeliveredViewButton.frame.height)
+        
+            tailorImageView.frame = CGRect(x: x/2, y: (2 * y), width: (6 * y), height: (6 * y))
+            tailorImageView.backgroundColor = UIColor.white
+            tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
+            tailorImageView.layer.borderWidth = 1
+            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+            tailorImageView.layer.masksToBounds = true
             
              if let imageName = DelivImageArray[i] as? String
              {

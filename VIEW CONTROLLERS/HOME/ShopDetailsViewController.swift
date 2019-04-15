@@ -114,11 +114,7 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
        {
          self.serviceCall.API_GetShopDetails(TailorId: TailorID!, delegate: self)
        }
-     
-   
-       // ShopDetailsContent()
-       // strPhoneNumber = "+91 8015557649"
-        
+       
         DaysArray = ["Sunday","Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"]
         TimeArray = ["Closed","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM","9.00 AM - 9.00 PM"]
         

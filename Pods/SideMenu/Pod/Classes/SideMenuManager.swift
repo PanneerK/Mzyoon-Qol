@@ -38,14 +38,7 @@ open class SideMenuManager: NSObject {
     // Bounds which has been allocated for the app on the whole device screen
     internal static var appScreenRect: CGRect {
         let appWindowRect = UIApplication.shared.keyWindow?.bounds ?? UIWindow().bounds
-        
         return appWindowRect
-    }
-    
-    internal static var viewWidth : CGFloat
-    {
-        let returnWidth = UIScreen.main.bounds.width
-        return returnWidth
     }
 
     /**
@@ -80,7 +73,7 @@ open class SideMenuManager: NSObject {
      
      Note that each menu's width can be overridden using the `menuWidth` property on any `UISideMenuNavigationController` instance.
      */
-    open var menuWidth: CGFloat = (UIScreen.main.bounds.width / 2) + (UIScreen.main.bounds.width / 4)
+    open var menuWidth: CGFloat = min(round(min((appScreenRect.width), (appScreenRect.height)) * 0.75), 240)
     
     /// Duration of the animation when the menu is presented without gestures. Default is 0.35 seconds.
     open var menuAnimationPresentDuration: Double = 0.35
@@ -121,8 +114,8 @@ open class SideMenuManager: NSObject {
     /// The animation options when a menu is displayed. Ignored when displayed with a gesture.
     open var menuAnimationOptions: UIView.AnimationOptions = .curveEaseInOut
 
-    ///    Animation curve of the remaining animation when the menu is partially dismissed with gestures. Default is .easeIn.
-    open var menuAnimationCompletionCurve: UIView.AnimationCurve = .easeIn
+	///	Animation curve of the remaining animation when the menu is partially dismissed with gestures. Default is .easeIn.
+	open var menuAnimationCompletionCurve: UIView.AnimationCurve = .easeIn
     
     /// The animation spring damping when a menu is displayed. Ignored when displayed with a gesture.
     open var menuAnimationUsingSpringWithDamping: CGFloat = 1
@@ -140,6 +133,9 @@ open class SideMenuManager: NSObject {
     
     /// Forces menus to always animate when appearing or disappearing, regardless of a pushed view controller's animation.
     open var menuAlwaysAnimate = false
+	
+    /// Automatically dismisses the menu when app goes to the background.
+    open var menuDismissWhenBackgrounded = true
     
     /// Default instance of SideMenuManager.
     public static let `default` = SideMenuManager()

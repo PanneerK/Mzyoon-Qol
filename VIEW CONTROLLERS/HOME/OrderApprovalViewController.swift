@@ -427,6 +427,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
                     dummyImageView.dowloadFromServer(url: apiurl!)
                 }
                 dummyImageView.tag = -1
+                dummyImageView.contentMode = .scaleToFill
                 DressImageView.addSubview(dummyImageView)
             }
          DressDetView.addSubview(DressImageView)

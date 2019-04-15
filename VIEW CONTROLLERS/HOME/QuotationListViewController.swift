@@ -313,14 +313,15 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             tailorListScrollView.addSubview(tailorViewButton)
             
             let tailorImageView = UIImageView()
-            tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: tailorViewButton.frame.height)
+           // tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: tailorViewButton.frame.height)
+            //tailorImageView.backgroundColor = UIColor.white
+          
+            tailorImageView.frame = CGRect(x: x, y: y, width: (6 * y), height: (6 * y))
             tailorImageView.backgroundColor = UIColor.white
-          //  tailorImageView.layer.borderWidth = 1.0
-          //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
-            
-          //  tailorImageView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-           // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
-         
+            tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
+            tailorImageView.layer.borderWidth = 1
+            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+            tailorImageView.layer.masksToBounds = true
           
             if let imageName = ShopImageArray[i] as? String
             {

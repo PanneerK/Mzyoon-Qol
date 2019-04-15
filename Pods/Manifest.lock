@@ -1,19 +1,19 @@
 PODS:
   - AlamofireDomain (4.1)
   - Cosmos (18.0.1)
-  - GoogleMaps (2.7.0):
-    - GoogleMaps/Maps (= 2.7.0)
-  - GoogleMaps/Base (2.7.0)
-  - GoogleMaps/Maps (2.7.0):
+  - GoogleMaps (3.0.3):
+    - GoogleMaps/Maps (= 3.0.3)
+  - GoogleMaps/Base (3.0.3)
+  - GoogleMaps/Maps (3.0.3):
     - GoogleMaps/Base
-  - GooglePlaces (2.7.0):
-    - GoogleMaps/Base (= 2.7.0)
-  - NVActivityIndicatorView (4.4.0):
-    - NVActivityIndicatorView/Presenter (= 4.4.0)
-  - NVActivityIndicatorView/Presenter (4.4.0)
-  - ReachabilitySwift (4.3.0)
-  - SideMenu (5.0.1)
-  - SideMenuSwift (1.0.1)
+  - GooglePlaces (3.0.3):
+    - GoogleMaps/Base (= 3.0.3)
+  - NVActivityIndicatorView (4.7.0):
+    - NVActivityIndicatorView/Presenter (= 4.7.0)
+  - NVActivityIndicatorView/Presenter (4.7.0)
+  - ReachabilitySwift (4.3.1)
+  - SideMenu (5.0.3)
+  - SideMenuSwift (2.0.0)
 
 DEPENDENCIES:
   - AlamofireDomain
@@ -39,12 +39,12 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AlamofireDomain: 6a17c975e5fe8c10d8dbfdb1ab28e6dd0ae7cd41
   Cosmos: 7dfaa3f52584ca5f94ab74b5c2e264019cc9f7f5
-  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
-  GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
-  NVActivityIndicatorView: ec7440a57af2450319d3a4181cca7da6fc127064
-  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
-  SideMenu: 87efd943737bb83aedf0358884d09fcf5576636d
-  SideMenuSwift: a78d47182aa03b5c07570fe57d3ba22c4561f2ce
+  GoogleMaps: fd5c9fa58871781b9fb94d4936f19c69fe60ce32
+  GooglePlaces: f09e76993c9c3ee4af8f4f7f535bb94d6aa3b649
+  NVActivityIndicatorView: b19ddab2576f805cbe0fb2306cba3476e09a1dea
+  ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
+  SideMenu: 1dcaabce84538c53325c287f7fe62999379a641c
+  SideMenuSwift: 1bee5a0e54c6df7d8106f749b82567eae5c6d974
 
 PODFILE CHECKSUM: 3af7d2a91c4664fdd90e468252762a6d78ee1256
 
