@@ -10,6 +10,6 @@ target 'Mzyoon' do
   pod 'GooglePlaces'
   pod 'Cosmos', '~> 18.0'
   pod 'SideMenuSwift'
-
+  pod 'FSCalendar'
   
 end
