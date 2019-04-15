@@ -82,13 +82,10 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     {
         print("Tailor Id:",TailorID)
         
-         TailorID = 219
-        
         if(TailorID != nil)
         {
             self.serviceCall.API_GetRatings(TailorId:TailorID, delegate: self)
         }
-       
        
     }
     

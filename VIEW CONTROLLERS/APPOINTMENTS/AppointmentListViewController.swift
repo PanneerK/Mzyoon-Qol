@@ -281,15 +281,21 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             AppointmentViewButton.backgroundColor = UIColor.white
             AppointmentListScrollView.addSubview(AppointmentViewButton)
             
-          
-            //
+           //
             let DressImageView = UIImageView()
-            DressImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: AppointmentViewButton.frame.height)
-            DressImageView.backgroundColor = UIColor.white  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+           // DressImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: AppointmentViewButton.frame.height)
            // DressImageView.layer.borderWidth = 1.0
            // DressImageView.layer.borderColor = UIColor.lightGray.cgColor
             // DressImageView.setImage(UIImage(named: "men"), for: .normal)
-        
+            
+            DressImageView.frame = CGRect(x: x/2, y: (2 * y), width: (6 * y), height: (6 * y))
+            DressImageView.backgroundColor = UIColor.white
+            DressImageView.layer.cornerRadius = DressImageView.frame.height / 2
+            DressImageView.layer.borderWidth = 1
+            DressImageView.layer.borderColor = UIColor.lightGray.cgColor
+            DressImageView.layer.masksToBounds = true
+            
+            
            
             if let imageName = ImageArray[i] as? String
             {
@@ -311,7 +317,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             
             // Straight Line..
             let StraightLine = UILabel()
-            StraightLine.frame = CGRect(x: DressImageView.frame.maxX, y: 0, width: 0.3, height: AppointmentViewButton.frame.height)
+            StraightLine.frame = CGRect(x: DressImageView.frame.maxX + x/2, y: 0, width: 0.3, height: AppointmentViewButton.frame.height)
             StraightLine.backgroundColor = UIColor.lightGray
             AppointmentViewButton.addSubview(StraightLine)
             

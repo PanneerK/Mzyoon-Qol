@@ -299,12 +299,18 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             RequestListScrollView.addSubview(RequestViewButton)
             
             let tailorImageView = UIImageView()
-            tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: RequestViewButton.frame.height)
+          //  tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: RequestViewButton.frame.height)
           //  tailorImageView.layer.borderWidth = 1.0
           //  tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
-            tailorImageView.backgroundColor = UIColor.white  // UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+           // tailorImageView.backgroundColor = UIColor.white  // UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
+            tailorImageView.frame = CGRect(x: x/2, y: y/2, width: (6 * y), height: (6 * y))
+            tailorImageView.backgroundColor = UIColor.white
+            tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
+            tailorImageView.layer.borderWidth = 1
+            tailorImageView.layer.borderColor = UIColor.lightGray.cgColor
+            tailorImageView.layer.masksToBounds = true
         
             if let imageName = ProductImageArray[i] as? String
             {
@@ -321,6 +327,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                     dummyImageView.dowloadFromServer(url: apiurl!)
                 }
                 dummyImageView.tag = -1
+                dummyImageView.contentMode = .scaleToFill
                 tailorImageView.addSubview(dummyImageView)
             }
             RequestViewButton.addSubview(tailorImageView)
@@ -328,13 +335,13 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
            
             // Straight Line..
             let StraightLine = UILabel()
-            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX, y: 0, width: 0.3, height: RequestViewButton.frame.height)
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x/2 , y: 0, width: 0.3, height: RequestViewButton.frame.height)
             StraightLine.backgroundColor = UIColor.lightGray
             RequestViewButton.addSubview(StraightLine)
  
             //
             let orderId_Icon = UIImageView()
-            orderId_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y, width: x, height: y)
+            orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: y, width: x, height: y)
             orderId_Icon.image = UIImage(named: "OrderDate")
             RequestViewButton.addSubview(orderId_Icon)
             
@@ -364,7 +371,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let ProductName_Icon = UIImageView()
-            ProductName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
             ProductName_Icon.image = UIImage(named: "ProductName")
             RequestViewButton.addSubview(ProductName_Icon)
             
@@ -392,7 +399,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let Tailor_Icon = UIImageView()
-            Tailor_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
+            Tailor_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
             Tailor_Icon.image = UIImage(named: "OrderID")
             RequestViewButton.addSubview(Tailor_Icon)
             
