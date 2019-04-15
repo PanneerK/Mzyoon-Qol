@@ -76,6 +76,25 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             changeViewToEnglishInSelf()
             dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
         }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func DeviceError()
@@ -235,7 +254,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "نوع اللباس"
+        selfScreenNavigationTitle.text = "اختيار نوع اللباس"
         
         dressTypeScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         searchTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -247,7 +266,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "DRESS TYPE"
+        selfScreenNavigationTitle.text = "Dress Type Selection"
         
         dressTypeScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         searchTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -269,14 +288,16 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "DRESS TYPE"
+        selfScreenNavigationTitle.text = "Dress Type Selection"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        searchTextField.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: (4 * y))
+        pageBar.image = UIImage(named: "Dress typeBar")
+        
+        searchTextField.frame = CGRect(x: 0, y: pageBar.frame.maxY, width: view.frame.width, height: (4 * y))
         searchTextField.layer.borderWidth = 1
         searchTextField.layer.borderColor = UIColor.orange.cgColor
         searchTextField.placeholder = "Search"
@@ -361,6 +382,8 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             changeViewToEnglishInSelf()
             dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
         }
+        
+        pageContent(tag: 2)
     }
     
     @objc func searchButtonAction(sender : UIButton)

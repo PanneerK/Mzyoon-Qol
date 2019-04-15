@@ -57,6 +57,24 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     
     override func viewWillAppear(_ animated: Bool) {
         self.addMaterialContent()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -129,13 +147,15 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
+        pageBar.image = UIImage(named: "Measurement_wizard")
+        
         self.view.bringSubviewToFront(slideMenuButton)
         
-        addReferenceImage.frame = CGRect(x: 0, y: (3 * y), width: selfScreenContents.frame.width, height: (30 * y))
+        addReferenceImage.frame = CGRect(x: 0, y: (3 * y), width: selfScreenContents.frame.width, height: (27 * y))
         addReferenceImage.layer.borderWidth = 1
         addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
         addReferenceImage.backgroundColor = UIColor.white
@@ -151,7 +171,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
             addReferenceImage.addSubview(notifyLabel)
         }
         
-        addMaterialLabel.frame = CGRect(x: 0, y: addReferenceImage.frame.maxY + (2 * x), width: selfScreenContents.frame.width, height: (2 * y))
+        addMaterialLabel.frame = CGRect(x: 0, y: addReferenceImage.frame.maxY + y, width: selfScreenContents.frame.width, height: (2 * y))
         addMaterialLabel.text = "Add reference image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
@@ -196,6 +216,36 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         {
             changeViewToEnglishInSelf()
         }
+        
+        hintsViewContents()
+        hintsContents()
+    }
+    
+    func hintsContents()
+    {
+        let headingLabel = UILabel()
+        headingLabel.frame = CGRect(x: (2 * x), y: (5 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
+        headingLabel.text = "Own Material"
+        headingLabel.textAlignment = .left
+        headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        hintsView.addSubview(headingLabel)
+        
+        let hintsImage = UIImageView()
+        hintsImage.frame = CGRect(x: addMaterialButton.frame.minX + (3 * x), y: addMaterialButton.frame.minY + (11.5 * y), width: addMaterialButton.frame.width, height: addMaterialButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "addHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        let detailedLabel = UILabel()
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here to add new reference  image"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
     }
     
     func addMaterial(xPosition : CGFloat)

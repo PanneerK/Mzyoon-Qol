@@ -16,6 +16,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     //SCREEN CONTENTS PARAMETERS
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
+    let viewDetailsButton = UIButton()
     let customization2NextButton = UIButton()
     let selfScreenContents = UIView()
     let materialTitleLabel = UILabel()
@@ -46,6 +47,12 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     let patternSelectionImage = UIImageView()
     
+    //DETAILS VIEW PARAMETERS
+    let detailsView = UIImageView()
+    let detailViewBackButton = UIButton()
+    let detailViewNavigationBar = UIView()
+    let detailViewNavigationTitle = UILabel()
+
     // Error PAram...
     var DeviceNum:String!
     var UserType:String!
@@ -83,6 +90,24 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     override func viewWillAppear(_ animated: Bool)
     {
 //        self.customization2Content()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func serviceCallFunction(getMaterialId : [Int], getColorId : [Int])
@@ -317,7 +342,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "التخصيص-2"
+        selfScreenNavigationTitle.text = "اختيار المواد"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
@@ -327,13 +352,16 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         materialTitleLabel.text = "نوع المادة"
         colorTitleLabel.text = "اللون"
         patternTitleLabel.text = "نمط"
+        
+        viewDetailsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        viewDetailsButton.setTitle("عرض التفاصيل", for: .normal)
     }
     
     func changeViewToEnglishInSelf()
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "CUSTOMIZATION-2"
+        selfScreenNavigationTitle.text = "Material Selection"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
@@ -343,6 +371,9 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         materialTitleLabel.text = "MATERIAL TYPE"
         colorTitleLabel.text = "COLOR"
         patternTitleLabel.text = "PATTERN"
+        
+        viewDetailsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        viewDetailsButton.setTitle("View Details", for: .normal)
     }
     
     func customization2Content()
@@ -359,16 +390,18 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "CUSTOMIZATION-2"
+        selfScreenNavigationTitle.text = "Material Selection"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
+        
+        pageBar.image = UIImage(named: "MaterialBar")
         
         self.view.bringSubviewToFront(slideMenuButton)
         
@@ -415,6 +448,13 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             patternContent(getInputArray: patternsArrayInEnglish)
         }
         
+        viewDetailsButton.frame = CGRect(x: x, y: patternScrollView.frame.maxY, width: (15 * x), height: (4 * y))
+        viewDetailsButton.layer.cornerRadius = viewDetailsButton.frame.height / 2
+        viewDetailsButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        viewDetailsButton.setTitle("View Details", for: .normal)
+        viewDetailsButton.addTarget(self, action: #selector(self.viewDetailsButtonAction(sender:)), for: .touchUpInside)
+        selfScreenContents.addSubview(viewDetailsButton)
+        
         customization2NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))
         customization2NextButton.layer.cornerRadius = customization2NextButton.frame.height / 2
         customization2NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
@@ -441,9 +481,193 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
+    @objc func viewDetailsButtonAction(sender : UIButton)
+    {
+        if selectedPatternId != 0
+        {
+            detailsView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+            detailsView.backgroundColor = UIColor.gray
+            view.addSubview(detailsView)
+            
+            detailViewNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+            detailViewNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            detailsView.addSubview(detailViewNavigationBar)
+            
+            detailViewBackButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
+            detailViewBackButton.setImage(UIImage(named: "leftArrow"), for: .normal)
+            detailViewBackButton.addTarget(self, action: #selector(self.detailBackButtonAction), for: .touchUpInside)
+            detailViewBackButton.tag = 1
+            view.addSubview(detailViewBackButton)
+            
+            detailViewNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+            detailViewNavigationTitle.text = "VIEW DETAILS"
+            detailViewNavigationTitle.textColor = UIColor.white
+            detailViewNavigationTitle.textAlignment = .center
+            detailViewNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+            detailViewNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
+            detailViewNavigationBar.addSubview(detailViewNavigationTitle)
+            
+            let detailScrollView = UIScrollView()
+            detailScrollView.frame = CGRect(x: (2 * x), y: detailViewNavigationBar.frame.maxY + (2 * y), width: detailsView.frame.width - (4 * x), height: view.frame.height - (30 * y))
+            detailScrollView.backgroundColor = UIColor.cyan
+            detailScrollView.isPagingEnabled = true
+            detailsView.addSubview(detailScrollView)
+            
+            let leftButton = UIButton()
+            leftButton.frame = CGRect(x: 0, y: ((detailScrollView.frame.height - (3 * y)) / 2), width: (3 * x), height: (3 * y))
+            leftButton.setImage(UIImage(named: "closeMenu"), for: .normal)
+            leftButton.backgroundColor = UIColor.white
+            detailScrollView.addSubview(leftButton)
+            
+            let rightButton = UIButton()
+            rightButton.frame = CGRect(x: detailScrollView.frame.width - (3 * x), y: ((detailScrollView.frame.height - (3 * y)) / 2), width: (3 * x), height: (3 * y))
+            rightButton.setImage(UIImage(named: "openMenu"), for: .normal)
+            rightButton.backgroundColor = UIColor.white
+            detailScrollView.addSubview(rightButton)
+            
+            var x1:CGFloat = (2 * x)
+            var y1:CGFloat = detailScrollView.frame.maxY + y
+            
+            var headingString = ["MATERIAL", "Seasonal", "Place Of Industry", "Brands", "Material Type", "Color"]
+            
+            for i in 0..<6
+            {
+                let detailLabel = UILabel()
+                detailLabel.frame = CGRect(x: (2 * x), y: y1, width: (detailScrollView.frame.width / 2), height: (3 * y))
+                detailLabel.text = headingString[i]
+                detailLabel.textAlignment = .center
+                detailsView.addSubview(detailLabel)
+                
+                let getDetailLabel = UITextView()
+                getDetailLabel.frame = CGRect(x: detailLabel.frame.maxX + 1, y: y1, width: (detailScrollView.frame.width / 2), height: (3 * y))
+                
+                if i == 0
+                {
+                    if let strings = UserDefaults.standard.value(forKey: "pattern") as? String
+                    {
+                        getDetailLabel.text = strings
+                    }
+                }
+                else if i == 1
+                {
+                    if let strings = UserDefaults.standard.value(forKey: "season") as? [String]
+                    {
+                        var appendString = String()
+                        for i in 0..<strings.count
+                        {
+                            appendString.append(strings[i])
+                        }
+                        getDetailLabel.text = appendString
+                    }
+                }
+                else if i == 2
+                {
+                    if let strings = UserDefaults.standard.value(forKey: "industry") as? [String]
+                    {
+                        var appendString = String()
+                        for i in 0..<strings.count
+                        {
+                            appendString.append(strings[i])
+                        }
+                        getDetailLabel.text = appendString
+                    }
+                }
+                else if i == 3
+                {
+                    if let strings = UserDefaults.standard.value(forKey: "brand") as? [String]
+                    {
+                        var appendString = String()
+                        for i in 0..<strings.count
+                        {
+                            appendString.append(strings[i])
+                        }
+                        getDetailLabel.text = appendString
+                    }
+                }
+                else if i == 4
+                {
+                    if let strings = UserDefaults.standard.value(forKey: "material") as? [String]
+                    {
+                        var appendString = String()
+                        for i in 0..<strings.count
+                        {
+                            appendString.append(strings[i])
+                        }
+                        getDetailLabel.text = appendString
+                    }
+                }
+                else if i == 5
+                {
+                    if let strings = UserDefaults.standard.value(forKey: "color") as? [String]
+                    {
+                        var appendString = String()
+                        for i in 0..<strings.count
+                        {
+                            appendString.append(strings[i])
+                        }
+                        getDetailLabel.text = appendString
+                    }
+                }
+                
+                getDetailLabel.isEditable = false
+                getDetailLabel.textAlignment = .center
+                detailsView.addSubview(getDetailLabel)
+                
+                if i == 0
+                {
+                    detailLabel.backgroundColor = UIColor.blue
+                    getDetailLabel.backgroundColor = UIColor.blue
+                    
+                    detailLabel.textColor = UIColor.white
+                    getDetailLabel.textColor = UIColor.white
+                }
+                else
+                {
+                    detailLabel.backgroundColor = UIColor.white
+                    getDetailLabel.backgroundColor = UIColor.white
+                    
+                    detailLabel.textColor = UIColor.black
+                    getDetailLabel.textColor = UIColor.black
+                }
+                
+                y1 = detailLabel.frame.maxY + 1
+            }
+        }
+        else
+        {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Please select a pattern and then view details", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let alert = UIAlertController(title: "تنبيه", message: "يرجى اختيار نمط وعرض التفاصيل", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Please select a pattern and then view details", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @objc func detailBackButtonAction()
+    {
+        detailsView.removeFromSuperview()
+        detailViewBackButton.removeFromSuperview()
+    }
+    
     func materialContent(getInputArray: NSArray)
     {
-        materialTitleLabel.frame = CGRect(x: ((view.frame.width - (15 * x)) / 2), y: y, width: (15 * x), height: (3 * y))
+        materialTitleLabel.frame = CGRect(x: ((selfScreenContents.frame.width - (15 * x)) / 2), y: y, width: (15 * x), height: (3 * y))
         materialTitleLabel.layer.borderWidth = 1
         materialTitleLabel.layer.masksToBounds = true
         materialTitleLabel.text = "MATERIAL TYPE"
@@ -452,7 +676,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         materialTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         selfScreenContents.addSubview(materialTitleLabel)
         
-        materialScrollView.frame = CGRect(x: 0, y: materialTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
+        materialScrollView.frame = CGRect(x: 0, y: materialTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
         selfScreenContents.addSubview(materialScrollView)
         
         let buttonTitleText = ["All Material Type", "Fabric", "Synthetic", "Coton"]
@@ -463,7 +687,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         for i in 0..<getInputArray.count
         {
             let materialButton = UIButton()
-            materialButton.frame = CGRect(x: x1, y: y, width: (12 * x), height: (10 * y))
+            materialButton.frame = CGRect(x: x1, y: y / 2, width: (12 * x), height: (10 * y))
             //            materialButton.setImage(UIImage(named: "genderBackground"), for: .normal)
             materialButton.tag = materialsIdArray[i] as! Int
             materialButton.addTarget(self, action: #selector(self.materialButtonAction), for: .touchUpInside)
@@ -521,7 +745,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     func colorContent(getInputArray: NSArray)
     {
-        colorTitleLabel.frame = CGRect(x: ((view.frame.width - (8 * x)) / 2), y: materialScrollView.frame.maxY + (2 * y), width: (8 * x), height: (3 * y))
+        colorTitleLabel.frame = CGRect(x: ((selfScreenContents.frame.width - (8 * x)) / 2), y: materialScrollView.frame.maxY + y, width: (8 * x), height: (3 * y))
         colorTitleLabel.layer.borderWidth = 1
         colorTitleLabel.layer.masksToBounds = true
         colorTitleLabel.backgroundColor = UIColor.white
@@ -531,7 +755,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         colorTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         selfScreenContents.addSubview(colorTitleLabel)
         
-        colorScrollView.frame = CGRect(x: 0, y: colorTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
+        colorScrollView.frame = CGRect(x: 0, y: colorTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
         selfScreenContents.addSubview(colorScrollView)
         
         for views in colorScrollView.subviews
@@ -545,7 +769,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         for i in 0..<getInputArray.count
         {
             let colorButton = UIButton()
-            colorButton.frame = CGRect(x: x2, y: y, width: (12 * x), height: (10 * y))
+            colorButton.frame = CGRect(x: x2, y: y / 2, width: (12 * x), height: (10 * y))
             //            colorButton.setImage(UIImage(named: "genderBackground"), for: .normal)
             colorButton.tag = colorsIdArray[i] as! Int
             colorButton.addTarget(self, action: #selector(self.colorButtonAction), for: .touchUpInside)
@@ -617,7 +841,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     func patternContent(getInputArray: NSArray)
     {
-        patternTitleLabel.frame = CGRect(x: ((view.frame.width - (10 * x)) / 2), y: colorScrollView.frame.maxY + (2 * y), width: (10 * x), height: (3 * y))
+        patternTitleLabel.frame = CGRect(x: ((selfScreenContents.frame.width - (10 * x)) / 2), y: colorScrollView.frame.maxY + y, width: (10 * x), height: (3 * y))
         patternTitleLabel.layer.borderWidth = 1
         patternTitleLabel.layer.masksToBounds = true
         patternTitleLabel.backgroundColor = UIColor.white
@@ -627,7 +851,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         patternTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         selfScreenContents.addSubview(patternTitleLabel)
         
-        patternScrollView.frame = CGRect(x: 0, y: patternTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
+        patternScrollView.frame = CGRect(x: 0, y: patternTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
         selfScreenContents.addSubview(patternScrollView)
         
         for views in patternScrollView.subviews
@@ -642,7 +866,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         for i in 0..<getInputArray.count
         {
             let patternButton = UIButton()
-            patternButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
+            patternButton.frame = CGRect(x: x3, y: y / 2, width: (12 * x), height: (10 * y))
             //            patternButton.setImage(UIImage(named: "genderBackground"), for: .normal)
             patternButton.tag = patternsIdArray[i] as! Int
             patternButton.addTarget(self, action: #selector(self.patternButtonAction), for: .touchUpInside)
@@ -816,6 +1040,64 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
             self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
         }
         
+        var selectedMaterialNameArray = [String]()
+        if materialTagIntArray.count != 0
+        {
+            if materialTagIntArray.contains(1)
+            {
+                selectedMaterialNameArray.append("All Material")
+            }
+            else
+            {
+                for i in 0..<materialsIdArray.count
+                {
+                    for j in 0..<materialTagIntArray.count
+                    {
+                        if let id = materialsIdArray[i] as? Int
+                        {
+                            if id == materialTagIntArray[j]
+                            {
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedMaterialNameArray.append(materialsArrayInArabic[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            UserDefaults.standard.set(selectedMaterialNameArray, forKey: "material")
+        }
+        else
+        {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("All Material", forKey: "material")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("مواد الكل", forKey: "material")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("All Material", forKey: "material")
+            }
+        }
     }
     /*{
         updatingId = 1
@@ -1058,6 +1340,66 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         {
             self.serviceCallFunction(getMaterialId: materialTagIntArray, getColorId: colorTagIntArray)
         }
+        
+        var selectedColorNameArray = [String]()
+        if colorTagIntArray.count != 0
+        {
+            if colorTagIntArray.contains(1)
+            {
+                selectedColorNameArray.append("All Colors")
+            }
+            else
+            {
+                for i in 0..<colorsIdArray.count
+                {
+                    for j in 0..<colorTagIntArray.count
+                    {
+                        if let id = colorsIdArray[i] as? Int
+                        {
+                            if id == colorTagIntArray[j]
+                            {
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedColorNameArray.append(colorsArrayInArabic[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
+            UserDefaults.standard.set(selectedColorNameArray, forKey: "color")
+        }
+        else
+        {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    UserDefaults.standard.set("All Colors", forKey: "color")
+                }
+                else if language == "ar"
+                {
+                    UserDefaults.standard.set("جميع الالوان", forKey: "color")
+                }
+            }
+            else
+            {
+                UserDefaults.standard.set("All Colors", forKey: "color")
+            }
+        }
     }
     /*{
         updatingId = 2
@@ -1242,131 +1584,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
          sender.addSubview(patternSelectionImage)
          }
          }*/
-    }
-    
-    @objc func customization2NextButtonAction(sender : UIButton)
-    {
-        var selectedMaterialNameArray = [String]()
-        var selectedColorNameArray = [String]()
+        
         var selectedPatternNameArray = String()
-        
-        if materialTagIntArray.count != 0
-        {
-            if materialTagIntArray.contains(1)
-            {
-                selectedMaterialNameArray.append("All Material")
-            }
-            else
-            {
-                for i in 0..<materialsIdArray.count
-                {
-                    for j in 0..<materialTagIntArray.count
-                    {
-                        if let id = materialsIdArray[i] as? Int
-                        {
-                            if id == materialTagIntArray[j]
-                            {
-                                if let language = UserDefaults.standard.value(forKey: "language") as? String
-                                {
-                                    if language == "en"
-                                    {
-                                        selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
-                                    }
-                                    else if language == "ar"
-                                    {
-                                        selectedMaterialNameArray.append(materialsArrayInArabic[i] as! String)
-                                    }
-                                }
-                                else
-                                {
-                                    selectedMaterialNameArray.append(materialsArrayInEnglish[i] as! String)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            UserDefaults.standard.set(selectedMaterialNameArray, forKey: "material")
-        }
-        else
-        {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    UserDefaults.standard.set("All Material", forKey: "material")
-                }
-                else if language == "ar"
-                {
-                    UserDefaults.standard.set("مواد الكل", forKey: "material")
-                }
-            }
-            else
-            {
-                UserDefaults.standard.set("All Material", forKey: "material")
-            }
-        }
-        
-        if colorTagIntArray.count != 0
-        {
-            if colorTagIntArray.contains(1)
-            {
-                selectedColorNameArray.append("All Colors")
-            }
-            else
-            {
-                for i in 0..<colorsIdArray.count
-                {
-                    for j in 0..<colorTagIntArray.count
-                    {
-                        if let id = colorsIdArray[i] as? Int
-                        {
-                            if id == colorTagIntArray[j]
-                            {
-                                if let language = UserDefaults.standard.value(forKey: "language") as? String
-                                {
-                                    if language == "en"
-                                    {
-                                        selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
-                                    }
-                                    else if language == "ar"
-                                    {
-                                        selectedColorNameArray.append(colorsArrayInArabic[i] as! String)
-                                    }
-                                }
-                                else
-                                {
-                                    selectedColorNameArray.append(colorsArrayInEnglish[i] as! String)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            
-            
-            UserDefaults.standard.set(selectedColorNameArray, forKey: "color")
-        }
-        else
-        {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    UserDefaults.standard.set("All Colors", forKey: "color")
-                }
-                else if language == "ar"
-                {
-                    UserDefaults.standard.set("جميع الالوان", forKey: "color")
-                }
-            }
-            else
-            {
-                UserDefaults.standard.set("All Colors", forKey: "color")
-            }
-        }
-        
         if selectedPatternId != 0
         {
             for i in 0..<patternsIdArray.count
@@ -1414,7 +1633,10 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
                 UserDefaults.standard.set(patternsArrayInEnglish[0], forKey: "pattern")
             }
         }
-        
+    }
+    
+    @objc func customization2NextButtonAction(sender : UIButton)
+    {
         if selectedPatternId != 0
         {
             UserDefaults.standard.set(selectedPatternId, forKey: "patternId")

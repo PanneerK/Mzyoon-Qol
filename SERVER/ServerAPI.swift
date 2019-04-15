@@ -13,13 +13,13 @@ import Reachability
 
 class ServerAPI : NSObject
 {
-    
     var delegate: ServerAPIDelegate?
     
     var resultDict:NSDictionary = NSDictionary()
     
+
     //    var baseURL:String = "http://192.168.0.26/TailorAPI"
-    
+   
           var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor

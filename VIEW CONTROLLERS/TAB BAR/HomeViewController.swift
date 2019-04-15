@@ -21,6 +21,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     var yPos:CGFloat!
     
     var imageName = NSArray()
+    
+    let blurView = UIView()
         
     var applicationDelegate = AppDelegate()
     
@@ -230,6 +232,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     
     func checkContent()
     {
+        pageBar.isHidden = true
+        
         let buttonTitleText = ["NEW ORDER", "BOOK AN APPOINTMENT", "STORE", "REFER AND EARN"]
         let imageName = ["new_order", "appointment", "store", "refer-&-earn"]
         var y1:CGFloat = (10 * yPos)
@@ -263,6 +267,28 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 5)
             selectionButton.addSubview(buttonTitle)
+        }
+        
+        blurView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        blurView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
+//        view.addSubview(blurView)
+        
+        var x2:CGFloat = 30
+        
+        let title = ["Back", "Skip", "Next"]
+        
+        for i in 0..<3
+        {
+            let button = UIButton()
+            button.frame = CGRect(x: x2, y: view.frame.height - 50, width: 100, height: 40)
+            button.backgroundColor = UIColor.blue
+            button.setTitle(title[i], for: .normal)
+            button.setTitleColor(UIColor.white, for: .normal)
+            button.tag = i
+            button.addTarget(self, action: #selector(self.hintsButtonAction(sender:)), for: .touchUpInside)
+            blurView.addSubview(button)
+            
+            x2 = button.frame.maxX + 10
         }
     }
     

@@ -86,6 +86,25 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         {
             self.newOrderContents(getInputArray: genderArray)
         }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func showActivityIndicator()
@@ -228,21 +247,25 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "GENDER"
+        selfScreenNavigationTitle.text = "Gender Selection"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
+        
+        pageContent(tag: 1)
     }
     
     func newOrderContents(getInputArray : NSArray)
     {
         selfScreenNavigationContents()
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
+        
+        pageBar.image = UIImage(named: "GenderBar")
         
         var x1:CGFloat = (3 * x)
         var y1:CGFloat =  (10.65 * y)
@@ -340,11 +363,11 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             
             if i == 0 || i == 2
             {
-                genderButton.frame = CGRect(x: selfScreenContents.frame.maxX, y: buttonYPos, width: selfScreenContents.frame.width, height: (12 * y))
+                genderButton.frame = CGRect(x: selfScreenContents.frame.maxX, y: buttonYPos, width: selfScreenContents.frame.width, height: (11 * y))
             }
             else
             {
-                genderButton.frame = CGRect(x: -(selfScreenContents.frame.width - (6 * x)), y: buttonYPos, width: selfScreenContents.frame.width, height: (12 * y))
+                genderButton.frame = CGRect(x: -(selfScreenContents.frame.width - (6 * x)), y: buttonYPos, width: selfScreenContents.frame.width, height: (11 * y))
             }
             
             genderButton.backgroundColor = UIColor.clear
@@ -452,7 +475,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "جنس"
+        selfScreenNavigationTitle.text = "اختيار الجنس"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }

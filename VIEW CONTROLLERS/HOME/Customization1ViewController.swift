@@ -102,6 +102,24 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     override func viewWillAppear(_ animated: Bool)
     {
 //        customization1Content()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func serviceCallFunction(originIdArray : [Int], seasonIdArray : [Int])
@@ -313,7 +331,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "التخصيص-1"
+        selfScreenNavigationTitle.text = "اختيار المواد"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
@@ -329,7 +347,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "CUSTOMIZATION-1"
+        selfScreenNavigationTitle.text = "Material Selection"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
@@ -355,16 +373,18 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "CUSTOMIZATION-1"
+        selfScreenNavigationTitle.text = "Material Selection"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
+        
+        pageBar.image = UIImage(named: "MaterialBar")
         
         self.view.bringSubviewToFront(slideMenuButton)
         
@@ -416,7 +436,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func seasonalContents(getInputArray : NSArray)
     {
-        seasonTitleLabel.frame = CGRect(x: ((view.frame.width - (12 * x)) / 2), y: y, width: (12 * x), height: (3 * y))
+        seasonTitleLabel.frame = CGRect(x: ((selfScreenContents.frame.width - (12 * x)) / 2), y: y, width: (12 * x), height: (3 * y))
         seasonTitleLabel.layer.borderWidth = 1
         seasonTitleLabel.layer.masksToBounds = true
         seasonTitleLabel.backgroundColor = UIColor.white
@@ -425,7 +445,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         seasonTitleLabel.textAlignment = .center
         selfScreenContents.addSubview(seasonTitleLabel)
         
-        seasonalScrollView.frame = CGRect(x: 0, y: seasonTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
+        seasonalScrollView.frame = CGRect(x: 0, y: seasonTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
         selfScreenContents.addSubview(seasonalScrollView)
         
         var x1:CGFloat = x
@@ -438,7 +458,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         for i in 0..<getInputArray.count
         {
             let seasonalButton = UIButton()
-            seasonalButton.frame = CGRect(x: x1, y: y, width: (12 * x), height: (10 * y))
+            seasonalButton.frame = CGRect(x: x1, y: y / 2, width: (12 * x), height: (10 * y))
             seasonalButton.tag = seasonalIdArray[i] as! Int
             seasonalButton.addTarget(self, action: #selector(self.seasonalButtonAction(sender:)), for: .touchUpInside)
             seasonalScrollView.addSubview(seasonalButton)
@@ -494,7 +514,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func industryContents(getInputArray : NSArray)
     {
-        industryTitleLabel.frame = CGRect(x: ((view.frame.width - (20 * x)) / 2), y: seasonalScrollView.frame.maxY + (2 * y), width: (20 * x), height: (3 * y))
+        industryTitleLabel.frame = CGRect(x: ((selfScreenContents.frame.width - (20 * x)) / 2), y: seasonalScrollView.frame.maxY + y, width: (20 * x), height: (3 * y))
         industryTitleLabel.layer.borderWidth = 1
         industryTitleLabel.layer.masksToBounds = true
         industryTitleLabel.backgroundColor = UIColor.white
@@ -503,7 +523,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         industryTitleLabel.textAlignment = .center
         selfScreenContents.addSubview(industryTitleLabel)
         
-        industryScrollView.frame = CGRect(x: 0, y: industryTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
+        industryScrollView.frame = CGRect(x: 0, y: industryTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
         selfScreenContents.addSubview(industryScrollView)
         
         for views in industryScrollView.subviews
@@ -515,7 +535,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         for i in 0..<getInputArray.count
         {
             let industryButton = UIButton()
-            industryButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
+            industryButton.frame = CGRect(x: x3, y: y / 2, width: (12 * x), height: (10 * y))
             industryButton.tag = industryIdArray[i] as! Int
             industryButton.addTarget(self, action: #selector(self.industryButtonAction(sender:)), for: .touchUpInside)
             industryScrollView.addSubview(industryButton)
@@ -570,7 +590,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func brandContents(getInputArray : NSArray)
     {
-        brandTitleLabel.frame = CGRect(x: ((view.frame.width - (13 * x)) / 2), y: industryScrollView.frame.maxY + (2 * y), width: (13 * x), height: (3 * y))
+        brandTitleLabel.frame = CGRect(x: ((selfScreenContents.frame.width - (13 * x)) / 2), y: industryScrollView.frame.maxY + y, width: (13 * x), height: (3 * y))
         brandTitleLabel.layer.borderWidth = 1
         brandTitleLabel.layer.masksToBounds = true
         brandTitleLabel.backgroundColor = UIColor.white
@@ -579,7 +599,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         brandTitleLabel.textAlignment = .center
         selfScreenContents.addSubview(brandTitleLabel)
         
-        brandScrollView.frame = CGRect(x: 0, y: brandTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (12 * y))
+        brandScrollView.frame = CGRect(x: 0, y: brandTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
         selfScreenContents.addSubview(brandScrollView)
         
         for views in brandScrollView.subviews
@@ -591,7 +611,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         for i in 0..<getInputArray.count
         {
             let brandButton = UIButton()
-            brandButton.frame = CGRect(x: x2, y: y, width: (12 * x), height: (10 * y))
+            brandButton.frame = CGRect(x: x2, y: y / 2, width: (12 * x), height: (10 * y))
             brandButton.tag = brandIdArray[i] as! Int
             brandButton.addTarget(self, action: #selector(self.brandButtonAction(sender:)), for: .touchUpInside)
             brandScrollView.addSubview(brandButton)

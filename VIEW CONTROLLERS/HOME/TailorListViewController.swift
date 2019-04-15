@@ -93,6 +93,11 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     //LOCATION PARAMETERS
     var coordinate1 = CLLocation()
     var coordinate2 = CLLocation()
+    
+    //HINTS PARAMETERS
+    var hintTag = 0
+    let hintsImage = UIImageView()
+    let detailedLabel = UILabel()
 
     var applicationDelegate = AppDelegate()
     
@@ -115,6 +120,25 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     {
          navigationBar.isHidden = true
 //         fetchingCurrentLocation()
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
         
     }
     override func viewDidAppear(_ animated: Bool)
@@ -474,11 +498,13 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: 0, y: pageBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        listViewButton.frame = CGRect(x: 0, y: 0, width: ((view.frame.width / 2) - 1), height: 50)
+        pageBar.image = UIImage(named: "tailorlistBar")
+        
+        listViewButton.frame = CGRect(x: 0, y: 0, width: ((view.frame.width / 2) - 1), height: (5 * y))
         listViewButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         listViewButton.setTitle("LIST VIEW", for: .normal)
         listViewButton.setTitleColor(UIColor.white, for: .normal)
@@ -486,7 +512,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         listViewButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(listViewButton)
         
-        mapViewButton.frame = CGRect(x: listViewButton.frame.maxX + 1, y: 0, width: view.frame.width / 2, height: 50)
+        mapViewButton.frame = CGRect(x: listViewButton.frame.maxX + 1, y: 0, width: view.frame.width / 2, height: (5 * y))
         mapViewButton.backgroundColor = UIColor.lightGray
         mapViewButton.setTitle("MAP VIEW", for: .normal)
         mapViewButton.setTitleColor(UIColor.black, for: .normal)
@@ -514,6 +540,248 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         mapViewButton.setTitleColor(UIColor.black, for: .normal)
         listViewContents(isHidden: false)
         mapViewContents(isHidden: true)
+        
+        hintsViewContents()
+        hintsContents()
+    }
+    
+    func hintsContents()
+    {
+        self.gotItButton.removeFromSuperview()
+        
+        let headingLabel = UILabel()
+        headingLabel.frame = CGRect(x: (2 * x), y: (5 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
+        headingLabel.text = "Measurements"
+        headingLabel.textAlignment = .left
+        headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        hintsView.addSubview(headingLabel)
+        
+        var x1:CGFloat = x
+        
+        let title = ["Back", "Skip", "Next"]
+        
+        for i in 0..<3
+        {
+            let threeButtons = UIButton()
+            threeButtons.frame = CGRect(x: x1, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+            threeButtons.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+            threeButtons.setTitle(title[i], for: .normal)
+            threeButtons.setTitleColor(UIColor.white, for: .normal)
+            threeButtons.tag = i
+            threeButtons.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+            hintsView.addSubview(threeButtons)
+            
+            x1 = threeButtons.frame.maxX + x
+        }
+        
+        firstHint()
+    }
+    
+    @objc func threeButtonAction(sender : UIButton)
+    {
+        print("HINT TAG", hintTag)
+        
+        if sender.tag == 0
+        {
+            if hintTag != 0
+            {
+                hintTag = hintTag - 1
+            }
+            
+            if hintTag == 0
+            {
+                firstHint()
+            }
+            else if hintTag == 1
+            {
+                secondHint()
+            }
+            else if hintTag == 2
+            {
+                thirdHint()
+            }
+            else if hintTag == 3
+            {
+                fourthHint()
+            }
+            else if hintTag == 4
+            {
+                fifthHint()
+            }
+            else if hintTag == 5
+            {
+                sixthHint()
+            }
+            else if hintTag == 6
+            {
+                seventhHint()
+            }
+        }
+        else if sender.tag == 1
+        {
+            hintsView.removeFromSuperview()
+        }
+        else if sender.tag == 2
+        {
+            if hintTag < 7
+            {
+                hintTag = hintTag + 1
+            }
+            
+            if hintTag == 0
+            {
+                firstHint()
+            }
+            else if hintTag == 1
+            {
+                secondHint()
+            }
+            else if hintTag == 2
+            {
+                thirdHint()
+            }
+            else if hintTag == 3
+            {
+                fourthHint()
+            }
+            else if hintTag == 4
+            {
+                fifthHint()
+            }
+            else if hintTag == 5
+            {
+                sixthHint()
+            }
+            else if hintTag == 6
+            {
+                seventhHint()
+            }
+            else
+            {
+                hintTag = 0
+                hintsView.removeFromSuperview()
+            }
+        }
+    }
+    
+    func firstHint()
+    {
+        hintsImage.frame = CGRect(x: listViewButton.frame.minX, y: listViewButton.frame.minY + (11.25 * y), width: listViewButton.frame.width, height: listViewButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "tailorListHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here view the list of tailors"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func secondHint()
+    {
+        hintsImage.frame = CGRect(x: mapViewButton.frame.minX, y: mapViewButton.frame.minY + (11.25 * y), width: mapViewButton.frame.width, height: mapViewButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "mapHintsImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here to view the tailors around you in map"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func thirdHint()
+    {
+        hintsImage.frame = CGRect(x: totalTailersSelectedCountLabel.frame.minX + (2 * x), y: totalTailersSelectedCountLabel.frame.minY + (16 * y), width: mapViewButton.frame.width, height: mapViewButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "totalNoHintsImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: x, y: hintsImage.frame.maxY + (2 * y), width: hintsView.frame.width - (2 * x), height: (3 * x))
+        detailedLabel.text = "Here you can see the number of tailors selected based on you selection"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func fourthHint()
+    {
+        hintsImage.frame = CGRect(x: (4 * x), y: sortButton.frame.maxY + (19.5 * y), width: (8 * x), height: (8 * y))
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "tailorSelectHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here to select/ Unselect the tailor."
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func fifthHint()
+    {
+        hintsImage.frame = CGRect(x: (13 * x), y: sortButton.frame.maxY + (20 * y), width: (20 * x), height: (3 * y))
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "shopNameHintsImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here to view the shop details of the tailor"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func sixthHint()
+    {
+        hintsImage.frame = CGRect(x: hintsView.frame.width - (8 * x), y: sortButton.frame.maxY + (23.2 * y), width: (5 * x), height: (5 * y))
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "directionHintsImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here to see the distance from you and the tailor in map view"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func seventhHint()
+    {
+        hintsImage.frame = CGRect(x: (10 * x), y: view.frame.height - (9.25 * y), width: confirmSelectionButton.frame.width, height: (3 * y))
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "confirmSelectionHintsImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (7 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here to confirm your selection."
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -544,7 +812,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func listViewContents(isHidden : Bool)
     {
-        backDrop.frame = CGRect(x: (3 * x), y: listViewButton.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (18 * y))
+        backDrop.frame = CGRect(x: (3 * x), y: listViewButton.frame.maxY + y, width: view.frame.width - (6 * x), height: selfScreenContents.frame.height - (7 * y))
         backDrop.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(backDrop)
         
@@ -615,7 +883,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         tailorListTableView.reloadData()
         
-        tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (35 * y))
+        tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (30 * y))
         backDrop.addSubview(tailorListScrollView)
         
         tailorListScrollView.contentSize.height = (12 * y * CGFloat(IdArray.count))
@@ -848,7 +1116,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             let locationButton = UIButton()
             locationButton.frame = CGRect(x: tailorView.frame.width - (5 * x), y: tailorView.frame.height - (5 * y), width: (5 * x), height: (5 * y))
             //            locationButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            locationButton.layer.borderWidth = 1
+//            locationButton.layer.borderWidth = 1
             locationButton.layer.borderColor = UIColor.lightGray.cgColor
             locationButton.setImage(UIImage(named: "locationMarker"), for: .normal)
             locationButton.tag = IdArray[i] as! Int

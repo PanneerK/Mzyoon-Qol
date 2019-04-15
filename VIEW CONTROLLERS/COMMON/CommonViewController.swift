@@ -50,6 +50,21 @@ class CommonViewController: UIViewController
     var activeView = UIView()
     var activityView = UIActivityIndicatorView()
     
+    let pageBar = UIImageView()
+    let button1 = UIButton()
+    let button2 = UIButton()
+    let button3 = UIButton()
+    let button4 = UIButton()
+    let button5 = UIButton()
+    let button6 = UIButton()
+    let button7 = UIButton()
+    let button8 = UIButton()
+    let button9 = UIButton()
+    
+    let hintsView = UIView()
+    let gotItButton = UIButton()
+
+    
 //    let slideScreen = SlideViewController()
 //    let selfScreen = CommonViewController()
     
@@ -196,6 +211,99 @@ class CommonViewController: UIViewController
         //        notificationButton.addTarget(self, action: #selector(self.selectionButtonAction(sender:)), for: .touchUpInside)
 //        navigationBar.addSubview(notificationButton)
         
+        pageBar.frame = CGRect(x: 0, y: navigationBar.frame.maxY, width: view.frame.width, height: (5 * y))
+        pageBar.backgroundColor = UIColor.clear
+        view.addSubview(pageBar)
+        
+        /*button1.frame = CGRect(x: 0, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button1.layer.borderWidth = 1
+        button1.layer.borderColor = UIColor.white.cgColor
+        button1.backgroundColor = UIColor.orange
+        button1.setTitle("\(1)", for: .normal)
+        button1.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button1)
+        
+        button2.frame = CGRect(x: button1.frame.maxX, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button2.layer.borderWidth = 1
+        button2.layer.borderColor = UIColor.white.cgColor
+        button2.backgroundColor = UIColor.orange
+        button2.setTitle("\(2)", for: .normal)
+        button2.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button2)
+        
+        button3.frame = CGRect(x: button2.frame.maxX, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button3.layer.borderWidth = 1
+        button3.layer.borderColor = UIColor.white.cgColor
+        button3.backgroundColor = UIColor.orange
+        button3.setTitle("\(3)", for: .normal)
+        button3.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button3)
+        
+        button4.frame = CGRect(x: button3.frame.maxX, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button4.layer.borderWidth = 1
+        button4.layer.borderColor = UIColor.white.cgColor
+        button4.backgroundColor = UIColor.orange
+        button4.setTitle("\(4)", for: .normal)
+        button4.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button4)
+        
+        button5.frame = CGRect(x: button4.frame.maxX, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button5.layer.borderWidth = 1
+        button5.layer.borderColor = UIColor.white.cgColor
+        button5.backgroundColor = UIColor.orange
+        button5.setTitle("\(5)", for: .normal)
+        button5.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button5)
+        
+        button6.frame = CGRect(x: button5.frame.maxX, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button6.layer.borderWidth = 1
+        button6.layer.borderColor = UIColor.white.cgColor
+        button6.backgroundColor = UIColor.orange
+        button6.setTitle("\(6)", for: .normal)
+        button6.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button6)
+        
+        button7.frame = CGRect(x: button6.frame.maxX, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button7.layer.borderWidth = 1
+        button7.layer.borderColor = UIColor.white.cgColor
+        button7.backgroundColor = UIColor.orange
+        button7.setTitle("\(7)", for: .normal)
+        button7.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button7)
+        
+        button8.frame = CGRect(x: button7.frame.maxX, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button8.layer.borderWidth = 1
+        button8.layer.borderColor = UIColor.white.cgColor
+        button8.backgroundColor = UIColor.orange
+        button8.setTitle("\(8)", for: .normal)
+        button8.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button8)
+        
+        button9.frame = CGRect(x: button8.frame.maxX, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+        button9.layer.borderWidth = 1
+        button9.layer.borderColor = UIColor.white.cgColor
+        button9.backgroundColor = UIColor.orange
+        button9.setTitle("\(9)", for: .normal)
+        button9.setTitleColor(UIColor.white, for: .normal)
+        pageBar.addSubview(button9)*/
+        
+        /*var x1:CGFloat = 0
+        
+        for i in 0..<9
+        {
+            let button = UIButton()
+            button.frame = CGRect(x: x1, y: 0, width: pageBar.frame.width / 9, height: (3 * y))
+            button.layer.borderWidth = 1
+            button.layer.borderColor = UIColor.white.cgColor
+            button.backgroundColor = UIColor.clear
+            button.setTitle("\(i + 1)", for: .normal)
+            button.setTitleColor(UIColor.white, for: .normal)
+            button.tag = (i * 1) + 1000
+            pageBar.addSubview(button)
+            
+            x1 = button.frame.maxX
+        }*/
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -263,7 +371,6 @@ class CommonViewController: UIViewController
         tab4ImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         tab4Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         tab4Text.text = "كارة"
-
     }
     
     func tabContents()
@@ -623,6 +730,101 @@ class CommonViewController: UIViewController
             
             tab4ImageView.tintColor = UIColor.orange
         }
+    }
+    
+    func pageContent(tag : Int)
+    {
+        if tag == 1
+        {
+            button1.backgroundColor = UIColor.blue
+        }
+        else if tag == 2
+        {
+            button1.backgroundColor = UIColor.blue
+            button2.backgroundColor = UIColor.blue
+        }
+        else if tag == 3
+        {
+            button1.backgroundColor = UIColor.blue
+            button2.backgroundColor = UIColor.blue
+            button3.backgroundColor = UIColor.blue
+        }
+        else if tag == 4
+        {
+            button1.backgroundColor = UIColor.blue
+            button2.backgroundColor = UIColor.blue
+            button3.backgroundColor = UIColor.blue
+            button4.backgroundColor = UIColor.blue
+        }
+        else if tag == 5
+        {
+            button1.backgroundColor = UIColor.blue
+            button2.backgroundColor = UIColor.blue
+            button3.backgroundColor = UIColor.blue
+            button4.backgroundColor = UIColor.blue
+            button5.backgroundColor = UIColor.blue
+        }
+        else if tag == 6
+        {
+            button1.backgroundColor = UIColor.blue
+            button2.backgroundColor = UIColor.blue
+            button3.backgroundColor = UIColor.blue
+            button4.backgroundColor = UIColor.blue
+            button5.backgroundColor = UIColor.blue
+            button6.backgroundColor = UIColor.blue
+        }
+        else if tag == 7
+        {
+            button1.backgroundColor = UIColor.blue
+            button2.backgroundColor = UIColor.blue
+            button3.backgroundColor = UIColor.blue
+            button4.backgroundColor = UIColor.blue
+            button5.backgroundColor = UIColor.blue
+            button6.backgroundColor = UIColor.blue
+            button7.backgroundColor = UIColor.blue
+        }
+        else if tag == 8
+        {
+            button1.backgroundColor = UIColor.blue
+            button2.backgroundColor = UIColor.blue
+            button3.backgroundColor = UIColor.blue
+            button4.backgroundColor = UIColor.blue
+            button5.backgroundColor = UIColor.blue
+            button6.backgroundColor = UIColor.blue
+            button7.backgroundColor = UIColor.blue
+            button8.backgroundColor = UIColor.blue
+        }
+        else if tag == 9
+        {
+            button1.backgroundColor = UIColor.blue
+            button2.backgroundColor = UIColor.blue
+            button3.backgroundColor = UIColor.blue
+            button4.backgroundColor = UIColor.blue
+            button5.backgroundColor = UIColor.blue
+            button6.backgroundColor = UIColor.blue
+            button7.backgroundColor = UIColor.blue
+            button8.backgroundColor = UIColor.blue
+            button9.backgroundColor = UIColor.blue
+        }
+    }
+    
+    func hintsViewContents()
+    {
+        hintsView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        hintsView.backgroundColor = UIColor.black.withAlphaComponent(0.85)
+        view.addSubview(hintsView)
+        
+        gotItButton.frame = CGRect(x: hintsView.frame.width - (12 * x), y: hintsView.frame.height - (6 * y), width: (10 * x), height: (4 * y))
+        gotItButton.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        gotItButton.setTitle("Got it", for: .normal)
+        gotItButton.setTitleColor(UIColor.white, for: .normal)
+        gotItButton.addTarget(self, action: #selector(self.hintsButtonAction(sender:)), for: .touchUpInside)
+        hintsView.addSubview(gotItButton)
+    }
+    
+    @objc func hintsButtonAction(sender : UIButton)
+    {
+        hintsView.removeFromSuperview()
     }
     
     

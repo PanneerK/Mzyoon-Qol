@@ -101,6 +101,27 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
+    }
+    
     func API_CALLBACK_Customization3(custom3: NSDictionary)
     {
         let ResponseMsg = custom3.object(forKey: "ResponseMsg") as! String
@@ -309,7 +330,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        orderSummaryScrollView.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
+        pageBar.image = UIImage(named: "SummaryBar")
+
+        orderSummaryScrollView.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + pageBar.frame.height + tabBar.frame.height + (2 * y)))
         orderSummaryScrollView.backgroundColor = UIColor.clear
         view.addSubview(orderSummaryScrollView)
         

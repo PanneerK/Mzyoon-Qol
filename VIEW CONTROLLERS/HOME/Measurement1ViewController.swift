@@ -38,11 +38,21 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     let manualTitleLabel = UILabel()
     let goTitleLabel = UILabel()
     let comeTitleLabel = UILabel()
+    
+    let manualButton = UIButton()
+    let goButton = UIButton()
+    let comeButton = UIButton()
+
 
     //EXISTING USER DEATILS PARAMETERS
     var existingUserName = [String]()
     var existingUserId = [String]()
     var existingUserDressType = [String]()
+    
+    //HINTS PARAMETERS
+    var hintTag = 0
+    let hintsImage = UIImageView()
+    let detailedLabel = UILabel()
     
     var applicationDelegate = AppDelegate()
 
@@ -86,6 +96,25 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             {
                 self.serviceCall.API_ExistingUserMeasurement(DressTypeId: "\(dressId)", UserId: "\(userId)", delegate: self)
             }
+        }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
         }
     }
     
@@ -218,17 +247,19 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "MEASUREMENT-1"
+        selfScreenNavigationTitle.text = "Measurement Type"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
+        pageBar.image = UIImage(named: "MeasurementBar")
+
         self.view.bringSubviewToFront(slideMenuButton)
         
         let manualIcon = UIImageView()
@@ -247,7 +278,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         underLine1.backgroundColor = UIColor.lightGray
         selfScreenContents.addSubview(underLine1)
         
-        let manualButton = UIButton()
         manualButton.frame = CGRect(x: 0, y: manualTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        manualButton.backgroundColor = UIColor.red
         //        manualButton.setImage(convertedMeasure1BodyImageArray[0], for: .normal)
@@ -285,11 +315,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         forWhomButton.addSubview(downArrowImageView)
         
         let goToIcon = UIImageView()
-        goToIcon.frame = CGRect(x: 0, y: manualButton.frame.maxY + (2.5 * y), width: (2 * x), height: (2 * y))
+        goToIcon.frame = CGRect(x: 0, y: manualButton.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
         goToIcon.image = UIImage(named: "Go_to_tailor_shop")
         selfScreenContents.addSubview(goToIcon)
         
-        goTitleLabel.frame = CGRect(x: goToIcon.frame.maxX + x, y: manualButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
+        goTitleLabel.frame = CGRect(x: goToIcon.frame.maxX + x, y: manualButton.frame.maxY, width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
         goTitleLabel.text = Measure1NameEngArray[1] as! String
         goTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         goTitleLabel.textAlignment = .left
@@ -300,7 +330,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         underLine2.backgroundColor = UIColor.lightGray
         selfScreenContents.addSubview(underLine2)
         
-        let goButton = UIButton()
         goButton.frame = CGRect(x: 0, y: goTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        goButton.backgroundColor = UIColor.red
         //        goButton.setImage(convertedMeasure1BodyImageArray[1], for: .normal)
@@ -324,11 +353,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         }
         
         let comeToIcon = UIImageView()
-        comeToIcon.frame = CGRect(x: 0, y: goButton.frame.maxY + (2.5 * y), width: (2 * x), height: (2 * y))
+        comeToIcon.frame = CGRect(x: 0, y: goButton.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
         comeToIcon.image = UIImage(named: "Tailor_come_to_your_place")
         selfScreenContents.addSubview(comeToIcon)
         
-        comeTitleLabel.frame = CGRect(x: comeToIcon.frame.maxX + x, y: goButton.frame.maxY + (2 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
+        comeTitleLabel.frame = CGRect(x: comeToIcon.frame.maxX + x, y: goButton.frame.maxY, width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
         comeTitleLabel.text = Measure1NameEngArray[2] as! String
         comeTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         comeTitleLabel.textAlignment = .left
@@ -339,7 +368,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         underLine3.backgroundColor = UIColor.lightGray
         selfScreenContents.addSubview(underLine3)
         
-        let comeButton = UIButton()
         comeButton.frame = CGRect(x: 0, y: comeTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        comeButton.backgroundColor = UIColor.red
         //        comeButton.setImage(convertedMeasure1BodyImageArray[2], for: .normal)
@@ -389,13 +417,153 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             changeViewToEnglishInSelf()
         }
+        
+        hintsViewContents()
+        hintsContents()
+    }
+    
+    func hintsContents()
+    {
+        self.gotItButton.removeFromSuperview()
+        
+        let headingLabel = UILabel()
+        headingLabel.frame = CGRect(x: (2 * x), y: (5 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
+        headingLabel.text = "Measurement 1"
+        headingLabel.textAlignment = .left
+        headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        hintsView.addSubview(headingLabel)
+        
+        var x1:CGFloat = x
+        
+        let title = ["Back", "Skip", "Next"]
+        
+        for i in 0..<3
+        {
+            let threeButtons = UIButton()
+            threeButtons.frame = CGRect(x: x1, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+            threeButtons.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+            threeButtons.setTitle(title[i], for: .normal)
+            threeButtons.setTitleColor(UIColor.white, for: .normal)
+            threeButtons.tag = i
+            threeButtons.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+            hintsView.addSubview(threeButtons)
+            
+            x1 = threeButtons.frame.maxX + x
+        }
+        
+        firstHint()
+    }
+    
+    @objc func threeButtonAction(sender : UIButton)
+    {
+        if sender.tag == 0
+        {
+            if hintTag != 0
+            {
+                hintTag = hintTag - 1
+            }
+            
+            if hintTag == 0
+            {
+                firstHint()
+            }
+            else if hintTag == 1
+            {
+                secondHint()
+            }
+            else if hintTag == 2
+            {
+                thirdHint()
+            }
+        }
+        else if sender.tag == 1
+        {
+            hintsView.removeFromSuperview()
+        }
+        else if sender.tag == 2
+        {
+            if hintTag < 5
+            {
+                hintTag = hintTag + 1
+            }
+            
+            if hintTag == 0
+            {
+                firstHint()
+            }
+            else if hintTag == 1
+            {
+                secondHint()
+            }
+            else if hintTag == 2
+            {
+                thirdHint()
+            }
+            else
+            {
+                hintTag = 0
+                hintsView.removeFromSuperview()
+            }
+        }
+    }
+    
+    func firstHint()
+    {
+        hintsImage.frame = CGRect(x: (3 * x), y: manualTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "manuallyHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here to add your measurement value yourself."
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func secondHint()
+    {
+        hintsImage.frame = CGRect(x: (3 * x), y: goTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "goToHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here if wish to go directly to the tailor shop to for adding measurments."
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func thirdHint()
+    {
+        hintsImage.frame = CGRect(x: (3 * x), y: comeTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "tailorComeHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (8 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here if you want the tailor to come to your plave for adding measurments."
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
     }
     
     func changeViewToArabicInSelf()
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "قياس-1"
+        selfScreenNavigationTitle.text = "نوع القياس"
 
         
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -417,7 +585,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "MEASUREMENT-1"
+        selfScreenNavigationTitle.text = "Measurement Type"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
