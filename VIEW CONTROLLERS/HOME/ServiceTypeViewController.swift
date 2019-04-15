@@ -51,6 +51,24 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         serviceCall.API_ServiceRequest(delegate: self)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)

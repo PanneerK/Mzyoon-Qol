@@ -88,6 +88,24 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool) {
 //        self.serviceCall.API_Customization3(DressTypeId: "5", delegate: self)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func activeStart1()
@@ -302,7 +320,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         dropDownImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        selfScreenNavigationTitle.text = "التخصيص - 3"
+        selfScreenNavigationTitle.text = "التخصيص"
         viewDesignLabel.text = "معاينة"
     }
     
@@ -317,7 +335,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         dropDownButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         dropDownImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
-        selfScreenNavigationTitle.text = "CUSTOMIZATION-3"
+        selfScreenNavigationTitle.text = "CUSTOMIZATION"
         viewDesignLabel.text = "PREVIEW"
     }
     
@@ -335,7 +353,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "CUSTOMIZATION-3"
+        selfScreenNavigationTitle.text = "CUSTOMIZATION"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
@@ -499,7 +517,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         
         let detailedLabel = UILabel()
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Click here to see available customizations for choosen dress type"
+        detailedLabel.text = "Please click and select the part to be customized"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -518,7 +536,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         }
         
         var x3:CGFloat = (2 * x)
-        for i in 0..<subCustomAttEnglishNameArray.count
+        for i in 0..<inputArray.count
         {
             let customizationButton = UIButton()
             customizationButton.frame = CGRect(x: x3, y: y, width: (12 * x), height: (10 * y))
@@ -526,21 +544,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             customizationButton.tag = subCustomAttIdArray[i] as! Int
             customizationButton.addTarget(self, action: #selector(self.customizationButtonAction(sender:)), for: .touchUpInside)
             customizationScrollView.addSubview(customizationButton)
-            
-            if selectedCustomIntArray["\(selectedCustomInt)"]!.isEmpty == true
-            {
-                
-            }
-            else
-            {
-                if let id = selectedCustomIntArray["\(selectedCustomInt)"]
-                {
-                    if id == "\(customizationButton.tag)"
-                    {
-                        self.customizationButtonAction(sender: customizationButton)
-                    }
-                }
-            }
             
             if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
@@ -588,6 +591,29 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             customizationButton.addSubview(buttonTitle)
             
             x3 = customizationButton.frame.maxX + (2 * x)
+            
+            
+            if selectedCustomIntArray["\(selectedCustomInt)"]!.isEmpty == true
+            {
+                
+            }
+            else
+            {
+                if let id = selectedCustomIntArray["\(selectedCustomInt)"]
+                {
+                    print("SELECTED SUB CONTENT", selectedCustomIntArray, id, selectedCustomInt)
+                    
+                    if id == "\(customizationButton.tag)"
+                    {
+                        //                        self.customizationButtonAction(sender: customizationButton)
+                        
+                        selectionImage1.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+                        selectionImage1.image = UIImage(named: "selectionImage")
+                        selectionImage1.tag = customizationButton.tag
+                        customizationButton.addSubview(selectionImage1)
+                    }
+                }
+            }
         }
         
         customizationScrollView.contentSize.width = x3

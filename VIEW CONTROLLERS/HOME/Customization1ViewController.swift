@@ -102,6 +102,24 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     override func viewWillAppear(_ animated: Bool)
     {
 //        customization1Content()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func serviceCallFunction(originIdArray : [Int], seasonIdArray : [Int])
@@ -313,7 +331,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "التخصيص-1"
+        selfScreenNavigationTitle.text = "اختيار المواد"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
@@ -329,7 +347,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "CUSTOMIZATION-1"
+        selfScreenNavigationTitle.text = "Material Selection"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
@@ -355,7 +373,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "CUSTOMIZATION-1"
+        selfScreenNavigationTitle.text = "Material Selection"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)

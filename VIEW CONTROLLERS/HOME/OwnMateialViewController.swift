@@ -66,6 +66,24 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     override func viewWillAppear(_ animated: Bool) {
         self.addMaterialContent()
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
@@ -206,6 +224,36 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         {
             changeViewToEnglishInSelf()
         }
+        
+        hintsViewContents()
+        hintsContents()
+    }
+    
+    func hintsContents()
+    {
+        let headingLabel = UILabel()
+        headingLabel.frame = CGRect(x: (2 * x), y: (5 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
+        headingLabel.text = "Own Material"
+        headingLabel.textAlignment = .left
+        headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        hintsView.addSubview(headingLabel)
+        
+        let hintsImage = UIImageView()
+        hintsImage.frame = CGRect(x: addMaterialButton.frame.minX + (3 * x), y: addMaterialButton.frame.minY + (11.5 * y), width: addMaterialButton.frame.width, height: addMaterialButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "addHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        let detailedLabel = UILabel()
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click here to add the new material image"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
     }
     
     func addMaterial(xPosition : CGFloat)

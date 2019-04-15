@@ -38,6 +38,7 @@
 		FD0F977F22255E40003744ED /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F977E22255E40003744ED /* Variables.swift */; };
 		FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */; };
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
+		FD1160462264940B00D34EAD /* AddNewMeasurementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
@@ -140,6 +141,7 @@
 		FD10A4022253657800438A9D /* Mzyoon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mzyoon.entitlements; sourceTree = "<group>"; };
 		FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCustomizationToJson.swift; sourceTree = "<group>"; };
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
+		FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewMeasurementViewController.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
@@ -259,6 +261,14 @@
 			path = "SLIDE MENUS";
 			sourceTree = "<group>";
 		};
+		FD116044226493C700D34EAD /* ADD MEASUREMENTS */ = {
+			isa = PBXGroup;
+			children = (
+				FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */,
+			);
+			path = "ADD MEASUREMENTS";
+			sourceTree = "<group>";
+		};
 		FD1751E8221FCB9C00AA0748 /* SETTINGS  */ = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +359,7 @@
 		FD2ADFE72175BFF00033025B /* VIEW CONTROLLERS */ = {
 			isa = PBXGroup;
 			children = (
+				FD116044226493C700D34EAD /* ADD MEASUREMENTS */,
 				DAB3CE0C21DF29F50080549A /* APPOINTMENTS */,
 				FD71D258219EB20200FFC067 /* HOME */,
 				FD71D255219E991300FFC067 /* COMMON */,
@@ -714,6 +725,7 @@
 				FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */,
 				FD2ADFEE2175C0230033025B /* ServerAPIDelegate.swift in Sources */,
 				FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */,
+				FD1160462264940B00D34EAD /* AddNewMeasurementViewController.swift in Sources */,
 				FD71D25A219EB21700FFC067 /* GenderViewController.swift in Sources */,
 				FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */,
 				DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */,
@@ -941,7 +953,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -970,7 +982,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Mzyoon/Mzyoon-Bridging-Header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

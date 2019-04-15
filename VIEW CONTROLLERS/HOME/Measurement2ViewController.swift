@@ -204,6 +204,25 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         {
             self.serviceCall.API_GetMeasurement2(Measurement1Value: Int(dressid)!, delegate: self)
         }*/
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func activitySubContents()
@@ -493,7 +512,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "MEASUREMENT-2"
+        selfScreenNavigationTitle.text = "MEASUREMENT"
         
         imageButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         imageButton.setTitle("IMAGE", for: .normal)
@@ -527,7 +546,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
 //        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "قياس-2"
+        selfScreenNavigationTitle.text = "قياس"
         
         imageButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         imageButton.setTitle("صورة", for: .normal)
@@ -569,7 +588,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "MEASUREMENT-2"
+        selfScreenNavigationTitle.text = "MEASUREMENT"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
@@ -3494,7 +3513,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Click here to see measurements for choosen dress type"
+        detailedLabel.text = "Please click here for image view of measurements."
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -3520,7 +3539,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Click the arrow to enter measurement value"
+        detailedLabel.text = "Please click here to add the measurment value via measuring ruler"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -3537,7 +3556,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: unitView.frame.minY - (6 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Click here to convert the measurement values into CM or IN"
+        detailedLabel.text = "This switch enables you select the unit of measuring value."
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -3554,7 +3573,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Click here to see measurements list for choosen dress type"
+        detailedLabel.text = "Please click here to view the list of parts to enter the value"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))

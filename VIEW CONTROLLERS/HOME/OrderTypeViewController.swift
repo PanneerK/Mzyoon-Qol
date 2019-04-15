@@ -47,6 +47,11 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
+    //HINTS PARAMETERS
+    var hintTag = 0
+    let hintsImage = UIImageView()
+    let detailedLabel = UILabel()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -66,6 +71,25 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         self.serviceCall.API_OrderType(delegate: self)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func DeviceError()
@@ -451,6 +475,156 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         
         self.view.bringSubviewToFront(slideMenuButton)
         pageContent(tag: 3)
+        
+        
+        let onOrOff = Variables.sharedManager.hintsEnableTag
+
+        if onOrOff == 1
+        {
+            hintsViewContents()
+            hintsContents()
+        }
+        else
+        {
+            
+        }
+    }
+    
+    func hintsContents()
+    {
+        self.gotItButton.removeFromSuperview()
+        
+        let headingLabel = UILabel()
+        headingLabel.frame = CGRect(x: (2 * x), y: (5 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
+        headingLabel.text = "Order Type"
+        headingLabel.textAlignment = .left
+        headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        hintsView.addSubview(headingLabel)
+        
+        var x1:CGFloat = x
+        
+        let title = ["Back", "Skip", "Next"]
+        
+        for i in 0..<3
+        {
+            let threeButtons = UIButton()
+            threeButtons.frame = CGRect(x: x1, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+            threeButtons.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+            threeButtons.setTitle(title[i], for: .normal)
+            threeButtons.setTitleColor(UIColor.white, for: .normal)
+            threeButtons.tag = i
+            threeButtons.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+            hintsView.addSubview(threeButtons)
+            
+            x1 = threeButtons.frame.maxX + x
+        }
+        
+        firstHint()
+    }
+    
+    @objc func threeButtonAction(sender : UIButton)
+    {
+        if sender.tag == 0
+        {
+            if hintTag != 0
+            {
+                hintTag = hintTag - 1
+            }
+            
+            if hintTag == 0
+            {
+                firstHint()
+            }
+            else if hintTag == 1
+            {
+                secondHint()
+            }
+            else if hintTag == 2
+            {
+                thirdHint()
+            }
+        }
+        else if sender.tag == 1
+        {
+            hintsView.removeFromSuperview()
+        }
+        else if sender.tag == 2
+        {
+            if hintTag < 5
+            {
+                hintTag = hintTag + 1
+            }
+            
+            if hintTag == 0
+            {
+                firstHint()
+            }
+            else if hintTag == 1
+            {
+                secondHint()
+            }
+            else if hintTag == 2
+            {
+                thirdHint()
+            }
+            else
+            {
+                hintTag = 0
+                hintsView.removeFromSuperview()
+            }
+        }
+    }
+    
+    func firstHint()
+    {
+        hintsImage.frame = CGRect(x: (3 * x), y: directDeliveryButton.frame.minY + (10.5 * y), width: directDeliveryButton.frame.width, height: directDeliveryButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "ownMaterialHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "If you have your own material for stitching and want to deliver it directly to tailor. Please click this option"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func secondHint()
+    {
+        hintsImage.frame = CGRect(x: (3 * x), y: courierDeliveryButton.frame.minY + (10.5 * y), width: courierDeliveryButton.frame.width, height: courierDeliveryButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "courierMaterialHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "If you have your own material for stitching and want it to be picked from your place. Please click this option"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
+    }
+    
+    func thirdHint()
+    {
+        hintsImage.frame = CGRect(x: (3 * x), y: companyButton.frame.minY + (10.5 * y), width: companyButton.frame.width, height: companyButton.frame.height)
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "companyMaterialHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (8 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please click this option to explore our materials for stitching"
+        detailedLabel.textAlignment = .justified
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.numberOfLines = 2
+        hintsView.addSubview(detailedLabel)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

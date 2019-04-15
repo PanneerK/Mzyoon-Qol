@@ -1504,7 +1504,15 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func textFieldDidBeginEditing(_ textField: UITextField)
     {
-        print("textFieldDidBeginEditing")
+        let  char = textField.text?.cString(using: String.Encoding.utf8)!
+        let isBackSpace = strcmp(char, "\\b")
+        
+        print("KEY FINDER WHEN EMPTY", isBackSpace)
+        
+        if isBackSpace == -92
+        {
+            textField.deleteBackward()
+        }
         
         if textField == otp1Letter
         {
@@ -1654,6 +1662,10 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let text = textField.text
         
+        if string.isBackspace {
+            print("DELETED")
+        }
+        
         if (text?.utf16.count)! >= 1{
             switch textField{
             case otp1Letter:
@@ -1679,7 +1691,6 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 break
             }
         }
-        
         
         if (isBackSpace == -92) {
             if (text?.utf16.count)! >= 1
@@ -1718,8 +1729,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                     break
                 }
             }
-            
         }
+        
         return true
     }
     
@@ -1754,5 +1765,27 @@ extension UIImageView {
     func dowloadFromServer1(link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
         dowloadFromServer(url: url, contentMode: mode)
+    }
+}
+
+extension String {
+    var isBackspace: Bool {
+        let char = self.cString(using: String.Encoding.utf8)!
+        return strcmp(char, "\\b") == -92
+    }
+}
+
+class YourTextField: UITextField
+{
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    // MARK: Methods
+    
+    override func deleteBackward() {
+        super.deleteBackward()
+        
+        print("deleteBackward")
     }
 }

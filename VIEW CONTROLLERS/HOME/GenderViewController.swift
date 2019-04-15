@@ -86,6 +86,25 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         {
             self.newOrderContents(getInputArray: genderArray)
         }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
     
     func showActivityIndicator()
@@ -228,7 +247,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "GENDER"
+        selfScreenNavigationTitle.text = "Gender Selection"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
@@ -456,7 +475,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "جنس"
+        selfScreenNavigationTitle.text = "اختيار الجنس"
         
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }

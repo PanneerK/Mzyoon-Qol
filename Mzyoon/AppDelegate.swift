@@ -45,6 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func checkLogin()
     {
+        let onOrOff = Variables.sharedManager.hintsEnableTag
+        
+        print("SWITCH STATE IN LOGIN", onOrOff)
+        
         if let screen = UserDefaults.standard.value(forKey: "screenAppearance") as? Int
         {
             if screen == 0

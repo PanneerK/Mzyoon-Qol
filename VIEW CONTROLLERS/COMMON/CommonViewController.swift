@@ -371,7 +371,6 @@ class CommonViewController: UIViewController
         tab4ImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         tab4Text.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         tab4Text.text = "كارة"
-
     }
     
     func tabContents()

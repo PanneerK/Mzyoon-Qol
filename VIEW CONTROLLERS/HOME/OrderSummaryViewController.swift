@@ -101,6 +101,27 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
+    }
+    
     func API_CALLBACK_Customization3(custom3: NSDictionary)
     {
         let ResponseMsg = custom3.object(forKey: "ResponseMsg") as! String
