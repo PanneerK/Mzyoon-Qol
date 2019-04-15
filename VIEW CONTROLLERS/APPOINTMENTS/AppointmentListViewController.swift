@@ -295,7 +295,6 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             DressImageView.layer.borderColor = UIColor.lightGray.cgColor
             DressImageView.layer.masksToBounds = true
             
-            
            
             if let imageName = ImageArray[i] as? String
             {
