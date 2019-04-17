@@ -13,9 +13,22 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
      let serviceCall = ServerAPI()
     
       let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
+      let selfScreenNavigationTitle = UILabel()
 
       let AppointmentScrollview = UIScrollView()
+      let selfScreenContents = UIView()
+    
+      // Tab button...
+      let MaterialButton = UIButton()
+      let MeasurementButton = UIButton()
+    
+      // Scrollview..
+      let MaterialScrollView = UIScrollView()
+      let MeasurementScrollView = UIScrollView()
+    
+      // Backview...
+      let MaterialViewBackDrop = UIView()
+      let MeasurementViewBackDrop = UIView()
     
        let OrderTypeView = UIView()
        let MeasurementTypeView = UIView()
@@ -107,7 +120,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         super.viewDidLoad()
  
         navigationBar.isHidden = true
-        slideMenuButton.isHidden = true
+       // slideMenuButton.isHidden = true
         
         selectedButton(tag: 1)
         
@@ -750,6 +763,29 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
+        MaterialButton.frame = CGRect(x: 0, y: navigationBar.frame.maxY, width: ((view.frame.width / 2) - 1), height: (4 * y))
+        MaterialButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        MaterialButton.setTitle("ORDER TYPE", for: .normal)
+        MaterialButton.setTitleColor(UIColor.white, for: .normal)
+        MaterialButton.tag = 0
+        MaterialButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(MaterialButton)
+        
+        MeasurementButton.frame = CGRect(x: MaterialButton.frame.maxX + 1, y: navigationBar.frame.maxY, width: view.frame.width / 2, height: (4 * y))
+        MeasurementButton.backgroundColor = UIColor.lightGray
+        MeasurementButton.setTitle("MEASUREMENT", for: .normal)
+        MeasurementButton.setTitleColor(UIColor.black, for: .normal)
+        MeasurementButton.tag = 1
+        MeasurementButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(MeasurementButton)
+        
+        selfScreenContents.frame = CGRect(x: (3 * x), y: MaterialButton.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + MaterialButton.frame.height))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        MeasurementButton.backgroundColor = UIColor.lightGray
+        MeasurementButton.setTitleColor(UIColor.black, for: .normal)
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -766,7 +802,877 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             changeViewToEnglishInSelf()
         }
         
-        AppointmentTypeView()
+        MaterialViewContents(isHidden: false)
+        MeasurementViewContents(isHidden: true)
+        
+       // AppointmentTypeView()
+    }
+    
+    @objc func selectionViewButtonAction(sender : UIButton)
+    {
+        if sender.tag == 0
+        {
+           
+            MeasurementButton.backgroundColor = UIColor.lightGray
+            MeasurementButton.setTitleColor(UIColor.black, for: .normal)
+            MaterialViewContents(isHidden: false)
+            MeasurementViewContents(isHidden: true)
+        }
+        else if sender.tag == 1
+        {
+            MaterialButton.backgroundColor = UIColor.lightGray
+            MaterialButton.setTitleColor(UIColor.black, for: .normal)
+            MaterialViewContents(isHidden: true)
+            MeasurementViewContents(isHidden: false)
+        }
+        
+        sender.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        sender.setTitleColor(UIColor.white, for: .normal)
+    }
+    
+    func MaterialViewContents(isHidden : Bool)
+    {
+       //  View BackDrop..
+        MaterialViewBackDrop.frame = CGRect(x: 0, y: 0 , width: selfScreenContents.frame.width, height: selfScreenContents.frame.height - (2 * y))
+        MaterialViewBackDrop.backgroundColor = UIColor.clear
+        selfScreenContents.addSubview(MaterialViewBackDrop)
+        
+        MaterialViewBackDrop.isHidden = isHidden
+        
+        if MaterialInEnglish.contains("Companies-Material")
+        {
+            OrderTypeView.removeFromSuperview()
+            MaterialSucessStr = "True"
+        }
+        else if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            // orderView Layout and content..
+            OrderTypeView.frame = CGRect(x: 0, y: 0, width: MaterialViewBackDrop.frame.width, height: (40 * y))
+            // OrderTypeView.backgroundColor = UIColor.lightGray
+            OrderTypeView.layer.borderWidth = 1
+            OrderTypeView.layer.borderColor = UIColor.clear.cgColor
+            MaterialViewBackDrop.addSubview(OrderTypeView)
+        }
+        else
+        {
+            // orderView Layout and content..
+            OrderTypeView.frame = CGRect(x: 0, y: 0, width: MaterialViewBackDrop.frame.width, height: (40 * y))
+            // OrderTypeView.backgroundColor = UIColor.lightGray
+            OrderTypeView.layer.borderWidth = 1
+            OrderTypeView.layer.borderColor = UIColor.clear.cgColor  // UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0).cgColor
+            MaterialViewBackDrop.addSubview(OrderTypeView)
+        }
+       
+        // -------------------------------AppointmentStatusView---------------------
+        
+        let Material_AppointmentStatusView = UIView()
+        Material_AppointmentStatusView.frame = CGRect(x: ((OrderTypeView.frame.width - (7 * x)) / 2), y: (2 * y), width: (19 * x), height: (2 * y))
+        Material_AppointmentStatusView.backgroundColor = UIColor.white
+        Material_AppointmentStatusView.layer.borderColor = UIColor.lightGray.cgColor
+        Material_AppointmentStatusView.layer.borderWidth = 1.0
+        Material_AppointmentStatusView.layer.cornerRadius = 5
+        OrderTypeView.addSubview(Material_AppointmentStatusView)
+        
+        let Material_StatusLabel = UILabel()
+        Material_StatusLabel.frame = CGRect(x: x, y: 0, width: (12 * x), height: (2 * y))
+        // Material_StatusLabel.backgroundColor = UIColor.gray
+        Material_StatusLabel.text = "Appointment Status:"
+        Material_StatusLabel.textColor = UIColor.black
+        Material_StatusLabel.textAlignment = .left
+        Material_StatusLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        Material_AppointmentStatusView.addSubview(Material_StatusLabel)
+        
+        let Material_StatusBtn = UIButton()
+        Material_StatusBtn.frame = CGRect(x: Material_StatusLabel.frame.maxX, y: 0, width: (6 * x), height: (2 * y))
+        // Material_StatusBtn.backgroundColor = UIColor.gray
+        if(MaterialStatus.count > 0)
+        {
+          
+            if(MaterialStatus.count == 1)
+            {
+                Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
+            }
+            else if(MaterialStatus.count == 2)
+            {
+                Material_StatusBtn.setTitle("\(MaterialStatus[1])", for: .normal)
+            }
+            else if(MaterialStatus.count == 3)
+            {
+                Material_StatusBtn.setTitle("\(MaterialStatus[2])", for: .normal)
+            }
+            
+            // }
+        }
+        else
+        {
+            Material_StatusBtn.setTitle("", for: .normal)
+        }
+        Material_StatusBtn.setTitleColor(UIColor.blue, for: .normal)
+        Material_StatusBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
+        Material_StatusBtn.addTarget(self, action: #selector(self.MaterialStatusButtonAction(sender:)), for: .touchUpInside)
+        Material_AppointmentStatusView.addSubview(Material_StatusBtn)
+        
+        
+        // orderType imageView...
+        let courierDeliveryIcon = UIImageView()
+        courierDeliveryIcon.frame = CGRect(x: 0, y: Material_AppointmentStatusView.frame.maxY +  y, width: (2 * x), height: (2 * y))
+        
+        if(MaterailHeaderImage.count > 0)
+        {
+            if let imageName = MaterailHeaderImage[0] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/OrderType/\(imageName)"
+                print("Order Type - Header Image", api)
+                let apiurl = URL(string: api)
+                if apiurl != nil
+                {
+                    courierDeliveryIcon.dowloadFromServer(url: apiurl!)
+                }
+            }
+        }
+        OrderTypeView.addSubview(courierDeliveryIcon)
+        
+        let couriertDeliveryLabel = UILabel()
+        couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: Material_AppointmentStatusView.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
+        if(MaterialInEnglish.count > 0)
+        {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    couriertDeliveryLabel.text = MaterialInEnglish[0] as? String
+                }
+                else if language == "ar"
+                {
+                    couriertDeliveryLabel.text = materialInArabic[0] as? String
+                }
+            }
+            else
+            {
+                couriertDeliveryLabel.text = MaterialInEnglish[0] as? String
+            }
+        }
+        else
+        {
+            couriertDeliveryLabel.text = ""
+        }
+        couriertDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        couriertDeliveryLabel.textAlignment = .left
+        couriertDeliveryLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        couriertDeliveryLabel.adjustsFontSizeToFitWidth = true
+        OrderTypeView.addSubview(couriertDeliveryLabel)
+        
+        let courierDeliveryUnderline = UILabel()
+        courierDeliveryUnderline.frame = CGRect(x: 0, y: couriertDeliveryLabel.frame.maxY + (y / 2), width: OrderTypeView.frame.width, height: 0.5)
+        courierDeliveryUnderline.backgroundColor = UIColor.lightGray
+        OrderTypeView.addSubview(courierDeliveryUnderline)
+        
+        let courierImageView = UIImageView()
+        courierImageView.frame = CGRect(x: 0, y: courierDeliveryUnderline.frame.maxY + y, width: OrderTypeView.frame.width, height: (10 * y))
+        // courierImageView.backgroundColor = UIColor.lightGray
+        
+        if(MaterialBodyImage.count > 0)
+        {
+            if let imageName = MaterialBodyImage[0] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/OrderType/\(imageName)"
+                print("Order Type - Body Image", api)
+                let apiurl = URL(string: api)
+                
+                let dummyImageView = UIImageView()
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: courierImageView.frame.width, height: courierImageView.frame.height)
+                if apiurl != nil{
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
+                courierImageView.addSubview(dummyImageView)
+            }
+            OrderTypeView.addSubview(courierImageView)
+        }
+        
+        
+        //---------------OrderType FromDate Label---------------------
+        
+        let From_OrderTypeLBL = UILabel()
+        From_OrderTypeLBL.frame = CGRect(x: 0, y: courierImageView.frame.maxY + y , width: courierImageView.frame.width / 2 , height: (2 * y))
+        From_OrderTypeLBL.text = "FROM"
+        From_OrderTypeLBL.textColor = UIColor.black
+        From_OrderTypeLBL.textAlignment = .left
+        From_OrderTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        From_OrderTypeLBL.adjustsFontSizeToFitWidth = true
+        // From_OrderTypeLBL.backgroundColor = UIColor.lightGray
+        OrderTypeView.addSubview(From_OrderTypeLBL)
+        
+        //---------------OrderType ToDate Label---------------------
+        
+        let TO_OrderTypeLBL = UILabel()
+        TO_OrderTypeLBL.frame = CGRect(x: From_OrderTypeLBL.frame.maxX + 1, y: courierImageView.frame.maxY + y , width: courierImageView.frame.width / 2, height: (2 * y))
+        TO_OrderTypeLBL.text = "TO"
+        TO_OrderTypeLBL.textColor = UIColor.black
+        TO_OrderTypeLBL.textAlignment = .left
+        TO_OrderTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        TO_OrderTypeLBL.adjustsFontSizeToFitWidth = true
+        // TO_OrderTypeLBL.backgroundColor = UIColor.lightGray
+        OrderTypeView.addSubview(TO_OrderTypeLBL)
+        
+        //-----------------OrderType FromDate View----------------------------
+        
+        //FromDateView
+        let FromDateView = UIView()
+        FromDateView.frame = CGRect(x: 0, y: From_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (3.5 * y))
+        FromDateView.backgroundColor = UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0)
+        OrderTypeView.addSubview(FromDateView)
+        
+        // FromDate Icon..
+        let FromDateMatrl_Icon = UIImageView()
+        FromDateMatrl_Icon.frame = CGRect(x: x/2, y: y, width: 18, height: 18)
+        //FromDateMatrl_Icon.backgroundColor = UIColor.white
+        FromDateMatrl_Icon.image = UIImage(named: "OrderDate_WH")
+         FromDateView.addSubview(FromDateMatrl_Icon)
+        
+        //let From_MaterialType_TF = UITextField()
+        From_MaterialType_TF.frame = CGRect(x: FromDateMatrl_Icon.frame.maxX, y: (y/2) - 4, width: (10 * x) , height: (3.5 * y))
+        From_MaterialType_TF.attributedPlaceholder = NSAttributedString(string: "Date",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        From_MaterialType_TF.textColor = UIColor.white
+        From_MaterialType_TF.textAlignment = .center
+        From_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        From_MaterialType_TF.adjustsFontSizeToFitWidth = true
+        //From_MaterialType_TF.backgroundColor = UIColor.gray
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            From_MaterialType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                From_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                From_MaterialType_TF.isUserInteractionEnabled = true
+            }
+            //  From_MaterialType_TF.isUserInteractionEnabled = true
+            
+        }
+        From_MaterialType_TF.addTarget(self, action: #selector(self.FMaterial_calendarAction), for: .allEditingEvents)
+        From_MaterialType_TF.delegate = self as? UITextFieldDelegate
+        FromDateView.addSubview(From_MaterialType_TF)
+        
+        // Edit icon..
+        let FromDateEditMatrl_Icon = UIImageView()
+        FromDateEditMatrl_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
+        //FromDateEditMatrl_Icon.backgroundColor = UIColor.white
+        FromDateEditMatrl_Icon.image = UIImage(named: "OrderDate_WH")
+        //FromDateView.addSubview(FromDateEditMatrl_Icon)
+        
+        
+        //-----------------OrderType ToDate View----------------------------
+        
+        //ToDateView
+        let ToDateView = UIView()
+        ToDateView.frame = CGRect(x: FromDateView.frame.maxX + 1, y: TO_OrderTypeLBL.frame.maxY, width: courierImageView.frame.width / 2, height: (3.5 * y))
+        ToDateView.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
+        OrderTypeView.addSubview(ToDateView)
+        
+        // ToDAteIcon..
+        let ToDateMatrl_Icon = UIImageView()
+        ToDateMatrl_Icon.frame = CGRect(x: x/2, y: y, width: 18, height: 18)
+        //ToDateMatrl_Icon.backgroundColor = UIColor.white
+        ToDateMatrl_Icon.image = UIImage(named: "OrderDate_WH")
+        ToDateView.addSubview(ToDateMatrl_Icon)
+        
+        // let TO_MaterialType_TF = UITextField()
+        TO_MaterialType_TF.frame = CGRect(x: ToDateMatrl_Icon.frame.maxX , y: (y/2) - 4, width: (10 * x), height: (3.5 * y))
+        TO_MaterialType_TF.attributedPlaceholder = NSAttributedString(string: "Date",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        TO_MaterialType_TF.textColor = UIColor.white
+        TO_MaterialType_TF.textAlignment = .center
+        TO_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        TO_MaterialType_TF.adjustsFontSizeToFitWidth = true
+        // TO_MaterialType_TF.backgroundColor = UIColor.gray  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            TO_MaterialType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                TO_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                TO_MaterialType_TF.isUserInteractionEnabled = true
+            }
+            
+            // TO_MaterialType_TF.isUserInteractionEnabled = true
+        }
+        TO_MaterialType_TF.addTarget(self, action: #selector(self.TMaterial_calendarAction), for: .allEditingEvents)
+        TO_MaterialType_TF.delegate = self as? UITextFieldDelegate
+        ToDateView.addSubview(TO_MaterialType_TF)
+        
+        // Edit icon..
+        let ToDateEditMatrl_Icon = UIImageView()
+        ToDateEditMatrl_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
+        //ToDateEditMatrl_Icon.backgroundColor = UIColor.white
+        ToDateEditMatrl_Icon.image = UIImage(named: "OrderDate_WH")
+       // ToDateView.addSubview(ToDateEditMatrl_Icon)
+        
+        
+        //-----------------OrderType TimeSlot View----------------------------
+        
+        let Slot_MaterialTypeLBL = UILabel()
+        Slot_MaterialTypeLBL.frame = CGRect(x: 0, y: FromDateView.frame.maxY + y, width: (8 * x), height: (3.5 * y))
+        Slot_MaterialTypeLBL.text = "TIME SLOT"
+        Slot_MaterialTypeLBL.textColor = UIColor.black
+        Slot_MaterialTypeLBL.textAlignment = .left
+        Slot_MaterialTypeLBL.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        Slot_MaterialTypeLBL.adjustsFontSizeToFitWidth = true
+        // Slot_MaterialTypeLBL.backgroundColor = UIColor.lightGray
+        OrderTypeView.addSubview(Slot_MaterialTypeLBL)
+        
+        
+        //TimeSlotView
+        let Material_TimeSlotView = UIView()
+        Material_TimeSlotView.frame = CGRect(x: Slot_MaterialTypeLBL.frame.maxX, y: FromDateView.frame.maxY + y, width: (23.5 * x), height: (3.5 * y))
+        Material_TimeSlotView.backgroundColor = UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0)
+        OrderTypeView.addSubview(Material_TimeSlotView)
+        
+        // TimeMatrl_Icon..
+        let TimeMatrl_Icon = UIImageView()
+        TimeMatrl_Icon.frame = CGRect(x: x/2, y: y, width: 18, height: 18)
+        //TimeMatrl_Icon.backgroundColor = UIColor.white
+        TimeMatrl_Icon.image = UIImage(named: "OrderTime_WH")
+        Material_TimeSlotView.addSubview(TimeMatrl_Icon)
+        
+        // let SLOT_MaterialType_TF.frame = UITextField()
+        SLOT_MaterialType_TF.frame = CGRect(x: TimeMatrl_Icon.frame.maxX + x, y: (y/2) - 4, width: (20 * x), height: (3.5 * y))
+        SLOT_MaterialType_TF.attributedPlaceholder = NSAttributedString(string: "Time",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        SLOT_MaterialType_TF.textColor = UIColor.white
+        SLOT_MaterialType_TF.textAlignment = .left
+        SLOT_MaterialType_TF.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        SLOT_MaterialType_TF.adjustsFontSizeToFitWidth = true
+        // SLOT_MaterialType_TF.frame.backgroundColor = UIColor.lightGray //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            SLOT_MaterialType_TF.isUserInteractionEnabled = false
+            
+        }
+        else
+        {
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                SLOT_MaterialType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                SLOT_MaterialType_TF.isUserInteractionEnabled = true
+            }
+            // SLOT_MaterialType_TF.isUserInteractionEnabled = true
+        }
+        SLOT_MaterialType_TF.addTarget(self, action: #selector(self.SlotMaterial_calendarAction), for: .allEditingEvents)
+        SLOT_MaterialType_TF.delegate = self as? UITextFieldDelegate
+        Material_TimeSlotView.addSubview(SLOT_MaterialType_TF)
+        
+        //---------------Material Approve Button----------------
+        
+        //let Material_ApproveButton = UIButton()
+        Material_ApproveButton.frame = CGRect(x: (5 * x), y: Material_TimeSlotView.frame.maxY + y, width: (10 * x), height: (3.5 * y))
+        Material_ApproveButton.backgroundColor = UIColor(red:0.24, green:0.62, blue:0.24, alpha:1.0)
+        Material_ApproveButton.setTitle("Approve", for: .normal)
+        Material_ApproveButton.setTitleColor(UIColor.white, for: .normal)
+        Material_ApproveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
+        Material_ApproveButton.layer.borderColor = UIColor.lightGray.cgColor
+        Material_ApproveButton.layer.borderWidth = 1.0
+        Material_ApproveButton.layer.cornerRadius = 15
+        Material_ApproveButton.addTarget(self, action: #selector(self.MaterialApproveButtonAction(sender:)), for: .touchUpInside)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                OrderTypeView.addSubview(Material_ApproveButton)
+            }
+        }
+        else
+        {
+            
+            
+        }
+        
+        
+        //-----------------MAterial Reject button-----------------
+        
+        
+        // let Material_RejectButton = UIButton()
+        Material_RejectButton.frame = CGRect(x: Material_ApproveButton.frame.maxX + (2 * x), y: Material_TimeSlotView.frame.maxY + y, width: (10 * x), height: (3.5 * y))
+        Material_RejectButton.backgroundColor = UIColor(red:0.89, green:0.13, blue:0.11, alpha:1.0)
+        Material_RejectButton.setTitle("Reject", for: .normal)
+        Material_RejectButton.setTitleColor(UIColor.white, for: .normal)
+        Material_RejectButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
+        Material_RejectButton.layer.borderColor = UIColor.lightGray.cgColor
+        Material_RejectButton.layer.borderWidth = 1.0
+        Material_RejectButton.layer.cornerRadius = 15
+        Material_RejectButton.addTarget(self, action: #selector(self.MaterialRejectButtonAction(sender:)), for: .touchUpInside)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+            }
+            else
+            {
+                OrderTypeView.addSubview(Material_RejectButton)
+            }
+        }
+        else
+        {
+            
+        }
+        
+        //-----------------Material Save Button------------------------
+        
+        let Material_SaveButton = UIButton()
+        Material_SaveButton.frame = CGRect(x: courierImageView.frame.width - (7 * x), y: Material_RejectButton.frame.minY + y, width: (10 * x), height: (3.5 * y))
+        Material_SaveButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
+        Material_SaveButton.setTitle("Save", for: .normal)
+        Material_SaveButton.setTitleColor(UIColor.white, for: .normal)
+        Material_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.4 * x)!
+        Material_SaveButton.addTarget(self, action: #selector(self.Material_SaveButtonAction(sender:)), for: .touchUpInside)
+        if MaterialInEnglish.contains("Own Material-Direct Delivery")
+        {
+            // MaterialSucessStr = "True"
+        }
+        else
+        {
+            if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                OrderTypeView.addSubview(Material_SaveButton)
+            }
+            
+        }
+        
+       
+    }
+    func MeasurementViewContents(isHidden : Bool)
+    {
+        //  View BackDrop..
+        MeasurementViewBackDrop.frame = CGRect(x: 0, y: 0 , width: selfScreenContents.frame.width, height: selfScreenContents.frame.height - (2 * y))
+        MeasurementViewBackDrop.backgroundColor = UIColor.clear
+        selfScreenContents.addSubview(MeasurementViewBackDrop)
+        
+        MeasurementViewBackDrop.isHidden = isHidden
+        
+        
+        if MeasurementInEnglish.contains("Manually")
+        {
+            MeasurementTypeView.removeFromSuperview()
+            MeasureSucessStr = "True"
+        }
+        else if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            MeasurementTypeView.frame = CGRect(x: 0, y: 0, width: MeasurementViewBackDrop.frame.width, height: (40 * y))
+            //MeasurementTypeView.backgroundColor = UIColor.darkGray
+            MeasurementTypeView.layer.borderWidth = 1
+            MeasurementTypeView.layer.borderColor = UIColor.clear.cgColor //UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0).cgColor
+            MeasurementViewBackDrop.addSubview(MeasurementTypeView)
+        
+        }
+        else
+        {
+            MeasurementTypeView.frame = CGRect(x: x/2, y: y/2, width: view.frame.width - x, height: (40 * y))
+            //MeasurementTypeView.backgroundColor = UIColor.darkGray
+            MeasurementTypeView.layer.borderWidth = 1
+            MeasurementTypeView.layer.borderColor = UIColor.clear.cgColor
+            MeasurementViewBackDrop.addSubview(MeasurementTypeView)
+        }
+        
+      
+        
+        let Measurement_AppointmentStatusView = UIView()
+        Measurement_AppointmentStatusView.frame = CGRect(x: ((MeasurementTypeView.frame.width - (7 * x)) / 2), y: (2 * y), width: (19 * x), height: (2 * y))
+        Measurement_AppointmentStatusView.backgroundColor = UIColor.white
+        Measurement_AppointmentStatusView.layer.borderColor = UIColor.lightGray.cgColor
+        Measurement_AppointmentStatusView.layer.borderWidth = 1.0
+        Measurement_AppointmentStatusView.layer.cornerRadius = 5
+        MeasurementTypeView.addSubview(Measurement_AppointmentStatusView)
+        
+        
+        let Measure_StatusLabel = UILabel()
+        Measure_StatusLabel.frame = CGRect(x: x, y: 0, width: (12 * x), height: (2 * y))
+        // SMeasure_StatusLabel.backgroundColor = UIColor.gray
+        Measure_StatusLabel.text = "Appointment Status:"
+        Measure_StatusLabel.textColor = UIColor.black
+        Measure_StatusLabel.textAlignment = .left
+        Measure_StatusLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        Measurement_AppointmentStatusView.addSubview(Measure_StatusLabel)
+        
+        let Measure_StatusBtn = UIButton()
+        Measure_StatusBtn.frame = CGRect(x: Measure_StatusLabel.frame.maxX, y: 0, width: (6 * x), height: (2 * y))
+        // Measure_StatusBtn.backgroundColor = UIColor.gray
+        if(MeasureStatus.count > 0)
+        {
+            if(MeasureStatus.count == 1)
+            {
+                Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
+            }
+            else if(MeasureStatus.count == 2)
+            {
+                Measure_StatusBtn.setTitle("\(MeasureStatus[1])", for: .normal)
+            }
+            else if(MeasureStatus.count == 3)
+            {
+                Measure_StatusBtn.setTitle("\(MeasureStatus[2])", for: .normal)
+            }
+            // }
+        }
+        else
+        {
+            Measure_StatusBtn.setTitle("", for: .normal)
+        }
+        
+        Measure_StatusBtn.setTitleColor(UIColor.blue, for: .normal)
+        Measure_StatusBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
+        Measure_StatusBtn.addTarget(self, action: #selector(self.MeasureStatusButtonAction(sender:)), for: .touchUpInside)
+        Measurement_AppointmentStatusView.addSubview(Measure_StatusBtn)
+        
+        
+        // orderType View...
+        let TailorShopIcon = UIImageView()
+        TailorShopIcon.frame = CGRect(x: 0, y: Measurement_AppointmentStatusView.frame.maxY + y, width: (2 * x), height: (2 * y))
+        
+        /*
+         if let imageName = orderTypeHeaderImage[1] as? String
+         {
+         let urlString = serviceCall.baseURL
+         let api = "\(urlString)/images/Measurement1/\(imageName)"
+         print("Measurement - Header Image", api)
+         let apiurl = URL(string: api)
+         courierDeliveryIcon.dowloadFromServer(url: apiurl!)
+         }
+         */
+        MeasurementTypeView.addSubview(TailorShopIcon)
+        
+        let TailorTypeLabel = UILabel()
+        TailorTypeLabel.frame = CGRect(x: TailorShopIcon.frame.maxX, y: Measurement_AppointmentStatusView.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
+        if(MeasurementInEnglish.count > 0)
+        {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    TailorTypeLabel.text = MeasurementInEnglish[0] as? String
+                }
+                else if language == "ar"
+                {
+                    TailorTypeLabel.text = measurementInArabic[0] as? String
+                }
+            }
+            else
+            {
+                TailorTypeLabel.text = MeasurementInEnglish[0] as? String
+            }
+        }
+        else
+        {
+            TailorTypeLabel.text = ""
+        }
+        TailorTypeLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        TailorTypeLabel.textAlignment = .left
+        TailorTypeLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        TailorTypeLabel.adjustsFontSizeToFitWidth = true
+        MeasurementTypeView.addSubview(TailorTypeLabel)
+        
+        let TailorUnderline = UILabel()
+        TailorUnderline.frame = CGRect(x: 0, y: TailorTypeLabel.frame.maxY + (y / 2), width: MeasurementTypeView.frame.width, height: 0.5)
+        TailorUnderline.backgroundColor = UIColor.lightGray
+        MeasurementTypeView.addSubview(TailorUnderline)
+        
+        let TailorImageView = UIImageView()
+        TailorImageView.frame = CGRect(x: 0, y: TailorUnderline.frame.maxY + y, width: MeasurementTypeView.frame.width, height: (10 * y))
+        // TailorImageView.backgroundColor = UIColor.lightGray
+        
+        if(MeasurementBodyImage.count > 0)
+        {
+            if let imageName = MeasurementBodyImage[0] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Measurement1/\(imageName)"
+                print("Measurement - Body Image", api)
+                let apiurl = URL(string: api)
+                
+                let dummyImageView = UIImageView()
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: TailorImageView.frame.width, height: TailorImageView.frame.height)
+                if apiurl != nil{
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
+                TailorImageView.addSubview(dummyImageView)
+            }
+            MeasurementTypeView.addSubview(TailorImageView)
+        }
+        
+        
+        
+        let From_MaterialTypeLBL = UILabel()
+        From_MaterialTypeLBL.frame = CGRect(x: 0, y: TailorImageView.frame.maxY + y, width: TailorImageView.frame.width / 2 , height: (2 * y))
+        From_MaterialTypeLBL.text = "FROM"
+        From_MaterialTypeLBL.textColor = UIColor.black
+        From_MaterialTypeLBL.textAlignment = .left
+        From_MaterialTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        From_MaterialTypeLBL.adjustsFontSizeToFitWidth = true
+        // From_MaterialTypeLBL.backgroundColor = UIColor.lightGray
+        MeasurementTypeView.addSubview(From_MaterialTypeLBL)
+        
+        let TO_MaterialTypeLBL = UILabel()
+        TO_MaterialTypeLBL.frame = CGRect(x: From_MaterialTypeLBL.frame.maxX + 1, y: TailorImageView.frame.maxY + y, width: TailorImageView.frame.width / 2, height: (2 * y))
+        TO_MaterialTypeLBL.text = "TO"
+        TO_MaterialTypeLBL.textColor = UIColor.black
+        TO_MaterialTypeLBL.textAlignment = .left
+        TO_MaterialTypeLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        TO_MaterialTypeLBL.adjustsFontSizeToFitWidth = true
+        //  TO_OrderTypeLBL.backgroundColor = UIColor.lightGray
+        MeasurementTypeView.addSubview(TO_MaterialTypeLBL)
+        
+        //--------------------Measure FromDate View----------------------
+        
+        //FromDateView
+        let Measure_FromDateView = UIView()
+        Measure_FromDateView.frame = CGRect(x: 0, y: From_MaterialTypeLBL.frame.maxY, width: TailorImageView.frame.width / 2, height: (3.5 * y))
+        Measure_FromDateView.backgroundColor = UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0)
+        MeasurementTypeView.addSubview(Measure_FromDateView)
+        
+        // FromDate Icon..
+        let FromDateMeasure_Icon = UIImageView()
+       // FromDateMeasure_Icon.frame = CGRect(x: 1, y: (y/2) - 4, width:(2 * x), height: (2 * y))
+        //FromDateMeasure_Icon.backgroundColor = UIColor.white
+        FromDateMeasure_Icon.frame = CGRect(x: x/2, y: y, width: 18, height: 18)
+        FromDateMeasure_Icon.image = UIImage(named: "OrderDate_WH")
+        Measure_FromDateView.addSubview(FromDateMeasure_Icon)
+        
+        //let From_MeasurementType_TF = UITextField()
+        From_MeasurementType_TF.frame = CGRect(x: FromDateMeasure_Icon.frame.maxX, y: (y/2) - 4, width: (10 * x) , height: (3.5 * y))
+        From_MeasurementType_TF.attributedPlaceholder = NSAttributedString(string: "Date",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        From_MeasurementType_TF.textColor = UIColor.white
+        From_MeasurementType_TF.textAlignment = .center
+        From_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        From_MeasurementType_TF.adjustsFontSizeToFitWidth = true
+        //From_MeasurementType_TF.backgroundColor = UIColor.gray
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            From_MeasurementType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                From_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                From_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+            // From_MeasurementType_TF.isUserInteractionEnabled = true
+        }
+        From_MeasurementType_TF.addTarget(self, action: #selector(self.FMeasurement_calendarAction), for: .allEditingEvents)
+        From_MeasurementType_TF.delegate = self as? UITextFieldDelegate
+        Measure_FromDateView.addSubview(From_MeasurementType_TF)
+        
+        // Edit icon..
+        let FromDateEditMeasure_Icon = UIImageView()
+        FromDateEditMeasure_Icon.frame = CGRect(x: From_MaterialType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
+        //FromDateEditMeasure_Icon.backgroundColor = UIColor.white
+        FromDateEditMeasure_Icon.image = UIImage(named: "OrderDate_WH")
+       // Measure_FromDateView.addSubview(FromDateEditMeasure_Icon)
+        
+        
+        //--------------------Measure ToDate View----------------------
+        
+        //ToDateView
+        let Measure_ToDateView = UIView()
+        Measure_ToDateView.frame = CGRect(x: Measure_FromDateView.frame.maxX + 1, y: TO_MaterialTypeLBL.frame.maxY, width: TailorImageView.frame.width / 2, height: (3.5 * y))
+        Measure_ToDateView.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
+        MeasurementTypeView.addSubview(Measure_ToDateView)
+        
+        // ToDAteIcon..
+        let ToDateMeasure_Icon = UIImageView()
+        ToDateMeasure_Icon.frame = CGRect(x: x/2, y: y, width: 18, height: 18)
+        //ToDateMeasure_Icon.backgroundColor = UIColor.white
+        ToDateMeasure_Icon.image = UIImage(named: "OrderDate_WH")
+        Measure_ToDateView.addSubview(ToDateMeasure_Icon)
+        
+        // let TO_MeasurementType_TF = UITextField()
+        TO_MeasurementType_TF.frame = CGRect(x: ToDateMeasure_Icon.frame.maxX , y: (y/2) - 4, width: (10 * x), height: (3.5 * y))
+        TO_MeasurementType_TF.attributedPlaceholder = NSAttributedString(string: "Date",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        TO_MeasurementType_TF.textColor = UIColor.white
+        TO_MeasurementType_TF.textAlignment = .center
+        TO_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        TO_MeasurementType_TF.adjustsFontSizeToFitWidth = true
+        // TO_MeasurementType_TF.backgroundColor = UIColor.gray  //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            TO_MeasurementType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                TO_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                TO_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+            // TO_MeasurementType_TF.isUserInteractionEnabled = true
+        }
+        TO_MeasurementType_TF.addTarget(self, action: #selector(self.TMeasurement_calendarAction), for: .allEditingEvents)
+        TO_MeasurementType_TF.delegate = self as? UITextFieldDelegate
+        Measure_ToDateView.addSubview(TO_MeasurementType_TF)
+        
+        // Edit icon..
+        let ToDateEditMeasure_Icon = UIImageView()
+        ToDateEditMeasure_Icon.frame = CGRect(x: TO_MeasurementType_TF.frame.maxX, y: (y/2) - 4, width:(2 * x), height: (1.5 * y))
+        //ToDateEditMeasure_Icon.backgroundColor = UIColor.white
+        ToDateEditMeasure_Icon.image = UIImage(named: "OrderDate_WH")
+       // Measure_ToDateView.addSubview(ToDateEditMeasure_Icon)
+        
+        
+        
+        //----------------Time Slot View------------------------------------
+        
+        let Slot_MeasureTypeLBL = UILabel()
+        Slot_MeasureTypeLBL.frame = CGRect(x: 0, y: Measure_FromDateView.frame.maxY + y, width: (8 * x), height: (3.5 * y))
+        Slot_MeasureTypeLBL.text = "TIME SLOT"
+        Slot_MeasureTypeLBL.textColor = UIColor.black
+        Slot_MeasureTypeLBL.textAlignment = .left
+        Slot_MeasureTypeLBL.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        Slot_MeasureTypeLBL.adjustsFontSizeToFitWidth = true
+        // Slot_MeasureTypeLBL.backgroundColor = UIColor.lightGray
+        MeasurementTypeView.addSubview(Slot_MeasureTypeLBL)
+        
+        
+        //TimeSlotView
+        let Measure_TimeSlotView = UIView()
+        Measure_TimeSlotView.frame = CGRect(x: Slot_MeasureTypeLBL.frame.maxX, y: Measure_FromDateView.frame.maxY + y, width: (23.5 * x), height: (3.5 * y))
+        Measure_TimeSlotView.backgroundColor = UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0)
+        MeasurementTypeView.addSubview(Measure_TimeSlotView)
+        //print("width value :",TailorImageView.frame.width / 2)
+        
+        // TimeMatrl_Icon..
+        let TimeMeasure_Icon = UIImageView()
+        TimeMeasure_Icon.frame = CGRect(x: x/2, y: y, width: 18, height: 18)
+        //TimeMeasure_Icon.backgroundColor = UIColor.white
+        TimeMeasure_Icon.image = UIImage(named: "OrderTime_WH")
+        Measure_TimeSlotView.addSubview(TimeMeasure_Icon)
+        
+        // let SLOT_MeasurementType_TF = UITextField()
+        SLOT_MeasurementType_TF.frame = CGRect(x: TimeMeasure_Icon.frame.maxX + x, y: (y/2) - 4, width: (20 * x), height: (3.5 * y))
+        SLOT_MeasurementType_TF.attributedPlaceholder = NSAttributedString(string: "Time",attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        SLOT_MeasurementType_TF.textColor = UIColor.white
+        SLOT_MeasurementType_TF.textAlignment = .left
+        SLOT_MeasurementType_TF.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        SLOT_MeasurementType_TF.adjustsFontSizeToFitWidth = true
+        // SLOT_MeasurementType_TF.backgroundColor = UIColor.lightGray //UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            SLOT_MeasurementType_TF.isUserInteractionEnabled = false
+        }
+        else
+        {
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                SLOT_MeasurementType_TF.isUserInteractionEnabled = false
+            }
+            else
+            {
+                SLOT_MeasurementType_TF.isUserInteractionEnabled = true
+            }
+            // SLOT_MeasurementType_TF.isUserInteractionEnabled = true
+        }
+        SLOT_MeasurementType_TF.addTarget(self, action: #selector(self.SlotMeasure_calendarAction), for: .allEditingEvents)
+        SLOT_MeasurementType_TF.delegate = self as? UITextFieldDelegate
+        Measure_TimeSlotView.addSubview(SLOT_MeasurementType_TF)
+        
+        
+        // -------------------------------------------------------------
+        
+        
+        // let ApproveButton = UIButton()
+        Measure_ApproveButton.frame = CGRect(x: (5 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (3.5 * y))
+        Measure_ApproveButton.backgroundColor = UIColor(red:0.24, green:0.62, blue:0.24, alpha:1.0)
+        Measure_ApproveButton.setTitle("Approve", for: .normal)
+        Measure_ApproveButton.setTitleColor(UIColor.white, for: .normal)
+        Measure_ApproveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
+        Measure_ApproveButton.layer.borderColor = UIColor.lightGray.cgColor
+        Measure_ApproveButton.layer.borderWidth = 1.0
+        Measure_ApproveButton.layer.cornerRadius = 15
+        Measure_ApproveButton.addTarget(self, action: #selector(self.MeasureApproveButtonAction(sender:)), for: .touchUpInside)
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                MeasurementTypeView.addSubview(Measure_ApproveButton)
+            }
+        }
+        
+        
+        
+        // let RejectButton = UIButton()
+        Measure_RejectButton.frame = CGRect(x: Measure_ApproveButton.frame.maxX + (2 * x), y: Measure_TimeSlotView.frame.maxY + y, width: (10 * x), height: (3.5 * y))
+        Measure_RejectButton.backgroundColor = UIColor(red:0.89, green:0.13, blue:0.11, alpha:1.0)
+        Measure_RejectButton.setTitle("Reject", for: .normal)
+        Measure_RejectButton.setTitleColor(UIColor.white, for: .normal)
+        Measure_RejectButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.3 * x)!
+        Measure_RejectButton.layer.borderColor = UIColor.lightGray.cgColor
+        Measure_RejectButton.layer.borderWidth = 1.0
+        Measure_RejectButton.layer.cornerRadius = 15
+        Measure_RejectButton.addTarget(self, action: #selector(self.MeasureRejectButtonAction(sender:)), for: .touchUpInside)
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                MeasurementTypeView.addSubview(Measure_RejectButton)
+            }
+        }
+        
+        
+        let Measure_SaveButton = UIButton()
+        Measure_SaveButton.frame = CGRect(x: TailorImageView.frame.width - (7 * x), y: Measure_RejectButton.frame.minY + y , width: (10 * x), height: (3.5 * y))
+        Measure_SaveButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
+        Measure_SaveButton.setTitle("Save", for: .normal)
+        Measure_SaveButton.setTitleColor(UIColor.white, for: .normal)
+        Measure_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.4 * x)!
+        Measure_SaveButton.addTarget(self, action: #selector(self.Measure_SaveButtonAction(sender:)), for: .touchUpInside)
+        if MeasurementInEnglish.contains("Go to Tailor Shop")
+        {
+            // MeasureSucessStr = "True"
+        }
+        else
+        {
+            if (MeasureStatus.contains("Approved") && MeasurementPayment.contains("Paid"))
+            {
+                
+            }
+            else
+            {
+                MeasurementTypeView.addSubview(Measure_SaveButton)
+            }
+            
+        }
     }
     
     func AppointmentTypeView()

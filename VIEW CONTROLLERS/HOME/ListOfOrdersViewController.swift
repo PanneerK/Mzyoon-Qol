@@ -532,7 +532,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(StraightLine)
             
             let orderId_Icon = UIImageView()
-            orderId_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y/2, width: x, height: y)
+            orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: y/2, width: x, height: y)
             orderId_Icon.image = UIImage(named: "OrderID")
             PendingViewButton.addSubview(orderId_Icon)
             
@@ -561,7 +561,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(underLine1)
             
             let TailorName_Icon = UIImageView()
-            TailorName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            TailorName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
             TailorName_Icon.image = UIImage(named: "TailorName")
             PendingViewButton.addSubview(TailorName_Icon)
             
@@ -589,7 +589,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(underLine2)
             
             let ShopName_Icon = UIImageView()
-            ShopName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
+            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
             ShopName_Icon.image = UIImage(named: "ShopName")
             PendingViewButton.addSubview(ShopName_Icon)
             
@@ -617,7 +617,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(underLine3)
             
             let ProductName_Icon = UIImageView()
-            ProductName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
+            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
             ProductName_Icon.image = UIImage(named: "ProductName")
             PendingViewButton.addSubview(ProductName_Icon)
             
@@ -645,7 +645,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(underLine4)
             
             let OrderDT_Icon = UIImageView()
-            OrderDT_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
+            OrderDT_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
             OrderDT_Icon.image = UIImage(named: "OrderDate_Time")
             PendingViewButton.addSubview(OrderDT_Icon)
             
@@ -854,12 +854,12 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
            
             // Straight Line..
             let StraightLine = UILabel()
-            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX, y: 0, width: 0.3, height: DeliveredViewButton.frame.height)
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x, y: 0, width: 0.3, height: DeliveredViewButton.frame.height)
             StraightLine.backgroundColor = UIColor.lightGray
             DeliveredViewButton.addSubview(StraightLine)
             
             let orderId_Icon = UIImageView()
-            orderId_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: y/2, width: x, height: y)
+            orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: y/2, width: x, height: y)
             orderId_Icon.image = UIImage(named: "OrderID")
             DeliveredViewButton.addSubview(orderId_Icon)
             
@@ -888,7 +888,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(underLine1)
             
             let TailorName_Icon = UIImageView()
-            TailorName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            TailorName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
             TailorName_Icon.image = UIImage(named: "TailorName")
             DeliveredViewButton.addSubview(TailorName_Icon)
             
@@ -916,7 +916,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(underLine2)
             
             let ShopName_Icon = UIImageView()
-            ShopName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
+            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
             ShopName_Icon.image = UIImage(named: "ShopName")
             DeliveredViewButton.addSubview(ShopName_Icon)
             
@@ -944,7 +944,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(underLine3)
             
             let ProductName_Icon = UIImageView()
-            ProductName_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
+            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
             ProductName_Icon.image = UIImage(named: "ProductName")
             DeliveredViewButton.addSubview(ProductName_Icon)
             
@@ -972,7 +972,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(underLine4)
             
             let OrderDT_Icon = UIImageView()
-            OrderDT_Icon.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
+            OrderDT_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
             OrderDT_Icon.image = UIImage(named: "OrderDate_Time")
             DeliveredViewButton.addSubview(OrderDT_Icon)
             
