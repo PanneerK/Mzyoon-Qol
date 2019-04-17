@@ -425,7 +425,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                 else
                 {
                     emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    emptyLabel.text = "You Don't Have Delivered orders"
+                  //  emptyLabel.text = "You Don't Have Delivered orders"
                 }
                 
                 emptyLabel.textColor = UIColor.black
@@ -854,7 +854,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
            
             // Straight Line..
             let StraightLine = UILabel()
-            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x, y: 0, width: 0.3, height: DeliveredViewButton.frame.height)
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x/2, y: 0, width: 0.3, height: DeliveredViewButton.frame.height)
             StraightLine.backgroundColor = UIColor.lightGray
             DeliveredViewButton.addSubview(StraightLine)
             

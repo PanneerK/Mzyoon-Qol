@@ -1236,7 +1236,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         //-----------------Material Save Button------------------------
         
         let Material_SaveButton = UIButton()
-        Material_SaveButton.frame = CGRect(x: courierImageView.frame.width - (7 * x), y: Material_RejectButton.frame.minY + y, width: (10 * x), height: (3.5 * y))
+        Material_SaveButton.frame = CGRect(x: courierImageView.frame.width - (10 * x), y: Material_RejectButton.frame.minY + y, width: (10 * x), height: (3.5 * y))
         Material_SaveButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
         Material_SaveButton.setTitle("Save", for: .normal)
         Material_SaveButton.setTitleColor(UIColor.white, for: .normal)
@@ -1287,7 +1287,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            MeasurementTypeView.frame = CGRect(x: x/2, y: y/2, width: view.frame.width - x, height: (40 * y))
+            MeasurementTypeView.frame = CGRect(x: 0, y: 0, width: MeasurementViewBackDrop.frame.width, height: (40 * y))
             //MeasurementTypeView.backgroundColor = UIColor.darkGray
             MeasurementTypeView.layer.borderWidth = 1
             MeasurementTypeView.layer.borderColor = UIColor.clear.cgColor
@@ -1651,7 +1651,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         
         let Measure_SaveButton = UIButton()
-        Measure_SaveButton.frame = CGRect(x: TailorImageView.frame.width - (7 * x), y: Measure_RejectButton.frame.minY + y , width: (10 * x), height: (3.5 * y))
+        Measure_SaveButton.frame = CGRect(x: TailorImageView.frame.width - (10 * x), y: Measure_RejectButton.frame.minY + y , width: (10 * x), height: (3.5 * y))
         Measure_SaveButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
         Measure_SaveButton.setTitle("Save", for: .normal)
         Measure_SaveButton.setTitleColor(UIColor.white, for: .normal)
