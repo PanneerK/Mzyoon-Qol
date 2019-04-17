@@ -10,6 +10,18 @@ import UIKit
 
 class Variables: NSObject
 {
+    //GENDER SELECTION
+    public var genderType:String = ""
+    public var genderId:Int = 0
+    
+    //DRESS TYPE SELECTION
+    public var dressType:String = ""
+    public var dressId:Int = 0
+    
+    //DRESS SUB TYPE SELECTION
+    public var dressSubType:String = ""
+    public var dressSubTypeId:Int = 0
+    
     public var firstName:String = ""
     public var secondName:String = ""
     public var countryName:String = ""
@@ -46,6 +58,8 @@ class Variables: NSObject
     public var TailorID:Int = 0
     
     public var hintsEnableTag:Int = 0
+    
+    public var measurementTag:Int = 0
     
     public var viewController:UIViewController = UIViewController()
     

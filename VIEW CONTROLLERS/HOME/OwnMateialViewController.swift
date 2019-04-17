@@ -225,8 +225,17 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             changeViewToEnglishInSelf()
         }
         
-        hintsViewContents()
-        hintsContents()
+        let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
+        
+        if onOrOffValue == 1
+        {
+            hintsViewContents()
+            hintsContents()
+        }
+        else
+        {
+            
+        }
     }
     
     func hintsContents()
@@ -249,11 +258,53 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         let detailedLabel = UILabel()
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
         detailedLabel.text = "Please click here to add the new material image"
-        detailedLabel.textAlignment = .justified
+        detailedLabel.textAlignment = .left
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                headingLabel.text = "Own Material"
+                headingLabel.textAlignment = .left
+                
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here to add the new material image"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                headingLabel.text = "Own Material"
+                headingLabel.textAlignment = .left
+                
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "الرجاء الضغط هنا لإضافة صورة المادة الجديدة"
+                detailedLabel.textAlignment = .left
+            }
+        }
+        else
+        {
+            headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            headingLabel.text = "Own Material"
+            headingLabel.textAlignment = .left
+            
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here to add the new material image"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func addMaterial(xPosition : CGFloat)

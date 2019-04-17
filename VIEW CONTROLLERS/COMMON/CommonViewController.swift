@@ -138,6 +138,7 @@ class CommonViewController: UIViewController
     {
         let slideScreen = SlideViewController()
         let leftSlideScreen = UISideMenuNavigationController(rootViewController: slideScreen)
+        leftSlideScreen.menuWidth = (view.frame.width / 2) + (view.frame.width / 4)
         SideMenuManager.default.menuLeftNavigationController = leftSlideScreen        
     }
     
@@ -145,6 +146,7 @@ class CommonViewController: UIViewController
     {
         let slideScreen = SlideViewController()
         let leftSlideScreen = UISideMenuNavigationController(rootViewController: slideScreen)
+        leftSlideScreen.menuWidth = (view.frame.width / 2) + (view.frame.width / 4)
         SideMenuManager.default.menuLeftNavigationController = leftSlideScreen
     }
     
@@ -152,6 +154,7 @@ class CommonViewController: UIViewController
     {
         let slideScreen = SlideViewController()
         let leftSlideScreen = UISideMenuNavigationController(rootViewController: slideScreen)
+        leftSlideScreen.menuWidth = (view.frame.width / 2) + (view.frame.width / 4)
         SideMenuManager.default.menuRightNavigationController = leftSlideScreen
     }
     
@@ -812,7 +815,17 @@ class CommonViewController: UIViewController
     {
         hintsView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         hintsView.backgroundColor = UIColor.black.withAlphaComponent(0.85)
-        view.addSubview(hintsView)
+        
+        let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
+
+        if onOrOffValue == 1
+        {
+            view.addSubview(hintsView)
+        }
+        else
+        {
+            hintsView.removeFromSuperview()
+        }
         
         gotItButton.frame = CGRect(x: hintsView.frame.width - (12 * x), y: hintsView.frame.height - (6 * y), width: (10 * x), height: (4 * y))
         gotItButton.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
@@ -820,6 +833,28 @@ class CommonViewController: UIViewController
         gotItButton.setTitleColor(UIColor.white, for: .normal)
         gotItButton.addTarget(self, action: #selector(self.hintsButtonAction(sender:)), for: .touchUpInside)
         hintsView.addSubview(gotItButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                gotItButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                gotItButton.setTitle("Got it", for: .normal)
+            }
+            else if language == "ar"
+            {
+                hintsView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                gotItButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                gotItButton.setTitle("حصلت عليك", for: .normal)
+            }
+        }
+        else
+        {
+            hintsView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            gotItButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            gotItButton.setTitle("Got it", for: .normal)
+        }
     }
     
     @objc func hintsButtonAction(sender : UIButton)
