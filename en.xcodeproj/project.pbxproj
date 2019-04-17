@@ -12,6 +12,7 @@
 		DA06035A21FAFEB20081A96F /* WriteReviewRateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06035921FAFEB20081A96F /* WriteReviewRateViewController.swift */; };
 		DA06035C21FB427C0081A96F /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06035B21FB427C0081A96F /* ReviewsViewController.swift */; };
 		DA06108721E4C4D1005BB29D /* ServiceTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA06108621E4C4D1005BB29D /* ServiceTypeViewController.swift */; };
+		DA07303A2264914A00DEDE13 /* DeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0730392264914900DEDE13 /* DeliveryViewController.swift */; };
 		DA077FC021D62A5400D9E565 /* ListOfOrdersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */; };
 		DA077FC221D6608000D9E565 /* OrderRequestListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */; };
 		DA07CF112223C571007DB14C /* OrderDetailsDeliveredVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA07CF102223C571007DB14C /* OrderDetailsDeliveredVC.swift */; };
@@ -107,6 +108,7 @@
 		DA06035921FAFEB20081A96F /* WriteReviewRateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteReviewRateViewController.swift; sourceTree = "<group>"; };
 		DA06035B21FB427C0081A96F /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
 		DA06108621E4C4D1005BB29D /* ServiceTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceTypeViewController.swift; sourceTree = "<group>"; };
+		DA0730392264914900DEDE13 /* DeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryViewController.swift; sourceTree = "<group>"; };
 		DA077FBF21D62A5400D9E565 /* ListOfOrdersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfOrdersViewController.swift; sourceTree = "<group>"; };
 		DA077FC121D6608000D9E565 /* OrderRequestListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRequestListViewController.swift; sourceTree = "<group>"; };
 		DA07CF102223C571007DB14C /* OrderDetailsDeliveredVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsDeliveredVC.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			children = (
 				DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */,
 				DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */,
+				DA0730392264914900DEDE13 /* DeliveryViewController.swift */,
 				DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */,
 				DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */,
 				DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */,
@@ -647,6 +650,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Mzyoon/Pods-Mzyoon-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AlamofireDomain/AlamofireDomain.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
+				"${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
@@ -658,6 +662,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireDomain.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
@@ -723,6 +728,7 @@
 				DA07CF112223C571007DB14C /* OrderDetailsDeliveredVC.swift in Sources */,
 				FD4631DC21775055002C06CA /* CountryCodeTableViewCell.swift in Sources */,
 				FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */,
+				DA07303A2264914A00DEDE13 /* DeliveryViewController.swift in Sources */,
 				FD2ADFEE2175C0230033025B /* ServerAPIDelegate.swift in Sources */,
 				FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */,
 				FD1160462264940B00D34EAD /* AddNewMeasurementViewController.swift in Sources */,
