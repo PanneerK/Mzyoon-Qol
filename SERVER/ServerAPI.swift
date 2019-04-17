@@ -18,9 +18,9 @@ class ServerAPI : NSObject
     var resultDict:NSDictionary = NSDictionary()
     
 
-    //    var baseURL:String = "http://192.168.0.26/TailorAPI"
+//    var baseURL:String = "http://192.168.0.26/TailorAPI"
    
-          var baseURL:String = "http://appsapi.mzyoon.com"
+    var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
     
@@ -2593,6 +2593,40 @@ class ServerAPI : NSObject
                     
                 }
             }
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
+    }
+    
+    //17.04.2019
+    
+    func API_ViewDetails(patternId : Int, delegate : ServerAPIDelegate)
+    {
+        
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - View Details Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/Api/Order/ViewMaterialDetails?Id=\(patternId)", arguments: [baseURL])
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    
+                    delegate.API_CALLBACK_ViewDetails!(details: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 62, errorMessage: "View Details Failed")
+                }
+            }
+            
         }
         else
         {

@@ -132,4 +132,7 @@ import Foundation
     @objc optional func API_CALLBACK_GetPaymentAddress(getAddress : NSDictionary)
     @objc optional func API_CALLBACK_GetShopDetails(getShopDetails : NSDictionary)
     
+    //17.04.2019
+    @objc optional func API_CALLBACK_ViewDetails(details : NSDictionary)
+    
 }
