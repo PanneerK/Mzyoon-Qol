@@ -323,7 +323,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         directDeliveryLabel.text = (orderTypeNameArray[0] as! String)
         directDeliveryLabel.textColor = UIColor.black
         directDeliveryLabel.textAlignment = .left
-        directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.2 * x))
         selfScreenContents.addSubview(directDeliveryLabel)
         
         let directDeliveryUnderline = UILabel()
@@ -370,7 +370,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         couriertDeliveryLabel.text = (orderTypeNameArray[1] as! String)
         couriertDeliveryLabel.textColor = UIColor.black
         couriertDeliveryLabel.textAlignment = .left
-        couriertDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        couriertDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.2 * x))
         couriertDeliveryLabel.adjustsFontSizeToFitWidth = true
         selfScreenContents.addSubview(couriertDeliveryLabel)
         
@@ -379,7 +379,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         extraLabel.text = "(Extra charges applicable)"
         extraLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         extraLabel.textAlignment = .left
-        extraLabel.font = UIFont(name: "AvenirNext-Regular", size: 10)
+        extraLabel.font = UIFont(name: "AvenirNext-Regular", size: x)
         extraLabel.adjustsFontSizeToFitWidth = true
         selfScreenContents.addSubview(extraLabel)
         
@@ -426,7 +426,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         companyLabel.text = (orderTypeNameArray[2] as! String)
         companyLabel.textColor = UIColor.black
         companyLabel.textAlignment = .left
-        companyLabel.font = UIFont(name: "AvenirNext-Regular", size: 12)
+        companyLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.2 * x))
         selfScreenContents.addSubview(companyLabel)
         
         let companyUnderline = UILabel()
@@ -477,9 +477,9 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         pageContent(tag: 3)
         
         
-        let onOrOff = Variables.sharedManager.hintsEnableTag
+        let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
 
-        if onOrOff == 1
+        if onOrOffValue == 1
         {
             hintsViewContents()
             hintsContents()
@@ -505,6 +505,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         var x1:CGFloat = x
         
         let title = ["Back", "Skip", "Next"]
+        let arabicTitle = ["الى الخلف", "تخطى", "التالي"]
         
         for i in 0..<3
         {
@@ -518,6 +519,47 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             hintsView.addSubview(threeButtons)
             
             x1 = threeButtons.frame.maxX + x
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    threeButtons.setTitle(title[i], for: .normal)
+                }
+                else if language == "ar"
+                {
+                    threeButtons.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    threeButtons.setTitle(arabicTitle[i], for: .normal)
+                }
+            }
+            else
+            {
+                threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                threeButtons.setTitle(title[i], for: .normal)
+            }
+        }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                headingLabel.text = "Order Type"
+                headingLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                headingLabel.text = "نوع الطلب"
+                headingLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            headingLabel.text = "Order Type"
+            headingLabel.textAlignment = .left
         }
         
         firstHint()
@@ -584,13 +626,39 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         hintsImage.image = UIImage(named: "ownMaterialHintImage")
         hintsView.addSubview(hintsImage)
         
-        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (6 * y))
         detailedLabel.text = "If you have your own material for stitching and want to deliver it directly to tailor. Please click this option"
-        detailedLabel.textAlignment = .justified
+        detailedLabel.textAlignment = .left
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "If you have your own material for stitching and want to deliver it directly to tailor. Please click this option"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "إذا كان لديك المواد الخاصة بك للخياطة وتريد تسليمها مباشرة إلى الخياطة. الرجاء الضغط على هذا الخيار"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "If you have your own material for stitching and want to deliver it directly to tailor. Please click this option"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func secondHint()
@@ -601,13 +669,39 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         hintsImage.image = UIImage(named: "courierMaterialHintImage")
         hintsView.addSubview(hintsImage)
         
-        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (6 * y))
         detailedLabel.text = "If you have your own material for stitching and want it to be picked from your place. Please click this option"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "If you have your own material for stitching and want it to be picked from your place. Please click this option"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "إذا كان لديك المواد الخاصة بك للخياطة وتريد أن يتم انتقاؤها من مكانك. الرجاء الضغط على هذا الخيار"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "If you have your own material for stitching and want it to be picked from your place. Please click this option"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func thirdHint()
@@ -618,13 +712,39 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         hintsImage.image = UIImage(named: "companyMaterialHintImage")
         hintsView.addSubview(hintsImage)
         
-        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (8 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (8 * y), width: hintsView.frame.width - (4 * x), height: (6 * y))
         detailedLabel.text = "Please click this option to explore our materials for stitching"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click this option to explore our materials for stitching"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر على هذا الخيار للإطلاع على مواد الخياطة الخاصة بنا"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click this option to explore our materials for stitching"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

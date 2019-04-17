@@ -541,8 +541,17 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         listViewContents(isHidden: false)
         mapViewContents(isHidden: true)
         
-        hintsViewContents()
-        hintsContents()
+        let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
+        
+        if onOrOffValue == 1
+        {
+            hintsViewContents()
+            hintsContents()
+        }
+        else
+        {
+            
+        }
     }
     
     func hintsContents()
@@ -551,7 +560,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         let headingLabel = UILabel()
         headingLabel.frame = CGRect(x: (2 * x), y: (5 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
-        headingLabel.text = "Measurements"
+        headingLabel.text = "Tailor List"
         headingLabel.textAlignment = .left
         headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
         headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
@@ -560,7 +569,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         var x1:CGFloat = x
         
         let title = ["Back", "Skip", "Next"]
-        
+        let arabicTitle = ["الى الخلف", "تخطى", "التالي"]
+
         for i in 0..<3
         {
             let threeButtons = UIButton()
@@ -573,6 +583,47 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             hintsView.addSubview(threeButtons)
             
             x1 = threeButtons.frame.maxX + x
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    threeButtons.setTitle(title[i], for: .normal)
+                }
+                else if language == "ar"
+                {
+                    threeButtons.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    threeButtons.setTitle(arabicTitle[i], for: .normal)
+                }
+            }
+            else
+            {
+                threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                threeButtons.setTitle(title[i], for: .normal)
+            }
+        }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                headingLabel.text = "Tailor List"
+                headingLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                headingLabel.text = "قائمة الخياط"
+                headingLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            headingLabel.text = "Tailor List"
+            headingLabel.textAlignment = .left
         }
         
         firstHint()
@@ -675,11 +726,37 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
         detailedLabel.text = "Please click here view the list of tailors"
-        detailedLabel.textAlignment = .justified
+        detailedLabel.textAlignment = .left
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here view the list of tailors"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر هنا لعرض قائمة الخياطين"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here view the list of tailors"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func secondHint()
@@ -695,8 +772,34 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here to view the tailors around you in map"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر هنا لعرض الخياطين من حولك في الخريطة"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here to view the tailors around you in map"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func thirdHint()
@@ -712,8 +815,34 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Here you can see the number of tailors selected based on you selection"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "هنا يمكنك رؤية عدد الخياطين المختارين بناءً على اختيارك"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Here you can see the number of tailors selected based on you selection"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func fourthHint()
@@ -729,8 +858,34 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here to select/ Unselect the tailor."
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر هنا لتحديد / إلغاء تحديد الخياط."
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here to select/ Unselect the tailor."
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func fifthHint()
@@ -746,8 +901,34 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here to view the shop details of the tailor"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر هنا لعرض تفاصيل متجر الخياط"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here to view the shop details of the tailor"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func sixthHint()
@@ -763,8 +944,34 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here to see the distance from you and the tailor in map view"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر هنا لمعرفة المسافة بينك و الخياط في عرض الخريطة"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here to see the distance from you and the tailor in map view"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func seventhHint()
@@ -780,8 +987,34 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here to confirm your selection."
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "الرجاء الضغط هنا لتأكيد اختيارك."
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here to confirm your selection."
+            detailedLabel.textAlignment = .left
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)

@@ -18,7 +18,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     let navigationBar = UIView()
     let navigationTitle = UILabel()
     let languageButton = UIButton()
+    let hintsButton = UIButton()
+    let hintsSwitch = UISwitch()
 
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -72,6 +75,31 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         languageButton.addTarget(self, action: #selector(self.languageFunction), for: .touchUpInside)
         view.addSubview(languageButton)
         
+        hintsButton.frame = CGRect(x: (2 * x), y: languageButton.frame.maxY + y, width: view.frame.width - (4 * x), height: (5 * y))
+        hintsButton.layer.cornerRadius = 10
+        hintsButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        hintsButton.setTitleColor(UIColor.white, for: .normal)
+        hintsButton.addTarget(self, action: #selector(self.hintsSwicthAction), for: .touchUpInside)
+        view.addSubview(hintsButton)
+        
+        hintsSwitch.frame = CGRect(x: hintsButton.frame.maxX - (7 * x), y: ((hintsButton.frame.height - 31) / 2), width: (5.1 * x), height: 31)
+        hintsSwitch.addTarget(self, action: #selector(self.hintsSwicthAction), for: .valueChanged)
+        hintsButton.addSubview(hintsSwitch)
+        
+        let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
+        
+        if onOrOffValue == 1
+        {
+            hintsButton.setTitle("Hints off - ", for: .normal)
+            hintsSwitch.isOn = true
+        }
+        else
+        {
+            hintsButton.setTitle("Hints on - ", for: .normal)
+            hintsSwitch.isOn = false
+        }
+        
+        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -82,6 +110,24 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             {
                 changeViewToArabic()
             }
+        }
+    }
+    
+    @objc func hintsSwicthAction()
+    {
+        let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
+        
+        if onOrOffValue == 1
+        {
+            UserDefaults.standard.set(0, forKey: "hintsSwitch")
+            hintsButton.setTitle("Hints on - ", for: .normal)
+            hintsSwitch.isOn = false
+        }
+        else
+        {
+            UserDefaults.standard.set(1, forKey: "hintsSwitch")
+            hintsButton.setTitle("Hints off - ", for: .normal)
+            hintsSwitch.isOn = true
         }
     }
     

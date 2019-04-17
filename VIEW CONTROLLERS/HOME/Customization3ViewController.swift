@@ -63,6 +63,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     let activeViewSub = UIView()
     let activityIndicatorSub = UIActivityIndicatorView()
     
+    //HINTS PARAMETERS
+    var hintTag = 0
+    let hintsImage = UIImageView()
+    let detailedLabel = UILabel()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -494,35 +499,221 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             subcCustomization3Content(inputArray: subCustomAttEnglishNameArray)
         }
         
-        hintsViewContents()
-        hintsContents()
+        let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
+        
+        if onOrOffValue == 1
+        {
+            hintsViewContents()
+            hintsContents()
+        }
+        else
+        {
+            
+        }
     }
     
     func hintsContents()
     {
         let headingLabel = UILabel()
-        headingLabel.frame = CGRect(x: (2 * x), y: customedImageView.frame.maxY + (10 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
+        headingLabel.frame = CGRect(x: (2 * x), y: (15 * y), width: hintsView.frame.width - (4 * x), height: (3 * y))
         headingLabel.text = "Customizations"
         headingLabel.textAlignment = .left
         headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
         headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         hintsView.addSubview(headingLabel)
        
-        let hintsImage = UIImageView()
-        hintsImage.frame = CGRect(x: (3 * x), y: customedImageView.frame.maxY + (14 * y), width: selfScreenContents.frame.width, height: (4 * y))
+        var x1:CGFloat = x
+        
+        let title = ["Back", "Skip", "Next"]
+        let arabicTitle = ["الى الخلف", "تخطى", "التالي"]
+        
+        for i in 0..<3
+        {
+            let threeButtons = UIButton()
+            threeButtons.frame = CGRect(x: x1, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+            threeButtons.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+            threeButtons.setTitle(title[i], for: .normal)
+            threeButtons.setTitleColor(UIColor.white, for: .normal)
+            threeButtons.tag = i
+            threeButtons.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+            hintsView.addSubview(threeButtons)
+            
+            x1 = threeButtons.frame.maxX + x
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    threeButtons.setTitle(title[i], for: .normal)
+                }
+                else if language == "ar"
+                {
+                    threeButtons.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    threeButtons.setTitle(arabicTitle[i], for: .normal)
+                }
+            }
+            else
+            {
+                threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                threeButtons.setTitle(title[i], for: .normal)
+            }
+        }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                headingLabel.text = "Customizations"
+                headingLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                headingLabel.text = "التخصيصات"
+                headingLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            headingLabel.text = "Customizations"
+            headingLabel.textAlignment = .left
+        }
+        
+        firstHint()
+    }
+    
+    @objc func threeButtonAction(sender : UIButton)
+    {
+        if sender.tag == 0
+        {
+            if hintTag != 0
+            {
+                hintTag = hintTag - 1
+            }
+            
+            if hintTag == 0
+            {
+                firstHint()
+            }
+            else if hintTag == 1
+            {
+                secondHint()
+            }
+        }
+        else if sender.tag == 1
+        {
+            hintsView.removeFromSuperview()
+        }
+        else if sender.tag == 2
+        {
+            if hintTag < 5
+            {
+                hintTag = hintTag + 1
+            }
+            
+            if hintTag == 0
+            {
+                firstHint()
+            }
+            else if hintTag == 1
+            {
+                secondHint()
+            }
+            else
+            {
+                hintTag = 0
+                hintsView.removeFromSuperview()
+            }
+        }
+    }
+    
+    func firstHint()
+    {
+        hintsImage.frame = CGRect(x: (3 * x), y: customedImageView.frame.maxY + (13.5 * y), width: selfScreenContents.frame.width, height: (4 * y))
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "custom3Image")
         hintsView.addSubview(hintsImage)
         
-        let detailedLabel = UILabel()
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Please click and select the part to be customized"
+        detailedLabel.text = "Please click and select the part to be customized."
+        detailedLabel.textAlignment = .left
+        detailedLabel.textColor = UIColor.white
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
+        hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click and select the part to be customized."
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "الرجاء الضغط وتحديد الجزء المراد تخصيصه."
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click and select the part to be customized."
+            detailedLabel.textAlignment = .left
+        }
+    }
+    
+    func secondHint()
+    {
+        hintsImage.frame = CGRect(x: (3 * x), y: customedImageView.frame.maxY + (19.5 * y), width: selfScreenContents.frame.width, height: (10 * y))
+        hintsImage.layer.borderWidth = 2
+        hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
+        hintsImage.image = UIImage(named: "customScrollHintImage")
+        hintsView.addSubview(hintsImage)
+        
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (6 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.text = "Please Select any customization for selected part."
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please Select any customization for selected part."
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى تحديد أي تخصيص للجزء المحدد."
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please Select any customization for selected part."
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func subcCustomization3Content(inputArray : NSArray)
@@ -535,7 +726,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             views.removeFromSuperview()
         }
         
-        var x3:CGFloat = (2 * x)
+        var x3:CGFloat = 0
+        
         for i in 0..<inputArray.count
         {
             let customizationButton = UIButton()
@@ -619,7 +811,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         customizationScrollView.contentSize.width = x3
         
         let customization3NextButton = UIButton()
-        customization3NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * y))
+        customization3NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * x))
         customization3NextButton.layer.cornerRadius = customization3NextButton.frame.height / 2
         customization3NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization3NextButton.layer.masksToBounds = true

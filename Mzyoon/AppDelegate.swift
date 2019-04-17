@@ -78,6 +78,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             window?.rootViewController = navigationScreen
             window?.makeKeyAndVisible()
         }
+        
+        if let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as? Int
+        {
+            print("SWITCH VALUE", onOrOffValue)
+        }
+        else
+        {
+            UserDefaults.standard.set(1, forKey: "hintsSwitch")
+        }
     }
     
     func applicationWillResignActive(_ application: UIApplication)
@@ -99,7 +108,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     func applicationDidBecomeActive(_ application: UIApplication)
     {
-        
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
     

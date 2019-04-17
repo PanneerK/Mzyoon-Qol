@@ -326,7 +326,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.text = buttonTitleText[i]
             buttonTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: 5)
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: x)
+            buttonTitle.font = buttonTitle.font.withSize(x)
             selectionButton.addSubview(buttonTitle)
         }
     }
@@ -342,6 +343,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     {
         if sender.tag == 0
         {
+            Variables.sharedManager.measurementTag = 0
             let newOrderScreen = GenderViewController()
             self.navigationController?.pushViewController(newOrderScreen, animated: true)
         }

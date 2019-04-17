@@ -455,7 +455,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         viewDetailsButton.addTarget(self, action: #selector(self.viewDetailsButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(viewDetailsButton)
         
-        customization2NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * y))
+        customization2NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * x))
         customization2NextButton.layer.cornerRadius = customization2NextButton.frame.height / 2
         customization2NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)

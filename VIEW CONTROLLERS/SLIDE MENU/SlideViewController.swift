@@ -26,12 +26,14 @@ class SlideViewController: UIViewController
     
     override func viewDidLoad()
     {
-        print("MENU WIDTH", self.view.frame.width)
+        print("MENU WIDTH", view.frame.width)
         
         slideViewWidth = (view.frame.width / 2) + (view.frame.width / 4)
         
         x = 10 / 375 * 100
         x = x * slideViewWidth / 100
+        
+        print("SLIDE MENU", x, slideViewWidth)
         
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
@@ -90,6 +92,8 @@ class SlideViewController: UIViewController
         
         userName.textColor = UIColor.white
         userName.textAlignment = .center
+        userName.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        userName.font = userName.font.withSize((2 * x))
         view.addSubview(userName)
         
         let underline = UILabel()
@@ -100,8 +104,8 @@ class SlideViewController: UIViewController
 //        let buttonTitle = ["My Account", "Address", "Book an Appointment", "Transaction" ,"Rewards", "Refer Friends", "FAQ", "Terms and Conditions", "Settings", "Log Out"]
 //        let buttonImage = ["my_account", "Address", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
         
-        let buttonTitle = ["My Account", "Address", "Add new measurements", "Hints on or off", "Settings", "Log Out"]
-        let buttonImage = ["my_account", "Address", "Add new measurements", "Hints on or off", "settings", "logout"]
+        let buttonTitle = ["My Account", "Address", "Add new measurements", "Settings", "Log Out"]
+        let buttonImage = ["my_account", "Address", "Add new measurements", "settings", "logout"]
         
         var y1:CGFloat = userName.frame.maxY + (2 * y)
         
@@ -116,30 +120,7 @@ class SlideViewController: UIViewController
 //                slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
 //            }
             
-            if i == 3
-            {
-                let hintsSwitch = UISwitch()
-                hintsSwitch.frame = CGRect(x: slideMenusButton.frame.width - (8 * x), y: ((slideMenusButton.frame.height - (3 * y)) / 2), width: (5 * x), height: (3 * y))
-                hintsSwitch.addTarget(self, action: #selector(self.hintsSwicthAction(action:)), for: .valueChanged)
-                
-                let onOrOff = Variables.sharedManager.hintsEnableTag
-                
-                print("SWITCH STATE", onOrOff)
-                
-                if onOrOff == 1
-                {
-                    hintsSwitch.isOn = true
-                }
-                else
-                {
-                    hintsSwitch.isOn = false
-                }
-                slideMenusButton.addSubview(hintsSwitch)
-            }
-            else
-            {
-                slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
-            }
+            slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
 
             view.addSubview(slideMenusButton)
             
@@ -162,20 +143,6 @@ class SlideViewController: UIViewController
             view.addSubview(lineLabel)
             
             y1 = slideMenusButton.frame.maxY + y
-        }
-    }
-    
-    @objc func hintsSwicthAction(action : UISwitch)
-    {
-        let onOrOff = Variables.sharedManager.hintsEnableTag
-        
-        if onOrOff == 1
-        {
-            Variables.sharedManager.hintsEnableTag = 0
-        }
-        else
-        {
-            Variables.sharedManager.hintsEnableTag = 1
         }
     }
     
@@ -203,6 +170,8 @@ class SlideViewController: UIViewController
         
         userName.textColor = UIColor.white
         userName.textAlignment = .center
+        userName.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        userName.font = userName.font.withSize((2 * x))
         view.addSubview(userName)
         
         let underline = UILabel()
@@ -214,8 +183,8 @@ class SlideViewController: UIViewController
 //        let buttonImage = ["my_account", "Address", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
         
         
-        let buttonTitle = ["حسابي", "عنوان", "إضافة قياسات جديدة", "تلميحات أو إيقاف تشغيله", "الإعدادات", "الخروج"]
-        let buttonImage = ["my_account", "Address", "Add new measurements", "Hints on or off", "settings", "logout"]
+        let buttonTitle = ["حسابي", "عنوان", "إضافة قياسات جديدة", "الإعدادات", "الخروج"]
+        let buttonImage = ["my_account", "Address", "Add new measurements", "settings", "logout"]
         
         var y1:CGFloat = userName.frame.maxY + (2 * y)
         
@@ -231,14 +200,8 @@ class SlideViewController: UIViewController
 //                slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
 //            }
             
-            if i == 3
-            {
-                
-            }
-            else
-            {
-                slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
-            }
+            slideMenusButton.addTarget(self, action: #selector(self.menuButtonAction(sender:)), for: .touchUpInside)
+            
             view.addSubview(slideMenusButton)
             
             y1 = slideMenusButton.frame.maxY + y
@@ -274,35 +237,15 @@ class SlideViewController: UIViewController
         }
         else if sender.tag == 2
         {
-            
+            let measureScreen = AddNewMeasurementViewController()
+            self.navigationController?.pushViewController(measureScreen, animated: true)
         }
         else if sender.tag == 3
-        {
-            let onOrOff = Variables.sharedManager.hintsEnableTag
-            
-            print("SWITCH STATUS", onOrOff)
-            
-            if onOrOff == 1
-            {
-                let hintsAlert = UIAlertController(title: "Alert", message: "Do you want to switch off the hints", preferredStyle: .alert)
-                hintsAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: hintsAlertAction(action:)))
-                hintsAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-                self.present(hintsAlert, animated: true, completion: nil)
-            }
-            else
-            {
-                let hintsAlert = UIAlertController(title: "Alert", message: "Do you want to switch on the hints", preferredStyle: .alert)
-                hintsAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: hintsAlertAction(action:)))
-                hintsAlert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-                self.present(hintsAlert, animated: true, completion: nil)
-            }
-        }
-        else if sender.tag == 4
         {
             let settingsScreen = SettingsViewController()
             self.navigationController?.pushViewController(settingsScreen, animated: true)
         }
-        else if sender.tag == 5
+        else if sender.tag == 4
         {
             var logoutAlert = UIAlertController()
             

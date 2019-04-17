@@ -410,7 +410,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             self.brandContents(getInputArray: brandNameEnglishArray)
         }
         
-        customization1NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: brandScrollView.frame.maxY, width: (4 * x), height: (4 * y))
+        customization1NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: brandScrollView.frame.maxY, width: (4 * x), height: (4 * x))
         customization1NextButton.layer.cornerRadius = customization1NextButton.frame.height / 2
         customization1NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization1NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)

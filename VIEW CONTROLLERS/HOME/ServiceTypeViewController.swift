@@ -134,7 +134,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         
         // Urgent...
         
-        directDeliveryIcon.frame = CGRect(x: 0, y: y, width: (2 * x), height: (2 * y))
+        /*directDeliveryIcon.frame = CGRect(x: 0, y: y, width: (2 * x), height: (2 * y))
         if let imageName = deliveryTypeIconArray[0] as? String
         {
             let urlString = serviceCall.baseURL
@@ -173,10 +173,10 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         }
         directDeliveryButton.tag = deliveryTypeIdArray[0] as! Int
         directDeliveryButton.addTarget(self, action: #selector(self.UrgentButtonAction(sender:)), for: .touchUpInside)
-        selfScreenContents.addSubview(directDeliveryButton)
+        selfScreenContents.addSubview(directDeliveryButton)*/
         
         // Appointment..
-        courierDeliveryIcon.frame = CGRect(x: 0, y: directDeliveryButton.frame.maxY + y, width: (2 * x), height: (2 * y))
+        courierDeliveryIcon.frame = CGRect(x: 0, y: y, width: (2 * x), height: (2 * y))
         if let imageName = deliveryTypeIconArray[1] as? String
         {
             let urlString = serviceCall.baseURL
@@ -187,7 +187,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         }
         selfScreenContents.addSubview(courierDeliveryIcon)
         
-        courierDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: directDeliveryButton.frame.maxY + y, width: view.frame.width - (5 * x), height: (2 * y))
+        courierDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: y, width: view.frame.width, height: (2 * y))
         courierDeliveryLabel.text = (deliveryTypeEnglishNameArray[1] as! String).uppercased()
         courierDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         courierDeliveryLabel.textAlignment = .left

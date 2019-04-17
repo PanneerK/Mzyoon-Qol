@@ -256,7 +256,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     func subTypeContents(getNameArray : NSArray, getIdArray : NSArray, getImageArray : NSArray)
     {
-        dressSubTypeScrollView.frame = CGRect(x: (3 * x), y: searchTextField.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (45 * y))
+        dressSubTypeScrollView.frame = CGRect(x: (3 * x), y: searchTextField.frame.maxY + y, width: view.frame.width - (6 * x), height: (view.frame.height - (searchTextField.frame.maxY + tabBar.frame.height + (2 * y))))
         //        dressSubTypeScrollView.backgroundColor = UIColor.black
         view.addSubview(dressSubTypeScrollView)
         
@@ -463,9 +463,18 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                     }
                 }
             }
-            print("CHECK LANGUAGE", UserDefaults.standard.value(forKey: "dressSubType"))
 
-            self.navigationController?.pushViewController(dressSubScreen, animated: true)
+            let tag = Variables.sharedManager.measurementTag
+            
+            if tag == 1
+            {
+                let measurementScreen = Measurement2ViewController()
+                self.navigationController?.pushViewController(measurementScreen, animated: true)
+            }
+            else
+            {
+                self.navigationController?.pushViewController(dressSubScreen, animated: true)
+            }
         }
         else
         {

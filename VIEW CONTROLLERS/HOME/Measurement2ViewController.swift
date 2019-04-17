@@ -646,8 +646,18 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         
         imageViewContents(isHidden : false)
-        hintsViewContents()
-        hintsContents()
+        
+        let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
+        
+        if onOrOffValue == 1
+        {
+            hintsViewContents()
+            hintsContents()
+        }
+        else
+        {
+            
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -3423,7 +3433,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         var x1:CGFloat = x
         
         let title = ["Back", "Skip", "Next"]
-        
+        let arabicTitle = ["الى الخلف", "تخطى", "التالي"]
+
         for i in 0..<3
         {
             let threeButtons = UIButton()
@@ -3436,6 +3447,47 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             hintsView.addSubview(threeButtons)
             
             x1 = threeButtons.frame.maxX + x
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    threeButtons.setTitle(title[i], for: .normal)
+                }
+                else if language == "ar"
+                {
+                    threeButtons.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    threeButtons.setTitle(arabicTitle[i], for: .normal)
+                }
+            }
+            else
+            {
+                threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                threeButtons.setTitle(title[i], for: .normal)
+            }
+        }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                headingLabel.text = "Measurements"
+                headingLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                headingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                headingLabel.text = "قياسات"
+                headingLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            headingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            headingLabel.text = "Measurements"
+            headingLabel.textAlignment = .left
         }
         
         firstHint()
@@ -3517,8 +3569,34 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here for image view of measurements."
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر هنا لمشاهدة صورة القياسات. "
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here for image view of measurements."
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func secondHint()
@@ -3543,8 +3621,34 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here to add the measurment value via measuring ruler"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر هنا لإضافة قيمة القياس عبر قياس المسطرة"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here to add the measurment value via measuring ruler"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func thirdHint()
@@ -3560,8 +3664,34 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "This switch enables you select the unit of measuring value."
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يتيح لك هذا المفتاح تحديد وحدة قياس القيمة."
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "This switch enables you select the unit of measuring value."
+            detailedLabel.textAlignment = .left
+        }
     }
     
     func fourthHint()
@@ -3577,8 +3707,34 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.numberOfLines = 2
+        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                detailedLabel.text = "Please click here to view the list of parts to enter the value"
+                detailedLabel.textAlignment = .left
+            }
+            else if language == "ar"
+            {
+                hintsImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                detailedLabel.text = "يرجى النقر هنا لمشاهدة  قائمة الأجزاء لإدخال القيمة"
+                detailedLabel.textAlignment = .right
+            }
+        }
+        else
+        {
+            hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            detailedLabel.text = "Please click here to view the list of parts to enter the value"
+            detailedLabel.textAlignment = .left
+        }
     }
     
     @objc func unitButtonAction(sender : UIButton)
