@@ -1727,7 +1727,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // Measure_ToDateView.addSubview(ToDateEditMeasure_Icon)
         
         
-        
         //----------------Time Slot View------------------------------------
         
         let Slot_MeasureTypeLBL = UILabel()
