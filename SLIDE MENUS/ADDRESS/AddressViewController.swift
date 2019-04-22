@@ -420,7 +420,24 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width, height: view.frame.height - (selfScreenNavigationBar.frame.maxY))
+        var yAxix:CGFloat = selfScreenNavigationBar.frame.maxY
+        
+        if viewController == "reference"
+        {
+            let pageBar = UIImageView()
+            pageBar.frame = CGRect(x: 0, y: yAxix, width: view.frame.width, height: (5 * y))
+            pageBar.image = UIImage(named: "AddressBar")
+            view.addSubview(pageBar)
+            
+            yAxix = pageBar.frame.maxY
+            
+            selfScreenContents.frame = CGRect(x: 0, y: yAxix, width: view.frame.width, height: view.frame.height - (pageBar.frame.maxY))
+        }
+        else
+        {
+            selfScreenContents.frame = CGRect(x: 0, y: yAxix, width: view.frame.width, height: view.frame.height - (selfScreenNavigationBar.frame.maxY))
+        }
+        
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -475,7 +492,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 allViews.removeFromSuperview()
             }
             
-            addressScrollView.frame = CGRect(x: x, y: (2 * y), width: view.frame.width - (2 * x), height: view.frame.height - (14 * y))
+            addressScrollView.frame = CGRect(x: x, y: y, width: selfScreenContents.frame.width - (2 * x), height: selfScreenContents.frame.height - (7 * y))
             addressScrollView.backgroundColor = UIColor.clear
             selfScreenContents.addSubview(addressScrollView)
             

@@ -70,6 +70,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     var selectedPatternId = Int()
     
     var viewDetailsImageArray = [String]()
+    var colorArrayCount = Int()
     
     //SCROLL VIEW CONTENTS
     let detailScrollView = UIScrollView()
@@ -363,6 +364,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
             let colorImageArray = color.value(forKey: "ColorImage") as! NSArray
             print("colorImageArray", colorImageArray)
             
+            colorArrayCount = colorImageArray.count
+            
             for i in 0..<colorImageArray.count
             {
                 if let imageName  = colorImageArray[i] as? String
@@ -569,6 +572,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     {
         if selectedPatternId != 0
         {
+            colorArrayCount = 0
+            viewDetailsImageArray.removeAll()
             serviceCall.API_ViewDetails(patternId: selectedPatternId, delegate: self)
         }
         else
@@ -627,25 +632,48 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         detailScrollView.delegate = self
         view.addSubview(detailScrollView)
         
-        for index in 0..<viewDetailsImageArray.count {
-            
+        for view in detailScrollView.subviews
+        {
+            view.removeFromSuperview()
+        }
+        
+        for index in 0..<viewDetailsImageArray.count
+        {
             frame.origin.x = self.detailScrollView.frame.size.width * CGFloat(index)
             frame.size = self.detailScrollView.frame.size
             
-            let subView = UIImageView(frame: frame)
+            print("COLOR IMAGE ARRAY COUNT", colorArrayCount)
+            
+            let subImageView = UIImageView(frame: frame)
+//            subImageView.backgroundColor = colors[index]
+            
             if let imageName =  viewDetailsImageArray[index] as? String
             {
-                let urlString = serviceCall.baseURL
-                let api = "\(urlString)/images/pattern/\(imageName)"
-                let apiurl = URL(string: api)
-                print("VIEW DETAILS IMAGE API", apiurl)
-                if apiurl != nil
+                if colorArrayCount >= index
                 {
-                    subView.dowloadFromServer(url: apiurl!)
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/color/\(imageName)"
+                    let apiurl = URL(string: api)
+                    print("VIEW DETAILS IMAGE API", apiurl)
+                    if apiurl != nil
+                    {
+                        subImageView.dowloadFromServer(url: apiurl!)
+                    }
+                }
+                else
+                {
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/pattern/\(imageName)"
+                    let apiurl = URL(string: api)
+                    print("VIEW DETAILS IMAGE API", apiurl)
+                    if apiurl != nil
+                    {
+                        subImageView.dowloadFromServer(url: apiurl!)
+                    }
                 }
             }
-            subView.contentMode = .scaleAspectFill
-            self.detailScrollView.addSubview(subView)
+            subImageView.contentMode = .scaleAspectFit
+            self.detailScrollView.addSubview(subImageView)
         }
         
         self.detailScrollView.contentSize = CGSize(width:self.detailScrollView.frame.size.width * CGFloat(viewDetailsImageArray.count),height: self.detailScrollView.frame.size.height)
@@ -803,6 +831,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     @objc func detailBackButtonAction()
     {
         detailsView.removeFromSuperview()
+        detailScrollView.removeFromSuperview()
         detailViewBackButton.removeFromSuperview()
     }
     

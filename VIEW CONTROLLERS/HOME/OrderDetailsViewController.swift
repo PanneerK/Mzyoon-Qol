@@ -614,7 +614,21 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         DressTypeLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: y , width: (20 * x), height: (2 * y))
        if(Product_Name.count > 0)
        {
-           DressTypeLabel.text = Product_Name[0] as? String
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                DressTypeLabel.text = Product_Name[0] as? String
+            }
+            else if language == "ar"
+            {
+                DressTypeLabel.text = Product_Name_Arabic[0] as? String
+            }
+        }
+        else
+        {
+            DressTypeLabel.text = Product_Name[0] as? String
+        }
        }
        else
        {
@@ -864,7 +878,21 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         ServiceTypeLabel.frame = CGRect(x:ServiceLabel.frame.maxX - (2 * x), y: TotalPriceLabel.frame.maxY, width: (15 * x), height: (2 * y))
         if(ServiceType.count > 0)
         {
-            ServiceTypeLabel.text = ServiceType[0] as? String
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    ServiceTypeLabel.text = ServiceType[0] as? String
+                }
+                else if language == "ar"
+                {
+                    ServiceTypeLabel.text = ServiceTypeinArabic[0] as? String
+                }
+            }
+            else
+            {
+                ServiceTypeLabel.text = ServiceType[0] as? String
+            }
         }
         else
         {
