@@ -1775,6 +1775,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
            else
            {
           */
+            
              if(MaterialStatus.count == 1)
              {
                Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
