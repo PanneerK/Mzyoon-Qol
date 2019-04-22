@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Customization2ViewController: CommonViewController, ServerAPIDelegate
+class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIScrollViewDelegate
 {
     var brandArray = [Int]()
     let serviceCall = ServerAPI()
@@ -68,6 +68,18 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     
     var updatingId = Int()
     var selectedPatternId = Int()
+    
+    var viewDetailsImageArray = [String]()
+    var colorArrayCount = Int()
+    
+    //SCROLL VIEW CONTENTS
+    let detailScrollView = UIScrollView()
+    
+    var colors:[UIColor] = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
+    var frame: CGRect = CGRect(x:0, y:0, width:0, height:0)
+    var pageControl : UIPageControl = UIPageControl()
+    
+    
     
     var applicationDelegate = AppDelegate()
 
@@ -338,6 +350,81 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         
     }
     
+    func API_CALLBACK_ViewDetails(details: NSDictionary)
+    {
+        let responseMsg = details.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = details.object(forKey: "Result") as! NSDictionary
+            
+            let color = result.object(forKey: "GetColorById") as! NSArray
+            print("COLOR", color)
+            
+            let colorImageArray = color.value(forKey: "ColorImage") as! NSArray
+            print("colorImageArray", colorImageArray)
+            
+            colorArrayCount = colorImageArray.count
+            
+            for i in 0..<colorImageArray.count
+            {
+                if let imageName  = colorImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            let pattern = result.object(forKey: "GetpattternById") as! NSArray
+            print("GetpattternById", pattern)
+            
+            let brandImageArray = pattern.value(forKey: "BrandImage") as! NSArray
+            print("brandImageArray", brandImageArray)
+            
+            for i in 0..<brandImageArray.count
+            {
+                if let imageName  = brandImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            let industryImageArray = pattern.value(forKey: "IndustryImage") as! NSArray
+            print("industryImageArray", industryImageArray)
+            
+            for i in 0..<industryImageArray.count
+            {
+                if let imageName  = industryImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            let materialImageArray = pattern.value(forKey: "MaterialImage") as! NSArray
+            print("materialImageArray", materialImageArray)
+            
+            for i in 0..<materialImageArray.count
+            {
+                if let imageName  = materialImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            let patternImageArray = pattern.value(forKey: "Image") as! NSArray
+            print("patternImageArray", patternImageArray)
+            
+            for i in 0..<patternImageArray.count
+            {
+                if let imageName  = patternImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            viewDetailsContents()
+        }
+    }
+    
     func changeViewToArabicInSelf()
     {
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -485,153 +572,9 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
     {
         if selectedPatternId != 0
         {
-            detailsView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-            detailsView.backgroundColor = UIColor.gray
-            view.addSubview(detailsView)
-            
-            detailViewNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-            detailViewNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            detailsView.addSubview(detailViewNavigationBar)
-            
-            detailViewBackButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-            detailViewBackButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-            detailViewBackButton.addTarget(self, action: #selector(self.detailBackButtonAction), for: .touchUpInside)
-            detailViewBackButton.tag = 1
-            view.addSubview(detailViewBackButton)
-            
-            detailViewNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-            detailViewNavigationTitle.text = "VIEW DETAILS"
-            detailViewNavigationTitle.textColor = UIColor.white
-            detailViewNavigationTitle.textAlignment = .center
-            detailViewNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-            detailViewNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-            detailViewNavigationBar.addSubview(detailViewNavigationTitle)
-            
-            let detailScrollView = UIScrollView()
-            detailScrollView.frame = CGRect(x: (2 * x), y: detailViewNavigationBar.frame.maxY + (2 * y), width: detailsView.frame.width - (4 * x), height: view.frame.height - (30 * y))
-            detailScrollView.backgroundColor = UIColor.cyan
-            detailScrollView.isPagingEnabled = true
-            detailsView.addSubview(detailScrollView)
-            
-            let leftButton = UIButton()
-            leftButton.frame = CGRect(x: 0, y: ((detailScrollView.frame.height - (3 * y)) / 2), width: (3 * x), height: (3 * y))
-            leftButton.setImage(UIImage(named: "closeMenu"), for: .normal)
-            leftButton.backgroundColor = UIColor.white
-            detailScrollView.addSubview(leftButton)
-            
-            let rightButton = UIButton()
-            rightButton.frame = CGRect(x: detailScrollView.frame.width - (3 * x), y: ((detailScrollView.frame.height - (3 * y)) / 2), width: (3 * x), height: (3 * y))
-            rightButton.setImage(UIImage(named: "openMenu"), for: .normal)
-            rightButton.backgroundColor = UIColor.white
-            detailScrollView.addSubview(rightButton)
-            
-            var x1:CGFloat = (2 * x)
-            var y1:CGFloat = detailScrollView.frame.maxY + y
-            
-            var headingString = ["MATERIAL", "Seasonal", "Place Of Industry", "Brands", "Material Type", "Color"]
-            
-            for i in 0..<6
-            {
-                let detailLabel = UILabel()
-                detailLabel.frame = CGRect(x: (2 * x), y: y1, width: (detailScrollView.frame.width / 2), height: (3 * y))
-                detailLabel.text = headingString[i]
-                detailLabel.textAlignment = .center
-                detailsView.addSubview(detailLabel)
-                
-                let getDetailLabel = UITextView()
-                getDetailLabel.frame = CGRect(x: detailLabel.frame.maxX + 1, y: y1, width: (detailScrollView.frame.width / 2), height: (3 * y))
-                
-                if i == 0
-                {
-                    if let strings = UserDefaults.standard.value(forKey: "pattern") as? String
-                    {
-                        getDetailLabel.text = strings
-                    }
-                }
-                else if i == 1
-                {
-                    if let strings = UserDefaults.standard.value(forKey: "season") as? [String]
-                    {
-                        var appendString = String()
-                        for i in 0..<strings.count
-                        {
-                            appendString.append(strings[i])
-                        }
-                        getDetailLabel.text = appendString
-                    }
-                }
-                else if i == 2
-                {
-                    if let strings = UserDefaults.standard.value(forKey: "industry") as? [String]
-                    {
-                        var appendString = String()
-                        for i in 0..<strings.count
-                        {
-                            appendString.append(strings[i])
-                        }
-                        getDetailLabel.text = appendString
-                    }
-                }
-                else if i == 3
-                {
-                    if let strings = UserDefaults.standard.value(forKey: "brand") as? [String]
-                    {
-                        var appendString = String()
-                        for i in 0..<strings.count
-                        {
-                            appendString.append(strings[i])
-                        }
-                        getDetailLabel.text = appendString
-                    }
-                }
-                else if i == 4
-                {
-                    if let strings = UserDefaults.standard.value(forKey: "material") as? [String]
-                    {
-                        var appendString = String()
-                        for i in 0..<strings.count
-                        {
-                            appendString.append(strings[i])
-                        }
-                        getDetailLabel.text = appendString
-                    }
-                }
-                else if i == 5
-                {
-                    if let strings = UserDefaults.standard.value(forKey: "color") as? [String]
-                    {
-                        var appendString = String()
-                        for i in 0..<strings.count
-                        {
-                            appendString.append(strings[i])
-                        }
-                        getDetailLabel.text = appendString
-                    }
-                }
-                
-                getDetailLabel.isEditable = false
-                getDetailLabel.textAlignment = .center
-                detailsView.addSubview(getDetailLabel)
-                
-                if i == 0
-                {
-                    detailLabel.backgroundColor = UIColor.blue
-                    getDetailLabel.backgroundColor = UIColor.blue
-                    
-                    detailLabel.textColor = UIColor.white
-                    getDetailLabel.textColor = UIColor.white
-                }
-                else
-                {
-                    detailLabel.backgroundColor = UIColor.white
-                    getDetailLabel.backgroundColor = UIColor.white
-                    
-                    detailLabel.textColor = UIColor.black
-                    getDetailLabel.textColor = UIColor.black
-                }
-                
-                y1 = detailLabel.frame.maxY + 1
-            }
+            colorArrayCount = 0
+            viewDetailsImageArray.removeAll()
+            serviceCall.API_ViewDetails(patternId: selectedPatternId, delegate: self)
         }
         else
         {
@@ -659,9 +602,236 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
+    func viewDetailsContents()
+    {
+        detailsView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        detailsView.backgroundColor = UIColor.gray
+        view.addSubview(detailsView)
+        
+        detailViewNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
+        detailViewNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        detailsView.addSubview(detailViewNavigationBar)
+        
+        detailViewBackButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
+        detailViewBackButton.setImage(UIImage(named: "leftArrow"), for: .normal)
+        detailViewBackButton.addTarget(self, action: #selector(self.detailBackButtonAction), for: .touchUpInside)
+        detailViewBackButton.tag = 1
+        view.addSubview(detailViewBackButton)
+        
+        detailViewNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        detailViewNavigationTitle.text = "VIEW DETAILS"
+        detailViewNavigationTitle.textColor = UIColor.white
+        detailViewNavigationTitle.textAlignment = .center
+        detailViewNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        detailViewNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
+        detailViewNavigationBar.addSubview(detailViewNavigationTitle)
+        
+        detailScrollView.frame = CGRect(x: (2 * x), y: detailViewNavigationBar.frame.maxY + (2 * y), width: detailsView.frame.width - (4 * x), height: view.frame.height - (30 * y))
+        detailScrollView.backgroundColor = UIColor.clear
+        detailScrollView.isPagingEnabled = true
+        detailScrollView.delegate = self
+        view.addSubview(detailScrollView)
+        
+        for view in detailScrollView.subviews
+        {
+            view.removeFromSuperview()
+        }
+        
+        for index in 0..<viewDetailsImageArray.count
+        {
+            frame.origin.x = self.detailScrollView.frame.size.width * CGFloat(index)
+            frame.size = self.detailScrollView.frame.size
+            
+            print("COLOR IMAGE ARRAY COUNT", colorArrayCount)
+            
+            let subImageView = UIImageView(frame: frame)
+//            subImageView.backgroundColor = colors[index]
+            
+            if let imageName =  viewDetailsImageArray[index] as? String
+            {
+                if colorArrayCount >= index
+                {
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/color/\(imageName)"
+                    let apiurl = URL(string: api)
+                    print("VIEW DETAILS IMAGE API", apiurl)
+                    if apiurl != nil
+                    {
+                        subImageView.dowloadFromServer(url: apiurl!)
+                    }
+                }
+                else
+                {
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/pattern/\(imageName)"
+                    let apiurl = URL(string: api)
+                    print("VIEW DETAILS IMAGE API", apiurl)
+                    if apiurl != nil
+                    {
+                        subImageView.dowloadFromServer(url: apiurl!)
+                    }
+                }
+            }
+            subImageView.contentMode = .scaleAspectFit
+            self.detailScrollView.addSubview(subImageView)
+        }
+        
+        self.detailScrollView.contentSize = CGSize(width:self.detailScrollView.frame.size.width * CGFloat(viewDetailsImageArray.count),height: self.detailScrollView.frame.size.height)
+        
+        pageControl = UIPageControl(frame: CGRect(x: ((detailScrollView.frame.width - (20 * x)) / 2), y: detailScrollView.frame.maxY - (2 * y), width: (20 * x), height: (2 * y)))
+        
+        configurePageControl()
+
+        pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
+        
+        
+        let leftButton = UIButton()
+        leftButton.frame = CGRect(x: (2 * x), y: ((detailScrollView.frame.height - (3 * y)) / 2), width: (3 * x), height: (3 * y))
+        leftButton.setImage(UIImage(named: "closeMenu"), for: .normal)
+        leftButton.backgroundColor = UIColor.white
+//        detailsView.addSubview(leftButton)
+        
+        let rightButton = UIButton()
+        rightButton.frame = CGRect(x: view.frame.width - (5 * x), y: ((detailScrollView.frame.height - (3 * y)) / 2), width: (3 * x), height: (3 * y))
+        rightButton.setImage(UIImage(named: "openMenu"), for: .normal)
+        rightButton.backgroundColor = UIColor.white
+//        detailsView.addSubview(rightButton)
+        
+        var x1:CGFloat = (2 * x)
+        var y1:CGFloat = detailScrollView.frame.maxY + y
+        
+        var headingString = ["MATERIAL", "Seasonal", "Place Of Industry", "Brands", "Material Type", "Color"]
+        
+        for i in 0..<6
+        {
+            let detailLabel = UILabel()
+            detailLabel.frame = CGRect(x: (2 * x), y: y1, width: (detailScrollView.frame.width / 2), height: (3 * y))
+            detailLabel.text = headingString[i]
+            detailLabel.textAlignment = .center
+            detailsView.addSubview(detailLabel)
+            
+            let getDetailLabel = UITextView()
+            getDetailLabel.frame = CGRect(x: detailLabel.frame.maxX + 1, y: y1, width: (detailScrollView.frame.width / 2), height: (3 * y))
+            
+            if i == 0
+            {
+                if let strings = UserDefaults.standard.value(forKey: "pattern") as? String
+                {
+                    getDetailLabel.text = strings
+                }
+            }
+            else if i == 1
+            {
+                if let strings = UserDefaults.standard.value(forKey: "season") as? [String]
+                {
+                    var appendString = String()
+                    for i in 0..<strings.count
+                    {
+                        appendString.append(strings[i])
+                    }
+                    getDetailLabel.text = appendString
+                }
+            }
+            else if i == 2
+            {
+                if let strings = UserDefaults.standard.value(forKey: "industry") as? [String]
+                {
+                    var appendString = String()
+                    for i in 0..<strings.count
+                    {
+                        appendString.append(strings[i])
+                    }
+                    getDetailLabel.text = appendString
+                }
+            }
+            else if i == 3
+            {
+                if let strings = UserDefaults.standard.value(forKey: "brand") as? [String]
+                {
+                    var appendString = String()
+                    for i in 0..<strings.count
+                    {
+                        appendString.append(strings[i])
+                    }
+                    getDetailLabel.text = appendString
+                }
+            }
+            else if i == 4
+            {
+                if let strings = UserDefaults.standard.value(forKey: "material") as? [String]
+                {
+                    var appendString = String()
+                    for i in 0..<strings.count
+                    {
+                        appendString.append(strings[i])
+                    }
+                    getDetailLabel.text = appendString
+                }
+            }
+            else if i == 5
+            {
+                if let strings = UserDefaults.standard.value(forKey: "color") as? [String]
+                {
+                    var appendString = String()
+                    for i in 0..<strings.count
+                    {
+                        appendString.append(strings[i])
+                    }
+                    getDetailLabel.text = appendString
+                }
+            }
+            
+            getDetailLabel.isEditable = false
+            getDetailLabel.textAlignment = .center
+            detailsView.addSubview(getDetailLabel)
+            
+            if i == 0
+            {
+                detailLabel.backgroundColor = UIColor.blue
+                getDetailLabel.backgroundColor = UIColor.blue
+                
+                detailLabel.textColor = UIColor.white
+                getDetailLabel.textColor = UIColor.white
+            }
+            else
+            {
+                detailLabel.backgroundColor = UIColor.white
+                getDetailLabel.backgroundColor = UIColor.white
+                
+                detailLabel.textColor = UIColor.black
+                getDetailLabel.textColor = UIColor.black
+            }
+            
+            y1 = detailLabel.frame.maxY + 1
+        }
+    }
+    
+    func configurePageControl() {
+        // The total number of pages that are available is based on how many available colors we have.
+        self.pageControl.numberOfPages = viewDetailsImageArray.count
+        self.pageControl.currentPage = 0
+        self.pageControl.tintColor = UIColor.red
+        self.pageControl.pageIndicatorTintColor = UIColor.black
+        self.pageControl.currentPageIndicatorTintColor = UIColor.orange
+        self.detailsView.addSubview(pageControl)
+    }
+    
+    // MARK : TO CHANGE WHILE CLICKING ON PAGE CONTROL
+    @objc func changePage(sender: AnyObject) -> () {
+        let x = CGFloat(pageControl.currentPage) * detailScrollView.frame.size.width
+        detailScrollView.setContentOffset(CGPoint(x:x, y:0), animated: true)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView)
+    {
+        let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
+        pageControl.currentPage = Int(pageNumber)
+    }
+    
     @objc func detailBackButtonAction()
     {
         detailsView.removeFromSuperview()
+        detailScrollView.removeFromSuperview()
         detailViewBackButton.removeFromSuperview()
     }
     

@@ -764,7 +764,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         imageView.isHidden = isHidden
         
-        imageScrollView.frame = CGRect(x: 0, y: 0, width: imageView.frame.width, height: imageView.frame.height - 30)
+        imageScrollView.frame = CGRect(x: 0, y: 0, width: imageView.frame.width, height: imageView.frame.height - (3 * y))
         imageScrollView.isPagingEnabled = true
         imageScrollView.showsHorizontalScrollIndicator = false
         imageScrollView.delegate = self

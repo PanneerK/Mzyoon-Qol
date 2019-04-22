@@ -728,6 +728,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         selfScreenNavigationTitle.text = "موعد"
         
         AppointmentScrollview.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        MaterialButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        MaterialButton.setTitle("نوع الطلب", for: .normal)
+        
+        MeasurementButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        MeasurementButton.setTitle("قياس", for: .normal)
+        
+        MeasurementViewBackDrop.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        MaterialViewBackDrop.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglishInSelf()
@@ -737,6 +746,15 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         selfScreenNavigationTitle.text = "APPOINTMENT"
         
         AppointmentScrollview.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        MaterialButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        MaterialButton.setTitle("ORDER TYPE", for: .normal)
+        
+        MeasurementButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        MeasurementButton.setTitle("MEASUREMENT", for: .normal)
+        
+        MeasurementViewBackDrop.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        MaterialViewBackDrop.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     func AppointmentContent()
@@ -1259,8 +1277,174 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             
         }
         
-       
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                Material_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_StatusLabel.text = "Appointment Status:"
+                Material_StatusLabel.textAlignment = .left
+                
+                Material_StatusBtn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                From_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "Date"
+                TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "Date"
+                
+                SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                SLOT_MeasurementType_TF.placeholder = "Time"
+                SLOT_MeasurementType_TF.textAlignment = .left
+                
+                Measure_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_ApproveButton.setTitle("Approve", for: .normal)
+                
+                Measure_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_RejectButton.setTitle("Reject", for: .normal)
+                
+                From_OrderTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_OrderTypeLBL.text = "FROM"
+                From_OrderTypeLBL.textAlignment = .left
+                TO_OrderTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TO_OrderTypeLBL.text = "TO"
+                TO_OrderTypeLBL.textAlignment = .left
+                
+                From_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MaterialType_TF.placeholder = "Date"
+                TO_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TO_MaterialType_TF.placeholder = "Date"
+                
+                Slot_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Slot_MaterialTypeLBL.text = "TIME SLOT"
+                Slot_MaterialTypeLBL.textAlignment = .left
+                
+                SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                SLOT_MaterialType_TF.placeholder = "Time"
+                SLOT_MaterialType_TF.textAlignment = .left
+                
+                Material_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_ApproveButton.setTitle("Approve", for: .normal)
+                
+                Material_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_RejectButton.setTitle("Reject", for: .normal)
+                
+                Material_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_SaveButton.setTitle("Save", for: .normal)
+                
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                Material_StatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_StatusLabel.text = "حالة التعيين : "
+                Material_StatusLabel.textAlignment = .right
+                
+                Material_StatusBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                From_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "تاريخ"
+                TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_MeasurementType_TF.placeholder = "تاريخ"
+                
+                SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                SLOT_MeasurementType_TF.placeholder = "زمن"
+                SLOT_MeasurementType_TF.textAlignment = .right
+                
+                Measure_ApproveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_ApproveButton.setTitle("يوافق", for: .normal)
+                
+                Measure_RejectButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_RejectButton.setTitle("رفض", for: .normal)
+                
+                From_OrderTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_OrderTypeLBL.text = "من عند"
+                From_OrderTypeLBL.textAlignment = .right
+                TO_OrderTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_OrderTypeLBL.text = "حتى"
+                TO_OrderTypeLBL.textAlignment = .right
+                
+                From_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_MaterialType_TF.placeholder = "تاريخ"
+                TO_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_MaterialType_TF.placeholder = "تاريخ"
+                
+                Slot_MaterialTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Slot_MaterialTypeLBL.text = "فسحة زمنية"
+                Slot_MaterialTypeLBL.textAlignment = .right
+                
+                SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                SLOT_MaterialType_TF.placeholder = "زمن"
+                SLOT_MaterialType_TF.textAlignment = .right
+                
+                Material_ApproveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_ApproveButton.setTitle("يوافق", for: .normal)
+                
+                Material_RejectButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_RejectButton.setTitle("رفض", for: .normal)
+                
+                Material_SaveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_SaveButton.setTitle("حفظ", for: .normal)
+                
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            Material_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_StatusLabel.text = "Appointment Status:"
+            Material_StatusLabel.textAlignment = .left
+            
+            Material_StatusBtn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            From_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MeasurementType_TF.placeholder = "Date"
+            TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MeasurementType_TF.placeholder = "Date"
+            
+            SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            SLOT_MeasurementType_TF.placeholder = "Time"
+            SLOT_MeasurementType_TF.textAlignment = .left
+            
+            Measure_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_ApproveButton.setTitle("Approve", for: .normal)
+            
+            Measure_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_RejectButton.setTitle("Reject", for: .normal)
+            
+            From_OrderTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_OrderTypeLBL.text = "FROM"
+            From_OrderTypeLBL.textAlignment = .left
+            TO_OrderTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TO_OrderTypeLBL.text = "TO"
+            TO_OrderTypeLBL.textAlignment = .left
+            
+            From_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MaterialType_TF.placeholder = "Date"
+            TO_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TO_MaterialType_TF.placeholder = "Date"
+            
+            Slot_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Slot_MaterialTypeLBL.text = "TIME SLOT"
+            Slot_MaterialTypeLBL.textAlignment = .left
+            
+            SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            SLOT_MaterialType_TF.placeholder = "Time"
+            SLOT_MaterialType_TF.textAlignment = .left
+            
+            Material_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_ApproveButton.setTitle("Approve", for: .normal)
+            
+            Material_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_RejectButton.setTitle("Reject", for: .normal)
+            
+            Material_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_SaveButton.setTitle("Save", for: .normal)
+            
+            changeViewToEnglishInSelf()
+        }
     }
+    
+    
     func MeasurementViewContents(isHidden : Bool)
     {
         //  View BackDrop..
@@ -1672,6 +1856,193 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 MeasurementTypeView.addSubview(Measure_SaveButton)
             }
             
+        }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                Measure_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_StatusLabel.text = "Appointment Status:"
+                Measure_StatusLabel.textAlignment = .left
+                
+                Measure_StatusBtn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                TailorTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TailorTypeLabel.textAlignment = .left
+                
+                TailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                From_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MaterialTypeLBL.text = "FROM"
+                From_MaterialTypeLBL.textAlignment = .left
+                
+                TO_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TO_MaterialTypeLBL.text = "TO"
+                TO_MaterialTypeLBL.textAlignment = .left
+                
+                From_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "Date"
+                TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "Date"
+                
+                
+                Slot_MeasureTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Slot_MeasureTypeLBL.text = "TIME SLOT"
+                Slot_MeasureTypeLBL.textAlignment = .left
+                
+                SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                SLOT_MeasurementType_TF.placeholder = "Time"
+                SLOT_MeasurementType_TF.textAlignment = .left
+                
+                Measure_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_ApproveButton.setTitle("Approve", for: .normal)
+                
+                Measure_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_RejectButton.setTitle("Reject", for: .normal)
+                
+                Measure_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Measure_SaveButton.setTitle("Save", for: .normal)
+            
+                From_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                From_MaterialType_TF.placeholder = "Date"
+                TO_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                TO_MaterialType_TF.placeholder = "Date"
+            
+                SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                SLOT_MaterialType_TF.placeholder = "Time"
+                SLOT_MaterialType_TF.textAlignment = .left
+                
+                Material_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_ApproveButton.setTitle("Approve", for: .normal)
+                
+                Material_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                Material_RejectButton.setTitle("Reject", for: .normal)
+            
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                Measure_StatusLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_StatusLabel.text = "حالة التعيين : "
+                Measure_StatusLabel.textAlignment = .right
+                
+                Measure_StatusBtn.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                TailorTypeLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TailorTypeLabel.textAlignment = .right
+                
+                TailorImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                
+                From_MaterialTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_MaterialTypeLBL.text = "من عند"
+                From_MaterialTypeLBL.textAlignment = .right
+                
+                
+                TO_MaterialTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_MaterialTypeLBL.text = "حتى"
+                TO_MaterialTypeLBL.textAlignment = .right
+                
+                From_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_MeasurementType_TF.placeholder = "تاريخ"
+                TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_MeasurementType_TF.placeholder = "تاريخ"
+                
+                Slot_MeasureTypeLBL.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Slot_MeasureTypeLBL.text = "فسحة زمنية"
+                Slot_MeasureTypeLBL.textAlignment = .right
+                
+                SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                SLOT_MeasurementType_TF.placeholder = "زمن"
+                SLOT_MeasurementType_TF.textAlignment = .right
+                
+                Measure_ApproveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_ApproveButton.setTitle("يوافق", for: .normal)
+                
+                Measure_RejectButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_RejectButton.setTitle("رفض", for: .normal)
+                
+                Measure_SaveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Measure_SaveButton.setTitle("حفظ", for: .normal)
+                
+                From_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                From_MaterialType_TF.placeholder = "تاريخ"
+                TO_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                TO_MaterialType_TF.placeholder = "تاريخ"
+                
+                SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                SLOT_MaterialType_TF.placeholder = "زمن"
+                SLOT_MaterialType_TF.textAlignment = .right
+                
+                Material_ApproveButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_ApproveButton.setTitle("يوافق", for: .normal)
+                
+                Material_RejectButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                Material_RejectButton.setTitle("رفض", for: .normal)
+                
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            Measure_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_StatusLabel.text = "Appointment Status:"
+            Measure_StatusLabel.textAlignment = .left
+            
+            Measure_StatusBtn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            TailorTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TailorTypeLabel.textAlignment = .left
+            
+            TailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            From_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MaterialTypeLBL.text = "FROM"
+            From_MaterialTypeLBL.textAlignment = .left
+            
+            TO_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TO_MaterialTypeLBL.text = "TO"
+            TO_MaterialTypeLBL.textAlignment = .left
+            
+            From_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MeasurementType_TF.placeholder = "Date"
+            TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MeasurementType_TF.placeholder = "Date"
+            
+            
+            Slot_MeasureTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Slot_MeasureTypeLBL.text = "TIME SLOT"
+            Slot_MeasureTypeLBL.textAlignment = .left
+            
+            SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            SLOT_MeasurementType_TF.placeholder = "Time"
+            SLOT_MeasurementType_TF.textAlignment = .left
+            
+            Measure_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_ApproveButton.setTitle("Approve", for: .normal)
+            
+            Measure_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_RejectButton.setTitle("Reject", for: .normal)
+            
+            Measure_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_SaveButton.setTitle("Save", for: .normal)
+    
+            From_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MaterialType_TF.placeholder = "Date"
+            TO_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TO_MaterialType_TF.placeholder = "Date"
+    
+            SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            SLOT_MaterialType_TF.placeholder = "Time"
+            SLOT_MaterialType_TF.textAlignment = .left
+            
+            Material_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_ApproveButton.setTitle("Approve", for: .normal)
+            
+            Material_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_RejectButton.setTitle("Reject", for: .normal)
+            
+            changeViewToEnglishInSelf()
         }
     }
     
@@ -2778,14 +3149,94 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             MaterialTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             MaterialTypeLabel.text = "MEASUREMENT_1"
-
+            
+            Material_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_StatusLabel.text = "Appointment Status:"
+            Material_StatusLabel.textAlignment = .left
+            
+            Material_StatusBtn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            Measure_StatusLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_StatusLabel.text = "Appointment Status:"
+            Measure_StatusLabel.textAlignment = .left
+            
+            Measure_StatusBtn.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            TailorTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TailorTypeLabel.textAlignment = .left
+            
+            TailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            
+            From_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MaterialTypeLBL.text = "FROM"
+            From_MaterialTypeLBL.textAlignment = .left
+            
+            TO_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TO_MaterialTypeLBL.text = "TO"
+            TO_MaterialTypeLBL.textAlignment = .left
+            
+            From_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MeasurementType_TF.placeholder = "Date"
+            TO_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MeasurementType_TF.placeholder = "Date"
+            
+            
+            Slot_MeasureTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Slot_MeasureTypeLBL.text = "TIME SLOT"
+            Slot_MeasureTypeLBL.textAlignment = .left
+            
+            SLOT_MeasurementType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            SLOT_MeasurementType_TF.placeholder = "Time"
+            SLOT_MeasurementType_TF.textAlignment = .left
+            
+            Measure_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_ApproveButton.setTitle("Approve", for: .normal)
+            
+            Measure_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_RejectButton.setTitle("Reject", for: .normal)
+            
+            Measure_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Measure_SaveButton.setTitle("Save", for: .normal)
+            
+            orderTypeLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            orderTypeLabel.text = "ORDER TYPE"
+            
+            From_OrderTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_OrderTypeLBL.text = "FROM"
+            From_OrderTypeLBL.textAlignment = .left
+            TO_OrderTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TO_OrderTypeLBL.text = "TO"
+            TO_OrderTypeLBL.textAlignment = .left
+            
+            From_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            From_MaterialType_TF.placeholder = "Date"
+            TO_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            TO_MaterialType_TF.placeholder = "Date"
+            
+            Slot_MaterialTypeLBL.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Slot_MaterialTypeLBL.text = "TIME SLOT"
+            Slot_MaterialTypeLBL.textAlignment = .left
+            
+            SLOT_MaterialType_TF.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            SLOT_MaterialType_TF.placeholder = "Time"
+            SLOT_MaterialType_TF.textAlignment = .left
+            
+            Material_ApproveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_ApproveButton.setTitle("Approve", for: .normal)
+            
+            Material_RejectButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_RejectButton.setTitle("Reject", for: .normal)
+            
+            Material_SaveButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            Material_SaveButton.setTitle("Save", for: .normal)
+            
             changeViewToEnglishInSelf()
         }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
     {
-     self.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func MaterialStatusButtonAction(sender : UIButton)
