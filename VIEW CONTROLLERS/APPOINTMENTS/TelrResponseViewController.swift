@@ -312,7 +312,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
      
         // Done Button
         DoneButton.frame = CGRect(x: ((TransactionView.frame.width - (15 * x)) / 2), y: TransLabel.frame.maxY + y, width: (15 * x), height: (3 * y))
-        DoneButton.backgroundColor = UIColor.orange
+        DoneButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0)
         DoneButton.setTitle("Done", for: .normal)
         DoneButton.setTitleColor(UIColor.white, for: .normal)
         DoneButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.3 * x))

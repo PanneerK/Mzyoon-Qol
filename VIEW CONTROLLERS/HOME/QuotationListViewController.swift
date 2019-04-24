@@ -335,7 +335,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
            // tailorImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: tailorViewButton.frame.height)
             //tailorImageView.backgroundColor = UIColor.white
           
-            tailorImageView.frame = CGRect(x: x, y: y, width: (6 * y), height: (6 * y))
+            tailorImageView.frame = CGRect(x: x/2, y: y, width: (6 * y), height: (6 * y))
             tailorImageView.backgroundColor = UIColor.white
             tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
             tailorImageView.layer.borderWidth = 1
@@ -364,7 +364,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             // Straight Line..
             let StraightLine = UILabel()
-            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x, y: 0, width: 0.3, height: tailorViewButton.frame.height)
+            StraightLine.frame = CGRect(x: tailorImageView.frame.maxX + x/2, y: 0, width: 0.3, height: tailorViewButton.frame.height)
             StraightLine.backgroundColor = UIColor.lightGray
             tailorViewButton.addSubview(StraightLine)
             
@@ -382,14 +382,14 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             print("TailorId:","\(String(describing: TailorId))")
             
             let Name_Icon = UIImageView()
-            Name_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: y/2, width: x, height: y)
+            Name_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: y/2, width: x, height: y)
             Name_Icon.image = UIImage(named: "TailorName")
             tailorViewButton.addSubview(Name_Icon)
             
             let nameLabel = UILabel()
             nameLabel.frame = CGRect(x: Name_Icon.frame.maxX + x, y: 0, width: (10 * x), height: (2 * y))
             nameLabel.text = "Name      :"
-            nameLabel.textColor = UIColor.blue
+            nameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
             tailorViewButton.addSubview(nameLabel)
@@ -411,14 +411,14 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let ShopName_Icon = UIImageView()
-            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: Name_Icon.frame.maxY + y, width: x, height: y)
+            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: Name_Icon.frame.maxY + y, width: x, height: y)
             ShopName_Icon.image = UIImage(named: "ShopName")
             tailorViewButton.addSubview(ShopName_Icon)
             
             let shopLabel = UILabel()
             shopLabel.frame = CGRect(x: ShopName_Icon.frame.maxX + x, y: nameLabel.frame.maxY, width: (10 * x), height: (2 * y))
             shopLabel.text = "Shop Name :"
-            shopLabel.textColor = UIColor.blue
+            shopLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(shopLabel)
@@ -440,14 +440,14 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let Price_Icon = UIImageView()
-            Price_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
+            Price_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
             Price_Icon.image = UIImage(named: "ProductName")
             tailorViewButton.addSubview(Price_Icon)
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: Price_Icon.frame.maxX + x, y: shopLabel.frame.maxY, width: (10 * x), height: (2 * y))
             ordersLabel.text = "Price      :"
-            ordersLabel.textColor = UIColor.blue
+            ordersLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(ordersLabel)
@@ -471,14 +471,14 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let Days_Icon = UIImageView()
-            Days_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: Price_Icon.frame.maxY + y, width: x, height: y)
+            Days_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: Price_Icon.frame.maxY + y, width: x, height: y)
             Days_Icon.image = UIImage(named: "OrderDate")
             tailorViewButton.addSubview(Days_Icon)
             
             let ratingLabel = UILabel()
             ratingLabel.frame = CGRect(x: Days_Icon.frame.maxX + x, y: ordersLabel.frame.maxY, width: (10 * x), height: (2 * y))
             ratingLabel.text = "No Of Days  :"
-            ratingLabel.textColor = UIColor.blue
+            ratingLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             ratingLabel.textAlignment = .left
             ratingLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             tailorViewButton.addSubview(ratingLabel)

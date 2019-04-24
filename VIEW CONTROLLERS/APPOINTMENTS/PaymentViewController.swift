@@ -1129,7 +1129,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
         //PayButton
         PayButton.frame = CGRect(x: ((BillingView.frame.width - (15 * x)) / 2), y: BillingView.frame.height - (10 * y), width: (15 * x), height: (4 * y))
-        PayButton.backgroundColor = UIColor.orange
+        PayButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0)
         PayButton.setTitle("Pay", for: .normal)
         PayButton.setTitleColor(UIColor.white, for: .normal)
         PayButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: 20)

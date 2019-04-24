@@ -474,7 +474,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func PendingViewContents(isHidden : Bool)
     {
        // let PendingViewBackDrop = UIView()
-        PendingViewBackDrop.frame = CGRect(x: 0, y: y , width: selfScreenContents.frame.width, height: selfScreenContents.frame.height - (2 * y))
+        PendingViewBackDrop.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: selfScreenContents.frame.height - (2 * y))
         PendingViewBackDrop.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(PendingViewBackDrop)
         
@@ -551,14 +551,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(StraightLine)
             
             let orderId_Icon = UIImageView()
-            orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: y/2, width: x, height: y)
+            orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: y/2, width: x, height: y)
             orderId_Icon.image = UIImage(named: "OrderID")
             PendingViewButton.addSubview(orderId_Icon)
             
             let nameLabel = UILabel()
             nameLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: 0, width: (12 * x), height: (2 * y))
             nameLabel.text = "Order Id : "
-            nameLabel.textColor = UIColor.blue
+            nameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
             PendingViewButton.addSubview(nameLabel)
@@ -580,14 +580,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(underLine1)
             
             let TailorName_Icon = UIImageView()
-            TailorName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            TailorName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: orderId_Icon.frame.maxY + y, width: x, height: y)
             TailorName_Icon.image = UIImage(named: "TailorName")
             PendingViewButton.addSubview(TailorName_Icon)
             
             let shopLabel = UILabel()
             shopLabel.frame = CGRect(x: TailorName_Icon.frame.maxX + x, y: nameLabel.frame.maxY, width: (10 * x), height: (2 * y))
             shopLabel.text = "Tailor Name : "
-            shopLabel.textColor = UIColor.blue
+            shopLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             PendingViewButton.addSubview(shopLabel)
@@ -608,14 +608,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(underLine2)
             
             let ShopName_Icon = UIImageView()
-            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
+            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
             ShopName_Icon.image = UIImage(named: "ShopName")
             PendingViewButton.addSubview(ShopName_Icon)
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: ShopName_Icon.frame.maxX + x, y: shopLabel.frame.maxY , width: (10 * x), height: (2 * y))
             ordersLabel.text = "Shop Name : "
-            ordersLabel.textColor = UIColor.blue
+            ordersLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             PendingViewButton.addSubview(ordersLabel)
@@ -636,14 +636,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(underLine3)
             
             let ProductName_Icon = UIImageView()
-            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
+            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
             ProductName_Icon.image = UIImage(named: "ProductName")
             PendingViewButton.addSubview(ProductName_Icon)
             
             let ProductLabel = UILabel()
             ProductLabel.frame = CGRect(x: ProductName_Icon.frame.maxX + x, y: ordersLabel.frame.maxY, width: (10 * x), height: (2 * y))
             ProductLabel.text = "Product Name : "
-            ProductLabel.textColor = UIColor.blue
+            ProductLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             ProductLabel.textAlignment = .left
             ProductLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             PendingViewButton.addSubview(ProductLabel)
@@ -664,14 +664,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             PendingViewButton.addSubview(underLine4)
             
             let OrderDT_Icon = UIImageView()
-            OrderDT_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
+            OrderDT_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
             OrderDT_Icon.image = UIImage(named: "OrderDate_Time")
             PendingViewButton.addSubview(OrderDT_Icon)
             
             let OrderDateLabel = UILabel()
             OrderDateLabel.frame = CGRect(x: OrderDT_Icon.frame.maxX + x, y: ProductLabel.frame.maxY, width: (12 * x), height: (2 * y))
             OrderDateLabel.text = "Order Date : "
-            OrderDateLabel.textColor = UIColor.blue
+            OrderDateLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             OrderDateLabel.textAlignment = .left
             OrderDateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             PendingViewButton.addSubview(OrderDateLabel)
@@ -878,14 +878,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(StraightLine)
             
             let orderId_Icon = UIImageView()
-            orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: y/2, width: x, height: y)
+            orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: y/2, width: x, height: y)
             orderId_Icon.image = UIImage(named: "OrderID")
             DeliveredViewButton.addSubview(orderId_Icon)
             
             let nameLabel = UILabel()
             nameLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: 0, width: (12 * x), height: (2 * y))
             nameLabel.text = "Order Id : "
-            nameLabel.textColor = UIColor.blue
+            nameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
             DeliveredViewButton.addSubview(nameLabel)
@@ -907,14 +907,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(underLine1)
             
             let TailorName_Icon = UIImageView()
-            TailorName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            TailorName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: orderId_Icon.frame.maxY + y, width: x, height: y)
             TailorName_Icon.image = UIImage(named: "TailorName")
             DeliveredViewButton.addSubview(TailorName_Icon)
             
             let shopLabel = UILabel()
             shopLabel.frame = CGRect(x: TailorName_Icon.frame.maxX + x, y: nameLabel.frame.maxY, width: (10 * x), height: (2 * y))
             shopLabel.text = "Tailor Name : "
-            shopLabel.textColor = UIColor.blue
+            shopLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             DeliveredViewButton.addSubview(shopLabel)
@@ -935,14 +935,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(underLine2)
             
             let ShopName_Icon = UIImageView()
-            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
+            ShopName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: TailorName_Icon.frame.maxY + y, width: x, height: y)
             ShopName_Icon.image = UIImage(named: "ShopName")
             DeliveredViewButton.addSubview(ShopName_Icon)
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: ShopName_Icon.frame.maxX + x, y: shopLabel.frame.maxY, width: (10 * x), height: (2 * y))
             ordersLabel.text = "Shop Name : "
-            ordersLabel.textColor = UIColor.blue
+            ordersLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             DeliveredViewButton.addSubview(ordersLabel)
@@ -963,14 +963,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(underLine3)
             
             let ProductName_Icon = UIImageView()
-            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
+            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: ShopName_Icon.frame.maxY + y, width: x, height: y)
             ProductName_Icon.image = UIImage(named: "ProductName")
             DeliveredViewButton.addSubview(ProductName_Icon)
             
             let ProductLabel = UILabel()
             ProductLabel.frame = CGRect(x: ProductName_Icon.frame.maxX + x, y: ordersLabel.frame.maxY, width: (10 * x), height: (2 * y))
             ProductLabel.text = "Product Name : "
-            ProductLabel.textColor = UIColor.blue
+            ProductLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             ProductLabel.textAlignment = .left
             ProductLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             DeliveredViewButton.addSubview(ProductLabel)
@@ -991,14 +991,14 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             DeliveredViewButton.addSubview(underLine4)
             
             let OrderDT_Icon = UIImageView()
-            OrderDT_Icon.frame = CGRect(x: StraightLine.frame.maxX + x, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
+            OrderDT_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
             OrderDT_Icon.image = UIImage(named: "OrderDate_Time")
             DeliveredViewButton.addSubview(OrderDT_Icon)
             
             let OrderDateLabel = UILabel()
             OrderDateLabel.frame = CGRect(x: OrderDT_Icon.frame.maxX + x, y: ProductLabel.frame.maxY, width: (12 * x), height: (2 * y))
             OrderDateLabel.text = "Order Date : "
-            OrderDateLabel.textColor = UIColor.blue
+            OrderDateLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             OrderDateLabel.textAlignment = .left
             OrderDateLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             DeliveredViewButton.addSubview(OrderDateLabel)

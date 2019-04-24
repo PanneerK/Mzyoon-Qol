@@ -329,7 +329,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             let O_DateLabel = UILabel()
             O_DateLabel.frame = CGRect(x: orderDate_Icon.frame.maxX + x, y: 0, width: (10 * x), height: (2 * y))
             O_DateLabel.text = "Order Date :"
-            O_DateLabel.textColor = UIColor.blue
+            O_DateLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             O_DateLabel.textAlignment = .left
             O_DateLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
             AppointmentViewButton.addSubview(O_DateLabel)
@@ -363,7 +363,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             let O_IdLabel = UILabel()
             O_IdLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: O_DateLabel.frame.maxY, width: (10 * x), height: (2 * y))
             O_IdLabel.text = "Order ID :"
-            O_IdLabel.textColor = UIColor.blue
+            O_IdLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             O_IdLabel.textAlignment = .left
             O_IdLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             AppointmentViewButton.addSubview(O_IdLabel)
@@ -394,7 +394,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             let T_NameLabel = UILabel()
             T_NameLabel.frame = CGRect(x: TailorName_Icon.frame.maxX + x, y: O_IdLabel.frame.maxY, width: (10 * x), height: (2 * y))
             T_NameLabel.text = "Tailor Name :"
-            T_NameLabel.textColor = UIColor.blue
+            T_NameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             T_NameLabel.textAlignment = .left
             T_NameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             AppointmentViewButton.addSubview(T_NameLabel)
@@ -423,7 +423,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             let S_NameLabel = UILabel()
             S_NameLabel.frame = CGRect(x: ShopName_Icon.frame.maxX + x, y: T_NameLabel.frame.maxY, width: (10 * x), height: (2 * y))
             S_NameLabel.text = "Shop Name :"
-            S_NameLabel.textColor = UIColor.blue
+            S_NameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             S_NameLabel.textAlignment = .left
             S_NameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             AppointmentViewButton.addSubview(S_NameLabel)
@@ -452,7 +452,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
             let P_NameLabel = UILabel()
             P_NameLabel.frame = CGRect(x: ProductName_Icon.frame.maxX + x, y: S_NameLabel.frame.maxY, width: (10 * x), height: (2 * y))
             P_NameLabel.text = "Product Name :"
-            P_NameLabel.textColor = UIColor.blue
+            P_NameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             P_NameLabel.textAlignment = .left
             P_NameLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             AppointmentViewButton.addSubview(P_NameLabel)

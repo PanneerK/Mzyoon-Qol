@@ -648,7 +648,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
        
         // Currency Button:-
         CurrencyButton.frame = CGRect(x: (22 * x), y: y, width: (8 * x), height: (2 * y))
-        CurrencyButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        CurrencyButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
         CurrencyButton.setTitle("AED", for: .normal)
         CurrencyButton.setTitleColor(UIColor.white, for: .normal)
         CurrencyButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 1.5 * x)
@@ -658,8 +658,8 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         ApprovalListScrollView.addSubview(CurrencyButton)
         
         let downArrowImageView = UIImageView()
-        downArrowImageView.frame = CGRect(x: CurrencyButton.frame.width - 15, y: ((CurrencyButton.frame.height - (1.5 * x)) / 2), width: (1.5 * x), height: (1.5 * y))
-        downArrowImageView.image = UIImage(named: "downArrow")
+        downArrowImageView.frame = CGRect(x: CurrencyButton.frame.width - 15, y: (CurrencyButton.frame.height / 2) - x/2, width: x, height: y/2)
+        downArrowImageView.image = UIImage(named: "DownArow_White")
         CurrencyButton.addSubview(downArrowImageView)
         
         // MeasurementChargesLabel..
@@ -1237,7 +1237,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             AppointmentsView.frame = CGRect(x: x, y: y, width: deliveryDetailsView.frame.width - (2 * x), height: (8 * y))
             AppointmentsView.layer.cornerRadius = 10
             AppointmentsView.layer.masksToBounds = true
-            AppointmentsView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            AppointmentsView.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
         
           //  DeliveryDetLabels.text = dressTypeArray[i]
            // AppointmentViewLabels.textColor = UIColor.white
@@ -1311,7 +1311,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DeliveryTypeView.frame = CGRect(x: x, y: AppointmentsView.frame.maxY + y, width: deliveryDetailsView.frame.width - (2 * x) , height: (4 * y))
         DeliveryTypeView.layer.cornerRadius = 10
         DeliveryTypeView.layer.masksToBounds = true
-        DeliveryTypeView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        DeliveryTypeView.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
         deliveryDetailsView.addSubview(DeliveryTypeView)
        
         // Label :-
@@ -1350,7 +1350,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         StichTimeView.frame = CGRect(x: x, y: DeliveryTypeView.frame.maxY + y, width: deliveryDetailsView.frame.width - (2 * x) , height: (6 * y))
         StichTimeView.layer.cornerRadius = 10
         StichTimeView.layer.masksToBounds = true
-        StichTimeView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        StichTimeView.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
         deliveryDetailsView.addSubview(StichTimeView)
         
         
@@ -1402,7 +1402,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DeliveryDateView.frame = CGRect(x: x, y: StichTimeView.frame.maxY + y, width: deliveryDetailsView.frame.width - (2 * x) , height: (6 * y))
         DeliveryDateView.layer.cornerRadius = 10
         DeliveryDateView.layer.masksToBounds = true
-        DeliveryDateView.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        DeliveryDateView.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0) // UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         deliveryDetailsView.addSubview(DeliveryDateView)
  
         // Label :-
@@ -1446,7 +1446,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         
         // Pay Button :-
         ProceedToPayButton.frame = CGRect(x: 0, y: view.frame.height - (9 * y), width: view.frame.width , height: (4 * y))
-        ProceedToPayButton.backgroundColor = UIColor.orange
+        ProceedToPayButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0)
         ProceedToPayButton.setTitle("PROCEED TO PAY", for: .normal)
         ProceedToPayButton.setTitleColor(UIColor.white, for: .normal)
         ProceedToPayButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 1.5 * x)

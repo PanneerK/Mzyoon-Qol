@@ -914,7 +914,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
 //        let PaymentLabel = UILabel()
         PaymentLabel.frame = CGRect(x:x, y: ServiceLabel.frame.maxY, width: (15 * x), height: (2 * y))
         PaymentLabel.text = "Payment Type"
-        PaymentLabel.textColor = UIColor.blue
+        PaymentLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PaymentLabel.textAlignment = .left
         PaymentLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
         PaymentLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
@@ -923,7 +923,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
 //        let PaymentTypeLabel = UILabel()
         PaymentTypeLabel.frame = CGRect(x:PaymentLabel.frame.maxX - (2 * x), y: ServiceTypeLabel.frame.maxY, width: (15 * x), height: (2 * y))
         PaymentTypeLabel.text = "(Card)"
-        PaymentTypeLabel.textColor = UIColor.blue
+        PaymentTypeLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PaymentTypeLabel.textAlignment = .right
         PaymentTypeLabel.font = UIFont(name: "Avenir Next", size: (1.2 * x))
         PaymentTypeLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
@@ -1008,7 +1008,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         //TrackingButton
         let TrackingButton = UIButton()
         TrackingButton.frame = CGRect(x: TrackImageView.frame.maxX, y: DateLabel.frame.maxY + (4 * y), width: (15 * x), height: (2.5 * y))
-        TrackingButton.backgroundColor = UIColor.orange
+        TrackingButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0)
         TrackingButton.setTitle("Tracking Details", for: .normal)
         TrackingButton.setTitleColor(UIColor.white, for: .normal)
         TrackingButton.titleLabel?.font =  UIFont(name: "Avenir-Regular", size: (1.3 * x))
