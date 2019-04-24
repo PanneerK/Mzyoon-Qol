@@ -495,7 +495,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     
     let SubmitButton = UIButton()
     SubmitButton.frame = CGRect(x: (selfScreenContents.frame.width - (16 * x)), y: Review_TF.frame.maxY + (3 * y) , width: (15 * x), height: (3 * y))
-    SubmitButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+    SubmitButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0)
     SubmitButton.setTitle("SUBMIT", for: .normal)
     SubmitButton.setTitleColor(UIColor.white, for: .normal)
     SubmitButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: 1.3 * x)
