@@ -3879,7 +3879,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
             
-          /*
+          
             if (FMaterial.compare(TMaterial) == .orderedAscending || FMaterial.compare(TMaterial) == .orderedSame)
             {
                 print("From-Date is smaller than To-Date")
@@ -3895,7 +3895,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
                 self.present(appointmentAlert, animated: true, completion: nil)
             }
-          */
+          
             
         }
     }
@@ -3951,7 +3951,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime: SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
             
-          /*
+          
             if (FMeasure.compare(TMeasure) == .orderedAscending || FMeasure.compare(TMeasure) == .orderedSame)
             {
                 print("From-Date is smaller then To-Date")
@@ -3967,7 +3967,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 // appointmentAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
                 self.present(appointmentAlert, animated: true, completion: nil)
             }
-            */
+            
         }
     }
     
