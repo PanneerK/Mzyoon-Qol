@@ -401,13 +401,20 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DressDetView.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: (10 * y))
         DressDetView.layer.cornerRadius = 5
         DressDetView.layer.borderWidth = 1
-        DressDetView.layer.backgroundColor = UIColor.orange.cgColor
-        DressDetView.layer.borderColor = UIColor.black.cgColor
+        DressDetView.layer.backgroundColor = UIColor.white.cgColor
+        DressDetView.layer.borderColor = UIColor.lightGray.cgColor
         selfScreenContents.addSubview(DressDetView)
         
         let DressImageView = UIImageView()
-        DressImageView.frame = CGRect(x: x, y: y, width: (8 * x), height:(8 * y))
+       // DressImageView.frame = CGRect(x: x, y: y, width: (8 * x), height:(8 * y))
+       // DressImageView.backgroundColor = UIColor.white
+        
+        DressImageView.frame = CGRect(x: x, y: y, width: (8 * y), height: (8 * y))
         DressImageView.backgroundColor = UIColor.white
+        DressImageView.layer.cornerRadius = DressImageView.frame.height / 2
+        DressImageView.layer.borderWidth = 1
+        DressImageView.layer.borderColor = UIColor.lightGray.cgColor
+        DressImageView.layer.masksToBounds = true
         
        if(DressImageArray.count != 0)
        {
@@ -438,8 +445,14 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
           DressDetView.addSubview(DressImageView)
         }
         
+        // Straight Line..
+        let StraightLine = UILabel()
+        StraightLine.frame = CGRect(x: DressImageView.frame.maxX + x, y: y, width: 0.3, height: DressDetView.frame.height - (2 * y))
+        StraightLine.backgroundColor = UIColor.lightGray
+        DressDetView.addSubview(StraightLine)
+        
         let DressTypeLabel = UILabel()
-        DressTypeLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: y, width: (20 * x), height: (2 * y))
+        DressTypeLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: y, width: (20 * x), height: (2 * y))
         if(DressNameArray.count != 0)
         {
           DressTypeLabel.text = DressNameArray[0] as? String
@@ -448,7 +461,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         {
             DressTypeLabel.text = ""
         }
-        DressTypeLabel.textColor = UIColor.white
+        DressTypeLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
     //  DressTypeLabel.backgroundColor = UIColor.gray
         DressTypeLabel.textAlignment = .left
         DressTypeLabel.font = UIFont(name: "Avenir Next", size: 1.5 * x)
@@ -456,19 +469,22 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         
         
         let QtyLabel = UILabel()
-        QtyLabel.frame = CGRect(x: DressImageView.frame.maxX + x, y: DressTypeLabel.frame.minY + (3 * y), width: (8 * x), height: (2 * y))
+        QtyLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: DressTypeLabel.frame.minY + (2 * y), width: (8 * x), height: (2 * y))
         QtyLabel.text = "Qty   : "
-        QtyLabel.textColor = UIColor.white
+        QtyLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         QtyLabel.textAlignment = .left
         QtyLabel.font = UIFont(name: "Avenir Next", size: 1.5 * x)
         DressDetView.addSubview(QtyLabel)
         
         
-        QtyNumTF.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (4 * x), height: (2 * y))
+        QtyNumTF.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (2 * y), width: (4 * x), height: (2 * y))
         QtyNumTF.backgroundColor = UIColor.white
+       // QtyNumTF.layer.cornerRadius = 5
+        QtyNumTF.layer.borderWidth = 1
+        QtyNumTF.layer.borderColor = UIColor.lightGray.cgColor
         QtyNumTF.placeholder = "Qty"
         QtyNumTF.text = "1" // Variables.sharedManager.ApprovalQty
-        QtyNumTF.textColor = UIColor.black
+        QtyNumTF.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         QtyNumTF.textAlignment = .center
         QtyNumTF.font = QtyNumTF.font!.withSize(14)
         QtyNumTF.adjustsFontSizeToFitWidth = true
@@ -480,7 +496,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DressDetView.addSubview(QtyNumTF)
         
         
-        PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((selfScreenContents.frame.width / 2) - 1), height: (4 * y))
+        PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((selfScreenContents.frame.width / 2) - 1), height: (3 * y))
         PricingButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PricingButton.setTitle("PRICE DETAILS", for: .normal)
         PricingButton.setTitleColor(UIColor.white, for: .normal)
@@ -489,7 +505,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         PricingButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(PricingButton)
         
-        DeliveryDetailsButton.frame = CGRect(x: PricingButton.frame.maxX + 1, y: DressDetView.frame.maxY + y, width: selfScreenContents.frame.width / 2, height: (4 * y))
+        DeliveryDetailsButton.frame = CGRect(x: PricingButton.frame.maxX + 1, y: DressDetView.frame.maxY + y, width: selfScreenContents.frame.width / 2, height: (3 * y))
         DeliveryDetailsButton.backgroundColor = UIColor.lightGray
         DeliveryDetailsButton.setTitle("DELIVERY DETAILS", for: .normal)
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
@@ -671,7 +687,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         {
            MeasureRupeeValueLBL.text = ""
         }
-        MeasureRupeeValueLBL.textColor = UIColor.blue
+        MeasureRupeeValueLBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         MeasureRupeeValueLBL.textAlignment = .center
         MeasureRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(MeasureRupeeValueLBL)
@@ -681,7 +697,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         CurrencyLabel.frame = CGRect(x: MeasureRupeeValueLBL.frame.maxX + 1, y: CurrencyButton.frame.minY + (4 * y), width: (3 * x), height: (3 * y))
        // CurrencyLabel.backgroundColor = UIColor.gray
         CurrencyLabel.text = "AED"
-        CurrencyLabel.textColor = UIColor.blue
+        CurrencyLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         CurrencyLabel.textAlignment = .center
         CurrencyLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(CurrencyLabel)
@@ -713,7 +729,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             StichingRupeeValueLBL.text = ""
         }
         
-        StichingRupeeValueLBL.textColor = UIColor.blue
+        StichingRupeeValueLBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         StichingRupeeValueLBL.textAlignment = .center
         StichingRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(StichingRupeeValueLBL)
@@ -724,7 +740,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         StichingCurrLabel.frame = CGRect(x: StichingRupeeValueLBL.frame.maxX + 1, y: MeasurementChargesLabel.frame.minY + (4 * y), width: (3 * x), height: (3 * y))
       //  StichingCurrLabel.backgroundColor = UIColor.gray
         StichingCurrLabel.text = "AED"
-        StichingCurrLabel.textColor = UIColor.blue
+        StichingCurrLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         StichingCurrLabel.textAlignment = .center
         StichingCurrLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(StichingCurrLabel)
@@ -753,7 +769,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             AppointmentRupeeValueLBL.text = ""
         }
        
-        AppointmentRupeeValueLBL.textColor = UIColor.blue
+        AppointmentRupeeValueLBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         AppointmentRupeeValueLBL.textAlignment = .center
         AppointmentRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(AppointmentRupeeValueLBL)
@@ -763,7 +779,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         AppointmentCurrLabel.frame = CGRect(x: AppointmentRupeeValueLBL.frame.maxX + 1, y: StichingChargesLabel.frame.minY + (4 * y), width: (3 * x), height: (3 * y))
       //  AppointmentCurrLabel.backgroundColor = UIColor.gray
         AppointmentCurrLabel.text = "AED"
-        AppointmentCurrLabel.textColor = UIColor.blue
+        AppointmentCurrLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         AppointmentCurrLabel.textAlignment = .center
         AppointmentCurrLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(AppointmentCurrLabel)
@@ -794,7 +810,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             MaterialRupeeValueLBL.text = ""
         }
         
-        MaterialRupeeValueLBL.textColor = UIColor.blue
+        MaterialRupeeValueLBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         MaterialRupeeValueLBL.textAlignment = .center
         MaterialRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(MaterialRupeeValueLBL)
@@ -804,7 +820,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         MaterialCurrLabel.frame = CGRect(x: MaterialRupeeValueLBL.frame.maxX + 1, y: AppointmentChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
        // MaterialCurrLabel.backgroundColor = UIColor.gray
         MaterialCurrLabel.text = "AED"
-        MaterialCurrLabel.textColor = UIColor.blue
+        MaterialCurrLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         MaterialCurrLabel.textAlignment = .center
         MaterialCurrLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(MaterialCurrLabel)
@@ -834,7 +850,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             UrgentStichValueLBL.text = ""
         }
         
-        UrgentStichValueLBL.textColor = UIColor.blue
+        UrgentStichValueLBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         UrgentStichValueLBL.textAlignment = .center
         UrgentStichValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(UrgentStichValueLBL)
@@ -844,7 +860,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         UrgentCurrLabel.frame = CGRect(x: UrgentStichValueLBL.frame.maxX + 1, y: MaterialDeliveryChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
        // UrgentCurrLabel.backgroundColor = UIColor.gray
         UrgentCurrLabel.text = "AED"
-        UrgentCurrLabel.textColor = UIColor.blue
+        UrgentCurrLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         UrgentCurrLabel.textAlignment = .center
         UrgentCurrLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(UrgentCurrLabel)
@@ -873,7 +889,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             DeliveryRupeeValueLBL.text = ""
         }
        
-        DeliveryRupeeValueLBL.textColor = UIColor.blue
+        DeliveryRupeeValueLBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         DeliveryRupeeValueLBL.textAlignment = .center
         DeliveryRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(DeliveryRupeeValueLBL)
@@ -883,7 +899,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DeliveryCurrLabel.frame = CGRect(x: DeliveryRupeeValueLBL.frame.maxX + 1, y: UrgentStichChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
       //  DeliveryCurrLabel.backgroundColor = UIColor.gray
         DeliveryCurrLabel.text = "AED"
-        DeliveryCurrLabel.textColor = UIColor.blue
+        DeliveryCurrLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         DeliveryCurrLabel.textAlignment = .center
         DeliveryCurrLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(DeliveryCurrLabel)
@@ -912,7 +928,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             ServiceRupeeValueLBL.text = ""
         }
         
-        ServiceRupeeValueLBL.textColor = UIColor.blue
+        ServiceRupeeValueLBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         ServiceRupeeValueLBL.textAlignment = .center
         ServiceRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(ServiceRupeeValueLBL)
@@ -922,7 +938,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         ServiceCurrLabel.frame = CGRect(x: ServiceRupeeValueLBL.frame.maxX + 1, y: DeliveryChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
      //   ServiceCurrLabel.backgroundColor = UIColor.gray
         ServiceCurrLabel.text = "AED"
-        ServiceCurrLabel.textColor = UIColor.blue
+        ServiceCurrLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         ServiceCurrLabel.textAlignment = .center
         ServiceCurrLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(ServiceCurrLabel)
@@ -950,7 +966,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             TaxRupeeValueLBL.text = ""
         }
        
-        TaxRupeeValueLBL.textColor = UIColor.blue
+        TaxRupeeValueLBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         TaxRupeeValueLBL.textAlignment = .center
         TaxRupeeValueLBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(TaxRupeeValueLBL)
@@ -960,7 +976,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         TaxCurrLabel.frame = CGRect(x: TaxRupeeValueLBL.frame.maxX + 1, y: ServiceChargesLabel.frame.minY + (3 * y), width: (3 * x), height: (3 * y))
       //  TaxCurrLabel.backgroundColor = UIColor.gray
         TaxCurrLabel.text = "AED"
-        TaxCurrLabel.textColor = UIColor.blue
+        TaxCurrLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         TaxCurrLabel.textAlignment = .center
         TaxCurrLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ApprovalListScrollView.addSubview(TaxCurrLabel)
@@ -977,7 +993,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         OrderTotalLabel.frame = CGRect(x: x, y: TaxChargesLabel.frame.minY + (4 * y), width: (ApprovalListScrollView.frame.width / 2), height: (3 * y))
        // OrderTotalLabel.backgroundColor = UIColor.gray
         OrderTotalLabel.text = "ORDER TOTAL"
-        OrderTotalLabel.textColor = UIColor.blue
+        OrderTotalLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         OrderTotalLabel.textAlignment = .left
         OrderTotalLabel.font = UIFont(name: "Avenir Next", size: 1.5 * x)
         ApprovalListScrollView.addSubview(OrderTotalLabel)
@@ -1005,7 +1021,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         TotalCurrLabel.frame = CGRect(x: OrderTotalValueLBL.frame.maxX + 1, y: TaxChargesLabel.frame.minY + (4 * y), width: (3 * x), height: (3 * y))
         //TaxCurrLabel.backgroundColor = UIColor.gray
         TotalCurrLabel.text = "AED"
-        TotalCurrLabel.textColor = UIColor.blue
+        TotalCurrLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         TotalCurrLabel.textAlignment = .center
         TotalCurrLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
         ApprovalListScrollView.addSubview(TotalCurrLabel)

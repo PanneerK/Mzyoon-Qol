@@ -1727,7 +1727,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // Measure_ToDateView.addSubview(ToDateEditMeasure_Icon)
         
         
-        
         //----------------Time Slot View------------------------------------
         
         let Slot_MeasureTypeLBL = UILabel()
@@ -2146,6 +2145,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
            else
            {
           */
+            
              if(MaterialStatus.count == 1)
              {
                Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
