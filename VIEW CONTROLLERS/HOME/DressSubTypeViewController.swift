@@ -37,6 +37,9 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     var PageNumStr:String!
     var MethodName:String!
     
+    var addNameAlert = UIAlertController()
+
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -468,8 +471,10 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             
             if tag == 1
             {
-                let measurementScreen = Measurement2ViewController()
-                self.navigationController?.pushViewController(measurementScreen, animated: true)
+                addNewAlertAction()
+                
+//                let measurementScreen = Measurement2ViewController()
+//                self.navigationController?.pushViewController(measurementScreen, animated: true)
             }
             else
             {
@@ -481,6 +486,100 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             let emptyAlert = UIAlertController(title: "Alert", message: "We don't have sub types", preferredStyle: .alert)
             emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(emptyAlert, animated: true, completion: nil)
+        }
+    }
+    
+    func addNewAlertAction()
+    {
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                var dressType = String()
+                if let dress = UserDefaults.standard.value(forKey: "dressSubType") as? String
+                {
+                    dressType = dress
+                }
+                addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - \(dressType)", preferredStyle: .alert)
+                addNameAlert.addTextField(configurationHandler: { (textField) in
+                    textField.placeholder = "Enter the name"
+                    textField.textAlignment = .left
+                })
+                addNameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: addNewNameAlertAction(action:)))
+                addNameAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                self.present(addNameAlert, animated: true, completion: nil)
+            }
+            else if language == "ar"
+            {
+                addNameAlert = UIAlertController(title: "اضف اسما", message: "لنوع الفستان - معطف", preferredStyle: .alert)
+                addNameAlert.addTextField(configurationHandler: { (textField) in
+                    textField.placeholder = "أدخل الاسم"
+                    textField.textAlignment = .right
+                })
+                addNameAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: addNewNameAlertAction(action:)))
+                addNameAlert.addAction(UIAlertAction(title: "إلغاء", style: .default, handler: nil))
+                self.present(addNameAlert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - Coat", preferredStyle: .alert)
+            addNameAlert.addTextField(configurationHandler: { (textField) in
+                textField.placeholder = "Enter the name"
+                textField.textAlignment = .left
+            })
+            addNameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: addNewNameAlertAction(action:)))
+            addNameAlert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            self.present(addNameAlert, animated: true, completion: nil)
+        }
+    }
+    
+    func emptyNameAlertAction(action : UIAlertAction)
+    {
+        addNewAlertAction()
+    }
+    
+    func addNewNameAlertAction(action : UIAlertAction)
+    {
+        if let text = addNameAlert.textFields![0].text as? String
+        {
+            if text.isEmpty == true || text == ""
+            {
+                print("VALUES IS EMPTY")
+                
+                var nameAlert = UIAlertController()
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        nameAlert = UIAlertController(title: "Alert", message: "Please enter a name and proceed", preferredStyle: .alert)
+                        nameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyNameAlertAction(action:)))
+                    }
+                    else if language == "ar"
+                    {
+                        nameAlert = UIAlertController(title: "تنبيه", message: "الرجاء إدخال اسم ومتابعة", preferredStyle: .alert)
+                        nameAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: emptyNameAlertAction(action:)))
+                    }
+                }
+                else
+                {
+                    nameAlert = UIAlertController(title: "Alert", message: "Please enter a name and proceed", preferredStyle: .alert)
+                    nameAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyNameAlertAction(action:)))
+                }
+                
+                self.present(nameAlert, animated: true, completion: nil)
+            }
+            else
+            {
+                print("VALUES ARE FULL")
+                
+                UserDefaults.standard.set(addNameAlert.textFields![0].text!, forKey: "measurementName")
+                UserDefaults.standard.set("-1", forKey: "measurementIdInt")
+                
+                let measurement2Screen = Measurement2ViewController()
+                self.navigationController?.pushViewController(measurement2Screen, animated: true)
+            }
         }
     }
     

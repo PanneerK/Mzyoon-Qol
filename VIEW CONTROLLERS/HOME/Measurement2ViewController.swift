@@ -3962,7 +3962,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         imageBackView.addSubview(partsImageView)
         
-        partsNameLabel.frame = CGRect(x: partsImageView.frame.minX + ((partsImageView.frame.width - (10 * x)) / 2), y: partsImageView.frame.maxY + y, width: (10 * x), height: (3 * y))
+        partsNameLabel.frame = CGRect(x: partsImageView.frame.minX, y: partsImageView.frame.maxY + y, width: partsImageView.frame.width, height: (3 * y))
         partsNameLabel.text = measurerPartsName
         partsNameLabel.textColor = UIColor.white
         partsNameLabel.textAlignment = .center
@@ -4262,13 +4262,123 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         }
         else
         {
-            UserDefaults.standard.set(keys, forKey: "measurementId")
-            UserDefaults.standard.set(values, forKey: "measurementValues")
-            UserDefaults.standard.set(0, forKey: "measurement2Response")
-            let referenceScreen = ReferenceImageViewController()
-            self.navigationController?.pushViewController(referenceScreen, animated: true)
+            
+            
+            let tag = Variables.sharedManager.measurementTag
+            
+            if tag == 1
+            {
+                var userId = Int()
+                var dressId = Int()
+                let orderCustom = OrderCustomizationToJson()
+                var measurementId = NSArray()
+                var measurementValues = [Double]()
+                var measurementBy = String()
+                var units = "CM"
+                var measurementName = String()
+
+
+                if let id = UserDefaults.standard.value(forKey: "userId") as? String
+                {
+                    userId = Int(id)!
+                }
+                else if let id = UserDefaults.standard.value(forKey: "userId") as? Int
+                {
+                    userId = id
+                }
+                
+                if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
+                {
+                    dressId = dressid
+                }
+                else if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
+                {
+                    let converted = Int(dressid)
+                    print("CONVERTED", converted, dressid)
+                    dressId = converted!
+                }
+                
+                if let partsId = UserDefaults.standard.value(forKey: "measurementId") as? NSArray
+                {
+                    measurementId = partsId
+                }
+                
+                if let dictValues = UserDefaults.standard.value(forKey: "measurementValues") as? [Double]
+                {
+                    measurementValues = dictValues
+                }
+                
+                let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
+                print("FINALIZED USER MEASUREMENT", userMeasurement)
+                
+                if let measurementby = UserDefaults.standard.value(forKey: "measurementBy") as? String
+                {
+                    measurementBy = measurementby
+                }
+                
+                if let unit = UserDefaults.standard.value(forKey: "units") as? String
+                {
+                    units = unit
+                }
+                
+                if measurementBy == "Customer"
+                {
+                    if let name = UserDefaults.standard.value(forKey: "measurementName") as? String
+                    {
+                        measurementName = name
+                    }
+                }
+                else
+                {
+                    measurementName = ""
+                }
+                
+                activityContents()
+                
+                self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
+            }
+            else
+            {
+                UserDefaults.standard.set(keys, forKey: "measurementId")
+                UserDefaults.standard.set(values, forKey: "measurementValues")
+                UserDefaults.standard.set(0, forKey: "measurement2Response")
+                let referenceScreen = ReferenceImageViewController()
+                self.navigationController?.pushViewController(referenceScreen, animated: true)
+            }
         }
         
+    }
+    
+    func API_CALLBACK_InsertUserMeasurement(insUsrMeasurementVal: NSDictionary)
+    {
+        let ResponseMsg = insUsrMeasurementVal.object(forKey: "ResponseMsg") as! String
+        
+        stopActivity()
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = insUsrMeasurementVal.object(forKey: "Result") as! Int
+            print("Result Value :", Result)
+            
+            let successAlert = UIAlertController(title: "Alert", message: "Saved Successfully", preferredStyle: .alert)
+            successAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: successAlertAction(action:)))
+            self.present(successAlert, animated: true, completion: nil)
+        }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = insUsrMeasurementVal.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "InsertUserMeasurementValues"
+            ErrorStr = Result
+            DeviceError()
+        }
+    }
+    
+    func successAlertAction(action : UIAlertAction)
+    {
+        let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+        self.navigationController!.popToViewController(viewControllers[viewControllers.count - 5], animated: true)
     }
     
     func partsViewContents(isHidden : Bool)

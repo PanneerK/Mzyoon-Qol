@@ -2651,6 +2651,7 @@ class ServerAPI : NSObject
                 if response.result.value != nil
                 {
                     self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_MeasurementList!(list: self.resultDict)
                 }
                 else
                 {

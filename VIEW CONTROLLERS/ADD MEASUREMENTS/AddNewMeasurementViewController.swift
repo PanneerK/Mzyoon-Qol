@@ -8,14 +8,27 @@
 
 import UIKit
 
-class AddNewMeasurementViewController: UIViewController
+class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
 {
+    
     var x = CGFloat()
     var y = CGFloat()
+    
+    let serviceCall = ServerAPI()
     
     let backgroundImage = UIImageView()
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
+    
+    let measurementScrollView = UIScrollView()
+    let addNewButton = UIButton()
+    
+    var genderArrayInEnglish = NSArray()
+    var genderArrayInArabic = NSArray()
+    var nameArray = NSArray()
+    var imageArray = NSArray()
+    var dressNameArrayInEnglish = NSArray()
+    var dressNameArrayInArabic = NSArray()
     
     override func viewDidLoad()
     {
@@ -25,14 +38,46 @@ class AddNewMeasurementViewController: UIViewController
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
         
-        selfScreenNavigationContents()
-        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-    func selfScreenNavigationContents()
+    override func viewWillAppear(_ animated: Bool)
+    {
+        if let id = UserDefaults.standard.value(forKey: "userId") as? Int
+        {
+            serviceCall.API_MeasurementList(userId: id, delegate: self)
+        }
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("ERROR CODE", errorMessage)
+    }
+    
+    func API_CALLBACK_MeasurementList(list: NSDictionary)
+    {
+        print("MEASUREMENT LIST", list)
+        
+        let ResponseMsg = list.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = list.object(forKey: "Result") as! NSArray
+            
+            genderArrayInEnglish = Result.value(forKey: "Gender") as! NSArray
+            genderArrayInArabic = Result.value(forKey: "GenderInArabic") as! NSArray
+            imageArray = Result.value(forKey: "Image") as! NSArray
+            nameArray = Result.value(forKey: "Name") as! NSArray
+            dressNameArrayInEnglish = Result.value(forKey: "NameInEnglish") as! NSArray
+            dressNameArrayInArabic = Result.value(forKey: "NameInArabic") as! NSArray
+            
+            selfScreenNavigationContents(getInputArray: nameArray)
+        }
+    }
+    
+    func selfScreenNavigationContents(getInputArray : NSArray)
     {
         backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         backgroundImage.image = UIImage(named: "background")
@@ -57,14 +102,13 @@ class AddNewMeasurementViewController: UIViewController
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        let measurementScrollView = UIScrollView()
         measurementScrollView.frame = CGRect(x: x, y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: view.frame.height - (selfScreenNavigationBar.frame.maxY + (7 * y)))
         view.addSubview(measurementScrollView)
         
         
         var y2:CGFloat = 0
         
-        for i in 0..<15
+        for i in 0..<getInputArray.count
         {
             let measurementButton = UIButton()
             measurementButton.frame = CGRect(x: 0, y: y2, width: measurementScrollView.frame.width, height: (8 * x))
@@ -76,8 +120,20 @@ class AddNewMeasurementViewController: UIViewController
             
             let dressImageView = UIImageView()
             dressImageView.frame = CGRect(x: x, y: y, width: (6 * y), height: (measurementButton.frame.height - (2 * y)))
-            dressImageView.backgroundColor = UIColor.blue
+//            dressImageView.layer.borderWidth = 0.5
+//            dressImageView.layer.borderColor = UIColor.lightGray.cgColor
             dressImageView.layer.cornerRadius = dressImageView.frame.height / 2
+            dressImageView.contentMode = .scaleAspectFit
+            if let imageName = imageArray[i] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/DressSubType/\(imageName)"
+                let apiurl = URL(string: api)
+                if apiurl != nil
+                {
+                    dressImageView.dowloadFromServer(url: apiurl!)
+                }
+            }
             measurementButton.addSubview(dressImageView)
             
             let lineLabel = UILabel()
@@ -87,7 +143,10 @@ class AddNewMeasurementViewController: UIViewController
             
             let userNameLabel = UILabel()
             userNameLabel.frame = CGRect(x: lineLabel.frame.maxX + x, y: y, width: measurementButton.frame.width - (10 * x), height: (3 * y))
-            userNameLabel.text = "Testing Name"
+            if let measurementName = getInputArray[i] as? String
+            {
+                userNameLabel.text = measurementName
+            }
             userNameLabel.textColor = UIColor.black
             userNameLabel.textAlignment = .left
             userNameLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
@@ -96,7 +155,10 @@ class AddNewMeasurementViewController: UIViewController
             
             let dressNameLabel = UILabel()
             dressNameLabel.frame = CGRect(x: lineLabel.frame.maxX + x, y: userNameLabel.frame.maxY, width: measurementButton.frame.width - (10 * x), height: (3 * y))
-            dressNameLabel.text = "Dress Name"
+            if let dressName = dressNameArrayInEnglish[i] as? String, let gender = genderArrayInEnglish[i] as? String
+            {
+                dressNameLabel.text = "\(dressName) - \(gender)"
+            }
             dressNameLabel.textColor = UIColor.lightGray
             dressNameLabel.textAlignment = .left
             dressNameLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
@@ -108,7 +170,6 @@ class AddNewMeasurementViewController: UIViewController
         
         measurementScrollView.contentSize.height = y2 + (2 * y)
         
-        let addNewButton = UIButton()
         addNewButton.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
         addNewButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addNewButton.setTitle("Add new measurements", for: .normal)
