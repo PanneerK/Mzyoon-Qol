@@ -925,7 +925,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             Material_StatusBtn.setTitle("", for: .normal)
         }
-        Material_StatusBtn.setTitleColor(UIColor.blue, for: .normal)
+        Material_StatusBtn.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0), for: .normal)
         Material_StatusBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         Material_StatusBtn.addTarget(self, action: #selector(self.MaterialStatusButtonAction(sender:)), for: .touchUpInside)
         Material_AppointmentStatusView.addSubview(Material_StatusBtn)
@@ -1255,7 +1255,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         let Material_SaveButton = UIButton()
         Material_SaveButton.frame = CGRect(x: courierImageView.frame.width - (10 * x), y: Material_RejectButton.frame.minY + y, width: (10 * x), height: (3.5 * y))
-        Material_SaveButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
+        Material_SaveButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0)
         Material_SaveButton.setTitle("Save", for: .normal)
         Material_SaveButton.setTitleColor(UIColor.white, for: .normal)
         Material_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.4 * x)!
@@ -1522,7 +1522,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             Measure_StatusBtn.setTitle("", for: .normal)
         }
         
-        Measure_StatusBtn.setTitleColor(UIColor.blue, for: .normal)
+        Measure_StatusBtn.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0), for: .normal)
         Measure_StatusBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         Measure_StatusBtn.addTarget(self, action: #selector(self.MeasureStatusButtonAction(sender:)), for: .touchUpInside)
         Measurement_AppointmentStatusView.addSubview(Measure_StatusBtn)
@@ -1835,7 +1835,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         let Measure_SaveButton = UIButton()
         Measure_SaveButton.frame = CGRect(x: TailorImageView.frame.width - (10 * x), y: Measure_RejectButton.frame.minY + y , width: (10 * x), height: (3.5 * y))
-        Measure_SaveButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
+        Measure_SaveButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0)
         Measure_SaveButton.setTitle("Save", for: .normal)
         Measure_SaveButton.setTitleColor(UIColor.white, for: .normal)
         Measure_SaveButton.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.4 * x)!
@@ -2122,30 +2122,6 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // Material_StatusBtn.backgroundColor = UIColor.gray
         if(MaterialStatus.count > 0)
         {
-            
-          /*
-           if(MaterialStatus.contains("Not Approved"))
-           {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    Material_StatusBtn.setTitle("Pending", for: .normal)
-                }
-                else if language == "ar"
-                {
-                    Material_StatusBtn.setTitle("قيد الانتظار", for: .normal)
-                }
-            }
-            else
-            {
-                Material_StatusBtn.setTitle("Pending", for: .normal)
-            }
-           }
-           else
-           {
-          */
-            
              if(MaterialStatus.count == 1)
              {
                Material_StatusBtn.setTitle("\(MaterialStatus[0])", for: .normal)
@@ -2158,14 +2134,12 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
              {
                 Material_StatusBtn.setTitle("\(MaterialStatus[2])", for: .normal)
              }
-            
-          // }
         }
         else
         {
           Material_StatusBtn.setTitle("", for: .normal)
         }
-        Material_StatusBtn.setTitleColor(UIColor.blue, for: .normal)
+        Material_StatusBtn.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0), for: .normal)
         Material_StatusBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         Material_StatusBtn.addTarget(self, action: #selector(self.MaterialStatusButtonAction(sender:)), for: .touchUpInside)
         Material_AppointmentStatusView.addSubview(Material_StatusBtn)
@@ -2589,29 +2563,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // Measure_StatusBtn.backgroundColor = UIColor.gray
         if(MeasureStatus.count > 0)
         {
-          /*
-            if(MeasureStatus.contains("Not Approved"))
-            {
-                if let language = UserDefaults.standard.value(forKey: "language") as? String
-                {
-                    if language == "en"
-                    {
-                        Measure_StatusBtn.setTitle("Pending", for: .normal)
-                    }
-                    else if language == "ar"
-                    {
-                        Measure_StatusBtn.setTitle("قيد الانتظار", for: .normal)
-                    }
-                }
-                else
-                {
-                    Measure_StatusBtn.setTitle("Pending", for: .normal)
-                }
-            }
-            else
-            {
-          */
-                if(MeasureStatus.count == 1)
+             if(MeasureStatus.count == 1)
                 {
                     Measure_StatusBtn.setTitle("\(MeasureStatus[0])", for: .normal)
                 }
@@ -2623,14 +2575,13 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
                 {
                     Measure_StatusBtn.setTitle("\(MeasureStatus[2])", for: .normal)
                 }
-           // }
         }
         else
         {
             Measure_StatusBtn.setTitle("", for: .normal)
         }
         
-        Measure_StatusBtn.setTitleColor(UIColor.blue, for: .normal)
+        Measure_StatusBtn.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0), for: .normal)
         Measure_StatusBtn.titleLabel?.font = UIFont(name: "Avenir Next", size: 1.2 * x)!
         Measure_StatusBtn.addTarget(self, action: #selector(self.MeasureStatusButtonAction(sender:)), for: .touchUpInside)
         Measurement_AppointmentStatusView.addSubview(Measure_StatusBtn)
@@ -3361,7 +3312,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
       
         let rescheduleButton = UIButton()
         rescheduleButton.frame = CGRect(x:(2 * x), y: reschedule_LBL.frame.maxY , width: (15 * x), height: (3 * y))
-        rescheduleButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0) //UIColor.blue
+        rescheduleButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0) //UIColor.blue
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -3390,7 +3341,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         let okButton = UIButton()
         okButton.frame = CGRect(x: rescheduleButton.frame.maxX + (8 * x), y: reschedule_LBL.frame.maxY, width: (10 * x), height: (3 * y))
-        okButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0) // UIColor.blue
+        okButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0) // UIColor.blue
         okButton.setTitle("Ok", for: .normal)
         okButton.setTitleColor(UIColor.white, for: .normal)
         okButton.layer.borderColor = UIColor.lightGray.cgColor
@@ -3454,7 +3405,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         let saveButton = UIButton()
         saveButton.frame = CGRect(x: CancelButton.frame.maxX + (12 * x), y: Material_rejectReason_TF.frame.maxY + y, width: (10 * x), height: (3 * y))
-        saveButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0) //UIColor.blue
+        saveButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0) //UIColor.blue
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.layer.borderColor = UIColor.lightGray.cgColor
@@ -3518,7 +3469,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         
         let saveButton = UIButton()
         saveButton.frame = CGRect(x: CancelButton.frame.maxX + (12 * x), y: Measure_rejectReason_TF.frame.maxY + y, width: (10 * x), height: (3 * y))
-        saveButton.backgroundColor = UIColor.blue
+        saveButton.backgroundColor = UIColor(red:0.29, green:0.48, blue:0.92, alpha:1.0)
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.layer.borderColor = UIColor.lightGray.cgColor

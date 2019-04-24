@@ -11,5 +11,7 @@ target 'Mzyoon' do
   pod 'Cosmos', '~> 18.0'
   pod 'SideMenuSwift'
   pod 'FSCalendar'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
   
 end
