@@ -102,6 +102,34 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         {
             self.serviceCall.API_GetOrderRequest(RequestId: Int(userId)!, delegate: self)
         }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+                
+                navigationTitle.text = "ORDER REQUEST LIST"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+                
+                navigationTitle.text = "طلب قائمة الطلب"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+            
+            navigationTitle.text = "ORDER REQUEST LIST"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)

@@ -2634,4 +2634,35 @@ class ServerAPI : NSObject
         }
     }
     
+    //25.04.2019
+    
+    func API_MeasurementList(userId : Int, delegate : ServerAPIDelegate)
+    {
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - Measurement List Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/Api/order/MeasurementList?CustomerId=\(userId)", arguments: [baseURL])
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 63, errorMessage: "Measuremen tList Failed")
+                }
+            }
+            
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
+    }
+    
 }

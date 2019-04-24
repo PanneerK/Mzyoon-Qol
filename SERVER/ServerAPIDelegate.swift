@@ -135,4 +135,7 @@ import Foundation
     //17.04.2019
     @objc optional func API_CALLBACK_ViewDetails(details : NSDictionary)
     
+    //24.04.2019
+    @objc optional func API_CALLBACK_MeasurementList(list : NSDictionary)
+    
 }

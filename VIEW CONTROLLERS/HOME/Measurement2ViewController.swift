@@ -3617,7 +3617,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Please click here to add the measurment value via measuring ruler"
+        detailedLabel.text = "Please click here to add the measurement value via measuring ruler"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))

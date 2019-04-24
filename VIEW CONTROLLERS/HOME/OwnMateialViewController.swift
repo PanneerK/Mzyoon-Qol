@@ -65,7 +65,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.addMaterialContent()
+//        self.addMaterialContent()
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"

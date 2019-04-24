@@ -477,138 +477,176 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             }
         }
         
-        customizationHeadingLabel.frame = CGRect(x: 0, y: yPos, width: orderSummaryScrollView.frame.width, height: (3 * y))
-        customizationHeadingLabel.text = "CUSTOMIZATION 3"
-        customizationHeadingLabel.textColor = UIColor.black
-        customizationHeadingLabel.textAlignment = .left
-        customizationHeadingLabel.font = UIFont(name: "Avenir-Regular", size: 10)
-        orderSummaryScrollView.addSubview(customizationHeadingLabel)
+        var yaxis:CGFloat = yPos
         
-        if let custom3 = UserDefaults.standard.value(forKey: "custom3") as? NSDictionary
+        if let customValue = UserDefaults.standard.value(forKey: "custom3Response") as? Int
         {
-            customization3 = custom3
-        }
-        
-        
-        let customizationView = UIView()
-        customizationView.frame = CGRect(x: 0, y: customizationHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width, height: (5 * x * CGFloat(customization3.count)))
-        customizationView.backgroundColor = UIColor.white
-        orderSummaryScrollView.addSubview(customizationView)
-        
-        print("CUSTOM 3 SELECTED", customization3.count)
-        
-//        for (keys, values) in customization3
-//        {
-//            customKeys.append(keys as! String)
-//            customvalues.append(values as! String)
-//        }
-        
-        let customizationArray = ["Lapels - ", "Buttons - ", "Pockets - ", "Vents - "]
-        let customizationImageArray = ["Lapels", "Buttons", "Pockets", "Vents"]
-        var y2:CGFloat = y
-        
-        for i in 0..<customization3.count
-        {
-            let dressSubViews = UIView()
-            dressSubViews.frame = CGRect(x: x, y: y2, width: customizationView.frame.width - (2 * x), height: (4 * y))
-            dressSubViews.layer.cornerRadius = 10
-            dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
-            dressSubViews.layer.masksToBounds = true
-            customizationView.addSubview(dressSubViews)
-            
-            let dressTypeImages = UIImageView()
-            dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
-            dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
-//            dressTypeImages.image = UIImage(named: customizationImageArray[i])
-            if let imageName = customAttImage[i] as? String
+            if customValue == 0
             {
-                let urlString = serviceCall.baseURL
-                let api = "\(urlString)/images/Customazation3/\(imageName)"
-                let apiurl = URL(string: api)
-                print("GET API", apiurl)
-                if apiurl != nil
-                {
-                    dressTypeImages.dowloadFromServer(url: apiurl!)
-                }
-            }
-            dressSubViews.addSubview(dressTypeImages)
-            
-            let dressTypeLabels = UILabel()
-            dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
-            dressTypeLabels.backgroundColor = UIColor.clear
-            dressTypeLabels.text = "\(customKeys[i])" + "-"
-            dressTypeLabels.textColor = UIColor.white
-            dressTypeLabels.textAlignment = .left
-            dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
-            dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
-            dressSubViews.addSubview(dressTypeLabels)
-            
-            let lineLabel = UILabel()
-            lineLabel.frame = CGRect(x: dressTypeLabels.frame.maxX, y: ((dressSubViews.frame.height - 1) / 2), width: (x / 3), height: 1)
-            lineLabel.backgroundColor = UIColor.white
-            dressSubViews.addSubview(lineLabel)
-            
-            let getDressTypeLabels = UILabel()
-            getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
-            getDressTypeLabels.backgroundColor = UIColor.clear
-            getDressTypeLabels.text = customvalues[i]
-            getDressTypeLabels.textColor = UIColor.white
-            getDressTypeLabels.textAlignment = .left
-            if let strings = customvalues[i] as? String
-            {
-                if strings.count > 15
-                {
-                    getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
-                    getDressTypeLabels.font = getDressTypeLabels.font.withSize(x)
-                    getDressTypeLabels.numberOfLines = 2
-                }
-                else
-                {
-                    getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
-                    getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
-                }
-            }
-            getDressTypeLabels.adjustsFontSizeToFitWidth = true
-            dressSubViews.addSubview(getDressTypeLabels)
-            
-            y2 = dressSubViews.frame.maxY + (y / 2)
-            
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    dressTypeLabels.text = "\(customKeys[i])"
-                    dressTypeLabels.textAlignment = .left
-                    
-                    getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    getDressTypeLabels.text = customvalues[i]
-                    getDressTypeLabels.textAlignment = .left
-                }
-                else if language == "ar"
-                {
-                    dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    dressTypeLabels.text = "\(customKeys[i])"
-                    dressTypeLabels.textAlignment = .right
-                    
-                    getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    getDressTypeLabels.text = customvalues[i]
-                    getDressTypeLabels.textAlignment = .right
-                }
-            }
-            else
-            {
-                dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                dressTypeLabels.text = "\(customKeys[i])"
-                dressTypeLabels.textAlignment = .left
+                customizationHeadingLabel.frame = CGRect(x: 0, y: yPos, width: orderSummaryScrollView.frame.width, height: (3 * y))
+                customizationHeadingLabel.text = "CUSTOMIZATION 3"
+                customizationHeadingLabel.textColor = UIColor.black
+                customizationHeadingLabel.textAlignment = .left
+                customizationHeadingLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+                orderSummaryScrollView.addSubview(customizationHeadingLabel)
                 
-                getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                getDressTypeLabels.text = customvalues[i]
-                getDressTypeLabels.textAlignment = .left
+                if let custom3 = UserDefaults.standard.value(forKey: "custom3") as? NSDictionary
+                {
+                    customization3 = custom3
+                }
+                
+                
+                let customizationView = UIView()
+                customizationView.frame = CGRect(x: 0, y: customizationHeadingLabel.frame.maxY, width: orderSummaryScrollView.frame.width, height: (5 * x * CGFloat(customization3.count)))
+                customizationView.backgroundColor = UIColor.white
+                orderSummaryScrollView.addSubview(customizationView)
+                
+                print("CUSTOM 3 SELECTED", customization3.count)
+                
+                //        for (keys, values) in customization3
+                //        {
+                //            customKeys.append(keys as! String)
+                //            customvalues.append(values as! String)
+                //        }
+                
+                let customizationArray = ["Lapels - ", "Buttons - ", "Pockets - ", "Vents - "]
+                let customizationImageArray = ["Lapels", "Buttons", "Pockets", "Vents"]
+                var y2:CGFloat = y
+                
+                print("CUSTOM KEYS AND CUSTOM VALUES", customKeys, customvalues, customization3)
+                
+                for i in 0..<customization3.count
+                {
+                    let dressSubViews = UIView()
+                    dressSubViews.frame = CGRect(x: x, y: y2, width: customizationView.frame.width - (2 * x), height: (4 * y))
+                    dressSubViews.layer.cornerRadius = 10
+                    dressSubViews.backgroundColor = UIColor(red: 0.0471, green: 0.1725, blue: 0.4588, alpha: 1.0)
+                    dressSubViews.layer.masksToBounds = true
+                    customizationView.addSubview(dressSubViews)
+                    
+                    let dressTypeImages = UIImageView()
+                    dressTypeImages.frame = CGRect(x: (x / 2), y: y / 2, width: (3 * x), height: (3 * y))
+                    dressTypeImages.layer.cornerRadius = dressTypeImages.frame.height / 2
+                    //            dressTypeImages.image = UIImage(named: customizationImageArray[i])
+                    if let imageName = customAttImage[i] as? String
+                    {
+                        let urlString = serviceCall.baseURL
+                        let api = "\(urlString)/images/Customazation3/\(imageName)"
+                        let apiurl = URL(string: api)
+                        print("GET API", apiurl)
+                        if apiurl != nil
+                        {
+                            dressTypeImages.dowloadFromServer(url: apiurl!)
+                        }
+                    }
+                    dressSubViews.addSubview(dressTypeImages)
+                    
+                    let dressTypeLabels = UILabel()
+                    dressTypeLabels.frame = CGRect(x: dressTypeImages.frame.maxX + (x / 2), y: y / 2, width: (13 * x), height: (3 * y))
+                    dressTypeLabels.backgroundColor = UIColor.clear
+                    if customKeys.count != 0
+                    {
+                        dressTypeLabels.text = "\(customKeys[i])" + "-"
+                    }
+                    dressTypeLabels.textColor = UIColor.white
+                    dressTypeLabels.textAlignment = .left
+                    dressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+                    dressTypeLabels.font = dressTypeLabels.font.withSize(1.5 * x)
+                    dressSubViews.addSubview(dressTypeLabels)
+                    
+                    let lineLabel = UILabel()
+                    lineLabel.frame = CGRect(x: dressTypeLabels.frame.maxX, y: ((dressSubViews.frame.height - 1) / 2), width: (x / 3), height: 1)
+                    lineLabel.backgroundColor = UIColor.white
+                    dressSubViews.addSubview(lineLabel)
+                    
+                    let getDressTypeLabels = UILabel()
+                    getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (11 * x), height: (3 * y))
+                    getDressTypeLabels.backgroundColor = UIColor.clear
+                    getDressTypeLabels.textColor = UIColor.white
+                    getDressTypeLabels.textAlignment = .left
+                    
+                    if customvalues.count != 0
+                    {
+                        getDressTypeLabels.text = customvalues[i]
+                        if let strings = customvalues[i] as? String
+                        {
+                            if strings.count > 15
+                            {
+                                getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+                                getDressTypeLabels.font = getDressTypeLabels.font.withSize(x)
+                                getDressTypeLabels.numberOfLines = 2
+                            }
+                            else
+                            {
+                                getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
+                                getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+                            }
+                        }
+                    }
+                    
+                    getDressTypeLabels.adjustsFontSizeToFitWidth = true
+                    dressSubViews.addSubview(getDressTypeLabels)
+                    
+                    y2 = dressSubViews.frame.maxY + (y / 2)
+                    
+                    if let language = UserDefaults.standard.value(forKey: "language") as? String
+                    {
+                        if language == "en"
+                        {
+                            dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                            if customKeys.count != 0
+                            {
+                                dressTypeLabels.text = "\(customKeys[i])" + "-"
+                            }
+                            dressTypeLabels.textAlignment = .left
+                            
+                            getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                            if customvalues.count != 0
+                            {
+                                getDressTypeLabels.text = customvalues[i]
+                            }
+                            getDressTypeLabels.textAlignment = .left
+                        }
+                        else if language == "ar"
+                        {
+                            dressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                            if customKeys.count != 0
+                            {
+                                dressTypeLabels.text = "\(customKeys[i])" + "-"
+                            }
+                            dressTypeLabels.textAlignment = .right
+                            
+                            getDressTypeLabels.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                            if customvalues.count != 0
+                            {
+                                getDressTypeLabels.text = customvalues[i]
+                            }
+                            getDressTypeLabels.textAlignment = .right
+                        }
+                    }
+                    else
+                    {
+                        dressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        if customKeys.count != 0
+                        {
+                            dressTypeLabels.text = "\(customKeys[i])" + "-"
+                        }
+                        dressTypeLabels.textAlignment = .left
+                        
+                        getDressTypeLabels.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                        if customvalues.count != 0
+                        {
+                            getDressTypeLabels.text = customvalues[i]
+                        }
+                        getDressTypeLabels.textAlignment = .left
+                    }
+                }
+                
+                yaxis = customizationView.frame.maxY + y
             }
         }
         
-        premiumServicesHeadingLabel.frame = CGRect(x: 0, y: customizationView.frame.maxY + y, width: orderSummaryScrollView.frame.width, height: (3 * y))
+        premiumServicesHeadingLabel.frame = CGRect(x: 0, y: yaxis, width: orderSummaryScrollView.frame.width, height: (3 * y))
         premiumServicesHeadingLabel.text = "PREMIUM SERVICES"
         premiumServicesHeadingLabel.textColor = UIColor.black
         premiumServicesHeadingLabel.textAlignment = .left
@@ -664,11 +702,73 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (12 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             
-            if let type = UserDefaults.standard.value(forKey: "serviceType") as? Int
+            print("MEASUEMENT TYPE", UserDefaults.standard.value(forKey: "measurementType"))
+            
+            if i == 0
             {
-                if type == 1
+                if let id = UserDefaults.standard.value(forKey: "measurementType") as? Int
                 {
-                    if i != 0
+                    if id == 1
+                    {
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Manually"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "يدويا"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Manually"
+                        }
+                    }
+                    else if id == 2
+                    {
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Go to the tailor shop"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "الذهاب إلى متجر خياط"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Go to the tailor shop"
+                        }
+                    }
+                    else if id == 3
+                    {
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Tailor comes to your place"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "خياط يأتي إلى مكانك"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Tailor comes to your place"
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if let type = UserDefaults.standard.value(forKey: "serviceType") as? Int
+                {
+                    if type == 1
                     {
                         if let language = UserDefaults.standard.value(forKey: "language") as? String
                         {
@@ -686,10 +786,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             getDressTypeLabels.text = "Appointment"
                         }
                     }
-                }
-                else if type == 2
-                {
-                    if i != 0
+                    else if type == 2
                     {
                         if let language = UserDefaults.standard.value(forKey: "language") as? String
                         {
@@ -707,10 +804,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             getDressTypeLabels.text = "Urgent"
                         }
                     }
-                }
-                else if type == 3
-                {
-                    if i != 0
+                    else if type == 3
                     {
                         if let language = UserDefaults.standard.value(forKey: "language") as? String
                         {
@@ -729,17 +823,20 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                         }
                     }
                 }
+                else
+                {
+                    
+                }
             }
-            else
-            {
-                
-            }
+            
+            
            
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
             getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
             getDressTypeLabels.adjustsFontSizeToFitWidth = true
+            getDressTypeLabels.numberOfLines = 2
             dressSubViews.addSubview(getDressTypeLabels)
             
             y3 = dressSubViews.frame.maxY + (y / 2)
@@ -944,10 +1041,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let season = UserDefaults.standard.value(forKey: "season") as? [String]
         {
-            for i in 0..<season.count
-            {
-                getSeason.append(contentsOf: season[i])
-            }
+            let joined = season.joined(separator: ",")
+            getSeason = joined
             
             getCustomizationOfAll.append(getSeason)
         }
@@ -956,12 +1051,12 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getCustomizationOfAll.append("")
         }
         
+        print("GET ALL SEASON", getSeason)
+        
         if let industry = UserDefaults.standard.value(forKey: "industry") as? [String]
         {
-            for i in 0..<industry.count
-            {
-                getIndustry.append(contentsOf: industry[i])
-            }
+            let joined = industry.joined(separator: ",")
+            getIndustry = joined
             
             getCustomizationOfAll.append(getIndustry)
         }
@@ -972,10 +1067,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let brand = UserDefaults.standard.value(forKey: "brand") as? [String]
         {
-            for i in 0..<brand.count
-            {
-                getBrand.append(contentsOf: brand[i])
-            }
+            let joined = brand.joined(separator: ",")
+            getBrand = joined
             
             getCustomizationOfAll.append(getBrand)
         }
@@ -986,10 +1079,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let material = UserDefaults.standard.value(forKey: "material") as? [String]
         {
-            for i in 0..<material.count
-            {
-                getMaterial.append(contentsOf: material[i])
-            }
+            let joined = material.joined(separator: ",")
+            getMaterial = joined
             
             getCustomizationOfAll.append(getMaterial)
         }
@@ -1000,11 +1091,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let color = UserDefaults.standard.value(forKey: "color") as? [String]
         {
-            for i in 0..<color.count
-            {
-                getColor.append(contentsOf: color[i])
-            }
-            
+            let joined = color.joined(separator: ",")
+            getColor = joined
+
             getCustomizationOfAll.append(getColor)
         }
         else
@@ -1062,6 +1151,18 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.backgroundColor = UIColor.clear
             if let custom = getCustomizationOfAll[i] as? String
             {
+                if custom.count > 20
+                {
+                    getDressTypeLabels.font = getDressTypeLabels.font.withSize(1 * x)
+                    getDressTypeLabels.adjustsFontSizeToFitWidth = true
+                    getDressTypeLabels.numberOfLines = 2
+                }
+                else
+                {
+                    getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+                    getDressTypeLabels.adjustsFontSizeToFitWidth = true
+                    getDressTypeLabels.numberOfLines = 1
+                }
                 getDressTypeLabels.text = custom
             }
             else
@@ -1071,8 +1172,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
-            getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
-            getDressTypeLabels.adjustsFontSizeToFitWidth = true
             dressSubViews.addSubview(getDressTypeLabels)
             
             y6 = dressSubViews.frame.maxY + (y / 2)

@@ -86,6 +86,25 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             self.serviceCall.API_ListOfOrdersPending(BuyerId: "\(userId)", delegate: self)
             self.serviceCall.API_ListOfOrdersDelivered(BuyerId: "\(userId)", delegate: self)
         }
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
     }
  
     func DeviceError()
