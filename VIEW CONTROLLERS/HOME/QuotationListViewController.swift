@@ -72,6 +72,25 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
         print("request Order ID :",OrderId)
         UserDefaults.standard.set(OrderId, forKey: "OrderID")
         
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                slideMenu()
+                changeViewToEnglish()
+            }
+            else if language == "ar"
+            {
+                slideMenuRight()
+                changeViewToArabic()
+            }
+        }
+        else
+        {
+            slideMenu()
+            changeViewToEnglish()
+        }
+        
         self.serviceCall.API_GetQuotationList(OrderId: OrderId, delegate: self)
     }
     

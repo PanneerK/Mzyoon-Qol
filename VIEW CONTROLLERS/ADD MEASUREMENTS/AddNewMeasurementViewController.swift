@@ -71,7 +71,7 @@ class AddNewMeasurementViewController: UIViewController
             measurementButton.backgroundColor = UIColor.white
             measurementButton.layer.cornerRadius = 10
             measurementButton.tag = i
-            measurementButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
+//            measurementButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
             measurementScrollView.addSubview(measurementButton)
             
             let dressImageView = UIImageView()
@@ -80,19 +80,24 @@ class AddNewMeasurementViewController: UIViewController
             dressImageView.layer.cornerRadius = dressImageView.frame.height / 2
             measurementButton.addSubview(dressImageView)
             
+            let lineLabel = UILabel()
+            lineLabel.frame = CGRect(x: dressImageView.frame.maxX + x, y: y, width: 1, height: measurementButton.frame.height - (2 * y))
+            lineLabel.backgroundColor = UIColor.lightGray
+            measurementButton.addSubview(lineLabel)
+            
             let userNameLabel = UILabel()
-            userNameLabel.frame = CGRect(x: dressImageView.frame.maxX + x, y: y, width: measurementButton.frame.width - (10 * x), height: (3 * y))
+            userNameLabel.frame = CGRect(x: lineLabel.frame.maxX + x, y: y, width: measurementButton.frame.width - (10 * x), height: (3 * y))
             userNameLabel.text = "Testing Name"
-            userNameLabel.textColor = UIColor.blue
+            userNameLabel.textColor = UIColor.black
             userNameLabel.textAlignment = .left
             userNameLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
             userNameLabel.font = userNameLabel.font.withSize((2 * x))
             measurementButton.addSubview(userNameLabel)
             
             let dressNameLabel = UILabel()
-            dressNameLabel.frame = CGRect(x: dressImageView.frame.maxX + x, y: userNameLabel.frame.maxY, width: measurementButton.frame.width - (10 * x), height: (3 * y))
+            dressNameLabel.frame = CGRect(x: lineLabel.frame.maxX + x, y: userNameLabel.frame.maxY, width: measurementButton.frame.width - (10 * x), height: (3 * y))
             dressNameLabel.text = "Dress Name"
-            dressNameLabel.textColor = UIColor.blue
+            dressNameLabel.textColor = UIColor.lightGray
             dressNameLabel.textAlignment = .left
             dressNameLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
             dressNameLabel.font = dressNameLabel.font.withSize((2 * x))
@@ -108,6 +113,7 @@ class AddNewMeasurementViewController: UIViewController
         addNewButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addNewButton.setTitle("Add new measurements", for: .normal)
         addNewButton.setTitleColor(UIColor.white, for: .normal)
+        addNewButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addNewButton)
     }
     

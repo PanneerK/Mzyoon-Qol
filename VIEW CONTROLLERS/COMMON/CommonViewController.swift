@@ -347,7 +347,7 @@ class CommonViewController: UIViewController
         tab3Text.text = "Orders"
         tab4ImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         tab4Text.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        tab4Text.text = "Cart"
+        tab4Text.text = "Rewards"
     }
     
     func changeViewToArabic()
@@ -449,11 +449,11 @@ class CommonViewController: UIViewController
         tabBar.addSubview(tab4Button)
         
         tab4ImageView.frame = CGRect(x: ((tab1Button.frame.width - (3 * x)) / 2), y: (y / 3), width: (3 * x), height: (3 * y))
-        tab4ImageView.image = UIImage(named: "cart")
+        tab4ImageView.image = UIImage(named: "rewards")
         tab4Button.addSubview(tab4ImageView)
         
         tab4Text.frame = CGRect(x: 0, y: tab4ImageView.frame.maxY, width: (9.37 * x), height: y)
-        tab4Text.text = "Cart"
+        tab4Text.text = "Rewards"
         tab4Text.textColor = UIColor.white
         tab4Text.textAlignment = .center
         tab4Text.font = tab4Text.font.withSize(10)
@@ -479,6 +479,8 @@ class CommonViewController: UIViewController
     @objc func slideMenuButtonAction(sender : UIButton)
     {
         UserDefaults.standard.set(1, forKey: "sideValue")
+        
+        sender.setImage(UIImage(named: "closeMenu"), for: .normal)
         
         SideMenuManager.default.menuLeftNavigationController?.dismiss(animated: true, completion: nil)
         
@@ -565,18 +567,18 @@ class CommonViewController: UIViewController
         {
             if language == "en"
             {
-                cartAlert = UIAlertController(title: "Alert", message: "Cart is Empty", preferredStyle: .alert)
+                cartAlert = UIAlertController(title: "Alert", message: "Reward is Empty", preferredStyle: .alert)
                 cartAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             }
             else if language == "ar"
             {
-                cartAlert = UIAlertController(title: "تنبيه", message: "السلة فارغة", preferredStyle: .alert)
+                cartAlert = UIAlertController(title: "تنبيه", message: "المكافأة فارغة", preferredStyle: .alert)
                 cartAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
             }
         }
         else
         {
-            cartAlert = UIAlertController(title: "Alert", message: "Cart is Empty", preferredStyle: .alert)
+            cartAlert = UIAlertController(title: "Alert", message: "Reward is Empty", preferredStyle: .alert)
             cartAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         }
         
@@ -895,4 +897,26 @@ extension UIImageView
         guard let url = URL(string: link) else { return }
         dowloadFromServer(url: url, contentMode: mode)
     }
+}
+
+
+extension CommonViewController: UISideMenuNavigationControllerDelegate {
+    
+    func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool) {
+        print("SideMenu Appearing! (animated: \(animated))")
+    }
+    
+    func sideMenuDidAppear(menu: UISideMenuNavigationController, animated: Bool) {
+        print("SideMenu Appeared! (animated: \(animated))")
+    }
+    
+    func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
+        print("SideMenu Disappearing! (animated: \(animated))")
+    }
+    
+    func sideMenuDidDisappear(menu: UISideMenuNavigationController, animated: Bool) {
+        print("SideMenu Disappeared! (animated: \(animated))")
+        slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
+    }
+    
 }

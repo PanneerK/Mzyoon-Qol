@@ -654,7 +654,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (8 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Please click here if you want the tailor to come to your plave for adding measurments."
+        detailedLabel.text = "Please click here if you want the tailor to come to your place for adding measurments."
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))

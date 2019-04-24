@@ -1258,6 +1258,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             shopName.setTitleColor(UIColor.black, for: .normal)
             shopName.tag = (IdArray[i] as? Int)!
             shopName.contentHorizontalAlignment = .left
+            shopName.titleLabel?.adjustsFontSizeToFitWidth = true
             shopName.addTarget(self, action: #selector(self.ShopButtonAction(sender:)), for: .touchUpInside)
             tailorView.addSubview(shopName)
             
@@ -1327,6 +1328,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
             
             #endif
+            
+            print("COORDINATE 1", coordinate1)
             
             coordinate2 = CLLocation(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             
@@ -1700,7 +1703,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     func mapViewContents(isHidden : Bool)
     {
         mapView.clear()
-        mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (16 * y))
+        mapView.frame = CGRect(x: 0, y: listViewButton.frame.maxY, width: view.frame.width, height: view.frame.height - (21 * y))
         mapView.delegate = self
         mapView.settings.myLocationButton = true
         mapView.settings.compassButton = true
@@ -1879,7 +1882,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         ratingCountLabel.adjustsFontSizeToFitWidth = true
        // tailorDeatiledView.addSubview(ratingCountLabel)
         
-        
         let nameLabel = UILabel()
         nameLabel.frame = CGRect(x: x, y: ratingLabel.frame.maxY, width: (5 * x), height: (2 * y))
         nameLabel.text = "Name : "
@@ -2036,9 +2038,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
         
 //        Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.closeAddressLabel), userInfo: nil, repeats: false)
-        
-        
     }
+    
+    
     func addBottomSheetView()
     {
         // 1- Init bottomSheetVC

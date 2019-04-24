@@ -664,11 +664,73 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.frame = CGRect(x: lineLabel.frame.maxX + (x / 2), y: (y / 2), width: (12 * x), height: (3 * y))
             getDressTypeLabels.backgroundColor = UIColor.clear
             
-            if let type = UserDefaults.standard.value(forKey: "serviceType") as? Int
+            print("MEASUEMENT TYPE", UserDefaults.standard.value(forKey: "measurementType"))
+            
+            if i == 0
             {
-                if type == 1
+                if let id = UserDefaults.standard.value(forKey: "measurementType") as? Int
                 {
-                    if i != 0
+                    if id == 1
+                    {
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Manually"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "يدويا"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Manually"
+                        }
+                    }
+                    else if id == 2
+                    {
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Go to the tailor shop"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "الذهاب إلى متجر خياط"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Go to the tailor shop"
+                        }
+                    }
+                    else if id == 3
+                    {
+                        if let language = UserDefaults.standard.value(forKey: "language") as? String
+                        {
+                            if language == "en"
+                            {
+                                getDressTypeLabels.text = "Tailor comes to your place"
+                            }
+                            else if language == "ar"
+                            {
+                                getDressTypeLabels.text = "خياط يأتي إلى مكانك"
+                            }
+                        }
+                        else
+                        {
+                            getDressTypeLabels.text = "Tailor comes to your place"
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if let type = UserDefaults.standard.value(forKey: "serviceType") as? Int
+                {
+                    if type == 1
                     {
                         if let language = UserDefaults.standard.value(forKey: "language") as? String
                         {
@@ -686,10 +748,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             getDressTypeLabels.text = "Appointment"
                         }
                     }
-                }
-                else if type == 2
-                {
-                    if i != 0
+                    else if type == 2
                     {
                         if let language = UserDefaults.standard.value(forKey: "language") as? String
                         {
@@ -707,10 +766,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                             getDressTypeLabels.text = "Urgent"
                         }
                     }
-                }
-                else if type == 3
-                {
-                    if i != 0
+                    else if type == 3
                     {
                         if let language = UserDefaults.standard.value(forKey: "language") as? String
                         {
@@ -729,17 +785,20 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                         }
                     }
                 }
+                else
+                {
+                    
+                }
             }
-            else
-            {
-                
-            }
+            
+            
            
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
             getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
             getDressTypeLabels.adjustsFontSizeToFitWidth = true
+            getDressTypeLabels.numberOfLines = 2
             dressSubViews.addSubview(getDressTypeLabels)
             
             y3 = dressSubViews.frame.maxY + (y / 2)
@@ -944,10 +1003,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let season = UserDefaults.standard.value(forKey: "season") as? [String]
         {
-            for i in 0..<season.count
-            {
-                getSeason.append(contentsOf: season[i])
-            }
+            let joined = season.joined(separator: ",")
+            getSeason = joined
             
             getCustomizationOfAll.append(getSeason)
         }
@@ -956,12 +1013,12 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getCustomizationOfAll.append("")
         }
         
+        print("GET ALL SEASON", getSeason)
+        
         if let industry = UserDefaults.standard.value(forKey: "industry") as? [String]
         {
-            for i in 0..<industry.count
-            {
-                getIndustry.append(contentsOf: industry[i])
-            }
+            let joined = industry.joined(separator: ",")
+            getIndustry = joined
             
             getCustomizationOfAll.append(getIndustry)
         }
@@ -972,10 +1029,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let brand = UserDefaults.standard.value(forKey: "brand") as? [String]
         {
-            for i in 0..<brand.count
-            {
-                getBrand.append(contentsOf: brand[i])
-            }
+            let joined = brand.joined(separator: ",")
+            getBrand = joined
             
             getCustomizationOfAll.append(getBrand)
         }
@@ -986,10 +1041,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let material = UserDefaults.standard.value(forKey: "material") as? [String]
         {
-            for i in 0..<material.count
-            {
-                getMaterial.append(contentsOf: material[i])
-            }
+            let joined = material.joined(separator: ",")
+            getMaterial = joined
             
             getCustomizationOfAll.append(getMaterial)
         }
@@ -1000,11 +1053,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         if let color = UserDefaults.standard.value(forKey: "color") as? [String]
         {
-            for i in 0..<color.count
-            {
-                getColor.append(contentsOf: color[i])
-            }
-            
+            let joined = color.joined(separator: ",")
+            getColor = joined
+
             getCustomizationOfAll.append(getColor)
         }
         else
@@ -1062,6 +1113,18 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.backgroundColor = UIColor.clear
             if let custom = getCustomizationOfAll[i] as? String
             {
+                if custom.count > 20
+                {
+                    getDressTypeLabels.font = getDressTypeLabels.font.withSize(1 * x)
+                    getDressTypeLabels.adjustsFontSizeToFitWidth = true
+                    getDressTypeLabels.numberOfLines = 2
+                }
+                else
+                {
+                    getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
+                    getDressTypeLabels.adjustsFontSizeToFitWidth = true
+                    getDressTypeLabels.numberOfLines = 1
+                }
                 getDressTypeLabels.text = custom
             }
             else
@@ -1071,8 +1134,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             getDressTypeLabels.textColor = UIColor.white
             getDressTypeLabels.textAlignment = .left
             getDressTypeLabels.font = UIFont(name: "Avenir-Regular", size: x)
-            getDressTypeLabels.font = getDressTypeLabels.font.withSize(1.5 * x)
-            getDressTypeLabels.adjustsFontSizeToFitWidth = true
             dressSubViews.addSubview(getDressTypeLabels)
             
             y6 = dressSubViews.frame.maxY + (y / 2)

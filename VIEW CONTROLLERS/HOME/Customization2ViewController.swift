@@ -605,7 +605,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     func viewDetailsContents()
     {
         detailsView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        detailsView.backgroundColor = UIColor.gray
+        detailsView.image = UIImage(named: "background")
         view.addSubview(detailsView)
         
         detailViewNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
