@@ -3263,7 +3263,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         else if textField == landMarkTextField
         {
             landMarkTextField.resignFirstResponder()
-            locationTypeTextField.becomeFirstResponder()
+//            locationTypeTextField.becomeFirstResponder()
         }
         else if textField == locationTypeTextField
         {

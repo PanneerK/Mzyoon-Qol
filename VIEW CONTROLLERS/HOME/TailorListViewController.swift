@@ -810,7 +810,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         hintsImage.image = UIImage(named: "totalNoHintsImage")
         hintsView.addSubview(hintsImage)
         
-        detailedLabel.frame = CGRect(x: x, y: hintsImage.frame.maxY + (2 * y), width: hintsView.frame.width - (2 * x), height: (3 * x))
+        detailedLabel.frame = CGRect(x: x, y: hintsImage.frame.maxY + (2 * y), width: hintsView.frame.width - (2 * x), height: (5 * x))
         detailedLabel.text = "Here you can see the number of tailors selected based on you selection"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
@@ -1333,9 +1333,13 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             coordinate2 = CLLocation(latitude: latitudeArray[i] as! CLLocationDegrees, longitude: longitudeArray[i] as! CLLocationDegrees)
             
+            print("COORDINATE 2", coordinate2)
+            
             let distanceInMeters = coordinate1.distance(from: coordinate2)
             
             let distanceInKiloMeters = distanceInMeters / 1000
+            
+            print("distanceInKiloMeters", distanceInKiloMeters)
             
             let distanceInt = Int(distanceInKiloMeters)
             
