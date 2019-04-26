@@ -261,7 +261,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     {
         selfScreenNavigationContents()
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
+        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         

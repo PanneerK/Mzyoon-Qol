@@ -378,7 +378,7 @@ class CommonViewController: UIViewController
     
     func tabContents()
     {
-        //let slideMenuButton = UIButton()
+        slideMenuButton.isHidden = true
         slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - (6.5 * y)) / 2), width: (2.5 * x), height: (6.5 * y))
         slideMenuButton.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
@@ -386,7 +386,6 @@ class CommonViewController: UIViewController
         slideMenuButton.addTarget(self, action: #selector(self.slideMenuButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents1.addSubview(slideMenuButton)
         
-        // let tabBar = UIView()
         tabBar.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
         tabBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         selfScreenContents1.addSubview(tabBar)

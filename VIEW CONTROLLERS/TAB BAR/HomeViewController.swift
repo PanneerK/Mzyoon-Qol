@@ -233,6 +233,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     func checkContent()
     {
         pageBar.isHidden = true
+        slideMenuButton.isHidden = false    
         
         let buttonTitleText = ["NEW ORDER", "BOOK AN APPOINTMENT", "STORE", "REFER AND EARN"]
         let imageName = ["new_order", "appointment", "store", "refer-&-earn"]

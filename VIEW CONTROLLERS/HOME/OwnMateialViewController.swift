@@ -152,7 +152,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
+        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -160,7 +160,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         
         self.view.bringSubviewToFront(slideMenuButton)
         
-        addReferenceImage.frame = CGRect(x: 0, y: (3 * y), width: selfScreenContents.frame.width, height: (27 * y))
+        addReferenceImage.frame = CGRect(x: (2 * x), y: y, width: selfScreenContents.frame.width - (4 * x), height: selfScreenContents.frame.width - (4 * x))
         addReferenceImage.layer.borderWidth = 1
         addReferenceImage.layer.borderColor = UIColor.lightGray.cgColor
         addReferenceImage.backgroundColor = UIColor.white
@@ -185,11 +185,11 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         selfScreenContents.addSubview(addMaterialLabel)
         
-        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: selfScreenContents.frame.width - (11 * x), height: (12 * y))
+        addReferenceScrolView.frame = CGRect(x: 0, y: addMaterialLabel.frame.maxY, width: selfScreenContents.frame.width - (11 * x), height: (10 * y))
         addReferenceScrolView.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(addReferenceScrolView)
         
-        addMaterialButton.frame = CGRect(x: addReferenceScrolView.frame.maxX + x, y: addMaterialLabel.frame.maxY + y, width: (10 * x), height: (10 * y))
+        addMaterialButton.frame = CGRect(x: addReferenceScrolView.frame.maxX + x, y: addMaterialLabel.frame.maxY + y, width: (8 * y), height: (8 * y))
         addMaterialButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addMaterialButton.setTitle("+", for: .normal)
         addMaterialButton.setTitleColor(UIColor.white, for: .normal)
@@ -197,7 +197,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialButton.addTarget(self, action: #selector(self.addMaterialButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(addMaterialButton)
         
-        addMaterialNextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: addReferenceScrolView.frame.maxY + y, width: (4 * x), height: (4 * y))
+        addMaterialNextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: addReferenceScrolView.frame.maxY, width: (4 * x), height: (4 * y))
         addMaterialNextButton.layer.cornerRadius = addMaterialNextButton.frame.height / 2
         addMaterialNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         addMaterialNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
@@ -513,7 +513,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             for i in 0..<imageArray.count
             {
                 let selectMaterialImageButton = UIButton()
-                selectMaterialImageButton.frame = CGRect(x: x1, y: y, width: (10 * x), height: (10 * y))
+                selectMaterialImageButton.frame = CGRect(x: x1, y: y, width: (8 * y), height: (8 * y))
                 selectMaterialImageButton.backgroundColor = UIColor.blue
                 selectMaterialImageButton.setImage(imageArray[i], for: .normal)
                 selectMaterialImageButton.tag = (i + 200)

@@ -22,6 +22,13 @@ class Variables: NSObject
     public var dressSubType:String = ""
     public var dressSubTypeId:Int = 0
     
+    //ORDER TYPE SELECTION
+    public var orderType:String = ""
+    public var orderTypeId:Int = 0
+    
+    //ADD MATERIAL IMAGE
+    
+    
     public var firstName:String = ""
     public var secondName:String = ""
     public var countryName:String = ""
