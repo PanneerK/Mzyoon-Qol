@@ -291,6 +291,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     func RequestListView()
     {
         self.stopActivity()
+        slideMenuButton.isHidden = false
         
         let backDrop = UIView()
         backDrop.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height))

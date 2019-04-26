@@ -45,6 +45,9 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 2 to desired number of seconds
             // Your code with delay
             
+            self.pageBar.isHidden = true
+            self.slideMenuButton.isHidden = false
+            
             if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
                 if language == "en"
@@ -232,8 +235,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     
     func checkContent()
     {
-        pageBar.isHidden = true
-        
         let buttonTitleText = ["NEW ORDER", "BOOK AN APPOINTMENT", "STORE", "REFER AND EARN"]
         let imageName = ["new_order", "appointment", "store", "refer-&-earn"]
         var y1:CGFloat = (10 * yPos)

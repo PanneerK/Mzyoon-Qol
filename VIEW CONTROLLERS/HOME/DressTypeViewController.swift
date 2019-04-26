@@ -315,7 +315,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         view.addSubview(searchTextField)
         
         let searchButton = UIButton()
-        searchButton.frame = CGRect(x: view.frame.width - (5                                                                                                                                                                                                                                                  * x), y: 0, width: (5 * x), height: (4 * y))
+        searchButton.frame = CGRect(x: view.frame.width - (5 * x), y: 0, width: (5 * x), height: (4 * y))
         searchButton.layer.borderWidth = 1
         searchButton.layer.borderColor = UIColor.orange.cgColor
         searchButton.setImage(UIImage(named: "search"), for: .normal)
@@ -393,7 +393,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     func dressTypeSubContents(inputTextArray : NSArray, inputIdArray : NSArray, inputImageArray : NSArray)
     {
-        dressTypeScrollView.frame = CGRect(x: (3 * x), y: searchTextField.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (45 * y))
+        dressTypeScrollView.frame = CGRect(x: x, y: searchTextField.frame.maxY + y, width: view.frame.width - (2 * x), height: (view.frame.height - (searchTextField.frame.maxY + tabBar.frame.height + (2 * y))))
         //        dressTypeScrollView.backgroundColor = UIColor.red
         view.addSubview(dressTypeScrollView)
         
@@ -409,11 +409,11 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             let dressTypeButton = UIButton()
             if i % 2 == 0
             {
-                dressTypeButton.frame = CGRect(x: 0, y: y1, width: (15.25 * x), height: (16 * y))
+                dressTypeButton.frame = CGRect(x: 0, y: y1, width: (17.25 * x), height: (17 * y))
             }
             else
             {
-                dressTypeButton.frame = CGRect(x: x1, y: y1, width: (15.25 * x), height: (16 * y))
+                dressTypeButton.frame = CGRect(x: x1, y: y1, width: (17.25 * x), height: (17 * y))
                 y1 = dressTypeButton.frame.maxY + y
             }
             dressTypeButton.backgroundColor = UIColor.white
@@ -440,7 +440,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             x1 = dressTypeButton.frame.maxX + x
             
             let dressTypeImageView = UIImageView()
-            dressTypeImageView.frame = CGRect(x: 0, y: 0, width: dressTypeButton.frame.width, height: (13 * y))
+            dressTypeImageView.frame = CGRect(x: 0, y: 0, width: dressTypeButton.frame.width, height: dressTypeButton.frame.height - (3 * y))
             if let imageName = inputImageArray[i] as? String
             {
                 let urlString = serviceCall.baseURL
@@ -464,16 +464,16 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeButton.addSubview(dressTypeImageView)
             
             let dressTypeNameLabel = UILabel()
+            dressTypeNameLabel.frame = CGRect(x: 0, y: dressTypeImageView.frame.maxY, width: dressTypeButton.frame.width, height: (3 * y))
+
             if let dressName = inputTextArray[i] as? String
             {
                 if dressName.characters.count > 15
                 {
-                    dressTypeNameLabel.frame = CGRect(x: 0, y: dressTypeButton.frame.height - (4 * y), width: dressTypeButton.frame.width, height: (4 * y))
                     dressTypeNameLabel.numberOfLines = 2
                 }
                 else
                 {
-                    dressTypeNameLabel.frame = CGRect(x: 0, y: dressTypeImageView.frame.maxY, width: dressTypeButton.frame.width, height: (3 * y))
                     dressTypeNameLabel.numberOfLines = 1
                 }
             }
@@ -481,7 +481,8 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeNameLabel.text = inputTextArray[i] as? String
             dressTypeNameLabel.textColor = UIColor.white
             dressTypeNameLabel.textAlignment = .center
-            dressTypeNameLabel.font = UIFont(name: "Avenir-Regular", size: 15)
+            dressTypeNameLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            dressTypeNameLabel.font = dressTypeNameLabel.font.withSize(1.5 * x)
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
         

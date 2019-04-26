@@ -1045,7 +1045,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func listViewContents(isHidden : Bool)
     {
-        backDrop.frame = CGRect(x: (3 * x), y: listViewButton.frame.maxY + y, width: view.frame.width - (6 * x), height: selfScreenContents.frame.height - (7 * y))
+        backDrop.frame = CGRect(x: 0, y: listViewButton.frame.maxY + y, width: selfScreenContents.frame.width, height: selfScreenContents.frame.height - (7 * y))
         backDrop.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(backDrop)
         
@@ -1053,7 +1053,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         
         backDrop.isHidden = isHidden
         
-        totalTailersCountLabel.frame = CGRect(x: 0, y: y, width: (3 * x), height: (3 * y))
+        totalTailersCountLabel.frame = CGRect(x: x, y: y, width: (3 * x), height: (3 * y))
         totalTailersCountLabel.layer.cornerRadius = totalTailersCountLabel.frame.height / 2
         totalTailersCountLabel.layer.borderWidth = 1
         totalTailersCountLabel.layer.borderColor = UIColor.lightGray.cgColor
@@ -1099,7 +1099,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         totalSelectedTailersLabel.font = totalTailersLabel.font.withSize(12)
         backDrop.addSubview(totalSelectedTailersLabel)
         
-        sortButton.frame = CGRect(x: backDrop.frame.width - (10 * x), y: totalTailersSelectedCountLabel.frame.maxY, width: (10 * x), height: (3 * y))
+        sortButton.frame = CGRect(x: backDrop.frame.width - (12 * x), y: totalTailersSelectedCountLabel.frame.maxY, width: (10 * x), height: (3 * y))
         sortButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         sortButton.setTitle("SORT", for: .normal)
         sortButton.setTitleColor(UIColor.white, for: .normal)
@@ -1131,7 +1131,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         for i in 0..<IdArray.count
         {
             let tailorView = UIView()
-            tailorView.frame = CGRect(x: 0, y: y1, width: tailorListScrollView.frame.width, height: (10 * y))
+            tailorView.frame = CGRect(x: x, y: y1, width: tailorListScrollView.frame.width - (2 * x), height: (10 * y))
             tailorView.backgroundColor = UIColor.white
             tailorListScrollView.addSubview(tailorView)
             

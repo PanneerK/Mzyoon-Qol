@@ -332,7 +332,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         pageBar.image = UIImage(named: "SummaryBar")
 
-        orderSummaryScrollView.frame = CGRect(x: (3 * x), y: pageBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + pageBar.frame.height + tabBar.frame.height + (2 * y)))
+        orderSummaryScrollView.frame = CGRect(x: x, y: pageBar.frame.maxY + y, width: view.frame.width - (2 * x), height: view.frame.height - (navigationBar.frame.height + pageBar.frame.height + tabBar.frame.height + (2 * y)))
         orderSummaryScrollView.backgroundColor = UIColor.clear
         view.addSubview(orderSummaryScrollView)
         
