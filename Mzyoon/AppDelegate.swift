@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = Measurement1ViewController()
+                let loginScreen = HomeViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen

@@ -318,6 +318,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func ListOfOrdersContent()
     {
         self.stopActivity()
+        slideMenuButton.isHidden = false
         
        // let ListOfOrdersNavigationBar = UIView()
         ListOfOrdersNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))

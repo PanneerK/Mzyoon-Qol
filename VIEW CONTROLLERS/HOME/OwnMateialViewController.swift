@@ -249,14 +249,14 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         hintsView.addSubview(headingLabel)
         
         let hintsImage = UIImageView()
-        hintsImage.frame = CGRect(x: addMaterialButton.frame.minX + (3 * x), y: addMaterialButton.frame.minY + (11.5 * y), width: addMaterialButton.frame.width, height: addMaterialButton.frame.height)
+        hintsImage.frame = CGRect(x: addMaterialButton.frame.minX + x, y: addMaterialButton.frame.minY + (11.5 * y), width: addMaterialButton.frame.width, height: addMaterialButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "addHintImage")
         hintsView.addSubview(hintsImage)
         
         let detailedLabel = UILabel()
-        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
+        detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (5 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
         detailedLabel.text = "Please click here to add the new material image"
         detailedLabel.textAlignment = .left
         detailedLabel.textColor = UIColor.white
