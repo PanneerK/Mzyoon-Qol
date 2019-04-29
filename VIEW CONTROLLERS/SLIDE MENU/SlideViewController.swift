@@ -105,7 +105,7 @@ class SlideViewController: UIViewController
 //        let buttonImage = ["my_account", "Address", "appointment-1", "transaction", "rewards", "refer_friends", "FAQ", "terms&condition", "settings", "logout"]
         
         let buttonTitle = ["My Account", "Address", "Add new measurements", "Settings", "Log Out"]
-        let buttonImage = ["my_account", "Address", "Add new measurements", "settings", "logout"]
+        let buttonImage = ["my_account", "Address", "Measurement_Icon", "settings", "logout"]
         
         var y1:CGFloat = userName.frame.maxY + (2 * y)
         
@@ -184,7 +184,7 @@ class SlideViewController: UIViewController
         
         
         let buttonTitle = ["حسابي", "عنوان", "إضافة قياسات جديدة", "الإعدادات", "الخروج"]
-        let buttonImage = ["my_account", "Address", "Add new measurements", "settings", "logout"]
+        let buttonImage = ["my_account", "Address", "Measurement_Icon", "settings", "logout"]
         
         var y1:CGFloat = userName.frame.maxY + (2 * y)
         
