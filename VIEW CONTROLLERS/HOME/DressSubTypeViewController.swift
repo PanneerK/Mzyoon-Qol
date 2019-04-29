@@ -351,6 +351,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             dressTypeNameLabel.textAlignment = .center
             dressTypeNameLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
             dressTypeNameLabel.font = dressTypeNameLabel.font.withSize(1.5 * x)
+            dressTypeNameLabel.tag = ((dressTypeButton.tag * 1) + 300)
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
         
@@ -438,33 +439,11 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         if sender.tag != 0
         {
             let dressSubScreen = OrderTypeViewController()
+            Variables.sharedManager.dressSubTypeId = sender.tag
             
-            for i in 0..<dressSubTypeArray.count
+            if let label = view.viewWithTag((sender.tag * 1) + 300) as? UILabel
             {
-                if let id = dressIdArray[i] as? Int
-                {
-                    if sender.tag == id
-                    {
-                        print("NAVIGATION CONTENTS", id, dressSubTypeArray[i])
-                        UserDefaults.standard.set(id, forKey: "dressSubTypeId")
-                        
-                        if let language = UserDefaults.standard.value(forKey: "language") as? String
-                        {
-                            if language == "en"
-                            {
-                                UserDefaults.standard.set(dressSubTypeArray[i], forKey: "dressSubType")
-                            }
-                            else if language == "ar"
-                            {
-                                UserDefaults.standard.set(dressSubTypeArrayInArabic[i], forKey: "dressSubType")
-                            }
-                        }
-                        else
-                        {
-                            UserDefaults.standard.set(dressSubTypeArray[i], forKey: "dressSubType")
-                        }
-                    }
-                }
+                Variables.sharedManager.dressSubType = label.text!
             }
 
             let tag = Variables.sharedManager.measurementTag
@@ -472,9 +451,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             if tag == 1
             {
                 addNewAlertAction()
-                
-//                let measurementScreen = Measurement2ViewController()
-//                self.navigationController?.pushViewController(measurementScreen, animated: true)
             }
             else
             {
@@ -495,11 +471,8 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         {
             if language == "en"
             {
-                var dressType = String()
-                if let dress = UserDefaults.standard.value(forKey: "dressSubType") as? String
-                {
-                    dressType = dress
-                }
+                let dressType = Variables.sharedManager.dressSubType
+
                 addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - \(dressType)", preferredStyle: .alert)
                 addNameAlert.addTextField(configurationHandler: { (textField) in
                     textField.placeholder = "Enter the name"

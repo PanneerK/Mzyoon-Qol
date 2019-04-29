@@ -24,7 +24,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     let imageView = UIView()
     let partsView = UIView()
-    var gender = String()
+    var setGender = String()
     let numberView = UIView()
     let unitView = UIView()
     let cmButton = UIButton()
@@ -143,10 +143,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
-        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
-        
-//        self.serviceCall.API_DisplayMeasurement(Measurement2Value: 1, delegate: self)
         
         let dummyArray = NSArray()
         
@@ -161,15 +158,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         converetedGenderImagesArray.removeAll()
         convertedPartsImageArray.removeAll()
         
-        if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-        {
-            self.serviceCall.API_GetMeasurement2(Measurement1Value: dressid, delegate: self)
-            
-        }
-        else if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-        {
-            self.serviceCall.API_GetMeasurement2(Measurement1Value: Int(dressid)!, delegate: self)
-        }
+        self.serviceCall.API_GetMeasurement2(Measurement1Value: Variables.sharedManager.dressSubTypeId, delegate: self)
+
         
         addDoneButtonOnKeyboard()
         
@@ -180,31 +170,8 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-        /*let dummyArray = NSArray()
-        
-        genderImageArray = dummyArray
-        genderImagesIdArray = dummyArray
-        PartsIdArray = dummyArray
-        PartsNameArray = dummyArray
-        partsNameArabicArray = dummayArray
-        PartsReferenceNumberArray = dummyArray
-        PartsGenderMeasurementIdArray = dummyArray
-        PartsImagesArray = dummyArray
-        converetedGenderImagesArray.removeAll()
-        convertedPartsImageArray.removeAll()
-        
-        if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-        {
-            self.serviceCall.API_GetMeasurement2(Measurement1Value: dressid, delegate: self)
-            
-        }
-        else if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-        {
-            self.serviceCall.API_GetMeasurement2(Measurement1Value: Int(dressid)!, delegate: self)
-        }*/
-        
+    override func viewWillAppear(_ animated: Bool)
+    {
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -818,28 +785,23 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         nextButton.addTarget(self, action: #selector(self.nextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(nextButton)
         
-        if let getGender = UserDefaults.standard.value(forKey: "gender") as? String
-        {
-            gender = getGender
-        }
-        
-//        gender = "Girl"
+        setGender = Variables.sharedManager.genderType
         
         var measureImages = [String]()
         
-        if gender == "Male"
+        if setGender == "Male"
         {
             measureImages = ["Man-front", "Man-front_2", "Man-Back", "Man-Back_2"]
         }
-        else if gender == "Boy"
+        else if setGender == "Boy"
         {
             measureImages = ["boyFront_1", "boyFront_2", "boyBack_1", "boyBack_2"]
         }
-        else if gender == "Female"
+        else if setGender == "Female"
         {
             measureImages = ["womenFront_1", "womenFront_2", "womenFront_3", "womenback_1", "womenback_2"]
         }
-        else if gender == "Girl"
+        else if setGender == "Girl"
         {
             measureImages = ["girlFront_1", "girlFront_2", "girlFront_3", "girlBack_1", "girlBack_2"]
         }
@@ -883,7 +845,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             //            verticalLine2.backgroundColor = UIColor.red
             subView.addSubview(verticalLine2)
             
-            if gender == "Male" || gender == "ذكر"
+            if setGender == "Male" || setGender == "ذكر"
             {
                 if index == 0
                 {
@@ -1381,7 +1343,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     }
                 }*/
             }
-            else if gender == "Female" || gender == "انثى"
+            else if setGender == "Female" || setGender == "انثى"
             {
                 if index == 0
                 {
@@ -2035,7 +1997,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                  }
                  }*/
             }
-            else if gender == "Boy" || gender == "ولد"
+            else if setGender == "Boy" || setGender == "ولد"
             {
                 if index == 0
                 {
@@ -2525,7 +2487,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                  }
                  }*/
             }
-            else if gender == "Girl" || gender == "بنت"
+            else if setGender == "Girl" || setGender == "بنت"
             {
                 if index == 0
                 {
@@ -4287,16 +4249,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     userId = id
                 }
                 
-                if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-                {
-                    dressId = dressid
-                }
-                else if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-                {
-                    let converted = Int(dressid)
-                    print("CONVERTED", converted, dressid)
-                    dressId = converted!
-                }
+                dressId = Variables.sharedManager.dressSubTypeId
                 
                 if let partsId = UserDefaults.standard.value(forKey: "measurementId") as? NSArray
                 {

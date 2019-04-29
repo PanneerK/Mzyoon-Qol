@@ -753,7 +753,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     @objc func ownMaterialButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set(sender.tag, forKey: "orderType")
+        Variables.sharedManager.orderTypeId = sender.tag
+        
         let ownMaterialScreen = OwnMateialViewController()
         self.navigationController?.pushViewController(ownMaterialScreen, animated: true)
     }
@@ -761,7 +762,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     @objc func companyButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set(sender.tag, forKey: "orderType")
+        Variables.sharedManager.orderTypeId = sender.tag
+
         let customizationScreen = Customization1ViewController()
         self.navigationController?.pushViewController(customizationScreen, animated: true)
     }

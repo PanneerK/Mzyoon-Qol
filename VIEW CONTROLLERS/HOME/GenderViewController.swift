@@ -10,11 +10,6 @@ import UIKit
 
 class GenderViewController: CommonViewController, ServerAPIDelegate
 {
-    
-    //POSITION
-    var xPos:CGFloat!
-    var yPos:CGFloat!
-    
     let serviceCall = ServerAPI()
     
     let selfScreenNavigationBar = UIView()
@@ -42,21 +37,12 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
-        xPos = 10 / 375 * 100
-        xPos = xPos * view.frame.width / 100
-        
-        yPos = 10 / 667 * 100
-        yPos = yPos * view.frame.height / 100
-        
         navigationBar.isHidden = true
-        
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
         serviceCall.API_Gender(delegate: self)
         
         let views = Variables()
-        
         views.viewController = self
 
         super.viewDidLoad()
@@ -64,8 +50,10 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
+    override func viewWillAppear(_ animated: Bool)
+    {
+        selfScreenNavigationContents()
+
         for allViews in selfScreenContents.subviews
         {
             allViews.removeFromSuperview()
@@ -75,61 +63,24 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         {
             if language == "en"
             {
-                self.newOrderContents(getInputArray: genderArray)
-            }
-            else if language == "ar"
-            {
-                self.newOrderContents(getInputArray: genderInArabicArray)
-            }
-        }
-        else
-        {
-            self.newOrderContents(getInputArray: genderArray)
-        }
-        
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
-        {
-            if language == "en"
-            {
                 slideMenu()
                 changeViewToEnglish()
+                self.newOrderContents(getInputArray: genderArray)
             }
             else if language == "ar"
             {
                 slideMenuRight()
                 changeViewToArabic()
+                self.newOrderContents(getInputArray: genderInArabicArray)
             }
         }
         else
         {
             slideMenu()
             changeViewToEnglish()
+            self.newOrderContents(getInputArray: genderArray)
         }
     }
-    
-    func showActivityIndicator()
-    {
-        let activeView1 = UIView()
-        activeView1.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        activeView1.backgroundColor = UIColor.black.withAlphaComponent(0.25)
-        view.addSubview(activeView1)
-        
-        self.view.bringSubviewToFront(activeView1)
-        
-        let activityView1 = UIActivityIndicatorView()
-        activityView1.frame = CGRect(x: ((activeView1.frame.width - 50) / 2), y: ((activeView1.frame.height - 50) / 2), width: 50, height: 50)
-        activityView1.style = .whiteLarge
-        activityView1.color = UIColor.white
-        activityView1.startAnimating()
-        activeView1.addSubview(activityView1)
-    }
-    
-    func hideActivityIndicator()
-    {
-        activeView.removeFromSuperview()
-        activityView.stopAnimating()
-    }
-    
     
     func DeviceError()
     {
@@ -192,35 +143,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             ErrorStr = Result
             DeviceError()
         }
-        
-        
-        /*for i in 0..<genderImageArray.count
-        {
-            if let imageName = genderImageArray[i] as? String
-            {
-                let urlString = serviceCall.baseURL
-                let api = "\(urlString)/images/\(imageName)"
-                let apiurl = URL(string: api)
-                
-                if let data = try? Data(contentsOf: apiurl!) {
-                    if let image = UIImage(data: data) {
-                        self.convertedGenderImageArray.append(image)
-                    }
-                }
-                else
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedGenderImageArray.append(emptyImage!)
-                }
-            }
-            else if genderImageArray[i] is NSNull
-            {
-                let emptyImage = UIImage(named: "empty")
-                self.convertedGenderImageArray.append(emptyImage!)
-            }
-        }*/
-        
-       
     }
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
@@ -254,106 +176,14 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        pageContent(tag: 1)
+        pageBar.image = UIImage(named: "GenderBar")
     }
     
     func newOrderContents(getInputArray : NSArray)
     {
-        selfScreenNavigationContents()
-        
         selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
-        
-        pageBar.image = UIImage(named: "GenderBar")
-        
-        var x1:CGFloat = (3 * x)
-        var y1:CGFloat =  (10.65 * y)
-        
-        /*for i in 0..<getInputArray.count
-        {
-            let genderButton = UIButton()
-            
-            if i % 2 == 0
-            {
-                genderButton.frame = CGRect(x: x1, y: y1, width: (14.75 * x), height: (16 * y))
-                x1 = genderButton.frame.maxX + (2 * x)
-            }
-            else
-            {
-                genderButton.frame = CGRect(x: x1, y: y1, width: (14.75 * x), height: (16 * y))
-                y1 = genderButton.frame.maxY + (2 * y)
-                x1 = (3 * x)
-            }
-            
-            genderButton.layer.borderWidth = 1
-            genderButton.backgroundColor = UIColor.lightGray
-//            genderButton.setImage(UIImage(named: "genderBackground"), for: .normal)
-            genderButton.tag = genderIdArray[i] as! Int
-            genderButton.addTarget(self, action: #selector(self.genderButtonAction(sender:)), for: .touchUpInside)
-            selfScreenContents.addSubview(genderButton)
-            
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    genderButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                }
-                else if language == "ar"
-                {
-                    genderButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                }
-            }
-            else
-            {
-                genderButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            }
-            
-            let buttonImage = UIImageView()
-            if i == 0
-            {
-                buttonImage.frame = CGRect(x: (2 * x), y: (2 * y), width: genderButton.frame.width - (4 * x), height: genderButton.frame.height - (4 * y))
-            }
-            else if i == 1
-            {
-                buttonImage.frame = CGRect(x: (3 * x), y: (2 * y), width: genderButton.frame.width - (6 * x), height: genderButton.frame.height - (4 * y))
-            }
-            else
-            {
-                buttonImage.frame = CGRect(x: (4 * x), y: (2 * y), width: genderButton.frame.width - (8 * x), height: genderButton.frame.height - (4 * y))
-            }
-            
-//            buttonImage.image = convertedGenderImageArray[i]
-            if let imageName = genderImageArray[i] as? String
-            {
-                let urlString = serviceCall.baseURL
-                let api = "\(urlString)/images/\(imageName)"
-                let apiurl = URL(string: api)
-                if apiurl != nil
-                {
-                    buttonImage.dowloadFromServer(url: apiurl!)
-                }
-                
-                if i == genderImageArray.count - 1
-                {
-                    self.stopActivity()
-                }
-                else
-                {
-                    
-                }
-            }
-            genderButton.addSubview(buttonImage)
-            
-            let buttonTitle = UILabel()
-            buttonTitle.frame = CGRect(x: 0, y: genderButton.frame.height - (3 * y), width: genderButton.frame.width, height: (3 * y))
-            buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-            buttonTitle.text = getInputArray[i] as? String
-            buttonTitle.textColor = UIColor.white
-            buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
-            genderButton.addSubview(buttonTitle)
-        }*/
         
         var buttonYPos:CGFloat = (2 * y)
         
@@ -373,13 +203,11 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             genderButton.backgroundColor = UIColor.clear
             let buttonImage = UIImageView()
             buttonImage.frame = CGRect(x: 0, y: 0, width: genderButton.frame.width, height: genderButton.frame.height)
-            //            buttonImage.image = convertedSeasonalImageArray[i]
             if let imageName =  genderImageArray[i] as? String
             {
                 let urlString = serviceCall.baseURL
                 let api = "\(urlString)/images/\(imageName)"
                 let apiurl = URL(string: api)
-                print("GENDER IMAGE API", apiurl)
                 if apiurl != nil
                 {
                     buttonImage.dowloadFromServer(url: apiurl!)
@@ -411,9 +239,10 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
                 genderButtonLabel.frame = CGRect(x: genderButton.frame.width - (7 * x), y: ((genderButton.frame.height - (2 * y)) / 2), width: (7 * x), height: (2 * y))
             }
             genderButtonLabel.backgroundColor = UIColor.darkGray
-            genderButtonLabel.text = (getInputArray[i] as? String)?.uppercased()
+            genderButtonLabel.text = (getInputArray[i] as? String)
             genderButtonLabel.textColor = UIColor.white
             genderButtonLabel.textAlignment = .center
+            genderButtonLabel.tag = ((genderButton.tag * 1) + 300)
             genderButton.addSubview(genderButtonLabel)
             
             if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -488,111 +317,18 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     @objc func genderButtonAction(sender : UIButton)
     {
         let dressTypeScreen = DressTypeViewController()
-
-        if sender.tag == 1
+        
+        Variables.sharedManager.genderId = sender.tag
+        
+        if let label = view.viewWithTag((sender.tag * 1) + 300) as? UILabel
         {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    UserDefaults.standard.set("Male", forKey: "gender")
-                }
-                else if language == "ar"
-                {
-                    UserDefaults.standard.set("ذكر", forKey: "gender")
-                }
-            }
-            else
-            {
-                UserDefaults.standard.set("Male", forKey: "gender")
-            }
-            
-            dressTypeScreen.tag = sender.tag
-        }
-        else if sender.tag == 2
-        {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    UserDefaults.standard.set("Female", forKey: "gender")
-                }
-                else if language == "ar"
-                {
-                    UserDefaults.standard.set("انثى", forKey: "gender")
-                }
-            }
-            else
-            {
-                UserDefaults.standard.set("Female", forKey: "gender")
-            }
-            
-            dressTypeScreen.tag = sender.tag
-        }
-        else if sender.tag == 3
-        {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    UserDefaults.standard.set("Boy", forKey: "gender")
-                }
-                else if language == "ar"
-                {
-                    UserDefaults.standard.set("صبي", forKey: "gender")
-                }
-            }
-            else
-            {
-                UserDefaults.standard.set("Boy", forKey: "gender")
-            }
-            
-            dressTypeScreen.tag = sender.tag
-        }
-        else if sender.tag == 4
-        {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
-            {
-                if language == "en"
-                {
-                    UserDefaults.standard.set("Girl", forKey: "gender")
-                }
-                else if language == "ar"
-                {
-                    UserDefaults.standard.set("فتاة", forKey: "gender")
-                }
-            }
-            else
-            {
-                UserDefaults.standard.set("Girl", forKey: "gender")
-            }
-            
-            dressTypeScreen.tag = sender.tag
-        }
-        else
-        {
-            let emptyAlert = UIAlertController(title: "Alert", message: "As of now we are providing services for men alone", preferredStyle: .alert)
-            emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(emptyAlert, animated: true, completion: nil)
+            Variables.sharedManager.genderType = label.text!
         }
         
+        print("GENDER TYPE IN VARIABLES", Variables.sharedManager.genderType)
+        
+        dressTypeScreen.tag = sender.tag
         self.navigationController?.pushViewController(dressTypeScreen, animated: true)
-
-        
-//        else if sender.tag == 2
-//        {
-//            UserDefaults.standard.set("women", forKey: "Gender")
-//        }
-//        else if sender.tag == 3
-//        {
-//            UserDefaults.standard.set("boy", forKey: "Gender")
-//        }
-//        else if sender.tag == 4
-//        {
-//            UserDefaults.standard.set("girl", forKey: "Gender")
-//        }
-//
-        
     }
     
 

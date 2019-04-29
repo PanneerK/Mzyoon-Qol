@@ -75,24 +75,15 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         navigationBar.isHidden = true
         selectedButton(tag: 0)
         
-        if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-        {
-            self.serviceCall.API_Customization3(DressTypeId: id, delegate: self)
-        }
-        else if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-        {
-            self.serviceCall.API_Customization3(DressTypeId: "\(id)", delegate: self)
-        }
-        
-//        self.serviceCall.API_Customization3(DressTypeId: "5", delegate: self)
+        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
         
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        self.serviceCall.API_Customization3(DressTypeId: "5", delegate: self)
+    override func viewWillAppear(_ animated: Bool)
+    {
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"

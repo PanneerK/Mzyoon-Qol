@@ -82,14 +82,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     {
         navigationBar.isHidden = true
         
-        if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-        {
-            self.serviceCall.API_Customization3(DressTypeId: id, delegate: self)
-        }
-        else if let id = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-        {
-            self.serviceCall.API_Customization3(DressTypeId: "\(id)", delegate: self)
-        }
+        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
         
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
 //            // Your code with delay
@@ -354,21 +347,12 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         let dressTypeImageArray = ["Gender-3", "Dress_types", "Dress_subtypes"]
         var getDressTypeArray = [String]()
         let dressTypeArabicArray = ["جنس", "نوع الفستان", "اللباس النوع الفرعي"]
+                
+        getDressTypeArray.append(Variables.sharedManager.genderType)
         
-        if let gender = UserDefaults.standard.value(forKey: "gender") as? String
-        {
-            getDressTypeArray.append(gender)
-        }
+        getDressTypeArray.append(Variables.sharedManager.dressType)
         
-        if let dressType = UserDefaults.standard.value(forKey: "dressType") as? String
-        {
-            getDressTypeArray.append(dressType)
-        }
-        
-        if let dressSubType = UserDefaults.standard.value(forKey: "dressSubType") as? String
-        {
-            getDressTypeArray.append(dressSubType)
-        }
+        getDressTypeArray.append(Variables.sharedManager.dressSubType)
         
         print("getDressTypeArray", getDressTypeArray)
         
@@ -454,27 +438,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         yPos = dressTypeView.frame.maxY + y
         
-        if let orderType = UserDefaults.standard.value(forKey: "orderType") as? Int
+        if Variables.sharedManager.orderTypeId == 3
         {
-            if orderType != 3
-            {
-                
-            }
-            else
-            {
-                custom1AndCustom2Content()
-            }
+            custom1AndCustom2Content()
         }
-        else if let orderType = UserDefaults.standard.value(forKey: "orderType") as? String
+        else
         {
-            if orderType == "3"
-            {
-                custom1AndCustom2Content()
-            }
-            else
-            {
-                
-            }
+            
         }
         
         var yaxis:CGFloat = yPos
@@ -1239,21 +1209,9 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             userId = id
         }
         
-        if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-        {
-            dressId = dressid
-        }
-        else if let dressid = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-        {
-            let converted = Int(dressid)
-            print("CONVERTED", converted, dressid)
-            dressId = converted!
-        }
+        dressId = Variables.sharedManager.dressSubTypeId
         
-        if let orderid = UserDefaults.standard.value(forKey: "orderType") as? Int
-        {
-            orderId = orderid
-        }
+        orderId = Variables.sharedManager.orderTypeId
         
         if let id = UserDefaults.standard.value(forKey: "addressId") as? Int
         {
@@ -1359,78 +1317,71 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         let convertImage = orderCustom.referenceImage(image: [getImage])
         
         var getImageArray = [UIImage]()
-        
-       
-        
-        print("GET IMAGE ARRAY COUNT", getImageArray.count)
-        
-        if let orderType = UserDefaults.standard.value(forKey: "orderType") as? Int
+                
+        if Variables.sharedManager.orderTypeId == 1 || Variables.sharedManager.orderTypeId == 2
         {
-            if orderType == 1 || orderType == 2
+            if let materialImages = UserDefaults.standard.value(forKey: "materialImageArray") as? Int
             {
-                if let materialImages = UserDefaults.standard.value(forKey: "materialImageArray") as? Int
+                print("MATERIAL IMAGES COUNT", materialImages)
+                
+                for i in 0..<materialImages
                 {
-                    print("MATERIAL IMAGES COUNT", materialImages)
-                    
+                    let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material\(i)")
+                    getImageArray.append(getImage)
+                }
+            }
+            activityContents()
+            spinnerOn()
+            
+            self.serviceCall.API_MaterialImageUpload(materialImages: getImageArray, delegate: self)
+        }
+        else if Variables.sharedManager.orderTypeId == 3
+        {
+            if let materialImages = UserDefaults.standard.value(forKey: "referenceImageArray") as? Int
+            {
+                print("MATERIAL IMAGES COUNT", materialImages)
+                
+                if materialImages != 0
+                {
                     for i in 0..<materialImages
                     {
-                        let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Material\(i)")
+                        let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Reference\(i)")
                         getImageArray.append(getImage)
                     }
-                }
-                activityContents()
-                spinnerOn()
-
-                self.serviceCall.API_MaterialImageUpload(materialImages: getImageArray, delegate: self)
-            }
-            else if orderType == 3
-            {
-                if let materialImages = UserDefaults.standard.value(forKey: "referenceImageArray") as? Int
-                {
-                    print("MATERIAL IMAGES COUNT", materialImages)
                     
-                    if materialImages != 0
+                    activityContents()
+                    spinnerOn()
+                    
+                    serviceCall.API_ReferenceImageUpload(referenceImages: getImageArray, delegate: self)
+                }
+                else
+                {
+                    print("MEASUREMENT ID", measurementId)
+                    print("MEASUREMENT VALUES", measurementValues)
+                    print("MEASUREMENT ID INT", measurementIdInt)
+                    
+                    if measurementIdInt != -1
                     {
-                        for i in 0..<materialImages
-                        {
-                            let getImage = fileAccessing.getImageFromDocumentDirectory(imageName: "Reference\(i)")
-                            getImageArray.append(getImage)
-                        }
+                        let userMeasurement = [[String : Any]]()
+                        
+                        //                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
                         
                         activityContents()
                         spinnerOn()
-
-                        serviceCall.API_ReferenceImageUpload(referenceImages: getImageArray, delegate: self)
+                        
+                        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
                     }
                     else
                     {
-                        print("MEASUREMENT ID", measurementId)
-                        print("MEASUREMENT VALUES", measurementValues)
-                        print("MEASUREMENT ID INT", measurementIdInt)
+                        let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
+                        print("FINALIZED USER MEASUREMENT", userMeasurement)
                         
-                        if measurementIdInt != -1
-                        {
-                            let userMeasurement = [[String : Any]]()
-                            
-                            //                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
-                            
-                            activityContents()
-                            spinnerOn()
-                            
-                            self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
-                        }
-                        else
-                        {
-                            let userMeasurement = orderCustom.userMeasurementRequest(id : measurementId as! [Int], values : measurementValues)
-                            print("FINALIZED USER MEASUREMENT", userMeasurement)
-                            
-                            //                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
-                            
-                            activityContents()
-                            spinnerOn()
-                            
-                             self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
-                        }
+                        //                        self.serviceCall.API_InsertUserMeasurementValues(UserId: userId, DressTypeId: dressId, MeasurementValue: userMeasurement, MeasurementBy: measurementBy, CreatedBy: "\(userId)", Units: units, Name: measurementName, delegate: self)
+                        
+                        activityContents()
+                        spinnerOn()
+                        
+                        self.serviceCall.API_InsertOrderSummary(dressType: dressId, CustomerId: userId, AddressId: addressId, PatternId: patternId, Ordertype: orderId, MeasurementId: measurementIdInt, MaterialImage: getMaterialImageNameArray, ReferenceImage: getReferenceImageNameArray, OrderCustomization : orderCustomization, TailorId: tailorId, MeasurementBy: measurementBy, CreatedBy: userId, MeasurementName: measurementName, UserMeasurement : userMeasurement, DeliveryTypeId: deliveryTypeId, units: units, measurementType: measurementType, delegate: self)
                     }
                 }
             }

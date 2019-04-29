@@ -45,8 +45,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     override func viewDidLoad()
     {
         self.navigationBar.isHidden = true
-        
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         selectedButton(tag: 0)
         
         serviceCall.API_DressType(genderId: tag, delegate: self)
@@ -132,32 +130,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressIdArray = Result.value(forKey: "Id") as! NSArray
             
             dressImageArray = Result.value(forKey: "ImageURL") as! NSArray
-            
-            /*for i in 0..<dressImageArray.count
-            {
-                if let imageName = dressImageArray[i] as? String
-                {
-                    let urlString = serviceCall.baseURL
-                    let api = "\(urlString)/images/DressTypes/\(imageName)"
-                    let apiurl = URL(string: api)
-                    
-                    if let data = try? Data(contentsOf: apiurl!) {
-                        if let image = UIImage(data: data) {
-                            self.convertedDressImageArray.append(image)
-                        }
-                    }
-                    else
-                    {
-                        let emptyImage = UIImage(named: "empty")
-                        self.convertedDressImageArray.append(emptyImage!)
-                    }
-                }
-                else if let imgName = dressImageArray[i] as? NSNull
-                {
-                    let emptyImage = UIImage(named: "empty")
-                    self.convertedDressImageArray.append(emptyImage!)
-                }
-            }*/
             
             dressTypeContent()
         }
@@ -348,22 +320,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         downArrow2.image = UIImage(named: "downArrow")
         sortButton.addSubview(downArrow2)
         
-        /*let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: view.frame.width / 2.70, height: view.frame.width / 2.25)
-        
-        let dressTypeCollectionView = UICollectionView(frame: CGRect(x: (3 * x), y: filterButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: view.frame.height - (18 * y)), collectionViewLayout: layout)
-        //        dressTypeCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-        dressTypeCollectionView.register(DressTypeCollectionViewCell.self, forCellWithReuseIdentifier: NSStringFromClass(DressTypeCollectionViewCell.self))
-//        dressTypeCollectionView.dataSource = self
-//        dressTypeCollectionView.delegate = self
-        dressTypeCollectionView.backgroundColor = UIColor.clear
-        dressTypeCollectionView.isUserInteractionEnabled = true
-        dressTypeCollectionView.allowsMultipleSelection = false
-        dressTypeCollectionView.allowsSelection = true
-        dressTypeCollectionView.selectItem(at: NSIndexPath(item: 0, section: 0) as IndexPath, animated: true, scrollPosition: UICollectionView.ScrollPosition.top)
-        //        view.addSubview(dressTypeCollectionView)*/
-        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
@@ -460,7 +416,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                     
                 }
             }
-            //            dressTypeImageView.image = convertedDressImageArray[i]
             dressTypeButton.addSubview(dressTypeImageView)
             
             let dressTypeNameLabel = UILabel()
@@ -483,6 +438,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             dressTypeNameLabel.textAlignment = .center
             dressTypeNameLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
             dressTypeNameLabel.font = dressTypeNameLabel.font.withSize(1.5 * x)
+            dressTypeNameLabel.tag = ((dressTypeButton.tag * 1) + 300)
             dressTypeButton.addSubview(dressTypeNameLabel)
         }
         
@@ -655,38 +611,17 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         {
             let dressSubScreen = DressSubTypeViewController()
             dressSubScreen.screenTag = sender.tag
+            Variables.sharedManager.dressId = sender.tag
             
-            for i in 0..<dressIdArray.count
+            if let label = view.viewWithTag((sender.tag * 1) + 300) as? UILabel
             {
-                if let id = dressIdArray[i] as? Int
-                {
-                    if sender.tag == id
-                    {
-                        if let language = UserDefaults.standard.value(forKey: "language") as? String
-                        {
-                            if language == "en"
-                            {
-                                dressSubScreen.headingTitle = dressTypeArray[i] as! String
-                                UserDefaults.standard.set(dressTypeArray[i], forKey: "dressType")
-                            }
-                            else if language == "ar"
-                            {
-                                dressSubScreen.headingTitle = dressTypeArrayInArabic[i] as! String
-                                UserDefaults.standard.set(dressTypeArrayInArabic[i], forKey: "dressType")
-                            }
-                        }
-                        else
-                        {
-                            dressSubScreen.headingTitle = dressTypeArray[i] as! String
-                            UserDefaults.standard.set(dressTypeArray[i], forKey: "dressType")
-
-                        }
-                    }
-                }
+                Variables.sharedManager.dressType = label.text!
+                dressSubScreen.headingTitle = label.text!
             }
             
+            print("DRESS TYPE IN VARIABLES", Variables.sharedManager.dressType)
+            
             self.navigationController?.pushViewController(dressSubScreen, animated: true)
-
         }
         else
         {
@@ -694,7 +629,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(emptyAlert, animated: true, completion: nil)
         }
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

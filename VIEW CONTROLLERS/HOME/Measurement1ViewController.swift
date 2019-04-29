@@ -77,25 +77,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
-            if let dressId = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-            {
-                self.serviceCall.API_ExistingUserMeasurement(DressTypeId: dressId, UserId: userId, delegate: self)
-            }
-            else if let dressId = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-            {
-                self.serviceCall.API_ExistingUserMeasurement(DressTypeId: "\(dressId)", UserId: userId, delegate: self)
-            }
+            self.serviceCall.API_ExistingUserMeasurement(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", UserId: userId, delegate: self)
         }
         else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
-            if let dressId = UserDefaults.standard.value(forKey: "dressSubTypeId") as? String
-            {
-                self.serviceCall.API_ExistingUserMeasurement(DressTypeId: dressId, UserId: "\(userId)", delegate: self)
-            }
-            else if let dressId = UserDefaults.standard.value(forKey: "dressSubTypeId") as? Int
-            {
-                self.serviceCall.API_ExistingUserMeasurement(DressTypeId: "\(dressId)", UserId: "\(userId)", delegate: self)
-            }
+            self.serviceCall.API_ExistingUserMeasurement(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", UserId: "\(userId)", delegate: self)
         }
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -893,11 +879,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             if language == "en"
             {
-                var dressType = String()
-                if let dress = UserDefaults.standard.value(forKey: "dressSubType") as? String
-                {
-                    dressType = dress   
-                }
+                let dressType = Variables.sharedManager.dressSubType
+
                 addNameAlert = UIAlertController(title: "Add Name", message: "for dress type - \(dressType)", preferredStyle: .alert)
                 addNameAlert.addTextField(configurationHandler: { (textField) in
                     textField.placeholder = "Enter the name"
