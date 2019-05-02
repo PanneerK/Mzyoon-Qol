@@ -164,7 +164,9 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         {
             mobileNumber = number
         }
-        serviceCall.API_InsertDeviceDetails(DeviceId: "", Os: systemVersion, Manufacturer: "Apple", CountryCode: countryCode, PhoneNumber: mobileNumber, Model: modelName, AppVersion: appVersion!, Type: "", delegate: self)
+         print("FCM Token:",Variables.sharedManager.Fcm)
+        
+        serviceCall.API_InsertDeviceDetails(DeviceId: "", Os: systemVersion, Manufacturer: "Apple", CountryCode: countryCode, PhoneNumber: mobileNumber, Model: modelName, AppVersion: appVersion!, Type: "", Fcm: Variables.sharedManager.Fcm, delegate: self)
     }
     
     func API_CALLBACK_DeviceDetails(deviceDet: NSDictionary)

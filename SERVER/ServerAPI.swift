@@ -1170,11 +1170,11 @@ class ServerAPI : NSObject
     }
     
     //Device Details..
-    func API_InsertDeviceDetails(DeviceId : String, Os : String, Manufacturer : String, CountryCode : String, PhoneNumber : String, Model : String, AppVersion : String, Type : String,delegate : ServerAPIDelegate)
+    func API_InsertDeviceDetails(DeviceId : String, Os : String, Manufacturer : String, CountryCode : String, PhoneNumber : String, Model : String, AppVersion : String, Type : String, Fcm : String, delegate : ServerAPIDelegate)
     {
         if Reachability.Connection.self != .none
         {
-            let parameters = ["DeviceId" : deviceId!, "Os" : Os, "Manufacturer" : Manufacturer, "CountryCode" : CountryCode, "PhoneNumber" : PhoneNumber, "Model" : Model, "AppVersion" : AppVersion, "Type" : Type] as [String : Any]
+            let parameters = ["DeviceId" : deviceId!, "Os" : Os, "Manufacturer" : Manufacturer, "CountryCode" : CountryCode, "PhoneNumber" : PhoneNumber, "Model" : Model, "AppVersion" : AppVersion, "Type" : Type, "Fcm" : Fcm] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Login/InsertUpdateDeviceDetails", arguments: [baseURL])
             

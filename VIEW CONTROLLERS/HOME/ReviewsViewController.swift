@@ -303,7 +303,7 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
    
     
     RatingNumLabel.textColor = UIColor.white
-    //RatingNumLabel.backgroundColor = UIColor.gray
+   // RatingNumLabel.backgroundColor = UIColor.gray
     RatingNumLabel.textAlignment = .center
     RatingNumLabel.font = UIFont(name: "Avenir Next", size: 1.3 * x)
     StarImageView.addSubview(RatingNumLabel)
@@ -320,16 +320,16 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
         {
             if language == "en"
             {
-                RatingStatusLabel.text = "POOR"
+                RatingStatusLabel.text = "No Reviews"
             }
             else if language == "ar"
             {
-                RatingStatusLabel.text = "فقير"
+                RatingStatusLabel.text = "لا توجد تعليقات مقدمة"
             }
         }
         else
         {
-            RatingStatusLabel.text = "POOR"
+            RatingStatusLabel.text = "No Reviews"
         }
     }
     RatingStatusLabel.textColor = UIColor.black
