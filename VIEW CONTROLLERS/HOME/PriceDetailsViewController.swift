@@ -150,8 +150,8 @@ class PriceDetailsViewController: CommonViewController
     
     @objc func priceDetailsNextButtonAction(sender : UIButton)
     {
-        let paymentScreen = PaymentViewController()
-        self.navigationController?.pushViewController(paymentScreen, animated: true)
+        let orderScreen = OrderSummaryViewController()
+        self.navigationController?.pushViewController(orderScreen, animated: true)
     }
     
 

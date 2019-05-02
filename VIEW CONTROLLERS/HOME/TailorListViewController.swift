@@ -1804,8 +1804,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             UserDefaults.standard.set(selectedTailorListNameArray, forKey: "selectedTailors")
             UserDefaults.standard.set(selectedTailorListArray, forKey: "selectedTailorsId")
-            let orderSummaryScreen = OrderSummaryViewController()
-            self.navigationController?.pushViewController(orderSummaryScreen, animated: true)
+            let priceScreen = PriceDetailsViewController()
+            self.navigationController?.pushViewController(priceScreen, animated: true)
         }
     }
     
