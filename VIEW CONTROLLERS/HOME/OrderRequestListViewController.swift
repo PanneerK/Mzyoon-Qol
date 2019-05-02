@@ -323,7 +323,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         for i in 0..<OrderIdArray.count
         {
              let RequestViewButton = UIButton()
-            RequestViewButton.frame = CGRect(x: 0, y: y1, width: RequestListScrollView.frame.width, height: (7 * y))
+            RequestViewButton.frame = CGRect(x: 0, y: y1, width: RequestListScrollView.frame.width, height: (9 * y))
             RequestViewButton.backgroundColor = UIColor.white
             RequestListScrollView.addSubview(RequestViewButton)
             
@@ -334,7 +334,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
            // tailorImageView.backgroundColor = UIColor.white  // UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
-            tailorImageView.frame = CGRect(x: x/2, y: y/2, width: (6 * y), height: (6 * y))
+            tailorImageView.frame = CGRect(x: x/2, y: (1.5 * y), width: (6 * y), height: (6 * y))
             tailorImageView.backgroundColor = UIColor.white
             tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
             tailorImageView.layer.borderWidth = 1
@@ -371,18 +371,48 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             //
             let orderId_Icon = UIImageView()
             orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: y, width: x, height: y)
-            orderId_Icon.image = UIImage(named: "OrderDate")
+            orderId_Icon.image = UIImage(named: "OrderID")
             RequestViewButton.addSubview(orderId_Icon)
             
+            let orderId_Label = UILabel()
+            orderId_Label.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: y/2, width: (10 * x), height: (2 * y))
+            orderId_Label.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            orderId_Label.textAlignment = .left
+            orderId_Label.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
+            RequestViewButton.addSubview(orderId_Label)
+            
+            let orderNum_Label = UILabel()
+            orderNum_Label.frame = CGRect(x: orderId_Label.frame.maxX - x, y: y/2, width: RequestViewButton.frame.width / 2, height: (2 * y))
+            let orderNum : Int = OrderIdArray[i] as! Int
+            orderNum_Label.text =  "\(orderNum)"
+            RequestViewButton.tag = OrderIdArray[i] as! Int
+            orderNum_Label.textColor = UIColor.black
+            orderNum_Label.textAlignment = .left
+            orderNum_Label.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+            orderNum_Label.adjustsFontSizeToFitWidth = true
+            RequestViewButton.addSubview(orderNum_Label)
+           
+            // UnderLine0..
+            let underLine0 = UILabel()
+            underLine0.frame = CGRect(x: StraightLine.frame.minX, y: orderId_Label.frame.maxY, width: RequestViewButton.frame.width - (tailorImageView.frame.width + StraightLine.frame.width), height: 0.3)
+            underLine0.backgroundColor = UIColor.lightGray
+            RequestViewButton.addSubview(underLine0)
+            
+            //
+            let ReqDate_Icon = UIImageView()
+            ReqDate_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            ReqDate_Icon.image = UIImage(named: "OrderDate")
+            RequestViewButton.addSubview(ReqDate_Icon)
+            
             let nameLabel = UILabel()
-            nameLabel.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: y/2, width: (10 * x), height: (2 * y))
+            nameLabel.frame = CGRect(x: ReqDate_Icon.frame.maxX + x, y: orderId_Label.frame.maxY, width: (10 * x), height: (2 * y))
             nameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
             RequestViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: y/2, width: RequestViewButton.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: orderId_Label.frame.maxY, width: RequestViewButton.frame.width / 2, height: (2 * y))
             if let date = RequestDtArray[i] as? String
             {
                 RequestDate = String(date.prefix(10))
@@ -400,7 +430,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let ProductName_Icon = UIImageView()
-            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: ReqDate_Icon.frame.maxY + y, width: x, height: y)
             ProductName_Icon.image = UIImage(named: "ProductName")
             RequestViewButton.addSubview(ProductName_Icon)
             
@@ -449,30 +479,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             ordersCountLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             ordersCountLabel.adjustsFontSizeToFitWidth = true
             RequestViewButton.addSubview(ordersCountLabel)
-            
-            //
-            let orderIDLabel = UILabel()
-            orderIDLabel.frame = CGRect(x: tailorImageView.frame.maxX + x, y: ordersLabel.frame.maxY, width: (10 * x), height: (2 * y))
-            orderIDLabel.text = "Order ID :"
-            orderIDLabel.textColor = UIColor.blue
-            orderIDLabel.textAlignment = .left
-            orderIDLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-           // RequestViewButton.addSubview(orderIDLabel)
-            
-            let orderIdNumLabel = UILabel()
-            orderIdNumLabel.frame = CGRect(x: ordersCountLabel.frame.maxX + x, y: shopLabel.frame.maxY, width: (5 * x), height: (2 * y))
-            let orderNum : Int = OrderIdArray[i] as! Int
-            orderIdNumLabel.text =  "\(orderNum)"
-            RequestViewButton.tag = OrderIdArray[i] as! Int
-            orderIdNumLabel.textColor = UIColor.black
-            orderIdNumLabel.textAlignment = .left
-            //orderIdNumLabel.backgroundColor = UIColor.lightGray
-            orderIdNumLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
-            orderIdNumLabel.adjustsFontSizeToFitWidth = true
-            RequestViewButton.addSubview(orderIdNumLabel)
-            
-          //  orderIDLabel.isHidden = true
-              orderIdNumLabel.isHidden = true
+          
             
             RequestViewButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
             
@@ -484,6 +491,11 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 {
                     RequestViewButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    
+                    orderId_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    orderId_Label.text = "Order ID          : "
+                    orderId_Label.textAlignment = .left
+                    
                     nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     nameLabel.text = "Request Date  : "
                     nameLabel.textAlignment = .left
@@ -511,6 +523,11 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 {
                     RequestViewButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                     tailorImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    
+                    orderId_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    orderId_Label.text = "معرف الطلب الخاص بك :"
+                    orderId_Label.textAlignment = .right
+                    
                     nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                     nameLabel.text = "تاريخ الطلب : "
                     nameLabel.textAlignment = .right
@@ -539,6 +556,11 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             {
                 RequestViewButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 tailorImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                
+                orderId_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderId_Label.text = "Order ID          : "
+                orderId_Label.textAlignment = .left
+                
                 nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 nameLabel.text = "Request Date  : "
                 nameLabel.textAlignment = .left
