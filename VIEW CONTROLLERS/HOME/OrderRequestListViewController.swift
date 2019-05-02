@@ -371,7 +371,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             //
             let orderId_Icon = UIImageView()
             orderId_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: y, width: x, height: y)
-            orderId_Icon.image = UIImage(named: "OrderDate")
+            orderId_Icon.image = UIImage(named: "OrderID")
             RequestViewButton.addSubview(orderId_Icon)
             
             let orderId_Label = UILabel()
