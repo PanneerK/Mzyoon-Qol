@@ -244,7 +244,21 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        pageBar.image = UIImage(named: "MeasurementBar")
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                pageBar.image = UIImage(named: "MeasurementBar")
+            }
+            else if language == "ar"
+            {
+                pageBar.image = UIImage(named: "measurementArabicHintImage")
+            }
+        }
+        else
+        {
+            pageBar.image = UIImage(named: "MeasurementBar")
+        }
 
         self.view.bringSubviewToFront(slideMenuButton)
         
@@ -429,42 +443,66 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         hintsView.addSubview(headingLabel)
         
-        var x1:CGFloat = x
+        hintsBackButton.isHidden = true
+        hintsBackButton.frame = CGRect(x: x, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+        hintsBackButton.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        hintsBackButton.setTitle("Back", for: .normal)
+        hintsBackButton.setTitleColor(UIColor.white, for: .normal)
+        hintsBackButton.tag = 0
+        hintsBackButton.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+        hintsView.addSubview(hintsBackButton)
         
-        let title = ["Back", "Skip", "Next"]
-        let arabicTitle = ["الى الخلف", "تخطى", "التالي"]
-
-        for i in 0..<3
+        hintsSkipButton.frame = CGRect(x: hintsBackButton.frame.maxX + x, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+        hintsSkipButton.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        hintsSkipButton.setTitle("Skip", for: .normal)
+        hintsSkipButton.setTitleColor(UIColor.white, for: .normal)
+        hintsSkipButton.tag = 1
+        hintsSkipButton.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+        hintsView.addSubview(hintsSkipButton)
+        
+        hintsNextButton.frame = CGRect(x: hintsSkipButton.frame.maxX + x, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+        hintsNextButton.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        hintsNextButton.setTitle("Next", for: .normal)
+        hintsNextButton.setTitleColor(UIColor.white, for: .normal)
+        hintsNextButton.tag = 2
+        hintsNextButton.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+        hintsView.addSubview(hintsNextButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
-            let threeButtons = UIButton()
-            threeButtons.frame = CGRect(x: x1, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
-            threeButtons.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
-            threeButtons.setTitle(title[i], for: .normal)
-            threeButtons.setTitleColor(UIColor.white, for: .normal)
-            threeButtons.tag = i
-            threeButtons.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
-            hintsView.addSubview(threeButtons)
-            
-            x1 = threeButtons.frame.maxX + x
-            
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            if language == "en"
             {
-                if language == "en"
-                {
-                    threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    threeButtons.setTitle(title[i], for: .normal)
-                }
-                else if language == "ar"
-                {
-                    threeButtons.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    threeButtons.setTitle(arabicTitle[i], for: .normal)
-                }
+                hintsBackButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                hintsBackButton.setTitle("Back", for: .normal)
+                
+                hintsSkipButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                hintsSkipButton.setTitle("Skip", for: .normal)
+                
+                hintsNextButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                hintsNextButton.setTitle("Next", for: .normal)
             }
-            else
+            else if language == "ar"
             {
-                threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                threeButtons.setTitle(title[i], for: .normal)
+                hintsBackButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                hintsBackButton.setTitle("الى الخلف", for: .normal)
+                
+                hintsSkipButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                hintsSkipButton.setTitle("تخطى", for: .normal)
+                
+                hintsNextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                hintsNextButton.setTitle("التالى", for: .normal)
             }
+        }
+        else
+        {
+            hintsBackButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            hintsBackButton.setTitle("Back", for: .normal)
+            
+            hintsSkipButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            hintsSkipButton.setTitle("Skip", for: .normal)
+            
+            hintsNextButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            hintsNextButton.setTitle("Next", for: .normal)
         }
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -504,14 +542,33 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             if hintTag == 0
             {
                 firstHint()
+                hintsBackButton.isHidden = true
             }
             else if hintTag == 1
             {
                 secondHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 2
             {
                 thirdHint()
+                hintsBackButton.isHidden = false
+            }
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    hintsNextButton.setTitle("Next", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    hintsNextButton.setTitle("التالى", for: .normal)
+                }
+            }
+            else
+            {
+                hintsNextButton.setTitle("Next", for: .normal)
             }
         }
         else if sender.tag == 1
@@ -532,10 +589,28 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             else if hintTag == 1
             {
                 secondHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 2
             {
                 thirdHint()
+                hintsBackButton.isHidden = false
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        sender.setTitle("Got it", for: .normal)
+                    }
+                    else if language == "ar"
+                    {
+                        sender.setTitle("أنا أخذت", for: .normal)
+                    }
+                }
+                else
+                {
+                    sender.setTitle("Got it", for: .normal)
+                }
             }
             else
             {
@@ -547,7 +622,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func firstHint()
     {
-        hintsImage.frame = CGRect(x: (3 * x), y: manualTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
+        hintsImage.frame = CGRect(x: x, y: manualTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "manuallyHintImage")
@@ -590,7 +665,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func secondHint()
     {
-        hintsImage.frame = CGRect(x: (3 * x), y: goTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
+        hintsImage.frame = CGRect(x: x, y: goTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "goToHintImage")
@@ -633,7 +708,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     func thirdHint()
     {
-        hintsImage.frame = CGRect(x: (3 * x), y: comeTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
+        hintsImage.frame = CGRect(x: x, y: comeTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "tailorComeHintImage")

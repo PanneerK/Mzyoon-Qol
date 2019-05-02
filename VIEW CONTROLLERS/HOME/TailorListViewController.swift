@@ -502,7 +502,21 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        pageBar.image = UIImage(named: "tailorlistBar")
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                pageBar.image = UIImage(named: "tailorlistBar")
+            }
+            else if language == "ar"
+            {
+                pageBar.image = UIImage(named: "tailorListArabicHintImage")
+            }
+        }
+        else
+        {
+            pageBar.image = UIImage(named: "tailorlistBar")
+        }
         
         listViewButton.frame = CGRect(x: 0, y: 0, width: ((view.frame.width / 2) - 1), height: (5 * y))
         listViewButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -566,42 +580,66 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         hintsView.addSubview(headingLabel)
         
-        var x1:CGFloat = x
+        hintsBackButton.isHidden = true
+        hintsBackButton.frame = CGRect(x: x, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+        hintsBackButton.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        hintsBackButton.setTitle("Back", for: .normal)
+        hintsBackButton.setTitleColor(UIColor.white, for: .normal)
+        hintsBackButton.tag = 0
+        hintsBackButton.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+        hintsView.addSubview(hintsBackButton)
         
-        let title = ["Back", "Skip", "Next"]
-        let arabicTitle = ["الى الخلف", "تخطى", "التالي"]
-
-        for i in 0..<3
+        hintsSkipButton.frame = CGRect(x: hintsBackButton.frame.maxX + x, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+        hintsSkipButton.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        hintsSkipButton.setTitle("Skip", for: .normal)
+        hintsSkipButton.setTitleColor(UIColor.white, for: .normal)
+        hintsSkipButton.tag = 1
+        hintsSkipButton.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+        hintsView.addSubview(hintsSkipButton)
+        
+        hintsNextButton.frame = CGRect(x: hintsSkipButton.frame.maxX + x, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
+        hintsNextButton.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
+        hintsNextButton.setTitle("Next", for: .normal)
+        hintsNextButton.setTitleColor(UIColor.white, for: .normal)
+        hintsNextButton.tag = 2
+        hintsNextButton.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
+        hintsView.addSubview(hintsNextButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
-            let threeButtons = UIButton()
-            threeButtons.frame = CGRect(x: x1, y: hintsView.frame.height - (6 * y), width: (11.16 * x), height: (4 * y))
-            threeButtons.backgroundColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
-            threeButtons.setTitle(title[i], for: .normal)
-            threeButtons.setTitleColor(UIColor.white, for: .normal)
-            threeButtons.tag = i
-            threeButtons.addTarget(self, action: #selector(self.threeButtonAction(sender:)), for: .touchUpInside)
-            hintsView.addSubview(threeButtons)
-            
-            x1 = threeButtons.frame.maxX + x
-            
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            if language == "en"
             {
-                if language == "en"
-                {
-                    threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    threeButtons.setTitle(title[i], for: .normal)
-                }
-                else if language == "ar"
-                {
-                    threeButtons.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-                    threeButtons.setTitle(arabicTitle[i], for: .normal)
-                }
+                hintsBackButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                hintsBackButton.setTitle("Back", for: .normal)
+                
+                hintsSkipButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                hintsSkipButton.setTitle("Skip", for: .normal)
+                
+                hintsNextButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                hintsNextButton.setTitle("Next", for: .normal)
             }
-            else
+            else if language == "ar"
             {
-                threeButtons.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                threeButtons.setTitle(title[i], for: .normal)
+                hintsBackButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                hintsBackButton.setTitle("الى الخلف", for: .normal)
+                
+                hintsSkipButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                hintsSkipButton.setTitle("تخطى", for: .normal)
+                
+                hintsNextButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                hintsNextButton.setTitle("التالى", for: .normal)
             }
+        }
+        else
+        {
+            hintsBackButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            hintsBackButton.setTitle("Back", for: .normal)
+            
+            hintsSkipButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            hintsSkipButton.setTitle("Skip", for: .normal)
+            
+            hintsNextButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            hintsNextButton.setTitle("Next", for: .normal)
         }
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -643,30 +681,53 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             if hintTag == 0
             {
                 firstHint()
+                hintsBackButton.isHidden = true
             }
             else if hintTag == 1
             {
                 secondHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 2
             {
                 thirdHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 3
             {
                 fourthHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 4
             {
                 fifthHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 5
             {
                 sixthHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 6
             {
                 seventhHint()
+                hintsBackButton.isHidden = false
+            }
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    hintsNextButton.setTitle("Next", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    hintsNextButton.setTitle("التالى", for: .normal)
+                }
+            }
+            else
+            {
+                hintsNextButton.setTitle("Next", for: .normal)
             }
         }
         else if sender.tag == 1
@@ -687,26 +748,48 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             else if hintTag == 1
             {
                 secondHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 2
             {
                 thirdHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 3
             {
                 fourthHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 4
             {
                 fifthHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 5
             {
                 sixthHint()
+                hintsBackButton.isHidden = false
             }
             else if hintTag == 6
             {
                 seventhHint()
+                hintsBackButton.isHidden = false
+                
+                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    if language == "en"
+                    {
+                        sender.setTitle("Got it", for: .normal)
+                    }
+                    else if language == "ar"
+                    {
+                        sender.setTitle("أنا أخذت", for: .normal)
+                    }
+                }
+                else
+                {
+                    sender.setTitle("Got it", for: .normal)
+                }
             }
             else
             {
@@ -804,7 +887,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func thirdHint()
     {
-        hintsImage.frame = CGRect(x: totalTailersSelectedCountLabel.frame.minX + (2 * x), y: totalTailersSelectedCountLabel.frame.minY + (16 * y), width: mapViewButton.frame.width, height: mapViewButton.frame.height)
+        hintsImage.frame = CGRect(x: totalTailersSelectedCountLabel.frame.minX, y: totalTailersSelectedCountLabel.frame.minY + (16 * y), width: mapViewButton.frame.width, height: mapViewButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "totalNoHintsImage")
@@ -847,7 +930,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func fourthHint()
     {
-        hintsImage.frame = CGRect(x: (4 * x), y: sortButton.frame.maxY + (19.5 * y), width: (8 * x), height: (8 * y))
+        hintsImage.frame = CGRect(x: (2 * x), y: sortButton.frame.maxY + (19.5 * y), width: (8 * x), height: (8 * y))
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "tailorSelectHintImage")
@@ -890,7 +973,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func fifthHint()
     {
-        hintsImage.frame = CGRect(x: (13 * x), y: sortButton.frame.maxY + (20 * y), width: (20 * x), height: (3 * y))
+        hintsImage.frame = CGRect(x: (11 * x), y: sortButton.frame.maxY + (20 * y), width: (20 * x), height: (3 * y))
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "shopNameHintsImage")
@@ -933,7 +1016,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func sixthHint()
     {
-        hintsImage.frame = CGRect(x: hintsView.frame.width - (8 * x), y: sortButton.frame.maxY + (23.2 * y), width: (5 * x), height: (5 * y))
+        hintsImage.frame = CGRect(x: hintsView.frame.width - (6 * x), y: sortButton.frame.maxY + (23.2 * y), width: (5 * x), height: (5 * y))
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
         hintsImage.image = UIImage(named: "directionHintsImage")
@@ -1133,6 +1216,10 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             let tailorView = UIView()
             tailorView.frame = CGRect(x: x, y: y1, width: tailorListScrollView.frame.width - (2 * x), height: (10 * y))
             tailorView.backgroundColor = UIColor.white
+            if let id = IdArray[i] as? Int
+            {
+                tailorView.tag = ((id * 1) + 200)
+            }
             tailorListScrollView.addSubview(tailorView)
             
             let tailorImageButton = UIButton()
@@ -1182,15 +1269,22 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
             
             let nameLabel = UILabel()
-            nameLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: 0, width: (5 * x), height: (2 * y))
-            nameLabel.text = "Name : "
+            nameLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: 0, width: (9 * x), height: (2 * y))
+            nameLabel.text = "Name"
             nameLabel.textColor = UIColor.blue
             nameLabel.textAlignment = .left
             nameLabel.font = nameLabel.font.withSize(1.2 * x)
             tailorView.addSubview(nameLabel)
             
+            let nameColon = UILabel()
+            nameColon.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: (x / 2), height: (2 * y))
+            nameColon.text = ":"
+            nameColon.textColor = UIColor.blue
+            nameColon.textAlignment = .left
+            tailorView.addSubview(nameColon)
+            
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX, y: 0, width: tailorView.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameColon.frame.maxX, y: 0, width: tailorView.frame.width / 2, height: (2 * y))
             if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
                 if language == "en"
@@ -1212,12 +1306,19 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             tailorView.addSubview(tailorName)
             
             let shopLabel = UILabel()
-            shopLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: nameLabel.frame.maxY, width: (8 * x), height: (2 * y))
-            shopLabel.text = "Shop Name : "
+            shopLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: nameLabel.frame.maxY, width: (9 * x), height: (2 * y))
+            shopLabel.text = "Shop Name"
             shopLabel.textColor = UIColor.blue
             shopLabel.textAlignment = .left
             shopLabel.font = nameLabel.font.withSize(1.2 * x)
             tailorView.addSubview(shopLabel)
+            
+            let shopColon = UILabel()
+            shopColon.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: (x / 2), height: (2 * y))
+            shopColon.text = ":"
+            shopColon.textColor = UIColor.blue
+            shopColon.textAlignment = .left
+            tailorView.addSubview(shopColon)
             
             /*let shopName = UILabel()
             shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
@@ -1229,7 +1330,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             tailorView.addSubview(shopName)*/
             
             let shopName = UIButton()
-            shopName.frame = CGRect(x: shopLabel.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
+            shopName.frame = CGRect(x: shopColon.frame.maxX, y: nameLabel.frame.maxY, width: tailorView.frame.width / 2.90, height: (2 * y))
           
             if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
@@ -1255,7 +1356,10 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     shopName.setTitle(nameString.uppercased(), for: .normal)
                 }
             }
-            shopName.setTitleColor(UIColor.black, for: .normal)
+            shopName.titleLabel?.lineBreakMode = .byCharWrapping
+            shopName.setTitleColor(UIColor.orange, for: .normal)
+            shopName.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (1.2 * x))
+            shopName.titleLabel?.font = shopName.titleLabel?.font.withSize(1.2 * x)
             shopName.tag = (IdArray[i] as? Int)!
             shopName.contentHorizontalAlignment = .left
             shopName.titleLabel?.adjustsFontSizeToFitWidth = true
@@ -1266,14 +1370,21 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             let ordersLabel = UILabel()
             ordersLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: shopLabel.frame.maxY, width: (9 * x), height: (2 * y))
-            ordersLabel.text = "No. of Orders : "
+            ordersLabel.text = "No. of Orders"
             ordersLabel.textColor = UIColor.blue
             ordersLabel.textAlignment = .left
             ordersLabel.font = ordersLabel.font.withSize(1.2 * x)
             tailorView.addSubview(ordersLabel)
             
+            let ordersColon = UILabel()
+            ordersColon.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: (x / 2), height: (2 * y))
+            ordersColon.text = ":"
+            ordersColon.textColor = UIColor.blue
+            ordersColon.textAlignment = .left
+            tailorView.addSubview(ordersColon)
+            
             let ordersCountLabel = UILabel()
-            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX, y: shopLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
+            ordersCountLabel.frame = CGRect(x: ordersColon.frame.maxX, y: shopLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
             ordersCountLabel.text = "\(orderCountArray[i])"
             ordersCountLabel.textColor = UIColor.black
             ordersCountLabel.textAlignment = .left
@@ -1282,15 +1393,22 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             tailorView.addSubview(ordersCountLabel)
             
             let ratingLabel = UILabel()
-            ratingLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ordersLabel.frame.maxY, width: (8 * x), height: (2 * y))
-            ratingLabel.text = "Rating : "
+            ratingLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ordersLabel.frame.maxY, width: (9 * x), height: (2 * y))
+            ratingLabel.text = "Rating"
             ratingLabel.textColor = UIColor.blue
             ratingLabel.textAlignment = .left
             ratingLabel.font = ratingLabel.font.withSize(1.2 * x)
             tailorView.addSubview(ratingLabel)
             
+            let ratingColon = UILabel()
+            ratingColon.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY, width: (x / 2), height: (2 * y))
+            ratingColon.text = ":"
+            ratingColon.textColor = UIColor.blue
+            ratingColon.textAlignment = .left
+            tailorView.addSubview(ratingColon)
+            
             let ratingCountLabel = UILabel()
-            ratingCountLabel.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
+            ratingCountLabel.frame = CGRect(x: ratingColon.frame.maxX, y: ordersLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
             ratingCountLabel.text = "\(ratingArray[i])"
             ratingCountLabel.textColor = UIColor.black
             ratingCountLabel.textAlignment = .left
@@ -1300,7 +1418,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             
             let ratingImageView = UIImageView()
-            ratingImageView.frame = CGRect(x: ratingLabel.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)
+            ratingImageView.frame = CGRect(x: ratingColon.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)
             ratingImageView.image = UIImage(named: "\(ratingArray[i])")
             tailorView.addSubview(ratingImageView)
             
@@ -1341,7 +1459,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             
             print("distanceInKiloMeters", distanceInKiloMeters)
             
-            let distanceInt = Int(distanceInKiloMeters)
+            let distanceInt = String(format: "%.2f", distanceInKiloMeters)
             
             let distanceLabel = UILabel()
             distanceLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ratingLabel.frame.maxY, width: tailorView.frame.width / 2.15, height: (2 * y))
@@ -1436,11 +1554,23 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             y1 = tailorView.frame.maxY + y
         }
         
+        tailorListScrollView.contentSize.height = y1 + (2 * y)
+        
         confirmSelectionButton.frame = CGRect(x: ((backDrop.frame.width - (17 * x)) / 2), y: tailorListScrollView.frame.maxY + (2 * y), width: (17 * x), height: (3 * y))
         confirmSelectionButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         confirmSelectionButton.setTitle("Confirm Selection", for: .normal)
         confirmSelectionButton.addTarget(self, action: #selector(self.confirmSelectionButtonAction(sender:)), for: .touchUpInside)
-        backDrop.addSubview(confirmSelectionButton)
+        
+        let id = Variables.sharedManager.tailorType
+        
+        if id == 0
+        {
+            backDrop.addSubview(confirmSelectionButton)
+        }
+        else
+        {
+            tailorListScrollView.frame = CGRect(x: 0, y: sortButton.frame.maxY + y, width: backDrop.frame.width, height: (35 * y))
+        }
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -1561,45 +1691,122 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         selectionImage.image = UIImage(named: "selectionImage")
         selectionImage.tag = sender.tag
         
-        if selectedTailorListArray.isEmpty == true
+        let tailorTypeId = Variables.sharedManager.tailorType
+        
+        if tailorTypeId == 0
         {
-            selectedTailorListArray.append(sender.tag)
-            sender.addSubview(selectionImage)
-        }
-        else
-        {
-            if selectedTailorListArray.contains(sender.tag)
-            {
-                if let index = selectedTailorListArray.index(where: {$0 == sender.tag}) {
-                    selectedTailorListArray.remove(at: index)
-                }
-                
-                for views in sender.subviews
-                {
-                    if let findView = views.viewWithTag(sender.tag)
-                    {
-                        if findView.tag == sender.tag
-                        {
-                            print("FIND VIEW", findView.description)
-                            findView.removeFromSuperview()
-                        }
-                        else
-                        {
-                            print("NOT SAME VIEW")
-                        }
-                    }
-                }
-            }
-            else
+            if selectedTailorListArray.isEmpty == true
             {
                 selectedTailorListArray.append(sender.tag)
                 sender.addSubview(selectionImage)
             }
+            else
+            {
+                if selectedTailorListArray.contains(sender.tag)
+                {
+                    if let index = selectedTailorListArray.index(where: {$0 == sender.tag}) {
+                        selectedTailorListArray.remove(at: index)
+                    }
+                    
+                    for views in sender.subviews
+                    {
+                        if let findView = views.viewWithTag(sender.tag)
+                        {
+                            if findView.tag == sender.tag
+                            {
+                                print("FIND VIEW", findView.description)
+                                findView.removeFromSuperview()
+                            }
+                            else
+                            {
+                                print("NOT SAME VIEW")
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    selectedTailorListArray.append(sender.tag)
+                    sender.addSubview(selectionImage)
+                }
+            }
+            
+            print("TAILOR LIST ARRAY", selectedTailorListArray)
+            
+            totalTailersSelectedCountLabel.text = "\(selectedTailorListArray.count)"
+            
+            
+            for view in tailorListScrollView.subviews
+            {
+                view.backgroundColor = UIColor.white
+            }
+            
+            for i in 0..<selectedTailorListArray.count
+            {
+                if let id = selectedTailorListArray[i] as? Int
+                {
+                    let tag = ((id * 1) + 200)
+                    
+                    if let foundView = view.viewWithTag(tag) as? UIView
+                    {
+                        foundView.backgroundColor = UIColor.lightGray
+                    }
+                    
+                }
+            }
         }
-        
-        print("TAILOR LIST ARRAY", selectedTailorListArray)
-        
-        totalTailersSelectedCountLabel.text = "\(selectedTailorListArray.count)"
+        else
+        {
+            selectedTailorListNameArray.removeAll()
+            selectedTailorListArray.removeAll()
+
+            selectedTailorListArray.append(sender.tag)
+            sender.addSubview(selectionImage)
+            
+            for i in 0..<IdArray.count
+            {
+                if let id1 = IdArray[i] as? Int
+                {
+                    for j in 0..<selectedTailorListArray.count
+                    {
+                        if let id2 = selectedTailorListArray[j] as? Int
+                        {
+                            if id1 == id2
+                            {
+                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+                                {
+                                    if language == "en"
+                                    {
+                                        selectedTailorListNameArray.append(TailorNameArray[i] as! String)
+                                    }
+                                    else if language == "ar"
+                                    {
+                                        selectedTailorListNameArray.append(tailorNameInArabicArray[i] as! String)
+                                    }
+                                }
+                                else
+                                {
+                                    selectedTailorListNameArray.append(TailorNameArray[i] as! String)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            print("SELECTED TAILOR LIST", selectedTailorListNameArray)
+            print("SELECTED TAILOR NAME", selectedTailorListArray)
+            
+            /*for i in 0..<selectedTailorListArray.count
+             {
+             selectedTailorListNameArray.append(TailorNameArray[selectedTailorListArray[i]] as! String)
+             }*/
+            
+            UserDefaults.standard.set(selectedTailorListNameArray, forKey: "selectedTailors")
+            UserDefaults.standard.set(selectedTailorListArray, forKey: "selectedTailorsId")
+            let priceScreen = PriceDetailsViewController()
+            self.navigationController?.pushViewController(priceScreen, animated: true)
+        }
     }
     
     @objc func confirmSelectionButtonAction(sender : UIButton)

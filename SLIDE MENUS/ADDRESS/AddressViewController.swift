@@ -426,7 +426,21 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         {
             let pageBar = UIImageView()
             pageBar.frame = CGRect(x: 0, y: yAxix, width: view.frame.width, height: (5 * y))
-            pageBar.image = UIImage(named: "AddressBar")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    pageBar.image = UIImage(named: "AddressBar")
+                }
+                else if language == "ar"
+                {
+                    pageBar.image = UIImage(named: "addressArabicHintImage")
+                }
+            }
+            else
+            {
+                pageBar.image = UIImage(named: "AddressBar")
+            }
             view.addSubview(pageBar)
             
             yAxix = pageBar.frame.maxY

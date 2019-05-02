@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ServerAPIDelegate
 {
@@ -316,14 +317,42 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func cameraAlertAction(action : UIAlertAction)
     {
-        if UIImagePickerController.isSourceTypeAvailable(.camera)
-        {
-            imagePicker.delegate = self
-            imagePicker.sourceType = .camera;
-            imagePicker.allowsEditing = false
-            
-            self.present(imagePicker, animated: true, completion: nil)
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+            //already authorized
+        } else {
+            AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+                if granted {
+                    //access allowed
+                    print("ALLOWED")
+                    
+                    if UIImagePickerController.isSourceTypeAvailable(.camera){
+                        print("Button capture")
+                        
+                        self.imagePicker.delegate = self
+                        self.imagePicker.sourceType = .camera;
+                        self.imagePicker.allowsEditing = false
+                        
+                        self.present(self.imagePicker, animated: true, completion: nil)
+                    }
+                    
+                } else {
+                    //access denied
+                    print("DENIED")
+                    self.alertPromptToAllowCameraAccessViaSetting()
+                }
+            })
         }
+    }
+    
+    func alertPromptToAllowCameraAccessViaSetting() {
+        let alert = UIAlertController(title: "Error", message: "Camera access required to...", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        alert.addAction(UIAlertAction(title: "Settings", style: .cancel) { (alert) -> Void in
+            UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
+        })
+        
+        present(alert, animated: true)
     }
     
     func galleryAlertAction(action : UIAlertAction)

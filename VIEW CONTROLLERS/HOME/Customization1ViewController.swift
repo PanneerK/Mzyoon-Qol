@@ -382,7 +382,21 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        pageBar.image = UIImage(named: "MaterialBar")
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                pageBar.image = UIImage(named: "MaterialBar")
+            }
+            else if language == "ar"
+            {
+                pageBar.image = UIImage(named: "materialArabicHintImage")
+            }
+        }
+        else
+        {
+            pageBar.image = UIImage(named: "MaterialBar")
+        }
         
         self.view.bringSubviewToFront(slideMenuButton)
         

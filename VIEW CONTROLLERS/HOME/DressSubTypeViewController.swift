@@ -195,7 +195,21 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        pageBar.image = UIImage(named: "Dress typeBar")
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                pageBar.image = UIImage(named: "Dress typeBar")
+            }
+            else if language == "ar"
+            {
+                pageBar.image = UIImage(named: "dressTypeArabicHintImage")
+            }
+        }
+        else
+        {
+            pageBar.image = UIImage(named: "Dress typeBar")
+        }
         
         searchTextField.frame = CGRect(x: 0, y: pageBar.frame.maxY, width: view.frame.width, height: (4 * y))
         searchTextField.layer.borderWidth = 1

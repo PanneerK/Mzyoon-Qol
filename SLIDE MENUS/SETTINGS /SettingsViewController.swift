@@ -90,13 +90,41 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if onOrOffValue == 1
         {
-            hintsButton.setTitle("Hints off - ", for: .normal)
             hintsSwitch.isOn = true
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    hintsButton.setTitle("Hints off", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    hintsButton.setTitle("إيقاف تلميحات", for: .normal)
+                }
+            }
+            else
+            {
+                hintsButton.setTitle("Hints off", for: .normal)
+            }
         }
         else
         {
-            hintsButton.setTitle("Hints on - ", for: .normal)
             hintsSwitch.isOn = false
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    hintsButton.setTitle("Hints on", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    hintsButton.setTitle("تلميحات على", for: .normal)
+                }
+            }
+            else
+            {
+                hintsButton.setTitle("Hints on", for: .normal)
+            }
         }
         
         
@@ -120,13 +148,41 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         if onOrOffValue == 1
         {
             UserDefaults.standard.set(0, forKey: "hintsSwitch")
-            hintsButton.setTitle("Hints on - ", for: .normal)
             hintsSwitch.isOn = false
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    hintsButton.setTitle("Hints on", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    hintsButton.setTitle("تلميحات على", for: .normal)
+                }
+            }
+            else
+            {
+                hintsButton.setTitle("Hints on", for: .normal)
+            }
         }
         else
         {
             UserDefaults.standard.set(1, forKey: "hintsSwitch")
-            hintsButton.setTitle("Hints off - ", for: .normal)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    hintsButton.setTitle("Hints off", for: .normal)
+                }
+                else if language == "ar"
+                {
+                    hintsButton.setTitle("إيقاف تلميحات", for: .normal)
+                }
+            }
+            else
+            {
+                hintsButton.setTitle("Hints off", for: .normal)
+            }
             hintsSwitch.isOn = true
         }
     }
@@ -210,6 +266,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let textString = "عربى"
         languageButton.setTitle("\(textString) - إعدادات اللغة", for: .normal)
+        
+        hintsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        hintsSwitch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglish()
@@ -220,6 +279,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         languageButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         languageButton.setTitle("Language Setting - English", for: .normal)
+        
+        hintsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        hintsSwitch.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     /*

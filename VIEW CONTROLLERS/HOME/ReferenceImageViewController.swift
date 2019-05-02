@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate
 {
@@ -151,7 +152,21 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        pageBar.image = UIImage(named: "Measurement_wizard")
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                pageBar.image = UIImage(named: "Measurement_wizard")
+            }
+            else if language == "ar"
+            {
+                pageBar.image = UIImage(named: "measurementArabicHintImage")
+            }
+        }
+        else
+        {
+            pageBar.image = UIImage(named: "Measurement_wizard")
+        }
         
         self.view.bringSubviewToFront(slideMenuButton)
         
@@ -388,28 +403,54 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
     
     func cameraAlertAction(action : UIAlertAction)
     {
-        if imageArray.count <= 10
-        {
-            if UIImagePickerController.isSourceTypeAvailable(.camera){
-                print("Button capture")
-                
-                imagePicker.delegate = self
-                imagePicker.sourceType = .camera;
-                imagePicker.allowsEditing = false
-                
-                self.present(imagePicker, animated: true, completion: nil)
-            }
-            else
-            {
-                print("CAMERA NOT OPENING")
-            }
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+            //already authorized
+        } else {
+            AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
+                if granted {
+                    //access allowed
+                    print("ALLOWED")
+                    
+                    if self.imageArray.count <= 10
+                    {
+                        if UIImagePickerController.isSourceTypeAvailable(.camera)
+                        {
+                            self.imagePicker.delegate = self
+                            self.imagePicker.sourceType = .camera;
+                            self.imagePicker.allowsEditing = false
+                            
+                            self.present(self.imagePicker, animated: true, completion: nil)
+                        }
+                        else
+                        {
+                            print("CAMERA NOT OPENING")
+                        }
+                    }
+                    else
+                    {
+                        let alert = UIAlertController(title: "Error", message: "You have excedded your limit for adding material image", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                    
+                } else {
+                    //access denied
+                    print("DENIED")
+                    self.alertPromptToAllowCameraAccessViaSetting()
+                }
+            })
         }
-        else
-        {
-            let alert = UIAlertController(title: "Error", message: "You have excedded your limit for adding material image", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
+    }
+    
+    func alertPromptToAllowCameraAccessViaSetting() {
+        let alert = UIAlertController(title: "Error", message: "Camera access required to...", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        alert.addAction(UIAlertAction(title: "Settings", style: .cancel) { (alert) -> Void in
+            UIApplication.shared.openURL(URL(string: UIApplication.openSettingsURLString)!)
+        })
+        
+        present(alert, animated: true)
     }
     
     func galleryAlertAction(action : UIAlertAction)
