@@ -82,10 +82,8 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     {
         navigationBar.isHidden = true
         
-//        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
-        
-        self.serviceCall.API_Customization3(DressTypeId: "1", delegate: self)
-        
+        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
+                
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
 //            // Your code with delay
 //            self.orderSummaryContent()
