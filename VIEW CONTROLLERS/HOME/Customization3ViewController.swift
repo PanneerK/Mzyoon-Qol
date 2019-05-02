@@ -75,7 +75,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         navigationBar.isHidden = true
         selectedButton(tag: 0)
         
-        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
+//        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
+        
+        self.serviceCall.API_Customization3(DressTypeId: "1", delegate: self)
         
         super.viewDidLoad()
         
@@ -936,12 +938,20 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             if language == "en"
             {
                 let customizationAlert = UIAlertController(title: "Customize", message: "Customize your material", preferredStyle: .alert)
-                
+                                
                 for i in 0..<customAttEnglishNameArray.count
                 {
                     if let alertString = customAttEnglishNameArray[i] as? String
                     {
-                        customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
+                        print("CHECKING WITH THE VALUES", selectedCustomStringArray[alertString]!)
+                        if selectedCustomStringArray[alertString]! == ""
+                        {
+                            customizationAlert.addAction(UIAlertAction(title: alertString, style: .destructive, handler: customizaionAlertAction(action:)))
+                        }
+                        else
+                        {
+                            customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
+                        }
                     }
                 }
                 customizationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -955,7 +965,18 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
                 {
                     if let alertString = customAttArabicNameArray[i] as? String
                     {
-                        customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
+                        if let alertString = customAttEnglishNameArray[i] as? String
+                        {
+                            print("CHECKING WITH THE VALUES", selectedCustomStringArray[alertString]!)
+                            if selectedCustomStringArray[alertString]! == ""
+                            {
+                                customizationAlert.addAction(UIAlertAction(title: alertString, style: .destructive, handler: customizaionAlertAction(action:)))
+                            }
+                            else
+                            {
+                                customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
+                            }
+                        }
                     }
                 }
                 customizationAlert.addAction(UIAlertAction(title: "إلغاء", style: .cancel, handler: nil))
@@ -970,7 +991,18 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             {
                 if let alertString = customAttEnglishNameArray[i] as? String
                 {
-                    customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
+                    if let alertString = customAttEnglishNameArray[i] as? String
+                    {
+                        print("CHECKING WITH THE VALUES", selectedCustomStringArray[alertString]!)
+                        if selectedCustomStringArray[alertString]! == ""
+                        {
+                            customizationAlert.addAction(UIAlertAction(title: alertString, style: .destructive, handler: customizaionAlertAction(action:)))
+                        }
+                        else
+                        {
+                            customizationAlert.addAction(UIAlertAction(title: alertString, style: .default, handler: customizaionAlertAction(action:)))
+                        }
+                    }
                 }
             }
             customizationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
