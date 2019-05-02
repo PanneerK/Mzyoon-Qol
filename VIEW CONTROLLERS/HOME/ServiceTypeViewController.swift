@@ -128,7 +128,21 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        pageBar.image = UIImage(named: "ServiceBar")
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                pageBar.image = UIImage(named: "ServiceBar")
+            }
+            else if language == "ar"
+            {
+                pageBar.image = UIImage(named: "serviceArabicHintImage")
+            }
+        }
+        else
+        {
+            pageBar.image = UIImage(named: "ServiceBar")
+        }
         
         self.view.bringSubviewToFront(slideMenuButton)
         
@@ -343,7 +357,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     {
         print("UrgentButtonAction", sender.tag, deliveryTypeIdArray[0])
         UserDefaults.standard.set(sender.tag, forKey: "serviceType")
-        let tailorScreen = TailorListViewController()
+        let tailorScreen = TailorTypeViewController()
         self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     
@@ -351,7 +365,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     {
         print("AppointmentButtonAction", sender.tag)
         UserDefaults.standard.set(sender.tag, forKey: "serviceType")
-        let tailorScreen = TailorListViewController()
+        let tailorScreen = TailorTypeViewController()
         self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     
@@ -359,7 +373,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     {
         print("NormalButtonAction", sender.tag)
         UserDefaults.standard.set(sender.tag, forKey: "serviceType")
-        let tailorScreen = TailorListViewController()
+        let tailorScreen = TailorTypeViewController()
         self.navigationController?.pushViewController(tailorScreen, animated: true)
     }
     /*

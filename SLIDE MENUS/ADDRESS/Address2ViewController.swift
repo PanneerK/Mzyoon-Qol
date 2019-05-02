@@ -1240,7 +1240,15 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(firstNameIcon)
         
         firstNameEnglishTextField.frame = CGRect(x: firstNameIcon.frame.maxX + x, y: y, width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        firstNameEnglishTextField.placeholder = "First Name"
+        if let getUserName = UserDefaults.standard.value(forKey: "userName") as? String
+        {
+            firstNameEnglishTextField.text = getUserName
+        }
+        else
+        {
+            firstNameEnglishTextField.placeholder = "First Name"
+        }
+        
         firstNameEnglishTextField.textColor = UIColor.black
         firstNameEnglishTextField.textAlignment = .left
         firstNameEnglishTextField.font = UIFont(name: "Avenir-Regular", size: 18)
@@ -1656,43 +1664,12 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         underline5.backgroundColor = UIColor.lightGray
         addressScrollView.addSubview(underline5)
         
-        let floorIcon = UIImageView()
-        floorIcon.frame = CGRect(x: x, y: underline5.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        floorIcon.image = UIImage(named: "Floor")
-        addressScrollView.addSubview(floorIcon)
-        
-        floorTextField.frame = CGRect(x: floorIcon.frame.maxX + x, y: underline5.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        floorTextField.placeholder = "Floor"
-        floorTextField.textColor = UIColor.black
-        floorTextField.textAlignment = .left
-        floorTextField.font = UIFont(name: "Avenir-Regular", size: 18)
-        //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
-        //        areaNameTextField.leftView = paddingView2
-        floorTextField.leftViewMode = UITextField.ViewMode.always
-        floorTextField.adjustsFontSizeToFitWidth = true
-        floorTextField.keyboardType = .default
-        //        floorTextField.clearsOnBeginEditing = true
-        floorTextField.returnKeyType = .done
-        floorTextField.delegate = self
-        //        floorTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
-        addressScrollView.addSubview(floorTextField)
-        
-        let floorEditButton = UIButton()
-        floorEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline5.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
-        floorEditButton.setImage(UIImage(named: "edit"), for: .normal)
-        addressScrollView.addSubview(floorEditButton)
-        
-        let underline6 = UILabel()
-        underline6.frame = CGRect(x: x, y: floorIcon.frame.maxY, width: view.frame.width - (2 * x), height: 1)
-        underline6.backgroundColor = UIColor.lightGray
-        addressScrollView.addSubview(underline6)
-        
         let landMarkIcon = UIImageView()
-        landMarkIcon.frame = CGRect(x: x, y: underline6.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
+        landMarkIcon.frame = CGRect(x: x, y: underline5.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
         landMarkIcon.image = UIImage(named: "landmark")
         addressScrollView.addSubview(landMarkIcon)
         
-        landMarkTextField.frame = CGRect(x: landMarkIcon.frame.maxX + x, y: underline6.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
+        landMarkTextField.frame = CGRect(x: landMarkIcon.frame.maxX + x, y: underline5.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
         landMarkTextField.placeholder = "Land Mark"
         landMarkTextField.textColor = UIColor.black
         landMarkTextField.textAlignment = .left
@@ -1709,7 +1686,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(landMarkTextField)
         
         let landMarkEditButton = UIButton()
-        landMarkEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline6.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
+        landMarkEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline5.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
         landMarkEditButton.setImage(UIImage(named: "edit"), for: .normal)
         addressScrollView.addSubview(landMarkEditButton)
         
@@ -1749,7 +1726,38 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         underline8.backgroundColor = UIColor.lightGray
         addressScrollView.addSubview(underline8)
         
-        mobileCountryCodeButton.frame = CGRect(x: x, y: underline8.frame.maxY + (3 * y), width: (10 * x), height: (3 * y))
+        let floorIcon = UIImageView()
+        floorIcon.frame = CGRect(x: x, y: underline8.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
+        floorIcon.image = UIImage(named: "Floor")
+        addressScrollView.addSubview(floorIcon)
+        
+        floorTextField.frame = CGRect(x: floorIcon.frame.maxX + x, y: underline8.frame.maxY + (3 * y), width: addressScrollView.frame.width - (4 * x), height: (2 * y))
+        floorTextField.placeholder = "Floor"
+        floorTextField.textColor = UIColor.black
+        floorTextField.textAlignment = .left
+        floorTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
+        //        areaNameTextField.leftView = paddingView2
+        floorTextField.leftViewMode = UITextField.ViewMode.always
+        floorTextField.adjustsFontSizeToFitWidth = true
+        floorTextField.keyboardType = .default
+        //        floorTextField.clearsOnBeginEditing = true
+        floorTextField.returnKeyType = .done
+        floorTextField.delegate = self
+        //        floorTextField.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
+        addressScrollView.addSubview(floorTextField)
+        
+        let floorEditButton = UIButton()
+        floorEditButton.frame = CGRect(x: addressScrollView.frame.width - (3 * x), y: underline8.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
+        floorEditButton.setImage(UIImage(named: "edit"), for: .normal)
+        addressScrollView.addSubview(floorEditButton)
+        
+        let underline6 = UILabel()
+        underline6.frame = CGRect(x: x, y: floorIcon.frame.maxY, width: view.frame.width - (2 * x), height: 1)
+        underline6.backgroundColor = UIColor.lightGray
+        addressScrollView.addSubview(underline6)
+        
+        mobileCountryCodeButton.frame = CGRect(x: x, y: underline6.frame.maxY + (3 * y), width: (10 * x), height: (3 * y))
         mobileCountryCodeButton.backgroundColor = UIColor(red: 0.7647, green: 0.7882, blue: 0.7765, alpha: 1.0)
         mobileCountryCodeButton.addTarget(self, action: #selector(self.mobileCountryCodeButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(mobileCountryCodeButton)
@@ -1854,12 +1862,19 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         mobileCountryCodeButton.addSubview(downArrowImageView)
         
         let mobileImageView = UIImageView()
-        mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: underline8.frame.maxY + (3 * y) + (y / 2), width: (1.5 * x), height: (2 * y))
+        mobileImageView.frame = CGRect(x: mobileCountryCodeButton.frame.maxX  + x, y: underline6.frame.maxY + (3 * y) + (y / 2), width: (1.5 * x), height: (2 * y))
         mobileImageView.image = UIImage(named: "mobile")
         addressScrollView.addSubview(mobileImageView)
         
-        mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: underline8.frame.maxY + (3 * y), width: addressScrollView.frame.width - (13 * x), height: (3 * y))
-        mobileTextField.placeholder = "Mobile Number"
+        mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: underline6.frame.maxY + (3 * y), width: addressScrollView.frame.width - (13 * x), height: (3 * y))
+        if let mobile = UserDefaults.standard.value(forKey: "Phone") as? String
+        {
+            mobileTextField.text = mobile   
+        }
+        else
+        {
+            mobileTextField.placeholder = "Mobile Number"
+        }
         mobileTextField.textColor = UIColor.black
         mobileTextField.textAlignment = .left
         mobileTextField.font = UIFont(name: "Avenir-Regular", size: 18)

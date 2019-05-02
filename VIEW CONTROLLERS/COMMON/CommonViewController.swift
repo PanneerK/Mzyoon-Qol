@@ -63,6 +63,10 @@ class CommonViewController: UIViewController
     
     let hintsView = UIView()
     let gotItButton = UIButton()
+    
+    let hintsBackButton = UIButton()
+    let hintsSkipButton = UIButton()
+    let hintsNextButton = UIButton()
 
     
 //    let slideScreen = SlideViewController()

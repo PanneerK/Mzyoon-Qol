@@ -41,6 +41,8 @@
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
 		FD1160462264940B00D34EAD /* AddNewMeasurementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
+		FD1C9F4B227AC1DF000F83EE /* TailorTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9F4A227AC1DF000F83EE /* TailorTypeViewController.swift */; };
+		FD1C9F4D227ACA6E000F83EE /* PriceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9F4C227ACA6E000F83EE /* PriceDetailsViewController.swift */; };
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
@@ -145,6 +147,8 @@
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
 		FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewMeasurementViewController.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
+		FD1C9F4A227AC1DF000F83EE /* TailorTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailorTypeViewController.swift; sourceTree = "<group>"; };
+		FD1C9F4C227ACA6E000F83EE /* PriceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceDetailsViewController.swift; sourceTree = "<group>"; };
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
@@ -418,8 +422,10 @@
 				FD60980321A2CC8A00DCCF58 /* LocationViewController.swift */,
 				DA06108621E4C4D1005BB29D /* ServiceTypeViewController.swift */,
 				FD6097FF21A2812B00DCCF58 /* OrderSummaryViewController.swift */,
+				FD1C9F4A227AC1DF000F83EE /* TailorTypeViewController.swift */,
 				FD53A3D421A809450097B4D9 /* TailorListViewController.swift */,
 				FD63D6D221AEC2910024AE96 /* TailorListTableViewCell.swift */,
+				FD1C9F4C227ACA6E000F83EE /* PriceDetailsViewController.swift */,
 				DA02A4F822265FD700577CBA /* ShopDetailsViewController.swift */,
 				DA0BC65F222E49630061245B /* ShopDetailsTableViewCell.swift */,
 				DA06035B21FB427C0081A96F /* ReviewsViewController.swift */,
@@ -735,6 +741,7 @@
 				FD4631DC21775055002C06CA /* CountryCodeTableViewCell.swift in Sources */,
 				FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */,
 				DA07303A2264914A00DEDE13 /* DeliveryViewController.swift in Sources */,
+				FD1C9F4D227ACA6E000F83EE /* PriceDetailsViewController.swift in Sources */,
 				FD2ADFEE2175C0230033025B /* ServerAPIDelegate.swift in Sources */,
 				FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */,
 				FD1160462264940B00D34EAD /* AddNewMeasurementViewController.swift in Sources */,
@@ -759,6 +766,7 @@
 				FDFE07352189E49F0056E773 /* ActivityView.swift in Sources */,
 				FD60980221A2B27600DCCF58 /* AddressViewController.swift in Sources */,
 				FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */,
+				FD1C9F4B227AC1DF000F83EE /* TailorTypeViewController.swift in Sources */,
 				FD5774B0219AB2F30026DBF8 /* GenderTableViewCell.swift in Sources */,
 				DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */,
 				FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */,
@@ -965,7 +973,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -994,7 +1002,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Mzyoon/Mzyoon-Bridging-Header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

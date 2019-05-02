@@ -42,7 +42,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 
         selectedButton(tag: 0)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
             // Your code with delay
             
             self.pageBar.isHidden = true
@@ -336,7 +336,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     @objc func closeSlideView(gesture : UITapGestureRecognizer)
     {
         slideView.removeFromSuperview()
-        // slideMenuButton.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
         slideMB.frame = CGRect(x: 0, y: ((view.frame.height - 65) / 2), width: 30, height: 65)
     }
     

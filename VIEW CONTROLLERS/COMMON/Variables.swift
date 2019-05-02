@@ -68,6 +68,8 @@ class Variables: NSObject
     
     public var measurementTag:Int = 0
     
+    public var tailorType:Int = 0
+    
     public var viewController:UIViewController = UIViewController()
     
     // Here is how you would get to it without there being a global collision of variables.

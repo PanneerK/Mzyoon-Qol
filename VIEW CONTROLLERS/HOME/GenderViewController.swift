@@ -176,7 +176,44 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        pageBar.image = UIImage(named: "GenderBar")
+        let tag = Variables.sharedManager.measurementTag
+        
+        if tag == 1
+        {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    pageBar.image = UIImage(named: "GenderBar")
+                }
+                else if language == "ar"
+                {
+                    pageBar.image = UIImage(named: "genderArabicHintImage")
+                }
+            }
+            else
+            {
+                pageBar.image = UIImage(named: "GenderBar")
+            }
+        }
+        else
+        {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    pageBar.image = UIImage(named: "GenderBar")
+                }
+                else if language == "ar"
+                {
+                    pageBar.image = UIImage(named: "genderArabicHintImage")
+                }
+            }
+            else
+            {
+                pageBar.image = UIImage(named: "GenderBar")
+            }
+        }
     }
     
     func newOrderContents(getInputArray : NSArray)
