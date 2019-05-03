@@ -8,25 +8,62 @@
 
 import UIKit
 
-class TailorTypeViewController: CommonViewController
+class TailorTypeViewController: CommonViewController,ServerAPIDelegate
 {
-
+   
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
     
+    let serviceCall = ServerAPI()
+    var applicationDelegate = AppDelegate()
+    
+    var TailorTypeImageArray = NSArray()
+    var TailorTypeEnglishNameArray = NSArray()
+    var TailorTypeArabicNameArray = NSArray()
+    var TailorTypeIdArray = NSArray()
     
     override func viewDidLoad()
     {
         navigationBar.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
             // Your code with delay
-            self.selfScreenNavigationContents()
+           // self.selfScreenNavigationContents()
+            self.serviceCall.API_GetTailorListType(delegate: self)
         }
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
+    {
+        print("ERROR", errorMessage)
+        stopActivity()
+        applicationDelegate.exitContents()
+    }
+    func API_CALLBACK_GetTailorListType(tailorType: NSDictionary)
+    {
+        print("Tailor List REQUEST", tailorType)
+        
+        let ResponseMsg = tailorType.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = tailorType.object(forKey: "Result") as! NSArray
+            print("Result:",Result)
+            
+         
+            TailorTypeImageArray = Result.value(forKey: "Image") as! NSArray
+            
+            TailorTypeEnglishNameArray = Result.value(forKey: "OrderTypeNameInEnglish") as! NSArray
+            
+            TailorTypeArabicNameArray = Result.value(forKey: "OrderTypeInArabic") as! NSArray
+            
+            TailorTypeIdArray = Result.value(forKey: "Id") as! NSArray
+            
+          
+           self.selfScreenNavigationContents()
+        }
+    }
     func selfScreenNavigationContents()
     {
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -41,7 +78,7 @@ class TailorTypeViewController: CommonViewController
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "Tailor Type"
+        selfScreenNavigationTitle.text = "Tailors Type"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)

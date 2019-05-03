@@ -2666,4 +2666,34 @@ class ServerAPI : NSObject
         }
     }
     
+    // 03.05.2019
+    func API_GetTailorListType(delegate : ServerAPIDelegate)
+    {
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - Tailor List Type Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/Api/order/GetTailorListType", arguments: [baseURL])
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    delegate.API_CALLBACK_GetTailorListType!(tailorType: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 65, errorMessage: "Tailor List Type Failed")
+                }
+            }
+            
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
+    }
 }
