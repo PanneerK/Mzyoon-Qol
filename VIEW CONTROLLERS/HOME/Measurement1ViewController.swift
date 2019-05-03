@@ -812,6 +812,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     {
         UserDefaults.standard.set("Customer", forKey: "measurementBy")
         UserDefaults.standard.set(sender.tag, forKey: "measurementType")
+        
+        Variables.sharedManager.measurementType = Measure1NameEngArray[sender.tag - 1] as! String
+        print("Measurement Type:",Variables.sharedManager.measurementType)
+        
         var userListAlert : UIAlertController!
         
         var trimmedName = String()
@@ -1094,6 +1098,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         UserDefaults.standard.set("Customer", forKey: "measurementBy")
         UserDefaults.standard.set(sender.tag, forKey: "measurementType")
         UserDefaults.standard.set(0, forKey: "measurement2Response")
+        
+        Variables.sharedManager.measurementType = Measure1NameEngArray[sender.tag - 1] as! String
+        print("Measurement Type:",Variables.sharedManager.measurementType)
+        
         let referencImageScreen = ReferenceImageViewController()
         self.navigationController?.pushViewController(referencImageScreen, animated: true)
     }

@@ -35,13 +35,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "SLIDE MENUS/ADDRESS/SearchResultsController.swift"
-            timestampString = "578492198.495073"
+            filePath = "VIEW CONTROLLERS/HOME/Measurement1ViewController.swift"
+            timestampString = "578497218.133634"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "1094"
+            endingLineNumber = "1094"
+            landmarkName = "measurement1NextButtonAction(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VIEW CONTROLLERS/HOME/Measurement1ViewController.swift"
+            timestampString = "578497218.134033"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "813"
+            endingLineNumber = "813"
+            landmarkName = "forWhomButtonAction(sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

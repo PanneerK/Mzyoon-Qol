@@ -15,7 +15,9 @@ class PriceDetailsViewController: CommonViewController
     let selfScreenNavigationTitle = UILabel()
     let selfScreenContents = UIView()
 
-    
+    // Order Total..
+    let orderTotalLabel = UILabel()
+    let getOrderTotalLabel = UILabel()
     
     override func viewDidLoad()
     {
@@ -110,7 +112,7 @@ class PriceDetailsViewController: CommonViewController
         lineLabel1.backgroundColor = UIColor.black
         selfScreenContents.addSubview(lineLabel1)
         
-        let orderTotalLabel = UILabel()
+       // let orderTotalLabel = UILabel()
         orderTotalLabel.frame = CGRect(x: x, y: lineLabel1.frame.maxY + y, width: (10 * y), height: (3 * y))
         orderTotalLabel.text = "Order Total"
         orderTotalLabel.textColor = UIColor.black
@@ -119,7 +121,7 @@ class PriceDetailsViewController: CommonViewController
         orderTotalLabel.font = orderTotalLabel.font.withSize(1.5 * x)
         selfScreenContents.addSubview(orderTotalLabel)
         
-        let getOrderTotalLabel = UILabel()
+       // let getOrderTotalLabel = UILabel()
         getOrderTotalLabel.frame = CGRect(x: selfScreenContents.frame.width - (8 * x), y: lineLabel1.frame.maxY + y, width: (7 * x), height: (3 * y))
         getOrderTotalLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         getOrderTotalLabel.text = "60 AED"
@@ -128,6 +130,7 @@ class PriceDetailsViewController: CommonViewController
         getOrderTotalLabel.font = UIFont(name: "Avenir-Regular", size: 20)
         getOrderTotalLabel.font = getOrderTotalLabel.font.withSize(1.5 * x)
         selfScreenContents.addSubview(getOrderTotalLabel)
+
         
         let lineLabel2 = UILabel()
         lineLabel2.frame = CGRect(x: x, y: orderTotalLabel.frame.maxY + y, width: view.frame.width - (2 * x), height: 1)
@@ -150,6 +153,12 @@ class PriceDetailsViewController: CommonViewController
     
     @objc func priceDetailsNextButtonAction(sender : UIButton)
     {
+        let idType = Variables.sharedManager.tailorType
+        
+        if idType == 1
+        {
+            Variables.sharedManager.TotalAmount = getOrderTotalLabel.text!
+        }
         let orderScreen = OrderSummaryViewController()
         self.navigationController?.pushViewController(orderScreen, animated: true)
     }
