@@ -14,7 +14,6 @@ class TelrGateWayViewController: UIViewController,UIWebViewDelegate
 {
     var window: UIWindow?
     
-    
      var x = CGFloat()
      var y = CGFloat()
  
@@ -22,11 +21,8 @@ class TelrGateWayViewController: UIViewController,UIWebViewDelegate
     // Parameters:
     var KEY:String!
     var STOREID:String!
- //   var EMAIL:String!
+ // var EMAIL:String!
 
-  
-   
-    
     var dictionaryData = NSDictionary()
     var TelrWebView = UIWebView()
    
