@@ -1257,20 +1257,20 @@ class ServerAPI : NSObject
     }
     
     // Tailor List View..
-    func API_GetTailorList(delegate : ServerAPIDelegate)
+    func API_GetTailorList(DressSubType : String, OrderType : String, MeasuremenType : String, DeliveryType : String, AreaId : String, Customization : [[String: Int]], delegate : ServerAPIDelegate)
     {
-        
         if Reachability.Connection.self != .none
         {
             print("Server Reached - Tailor List Page")
             
-            let parameters = [:] as [String : Any]
+            let parameters = ["DressSubType" : DressSubType, "OrderType" : OrderType, "MeasuremenType" : MeasuremenType, "DeliveryType" : DeliveryType, "AreaId" : AreaId, "Customization" : Customization] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetTailorlist", arguments: [baseURL])
             
             print("URL STRING FOR Tailor List", urlString)
+            print("PARAMETERS", parameters)
             
-            request(urlString, method: .get, parameters: nil, encoding: URLEncoding.default).responseJSON {response in
+            request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.default).responseJSON {response in
                 
                 if response.result.value != nil
                 {

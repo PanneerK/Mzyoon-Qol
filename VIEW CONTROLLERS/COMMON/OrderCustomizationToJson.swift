@@ -108,6 +108,43 @@ class OrderCustomizationToJson
         return checkList
     }
     
+    func TailorListMakeRequest(attId : [Int], imgId : [Int]) -> [[String: Int]]
+    {
+        var compareId = Int()
+        //        var List1 = [[String: Int]]()
+        var checkList = [[String: Int]]()
+        
+        for i in 0..<attId.count
+        {
+            if compareId == nil || compareId == 0
+            {
+                checkList.insert(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]], at: i)
+                compareId = attId[i]
+            }
+            else
+            {
+                if compareId > attId[i]
+                {
+                    let count = checkList.count
+                    checkList.insert(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]], at: (i - count))
+                    compareId = attId[i]
+                }
+                else
+                {
+                    checkList.insert(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]], at: i)
+                    compareId = attId[i]
+                }
+            }
+            
+            //            List1.append(["CustomizationAttributeId" : attId[i], "AttributeImageId" : imgId[i]])
+            print("List1", attId[i])
+            print("CHECK LIST", checkList)
+        }
+        
+        print("CHECK LIST OUT OF FOR LOOP", checkList)
+        return checkList
+    }
+    
     func userMeasurementRequest(id : [Int], values : [Double]) -> [[String: Any]]
     {
         var List1 = [[String: Any]]()

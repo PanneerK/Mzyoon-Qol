@@ -991,7 +991,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customLabel.textAlignment = .left
         customLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         customLabel.font = customLabel.font.withSize(2 * x)
-        cell.addSubview(customLabel)
+//        cell.addSubview(customLabel)
+        
+        cell.textLabel?.text = customAttEnglishNameArray[indexPath.row] as! String
         
         let customSelectedImage = UIImageView()
         customSelectedImage.frame = CGRect(x: customLabel.frame.maxX, y: 0, width: (3 * x), height: cell.frame.height)
@@ -1057,9 +1059,10 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        dropDownButton.setTitle(action.title?.uppercased(), for: .normal)
-//        
-//        selectedCustomString = (action.title)!
+        
+        dropDownButton.setTitle(customAttEnglishNameArray[indexPath.row] as! String, for: .normal)
+
+        selectedCustomString = (customAttEnglishNameArray[indexPath.row] as! String)
         
         print("ACTION TITLE AFTER CLICK", selectedCustomStringArray)
         
@@ -1130,6 +1133,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
             }
             
         }
+        
+        customBlurView.removeFromSuperview()
     }
     
     @objc func dropDownButtonAction(sender : UIButton)

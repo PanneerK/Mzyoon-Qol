@@ -237,12 +237,71 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         #if targetEnvironment(simulator)
         // your simulator code
         print("APP IS RUNNING ON SIMULATOR")
-        self.serviceCall.API_GetTailorList(delegate: self)
+        
+        let dressSubTypeId = Variables.sharedManager.dressSubTypeId
+        let orderTypeId = Variables.sharedManager.orderTypeId
+        
+        if let measurementId = UserDefaults.standard.value(forKey: "measurementType") as? Int
+        {
+            if let deliveryId = UserDefaults.standard.value(forKey: "serviceType") as? Int
+            {
+                let orderCustom = OrderCustomizationToJson()
+                
+                var custom3KeyInt = [Int]()
+                var custom3ValuesInt = [Int]()
+                
+                if let custom3 = UserDefaults.standard.value(forKey: "custom3Id") as? [String : String]
+                {
+                    print("custom3", custom3)
 
+                    for (keys, values) in custom3
+                    {
+                        custom3KeyInt.append(Int(keys)!)
+                        custom3ValuesInt.append(Int(values)!)
+                    }
+                    
+                    let orderCustomization = orderCustom.makeRequest(attId: custom3KeyInt, imgId: custom3ValuesInt)
+                    print("FINALIZED ORDER", orderCustomization)
+                    
+                    self.serviceCall.API_GetTailorList(DressSubType: "\(dressSubTypeId)", OrderType: "\(orderTypeId)", MeasuremenType: "\(measurementId)", DeliveryType: "\(deliveryId)", AreaId: "1", Customization: orderCustomization, delegate: self)
+                    
+                }
+            }
+        }
         #else
         // your real device code
         print("APP IS RUNNING ON DEVICE")
-        self.serviceCall.API_GetTailorList(delegate: self)
+        
+        let dressSubTypeId = Variables.sharedManager.dressSubTypeId
+        let orderTypeId = Variables.sharedManager.orderTypeId
+        
+        if let measurementId = UserDefaults.standard.value(forKey: "measurementType") as? Int
+        {
+            if let deliveryId = UserDefaults.standard.value(forKey: "serviceType") as? Int
+            {
+                let orderCustom = OrderCustomizationToJson()
+
+                var custom3KeyInt = [Int]()
+                var custom3ValuesInt = [Int]()
+                
+                if let custom3 = UserDefaults.standard.value(forKey: "custom3Id") as? [String : String]
+                {
+                    print("custom3", custom3)
+                    for (keys, values) in custom3
+                    {
+                        custom3KeyInt.append(Int(keys)!)
+                        custom3ValuesInt.append(Int(values)!)
+                    }
+                    
+                    let orderCustomization = orderCustom.makeRequest(attId: custom3KeyInt, imgId: custom3ValuesInt)
+                    print("FINALIZED ORDER", orderCustomization)
+                    
+                    self.serviceCall.API_GetTailorList(DressSubType: "\(dressSubTypeId)", OrderType: "\(orderTypeId)", MeasuremenType: "\(measurementId)", DeliveryType: "\(deliveryId)", AreaId: "1", Customization: orderCustomization, delegate: self)
+
+                }
+            }
+        }
+        
         if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {

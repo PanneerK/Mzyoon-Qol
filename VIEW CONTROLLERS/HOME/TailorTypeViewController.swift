@@ -112,8 +112,8 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
         quoteButton.frame = CGRect(x: x, y: pageBar.frame.maxY + y, width: view.frame.width - (2 * x), height: (20 * y))
         quoteButton.layer.cornerRadius = x
         quoteButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        quoteButton.setTitle(TailorTypeEnglishNameArray[0] as? String, for: .normal)
-        quoteButton.setTitleColor(UIColor.white, for: .normal)
+//        quoteButton.setTitle(TailorTypeEnglishNameArray[0] as? String, for: .normal)
+//        quoteButton.setTitleColor(UIColor.white, for: .normal)
         quoteButton.contentVerticalAlignment = .center
         
         let quoteButtonImage = UIImageView()
@@ -131,6 +131,16 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
         quoteButtonImage.contentMode = .scaleToFill
         quoteButton.addSubview(quoteButtonImage)
         
+        let quoteButtonLabel = UILabel()
+        quoteButtonLabel.frame = CGRect(x: 0, y: ((quoteButton.frame.height - (3 * y)) / 2), width: quoteButton.frame.width, height: (3 * y))
+        quoteButtonLabel.backgroundColor = UIColor(red: 0.2039, green: 0.2941, blue: 0.4157, alpha: 1.0).withAlphaComponent(0.5)
+        quoteButtonLabel.text = TailorTypeEnglishNameArray[0] as? String
+        quoteButtonLabel.textColor = UIColor.white
+        quoteButtonLabel.textAlignment = .center
+        quoteButtonLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        quoteButtonLabel.font = quoteButtonLabel.font.withSize(2 * x)
+        quoteButton.addSubview(quoteButtonLabel)
+        
         quoteButton.tag = 1
         quoteButton.addTarget(self, action: #selector(self.tailorTypeButtonACtion(sender:)), for: .touchUpInside)
         view.addSubview(quoteButton)
@@ -146,8 +156,8 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
         directButton.frame = CGRect(x: x, y: quoteButton.frame.maxY + y, width: view.frame.width - (2 * x), height: (20 * y))
         directButton.layer.cornerRadius = x
         directButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        directButton.setTitle(TailorTypeEnglishNameArray[1] as? String, for: .normal)
-        directButton.setTitleColor(UIColor.white, for: .normal)
+//        directButton.setTitle(TailorTypeEnglishNameArray[1] as? String, for: .normal)
+//        directButton.setTitleColor(UIColor.white, for: .normal)
         directButton.contentVerticalAlignment = .center
         
         let directButtonImage = UIImageView()
@@ -164,6 +174,17 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
         }
         directButtonImage.contentMode = .scaleToFill
         directButton.addSubview(directButtonImage)
+        
+        let directButtonLabel = UILabel()
+        directButtonLabel.frame = CGRect(x: 0, y: ((directButton.frame.height - (3 * y)) / 2), width: directButton.frame.width, height: (3 * y))
+        directButtonLabel.backgroundColor = UIColor(red: 0.2039, green: 0.2941, blue: 0.4157, alpha: 1.0).withAlphaComponent(0.5)
+        directButtonLabel.text = TailorTypeEnglishNameArray[1] as? String
+        directButtonLabel.textColor = UIColor.white
+        directButtonLabel.textAlignment = .center
+        directButtonLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        directButtonLabel.font = directButtonLabel.font.withSize(2 * x)
+        directButton.addSubview(directButtonLabel)
+        
         
         directButton.tag = 2
         directButton.addTarget(self, action: #selector(self.tailorTypeButtonACtion(sender:)), for: .touchUpInside)
