@@ -562,20 +562,44 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        
+        let tag = Variables.sharedManager.measurementTag
+        
+        if tag == 1
         {
-            if language == "en"
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
-                pageBar.image = UIImage(named: "Measurement_wizard")
+                if language == "en"
+                {
+                    pageBar.image = UIImage(named: "MeasurementInMeasurementEnglish")
+                }
+                else if language == "ar"
+                {
+                    pageBar.image = UIImage(named: "MeasurementInArabic.png")
+                }
             }
-            else if language == "ar"
+            else
             {
-                pageBar.image = UIImage(named: "measurementArabicHintImage")
+                pageBar.image = UIImage(named: "MeasurementInMeasurementEnglish")
             }
         }
         else
         {
-            pageBar.image = UIImage(named: "Measurement_wizard")
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    pageBar.image = UIImage(named: "Measurement_wizard")
+                }
+                else if language == "ar"
+                {
+                    pageBar.image = UIImage(named: "measurementArabicHintImage")
+                }
+            }
+            else
+            {
+                pageBar.image = UIImage(named: "Measurement_wizard")
+            }
         }
         
         imageButton.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY + (5 * y), width: ((view.frame.width / 2) - 1), height: (5 * y))

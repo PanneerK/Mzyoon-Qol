@@ -73,11 +73,49 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
             dressNameArrayInEnglish = Result.value(forKey: "NameInEnglish") as! NSArray
             dressNameArrayInArabic = Result.value(forKey: "NameInArabic") as! NSArray
             
-            selfScreenNavigationContents(getInputArray: nameArray)
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    selfScreenNavigationContents(getUserNameArray: nameArray, getDressNameArray: dressNameArrayInEnglish, getGenderArray: genderArrayInEnglish)
+                }
+                else if language == "ar"
+                {
+                    selfScreenNavigationContents(getUserNameArray: nameArray, getDressNameArray: dressNameArrayInArabic, getGenderArray: genderArrayInArabic)
+                }
+            }
+            else
+            {
+                selfScreenNavigationContents(getUserNameArray: nameArray, getDressNameArray: dressNameArrayInEnglish, getGenderArray: genderArrayInEnglish)
+            }
         }
     }
     
-    func selfScreenNavigationContents(getInputArray : NSArray)
+    func changeViewToArabicInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "قائمة القياس"
+        
+//        measurementScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        addNewButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        addNewButton.setTitle("إضافة قياسات جديدة", for: .normal)
+    }
+    
+    func changeViewToEnglishInSelf()
+    {
+        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        selfScreenNavigationTitle.text = "Measurement List"
+        
+//        measurementScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        addNewButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        addNewButton.setTitle("Add new measurements", for: .normal)
+    }
+    
+    func selfScreenNavigationContents(getUserNameArray : NSArray, getDressNameArray : NSArray, getGenderArray : NSArray)
     {
         backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         backgroundImage.image = UIImage(named: "background")
@@ -105,10 +143,9 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
         measurementScrollView.frame = CGRect(x: x, y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: view.frame.height - (selfScreenNavigationBar.frame.maxY + (7 * y)))
         view.addSubview(measurementScrollView)
         
-        
         var y2:CGFloat = 0
         
-        for i in 0..<getInputArray.count
+        for i in 0..<getUserNameArray.count
         {
             let measurementButton = UIButton()
             measurementButton.frame = CGRect(x: 0, y: y2, width: measurementScrollView.frame.width, height: (8 * x))
@@ -143,7 +180,7 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
             
             let userNameLabel = UILabel()
             userNameLabel.frame = CGRect(x: lineLabel.frame.maxX + x, y: y, width: measurementButton.frame.width - (10 * x), height: (3 * y))
-            if let measurementName = getInputArray[i] as? String
+            if let measurementName = getUserNameArray[i] as? String
             {
                 userNameLabel.text = measurementName
             }
@@ -155,7 +192,7 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
             
             let dressNameLabel = UILabel()
             dressNameLabel.frame = CGRect(x: lineLabel.frame.maxX + x, y: userNameLabel.frame.maxY, width: measurementButton.frame.width - (10 * x), height: (3 * y))
-            if let dressName = dressNameArrayInEnglish[i] as? String, let gender = genderArrayInEnglish[i] as? String
+            if let dressName = getDressNameArray[i] as? String, let gender = getGenderArray[i] as? String
             {
                 dressNameLabel.text = "\(dressName) - \(gender)"
             }
@@ -166,6 +203,37 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
             measurementButton.addSubview(dressNameLabel)
             
             y2 = measurementButton.frame.maxY + y
+            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    measurementButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    dressImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    userNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    userNameLabel.textAlignment = .left
+                    dressNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    dressNameLabel.textAlignment = .left
+                }
+                else if language == "ar"
+                {
+                    measurementButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    dressImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    userNameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    userNameLabel.textAlignment = .right
+                    dressNameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    dressNameLabel.textAlignment = .right   
+                }
+            }
+            else
+            {
+                measurementButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                dressImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                userNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                userNameLabel.textAlignment = .left
+                dressNameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                dressNameLabel.textAlignment = .left
+            }
         }
         
         measurementScrollView.contentSize.height = y2 + (2 * y)
@@ -176,6 +244,22 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
         addNewButton.setTitleColor(UIColor.white, for: .normal)
         addNewButton.addTarget(self, action: #selector(self.measurementButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(addNewButton)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                changeViewToEnglishInSelf()
+            }
+            else if language == "ar"
+            {
+                changeViewToArabicInSelf()
+            }
+        }
+        else
+        {
+            changeViewToEnglishInSelf()
+        }
     }
     
     @objc func measurementButtonAction(sender : UIButton)
