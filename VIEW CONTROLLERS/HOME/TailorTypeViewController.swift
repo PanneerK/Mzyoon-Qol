@@ -78,7 +78,7 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "Tailors Type"
+        selfScreenNavigationTitle.text = "TAILORS TYPE"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
@@ -114,10 +114,10 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
         quoteButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         quoteButton.setTitle(TailorTypeEnglishNameArray[0] as? String, for: .normal)
         quoteButton.setTitleColor(UIColor.white, for: .normal)
-        quoteButton.contentVerticalAlignment = .bottom
+        quoteButton.contentVerticalAlignment = .center
         
         let quoteButtonImage = UIImageView()
-        quoteButtonImage.frame = CGRect(x: 0, y: 0, width: quoteButton.frame.width, height: quoteButton.frame.height - (2 * y))
+        quoteButtonImage.frame = CGRect(x: 0, y: 0, width: quoteButton.frame.width, height: quoteButton.frame.height)
         if let imageName =  TailorTypeImageArray[0] as? String
         {
             let urlString = serviceCall.baseURL
@@ -148,10 +148,10 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
         directButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         directButton.setTitle(TailorTypeEnglishNameArray[1] as? String, for: .normal)
         directButton.setTitleColor(UIColor.white, for: .normal)
-        directButton.contentVerticalAlignment = .bottom
+        directButton.contentVerticalAlignment = .center
         
         let directButtonImage = UIImageView()
-        directButtonImage.frame = CGRect(x: 0, y: 0, width: directButton.frame.width, height: directButton.frame.height - (2 * y))
+        directButtonImage.frame = CGRect(x: 0, y: 0, width: directButton.frame.width, height: directButton.frame.height)
         if let imageName =  TailorTypeImageArray[1] as? String
         {
             let urlString = serviceCall.baseURL
