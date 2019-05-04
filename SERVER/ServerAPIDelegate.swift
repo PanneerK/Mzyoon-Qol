@@ -138,4 +138,7 @@ import Foundation
     //24.04.2019
     @objc optional func API_CALLBACK_MeasurementList(list : NSDictionary)
     
+    // 3.05.2019
+    @objc optional func API_CALLBACK_GetTailorListType(tailorType : NSDictionary)
+    
 }

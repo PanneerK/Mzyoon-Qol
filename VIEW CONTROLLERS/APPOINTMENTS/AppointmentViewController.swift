@@ -3877,7 +3877,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
+          //  self.serviceCall.API_InsertAppoinmentMaterial(OrderId: Mat_OrderID, AppointmentType: 1, AppointmentTime: SlotStr, From: FMaterial, To: TMaterial, CreatedBy:"Customer", delegate: self)
             
           
             if (FMaterial.compare(TMaterial) == .orderedAscending || FMaterial.compare(TMaterial) == .orderedSame)
@@ -3949,7 +3949,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else
         {
-            self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime: SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
+          //  self.serviceCall.API_InsertAppoinmentMeasurement(OrderId: Msr_OrderID, AppointmentType: 2, AppointmentTime: SlotStr, From: FMeasure, To: TMeasure, CreatedBy: "Customer", delegate: self)
             
           
             if (FMeasure.compare(TMeasure) == .orderedAscending || FMeasure.compare(TMeasure) == .orderedSame)

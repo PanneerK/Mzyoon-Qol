@@ -1324,6 +1324,16 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         var custom3KeyInt = [Int]()
         var custom3ValuesInt = [Int]()
         
+         if let taiId = UserDefaults.standard.value(forKey: "selectedTailorsId") as? Int
+         {
+           Variables.sharedManager.TailorID = taiId
+         }
+         else if let taiId = UserDefaults.standard.value(forKey: "selectedTailorsId") as? String
+         {
+            Variables.sharedManager.TailorID = Int(taiId)!
+         }
+         print("Tailor ID:",Variables.sharedManager.TailorID)
+        
         if let delId = UserDefaults.standard.value(forKey: "serviceType") as? Int
         {
             deliveryTypeId = delId
@@ -1681,10 +1691,30 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             window?.rootViewController = navigationScreen
             window?.makeKeyAndVisible()
         }
-        else
+        if tailorTypeId == 1
         {
-            let paymentScreen = PaymentViewController()
-            self.navigationController?.pushViewController(paymentScreen, animated: true)
+            if (Variables.sharedManager.orderType.contains("Companies-Material") && Variables.sharedManager.measurementType.contains("Manually"))
+            {
+                let paymentScreen = PaymentViewController()
+                self.navigationController?.pushViewController(paymentScreen, animated: true)
+            }
+            else if (Variables.sharedManager.orderType.contains("Own Material-Courier the Material"))
+            {
+                let AppointmentScreen = AppointmentViewController()
+                self.navigationController?.pushViewController(AppointmentScreen, animated: true)
+            }
+            else if (Variables.sharedManager.measurementType.contains("Tailor Come To Your Place"))
+            {
+                let AppointmentScreen = AppointmentViewController()
+                self.navigationController?.pushViewController(AppointmentScreen, animated: true)
+            }
+            else
+            {
+                let paymentScreen = PaymentViewController()
+                self.navigationController?.pushViewController(paymentScreen, animated: true)
+            }
+            
+           
         }
         
         
@@ -1710,6 +1740,20 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
             print("Result in SUCCESS in ORDER SUMMARY", Result)
             
             UserDefaults.standard.set(Result, forKey: "requestId")
+            
+            let idType = Variables.sharedManager.tailorType
+            
+            if idType == 1
+            {
+                if let RequestID = UserDefaults.standard.value(forKey: "requestId") as? Int
+                {
+                    Variables.sharedManager.OrderID = RequestID
+                }
+                else if let RequestID = UserDefaults.standard.value(forKey: "requestId") as? String
+                {
+                    Variables.sharedManager.OrderID = Int(RequestID)!
+                }
+            }
             
             var successAlert = UIAlertController()
             if let language = UserDefaults.standard.value(forKey: "language") as? String

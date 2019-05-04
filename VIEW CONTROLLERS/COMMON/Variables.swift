@@ -26,6 +26,9 @@ class Variables: NSObject
     public var orderType:String = ""
     public var orderTypeId:Int = 0
     
+    // MEASUREMENT TYPE SELECTION..
+    public var measurementType:String = ""
+    
     // FCM..
     public var Fcm:String = ""
     
