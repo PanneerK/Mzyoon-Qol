@@ -23,6 +23,8 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
     var searchResultController: SearchResultsController!
     var resultsArray = [String]()
     var gmsFetcher: GMSAutocompleteFetcher!
+    
+    let mapView = GMSMapView()
 
     override func viewDidLoad()
     {
@@ -58,6 +60,23 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
         gmsFetcher = GMSAutocompleteFetcher()
         gmsFetcher.delegate = self
         
+        mapView.frame = CGRect(x: 0, y: 200, width: view.frame.width, height: view.frame.height - (210))
+//        mapView.delegate = self
+        mapView.settings.myLocationButton = true
+        mapView.settings.compassButton = true
+        mapView.isMyLocationEnabled = true
+        view.addSubview(mapView)
+        
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: 13.0067, longitude: 80.2206)
+        marker.groundAnchor = CGPoint(x: 0.5, y: 0.75)
+        marker.snippet = "PANNEER"
+        marker.title = "MY NAME"
+        marker.tracksInfoWindowChanges = true
+        marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
+        marker.map = mapView
+        
+        mapView.selectedMarker = marker
     }
     
     

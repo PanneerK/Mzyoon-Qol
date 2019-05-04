@@ -184,16 +184,16 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             {
                 if language == "en"
                 {
-                    pageBar.image = UIImage(named: "GenderBar")
+                    pageBar.image = UIImage(named: "GenderInMeasurementEnglish")
                 }
                 else if language == "ar"
                 {
-                    pageBar.image = UIImage(named: "genderArabicHintImage")
+                    pageBar.image = UIImage(named: "GenderInMeasurementArabic")
                 }
             }
             else
             {
-                pageBar.image = UIImage(named: "GenderBar")
+                pageBar.image = UIImage(named: "GenderInMeasurementEnglish")
             }
         }
         else

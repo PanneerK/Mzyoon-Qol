@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Customization3ViewController: CommonViewController, ServerAPIDelegate
+class Customization3ViewController: CommonViewController, ServerAPIDelegate, UITableViewDataSource, UITableViewDelegate
 {
     //SERVICE PARAMETERS
     let serviceCall = ServerAPI()
@@ -67,6 +67,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
     var hintTag = 0
     let hintsImage = UIImageView()
     let detailedLabel = UILabel()
+    
+    //CUSTOMIZATION PARAMETERS
+    let customBlurView = UIView()
     
     var applicationDelegate = AppDelegate()
 
@@ -931,9 +934,209 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
         
     }
     
+    func customizationViewContents()
+    {
+        customBlurView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        customBlurView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        view.addSubview(customBlurView)
+        
+        let customTitleLabel = UILabel()
+        customTitleLabel.frame = CGRect(x: x, y: customBlurView.frame.height - (35 * y), width: customBlurView.frame.width - (2 * x), height: (5 * y))
+        customTitleLabel.backgroundColor = UIColor.white
+        customTitleLabel.text = "Customize your material"
+        customTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        customTitleLabel.textAlignment = .center
+        customTitleLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        customTitleLabel.font = customTitleLabel.font.withSize(2 * x)
+        customBlurView.addSubview(customTitleLabel)
+        
+        let customTableView = UITableView()
+        customTableView.frame = CGRect(x: x, y: customTitleLabel.frame.maxY, width: customBlurView.frame.width - (2 * x), height: (CGFloat(customAttEnglishNameArray.count) * 4 * y))
+        customTableView.backgroundColor = UIColor.clear
+        customTableView.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
+        customTableView.separatorStyle = .none
+        customTableView.dataSource = self
+        customTableView.delegate = self
+        customBlurView.addSubview(customTableView)
+        
+        let customCancelButton = UIButton()
+        customCancelButton.frame = CGRect(x: x, y: customTableView.frame.maxY, width: customBlurView.frame.width - (2 * x), height: (5 * y))
+        customCancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        customCancelButton.setTitle("Cancel", for: .normal)
+        customCancelButton.setTitleColor(UIColor.white, for: .normal)
+        customCancelButton.addTarget(self, action: #selector(self.customCancelButtonAction(sender:)), for: .touchUpInside)
+        customBlurView.addSubview(customCancelButton)
+    }
+    
+    @objc func customCancelButtonAction(sender : UIButton)
+    {
+        customBlurView.removeFromSuperview()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return customAttEnglishNameArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self), for: indexPath as IndexPath)
+        
+        cell.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.white.cgColor
+        
+        let customLabel = UILabel()
+        customLabel.frame = CGRect(x: x, y: 0, width: cell.frame.width - (5 * x), height: cell.frame.height)
+        customLabel.text = customAttEnglishNameArray[indexPath.row] as! String
+        customLabel.textColor = UIColor.white
+        customLabel.textAlignment = .left
+        customLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        customLabel.font = customLabel.font.withSize(2 * x)
+        cell.addSubview(customLabel)
+        
+        let customSelectedImage = UIImageView()
+        customSelectedImage.frame = CGRect(x: customLabel.frame.maxX, y: 0, width: (3 * x), height: cell.frame.height)
+        customSelectedImage.image = UIImage(named: "customCheckMark")
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                if let custom = customAttEnglishNameArray[indexPath.row] as? String
+                {
+                    customLabel.text = custom
+                    
+                    if selectedCustomStringArray[custom] == ""
+                    {
+                        
+                    }
+                    else
+                    {
+                        cell.addSubview(customSelectedImage)
+                    }
+                }
+            }
+            else if language == "ar"
+            {
+                if let custom = customAttArabicNameArray[indexPath.row] as? String
+                {
+                    customLabel.text = custom
+                    
+                    if selectedCustomStringArray[custom] == ""
+                    {
+                        
+                    }
+                    else
+                    {
+                        cell.addSubview(customSelectedImage)
+                    }
+                }
+            }
+        }
+        else
+        {
+            if let custom = customAttEnglishNameArray[indexPath.row] as? String
+            {
+                customLabel.text = custom
+                
+                if selectedCustomStringArray[custom] == ""
+                {
+                    
+                }
+                else
+                {
+                    cell.addSubview(customSelectedImage)
+                }
+            }
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return (4 * y)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        dropDownButton.setTitle(action.title?.uppercased(), for: .normal)
+//        
+//        selectedCustomString = (action.title)!
+        
+        print("ACTION TITLE AFTER CLICK", selectedCustomStringArray)
+        
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                for i in 0..<customAttEnglishNameArray.count
+                {
+                    if let checkAtt = customAttEnglishNameArray[i] as? String
+                    {
+                        print("EQUAATING OR CHECKING THE CONDITION", selectedCustomString, checkAtt)
+                        if selectedCustomString == checkAtt
+                        {
+                            if let attId = customAttIdArray[i] as? Int
+                            {
+                                self.activeStart1()
+                                self.view.bringSubviewToFront(activeView)
+                                
+                                self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
+                                selectedCustomInt = attId
+                            }
+                        }
+                    }
+                }
+                
+            }
+            else if language == "ar"
+            {
+                for i in 0..<customAttArabicNameArray.count
+                {
+                    if let checkAtt = customAttArabicNameArray[i] as? String
+                    {
+                        if selectedCustomString == checkAtt
+                        {
+                            if let attId = customAttIdArray[i] as? Int
+                            {
+                                self.activeStart1()
+                                self.view.bringSubviewToFront(activeView)
+                                
+                                self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
+                                selectedCustomInt = attId
+                            }
+                        }
+                    }
+                }
+                
+            }
+        }
+        else
+        {
+            for i in 0..<customAttEnglishNameArray.count
+            {
+                if let checkAtt = customAttEnglishNameArray[i] as? String
+                {
+                    if selectedCustomString == checkAtt
+                    {
+                        if let attId = customAttIdArray[i] as? Int
+                        {
+                            self.activeStart1()
+                            self.view.bringSubviewToFront(activeView)
+                            
+                            self.serviceCall.API_Customization3Attr(AttributeId: attId, delegate: self)
+                            selectedCustomInt = attId
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+    
     @objc func dropDownButtonAction(sender : UIButton)
     {
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        customizationViewContents()
+        
+        /*if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
             if language == "en"
             {
@@ -1007,7 +1210,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate
             }
             customizationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(customizationAlert, animated: true, completion: nil)
-        }
+        }*/
     }
     
     func customizaionAlertAction(action : UIAlertAction)

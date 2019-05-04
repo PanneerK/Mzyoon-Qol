@@ -1983,7 +1983,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
             marker.map = mapView
         }
-        
+
         /*let markerImageView = UIImageView()
         markerImageView.frame = CGRect(x: 0, y: 0, width: (6 * x), height: (5 * y))
         markerImageView.image = UIImage(named: "marker")
