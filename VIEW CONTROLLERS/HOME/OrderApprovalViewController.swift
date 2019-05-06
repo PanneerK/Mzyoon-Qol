@@ -393,7 +393,8 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+      //  selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+        selfScreenContents.frame = CGRect(x: x, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -409,7 +410,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
        // DressImageView.frame = CGRect(x: x, y: y, width: (8 * x), height:(8 * y))
        // DressImageView.backgroundColor = UIColor.white
         
-        DressImageView.frame = CGRect(x: x, y: y, width: (8 * y), height: (8 * y))
+        DressImageView.frame = CGRect(x: x, y: (2 * y), width: (6 * y), height: (6 * y))
         DressImageView.backgroundColor = UIColor.white
         DressImageView.layer.cornerRadius = DressImageView.frame.height / 2
         DressImageView.layer.borderWidth = 1
@@ -452,7 +453,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DressDetView.addSubview(StraightLine)
         
         let DressTypeLabel = UILabel()
-        DressTypeLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: y, width: (20 * x), height: (2 * y))
+        DressTypeLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: (2 * y), width: (20 * x), height: (2 * y))
         if(DressNameArray.count != 0)
         {
           DressTypeLabel.text = DressNameArray[0] as? String
@@ -469,7 +470,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         
         
         let QtyLabel = UILabel()
-        QtyLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: DressTypeLabel.frame.minY + (2 * y), width: (8 * x), height: (2 * y))
+        QtyLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: DressTypeLabel.frame.minY + (3 * y), width: (8 * x), height: (2 * y))
         QtyLabel.text = "Qty   : "
         QtyLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         QtyLabel.textAlignment = .left
@@ -477,7 +478,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DressDetView.addSubview(QtyLabel)
         
         
-        QtyNumTF.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (2 * y), width: (4 * x), height: (2 * y))
+        QtyNumTF.frame = CGRect(x: QtyLabel.frame.minX + (5 * x), y: DressTypeLabel.frame.minY + (3 * y), width: (4 * x), height: (2 * y))
         QtyNumTF.backgroundColor = UIColor.white
        // QtyNumTF.layer.cornerRadius = 5
         QtyNumTF.layer.borderWidth = 1
@@ -647,7 +648,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         ApprovalListScrollView.isHidden = isHidden
        
         // Currency Button:-
-        CurrencyButton.frame = CGRect(x: (22 * x), y: y, width: (8 * x), height: (2 * y))
+        CurrencyButton.frame = CGRect(x: ApprovalListScrollView.frame.width - (10 * x), y: y, width: (8 * x), height: (2 * y))
         CurrencyButton.backgroundColor = UIColor(red:0.10, green:0.30, blue:0.76, alpha:1.0)
         CurrencyButton.setTitle("AED", for: .normal)
         CurrencyButton.setTitleColor(UIColor.white, for: .normal)

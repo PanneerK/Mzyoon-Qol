@@ -258,7 +258,8 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
          backDrop.addSubview(sortButton)
          */
         
-        AppointmentListScrollView.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height + (2 * y)))
+       // AppointmentListScrollView.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height + (2 * y)))
+        AppointmentListScrollView.frame = CGRect(x: x, y: navigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height + (2 * y)))
         AppointmentListScrollView.backgroundColor = UIColor.clear
         view.addSubview(AppointmentListScrollView)
         
@@ -288,7 +289,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
            // DressImageView.layer.borderColor = UIColor.lightGray.cgColor
             // DressImageView.setImage(UIImage(named: "men"), for: .normal)
             
-            DressImageView.frame = CGRect(x: x/2, y: (2 * y), width: (6 * y), height: (6 * y))
+            DressImageView.frame = CGRect(x: x/2, y: (2.5 * y), width: (5 * y), height: (5 * y))
             DressImageView.backgroundColor = UIColor.white
             DressImageView.layer.cornerRadius = DressImageView.frame.height / 2
             DressImageView.layer.borderWidth = 1
