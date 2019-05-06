@@ -141,4 +141,6 @@ import Foundation
     // 3.05.2019
     @objc optional func API_CALLBACK_GetTailorListType(tailorType : NSDictionary)
     
+    //04.05.2019
+    @objc optional func API_CALLBACK_GetCustomImage(imageData : Data)
 }

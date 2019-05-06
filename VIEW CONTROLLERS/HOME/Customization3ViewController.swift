@@ -78,9 +78,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         navigationBar.isHidden = true
         selectedButton(tag: 0)
         
-//        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
-        
-        self.serviceCall.API_Customization3(DressTypeId: "1", delegate: self)
+        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
         
         super.viewDidLoad()
         
@@ -950,6 +948,15 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customTitleLabel.font = customTitleLabel.font.withSize(2 * x)
         customBlurView.addSubview(customTitleLabel)
         
+        if customAttEnglishNameArray.count <= 5
+        {
+            customTitleLabel.frame = CGRect(x: x, y: customBlurView.frame.height - (35 * y), width: customBlurView.frame.width - (2 * x), height: (5 * y))
+        }
+        else
+        {
+            customTitleLabel.frame = CGRect(x: x, y: customBlurView.frame.height - ((35 * y) + (CGFloat(customAttEnglishNameArray.count) * y)), width: customBlurView.frame.width - (2 * x), height: (5 * y))
+        }
+        
         let customTableView = UITableView()
         customTableView.frame = CGRect(x: x, y: customTitleLabel.frame.maxY, width: customBlurView.frame.width - (2 * x), height: (CGFloat(customAttEnglishNameArray.count) * 4 * y))
         customTableView.backgroundColor = UIColor.clear
@@ -994,6 +1001,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
 //        cell.addSubview(customLabel)
         
         cell.textLabel?.text = customAttEnglishNameArray[indexPath.row] as! String
+        cell.textLabel?.textColor = UIColor.white
         
         let customSelectedImage = UIImageView()
         customSelectedImage.frame = CGRect(x: customLabel.frame.maxX, y: 0, width: (3 * x), height: cell.frame.height)

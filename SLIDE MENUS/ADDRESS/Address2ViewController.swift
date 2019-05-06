@@ -2638,8 +2638,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                     {
                         if areaButton.titleLabel?.text != "Area" || areaButton.titleLabel?.text?.isEmpty == true || areaButton.titleLabel?.text == nil
                         {
-                            if floorTextField.text != "" || floorTextField.text?.count != 0 || floorTextField.text?.isEmpty != true
-                            {
+//                            if floorTextField.text != "" || floorTextField.text?.count != 0 || floorTextField.text?.isEmpty != true
+//                            {
                                 if landMarkTextField.text != "" || landMarkTextField.text?.count != 0 || landMarkTextField.text?.isEmpty != true
                                 {
                                     if locationTypeTextField.text != "" || locationTypeTextField.text?.count != 0 || locationTypeTextField.text?.isEmpty != true
@@ -2728,30 +2728,30 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
                                     
                                     self.present(emptyAlert, animated: true, completion: nil)
                                 }
-                            }
-                            else
-                            {
-                                if let language = UserDefaults.standard.value(forKey: "language") as? String
-                                {
-                                    if language == "en"
-                                    {
-                                        emptyAlert = UIAlertController(title: "Alert", message: "Please fill floor details to proceed", preferredStyle: .alert)
-                                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                    }
-                                    else if language == "ar"
-                                    {
-                                        emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى ملء تفاصيل الكلمة للمضي قدما", preferredStyle: .alert)
-                                        emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
-                                    }
-                                }
-                                else
-                                {
-                                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill floor details to proceed", preferredStyle: .alert)
-                                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                                }
-                                
-                                self.present(emptyAlert, animated: true, completion: nil)
-                            }
+//                            }
+//                            else
+//                            {
+//                                if let language = UserDefaults.standard.value(forKey: "language") as? String
+//                                {
+//                                    if language == "en"
+//                                    {
+//                                        emptyAlert = UIAlertController(title: "Alert", message: "Please fill floor details to proceed", preferredStyle: .alert)
+//                                        emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//                                    }
+//                                    else if language == "ar"
+//                                    {
+//                                        emptyAlert = UIAlertController(title: "تنبيه", message: "يرجى ملء تفاصيل الكلمة للمضي قدما", preferredStyle: .alert)
+//                                        emptyAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+//                                    }
+//                                }
+//                                else
+//                                {
+//                                    emptyAlert = UIAlertController(title: "Alert", message: "Please fill floor details to proceed", preferredStyle: .alert)
+//                                    emptyAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//                                }
+//
+//                                self.present(emptyAlert, animated: true, completion: nil)
+//                            }
                         }
                         else
                         {

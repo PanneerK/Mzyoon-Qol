@@ -65,9 +65,9 @@ class SlideViewController: UIViewController
         self.navigationController?.isNavigationBarHidden = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        commonScreen.slideMenuButton.setImage(UIImage(named: "openMenu"), for: .normal)
-        print("WELCOME TO DISAPPEAR")
+    override func viewWillDisappear(_ animated: Bool)
+    {
+        
     }
     
     func screenContents()

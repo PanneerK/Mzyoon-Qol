@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AlamofireDomain
 
 class OrderTypeViewController: CommonViewController, ServerAPIDelegate
 {
@@ -51,6 +52,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     var hintTag = 0
     let hintsImage = UIImageView()
     let detailedLabel = UILabel()
+    
+    var finalisedImageArray = [UIImage]()
     
     var applicationDelegate = AppDelegate()
 
@@ -141,7 +144,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             
             orderTypeBodyImage = Result.value(forKey: "BodyImage") as! NSArray
             
-            /*for i in 0..<orderTypeHeaderImage.count
+            for i in 0..<orderTypeHeaderImage.count
             {
                 
                 if let imageName = orderTypeHeaderImage[i] as? String
@@ -194,7 +197,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
                     let emptyImage = UIImage(named: "empty")
                     self.convertedOrderBodyImageArray.append(emptyImage!)
                 }
-            }*/
+            }
             
             self.orderTypeContent()
         }
@@ -319,17 +322,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         }
 
         directDeliveryIcon.frame = CGRect(x: 0, y: y, width: (2 * x), height: (2 * y))
-//        directDeliveryIcon.image = convertedOrderHeaderImageArray[0]
-        if let imageName = orderTypeHeaderImage[0] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            if apiurl != nil
-            {
-                directDeliveryIcon.dowloadFromServer(url: apiurl!)
-            }
-        }
+        directDeliveryIcon.image = convertedOrderHeaderImageArray[0]
         selfScreenContents.addSubview(directDeliveryIcon)
         
         directDeliveryLabel.frame = CGRect(x: directDeliveryIcon.frame.maxX + x, y: y, width: view.frame.width, height: (2 * y))
@@ -345,37 +338,13 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.addSubview(directDeliveryUnderline)
         
         directDeliveryButton.frame = CGRect(x: 0, y: directDeliveryUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (12 * y))
-        if let imageName = orderTypeBodyImage[0] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: directDeliveryButton.frame.width, height: directDeliveryButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
-            if apiurl != nil
-            {
-                directDeliveryButton.addSubview(dummyImageView)
-            }
-        }
-//        directDeliveryButton.setImage(convertedOrderBodyImageArray[0], for: .normal)
+        directDeliveryButton.setImage(convertedOrderBodyImageArray[0], for: .normal)
         directDeliveryButton.tag = orderTypeIDArray[0] as! Int
         directDeliveryButton.addTarget(self, action: #selector(self.ownMaterialButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(directDeliveryButton)
         
         courierDeliveryIcon.frame = CGRect(x: 0, y: directDeliveryButton.frame.maxY + y, width: (2 * x), height: (2 * y))
-//        courierDeliveryIcon.image = convertedOrderHeaderImageArray[1]
-        if let imageName = orderTypeHeaderImage[1] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            if apiurl != nil
-            {
-                courierDeliveryIcon.dowloadFromServer(url: apiurl!)
-            }
-        }
+        courierDeliveryIcon.image = convertedOrderHeaderImageArray[1]
         selfScreenContents.addSubview(courierDeliveryIcon)
         
         couriertDeliveryLabel.frame = CGRect(x: courierDeliveryIcon.frame.maxX + x, y: directDeliveryButton.frame.maxY + y, width: view.frame.width - (21 * x), height: (2 * y))
@@ -402,37 +371,13 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         selfScreenContents.addSubview(courierDeliveryUnderline)
         
         courierDeliveryButton.frame = CGRect(x: 0, y: courierDeliveryUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (12 * y))
-        if let imageName = orderTypeBodyImage[1] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: courierDeliveryButton.frame.width, height: courierDeliveryButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
-            if apiurl != nil
-            {
-                courierDeliveryButton.addSubview(dummyImageView)
-            }
-        }
-//        courierDeliveryButton.setImage(convertedOrderBodyImageArray[1], for: .normal)
+        courierDeliveryButton.setImage(convertedOrderBodyImageArray[1], for: .normal)
         courierDeliveryButton.tag = orderTypeIDArray[1] as! Int
         courierDeliveryButton.addTarget(self, action: #selector(self.ownMaterialButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(courierDeliveryButton)
         
         companyIcon.frame = CGRect(x: 0, y: courierDeliveryButton.frame.maxY + y, width: (2 * x), height: (2 * y))
-//        companyIcon.image = convertedOrderHeaderImageArray[2]
-        if let imageName = orderTypeHeaderImage[2] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            if apiurl != nil
-            {
-                companyIcon.dowloadFromServer(url: apiurl!)
-            }
-        }
+        companyIcon.image = convertedOrderHeaderImageArray[2]
         selfScreenContents.addSubview(companyIcon)
         
         companyLabel.frame = CGRect(x: companyIcon.frame.maxX + x, y: courierDeliveryButton.frame.maxY + y, width: view.frame.width, height: (2 * y))
@@ -449,23 +394,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         
         companyButton.frame = CGRect(x: 0, y: companyUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (12 * y))
 //        companyButton.backgroundColor = UIColor.magenta
-        if let imageName = orderTypeBodyImage[2] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/OrderType/\(imageName)"
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: companyButton.frame.width, height: companyButton.frame.height)
-            dummyImageView.dowloadFromServer(url: apiurl!)
-            if apiurl != nil
-            {
-                companyButton.addSubview(dummyImageView)
-            }
-            
-            self.stopActivity()
-        }
-//        companyButton.setImage(convertedOrderBodyImageArray[2], for: .normal)
+        companyButton.setImage(convertedOrderBodyImageArray[2], for: .normal)
         companyButton.tag = orderTypeIDArray[2] as! Int
         companyButton.addTarget(self, action: #selector(self.companyButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(companyButton)
@@ -488,7 +417,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         
         self.view.bringSubviewToFront(slideMenuButton)
         pageContent(tag: 3)
-        
         
         let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
 
@@ -604,6 +532,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     @objc func threeButtonAction(sender : UIButton)
     {
+        hintsImage.image = nil
         if sender.tag == 0
         {
             if hintTag != 0
@@ -693,12 +622,16 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
+    func API_CALLBACK_GetCustomImage(imageData: NSDictionary) {
+        print("IMAGEDATA", imageData)
+    }
+    
     func firstHint()
     {
-        hintsImage.frame = CGRect(x: x, y: directDeliveryButton.frame.minY + (10.5 * y), width: directDeliveryButton.frame.width, height: directDeliveryButton.frame.height)
+        hintsImage.frame = CGRect(x: x, y: directDeliveryButton.frame.minY + (11 * y), width: directDeliveryButton.frame.width, height: directDeliveryButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
-        hintsImage.image = UIImage(named: "ownMaterialHintImage")
+        hintsImage.image = convertedOrderBodyImageArray[0]
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (6 * y))
@@ -741,7 +674,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         hintsImage.frame = CGRect(x: x, y: courierDeliveryButton.frame.minY + (10.5 * y), width: courierDeliveryButton.frame.width, height: courierDeliveryButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
-        hintsImage.image = UIImage(named: "courierMaterialHintImage")
+        hintsImage.image = convertedOrderBodyImageArray[1]
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (6 * y))
@@ -784,7 +717,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         hintsImage.frame = CGRect(x: x, y: companyButton.frame.minY + (10.5 * y), width: companyButton.frame.width, height: companyButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
-        hintsImage.image = UIImage(named: "companyMaterialHintImage")
+        hintsImage.image = convertedOrderBodyImageArray[2]
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (8 * y), width: hintsView.frame.width - (4 * x), height: (6 * y))

@@ -1816,6 +1816,22 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
         else
         {
+            for views in tailorListScrollView.subviews
+            {
+                if let button = views as? UIButton
+                {
+                    for foundView in button.subviews
+                    {
+                        if let imageView = foundView as? UIImageView
+                        {
+                            if imageView.tag != -1
+                            {
+                                imageView.removeFromSuperview()
+                            }
+                        }
+                    }
+                }
+            }
             selectedTailorListNameArray.removeAll()
             selectedTailorListArray.removeAll()
 

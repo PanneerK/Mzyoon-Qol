@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AlamofireDomain
 import Reachability
+import SystemConfiguration
 
 class ServerAPI : NSObject
 {
@@ -2638,6 +2639,16 @@ class ServerAPI : NSObject
     
     func API_MeasurementList(userId : Int, delegate : ServerAPIDelegate)
     {
+        if Connectivity.isConnectedToInternet() {
+            print("Yes! internet is available.")
+            // do some tasks..
+        }
+        else
+        {
+            print("NO CONNECTION")
+            delegate.API_CALLBACK_Error(errorNumber: 63, errorMessage: "Measurement List Failed")
+        }
+        
         if Reachability.Connection.self != .none
         {
             print("Server Reached - Measurement List Page")
@@ -2655,7 +2666,7 @@ class ServerAPI : NSObject
                 }
                 else
                 {
-                    delegate.API_CALLBACK_Error(errorNumber: 63, errorMessage: "Measuremen tList Failed")
+                    delegate.API_CALLBACK_Error(errorNumber: 63, errorMessage: "Measurement List Failed")
                 }
             }
             
@@ -2695,5 +2706,51 @@ class ServerAPI : NSObject
         {
             delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
+    }
+    
+    // 04.05.2019
+    func API_GetCustomImage(imageName : String, delegate : ServerAPIDelegate)
+    {
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - Custom image Page")
+            
+            let parameters = [:] as [String : Any]
+            
+            let urlString:String = String(format: "%@/images/OrderType/\(imageName)", arguments: [baseURL])
+            
+            request(urlString).responseData { (response) in
+                if response.data != nil {
+                    print(response.result)
+                    if let data = response.data {
+//                        self.downloadImage.image = UIImage(data: data)
+                        delegate.API_CALLBACK_GetCustomImage!(imageData: data)
+                        }
+                   }
+                }
+            
+            request(urlString, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {response in
+                
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 66, errorMessage: "Custom Image Failed")
+                }
+            }
+            
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
+    }
+}
+
+class Connectivity {
+    class func isConnectedToInternet() -> Bool {
+        return NetworkReachabilityManager()?.isReachable ?? false
     }
 }

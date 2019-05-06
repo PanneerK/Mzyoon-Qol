@@ -30,6 +30,8 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
     var dressNameArrayInEnglish = NSArray()
     var dressNameArrayInArabic = NSArray()
     
+    let networkLabel = UILabel()
+    
     override func viewDidLoad()
     {
         x = 10 / 375 * 100
@@ -37,6 +39,10 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
         
         y = 10 / 667 * 100
         y = y * view.frame.height / 100
+        
+        view.backgroundColor = UIColor.white
+        
+        navigationScreenContents()
         
         super.viewDidLoad()
 
@@ -54,6 +60,17 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR CODE", errorMessage)
+        
+        networkLabel.frame = CGRect(x: x, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width - (2 * x), height: (3 * y))
+        networkLabel.text = "Please try after some time. You are offline"
+        networkLabel.textColor = UIColor.black
+        networkLabel.textAlignment = .center
+        view.addSubview(networkLabel)
+    }
+    
+    func errorAlertAction(action : UIAlertAction)
+    {
+        self.navigationController?.popViewController(animated: true)
     }
     
     func API_CALLBACK_MeasurementList(list: NSDictionary)
@@ -64,6 +81,8 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
         
         if ResponseMsg == "Success"
         {
+            networkLabel.removeFromSuperview()
+            
             let Result = list.object(forKey: "Result") as! NSArray
             
             genderArrayInEnglish = Result.value(forKey: "Gender") as! NSArray
@@ -115,7 +134,7 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
         addNewButton.setTitle("Add new measurements", for: .normal)
     }
     
-    func selfScreenNavigationContents(getUserNameArray : NSArray, getDressNameArray : NSArray, getGenderArray : NSArray)
+    func navigationScreenContents()
     {
         backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         backgroundImage.image = UIImage(named: "background")
@@ -139,7 +158,10 @@ class AddNewMeasurementViewController: UIViewController, ServerAPIDelegate
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
         selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
+    }
+    
+    func selfScreenNavigationContents(getUserNameArray : NSArray, getDressNameArray : NSArray, getGenderArray : NSArray)
+    {
         measurementScrollView.frame = CGRect(x: x, y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: view.frame.height - (selfScreenNavigationBar.frame.maxY + (7 * y)))
         view.addSubview(measurementScrollView)
         

@@ -254,7 +254,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         premiumServicesHeadingLabel.textAlignment = .left
         
         tailorListHeadingLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        tailorListHeadingLabel.text = "TOTAL NUMBER OF TAILORS"
+        tailorListHeadingLabel.text = "TOTAL NUMBER OF TAILORS - \(selectedTailors.count)"
         tailorListHeadingLabel.textAlignment = .left
         
         submitButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -289,7 +289,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         premiumServicesHeadingLabel.textAlignment = .right
         
         tailorListHeadingLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        tailorListHeadingLabel.text = "مجموع عدد الخياطين"
+        tailorListHeadingLabel.text = "مجموع عدد الخياطين - \(selectedTailors.count)"
         tailorListHeadingLabel.textAlignment = .right
         
         submitButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -485,11 +485,11 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 
                 print("CUSTOM 3 SELECTED", customization3.count)
                 
-                //        for (keys, values) in customization3
-                //        {
-                //            customKeys.append(keys as! String)
-                //            customvalues.append(values as! String)
-                //        }
+                for (keys, values) in customization3
+                {
+                    customKeys.append(keys as! String)
+                    customvalues.append(values as! String)
+                }
                 
                 let customizationArray = ["Lapels - ", "Buttons - ", "Pockets - ", "Vents - "]
                 let customizationImageArray = ["Lapels", "Buttons", "Pockets", "Vents"]
@@ -948,12 +948,11 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         noteView.addSubview(noteLabel)
         
         tailorListHeadingLabel.frame = CGRect(x: 0, y: noteView.frame.maxY + y, width: orderSummaryScrollView.frame.width, height: (3 * y))
-        tailorListHeadingLabel.text = "TOTAL NUMBER OF TAILORS"
+        tailorListHeadingLabel.text = "TOTAL NUMBER OF TAILORS - \(selectedTailors.count)"
         tailorListHeadingLabel.textColor = UIColor.black
         tailorListHeadingLabel.textAlignment = .left
         tailorListHeadingLabel.font = UIFont(name: "Avenir-Regular", size: 10)
         orderSummaryScrollView.addSubview(tailorListHeadingLabel)
-        
         
         if let tailorList = UserDefaults.standard.value(forKey: "selectedTailors")
         {
