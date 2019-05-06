@@ -1323,14 +1323,6 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         var custom3KeyInt = [Int]()
         var custom3ValuesInt = [Int]()
         
-         if let taiId = UserDefaults.standard.value(forKey: "selectedTailorsId") as? Int
-         {
-           Variables.sharedManager.TailorID = taiId
-         }
-         else if let taiId = UserDefaults.standard.value(forKey: "selectedTailorsId") as? String
-         {
-            Variables.sharedManager.TailorID = Int(taiId)!
-         }
          print("Tailor ID:",Variables.sharedManager.TailorID)
         
         if let delId = UserDefaults.standard.value(forKey: "serviceType") as? Int

@@ -1877,6 +1877,9 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
              selectedTailorListNameArray.append(TailorNameArray[selectedTailorListArray[i]] as! String)
              }*/
             
+            Variables.sharedManager.TailorID = selectedTailorListArray[0]
+            print("SELECTED TAILOR ID:", Variables.sharedManager.TailorID)
+            
             UserDefaults.standard.set(selectedTailorListNameArray, forKey: "selectedTailors")
             UserDefaults.standard.set(selectedTailorListArray, forKey: "selectedTailorsId")
             let priceScreen = PriceDetailsViewController()
