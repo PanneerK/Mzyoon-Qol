@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         fetchingCurrentLocation()
         
-        // checkLogin()
+        checkLogin()
         
         FirebaseApp.configure()
         
@@ -62,16 +62,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         application.registerForRemoteNotifications()
     
-        Messaging.messaging().delegate = self
-        let token = Messaging.messaging().fcmToken
-        print("FCM token: \(token ?? "")")
-        Variables.sharedManager.Fcm = token!
-        Messaging.messaging().shouldEstablishDirectChannel = true
+     //   let token = Messaging.messaging().fcmToken
+     //   print("FCM token: \(token ?? "")")
+       // Variables.sharedManager.Fcm = token ?? ""
+      //  Messaging.messaging().shouldEstablishDirectChannel = true
+      //  print("FCM Token:",Variables.sharedManager.Fcm)
         
-        print("FCM Token:",Variables.sharedManager.Fcm)
-        
-        checkLogin()
-        
+      //  checkLogin()
+
         return true
     }
     
@@ -288,7 +286,7 @@ extension AppDelegate: MessagingDelegate
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String)
     {
         print("Firebase registration token: \(fcmToken)")
-       // Variables.sharedManager.Fcm = fcmToken
+        Variables.sharedManager.Fcm = fcmToken
         
         print("FCM Token:",Variables.sharedManager.Fcm)
         

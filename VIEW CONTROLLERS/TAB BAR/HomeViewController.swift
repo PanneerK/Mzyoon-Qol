@@ -172,6 +172,20 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     func API_CALLBACK_DeviceDetails(deviceDet: NSDictionary)
     {
         print("API_CALLBACK_DeviceDetails", deviceDet)
+        
+        let responseMsg = deviceDet.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = deviceDet.object(forKey: "Result") as! NSArray
+            print("Result:",result)
+        }
+        else
+        {
+            let result = deviceDet.object(forKey: "Result") as! NSArray
+            print("Result:",result)
+        }
+        
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
