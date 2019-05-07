@@ -334,7 +334,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
            // tailorImageView.backgroundColor = UIColor.white  // UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             // tailorImageView.setImage(UIImage(named: "men"), for: .normal)
             
-            tailorImageView.frame = CGRect(x: x/2, y: (1.5 * y), width: (6 * y), height: (6 * y))
+            tailorImageView.frame = CGRect(x: x/2, y: (2 * y), width: (5 * y), height: (5 * y))
             tailorImageView.backgroundColor = UIColor.white
             tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
             tailorImageView.layer.borderWidth = 1
@@ -400,19 +400,19 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let ReqDate_Icon = UIImageView()
-            ReqDate_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: orderId_Icon.frame.maxY + y, width: x, height: y)
+            ReqDate_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: underLine0.frame.maxY + y/2, width: x, height: y)
             ReqDate_Icon.image = UIImage(named: "OrderDate")
             RequestViewButton.addSubview(ReqDate_Icon)
             
             let nameLabel = UILabel()
-            nameLabel.frame = CGRect(x: ReqDate_Icon.frame.maxX + x, y: orderId_Label.frame.maxY, width: (10 * x), height: (2 * y))
+            nameLabel.frame = CGRect(x: ReqDate_Icon.frame.maxX + x, y: underLine0.frame.maxY, width: (10 * x), height: (2 * y))
             nameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             nameLabel.textAlignment = .left
             nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
             RequestViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
-            tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: orderId_Label.frame.maxY, width: RequestViewButton.frame.width / 2, height: (2 * y))
+            tailorName.frame = CGRect(x: nameLabel.frame.maxX - x, y: underLine0.frame.maxY, width: RequestViewButton.frame.width / 2, height: (2 * y))
             if let date = RequestDtArray[i] as? String
             {
                 RequestDate = String(date.prefix(10))
@@ -430,19 +430,19 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let ProductName_Icon = UIImageView()
-            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: ReqDate_Icon.frame.maxY + y, width: x, height: y)
+            ProductName_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: underLine1.frame.maxY + y/2, width: x, height: y)
             ProductName_Icon.image = UIImage(named: "ProductName")
             RequestViewButton.addSubview(ProductName_Icon)
             
             let shopLabel = UILabel()
-            shopLabel.frame = CGRect(x: ProductName_Icon.frame.maxX + x, y: nameLabel.frame.maxY, width: (10 * x), height: (2 * y))
+            shopLabel.frame = CGRect(x: ProductName_Icon.frame.maxX + x, y: underLine1.frame.maxY, width: (10 * x), height: (2 * y))
             shopLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             shopLabel.textAlignment = .left
             shopLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             RequestViewButton.addSubview(shopLabel)
             
             let shopName = UILabel()
-            shopName.frame = CGRect(x: shopLabel.frame.maxX - x, y: nameLabel.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
+            shopName.frame = CGRect(x: shopLabel.frame.maxX - x, y: underLine1.frame.maxY, width: RequestViewButton.frame.width / 2.5, height: (2 * y))
             shopName.textColor = UIColor.black
             shopName.textAlignment = .left
             shopName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
@@ -458,19 +458,19 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             
             //
             let Tailor_Icon = UIImageView()
-            Tailor_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: ProductName_Icon.frame.maxY + y, width: x, height: y)
+            Tailor_Icon.frame = CGRect(x: StraightLine.frame.maxX + x/2, y: underLine2.frame.maxY + y/2, width: x, height: y)
             Tailor_Icon.image = UIImage(named: "OrderID")
             RequestViewButton.addSubview(Tailor_Icon)
             
             let ordersLabel = UILabel()
-            ordersLabel.frame = CGRect(x: Tailor_Icon.frame.maxX + x, y: shopLabel.frame.maxY, width: (12 * x), height: (2 * y))
+            ordersLabel.frame = CGRect(x: Tailor_Icon.frame.maxX + x, y: underLine2.frame.maxY, width: (12 * x), height: (2 * y))
             ordersLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             ordersLabel.textAlignment = .left
             ordersLabel.font = UIFont(name: "Avenir Next", size: 1.2 * x)
             RequestViewButton.addSubview(ordersLabel)
             
             let ordersCountLabel = UILabel()
-            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX - (3 * x), y: shopLabel.frame.maxY, width: (5 * x) , height: (2 * y))
+            ordersCountLabel.frame = CGRect(x: ordersLabel.frame.maxX - (3 * x), y: underLine2.frame.maxY, width: (5 * x) , height: (2 * y))
             let TailorNum : Int = NoOfTailorsArray[i] as! Int
             //ordersCountLabel.backgroundColor = UIColor.lightGray
             ordersCountLabel.text =  "\(TailorNum)"

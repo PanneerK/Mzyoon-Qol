@@ -517,7 +517,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             let tailorImageView = UIImageView()
           //  tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: PendingViewButton.frame.height)
           
-            tailorImageView.frame = CGRect(x: x/2, y: (2 * y), width: (6 * y), height: (6 * y))
+            tailorImageView.frame = CGRect(x: x/2, y: (2.5 * y), width: (5 * y), height: (5 * y))
             tailorImageView.backgroundColor = UIColor.white
             tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
             tailorImageView.layer.borderWidth = 1
@@ -843,7 +843,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
             let tailorImageView = UIImageView()
            // tailorImageView.frame = CGRect(x: 0, y: 0, width: (7 * x), height: DeliveredViewButton.frame.height)
         
-            tailorImageView.frame = CGRect(x: x/2, y: (2 * y), width: (6 * y), height: (6 * y))
+            tailorImageView.frame = CGRect(x: x/2, y: (2.5 * y), width: (5 * y), height: (5 * y))
             tailorImageView.backgroundColor = UIColor.white
             tailorImageView.layer.cornerRadius = tailorImageView.frame.height / 2
             tailorImageView.layer.borderWidth = 1

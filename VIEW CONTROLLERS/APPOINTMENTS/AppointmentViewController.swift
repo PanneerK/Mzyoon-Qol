@@ -864,12 +864,19 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
+            if (Variables.sharedManager.orderType.contains("Own Material-Direct Delivery"))
+            {
+                MaterialSucessStr = "True"
+            }
+            else
+            {
             // orderView Layout and content..
             OrderTypeView.frame = CGRect(x: 0, y: 0, width: MaterialViewBackDrop.frame.width, height: (40 * y))
             // OrderTypeView.backgroundColor = UIColor.lightGray
             OrderTypeView.layer.borderWidth = 1
             OrderTypeView.layer.borderColor = UIColor.clear.cgColor
             MaterialViewBackDrop.addSubview(OrderTypeView)
+            }
         }
         else
         {
@@ -1213,7 +1220,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             }
             else
             {
-                OrderTypeView.addSubview(Material_ApproveButton)
+               if (Variables.sharedManager.orderType.contains("Own Material-Direct Delivery"))
+               {
+                
+               }
+               else
+               {
+                 OrderTypeView.addSubview(Material_ApproveButton)
+               }
             }
         }
         else
@@ -1240,11 +1254,20 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         {
             if (MaterialStatus.contains("Approved") && MaterialPayment.contains("Paid"))
             {
+                
             }
             else
             {
-                OrderTypeView.addSubview(Material_RejectButton)
+                if (Variables.sharedManager.orderType.contains("Own Material-Direct Delivery"))
+                {
+                    
+                }
+                else
+                {
+                    OrderTypeView.addSubview(Material_RejectButton)
+                }
             }
+            
         }
         else
         {
@@ -1462,12 +1485,18 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         }
         else if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
+          if (Variables.sharedManager.measurementType.contains("Go to Tailor Shop"))
+          {
+             MeasureSucessStr = "True"
+          }
+          else
+          {
             MeasurementTypeView.frame = CGRect(x: 0, y: 0, width: MeasurementViewBackDrop.frame.width, height: (40 * y))
             //MeasurementTypeView.backgroundColor = UIColor.darkGray
             MeasurementTypeView.layer.borderWidth = 1
             MeasurementTypeView.layer.borderColor = UIColor.clear.cgColor //UIColor(red:0.05, green:0.17, blue:0.46, alpha:1.0).cgColor
             MeasurementViewBackDrop.addSubview(MeasurementTypeView)
-        
+          }
         }
         else
         {
@@ -1804,7 +1833,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             }
             else
             {
-                MeasurementTypeView.addSubview(Measure_ApproveButton)
+                if (Variables.sharedManager.measurementType.contains("Go to Tailor Shop"))
+                {
+                   
+                }
+                else
+                {
+                  MeasurementTypeView.addSubview(Measure_ApproveButton)
+                }
             }
         }
         
@@ -1828,7 +1864,14 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
             }
             else
             {
+                if (Variables.sharedManager.measurementType.contains("Go to Tailor Shop"))
+                {
+            
+                }
+                else
+                {
                 MeasurementTypeView.addSubview(Measure_RejectButton)
+                }
             }
         }
         
