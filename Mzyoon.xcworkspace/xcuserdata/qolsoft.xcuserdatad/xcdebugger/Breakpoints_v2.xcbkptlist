@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VIEW CONTROLLERS/HOME/LocationViewController.swift"
-            timestampString = "576498534.119758"
+            timestampString = "578905657.229773"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
@@ -58,6 +58,22 @@
             startingLineNumber = "1475"
             endingLineNumber = "1475"
             landmarkName = "MeasurementViewContents(isHidden:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VIEW CONTROLLERS/LOGIN/LoginViewController.swift"
+            timestampString = "578907217.743916"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "560"
+            endingLineNumber = "560"
+            landmarkName = "API_CALLBACK_ProfileUserType(userType:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -178,7 +178,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if let string1 = otp1Letter.text, let string2 = otp2Letter.text, let string3 = otp3Letter.text, let string4 = otp4Letter.text, let string5 = otp5Letter.text, let string6 = otp6Letter.text
         {
-             server.API_ValidateOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, otp: "\(string1)\(string2)\(string3)\(string4)\(string5)\(string6)", type: "customer", delegate: self)
+             server.API_ValidateOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, otp: "\(string1)\(string2)\(string3)\(string4)\(string5)\(string6)", type: "Customer", delegate: self)
             
             /*if string1 == "0" && string2 == "0" && string3 == "0" && string4 == "0" && string5 == "0" && string6 == "0"
             {
@@ -563,6 +563,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             
 //            UserDefaults.standard.set("en", forKey: "language")
             
+             deviceDetails()
+            
             if result == "Existing User"
             {
                 let homeScreen = HomeViewController()
@@ -574,6 +576,53 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.navigationController?.pushViewController(introProfileScreen, animated: true)
             }
         }
+    }
+    func deviceDetails()
+    {
+        let systemVersion = UIDevice.current.systemVersion
+        print("systemVersion", systemVersion)
+        
+        let modelName = UIDevice.modelName
+        print("modelName", modelName)
+        
+        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+        print("appVersion", appVersion)
+        
+        var countryCode = String()
+        var mobileNumber = String()
+        if let code = UserDefaults.standard.value(forKey: "countryCode") as? String
+        {
+            countryCode = code
+        }
+        
+        //  if let number = UserDefaults.standard.value(forKey: "mobileNumber") as? String      // Panneer
+        if let number = UserDefaults.standard.value(forKey: "Phone") as? String   // Rohith
+        {
+            mobileNumber = number
+        }
+        
+        print("FCM Token:",Variables.sharedManager.Fcm)
+        
+        serviceCall.API_InsertDeviceDetails(DeviceId: "", Os: systemVersion, Manufacturer: "Apple", CountryCode: countryCode, PhoneNumber: mobileNumber, Model: modelName, AppVersion: appVersion!, Type: "Customer", Fcm: Variables.sharedManager.Fcm, delegate: self)
+    }
+    
+    func API_CALLBACK_DeviceDetails(deviceDet: NSDictionary)
+    {
+        print("API_CALLBACK_DeviceDetails", deviceDet)
+        
+        let responseMsg = deviceDet.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = deviceDet.object(forKey: "Result") as! String
+            print("Result:",result)
+        }
+        else
+        {
+            let result = deviceDet.object(forKey: "Result") as! String
+            print("Result:",result)
+        }
+        
     }
     
     func changeViewToArabic()
@@ -1645,7 +1694,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         {
             if let string1 = otp1Letter.text, let string2 = otp2Letter.text, let string3 = otp3Letter.text, let string4 = otp4Letter.text, let string5 = otp5Letter.text, let string6 = otp6Letter.text
             {
-                server.API_ValidateOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, otp: "\(string1)\(string2)\(string3)\(string4)\(string5)\(string6)", type: "customer", delegate: self)
+                server.API_ValidateOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, otp: "\(string1)\(string2)\(string3)\(string4)\(string5)\(string6)", type: "Customer", delegate: self)
             }
         }
         

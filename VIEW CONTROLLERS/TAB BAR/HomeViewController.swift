@@ -71,7 +71,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             }
         }
         
-        deviceDetails()
+       
                 
         super.viewDidLoad()
         
@@ -142,52 +142,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         SideMenuManager.default.menuFadeStatusBar = false
     }
     
-    func deviceDetails()
-    {
-        let systemVersion = UIDevice.current.systemVersion
-        print("systemVersion", systemVersion)
-        
-        let modelName = UIDevice.modelName
-        print("modelName", modelName)
-        
-        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
-        print("appVersion", appVersion)
-        
-        var countryCode = String()
-        var mobileNumber = String()
-        if let code = UserDefaults.standard.value(forKey: "countryCode") as? String
-        {
-            countryCode = code
-        }
-        
-        if let number = UserDefaults.standard.value(forKey: "mobileNumber") as? String
-        {
-            mobileNumber = number
-        }
-         print("FCM Token:",Variables.sharedManager.Fcm)
-        
-        serviceCall.API_InsertDeviceDetails(DeviceId: "", Os: systemVersion, Manufacturer: "Apple", CountryCode: countryCode, PhoneNumber: mobileNumber, Model: modelName, AppVersion: appVersion!, Type: "", Fcm: Variables.sharedManager.Fcm, delegate: self)
-    }
-    
-    func API_CALLBACK_DeviceDetails(deviceDet: NSDictionary)
-    {
-        print("API_CALLBACK_DeviceDetails", deviceDet)
-        
-        let responseMsg = deviceDet.object(forKey: "ResponseMsg") as! String
-        
-        if responseMsg == "Success"
-        {
-            let result = deviceDet.object(forKey: "Result") as! NSArray
-            print("Result:",result)
-        }
-        else
-        {
-            let result = deviceDet.object(forKey: "Result") as! NSArray
-            print("Result:",result)
-        }
-        
-    }
-    
+   
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR MESSAGE IN HOME PAGE", errorMessage)
