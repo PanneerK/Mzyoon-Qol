@@ -398,8 +398,20 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func responseEmptyAlertAction(action : UIAlertAction)
     {
         UserDefaults.standard.set(1, forKey: "measurement2Response")
-        let referenceScreen = ReferenceImageViewController()
-        self.navigationController?.pushViewController(referenceScreen, animated: true)
+        
+        
+        let id = Variables.sharedManager.measurementTag
+        
+        if id == 1
+        {
+            let viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 5], animated: true)
+        }
+        else
+        {
+            let referenceScreen = ReferenceImageViewController()
+            self.navigationController?.pushViewController(referenceScreen, animated: true)
+        }
     }
     
     func API_CALLBACK_DisplayMeasurement(GetMeasurement2val: NSDictionary) 
@@ -3723,7 +3735,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                detailedLabel.text = "Please click here to add the measurment value via measuring ruler"
+                detailedLabel.text = "Please click here to add the measurement value via measuring ruler"
                 detailedLabel.textAlignment = .left
             }
             else if language == "ar"
@@ -3738,7 +3750,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         {
             hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            detailedLabel.text = "Please click here to add the measurment value via measuring ruler"
+            detailedLabel.text = "Please click here to add the measurement value via measuring ruler"
             detailedLabel.textAlignment = .left
         }
     }
@@ -3752,7 +3764,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: unitView.frame.minY - (6 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "This switch enables you select the unit of measuring value."
+        detailedLabel.text = "This switch enables you select the unit of measuring values."
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -3766,7 +3778,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             {
                 hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                detailedLabel.text = "This switch enables you select the unit of measuring value."
+                detailedLabel.text = "This switch enables you select the unit of measuring values."
                 detailedLabel.textAlignment = .left
             }
             else if language == "ar"
@@ -3781,7 +3793,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         {
             hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            detailedLabel.text = "This switch enables you select the unit of measuring value."
+            detailedLabel.text = "This switch enables you select the unit of measuring values."
             detailedLabel.textAlignment = .left
         }
     }

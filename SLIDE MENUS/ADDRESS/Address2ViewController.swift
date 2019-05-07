@@ -1240,13 +1240,23 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(firstNameIcon)
         
         firstNameEnglishTextField.frame = CGRect(x: firstNameIcon.frame.maxX + x, y: y, width: addressScrollView.frame.width - (4 * x), height: (2 * y))
-        if let getUserName = UserDefaults.standard.value(forKey: "userName") as? String
+        
+        let id = Variables.sharedManager.editAddress
+        
+        if id == 1
         {
-            firstNameEnglishTextField.text = getUserName
+            
         }
         else
         {
-            firstNameEnglishTextField.placeholder = "First Name"
+            if let getUserName = UserDefaults.standard.value(forKey: "userName") as? String
+            {
+                firstNameEnglishTextField.text = getUserName
+            }
+            else
+            {
+                firstNameEnglishTextField.placeholder = "First Name"
+            }
         }
         
         firstNameEnglishTextField.textColor = UIColor.black
@@ -1821,35 +1831,42 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         else
         {
-            if let countryCode = UserDefaults.standard.value(forKey: "countryCode") as? String
+            if id == 1
             {
-                print("COUNTRY CODE IN ADDRESS FIELD", countryCode)
                 
-                for i in 0..<countryCodeArray.count
+            }
+            else
+            {
+                if let countryCode = UserDefaults.standard.value(forKey: "countryCode") as? String
                 {
-                    if let id = countryCodeArray[i] as? String
+                    print("COUNTRY CODE IN ADDRESS FIELD", countryCode)
+                    
+                    for i in 0..<countryCodeArray.count
                     {
-                        if id == countryCode
+                        if let id = countryCodeArray[i] as? String
                         {
-                            print("ID OF DE 2", id, countryCode)
-                            
-                            if let imageName = countryFlagArray[i] as? String
+                            if id == countryCode
                             {
-                                let urlString = serviceCall.baseURL
-                                let api = "\(urlString)/images/flags/\(imageName)"
-                                let apiurl = URL(string: api)
+                                print("ID OF DE 2", id, countryCode)
                                 
-                                if apiurl != nil
+                                if let imageName = countryFlagArray[i] as? String
                                 {
-                                    flagImageView.dowloadFromServer(url: apiurl!)
+                                    let urlString = serviceCall.baseURL
+                                    let api = "\(urlString)/images/flags/\(imageName)"
+                                    let apiurl = URL(string: api)
+                                    
+                                    if apiurl != nil
+                                    {
+                                        flagImageView.dowloadFromServer(url: apiurl!)
+                                    }
+                                    else
+                                    {
+                                        flagImageView.image = UIImage(named: "empty")
+                                    }
                                 }
-                                else
-                                {
-                                    flagImageView.image = UIImage(named: "empty")
-                                }
+                                
+                                mobileCountryCodeLabel.text = (countryCodeArray[i] as! String)
                             }
-                            
-                            mobileCountryCodeLabel.text = (countryCodeArray[i] as! String)
                         }
                     }
                 }
@@ -1867,14 +1884,23 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(mobileImageView)
         
         mobileTextField.frame = CGRect(x: mobileImageView.frame.maxX + 2, y: underline6.frame.maxY + (3 * y), width: addressScrollView.frame.width - (13 * x), height: (3 * y))
-        if let mobile = UserDefaults.standard.value(forKey: "Phone") as? String
+        
+        if id == 1
         {
-            mobileTextField.text = mobile   
+            
         }
         else
         {
-            mobileTextField.placeholder = "Mobile Number"
+            if let mobile = UserDefaults.standard.value(forKey: "Phone") as? String
+            {
+                mobileTextField.text = mobile
+            }
+            else
+            {
+                mobileTextField.placeholder = "Mobile Number"
+            }
         }
+      
         mobileTextField.textColor = UIColor.black
         mobileTextField.textAlignment = .left
         mobileTextField.font = UIFont(name: "Avenir-Regular", size: 18)

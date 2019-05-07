@@ -1343,10 +1343,17 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         
         orderId = Variables.sharedManager.orderTypeId
         
-        if let id = UserDefaults.standard.value(forKey: "addressId") as? Int
+        let addId = Variables.sharedManager.selectedAddressId
+        
+        if addId != 0
         {
-            addressId = id
+            addressId = addId
         }
+        
+//        if let id = UserDefaults.standard.value(forKey: "addressId") as? Int
+//        {
+//            addressId = id
+//        }
         
         if let measurementby = UserDefaults.standard.value(forKey: "measurementBy") as? String
         {

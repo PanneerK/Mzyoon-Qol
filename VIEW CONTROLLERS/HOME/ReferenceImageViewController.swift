@@ -92,7 +92,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        selfScreenNavigationTitle.text = "إضافة صورة المواد"
+        selfScreenNavigationTitle.text = "الرجاء اضافة صور توضيحية"
         notifyLabel.text = "يرجى إضافة صورة للرجوع اليها"
         addMaterialLabel.text = "إضافة صورة مرجعية لتوصية خياط"
         
@@ -112,7 +112,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
-        selfScreenNavigationTitle.text = "ADD REFERENCE IMAGE"
+        selfScreenNavigationTitle.text = "REFERENCE IMAGE"
         notifyLabel.text = "Please add Image for reference"
         addMaterialLabel.text = "Add reference image for tailor refrence"
         
@@ -141,7 +141,7 @@ class ReferenceImageViewController: CommonViewController, ServerAPIDelegate, UIN
         selfScreenNavigationBar.addSubview(backButton)
         
         selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "ADD REFERENCE IMAGE"
+        selfScreenNavigationTitle.text = "REFERENCE IMAGE"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
         selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))

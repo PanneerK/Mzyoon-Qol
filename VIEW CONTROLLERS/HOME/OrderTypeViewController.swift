@@ -132,6 +132,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         
         if ResponseMsg == "Success"
         {
+            stopActivity()
+            
             let Result = orderType.object(forKey: "Result") as! NSArray
             
             orderTypeNameArray = Result.value(forKey: "HeaderInEnglish") as! NSArray

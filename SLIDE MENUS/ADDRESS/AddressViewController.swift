@@ -891,13 +891,15 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     @objc func addressSelectButtonAction(sender : UIButton)
     {
-        UserDefaults.standard.set(sender.tag, forKey: "addressId")
+        Variables.sharedManager.selectedAddressId = sender.tag
+//        UserDefaults.standard.set(sender.tag, forKey: "addressId")
         let serviceScreen = ServiceTypeViewController()
         self.navigationController?.pushViewController(serviceScreen, animated: true)
     }
     
     @objc func editButtonAction(sender : UIButton)
     {
+        Variables.sharedManager.editAddress = 1
         activityContents()
         selectedCoordinate = CLLocationCoordinate2D(latitude: Lattitude[sender.tag] as! CLLocationDegrees, longitude: Longitude[sender.tag] as! CLLocationDegrees)
         
@@ -1002,6 +1004,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     @objc func addNewAddressButtonAction(sender : UIButton)
     {
+        Variables.sharedManager.editAddress = 0
         Variables.sharedManager.individualAddressId = 0
         
         let locationScreen = LocationViewController()

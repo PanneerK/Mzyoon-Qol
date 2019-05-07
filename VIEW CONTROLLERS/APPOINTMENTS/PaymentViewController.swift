@@ -229,7 +229,6 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     {
          print("Payment summary : ", errorMessage)
          stopActivity()
-        
         applicationDelegate.exitContents()
     }
     

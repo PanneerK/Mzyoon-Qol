@@ -72,9 +72,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR IN Appointment List Page:", errorMessage)
-        stopActivity()
-        applicationDelegate.exitContents()
-        
+        stopActivity()        
     }
     func API_CALLBACK_GetAppointmentList(getAppointmentList: NSDictionary)
     {

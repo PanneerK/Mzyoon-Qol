@@ -65,7 +65,7 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
         mapView.settings.myLocationButton = true
         mapView.settings.compassButton = true
         mapView.isMyLocationEnabled = true
-        view.addSubview(mapView)
+//        view.addSubview(mapView)
         
         let marker = GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: 13.0067, longitude: 80.2206)
@@ -77,6 +77,28 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
         marker.map = mapView
         
         mapView.selectedMarker = marker
+        
+        let imagesArray = [UIImage(named: "loader1"), UIImage(named: "loader5"), UIImage(named: "loader2"), UIImage(named: "loader6"), UIImage(named: "loader3"), UIImage(named: "loader7"), UIImage(named: "loader4"), UIImage(named: "loader8")]
+        
+        let customLoader = UIImageView()
+        customLoader.frame = CGRect(x: 150, y: 500, width: 50, height: 50)
+//        customLoader.backgroundColor = UIColor.gray
+        customLoader.layer.cornerRadius = customLoader.frame.height / 2
+        customLoader.animationImages = imagesArray as! [UIImage]
+        customLoader.animationDuration = 5.0
+        customLoader.startAnimating()
+        view.addSubview(customLoader)
+        
+        let imagesArray1 = [UIImage(named: "loading1"), UIImage(named: "loading2"), UIImage(named: "loading3")]
+        
+        let customLoading = UIImageView()
+        customLoading.frame = CGRect(x: 150, y: customLoader.frame.maxY, width: 50, height: 30)
+        //        customLoading.backgroundColor = UIColor.gray
+        customLoading.layer.cornerRadius = customLoader.frame.height / 2
+        customLoading.animationImages = imagesArray1 as! [UIImage]
+        customLoading.animationDuration = 2.0
+        customLoading.startAnimating()
+        view.addSubview(customLoading)
     }
     
     
@@ -85,7 +107,7 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
     {
         let btnLaunchAc = UIButton(frame: CGRect(x: 5, y: 150, width: 300, height: 35))
         btnLaunchAc.backgroundColor = .blue
-        btnLaunchAc.setTitle("Launch autocomplete", for: .normal)
+        btnLaunchAc.setTitle("Loading...", for: .normal)
         btnLaunchAc.addTarget(self, action: #selector(autocompleteClicked), for: .touchUpInside)
         self.view.addSubview(btnLaunchAc)
     }

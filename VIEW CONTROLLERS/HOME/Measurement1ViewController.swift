@@ -152,31 +152,32 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             
             Measure1BodyImage = Result.value(forKey: "BodyImage") as! NSArray
             
-            /*for i in 0..<Measure1BodyImage.count
-             {
-             if let imageName = Measure1BodyImage[i] as? String
-             {
-             let urlString = serviceCall.baseURL
-             let api = "\(urlString)/images/Measurement1/\(imageName)"
-             let apiurl = URL(string: api)
-             
-             if let data = try? Data(contentsOf: apiurl!) {
-             if let image = UIImage(data: data) {
-             self.convertedMeasure1BodyImageArray.append(image)
-             }
-             }
-             else
-             {
-             let emptyImage = UIImage(named: "empty")
-             self.convertedMeasure1BodyImageArray.append(emptyImage!)
-             }
-             }
-             else if Measure1BodyImage[i] is NSNull
-             {
-             let emptyImage = UIImage(named: "empty")
-             self.convertedMeasure1BodyImageArray.append(emptyImage!)
-             }
-             }*/
+            for i in 0..<Measure1BodyImage.count
+            {
+                if let imageName = Measure1BodyImage[i] as? String
+                {
+                    let urlString = serviceCall.baseURL
+                    let api = "\(urlString)/images/Measurement1/\(imageName)"
+                    let apiurl = URL(string: api)
+                    
+                    if let data = try? Data(contentsOf: apiurl!) {
+                        if let image = UIImage(data: data) {
+                            self.convertedMeasure1BodyImageArray.append(image)
+                        }
+                    }
+                    else
+                    {
+                        let emptyImage = UIImage(named: "empty")
+                        self.convertedMeasure1BodyImageArray.append(emptyImage!)
+                    }
+                }
+                else if Measure1BodyImage[i] is NSNull
+                {
+                    let emptyImage = UIImage(named: "empty")
+                    self.convertedMeasure1BodyImageArray.append(emptyImage!)
+                }
+            }
+            
             self.measurement1Content()
         }
         else if ResponseMsg == "Failure"
@@ -280,25 +281,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         manualButton.frame = CGRect(x: 0, y: manualTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        manualButton.backgroundColor = UIColor.red
-        //        manualButton.setImage(convertedMeasure1BodyImageArray[0], for: .normal)
+        manualButton.setImage(convertedMeasure1BodyImageArray[0], for: .normal)
         manualButton.tag = Measure1IdArray[0] as! Int
         manualButton.addTarget(self, action: #selector(self.forWhomButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(manualButton)
-        
-        if let imageName = Measure1BodyImage[0] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/Measurement1/\(imageName)"
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: manualButton.frame.width, height: manualButton.frame.height)
-            if apiurl != nil
-            {
-                dummyImageView.dowloadFromServer(url: apiurl!)
-            }
-            manualButton.addSubview(dummyImageView)
-        }
         
         let forWhomButton = UIButton()
         forWhomButton.frame = CGRect(x: (4 * x), y: manualButton.frame.maxY + (2 * y), width: view.frame.width - (8 * x), height: (3 * y))
@@ -332,25 +318,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         goButton.frame = CGRect(x: 0, y: goTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        goButton.backgroundColor = UIColor.red
-        //        goButton.setImage(convertedMeasure1BodyImageArray[1], for: .normal)
+        goButton.setImage(convertedMeasure1BodyImageArray[1], for: .normal)
         goButton.tag = Measure1IdArray[1] as! Int
         goButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(goButton)
-        
-        if let imageName = Measure1BodyImage[1] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/Measurement1/\(imageName)"
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: goButton.frame.width, height: goButton.frame.height)
-            if apiurl != nil
-            {
-                dummyImageView.dowloadFromServer(url: apiurl!)
-            }
-            goButton.addSubview(dummyImageView)
-        }
         
         let comeToIcon = UIImageView()
         comeToIcon.frame = CGRect(x: 0, y: goButton.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
@@ -370,27 +341,10 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         
         comeButton.frame = CGRect(x: 0, y: comeTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (13 * y))
         //        comeButton.backgroundColor = UIColor.red
-        //        comeButton.setImage(convertedMeasure1BodyImageArray[2], for: .normal)
+        comeButton.setImage(convertedMeasure1BodyImageArray[2], for: .normal)
         comeButton.tag = Measure1IdArray[2] as! Int
         comeButton.addTarget(self, action: #selector(self.measurement1NextButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(comeButton)
-        
-        if let imageName = Measure1BodyImage[2] as? String
-        {
-            let urlString = serviceCall.baseURL
-            let api = "\(urlString)/images/Measurement1/\(imageName)"
-            let apiurl = URL(string: api)
-            
-            let dummyImageView = UIImageView()
-            dummyImageView.frame = CGRect(x: 0, y: 0, width: comeButton.frame.width, height: comeButton.frame.height)
-            if apiurl != nil
-            {
-                dummyImageView.dowloadFromServer(url: apiurl!)
-            }
-            comeButton.addSubview(dummyImageView)
-            
-            self.stopActivity()
-        }
         
         let measurement1NextButton = UIButton()
         measurement1NextButton.frame = CGRect(x: view.frame.width - (5 * x), y: comeButton.frame.maxY + y, width: (4 * x), height: (4 * y))
@@ -625,7 +579,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         hintsImage.frame = CGRect(x: x, y: manualTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
-        hintsImage.image = UIImage(named: "manuallyHintImage")
+        hintsImage.image = convertedMeasure1BodyImageArray[0]
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
@@ -668,11 +622,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         hintsImage.frame = CGRect(x: x, y: goTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
-        hintsImage.image = UIImage(named: "goToHintImage")
+        hintsImage.image = convertedMeasure1BodyImageArray[1]
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.maxY + y, width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Please click here if wish to go directly to the tailor shop to for adding measurments."
+        detailedLabel.text = "Please click here if wish to go directly to the tailor shop to for adding measurements."
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -686,7 +640,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             {
                 hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                detailedLabel.text = "Please click here if wish to go directly to the tailor shop to for adding measurments."
+                detailedLabel.text = "Please click here if wish to go directly to the tailor shop to for adding measurements."
                 detailedLabel.textAlignment = .left
             }
             else if language == "ar"
@@ -701,7 +655,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            detailedLabel.text = "Please click here if wish to go directly to the tailor shop to for adding measurments."
+            detailedLabel.text = "Please click here if wish to go directly to the tailor shop to for adding measurements."
             detailedLabel.textAlignment = .left
         }
     }
@@ -711,11 +665,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         hintsImage.frame = CGRect(x: x, y: comeTitleLabel.frame.maxY + (10.5 * y), width: manualButton.frame.width, height: manualButton.frame.height)
         hintsImage.layer.borderWidth = 2
         hintsImage.layer.borderColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0).cgColor
-        hintsImage.image = UIImage(named: "tailorComeHintImage")
+        hintsImage.image = convertedMeasure1BodyImageArray[2]
         hintsView.addSubview(hintsImage)
         
         detailedLabel.frame = CGRect(x: (2 * x), y: hintsImage.frame.minY - (8 * y), width: hintsView.frame.width - (4 * x), height: (5 * y))
-        detailedLabel.text = "Please click here if you want the tailor to come to your place for adding measurments."
+        detailedLabel.text = "Please click here if you want the tailor to come to your place for adding measurements."
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
         detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
@@ -729,7 +683,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             {
                 hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                detailedLabel.text = "Please click here if you want the tailor to come to your plave for adding measurments."
+                detailedLabel.text = "Please click here if you want the tailor to come to your plave for adding measurements."
                 detailedLabel.textAlignment = .left
             }
             else if language == "ar"
@@ -744,7 +698,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         {
             hintsImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             detailedLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-            detailedLabel.text = "Please click here if you want the tailor to come to your plave for adding measurments."
+            detailedLabel.text = "Please click here if you want the tailor to come to your plave for adding measurements."
             detailedLabel.textAlignment = .left
         }
     }

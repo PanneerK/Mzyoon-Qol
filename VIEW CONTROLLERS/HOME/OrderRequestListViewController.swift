@@ -496,6 +496,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                     orderId_Label.text = "Order ID          : "
                     orderId_Label.textAlignment = .left
                     
+                    orderNum_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                    orderNum_Label.textAlignment = .left
+                    
                     nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     nameLabel.text = "Request Date  : "
                     nameLabel.textAlignment = .left
@@ -527,6 +530,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                     orderId_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                     orderId_Label.text = "معرف الطلب الخاص بك :"
                     orderId_Label.textAlignment = .right
+                    
+                    orderNum_Label.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                    orderNum_Label.textAlignment = .right
                     
                     nameLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
                     nameLabel.text = "تاريخ الطلب : "
@@ -560,6 +566,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
                 orderId_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 orderId_Label.text = "Order ID          : "
                 orderId_Label.textAlignment = .left
+                
+                orderNum_Label.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                orderNum_Label.textAlignment = .left
                 
                 nameLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 nameLabel.text = "Request Date  : "
