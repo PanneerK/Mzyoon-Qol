@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         fetchingCurrentLocation()
         
-        checkLogin()
+        // checkLogin()
         
         FirebaseApp.configure()
         
@@ -62,11 +62,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         application.registerForRemoteNotifications()
     
+        Messaging.messaging().delegate = self
+        let token = Messaging.messaging().fcmToken
+        print("FCM token: \(token ?? "")")
+        Variables.sharedManager.Fcm = token!
+        Messaging.messaging().shouldEstablishDirectChannel = true
+        
+        print("FCM Token:",Variables.sharedManager.Fcm)
+        
+        checkLogin()
         
         return true
     }
-    
- 
     
     func checkLogin()
     {
@@ -152,15 +159,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // With swizzling disabled you must let Messaging know about the message, for Analytics
         // Messaging.messaging().appDidReceiveMessage(userInfo)
         
-      
         // Print message ID.
         if let messageID = userInfo[gcmMessageIDKey]
         {
             print("Message ID: \(messageID)")
         }
  
-     
-        // Print full message.
+       // Print full message.
         print(userInfo)
     }
  
@@ -196,7 +201,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {
-            
             currentLocation = locationManager.location
             print("Current Loc:",currentLocation.coordinate)
         }
@@ -284,7 +288,7 @@ extension AppDelegate: MessagingDelegate
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String)
     {
         print("Firebase registration token: \(fcmToken)")
-        Variables.sharedManager.Fcm = fcmToken
+       // Variables.sharedManager.Fcm = fcmToken
         
         print("FCM Token:",Variables.sharedManager.Fcm)
         
@@ -301,6 +305,7 @@ extension AppDelegate: MessagingDelegate
         print("Message Data :",remoteMessage.appData)
     }
    
+    
 }
 
 
