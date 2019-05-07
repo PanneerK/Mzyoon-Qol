@@ -69,6 +69,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         
       //  self.tab3Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         navigationBar.isHidden = false
+        
         selectedButton(tag: 2)
  
       //  ListOfOrdersContent()
@@ -172,6 +173,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
                     emptyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                     emptyLabel.text = "You Don't Have Pending Orders"
                 }
+                
                 emptyLabel.textColor = UIColor.black
                 emptyLabel.textAlignment = .center
                 emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
@@ -318,7 +320,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func ListOfOrdersContent()
     {
         self.stopActivity()
-        slideMenuButton.isHidden = false
+        
+      //  slideMenuButton.isHidden = false
         
        // let ListOfOrdersNavigationBar = UIView()
         ListOfOrdersNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -362,7 +365,8 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
         DeliveredButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(DeliveredButton)
         
-        selfScreenContents.frame = CGRect(x: (3 * x), y: PendingButton.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + PendingButton.frame.height))
+      //  selfScreenContents.frame = CGRect(x: (3 * x), y: PendingButton.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + PendingButton.frame.height))
+        selfScreenContents.frame = CGRect(x: x, y: PendingButton.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + PendingButton.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
