@@ -70,7 +70,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             }
         }
         
-        deviceDetails()
+       
                 
         super.viewDidLoad()
         
@@ -141,6 +141,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         SideMenuManager.default.menuFadeStatusBar = false
     }
     
+<<<<<<< HEAD
     func deviceDetails()
     {
         let systemVersion = UIDevice.current.systemVersion
@@ -186,6 +187,9 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         }
     }
     
+=======
+   
+>>>>>>> 8a4ebb97f5cd647db9c1f66be351c02fc9af0c66
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR MESSAGE IN HOME PAGE", errorMessage)
