@@ -10,6 +10,9 @@ import UIKit
 
 class Variables: NSObject
 {
+    //COMMON SELECTOR CHECK
+    public var screenNavigationBarTag:Int = 0
+    
     //GENDER SELECTION
     public var genderType:String = ""
     public var genderId:Int = 0
@@ -78,9 +81,7 @@ class Variables: NSObject
     
     public var editAddress:Int = 0
     public var selectedAddressId:Int = 0
-    
-    public var viewController:UIViewController = UIViewController()
-    
+        
     // Here is how you would get to it without there being a global collision of variables.
     // , or in other words, it is a globally accessable parameter that is specific to the
     // class.

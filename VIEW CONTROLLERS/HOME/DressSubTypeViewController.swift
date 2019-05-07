@@ -14,9 +14,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     var headingTitle = String()
     let serviceCall = ServerAPI()
     
-    let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
-    
     let dressSubTypeScrollView = UIScrollView()
     let searchTextField = UITextField()
     let sortButton = UIButton()
@@ -45,10 +42,27 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     override func viewDidLoad()
     {
-        navigationBar.isHidden = true
-        
-        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        Variables.sharedManager.screenNavigationBarTag = 0
+        commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "\(headingTitle.uppercased())"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "\(headingTitle)"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "\(headingTitle.uppercased())"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         self.serviceCall.API_DressSubType(DressSubTypeId: screenTag, delegate: self)
 
@@ -176,25 +190,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     func screenContents()
     {
-        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(selfScreenNavigationBar)
-        
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.tag = 3
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        selfScreenNavigationBar.addSubview(backButton)
-        
-        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "\(headingTitle.uppercased())"
-        selfScreenNavigationTitle.textColor = UIColor.white
-        selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
         let tag = Variables.sharedManager.measurementTag
         
         if tag == 1
@@ -285,8 +280,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             changeViewToEnglishInSelf()
             self.subTypeContents(getNameArray: dressSubTypeArray, getIdArray: dressIdArray, getImageArray: dressSubTypeImages)
         }
-        
-        pageContent(tag: 2)
     }
     
     @objc func searchButtonAction(sender : UIButton)
@@ -404,8 +397,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     func changeViewToArabicInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         dressSubTypeScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         searchTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -415,8 +406,6 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     
     func changeViewToEnglishInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         dressSubTypeScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         searchTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)

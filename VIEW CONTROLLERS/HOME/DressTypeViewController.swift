@@ -12,9 +12,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
 {
     var tag = Int()
     let serviceCall = ServerAPI()
-    
-    let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
 
     //DRESS TYPE PARAMETERS
     var dressTypeArray = NSArray()
@@ -44,8 +41,27 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     override func viewDidLoad()
     {
-        self.navigationBar.isHidden = true
+        Variables.sharedManager.screenNavigationBarTag = 0
+        commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "Dress Type Selection"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "اختيار نوع اللباس"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "Dress Type Selection"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         serviceCall.API_DressType(genderId: tag, delegate: self)
 
@@ -224,10 +240,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     func changeViewToArabicInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "اختيار نوع اللباس"
-        
         dressTypeScrollView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         searchTextField.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         searchTextField.textAlignment = .left
@@ -236,10 +248,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     func changeViewToEnglishInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "Dress Type Selection"
-        
         dressTypeScrollView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         searchTextField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         searchTextField.textAlignment = .left
@@ -248,25 +256,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     
     func dressTypeContent()
     {
-        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(selfScreenNavigationBar)
-        
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        backButton.tag = 2
-        selfScreenNavigationBar.addSubview(backButton)
-        
-        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "Dress Type Selection"
-        selfScreenNavigationTitle.textColor = UIColor.white
-        selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
         let tag = Variables.sharedManager.measurementTag
         
         if tag == 1
@@ -375,8 +364,6 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             changeViewToEnglishInSelf()
             dressTypeSubContents(inputTextArray: dressTypeArray, inputIdArray: dressIdArray, inputImageArray: dressImageArray)
         }
-        
-        pageContent(tag: 2)
     }
     
     @objc func searchButtonAction(sender : UIButton)

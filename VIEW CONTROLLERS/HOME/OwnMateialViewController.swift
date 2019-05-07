@@ -15,9 +15,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
 {
     let serviceCall = ServerAPI()
     
-    let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
-    
     let selfScreenContents = UIView()
 
     //ADD MATERIAL PARAMETERS
@@ -49,10 +46,27 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         fileAccessing.deleteDirectory(imageType: "Mzyoon")
         fileAccessing.configureDirectory()
         
-        navigationBar.isHidden = true
-        
-        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        Variables.sharedManager.screenNavigationBarTag = 0
+        commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "ADD MATERIAL IMAGE"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "إضافة صورة المواد"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "ADD MATERIAL IMAGE"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
@@ -95,10 +109,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     func changeViewToArabicInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        
-        selfScreenNavigationTitle.text = "إضافة صورة المواد"
         notifyLabel.text = "يرجى إضافة صورة مادية لتكون مرجعا"
         addMaterialLabel.text = "إضافة صورة مادية لتوصية الطلب"
         
@@ -113,10 +123,6 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     
     func changeViewToEnglishInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        
-        selfScreenNavigationTitle.text = "ADD MATERIAL IMAGE"
         notifyLabel.text = "Please add material image for reference"
         addMaterialLabel.text = "Add material image for tailor refrence"
         
@@ -133,26 +139,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     {
         self.stopActivity()
         
-        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(selfScreenNavigationBar)
-        
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.tag = 4
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        selfScreenNavigationBar.addSubview(backButton)
-        
-        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "ADD MATERIAL IMAGE"
-        selfScreenNavigationTitle.textColor = UIColor.white
-        selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
-        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
+        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         

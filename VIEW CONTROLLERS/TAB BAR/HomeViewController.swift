@@ -29,8 +29,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
-        let views = Variables()
-        views.viewController = HomeViewController()
+        Variables.sharedManager.screenNavigationBarTag = 1
         
         UserDefaults.standard.set(1, forKey: "screenAppearance")
         
@@ -42,7 +41,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 
         selectedButton(tag: 0)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 2 to desired number of seconds
             // Your code with delay
             
             self.pageBar.isHidden = true
@@ -182,10 +181,9 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         }
         else
         {
-            let result = deviceDet.object(forKey: "Result") as! NSArray
+            let result = deviceDet.object(forKey: "Result") as! String  
             print("Result:",result)
         }
-        
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)

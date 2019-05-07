@@ -13,9 +13,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
     //SERVICE PARAMETERS
     let serviceCall = ServerAPI()
     
-    let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
-    
     let selfScreenContents = UIView()
 
     let viewDesignLabel = UILabel()
@@ -74,9 +71,29 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
     var applicationDelegate = AppDelegate()
 
     
-    override func viewDidLoad() {
-        navigationBar.isHidden = true
+    override func viewDidLoad()
+    {
+        Variables.sharedManager.screenNavigationBarTag = 0
+        commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "CUSTOMIZATION"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "التخصيص"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "CUSTOMIZATION"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
         
@@ -310,8 +327,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
     
     func changeViewToArabicInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         viewDesignLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         selectionImage.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -319,14 +334,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         dropDownButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         dropDownImageView.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        selfScreenNavigationTitle.text = "التخصيص"
         viewDesignLabel.text = "معاينة"
     }
     
     func changeViewToEnglishInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         viewDesignLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         selectionImage.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -334,32 +346,12 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         dropDownButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         dropDownImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
-        selfScreenNavigationTitle.text = "CUSTOMIZATION"
         viewDesignLabel.text = "PREVIEW"
     }
     
     func customization3Content(inputArray : NSArray)
     {
-        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(selfScreenNavigationBar)
-        
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        backButton.tag = 3
-        selfScreenNavigationBar.addSubview(backButton)
-        
-        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "CUSTOMIZATION"
-        selfScreenNavigationTitle.textColor = UIColor.white
-        selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
-        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
+        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -942,11 +934,16 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customTitleLabel.frame = CGRect(x: x, y: customBlurView.frame.height - (35 * y), width: customBlurView.frame.width - (2 * x), height: (5 * y))
         customTitleLabel.backgroundColor = UIColor.white
         customTitleLabel.text = "Customize your material"
-        customTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        customTitleLabel.textColor = UIColor.black
         customTitleLabel.textAlignment = .center
         customTitleLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         customTitleLabel.font = customTitleLabel.font.withSize(2 * x)
         customBlurView.addSubview(customTitleLabel)
+        
+        let underline = UILabel()
+        underline.frame = CGRect(x: x, y: customTitleLabel.frame.maxY, width: customBlurView.frame.width  - (2 * x), height: 1)
+        underline.backgroundColor = UIColor.lightGray
+        customBlurView.addSubview(underline)
         
         if customAttEnglishNameArray.count <= 5
         {
@@ -958,10 +955,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         }
         
         let customTableView = UITableView()
-        customTableView.frame = CGRect(x: x, y: customTitleLabel.frame.maxY, width: customBlurView.frame.width - (2 * x), height: (CGFloat(customAttEnglishNameArray.count) * 4 * y))
+        customTableView.frame = CGRect(x: x, y: underline.frame.maxY, width: customBlurView.frame.width - (2 * x), height: (CGFloat(customAttEnglishNameArray.count) * 4 * y))
         customTableView.backgroundColor = UIColor.clear
         customTableView.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
-        customTableView.separatorStyle = .none
+        customTableView.separatorStyle = .singleLineEtched
+        customTableView.separatorColor = UIColor.lightGray
         customTableView.dataSource = self
         customTableView.delegate = self
         customBlurView.addSubview(customTableView)
@@ -987,25 +985,23 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self), for: indexPath as IndexPath)
         
-        cell.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor.white.cgColor
+        cell.backgroundColor = UIColor.white
         
         let customLabel = UILabel()
         customLabel.frame = CGRect(x: x, y: 0, width: cell.frame.width - (5 * x), height: cell.frame.height)
         customLabel.text = customAttEnglishNameArray[indexPath.row] as! String
-        customLabel.textColor = UIColor.white
+        customLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         customLabel.textAlignment = .left
         customLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         customLabel.font = customLabel.font.withSize(2 * x)
 //        cell.addSubview(customLabel)
         
         cell.textLabel?.text = customAttEnglishNameArray[indexPath.row] as! String
-        cell.textLabel?.textColor = UIColor.white
+        cell.textLabel?.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         
         let customSelectedImage = UIImageView()
-        customSelectedImage.frame = CGRect(x: customLabel.frame.maxX, y: 0, width: (3 * x), height: cell.frame.height)
-        customSelectedImage.image = UIImage(named: "customCheckMark")
+        customSelectedImage.frame = CGRect(x: customLabel.frame.maxX, y: y, width: (2 * y), height: (2 * y))
+        customSelectedImage.image = UIImage(named: "selectionImage")
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {

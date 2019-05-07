@@ -12,9 +12,6 @@ import AlamofireDomain
 class OrderTypeViewController: CommonViewController, ServerAPIDelegate
 {
     let serviceCall = ServerAPI()
-    
-    let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
 
     let selfScreenContents = UIView()
 
@@ -60,10 +57,27 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
-        navigationBar.isHidden = true
-        
-//        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        Variables.sharedManager.screenNavigationBarTag = 0
+        commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "ORDER TYPE"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "نوع الطلب"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "ORDER TYPE"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         self.serviceCall.API_OrderType(delegate: self)
 
@@ -217,10 +231,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     func changeViewToArabicInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "نوع الطلب"
-        
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         directDeliveryIcon.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -250,10 +260,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     func changeViewToEnglishInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "ORDER TYPE"
-        
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
 
         directDeliveryIcon.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -284,26 +290,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     func orderTypeContent()
     {
-        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(selfScreenNavigationBar)
-        
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.tag = 3
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        selfScreenNavigationBar.addSubview(backButton)
-        
-        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "ORDER TYPE"
-        selfScreenNavigationTitle.textColor = UIColor.white
-        selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
-        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
+        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -418,7 +405,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         }
         
         self.view.bringSubviewToFront(slideMenuButton)
-        pageContent(tag: 3)
         
         let onOrOffValue = UserDefaults.standard.value(forKey: "hintsSwitch") as! Int
 

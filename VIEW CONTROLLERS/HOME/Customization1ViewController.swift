@@ -12,12 +12,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
 {
     let serviceCall = ServerAPI()
     
-    
-    
-    //NAVIGATION BAR CONTENTS
-    let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
-    
     //SCREEN CONTENTS
     let selfScreenContents = UIView()
     let customization1NextButton = UIButton()
@@ -85,8 +79,27 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     override func viewDidLoad()
     {
-        navigationBar.isHidden = true
+        Variables.sharedManager.screenNavigationBarTag = 0
+        commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "Material Selection"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "اختيار المواد"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "Material Selection"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         updateId = 0
         
@@ -327,10 +340,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func changeViewToArabicInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "اختيار المواد"
-        
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         seasonTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -343,10 +352,6 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func changeViewToEnglishInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "Material Selection"
-        
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         seasonTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -359,26 +364,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     
     func customization1Content()
     {
-        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(selfScreenNavigationBar)
-        
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.tag = 5
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        selfScreenNavigationBar.addSubview(backButton)
-        
-        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "Material Selection"
-        selfScreenNavigationTitle.textColor = UIColor.white
-        selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
-        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
+        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         

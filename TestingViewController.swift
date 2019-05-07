@@ -78,7 +78,7 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
         
         mapView.selectedMarker = marker
         
-        let imagesArray = [UIImage(named: "loader1"), UIImage(named: "loader5"), UIImage(named: "loader2"), UIImage(named: "loader6"), UIImage(named: "loader3"), UIImage(named: "loader7"), UIImage(named: "loader4"), UIImage(named: "loader8")]
+        let imagesArray = [UIImage(named: "loader1"), UIImage(named: "loader2"), UIImage(named: "loader3"), UIImage(named: "loader4"), UIImage(named: "loader5"), UIImage(named: "loader6"), UIImage(named: "loader7"), UIImage(named: "loader8")]
         
         let customLoader = UIImageView()
         customLoader.frame = CGRect(x: 150, y: 500, width: 50, height: 50)

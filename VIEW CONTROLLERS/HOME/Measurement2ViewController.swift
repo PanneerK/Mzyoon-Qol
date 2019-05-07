@@ -35,10 +35,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var Measurement2ImagesArray = NSArray()
     var convertedMeasurement2ImageArray = [UIImage]()
     
-    //SCREEN PARAMETERS
-    let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
-    
     // Measurements2...
     var MeasurementsIdArray = NSArray()
     var GenderMeasurementIdArray = NSArray()
@@ -142,8 +138,27 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     override func viewDidLoad()
     {
-        navigationBar.isHidden = true
+        Variables.sharedManager.screenNavigationBarTag = 0
+        commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "MEASUREMENT"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "قياس"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "MEASUREMENT"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         let dummyArray = NSArray()
         
@@ -489,10 +504,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         tabBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "MEASUREMENT"
-        
         imageButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         imageButton.setTitle("IMAGE", for: .normal)
         partsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -523,10 +534,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         
         tabBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-//        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "قياس"
-        
         imageButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         imageButton.setTitle("صورة", for: .normal)
         partsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -554,26 +561,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     func measurement2Contents()
     {
         imageBackView.removeFromSuperview()
-        
-        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(selfScreenNavigationBar)
-        
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        backButton.tag = 3
-        selfScreenNavigationBar.addSubview(backButton)
-        
-        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "MEASUREMENT"
-        selfScreenNavigationTitle.textColor = UIColor.white
-        selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
         
         let tag = Variables.sharedManager.measurementTag
         
@@ -614,7 +601,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             }
         }
         
-        imageButton.frame = CGRect(x: 0, y: selfScreenNavigationBar.frame.maxY + (5 * y), width: ((view.frame.width / 2) - 1), height: (5 * y))
+        imageButton.frame = CGRect(x: 0, y: navigationBar.frame.maxY + (5 * y), width: ((view.frame.width / 2) - 1), height: (5 * y))
         imageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         imageButton.setTitle("IMAGE", for: .normal)
         imageButton.setTitleColor(UIColor.white, for: .normal)
@@ -627,7 +614,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         dropDown.image = UIImage(named: "downArrow")
         imageButton.addSubview(dropDown)
         
-        partsButton.frame = CGRect(x: imageButton.frame.maxX + 1, y: selfScreenNavigationBar.frame.maxY + (5 * y), width: view.frame.width / 2, height: (5 * y))
+        partsButton.frame = CGRect(x: imageButton.frame.maxX + 1, y: navigationBar.frame.maxY + (5 * y), width: view.frame.width / 2, height: (5 * y))
         partsButton.backgroundColor = UIColor.lightGray
         partsButton.setTitle("PARTS", for: .normal)
         partsButton.setTitleColor(UIColor.black, for: .normal)
@@ -1080,7 +1067,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
                     subView.addSubview(getKneeLabel)
                     
                     let ankleLabel = UILabel()
-                    ankleLabel.frame = CGRect(x: (11 * x), y: (39.9 * y), width: subView.frame.width - (20 * x), height: (2 * y))
+                    ankleLabel.frame = CGRect(x: (11 * x), y: (36.5 * y), width: subView.frame.width - (20 * x), height: (2 * y))
                     ankleLabel.text = "Ankle"
                     ankleLabel.textColor = UIColor.black
                     ankleLabel.textAlignment = .right

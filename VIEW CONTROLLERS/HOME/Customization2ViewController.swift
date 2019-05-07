@@ -14,8 +14,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     let serviceCall = ServerAPI()
     
     //SCREEN CONTENTS PARAMETERS
-    let selfScreenNavigationBar = UIView()
-    let selfScreenNavigationTitle = UILabel()
     let viewDetailsButton = UIButton()
     let customization2NextButton = UIButton()
     let selfScreenContents = UIView()
@@ -86,10 +84,27 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     
     override func viewDidLoad()
     {
-        navigationBar.isHidden = true
-        
-        //        self.tab1Button.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        Variables.sharedManager.screenNavigationBarTag = 0
+        commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                self.navigationTitle.text = "Material Selection"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                self.navigationTitle.text = "اختيار المواد"
+                self.navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            self.navigationTitle.text = "Material Selection"
+            self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         
         self.serviceCallFunction(getMaterialId: [1], getColorId: [1])
         self.customization2Content()
@@ -427,10 +442,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     
     func changeViewToArabicInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "اختيار المواد"
-        
         selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
         materialTitleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -446,10 +457,6 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     
     func changeViewToEnglishInSelf()
     {
-        selfScreenNavigationBar.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        selfScreenNavigationTitle.text = "Material Selection"
-        
         selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         
         materialTitleLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -465,26 +472,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     
     func customization2Content()
     {
-        selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        view.addSubview(selfScreenNavigationBar)
-        
-        let backButton = UIButton()
-        backButton.frame = CGRect(x: x, y: (3 * y), width: (3 * x), height: (2.5 * y))
-        backButton.setImage(UIImage(named: "leftArrow"), for: .normal)
-        backButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
-        backButton.tag = 3
-        selfScreenNavigationBar.addSubview(backButton)
-        
-        selfScreenNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
-        selfScreenNavigationTitle.text = "Material Selection"
-        selfScreenNavigationTitle.textColor = UIColor.white
-        selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
-        selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
-        
-        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY + pageBar.frame.height))
+        selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
@@ -632,12 +620,12 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         detailViewBackButton.tag = 1
         view.addSubview(detailViewBackButton)
         
-        detailViewNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: selfScreenNavigationBar.frame.width, height: (3 * y))
+        detailViewNavigationTitle.frame = CGRect(x: 0, y: (2.5 * y), width: navigationBar.frame.width, height: (3 * y))
         detailViewNavigationTitle.text = "VIEW DETAILS"
         detailViewNavigationTitle.textColor = UIColor.white
         detailViewNavigationTitle.textAlignment = .center
         detailViewNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        detailViewNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
+        detailViewNavigationTitle.font = detailViewNavigationTitle.font.withSize(2 * x)
         detailViewNavigationBar.addSubview(detailViewNavigationTitle)
         
         detailScrollView.frame = CGRect(x: (2 * x), y: detailViewNavigationBar.frame.maxY + (2 * y), width: detailsView.frame.width - (4 * x), height: view.frame.height - (30 * y))
