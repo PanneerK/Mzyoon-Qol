@@ -291,7 +291,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     func RequestListView()
     {
         self.stopActivity()
-        slideMenuButton.isHidden = false
+        
+      //  slideMenuButton.isHidden = false
         
         let backDrop = UIView()
         backDrop.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height))
@@ -309,7 +310,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
         backDrop.addSubview(sortButton)
       */
         
-        RequestListScrollView.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height + (2 * y)))
+     //   RequestListScrollView.frame = CGRect(x: (3 * x), y: navigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height + (2 * y)))
+        RequestListScrollView.frame = CGRect(x: x, y: navigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: view.frame.height - (navigationBar.frame.height + tabBar.frame.height + (2 * y)))
         RequestListScrollView.backgroundColor = UIColor.clear
         view.addSubview(RequestListScrollView)
         

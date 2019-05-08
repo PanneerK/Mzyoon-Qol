@@ -497,7 +497,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DressDetView.addSubview(QtyNumTF)
         
         
-        PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((selfScreenContents.frame.width / 2) - 1), height: (3 * y))
+        PricingButton.frame = CGRect(x: 0, y: DressDetView.frame.maxY + y, width: ((selfScreenContents.frame.width / 2) - 1), height: (4 * y))
         PricingButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PricingButton.setTitle("PRICE DETAILS", for: .normal)
         PricingButton.setTitleColor(UIColor.white, for: .normal)
@@ -506,7 +506,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         PricingButton.addTarget(self, action: #selector(self.selectionViewButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(PricingButton)
         
-        DeliveryDetailsButton.frame = CGRect(x: PricingButton.frame.maxX + 1, y: DressDetView.frame.maxY + y, width: selfScreenContents.frame.width / 2, height: (3 * y))
+        DeliveryDetailsButton.frame = CGRect(x: PricingButton.frame.maxX + 1, y: DressDetView.frame.maxY + y, width: selfScreenContents.frame.width / 2, height: (4 * y))
         DeliveryDetailsButton.backgroundColor = UIColor.lightGray
         DeliveryDetailsButton.setTitle("DELIVERY DETAILS", for: .normal)
         DeliveryDetailsButton.setTitleColor(UIColor.black, for: .normal)
