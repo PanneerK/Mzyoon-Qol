@@ -35,6 +35,7 @@
 		FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */; };
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
 		FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0DD42C2242192800F7AF38 /* TestingViewController.swift */; };
+		FD0EB0A12282A33400F7119F /* ViewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB0A02282A33400F7119F /* ViewDetailsViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
 		FD0F977F22255E40003744ED /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F977E22255E40003744ED /* Variables.swift */; };
 		FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */; };
@@ -140,6 +141,7 @@
 		FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
 		FD0DD42C2242192800F7AF38 /* TestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingViewController.swift; sourceTree = "<group>"; };
+		FD0EB0A02282A33400F7119F /* ViewDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailsViewController.swift; sourceTree = "<group>"; };
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
 		FD0F977E22255E40003744ED /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		FD10A4022253657800438A9D /* Mzyoon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mzyoon.entitlements; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 				FD71D25F219EF93700FFC067 /* OwnMateialViewController.swift */,
 				FD71D261219F055300FFC067 /* Customization1ViewController.swift */,
 				FD71D263219F1F2200FFC067 /* Customization2ViewController.swift */,
+				FD0EB0A02282A33400F7119F /* ViewDetailsViewController.swift */,
 				FD71D265219F234B00FFC067 /* Customization3ViewController.swift */,
 				FD71D267219F29AD00FFC067 /* Measurement1ViewController.swift */,
 				FD462DD921AD0E9A0073B53B /* Measurement2ViewController.swift */,
@@ -772,6 +775,7 @@
 				FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */,
 				FDC9BB922186F6F7003BA5C9 /* CartViewController.swift in Sources */,
 				FDC9BB8E2186F6CD003BA5C9 /* ProfileViewController.swift in Sources */,
+				FD0EB0A12282A33400F7119F /* ViewDetailsViewController.swift in Sources */,
 				FDC9BB872186F30D003BA5C9 /* HomeViewController.swift in Sources */,
 				FD0611A821D4F481006FDAC4 /* MeasurementCall.swift in Sources */,
 				DA06108721E4C4D1005BB29D /* ServiceTypeViewController.swift in Sources */,

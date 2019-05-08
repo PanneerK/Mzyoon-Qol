@@ -24,6 +24,12 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
     var resultsArray = [String]()
     var gmsFetcher: GMSAutocompleteFetcher!
     
+    var loadingCount = 0
+    let customLoader = UIImageView()
+    var loadingTimer = Timer()
+    let loadingText = UILabel()
+
+    
     let mapView = GMSMapView()
 
     override func viewDidLoad()
@@ -80,7 +86,6 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
         
         let imagesArray = [UIImage(named: "loader1"), UIImage(named: "loader2"), UIImage(named: "loader3"), UIImage(named: "loader4"), UIImage(named: "loader5"), UIImage(named: "loader6"), UIImage(named: "loader7"), UIImage(named: "loader8")]
         
-        let customLoader = UIImageView()
         customLoader.frame = CGRect(x: 150, y: 500, width: 50, height: 50)
 //        customLoader.backgroundColor = UIColor.gray
         customLoader.layer.cornerRadius = customLoader.frame.height / 2
@@ -98,7 +103,41 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
         customLoading.animationImages = imagesArray1 as! [UIImage]
         customLoading.animationDuration = 2.0
         customLoading.startAnimating()
-        view.addSubview(customLoading)
+//        view.addSubview(customLoading)
+        
+        forLoadingText()
+        
+        loadingCount = 1
+        
+        loadingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
+    }
+    
+    func forLoadingText()
+    {
+        loadingText.frame = CGRect(x: 100, y: customLoader.frame.maxY, width: 200, height: 50)
+        loadingText.text = "Loading."
+        loadingText.textAlignment = .center
+        loadingText.textColor = UIColor.blue
+        view.addSubview(loadingText)
+    }
+    
+    @objc func timerCall()
+    {
+        if loadingCount == 0
+        {
+            forLoadingText()
+            loadingCount = 1
+        }
+        else if loadingCount == 1
+        {
+            self.loadingText.text = "Loading.."
+            loadingCount = 2
+        }
+        else
+        {
+            self.loadingText.text = "Loading..."
+            loadingCount = 0
+        }
     }
     
     
