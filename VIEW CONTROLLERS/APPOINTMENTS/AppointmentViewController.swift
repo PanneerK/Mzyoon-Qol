@@ -860,13 +860,36 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MaterialInEnglish.contains("Companies-Material")
         {
             OrderTypeView.removeFromSuperview()
+            
+            emptyLabel.frame = CGRect(x: 0, y: ((MaterialViewBackDrop.frame.height - (3 * y)) / 2), width: MaterialViewBackDrop.frame.width, height: (3 * y))
+            emptyLabel.text = "There is No Appointment For Order Type.."
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.numberOfLines = 2
+            emptyLabel.adjustsFontSizeToFitWidth = true
+            emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            MaterialViewBackDrop.addSubview(emptyLabel)
+            
             MaterialSucessStr = "True"
         }
         else if MaterialInEnglish.contains("Own Material-Direct Delivery")
         {
             if (Variables.sharedManager.orderType.contains("Own Material-Direct Delivery"))
             {
+                /*
+                emptyLabel.frame = CGRect(x: 0, y: ((MaterialViewBackDrop.frame.height - (3 * y)) / 2), width: MaterialViewBackDrop.frame.width, height: (3 * y))
+                emptyLabel.text = "There is No Appointment For Order Type.."
+                emptyLabel.textColor = UIColor.black
+                emptyLabel.textAlignment = .center
+                emptyLabel.numberOfLines = 2
+                emptyLabel.adjustsFontSizeToFitWidth = true
+                emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+                emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+                MaterialViewBackDrop.addSubview(emptyLabel)
+              */
                 MaterialSucessStr = "True"
+                
             }
             else
             {
@@ -1481,12 +1504,34 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         if MeasurementInEnglish.contains("Manually")
         {
             MeasurementTypeView.removeFromSuperview()
+            
+            emptyLabel.frame = CGRect(x: 0, y: ((MeasurementViewBackDrop.frame.height - (3 * y)) / 2), width: MeasurementViewBackDrop.frame.width, height: (3 * y))
+            emptyLabel.text = "There is No Appointment For Measurement.."
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.numberOfLines = 2
+            emptyLabel.adjustsFontSizeToFitWidth = true
+            emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            MeasurementViewBackDrop.addSubview(emptyLabel)
+            
             MeasureSucessStr = "True"
         }
         else if MeasurementInEnglish.contains("Go to Tailor Shop")
         {
           if (Variables.sharedManager.measurementType.contains("Go to Tailor Shop"))
           {
+            /*
+            emptyLabel.frame = CGRect(x: 0, y: ((MeasurementViewBackDrop.frame.height - (3 * y)) / 2), width: MeasurementViewBackDrop.frame.width, height: (3 * y))
+            emptyLabel.text = "There is No Appointment For Measurement.."
+            emptyLabel.textColor = UIColor.black
+            emptyLabel.textAlignment = .center
+            emptyLabel.numberOfLines = 2
+            emptyLabel.adjustsFontSizeToFitWidth = true
+            emptyLabel.font = UIFont(name: "Avenir Next", size: (1.5 * x))
+            emptyLabel.font = emptyLabel.font.withSize(1.5 * x)
+            MeasurementViewBackDrop.addSubview(emptyLabel)
+            */
              MeasureSucessStr = "True"
           }
           else
@@ -3261,8 +3306,41 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     {
         print("Material Approve Status Page..")
         
-        if (MaterialAppointID.count != 0)
+        let FMaterial : String = self.From_MaterialType_TF.text!
+        let TMaterial : String = self.TO_MaterialType_TF.text!
+        
+        print("From_Material:",FMaterial)
+        print("To_Material:",TMaterial)
+        
+        if (FMaterial.isEmpty && TMaterial.isEmpty)
         {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let appointmentAlert = UIAlertController(title: "Alert..!", message: "You Cannot Approve Appointment Without Dates..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let appointmentAlert = UIAlertController(title: "تنبيه..!", message: "لا يمكنك الموافقة على موعد دون مواعيد ..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let appointmentAlert = UIAlertController(title: "Alert..!", message: "You Cannot Approve Appointment Without Dates..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
+            
+        }
+        else
+        {
+          if (MaterialAppointID.count != 0)
+          {
            var AppointID : Int!
         
             if(MaterialAppointID.count == 1)
@@ -3281,12 +3359,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         // let AppointID = MaterialAppointID[0] as! Int
          let Msg = ""
          self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID!, IsApproved: 1, Reason: Msg, delegate: self)
-       }
-       else
-       {
-        
-       }
-       
+        }
+      }
     }
     
     @objc func MaterialRejectButtonAction(sender : UIButton)
@@ -3298,8 +3372,42 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     @objc func MeasureApproveButtonAction(sender : UIButton)
     {
         print("Measure Approve Status Page..")
-        if (MeasurementAppointID.count != 0)
+        
+        let FMeasure : String = self.From_MeasurementType_TF.text!
+        let TMeasure : String = self.TO_MeasurementType_TF.text!
+        
+        print("From_Measure:",FMeasure)
+        print("To_Measure:",TMeasure)
+        
+        if (FMeasure.isEmpty && TMeasure.isEmpty)
         {
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let appointmentAlert = UIAlertController(title: "Alert..!", message: "You Cannot Approve Appointment Without Dates..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let appointmentAlert = UIAlertController(title: "تنبيه..!", message: "لا يمكنك الموافقة على موعد دون مواعيد ..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let appointmentAlert = UIAlertController(title: "Alert..!", message: "You Cannot Approve Appointment Without Dates..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
+            
+        }
+        else
+        {
+         if (MeasurementAppointID.count != 0)
+         {
             var AppointID : Int!
             
             if(MeasurementAppointID.count == 1)
@@ -3318,9 +3426,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
            // let AppointID : Int = MeasurementAppointID[0] as! Int
             let Msg = ""
             self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 1, Reason: Msg, delegate: self)
-        
+          }
        }
-     
     }
     
     @objc func MeasureRejectButtonAction(sender : UIButton)
@@ -3544,9 +3651,42 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     {
         MaterialRejectButtonView.removeFromSuperview()
         
-      if(MaterialAppointID.count != 0)
-      {
+        let FMaterial : String = self.From_MaterialType_TF.text!
+        let TMaterial : String = self.TO_MaterialType_TF.text!
         
+        print("From_Material:",FMaterial)
+        print("To_Material:",TMaterial)
+        
+    if (FMaterial.isEmpty && TMaterial.isEmpty)
+    {
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                let appointmentAlert = UIAlertController(title: "Alert..!", message: "You Cannot Reject Appointment Without Dates..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+                
+            }
+            else if language == "ar"
+            {
+                let appointmentAlert = UIAlertController(title: "تنبيه..!", message: "لا يمكنك رفض موعد دون مواعيد ..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+            }
+        }
+        else
+        {
+            let appointmentAlert = UIAlertController(title: "Alert..!", message: "You Cannot Reject Appointment Without Dates..!", preferredStyle: .alert)
+            appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(appointmentAlert, animated: true, completion: nil)
+            
+        }
+    }
+    else
+    {
+       if(MaterialAppointID.count != 0)
+       {
         var AppointID : Int!
         
         if(MaterialAppointID.count == 1)
@@ -3565,16 +3705,50 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
        // let AppointID = MaterialAppointID[0] as! Int
         let Msg : String = self.Material_rejectReason_TF.text!
         self.serviceCall.API_IsApproveAppointmentMaterial(AppointmentId: AppointID, IsApproved: 2, Reason: Msg, delegate: self)
+       }
       }
-    }
+   }
     
     @objc func Save_MeasureRejectAction(sender : UIButton)
     {
         MeasureRejectButtonView.removeFromSuperview()
         
-        if(MeasurementAppointID.count != 0)
+        let FMeasure : String = self.From_MeasurementType_TF.text!
+        let TMeasure : String = self.TO_MeasurementType_TF.text!
+        
+        print("From_Measure:",FMeasure)
+        print("To_Measure:",TMeasure)
+        
+        if (FMeasure.isEmpty && TMeasure.isEmpty)
         {
-            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let appointmentAlert = UIAlertController(title: "Alert..!", message: "You Cannot Reject Appointment Without Dates..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                    
+                }
+                else if language == "ar"
+                {
+                    let appointmentAlert = UIAlertController(title: "تنبيه..!", message: "لا يمكنك رفض موعد دون مواعيد ..!", preferredStyle: .alert)
+                    appointmentAlert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(appointmentAlert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let appointmentAlert = UIAlertController(title: "Alert..!", message: "You Cannot Reject Appointment Without Dates..!", preferredStyle: .alert)
+                appointmentAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(appointmentAlert, animated: true, completion: nil)
+                
+            }
+        }
+        else
+        {
+          if(MeasurementAppointID.count != 0)
+          {
             var AppointID : Int!
             
             if(MeasurementAppointID.count == 1)
@@ -3594,6 +3768,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
         let Msg : String = self.Measure_rejectReason_TF.text!
         self.serviceCall.API_IsApproveAppointmentMeasurement(AppointmentId: AppointID, IsApproved: 2, Reason: Msg, delegate: self)
         }
+      }
     }
     
     @objc func FMaterial_calendarAction()

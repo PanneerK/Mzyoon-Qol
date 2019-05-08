@@ -104,6 +104,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
     var applicationDelegate = AppDelegate()
 
+    var UserNameStr:String!
     var Line1Str:String!
     var Line2Str:String!
     var Line3Str:String!
@@ -119,12 +120,11 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         print("TailorId",TailorId)
         print("Global TailorID:",Variables.sharedManager.TailorID)
       
-        
         navigationBar.isHidden = true
 
         // Do any additional setup after loading the view.
         
-      // EMAIL = UserDefaults.standard.value(forKey: "Email") as? String
+        // EMAIL = UserDefaults.standard.value(forKey: "Email") as? String
         DeviceNum = UIDevice.current.identifierForVendor?.uuidString
         DeviceType = UIDevice.current.name
         DeviceAgent = ""
@@ -155,6 +155,22 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         else if let userId = UserDefaults.standard.value(forKey: "userId") as? Int
         {
             self.serviceCall.API_GetPaymentAddress(BuyerId: "\(userId)", delegate: self)
+        }
+        
+        if let UserName = UserDefaults.standard.value(forKey: "userName") as? String
+        {
+            print("UserName :",UserName)
+            UserNameStr = UserName
+        }
+        
+        if let RequestID = UserDefaults.standard.value(forKey: "requestId") as? Int
+        {
+            // Variables.sharedManager.OrderID = RequestID
+             RequestId = "\(RequestID)"
+        }
+        else if let RequestID = UserDefaults.standard.value(forKey: "requestId") as? String
+        {
+             RequestId = "\(RequestID)"
         }
         
         //  self.Email_TF.text = UserDefaults.standard.value(forKey: "Email") as? String
@@ -292,13 +308,6 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
                 self.Email_TF.text = EmailStr
                */
                 
-                AddLine1 = Line1Str
-                AddLine2 = Line2Str
-                AddLine3 = Line3Str
-                City = CityStr
-                State = StateStr
-                Country = CountryStr
-                EMAIL = EmailStr
                 
                 PaymentContent()
             }
@@ -345,7 +354,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             "<billing>" +
             "<name>" +
             "<title></title>" +
-            "<first></first>" +
+            "<first>\(UserNameStr!)</first>" +
             "<last></last>" +
             "</name>" +
             "<address>" +
@@ -363,6 +372,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
         print("Request:",Message)
         let urlString = "https://secure.innovatepayments.com/gateway/mobile.xml"
+        
+        
         if let url = NSURL(string: urlString)
         {
             let theRequest = NSMutableURLRequest(url: url as URL)
@@ -506,20 +517,20 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         
         // Amount Label..
         let AmountLabel = UILabel()
-        AmountLabel.frame = CGRect(x: (4 * x), y: (2 * y), width: (10 * x), height: (3 * y))
+        AmountLabel.frame = CGRect(x: (4 * x), y: (2 * y), width: (12 * x), height: (3 * y))
         // AmountLabel.backgroundColor = UIColor.gray
         AmountLabel.font = UIFont.boldSystemFont(ofSize: 16)
         AmountLabel.text = "Total Amount :"
         AmountLabel.font = UIFont(name: "Avenir Next", size: 16)
         AmountLabel.textColor = UIColor.black
-        AmountLabel.textAlignment = .left
+        AmountLabel.textAlignment = .right
         BillingView.addSubview(AmountLabel)
         
         // let Amount_TF = UITextField()
         Amount_TF.frame = CGRect(x: AmountLabel.frame.maxX + x, y: (2 * y), width: (15 * x), height: (3 * y))
         Amount_TF.backgroundColor = UIColor.white
         Amount_TF.font = UIFont.boldSystemFont(ofSize: 16)
-        Amount_TF.text = TotalAmount  +  Currency
+        Amount_TF.text = TotalAmount
         Amount_TF.font = UIFont(name: "Avenir Next", size: 16)
         Amount_TF.textColor = UIColor.black
         Amount_TF.adjustsFontSizeToFitWidth = true
@@ -568,6 +579,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
     @objc func PayButtonAction(sender : UIButton)
     {
+        
         if(RequestId == nil)
         {
             RequestId = String(arc4random())
@@ -577,10 +589,71 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
             RequestId = "\(Variables.sharedManager.OrderID)"
         }
 
+        if(Line1Str == nil)
+        {
+            AddLine1 = ""
+        }
+        else
+        {
+            AddLine1 = Line1Str
+        }
+        
+        if(Line2Str == nil)
+        {
+            AddLine2 = ""
+        }
+        else
+        {
+            AddLine2 = Line2Str
+        }
+        
+        if(Line3Str == nil)
+        {
+            AddLine3 = ""
+        }
+        else
+        {
+            AddLine3 = Line3Str
+        }
+        
+        if(CityStr == nil)
+        {
+            City = ""
+        }
+        else
+        {
+            City = CityStr
+        }
+        
+        if(StateStr == nil)
+        {
+            State = ""
+        }
+        else
+        {
+            State = StateStr
+        }
+        
+        if(CountryStr == nil)
+        {
+            Country = ""
+        }
+        else
+        {
+            Country = CountryStr
+        }
+        
+        if(EmailStr == nil)
+        {
+            EMAIL = ""
+        }
+        else
+        {
+            EMAIL = EmailStr
+        }
         
          PayPageRequest()
     }
     
-
 }
 
