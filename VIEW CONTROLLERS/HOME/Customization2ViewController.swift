@@ -20,6 +20,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     let materialTitleLabel = UILabel()
     let colorTitleLabel = UILabel()
     let patternTitleLabel = UILabel()
+    let seeMaterialButton = UIButton()
+    let checkBox = UIImageView()
 
     var colorsArrayInEnglish = NSArray()
     var colorsArrayInArabic = NSArray()
@@ -542,14 +544,28 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         viewDetailsButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         viewDetailsButton.setTitle("View Details", for: .normal)
         viewDetailsButton.addTarget(self, action: #selector(self.viewDetailsButtonAction(sender:)), for: .touchUpInside)
-        selfScreenContents.addSubview(viewDetailsButton)
+//        selfScreenContents.addSubview(viewDetailsButton)
         
         customization2NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * x))
         customization2NextButton.layer.cornerRadius = customization2NextButton.frame.height / 2
         customization2NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
         customization2NextButton.addTarget(self, action: #selector(self.customization2NextButtonAction(sender:)), for: .touchUpInside)
-        selfScreenContents.addSubview(customization2NextButton)
+//        selfScreenContents.addSubview(customization2NextButton)
+        
+        seeMaterialButton.frame = CGRect(x: x, y: patternScrollView.frame.maxY, width: selfScreenContents.frame.width - (8 * x), height: (4 * y))
+        seeMaterialButton.setTitle("Do you like to see the material", for: .normal)
+        seeMaterialButton.setTitleColor(UIColor.black, for: .normal)
+        seeMaterialButton.contentHorizontalAlignment = .right
+        seeMaterialButton.tag = 1
+        seeMaterialButton.addTarget(self, action: #selector(self.seeMaterialButtonAction(sender:)), for: .touchUpInside)
+        selfScreenContents.addSubview(seeMaterialButton)
+        
+        checkBox.frame = CGRect(x: 0, y: y, width: (2 * y), height: (2 * y))
+        checkBox.layer.cornerRadius = checkBox.frame.height / 2
+        checkBox.layer.borderWidth = 1
+        checkBox.layer.borderColor = UIColor.lightGray.cgColor
+        seeMaterialButton.addSubview(checkBox)
         
         self.stopActivity()
         
@@ -570,13 +586,30 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         }
     }
     
+    @objc func seeMaterialButtonAction(sender : UIButton)
+    {
+        if sender.tag == 1
+        {
+            checkBox.image = UIImage(named: "selectionImage")
+            sender.tag = 2
+        }
+        else
+        {
+            checkBox.image = nil
+            sender.tag = 1
+        }
+    }
+    
     @objc func viewDetailsButtonAction(sender : UIButton)
     {
         if selectedPatternId != 0
         {
-            colorArrayCount = 0
-            viewDetailsImageArray.removeAll()
-            serviceCall.API_ViewDetails(patternId: selectedPatternId, delegate: self)
+//            colorArrayCount = 0
+//            viewDetailsImageArray.removeAll()
+//            serviceCall.API_ViewDetails(patternId: selectedPatternId, delegate: self)
+            
+            let viewScreen = ViewDetailsViewController()
+            self.navigationController?.pushViewController(viewScreen, animated: true)
         }
         else
         {
@@ -606,6 +639,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     
     func viewDetailsContents()
     {
+        stopActivity()
+        
         detailsView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         detailsView.image = UIImage(named: "background")
         view.addSubview(detailsView)
@@ -1805,14 +1840,16 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
                 UserDefaults.standard.set(patternsArrayInEnglish[0], forKey: "pattern")
             }
         }
+        
+        let viewScreen = ViewDetailsViewController()
+        viewScreen.patternId = sender.tag
+        self.navigationController?.pushViewController(viewScreen, animated: true)
     }
     
     @objc func customization2NextButtonAction(sender : UIButton)
     {
         if selectedPatternId != 0
-        {
-            UserDefaults.standard.set(selectedPatternId, forKey: "patternId")
-            
+        {            
             let custom3Screen = Customization3ViewController()
             self.navigationController?.pushViewController(custom3Screen, animated: true)
         }

@@ -8,12 +8,14 @@
 
 import UIKit
 
-class ViewDetailsViewController: CommonViewController, UIScrollViewDelegate
+class ViewDetailsViewController: CommonViewController, ServerAPIDelegate, UIScrollViewDelegate
 {
+    var patternId = Int()
     let serviceCall = ServerAPI()
 
     //SCROLL VIEW CONTENTS
     let detailScrollView = UIScrollView()
+    let viewDetailsNextButton = UIButton()
     var viewDetailsImageArray = [String]()
     var colorArrayCount = Int()
     
@@ -45,9 +47,91 @@ class ViewDetailsViewController: CommonViewController, UIScrollViewDelegate
             self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }
         
+        print("PATTERN ID", patternId)
+        serviceCall.API_ViewDetails(patternId: patternId, delegate: self)
+        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+        print("errorMessage", errorMessage)
+    }
+    
+    func API_CALLBACK_ViewDetails(details: NSDictionary)
+    {
+        let responseMsg = details.object(forKey: "ResponseMsg") as! String
+        
+        if responseMsg == "Success"
+        {
+            let result = details.object(forKey: "Result") as! NSDictionary
+            
+            let color = result.object(forKey: "GetColorById") as! NSArray
+            print("COLOR", color)
+            
+            let colorImageArray = color.value(forKey: "ColorImage") as! NSArray
+            print("colorImageArray", colorImageArray)
+            
+            colorArrayCount = colorImageArray.count
+            
+            for i in 0..<colorImageArray.count
+            {
+                if let imageName  = colorImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            let pattern = result.object(forKey: "GetpattternById") as! NSArray
+            print("GetpattternById", pattern)
+            
+            let brandImageArray = pattern.value(forKey: "BrandImage") as! NSArray
+            print("brandImageArray", brandImageArray)
+            
+            for i in 0..<brandImageArray.count
+            {
+                if let imageName  = brandImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            let industryImageArray = pattern.value(forKey: "IndustryImage") as! NSArray
+            print("industryImageArray", industryImageArray)
+            
+            for i in 0..<industryImageArray.count
+            {
+                if let imageName  = industryImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            let materialImageArray = pattern.value(forKey: "MaterialImage") as! NSArray
+            print("materialImageArray", materialImageArray)
+            
+            for i in 0..<materialImageArray.count
+            {
+                if let imageName  = materialImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            let patternImageArray = pattern.value(forKey: "Image") as! NSArray
+            print("patternImageArray", patternImageArray)
+            
+            for i in 0..<patternImageArray.count
+            {
+                if let imageName  = patternImageArray[i] as? String
+                {
+                    viewDetailsImageArray.append(imageName)
+                }
+            }
+            
+            viewDetailsContents()
+        }
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -57,7 +141,9 @@ class ViewDetailsViewController: CommonViewController, UIScrollViewDelegate
     
     func viewDetailsContents()
     {
-        detailScrollView.frame = CGRect(x: (2 * x), y: navigationBar.frame.maxY + (2 * y), width: view.frame.width - (4 * x), height: view.frame.height - (30 * y))
+        stopActivity()
+        
+        detailScrollView.frame = CGRect(x: (2 * x), y: navigationBar.frame.maxY + (2 * y), width: view.frame.width - (4 * x), height: view.frame.height - (40 * y))
         detailScrollView.backgroundColor = UIColor.clear
         detailScrollView.isPagingEnabled = true
         detailScrollView.delegate = self
@@ -235,6 +321,13 @@ class ViewDetailsViewController: CommonViewController, UIScrollViewDelegate
             
             y1 = detailLabel.frame.maxY + 1
         }
+        
+        viewDetailsNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: y1 + y, width: (4 * x), height: (4 * x))
+        viewDetailsNextButton.layer.cornerRadius = viewDetailsNextButton.frame.height / 2
+        viewDetailsNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        viewDetailsNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
+        viewDetailsNextButton.addTarget(self, action: #selector(self.viewDetailsButtonAction(sender:)), for: .touchUpInside)
+        view.addSubview(viewDetailsNextButton)
     }
     
     func configurePageControl() {
@@ -250,6 +343,14 @@ class ViewDetailsViewController: CommonViewController, UIScrollViewDelegate
     @objc func changePage(sender: AnyObject) -> () {
         let x = CGFloat(pageControl.currentPage) * detailScrollView.frame.size.width
         detailScrollView.setContentOffset(CGPoint(x:x, y:0), animated: true)
+    }
+    
+    @objc func viewDetailsButtonAction(sender : UIButton)
+    {
+        UserDefaults.standard.set(patternId, forKey: "patternId")
+
+        let custom3Screen = Customization3ViewController()
+        self.navigationController?.pushViewController(custom3Screen, animated: true)
     }
 
     /*

@@ -53,6 +53,9 @@ class CommonViewController: UIViewController
     let customLoader = UIImageView()
     let customLoading = UIImageView()
     let backgroundCircle = UIView()
+    var loadingTimer = Timer()
+    let loadingText = UILabel()
+    var loadingCount = 0
 
     let pageBar = UIImageView()
     
@@ -127,6 +130,8 @@ class CommonViewController: UIViewController
             slideMenu()
             changeViewToEnglish()
         }
+        
+        loadingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -193,7 +198,40 @@ class CommonViewController: UIViewController
         customLoading.animationImages = imagesArray1 as? [UIImage]
         customLoading.animationDuration = 2.0
         customLoading.startAnimating()
-        backgroundCircle.addSubview(customLoading)
+//        backgroundCircle.addSubview(customLoading)
+        
+        forLoadingText()
+        loadingCount = 1
+        loadingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
+
+    }
+    
+    @objc func timerCall()
+    {
+        if loadingCount == 0
+        {
+            forLoadingText()
+            loadingCount = 1
+        }
+        else if loadingCount == 1
+        {
+            self.loadingText.text = "Loading.."
+            loadingCount = 2
+        }
+        else
+        {
+            self.loadingText.text = "Loading..."
+            loadingCount = 0
+        }
+    }
+    
+    func forLoadingText()
+    {
+        loadingText.frame = CGRect(x: ((activeView.frame.width - (8 * x)) / 2), y: backgroundCircle.frame.maxY, width: (8 * x), height: (3 * y))
+        loadingText.text = "Loading."
+        loadingText.textAlignment = .left
+        loadingText.textColor = UIColor.white
+        activeView.addSubview(loadingText)
     }
     
     func stopActivity()

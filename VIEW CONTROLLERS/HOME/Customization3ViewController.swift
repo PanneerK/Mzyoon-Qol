@@ -67,6 +67,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
     
     //CUSTOMIZATION PARAMETERS
     let customBlurView = UIView()
+    let customTitleLabel = UILabel()
+    let customTableView = UITableView()
     
     var applicationDelegate = AppDelegate()
 
@@ -96,6 +98,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         }
         
         self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
+        
+//        self.serviceCall.API_Customization3(DressTypeId: "112", delegate: self)
         
         super.viewDidLoad()
         
@@ -930,7 +934,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customBlurView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         view.addSubview(customBlurView)
         
-        let customTitleLabel = UILabel()
         customTitleLabel.frame = CGRect(x: x, y: customBlurView.frame.height - (35 * y), width: customBlurView.frame.width - (2 * x), height: (5 * y))
         customTitleLabel.backgroundColor = UIColor.white
         customTitleLabel.text = "Customize your material"
@@ -939,11 +942,6 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customTitleLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         customTitleLabel.font = customTitleLabel.font.withSize(2 * x)
         customBlurView.addSubview(customTitleLabel)
-        
-        let underline = UILabel()
-        underline.frame = CGRect(x: x, y: customTitleLabel.frame.maxY, width: customBlurView.frame.width  - (2 * x), height: 1)
-        underline.backgroundColor = UIColor.lightGray
-        customBlurView.addSubview(underline)
         
         if customAttEnglishNameArray.count <= 5
         {
@@ -954,7 +952,11 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
             customTitleLabel.frame = CGRect(x: x, y: customBlurView.frame.height - ((35 * y) + (CGFloat(customAttEnglishNameArray.count) * y)), width: customBlurView.frame.width - (2 * x), height: (5 * y))
         }
         
-        let customTableView = UITableView()
+        let underline = UILabel()
+        underline.frame = CGRect(x: x, y: customTitleLabel.frame.maxY, width: customBlurView.frame.width  - (2 * x), height: 1)
+        underline.backgroundColor = UIColor.lightGray
+        customBlurView.addSubview(underline)
+        
         customTableView.frame = CGRect(x: x, y: underline.frame.maxY, width: customBlurView.frame.width - (2 * x), height: (CGFloat(customAttEnglishNameArray.count) * 4 * y))
         customTableView.backgroundColor = UIColor.clear
         customTableView.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
@@ -963,6 +965,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customTableView.dataSource = self
         customTableView.delegate = self
         customBlurView.addSubview(customTableView)
+    
+        customTableView.reloadData()
         
         let customCancelButton = UIButton()
         customCancelButton.frame = CGRect(x: x, y: customTableView.frame.maxY, width: customBlurView.frame.width - (2 * x), height: (5 * y))
@@ -1000,7 +1004,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         cell.textLabel?.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         
         let customSelectedImage = UIImageView()
-        customSelectedImage.frame = CGRect(x: customLabel.frame.maxX, y: y, width: (2 * y), height: (2 * y))
+        customSelectedImage.frame = CGRect(x: cell.frame.width - (3 * y), y: y, width: (2 * y), height: (2 * y))
         customSelectedImage.image = UIImage(named: "selectionImage")
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String

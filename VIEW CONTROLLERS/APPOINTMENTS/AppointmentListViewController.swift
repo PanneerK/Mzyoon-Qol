@@ -11,7 +11,7 @@ import UIKit
 class AppointmentListViewController: CommonViewController,ServerAPIDelegate
 {
    
-     let serviceCall = ServerAPI()
+    let serviceCall = ServerAPI()
     
     let selfScreenNavigationBar = UIView()
     let selfScreenNavigationTitle = UILabel()
@@ -50,8 +50,6 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-   
-        
   }
     
     override func viewWillAppear(_ animated: Bool)

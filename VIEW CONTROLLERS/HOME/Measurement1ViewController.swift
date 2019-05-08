@@ -485,7 +485,11 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     
     @objc func threeButtonAction(sender : UIButton)
     {
-        if sender.tag == 0
+         if sender.tag == 1
+        {
+            hintsView.removeFromSuperview()
+        }
+        else if sender.tag == 0
         {
             if hintTag != 0
             {
@@ -523,10 +527,6 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
             {
                 hintsNextButton.setTitle("Next", for: .normal)
             }
-        }
-        else if sender.tag == 1
-        {
-            hintsView.removeFromSuperview()
         }
         else if sender.tag == 2
         {
