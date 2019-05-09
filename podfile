@@ -13,5 +13,6 @@ target 'Mzyoon' do
   pod 'FSCalendar'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  pod 'OpenSans'
   
 end
