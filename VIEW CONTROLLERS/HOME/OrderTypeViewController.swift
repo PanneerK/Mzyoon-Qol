@@ -146,8 +146,6 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         
         if ResponseMsg == "Success"
         {
-            stopActivity()
-            
             let Result = orderType.object(forKey: "Result") as! NSArray
             
             orderTypeNameArray = Result.value(forKey: "HeaderInEnglish") as! NSArray
@@ -290,6 +288,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     
     func orderTypeContent()
     {
+        stopActivity()
+
         selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
