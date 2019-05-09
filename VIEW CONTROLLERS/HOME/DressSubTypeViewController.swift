@@ -71,7 +71,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool)
+    /*override func viewWillAppear(_ animated: Bool)
     {
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -110,7 +110,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             slideMenu()
             changeViewToEnglish()
         }
-    }
+    }*/
     
     func DeviceError()
     {

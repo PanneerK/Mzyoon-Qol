@@ -70,7 +70,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool)
+    /*override func viewWillAppear(_ animated: Bool)
     {
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -109,7 +109,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
             slideMenu()
             changeViewToEnglish()
         }
-    }
+    }*/
     
     func DeviceError()
     {

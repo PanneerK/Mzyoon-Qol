@@ -45,7 +45,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             // Your code with delay
             
             self.pageBar.isHidden = true
-            self.slideMenuButton.isHidden = false
             
             if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
@@ -70,8 +69,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             }
         }
         
-       
-                
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -141,10 +138,6 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         SideMenuManager.default.menuFadeStatusBar = false
     }
     
-<<<<<<< HEAD
-
-=======
->>>>>>> 134422f21a9756b5d7618b8b630c573a20523e78
     func deviceDetails()
     {
         let systemVersion = UIDevice.current.systemVersion
@@ -189,11 +182,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             print("Result:",result)
         }
     }
-<<<<<<< HEAD
 
-=======
-       
->>>>>>> 134422f21a9756b5d7618b8b630c573a20523e78
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR MESSAGE IN HOME PAGE", errorMessage)
@@ -261,6 +250,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         let imageName = ["new_order", "appointment", "store", "refer-&-earn"]
         var y1:CGFloat = (10 * yPos)
         
+        self.slideMenuButton.isHidden = false
+        
         self.stopActivity()
         for i in 0..<4
         {
@@ -320,6 +311,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         let buttonTitleText = ["طلب جديد", "حجز موعد", "متجر", "اشير واكسب"]
         let imageName = ["new_order", "appointment", "store", "refer-&-earn"]
         var y1:CGFloat = (10 * yPos)
+        
+        self.slideMenuButton.isHidden = false
         
         self.stopActivity()
         

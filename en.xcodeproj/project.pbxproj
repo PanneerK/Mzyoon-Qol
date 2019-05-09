@@ -47,6 +47,7 @@
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
+		FD25308D22842910008FA9E0 /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25308C22842910008FA9E0 /* CodeInputView.swift */; };
 		FD2ADFB82175A5480033025B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFB72175A5480033025B /* AppDelegate.swift */; };
 		FD2ADFBF2175A5500033025B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFBE2175A5500033025B /* Assets.xcassets */; };
 		FD2ADFC22175A5500033025B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFC02175A5500033025B /* LaunchScreen.storyboard */; };
@@ -154,6 +155,7 @@
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
+		FD25308C22842910008FA9E0 /* CodeInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeInputView.swift; path = "../../../../Downloads/CodeInputView-master 2/CodeInputView/CodeInputView.swift"; sourceTree = "<group>"; };
 		FD2ADFB42175A5480033025B /* Mzyoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mzyoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2ADFB72175A5480033025B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD2ADFBE2175A5500033025B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 			isa = PBXGroup;
 			children = (
 				FDFE07342189E49F0056E773 /* ActivityView.swift */,
+				FD25308C22842910008FA9E0 /* CodeInputView.swift */,
 			);
 			path = VIEW;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				FD5774AE219AA2950026DBF8 /* FilterTableViewCell.swift in Sources */,
 				FD60980021A2812B00DCCF58 /* OrderSummaryViewController.swift in Sources */,
 				FD2ADFE62175A5AB0033025B /* LoginViewController.swift in Sources */,
+				FD25308D22842910008FA9E0 /* CodeInputView.swift in Sources */,
 				DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */,
 				DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */,
 				FD71D257219E994100FFC067 /* CommonViewController.swift in Sources */,

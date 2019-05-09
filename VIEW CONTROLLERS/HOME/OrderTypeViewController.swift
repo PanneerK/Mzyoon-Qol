@@ -86,7 +86,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool)
+    /*override func viewWillAppear(_ animated: Bool)
     {        
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -106,7 +106,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
             slideMenu()
             changeViewToEnglish()
         }
-    }
+    }*/
     
     func DeviceError()
     {

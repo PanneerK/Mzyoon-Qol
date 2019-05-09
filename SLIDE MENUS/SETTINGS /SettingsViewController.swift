@@ -14,6 +14,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     var x = CGFloat()
     var y = CGFloat()
     
+    let selfScreenContents = UIView()
+    
     let backgroundImage = UIImageView()
     let navigationBar = UIView()
     let navigationTitle = UILabel()
@@ -67,22 +69,28 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         settingsTableView.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
 //        view.addSubview(settingsTableView)
         
-        languageButton.frame = CGRect(x: (2 * x), y: navigationBar.frame.maxY + (3 * y), width: view.frame.width - (4 * x), height: (5 * y))
+        selfScreenContents.frame = CGRect(x: x, y: navigationBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - (navigationBar.frame.maxY))
+        selfScreenContents.backgroundColor = UIColor.clear
+        view.addSubview(selfScreenContents)
+        
+        languageButton.frame = CGRect(x: (2 * x), y: (3 * y), width: view.frame.width - (4 * x), height: (5 * y))
         languageButton.layer.cornerRadius = 10
         languageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         languageButton.setTitle("Language Setting - English", for: .normal)
         languageButton.setTitleColor(UIColor.white, for: .normal)
         languageButton.addTarget(self, action: #selector(self.languageFunction), for: .touchUpInside)
-        view.addSubview(languageButton)
+        selfScreenContents.addSubview(languageButton)
         
         hintsButton.frame = CGRect(x: (2 * x), y: languageButton.frame.maxY + y, width: view.frame.width - (4 * x), height: (5 * y))
         hintsButton.layer.cornerRadius = 10
         hintsButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         hintsButton.setTitleColor(UIColor.white, for: .normal)
         hintsButton.addTarget(self, action: #selector(self.hintsSwicthAction), for: .touchUpInside)
-        view.addSubview(hintsButton)
+        selfScreenContents.addSubview(hintsButton)
         
         hintsSwitch.frame = CGRect(x: hintsButton.frame.maxX - (7 * x), y: ((hintsButton.frame.height - 31) / 2), width: (5.1 * x), height: 31)
+//        hintsSwitch.tintColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
+        hintsSwitch.onTintColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
         hintsSwitch.addTarget(self, action: #selector(self.hintsSwicthAction), for: .valueChanged)
         hintsButton.addSubview(hintsSwitch)
         
@@ -262,13 +270,23 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         navigationTitle.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         navigationTitle.text = "الإعدادات"
         
-        languageButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        selfScreenContents.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        let textString = "عربى"
-        languageButton.setTitle("\(textString) - إعدادات اللغة", for: .normal)
+//        languageButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         
-        hintsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        languageButton.setTitle("إعداد اللغة - العربية", for: .normal)
+        
+//        hintsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         hintsSwitch.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        
+        if hintsSwitch.isOn == true
+        {
+            hintsButton.setTitle("إيقاف تلميحات", for: .normal)
+        }
+        else
+        {
+            hintsButton.setTitle("تلميحات على", for: .normal)
+        }
     }
     
     func changeViewToEnglish()
@@ -277,11 +295,22 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         navigationTitle.text = "SETTINGS"
         
+        selfScreenContents.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
         languageButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         languageButton.setTitle("Language Setting - English", for: .normal)
         
         hintsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         hintsSwitch.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        
+        if hintsSwitch.isOn == true
+        {
+            hintsButton.setTitle("Hints off", for: .normal)
+        }
+        else
+        {
+            hintsButton.setTitle("Hints on", for: .normal)
+        }
     }
     
     /*

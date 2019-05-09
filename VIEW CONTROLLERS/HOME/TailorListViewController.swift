@@ -96,6 +96,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     var hintTag = 0
     let hintsImage = UIImageView()
     let detailedLabel = UILabel()
+    
+    let singleSelectionImage = UIImageView()
 
     var applicationDelegate = AppDelegate()
     
@@ -1807,27 +1809,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         }
         else
         {
-            for views in tailorListScrollView.subviews
-            {
-                if let button = views as? UIButton
-                {
-                    for foundView in button.subviews
-                    {
-                        if let imageView = foundView as? UIImageView
-                        {
-                            if imageView.tag != -1
-                            {
-                                imageView.removeFromSuperview()
-                            }
-                        }
-                    }
-                }
-            }
+            singleSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
+            singleSelectionImage.image = UIImage(named: "selectionImage")
+            singleSelectionImage.tag = sender.tag
+            
             selectedTailorListNameArray.removeAll()
             selectedTailorListArray.removeAll()
 
             selectedTailorListArray.append(sender.tag)
-            sender.addSubview(selectionImage)
+            sender.addSubview(singleSelectionImage)
             
             for i in 0..<IdArray.count
             {

@@ -63,7 +63,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool)
+    /*override func viewWillAppear(_ animated: Bool)
     {
         for allViews in selfScreenContents.subviews
         {
@@ -91,7 +91,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             changeViewToEnglish()
             self.newOrderContents(getInputArray: genderArray)
         }
-    }
+    }*/
     
     func DeviceError()
     {

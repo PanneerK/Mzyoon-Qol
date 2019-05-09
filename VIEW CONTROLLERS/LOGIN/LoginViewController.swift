@@ -1163,6 +1163,12 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp1Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
         otpView.addSubview(otp1Letter)
         
+        if #available(iOS 12.0, *) {
+            otp1Letter.textContentType = .oneTimeCode
+        } else {
+            // Fallback on earlier versions
+        }
+        
         let border = CALayer()
         let width = CGFloat(2.0)
         border.borderColor = UIColor.black.cgColor

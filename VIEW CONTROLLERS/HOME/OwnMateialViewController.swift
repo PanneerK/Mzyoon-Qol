@@ -78,7 +78,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         // Do any additional setup after loading the view.
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    /*override func viewWillAppear(_ animated: Bool) {
 //        self.addMaterialContent()
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -98,7 +98,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
             slideMenu()
             changeViewToEnglish()
         }
-    }
+    }*/
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
