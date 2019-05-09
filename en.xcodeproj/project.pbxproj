@@ -47,7 +47,7 @@
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
 		FD25308D22842910008FA9E0 /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25308C22842910008FA9E0 /* CodeInputView.swift */; };
-		FD25308F22843354008FA9E0 /* GoogleService-Info (3).plist in Resources */ = {isa = PBXBuildFile; fileRef = FD25308E22843354008FA9E0 /* GoogleService-Info (3).plist */; };
+		FD25308F22843354008FA9E0 /* GoogleService-Info .plist in Resources */ = {isa = PBXBuildFile; fileRef = FD25308E22843354008FA9E0 /* GoogleService-Info .plist */; };
 		FD2ADFB82175A5480033025B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFB72175A5480033025B /* AppDelegate.swift */; };
 		FD2ADFBF2175A5500033025B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFBE2175A5500033025B /* Assets.xcassets */; };
 		FD2ADFC22175A5500033025B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFC02175A5500033025B /* LaunchScreen.storyboard */; };
@@ -155,7 +155,7 @@
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
 		FD25308C22842910008FA9E0 /* CodeInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeInputView.swift; path = "../../../../Downloads/CodeInputView-master 2/CodeInputView/CodeInputView.swift"; sourceTree = "<group>"; };
-		FD25308E22843354008FA9E0 /* GoogleService-Info (3).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info (3).plist"; path = "../../../../Downloads/GoogleService-Info (3).plist"; sourceTree = "<group>"; };
+		FD25308E22843354008FA9E0 /* GoogleService-Info .plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info .plist"; path = "../../../../Downloads/GoogleService-Info .plist"; sourceTree = "<group>"; };
 		FD2ADFB42175A5480033025B /* Mzyoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mzyoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2ADFB72175A5480033025B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD2ADFBE2175A5500033025B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -337,7 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				FD10A4022253657800438A9D /* Mzyoon.entitlements */,
-				FD25308E22843354008FA9E0 /* GoogleService-Info (3).plist */,
+				FD25308E22843354008FA9E0 /* GoogleService-Info .plist */,
 				FD2ADFB72175A5480033025B /* AppDelegate.swift */,
 				DA8F54D02211ACCA00CCA501 /* XMLReader.h */,
 				DA8F54D12211ACCA00CCA501 /* XMLReader.m */,
@@ -605,7 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD2ADFC22175A5500033025B /* LaunchScreen.storyboard in Resources */,
-				FD25308F22843354008FA9E0 /* GoogleService-Info (3).plist in Resources */,
+				FD25308F22843354008FA9E0 /* GoogleService-Info .plist in Resources */,
 				FD2ADFBF2175A5500033025B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -961,6 +961,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DDB0F57EB0056E4AF113C9BB /* Pods-Mzyoon.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Mzyoon/Mzyoon.entitlements;
@@ -991,6 +992,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A5457EC0C6335A24A15B04CE /* Pods-Mzyoon.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Mzyoon/Mzyoon.entitlements;
