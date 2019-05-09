@@ -137,7 +137,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
         SideMenuManager.default.menuFadeStatusBar = false
     }
-    
+
     func deviceDetails()
     {
         let systemVersion = UIDevice.current.systemVersion

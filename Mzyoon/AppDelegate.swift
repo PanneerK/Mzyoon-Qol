@@ -29,9 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     {
         // Override point for customization after application launch.
         
-        GMSServices.provideAPIKey("AIzaSyBeDuAraL0aQgpbr2dGw3bqBywv-R3gQOM")
+        GMSServices.provideAPIKey("AIzaSyBCXjn6o1fJeIi1RtL0AUId1GeiAJa-n0M")   // ("AIzaSyBeDuAraL0aQgpbr2dGw3bqBywv-R3gQOM")
         
-        GMSPlacesClient.provideAPIKey("AIzaSyBeDuAraL0aQgpbr2dGw3bqBywv-R3gQOM")
+        GMSPlacesClient.provideAPIKey("AIzaSyBCXjn6o1fJeIi1RtL0AUId1GeiAJa-n0M") //("AIzaSyBeDuAraL0aQgpbr2dGw3bqBywv-R3gQOM")
         
         UserDefaults.standard.set(0, forKey: "screenValue")
         
