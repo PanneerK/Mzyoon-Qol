@@ -9,8 +9,9 @@
 import UIKit
 import NVActivityIndicatorView
 
-class LoginViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate, UITextFieldDelegate
+class LoginViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate, UITextFieldDelegate, CodeInputViewDelegate
 {
+    
     var findString = "appDelegate"
     
     var x = CGFloat()
@@ -48,6 +49,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     var act = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     var secs = 30
     var secTimer = Timer()
+    let OTPView = CodeInputView()
     
     //SERVER PARAMETERS
     let server = ServerAPI()
@@ -530,8 +532,9 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
                 if language == "en"
                 {
                     let errorAlert = UIAlertController(title: "Alert", message: "Invalid OTP", preferredStyle: .alert)
-                    errorAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in self.OTPView.clear(); self.OTPView.becomeFirstResponder() })
                     self.present(errorAlert, animated: true, completion: nil)
+                    
                 }
                 else if language == "ar"
                 {
@@ -1161,7 +1164,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp1Letter.returnKeyType = .next
         otp1Letter.delegate = self
         otp1Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
-        otpView.addSubview(otp1Letter)
+//        otpView.addSubview(otp1Letter)
         
         if #available(iOS 12.0, *) {
             otp1Letter.textContentType = .oneTimeCode
@@ -1173,6 +1176,16 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         let width = CGFloat(2.0)
         border.borderColor = UIColor.black.cgColor
         border.frame = CGRect(x: 0, y: otp1Letter.frame.size.height - width, width: otp1Letter.frame.size.width, height: otp1Letter.frame.size.height)
+        
+        OTPView.frame = CGRect(x: 0, y: otpEnterLabel.frame.maxY + (2 * y), width: view.frame.width, height: (9 * y))
+        OTPView.delegate = self
+        otpView.addSubview(OTPView)
+        
+        otpView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.cancelKeyboardGestureRecogniser(gesture:))))
+        
+        OTPView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.OTPTapGestureRecongniser(gesture:))))
+        
+//         OTPView.becomeFirstResponder()
         
         border.borderWidth = width
         otp1Letter.layer.addSublayer(border)
@@ -1191,7 +1204,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp2Letter.returnKeyType = .next
         otp2Letter.delegate = self
         otp2Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
-        otpView.addSubview(otp2Letter)
+//        otpView.addSubview(otp2Letter)
         
         let border2 = CALayer()
         border2.borderColor = UIColor.black.cgColor
@@ -1213,7 +1226,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp3Letter.returnKeyType = .next
         otp3Letter.delegate = self
         otp3Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
-        otpView.addSubview(otp3Letter)
+//        otpView.addSubview(otp3Letter)
         
         let border3 = CALayer()
         border3.borderColor = UIColor.black.cgColor
@@ -1235,7 +1248,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp4Letter.returnKeyType = .next
         otp4Letter.delegate = self
         otp4Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
-        otpView.addSubview(otp4Letter)
+//        otpView.addSubview(otp4Letter)
         
         let border4 = CALayer()
         border4.borderColor = UIColor.black.cgColor
@@ -1256,7 +1269,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp5Letter.returnKeyType = .next
         otp5Letter.delegate = self
         otp5Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
-        otpView.addSubview(otp5Letter)
+//        otpView.addSubview(otp5Letter)
         
         let border5 = CALayer()
         border5.borderColor = UIColor.black.cgColor
@@ -1278,7 +1291,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         otp6Letter.returnKeyType = .done
         otp6Letter.delegate = self
         otp6Letter.addTarget(self, action: #selector(self.textFieldDidChange(textField:)), for: .editingChanged)
-        otpView.addSubview(otp6Letter)
+//        otpView.addSubview(otp6Letter)
         
         let border6 = CALayer()
         border6.borderColor = UIColor.black.cgColor
@@ -1364,6 +1377,16 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             changeViewToEnglish()
         }
+    }
+    
+    @objc func OTPTapGestureRecongniser(gesture : UITapGestureRecognizer)
+    {
+        OTPView.becomeFirstResponder()
+    }
+    
+    @objc func cancelKeyboardGestureRecogniser(gesture : UITapGestureRecognizer)
+    {
+        self.view.endEditing(true)
     }
     
     @objc func timerCall(timer : Timer)
@@ -1787,6 +1810,20 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         return true
+    }
+    
+    func codeInputView(_ codeInputView: CodeInputView, didFinishWithCode code: String) {
+        let title = (code == "123456" ? "Correct!" : "Wrong!")
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel) { _ in codeInputView.clear() })
+//        present(alert, animated: true)
+        
+        self.view.endEditing(true)
+        
+        server.API_ValidateOTP(CountryCode: mobileCountryCodeLabel.text!, PhoneNo: mobileTextField.text!, otp: "\(code)", type: "Customer", delegate: self)
+
+        UserDefaults.standard.set(mobileTextField.text!, forKey: "Phone")
+        
     }
     
     /*

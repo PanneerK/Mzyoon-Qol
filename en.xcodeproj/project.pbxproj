@@ -32,6 +32,7 @@
 		FD0611A821D4F481006FDAC4 /* MeasurementCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0611A721D4F481006FDAC4 /* MeasurementCall.swift */; };
 		FD0785D9220964E1001B9FC9 /* ConversionToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0785D8220964E1001B9FC9 /* ConversionToJson.swift */; };
 		FD0785DC2209A489001B9FC9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */; };
+		FD08181822857CDC00B6DEEB /* OTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD08181722857CDC00B6DEEB /* OTPViewController.swift */; };
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
 		FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0DD42C2242192800F7AF38 /* TestingViewController.swift */; };
 		FD0EB0A12282A33400F7119F /* ViewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB0A02282A33400F7119F /* ViewDetailsViewController.swift */; };
@@ -139,6 +140,7 @@
 		FD0611A721D4F481006FDAC4 /* MeasurementCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementCall.swift; sourceTree = "<group>"; };
 		FD0785D8220964E1001B9FC9 /* ConversionToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionToJson.swift; sourceTree = "<group>"; };
 		FD0785DB2209A489001B9FC9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		FD08181722857CDC00B6DEEB /* OTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewController.swift; sourceTree = "<group>"; };
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
 		FD0DD42C2242192800F7AF38 /* TestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingViewController.swift; sourceTree = "<group>"; };
 		FD0EB0A02282A33400F7119F /* ViewDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailsViewController.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				FD2ADFE52175A5AB0033025B /* LoginViewController.swift */,
+				FD08181722857CDC00B6DEEB /* OTPViewController.swift */,
 				FD4631DB21775055002C06CA /* CountryCodeTableViewCell.swift */,
 				FD696A8621AC208600E622FC /* IntroProfileViewController.swift */,
 			);
@@ -738,6 +741,7 @@
 				FD462DDA21AD0E9A0073B53B /* Measurement2ViewController.swift in Sources */,
 				DA02A4F922265FD700577CBA /* ShopDetailsViewController.swift in Sources */,
 				DA0DB13A21F98D9C00C20299 /* PaymentViewController.swift in Sources */,
+				FD08181822857CDC00B6DEEB /* OTPViewController.swift in Sources */,
 				DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */,
 				DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */,
 				FD71D26A219F2EFE00FFC067 /* ReferenceImageViewController.swift in Sources */,
@@ -1031,6 +1035,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V4W4WB96C8;
 				INFOPLIST_FILE = MzyoonTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1051,6 +1056,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V4W4WB96C8;
 				INFOPLIST_FILE = MzyoonTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
