@@ -369,11 +369,51 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         }
         else if sender.tag == 2
         {
-            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Stores are not available", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let alert = UIAlertController(title: "تنبيه", message: "المتاجر غير متوفرة", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Stores are not available", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
         else if sender.tag == 3
         {
-            
+            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            {
+                if language == "en"
+                {
+                    let alert = UIAlertController(title: "Alert", message: "Refer and earn will be updated soon", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                else if language == "ar"
+                {
+                    let alert = UIAlertController(title: "تنبيه", message: "سيتم تحديث العائد والربح قريبًا", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "حسنا", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+            else
+            {
+                let alert = UIAlertController(title: "Alert", message: "Refer and earn will be updated soon", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
 
