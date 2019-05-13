@@ -26,6 +26,7 @@
 		DAA737BD2215D1BC00B4B573 /* TelrResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */; };
 		DAB3CE0E21DF2A750080549A /* AppointmentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */; };
 		DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */; };
+		DAC59759228944ED0059081D /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC59758228944ED0059081D /* CodeInputView.swift */; };
 		DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */; };
 		DAE1A10C21DCDD61009A612F /* TrackingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE1A10B21DCDD61009A612F /* TrackingTableViewCell.swift */; };
 		DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */; };
@@ -47,7 +48,6 @@
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
-		FD25308D22842910008FA9E0 /* CodeInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD25308C22842910008FA9E0 /* CodeInputView.swift */; };
 		FD2ADFB82175A5480033025B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFB72175A5480033025B /* AppDelegate.swift */; };
 		FD2ADFBF2175A5500033025B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFBE2175A5500033025B /* Assets.xcassets */; };
 		FD2ADFC22175A5500033025B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFC02175A5500033025B /* LaunchScreen.storyboard */; };
@@ -133,6 +133,7 @@
 		DAA737BC2215D1BC00B4B573 /* TelrResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelrResponseViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0D21DF2A750080549A /* AppointmentListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentListViewController.swift; sourceTree = "<group>"; };
 		DAB3CE0F21DF4E580080549A /* AppointmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentViewController.swift; sourceTree = "<group>"; };
+		DAC59758228944ED0059081D /* CodeInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeInputView.swift; sourceTree = "<group>"; };
 		DAE1A10921DCBE2A009A612F /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingViewController.swift; sourceTree = "<group>"; };
 		DAE1A10B21DCDD61009A612F /* TrackingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingTableViewCell.swift; sourceTree = "<group>"; };
 		DAE43B5321C2492E002ED428 /* OrderApprovalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApprovalViewController.swift; sourceTree = "<group>"; };
@@ -156,7 +157,6 @@
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
-		FD25308C22842910008FA9E0 /* CodeInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CodeInputView.swift; path = "../../../../Downloads/CodeInputView-master 2/CodeInputView/CodeInputView.swift"; sourceTree = "<group>"; };
 		FD2ADFB42175A5480033025B /* Mzyoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mzyoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2ADFB72175A5480033025B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD2ADFBE2175A5500033025B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -478,7 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				FDFE07342189E49F0056E773 /* ActivityView.swift */,
-				FD25308C22842910008FA9E0 /* CodeInputView.swift */,
+				DAC59758228944ED0059081D /* CodeInputView.swift */,
 			);
 			path = VIEW;
 			sourceTree = "<group>";
@@ -765,13 +765,13 @@
 				FD5774AE219AA2950026DBF8 /* FilterTableViewCell.swift in Sources */,
 				FD60980021A2812B00DCCF58 /* OrderSummaryViewController.swift in Sources */,
 				FD2ADFE62175A5AB0033025B /* LoginViewController.swift in Sources */,
-				FD25308D22842910008FA9E0 /* CodeInputView.swift in Sources */,
 				DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */,
 				DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */,
 				FD71D257219E994100FFC067 /* CommonViewController.swift in Sources */,
 				FDC9BB902186F6E1003BA5C9 /* OrdersViewController.swift in Sources */,
 				FD71D264219F1F2200FFC067 /* Customization2ViewController.swift in Sources */,
 				FD71D260219EF93700FFC067 /* OwnMateialViewController.swift in Sources */,
+				DAC59759228944ED0059081D /* CodeInputView.swift in Sources */,
 				DA077FC221D6608000D9E565 /* OrderRequestListViewController.swift in Sources */,
 				FD2ADFB82175A5480033025B /* AppDelegate.swift in Sources */,
 				FD696A8721AC208600E622FC /* IntroProfileViewController.swift in Sources */,
