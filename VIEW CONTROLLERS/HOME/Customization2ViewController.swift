@@ -455,6 +455,12 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         
         viewDetailsButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         viewDetailsButton.setTitle("عرض التفاصيل", for: .normal)
+        
+        seeMaterialButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+        seeMaterialButton.setTitle("كنت ترغب في رؤية المواد", for: .normal)
+        seeMaterialButton.contentHorizontalAlignment = .right
+
+        checkBox.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
     }
     
     func changeViewToEnglishInSelf()
@@ -470,6 +476,12 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         
         viewDetailsButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         viewDetailsButton.setTitle("View Details", for: .normal)
+        
+        seeMaterialButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        seeMaterialButton.setTitle("Do you like to see the material", for: .normal)
+        seeMaterialButton.contentHorizontalAlignment = .left
+        
+        checkBox.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
     }
     
     func customization2Content()
@@ -553,19 +565,20 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         customization2NextButton.addTarget(self, action: #selector(self.customization2NextButtonAction(sender:)), for: .touchUpInside)
 //        selfScreenContents.addSubview(customization2NextButton)
         
-        seeMaterialButton.frame = CGRect(x: x, y: patternScrollView.frame.maxY, width: selfScreenContents.frame.width - (8 * x), height: (4 * y))
-        seeMaterialButton.setTitle("Do you like to see the material", for: .normal)
-        seeMaterialButton.setTitleColor(UIColor.black, for: .normal)
-        seeMaterialButton.contentHorizontalAlignment = .right
-        seeMaterialButton.tag = 1
-        seeMaterialButton.addTarget(self, action: #selector(self.seeMaterialButtonAction(sender:)), for: .touchUpInside)
-        selfScreenContents.addSubview(seeMaterialButton)
-        
-        checkBox.frame = CGRect(x: 0, y: y, width: (2 * y), height: (2 * y))
+        checkBox.frame = CGRect(x: x, y: patternScrollView.frame.maxY + y, width: (2 * y), height: (2 * y))
         checkBox.layer.cornerRadius = checkBox.frame.height / 2
         checkBox.layer.borderWidth = 1
         checkBox.layer.borderColor = UIColor.lightGray.cgColor
-        seeMaterialButton.addSubview(checkBox)
+        checkBox.image = UIImage(named: "unCheck")
+        selfScreenContents.addSubview(checkBox)
+        
+        seeMaterialButton.frame = CGRect(x: checkBox.frame.maxX + x, y: patternScrollView.frame.maxY, width: selfScreenContents.frame.width - (8 * x), height: (4 * y))
+        seeMaterialButton.setTitle("Do you like to see the material", for: .normal)
+        seeMaterialButton.setTitleColor(UIColor.black, for: .normal)
+        seeMaterialButton.contentHorizontalAlignment = .left
+        seeMaterialButton.tag = 1
+        seeMaterialButton.addTarget(self, action: #selector(self.seeMaterialButtonAction(sender:)), for: .touchUpInside)
+        selfScreenContents.addSubview(seeMaterialButton)
         
         self.stopActivity()
         
@@ -590,12 +603,12 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
     {
         if sender.tag == 1
         {
-            checkBox.image = UIImage(named: "selectionImage")
+            checkBox.image = UIImage(named: "check")
             sender.tag = 2
         }
         else
         {
-            checkBox.image = nil
+            checkBox.image = UIImage(named: "unCheck")
             sender.tag = 1
         }
     }

@@ -186,11 +186,32 @@ class CommonViewController: UIViewController
         backgroundCircle.addSubview(customLoader)
         
         let imagesArray1 = [UIImage(named: "loading1"), UIImage(named: "loading2"), UIImage(named: "loading3")]
+        let imagesArray2 = [UIImage(named: "loadingArabic1"), UIImage(named: "loadingArabic2"), UIImage(named: "loadingArabic3")]
         
         customLoading.frame = CGRect(x: ((activeView.frame.width - (8 * x)) / 2), y: backgroundCircle.frame.maxY + y, width: (8 * x), height: y)
         //        customLoading.backgroundColor = UIColor.gray
         customLoading.layer.cornerRadius = customLoader.frame.height / 2
-        customLoading.animationImages = imagesArray1 as? [UIImage]
+        if let language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            if language == "en"
+            {
+                customLoading.animationImages = imagesArray1 as? [UIImage]
+                customLoading.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                customLoader.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+            else if language == "ar"
+            {
+                customLoading.animationImages = imagesArray2 as? [UIImage]
+                customLoading.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+                customLoader.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
+            }
+        }
+        else
+        {
+            customLoading.animationImages = imagesArray1 as? [UIImage]
+            customLoading.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            customLoader.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }
         customLoading.animationDuration = 2.0
         customLoading.startAnimating()
         activeView.addSubview(customLoading)
