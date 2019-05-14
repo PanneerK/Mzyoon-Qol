@@ -49,6 +49,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
 
         // Do any additional setup after loading the view.
         
+         selectedButton(tag: 2)
         
     }
     override func viewWillAppear(_ animated: Bool)

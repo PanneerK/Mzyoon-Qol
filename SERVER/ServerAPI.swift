@@ -2747,6 +2747,39 @@ class ServerAPI : NSObject
             delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
         }
     }
+    
+    // 14.05.2019 -  Tailor order Approved..
+    func API_IsApproveTailorOrder(OrderId : Int, TailorId : Int, IsApproved:Int, delegate : ServerAPIDelegate)
+    {
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - order summary..")
+            
+            let parameters = ["OrderId" : OrderId, "TailorId" : TailorId, "IsApproved" : IsApproved] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/shop/TailorOrderApproved", arguments: [baseURL])
+            
+            print("Tailor Order IsApprove: ", urlString)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("response", self.resultDict)
+                    delegate.API_CALLBACK_TailorOrderApprove!(TailorApprove: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 50, errorMessage: "IsApprove Tailor Order Failed")
+                }
+            }
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
+    }
 }
 
 class Connectivity {

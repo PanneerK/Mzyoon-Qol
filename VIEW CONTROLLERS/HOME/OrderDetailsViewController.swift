@@ -1,4 +1,4 @@
-//
+    //
 //  OrderDetailsViewController.swift
 //  Mzyoon
 //
@@ -455,7 +455,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
        // Scrollview...
         // let OrderDetailsScrollView = UIScrollView()
-        OrderDetailsScrollView.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
+      //  OrderDetailsScrollView.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (6 * x), height: view.frame.height - (13 * y))
+        OrderDetailsScrollView.frame = CGRect(x: x, y: selfScreenNavigationBar.frame.maxY + y, width: view.frame.width - (2 * x), height: view.frame.height - (13 * y))
         OrderDetailsScrollView.backgroundColor = UIColor.clear
         OrderDetailsScrollView.contentSize.height = (1.75 * view.frame.height)
         view.addSubview(OrderDetailsScrollView)
@@ -701,7 +702,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         
         
 //        let SubTotalPriceLabel = UILabel()
-        SubTotalPriceLabel.frame = CGRect(x:SubTotalLabel.frame.maxX + (12 * x), y: ProductInfoView.frame.maxY + y/2, width: (8 * x), height: (2 * y))
+       // SubTotalPriceLabel.frame = CGRect(x:SubTotalLabel.frame.maxX + (12 * x), y: ProductInfoView.frame.maxY + y/2, width: (8 * x), height: (2 * y))
+       SubTotalPriceLabel.frame = CGRect(x:PaymentInfoView.frame.width - (10 * x), y: ProductInfoView.frame.maxY + y/2, width: (8 * x), height: (2 * y))
         if(Price.count > 0)
         {
             let SubPriceNum : Int = Price[0] as! Int
@@ -734,7 +736,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(ShippingLabel)
         
 //        let ShippingPriceLabel = UILabel()
-        ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+      //  ShippingPriceLabel.frame = CGRect(x:ShippingLabel.frame.maxX + (5 * x), y: SubTotalPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+         ShippingPriceLabel.frame = CGRect(x:PaymentInfoView.frame.width - (10 * x), y: SubTotalPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
         if(ShippingCharges.count > 0)
         {
             ShippingPriceLabel.text = "0 AED"  //ShippingCharges[0] as? String
@@ -756,7 +759,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(UnderLine2)
         
         // Tax Label
-//        let TaxLabel = UILabel()
+        // let TaxLabel = UILabel()
         TaxLabel.frame = CGRect(x:x, y: ShippingLabel.frame.maxY, width: (8 * x), height: (2 * y))
         TaxLabel.text = "Tax"
         TaxLabel.textColor = UIColor.black
@@ -765,8 +768,9 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         TaxLabel.font = UIFont.boldSystemFont(ofSize: (1.2 * x))
         PaymentInfoView.addSubview(TaxLabel)
         
-//        let TaxPriceLabel = UILabel()
-        TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+       //  let TaxPriceLabel = UILabel()
+       // TaxPriceLabel.frame = CGRect(x:TaxLabel.frame.maxX + (12 * x), y: ShippingPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+        TaxPriceLabel.frame = CGRect(x:PaymentInfoView.frame.width - (10 * x), y: ShippingPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
         if(Tax.count > 0)
         {
           // let TaxNum : Int = Tax[0] as! Int
@@ -800,7 +804,9 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(AppointmentLabel)
         
 //        let AppointmentPriceLabel = UILabel()
-        AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+       // AppointmentPriceLabel.frame = CGRect(x:AppointmentLabel.frame.maxX + (5 * x), y: TaxPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+        AppointmentPriceLabel.frame = CGRect(x:PaymentInfoView.frame.width - (10 * x), y: TaxPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+        
         if(Appoinment.count > 0)
         {
             /*
@@ -836,7 +842,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(TotalLabel)
         
 //        let TotalPriceLabel = UILabel()
-        TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+       // TotalPriceLabel.frame = CGRect(x:TotalLabel.frame.maxX + (5 * x), y: AppointmentPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
+        TotalPriceLabel.frame = CGRect(x:PaymentInfoView.frame.width - (10 * x), y: AppointmentPriceLabel.frame.maxY, width: (8 * x), height: (2 * y))
         if(Total.count > 0)
         {
           /*
@@ -875,7 +882,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(ServiceLabel)
         
         //        let ServiceTypeLabel = UILabel()
-        ServiceTypeLabel.frame = CGRect(x:ServiceLabel.frame.maxX - (2 * x), y: TotalPriceLabel.frame.maxY, width: (15 * x), height: (2 * y))
+      //  ServiceTypeLabel.frame = CGRect(x:ServiceLabel.frame.maxX - (2 * x), y: TotalPriceLabel.frame.maxY, width: (15 * x), height: (2 * y))
+        ServiceTypeLabel.frame = CGRect(x:PaymentInfoView.frame.width - (17 * x), y: TotalPriceLabel.frame.maxY, width: (15 * x), height: (2 * y))
         if(ServiceType.count > 0)
         {
             if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -921,7 +929,8 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
         PaymentInfoView.addSubview(PaymentLabel)
         
 //        let PaymentTypeLabel = UILabel()
-        PaymentTypeLabel.frame = CGRect(x:PaymentLabel.frame.maxX - (2 * x), y: ServiceTypeLabel.frame.maxY, width: (15 * x), height: (2 * y))
+      //  PaymentTypeLabel.frame = CGRect(x:PaymentLabel.frame.maxX - (2 * x), y: ServiceTypeLabel.frame.maxY, width: (15 * x), height: (2 * y))
+        PaymentTypeLabel.frame = CGRect(x:PaymentInfoView.frame.width - (17 * x), y: ServiceTypeLabel.frame.maxY, width: (15 * x), height: (2 * y))
         PaymentTypeLabel.text = "(Card)"
         PaymentTypeLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PaymentTypeLabel.textAlignment = .right

@@ -1741,6 +1741,13 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 {
                     Variables.sharedManager.OrderID = Int(RequestID)!
                 }
+                
+                let qtyNum = 1
+                 print("Order_ID:",Variables.sharedManager.OrderID)
+                 print("Tailor_ID:",Variables.sharedManager.TailorID)
+                
+                self.serviceCall.API_UpdateQtyOrderApproval(OrderId: Variables.sharedManager.OrderID, Qty: qtyNum, delegate: self)
+                self.serviceCall.API_IsApproveTailorOrder(OrderId: Variables.sharedManager.OrderID, TailorId: Variables.sharedManager.TailorID, IsApproved: 1, delegate: self)
             }
             
             var successAlert = UIAlertController()
@@ -1799,6 +1806,41 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         {
             let Result = deviceError.object(forKey: "Result") as! String
             print("Result", Result)
+        }
+    }
+    func API_CALLBACK_UpdateQtyOrderApproval(updateQtyOA: NSDictionary)
+    {
+       
+        let ResponseMsg = updateQtyOA.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = updateQtyOA.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+       }
+        else if ResponseMsg == "Failure"
+        {
+            let Result = updateQtyOA.object(forKey: "Result") as! String
+            print("Result", Result)
+            
+            MethodName = "UPdateQtyInOrderApproval"
+            ErrorStr = Result
+            
+            DeviceError()
+            
+        }
+    }
+    
+    func API_CALLBACK_TailorOrderApprove(TailorApprove: NSDictionary)
+    {
+        let ResponseMsg = TailorApprove.object(forKey: "ResponseMsg") as! String
+        
+        if ResponseMsg == "Success"
+        {
+            let Result = TailorApprove.object(forKey: "Result") as! String
+            print("Result", Result)
+            
         }
     }
     

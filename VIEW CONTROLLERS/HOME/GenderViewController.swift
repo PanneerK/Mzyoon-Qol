@@ -56,7 +56,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }
         
-//        serviceCall.API_Gender(delegate: self)
+          serviceCall.API_Gender(delegate: self)
         
         super.viewDidLoad()
 

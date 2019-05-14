@@ -27,10 +27,10 @@ class PriceDetailsViewController: CommonViewController
             self.selfScreenNavigationContents()
         }
         
-        
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        print("Tailor ID:",Variables.sharedManager.TailorID);
     }
     
     
@@ -163,7 +163,6 @@ class PriceDetailsViewController: CommonViewController
         self.navigationController?.pushViewController(orderScreen, animated: true)
     }
     
-
     /*
     // MARK: - Navigation
 
