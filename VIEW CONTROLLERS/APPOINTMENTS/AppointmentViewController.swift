@@ -855,6 +855,8 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     func MaterialViewContents(isHidden : Bool)
     {
+       // stopActivity()
+        
        //  View BackDrop..
         MaterialViewBackDrop.frame = CGRect(x: 0, y: 0 , width: selfScreenContents.frame.width, height: selfScreenContents.frame.height - (2 * y))
         MaterialViewBackDrop.backgroundColor = UIColor.clear

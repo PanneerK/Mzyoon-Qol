@@ -1750,11 +1750,11 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                     Variables.sharedManager.OrderID = Int(RequestID)!
                 }
                 
-                let qtyNum = 1
+                 print("Qty:",Variables.sharedManager.ApprovalQty)
                  print("Order_ID:",Variables.sharedManager.OrderID)
                  print("Tailor_ID:",Variables.sharedManager.TailorID)
                 
-                self.serviceCall.API_UpdateQtyOrderApproval(OrderId: Variables.sharedManager.OrderID, Qty: qtyNum, delegate: self)
+                self.serviceCall.API_UpdateQtyOrderApproval(OrderId: Variables.sharedManager.OrderID, Qty:Int(Variables.sharedManager.ApprovalQty)!, delegate: self)
                 self.serviceCall.API_IsApproveTailorOrder(OrderId: Variables.sharedManager.OrderID, TailorId: Variables.sharedManager.TailorID, IsApproved: 1, delegate: self)
             }
             

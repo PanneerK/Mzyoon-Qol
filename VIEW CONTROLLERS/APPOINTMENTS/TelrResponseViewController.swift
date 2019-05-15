@@ -229,7 +229,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         {
             TransLabel.text = "الدفع الناجح ، رقم مرجع المعاملة الخاص بك هو  : \(TransRef!)"
         }
-        else if(self.TransMessage == "Cancelled")
+        else if(self.TransMessage == "Cancelled" || self.TransMessage == "3DSecure authentication rejected")
         {
             TransLabel.text = "فشلت العملية .. يرجى المحاولة مرة أخرى .."
         }
@@ -249,7 +249,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         {
             TransLabel.text = "Payment Success, Your Transaction Reference Number is  : \(TransRef!)"
         }
-        else if(self.TransMessage == "Cancelled")
+        else if(self.TransMessage == "Cancelled" || self.TransMessage == "3DSecure authentication rejected")
         {
             TransLabel.text = "Transaction Failed.. Please Try Again.."
         }
@@ -299,7 +299,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         {
           TransLabel.text = "Payment Success, Your Transaction Reference Number is  : \(TransRef!)"
         }
-        else if(self.TransMessage == "Cancelled")
+        else if(self.TransMessage == "Cancelled" || self.TransMessage == "3DSecure authentication rejected")
         {
           TransLabel.text = "Transaction Failed.. Please Try Again.."
         }
@@ -381,7 +381,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
             window?.makeKeyAndVisible()
             
         }
-        else if(self.TransMessage == "Cancelled")
+        else if(self.TransMessage == "Cancelled" || self.TransMessage == "3DSecure authentication rejected")
         {
             window = UIWindow(frame: UIScreen.main.bounds)
             let HomeScreen = PaymentViewController()

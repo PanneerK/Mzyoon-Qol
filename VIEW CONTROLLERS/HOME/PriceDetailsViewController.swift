@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PriceDetailsViewController: CommonViewController
+class PriceDetailsViewController: CommonViewController,UITextFieldDelegate
 {
 
     let selfScreenNavigationBar = UIView()
@@ -18,6 +18,10 @@ class PriceDetailsViewController: CommonViewController
     // Order Total..
     let orderTotalLabel = UILabel()
     let getOrderTotalLabel = UILabel()
+    
+    // Qty..
+    let QtyLbl = UILabel()
+    let QtyNum_TF = UITextField()
     
     override func viewDidLoad()
     {
@@ -30,6 +34,9 @@ class PriceDetailsViewController: CommonViewController
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        self.addDoneButtonOnKeyboard()
+        
         print("Tailor ID:",Variables.sharedManager.TailorID);
     }
     
@@ -83,7 +90,37 @@ class PriceDetailsViewController: CommonViewController
         stopActivity()
         activity.stopActivity()
         
-        var y1:CGFloat = y
+        
+        QtyLbl.frame = CGRect(x: x, y: y, width: (10 * y), height: (3 * y))
+        QtyLbl.text = "QTY"
+        QtyLbl.textColor = UIColor.black
+        QtyLbl.textAlignment = .left
+        QtyLbl.font = UIFont(name: "Avenir-Regular", size: 20)
+        QtyLbl.font = QtyLbl.font.withSize(1.5 * x)
+        selfScreenContents.addSubview(QtyLbl)
+        
+        
+        QtyNum_TF.frame = CGRect(x: selfScreenContents.frame.width - (8 * x), y: y, width: (7 * x), height: (3 * y))
+        QtyNum_TF.backgroundColor = UIColor.white
+        QtyNum_TF.layer.borderWidth = 1
+        QtyNum_TF.layer.borderColor = UIColor.lightGray.cgColor
+        
+        QtyNum_TF.text = "1"
+        QtyNum_TF.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        QtyNum_TF.textAlignment = .center
+        QtyNum_TF.font = UIFont(name: "Avenir-Regular", size: 20)
+        QtyNum_TF.font = QtyNum_TF.font!.withSize(1.5 * x)
+        QtyNum_TF.adjustsFontSizeToFitWidth = true
+        QtyNum_TF.keyboardType = .numberPad
+        QtyNum_TF.clearsOnBeginEditing = false
+        QtyNum_TF.returnKeyType = .done
+        QtyNum_TF.delegate = self
+        QtyNum_TF.isUserInteractionEnabled = true
+        selfScreenContents.addSubview(QtyNum_TF)
+        
+        var y1:CGFloat = QtyLbl.frame.maxY + y
+        
+       // var y1:CGFloat = y
         
         for i in 0..<3
         {
@@ -123,14 +160,24 @@ class PriceDetailsViewController: CommonViewController
         selfScreenContents.addSubview(orderTotalLabel)
         
        // let getOrderTotalLabel = UILabel()
-        getOrderTotalLabel.frame = CGRect(x: selfScreenContents.frame.width - (8 * x), y: lineLabel1.frame.maxY + y, width: (7 * x), height: (3 * y))
+        getOrderTotalLabel.frame = CGRect(x: selfScreenContents.frame.width - (12 * x), y: lineLabel1.frame.maxY + y, width: (7 * x), height: (3 * y))
         getOrderTotalLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        getOrderTotalLabel.text = "60 AED"
+        getOrderTotalLabel.text = "60"
         getOrderTotalLabel.textColor = UIColor.white
-        getOrderTotalLabel.textAlignment = .center
+        getOrderTotalLabel.textAlignment = .right
         getOrderTotalLabel.font = UIFont(name: "Avenir-Regular", size: 20)
         getOrderTotalLabel.font = getOrderTotalLabel.font.withSize(1.5 * x)
         selfScreenContents.addSubview(getOrderTotalLabel)
+        
+         let AED_Label = UILabel()
+        AED_Label.frame = CGRect(x: getOrderTotalLabel.frame.maxX - x, y: lineLabel1.frame.maxY + y, width: (7 * x), height: (3 * y))
+       // AED_Label.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        AED_Label.text = "AED"
+        AED_Label.textColor =  UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        AED_Label.textAlignment = .center
+        AED_Label.font = UIFont(name: "Avenir-Regular", size: 20)
+        AED_Label.font = AED_Label.font.withSize(1.5 * x)
+        selfScreenContents.addSubview(AED_Label)
 
         
         let lineLabel2 = UILabel()
@@ -147,6 +194,33 @@ class PriceDetailsViewController: CommonViewController
         selfScreenContents.addSubview(priceDetailsNextButton)
     }
     
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle = UIBarStyle.default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.QtyNum_TF.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction()
+    {
+        Variables.sharedManager.ApprovalQty = self.QtyNum_TF.text!
+        let orderTotal = Int(getOrderTotalLabel.text!)!
+        let QtyTotal = Int(Variables.sharedManager.ApprovalQty)!
+        let total:Int = (orderTotal * QtyTotal)
+        getOrderTotalLabel.text = String(total)
+        self.view.endEditing(true)
+    }
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)

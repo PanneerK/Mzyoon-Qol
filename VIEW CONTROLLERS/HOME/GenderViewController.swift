@@ -56,7 +56,11 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         }
         
         serviceCall.API_Gender(delegate: self)
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 36f49a710dd9b4936de60eb2fe29bd08bed4f601
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
