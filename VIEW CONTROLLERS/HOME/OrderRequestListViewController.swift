@@ -136,6 +136,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     {
         print("Order Request : ", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -177,6 +178,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             if Result.count == 0
             {
                 stopActivity()
+                activity.stopActivity()
                 
                 emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
                 if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -238,6 +240,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             DeviceError()
             
             stopActivity()
+            activity.stopActivity()
             
             emptyLabel.frame = CGRect(x: 0, y: ((view.frame.height - (3 * y)) / 2), width: view.frame.width, height: (3 * y))
             if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -291,6 +294,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
     func RequestListView()
     {
         self.stopActivity()
+        activity.stopActivity()
         
       //  slideMenuButton.isHidden = false
         

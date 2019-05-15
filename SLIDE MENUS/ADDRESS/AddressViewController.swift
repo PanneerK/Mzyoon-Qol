@@ -74,11 +74,12 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     
     var convertedAddressArray = [String]()
     
-    var applicationDelegate = AppDelegate()
-    
-    
     //SCREEN PARAMETERS
     let addressScrollView = UIScrollView()
+    
+    let activity = ActivityView()
+    
+    var applicationDelegate = AppDelegate()
     
     
     override func viewDidLoad()
@@ -91,7 +92,10 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         
         view.backgroundColor = UIColor.white
         
-        activityContents()
+//        activityContents()
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
         
         super.viewDidLoad()
         
@@ -133,6 +137,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
     {
         print("Address ", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -166,6 +171,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         let ResponseMsg = getBuyerAddr.object(forKey: "ResponseMsg") as! String
         
         stopActivity()
+        activity.stopActivity()
         
         if ResponseMsg == "Success"
         {
@@ -877,6 +883,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         selfScreenContents.addSubview(addNewAddressButton)
         
         self.stopActivity()
+        activity.stopActivity()
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -944,6 +951,7 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
             
             
             self.stopActivity()
+            activity.stopActivity()
             let address2Screen = Address2ViewController()
             
             print("COUNTRY ID - \(self.CountryId[sender.tag]), STATE ID - \(self.StateId[sender.tag]), AREA ID - \(self.areaId[sender.tag])")

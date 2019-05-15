@@ -220,8 +220,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
-         print("Payment summary : ", errorMessage)
-         stopActivity()
+        print("Payment summary : ", errorMessage)
+        stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -491,7 +492,8 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     
     func PaymentContent()
     {
-          stopActivity()
+        stopActivity()
+        activity.stopActivity()
         
         // let PaymentNavigationBar = UIView()
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))

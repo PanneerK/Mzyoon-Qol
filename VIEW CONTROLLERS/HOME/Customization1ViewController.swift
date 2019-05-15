@@ -161,6 +161,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
     {
         print("CUSTOMIZATION 1", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -441,8 +442,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         seasonTitleLabel.text = "SEASONAL"
         seasonTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         seasonTitleLabel.textAlignment = .center
-        seasonTitleLabel.font = UIFont(name: "Avenir-Regular", size: 15)
-        seasonTitleLabel.font = seasonTitleLabel.font.withSize(x)
+        seasonTitleLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        seasonTitleLabel.font = seasonTitleLabel.font.withSize(1.5 * x)
         selfScreenContents.addSubview(seasonTitleLabel)
         
         seasonalScrollView.frame = CGRect(x: 0, y: seasonTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
@@ -501,8 +502,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.text = getInputArray[i] as? String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
-            buttonTitle.font = buttonTitle.font.withSize(0.75 * x)
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+            buttonTitle.font = buttonTitle.font.withSize(1.25 * x)
             buttonTitle.tag = -1
             seasonalButton.addSubview(buttonTitle)
             
@@ -522,8 +523,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         industryTitleLabel.text = "PLACE OF INDUSTRY"
         industryTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         industryTitleLabel.textAlignment = .center
-        industryTitleLabel.font = UIFont(name: "Avenir-Regular", size: 15)
-        industryTitleLabel.font = industryTitleLabel.font.withSize(x)
+        industryTitleLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        industryTitleLabel.font = industryTitleLabel.font.withSize(1.5 * x)
         selfScreenContents.addSubview(industryTitleLabel)
         
         industryScrollView.frame = CGRect(x: 0, y: industryTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
@@ -581,8 +582,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.text = getInputArray[i] as? String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
-            buttonTitle.font = buttonTitle.font.withSize(0.75 * x)
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+            buttonTitle.font = buttonTitle.font.withSize(1.25 * x)
             buttonTitle.tag = -1
             industryButton.addSubview(buttonTitle)
             
@@ -601,8 +602,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         brandTitleLabel.text = "BRANDS"
         brandTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         brandTitleLabel.textAlignment = .center
-        brandTitleLabel.font = UIFont(name: "Avenir-Regular", size: 15)
-        brandTitleLabel.font = brandTitleLabel.font.withSize(x)
+        brandTitleLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        brandTitleLabel.font = brandTitleLabel.font.withSize(1.5 * x)
         selfScreenContents.addSubview(brandTitleLabel)
         
         brandScrollView.frame = CGRect(x: 0, y: brandTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
@@ -660,8 +661,8 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.text = getInputArray[i] as? String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
-            buttonTitle.font = buttonTitle.font.withSize(0.75 * x)
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+            buttonTitle.font = buttonTitle.font.withSize(1.25 * x)
             buttonTitle.tag = -1
             brandButton.addSubview(buttonTitle)
             
@@ -671,6 +672,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
         brandScrollView.contentSize.width = x2 + (3 * x)
         
         self.stopActivity()
+        activity.stopActivity()
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {

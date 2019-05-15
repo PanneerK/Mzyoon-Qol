@@ -227,7 +227,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     
     func spinnerOn()
     {
-        spinnerBackView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        /*spinnerBackView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         spinnerBackView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(spinnerBackView)
         
@@ -237,13 +237,18 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         spinner.color = UIColor.white
         spinner.style = .whiteLarge
         spinner.startAnimating()
-        spinnerBackView.addSubview(spinner)
+        spinnerBackView.addSubview(spinner)*/
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
     }
     
     func spinnerOff()
     {
-        spinnerBackView.removeFromSuperview()
-        spinner.stopAnimating()
+        /*spinnerBackView.removeFromSuperview()
+        spinner.stopAnimating()*/
+        
+        activity.stopActivity()
     }
     
     func changeViewToEnglishInSelf()
@@ -310,6 +315,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     func orderSummaryContent()
     {
         self.stopActivity()
+        activity.stopActivity()
     
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -1712,6 +1718,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
     {
         print("Order Summary", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -1720,6 +1727,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
         let ResponseMsg = insertOrder.object(forKey: "ResponseMsg") as! String
      
         stopActivity()
+        activity.stopActivity()
         spinnerOff()
         
         if ResponseMsg == "Success"

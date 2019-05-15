@@ -199,9 +199,10 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
-         print("Book an appointment : ", errorMessage)
-         stopActivity()
-         applicationDelegate.exitContents()
+        print("Book an appointment : ", errorMessage)
+        stopActivity()
+        activity.stopActivity()
+        applicationDelegate.exitContents()
     }
     
     func API_CALLBACK_InsertErrorDevice(deviceError: NSDictionary)
@@ -763,6 +764,7 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     func AppointmentContent()
     {
         self.stopActivity()
+        activity.stopActivity()
         
        // let AppointmentNavigationBar = UIView()
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))

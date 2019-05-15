@@ -191,6 +191,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     {
         print("ERROR MESSAGE IN HOME PAGE", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -257,6 +258,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         self.slideMenuButton.isHidden = false
         
         self.stopActivity()
+        activity.stopActivity()
         for i in 0..<4
         {
             let selectionButton = UIButton()
@@ -283,8 +285,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.text = buttonTitleText[i]
             buttonTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
-            buttonTitle.font = buttonTitle.font.withSize(1.25 * x)
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            buttonTitle.font = buttonTitle.font.withSize(1.5 * x)
             selectionButton.addSubview(buttonTitle)
         }
         
@@ -320,6 +322,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         self.slideMenuButton.isHidden = false
         
         self.stopActivity()
+        activity.stopActivity()
         
         for i in 0..<4
         {

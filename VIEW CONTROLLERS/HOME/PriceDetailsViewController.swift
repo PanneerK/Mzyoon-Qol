@@ -81,6 +81,7 @@ class PriceDetailsViewController: CommonViewController
     func PriceDetailsScreenContents()
     {
         stopActivity()
+        activity.stopActivity()
         
         var y1:CGFloat = y
         

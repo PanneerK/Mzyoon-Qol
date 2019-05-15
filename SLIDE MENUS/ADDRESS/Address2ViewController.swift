@@ -131,12 +131,17 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     //SCREEN CONTENTS
     let addressSwitchButton = UISwitch()
     
+    let activity = ActivityView()
+    
     var applicationDelegate = AppDelegate()
 
     
     override func viewDidLoad()
     {
-        activityContents()
+//        activityContents()
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
         
         print("ADDRESS STRING ADDRESS 2 VIEW CONTROLLER 1", addressString)
 
@@ -350,6 +355,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         print("Insert Address", errorMessage)
         
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -529,6 +535,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let ResponseMsg = insertAddr.object(forKey: "ResponseMsg") as! String
         
         stopActivity()
+        activity.stopActivity()
         
         if ResponseMsg == "Success"
         {
@@ -841,6 +848,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let ResponseMsg = area.object(forKey: "ResponseMsg") as! String
         
         stopActivity()
+        activity.stopActivity()
         
         if ResponseMsg == "Success"
         {
@@ -895,6 +903,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         let ResponseMsg = updateAddr.object(forKey: "ResponseMsg") as! String
         
         stopActivity()
+        activity.stopActivity()
         
         if ResponseMsg == "Success"
         {
@@ -1098,6 +1107,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
     func addressContents()
     {
         stopActivity()
+        activity.stopActivity()
         
 //        if getEditId != 0
 //        {
@@ -2118,6 +2128,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             
             areaAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             stopActivity()
+            activity.stopActivity()
             self.present(areaAlert, animated: true, completion: nil)
         }*/
     }

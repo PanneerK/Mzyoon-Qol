@@ -35,6 +35,8 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     let activeView = UIView()
     let activityIndicator = UIActivityIndicatorView()
     
+    let activity = ActivityView()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -264,7 +266,7 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
     
     func active()
     {
-        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        /*activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(activeView)
         
@@ -272,13 +274,18 @@ class IntroProfileViewController: UIViewController, UITextFieldDelegate, UINavig
         activityIndicator.color = UIColor.white
         activityIndicator.style = .whiteLarge
         activityIndicator.startAnimating()
-        activeView.addSubview(activityIndicator)
+        activeView.addSubview(activityIndicator)*/
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
     }
     
     func activeStop()
     {
-        activeView.removeFromSuperview()
-        activityIndicator.stopAnimating()
+        /*activeView.removeFromSuperview()
+        activityIndicator.stopAnimating()*/
+        
+        activity.stopActivity()
     }
     
     @objc func cameraButtonAction(sender : UIButton)

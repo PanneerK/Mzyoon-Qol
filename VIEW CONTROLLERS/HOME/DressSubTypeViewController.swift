@@ -128,6 +128,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     {
         print("DRESS SUB-TYPE", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -168,6 +169,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
             else
             {
                 stopActivity()
+                activity.stopActivity()
                 let emptyAlert = UIAlertController(title: "Alert", message: "We don't have sub types in this", preferredStyle: .alert)
                 emptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: emptyDressTypesAlertAction(action:)))
                 self.present(emptyAlert, animated: true, completion: nil)
@@ -352,6 +354,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                 if i == getImageArray.count - 1
                 {
                     self.stopActivity()
+                    activity.stopActivity()
                 }
                 else
                 {

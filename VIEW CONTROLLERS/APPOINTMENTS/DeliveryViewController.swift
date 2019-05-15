@@ -28,6 +28,7 @@ class DeliveryViewController: CommonViewController,FSCalendarDelegate,FSCalendar
     func DeliveryDetailsView()
     {
         self.stopActivity()
+        activity.stopActivity()
         
         //let RequestListNavigationBar = UIView()
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))

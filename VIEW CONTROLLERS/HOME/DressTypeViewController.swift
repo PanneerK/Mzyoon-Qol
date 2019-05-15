@@ -127,6 +127,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
     {
         print("DRESS TYPE", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -434,6 +435,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                 if i == inputImageArray.count - 1
                 {
                     self.stopActivity()
+                    activity.stopActivity()
                 }
                 else
                 {

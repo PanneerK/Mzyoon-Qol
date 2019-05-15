@@ -124,6 +124,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     {
         print("ORDER TYPE", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -289,6 +290,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
     func orderTypeContent()
     {
         stopActivity()
+        activity.stopActivity()
 
         selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
@@ -318,7 +320,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         directDeliveryLabel.text = (orderTypeNameArray[0] as! String)
         directDeliveryLabel.textColor = UIColor.black
         directDeliveryLabel.textAlignment = .left
-        directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.2 * x))
+        directDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.25 * x))
+        directDeliveryLabel.font = directDeliveryLabel.font.withSize(1.25 * x)
         selfScreenContents.addSubview(directDeliveryLabel)
         
         let directDeliveryUnderline = UILabel()
@@ -341,7 +344,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         couriertDeliveryLabel.text = (orderTypeNameArray[1] as! String)
         couriertDeliveryLabel.textColor = UIColor.black
         couriertDeliveryLabel.textAlignment = .left
-        couriertDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.2 * x))
+        couriertDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.25 * x))
+        couriertDeliveryLabel.font = couriertDeliveryLabel.font.withSize(1.25 * x)
         couriertDeliveryLabel.adjustsFontSizeToFitWidth = true
         selfScreenContents.addSubview(couriertDeliveryLabel)
         
@@ -350,7 +354,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         extraLabel.text = "(Extra charges applicable)"
         extraLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         extraLabel.textAlignment = .left
-        extraLabel.font = UIFont(name: "AvenirNext-Regular", size: x)
+        extraLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.25 * x))
+        extraLabel.font = extraLabel.font.withSize(1.25 * x)
         extraLabel.adjustsFontSizeToFitWidth = true
         selfScreenContents.addSubview(extraLabel)
         
@@ -373,7 +378,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         companyLabel.text = (orderTypeNameArray[2] as! String)
         companyLabel.textColor = UIColor.black
         companyLabel.textAlignment = .left
-        companyLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.2 * x))
+        companyLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.25 * x))
+        companyLabel.font = companyLabel.font.withSize(1.25 * x)
         selfScreenContents.addSubview(companyLabel)
         
         let companyUnderline = UILabel()
@@ -429,6 +435,7 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         headingLabel.textAlignment = .left
         headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
         headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        headingLabel.font = headingLabel.font.withSize(2 * x)
         hintsView.addSubview(headingLabel)
 
         hintsBackButton.isHidden = true
@@ -626,8 +633,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         detailedLabel.text = "If you have your own material for stitching and want to deliver it directly to tailor. Please click this option"
         detailedLabel.textAlignment = .left
         detailedLabel.textColor = UIColor.white
-        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        detailedLabel.font = detailedLabel.font.withSize((1.25 * x))
         detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
         
@@ -669,8 +676,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         detailedLabel.text = "If you have your own material for stitching and want it to be picked from your place. Please click this option"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
-        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        detailedLabel.font = detailedLabel.font.withSize((1.25 * x))
         detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
         
@@ -712,8 +719,8 @@ class OrderTypeViewController: CommonViewController, ServerAPIDelegate
         detailedLabel.text = "Please click this option to explore our materials for stitching"
         detailedLabel.textAlignment = .justified
         detailedLabel.textColor = UIColor.white
-        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        detailedLabel.font = detailedLabel.font.withSize((1.5 * x))
+        detailedLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        detailedLabel.font = detailedLabel.font.withSize((1.25 * x))
         detailedLabel.numberOfLines = 3
         hintsView.addSubview(detailedLabel)
         

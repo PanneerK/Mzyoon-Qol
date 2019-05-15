@@ -122,6 +122,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     {
          print("Quotation List : ", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -251,6 +252,7 @@ class QuotationListViewController: CommonViewController,ServerAPIDelegate
     func quotationListContent()
     {
         self.stopActivity()
+        activity.stopActivity()
         
         //let quotationListNavigationBar = UIView()
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))

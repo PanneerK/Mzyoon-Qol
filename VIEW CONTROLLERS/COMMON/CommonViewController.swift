@@ -62,6 +62,8 @@ class CommonViewController: UIViewController
     let hintsBackButton = UIButton()
     let hintsSkipButton = UIButton()
     let hintsNextButton = UIButton()
+    
+    let activity = ActivityView()
 
     
 //    let slideScreen = SlideViewController()
@@ -93,7 +95,7 @@ class CommonViewController: UIViewController
             slideMenu()
         }
         
-        self.activityContents()
+//        self.activityContents()
         
         selfScreenContents1.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         selfScreenContents1.backgroundColor = UIColor.clear
@@ -101,6 +103,9 @@ class CommonViewController: UIViewController
         
         navigationContents()
         tabContents()
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
         
         super.viewDidLoad()
         
@@ -244,8 +249,8 @@ class CommonViewController: UIViewController
         navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 15)
-        navigationTitle.font = navigationTitle.font.withSize(1.5 * x)
+        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        navigationTitle.font = navigationTitle.font.withSize(2 * x)
         navigationBar.addSubview(navigationTitle)
         
         userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: (4 * y), height: (4 * y))
@@ -594,6 +599,7 @@ class CommonViewController: UIViewController
         else
         {
             stopActivity()
+            activity.stopActivity()
             self.present(cartAlert, animated: true, completion: nil)
         }
         /*  // Cart..

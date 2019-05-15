@@ -36,7 +36,7 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
     {
         view.backgroundColor = UIColor.cyan
         
-        resultsViewController = GMSAutocompleteResultsViewController()
+        /*resultsViewController = GMSAutocompleteResultsViewController()
 //        resultsViewController?.delegate = self
         
         searchController = UISearchController(searchResultsController: resultsViewController)
@@ -53,12 +53,12 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
         // this view controller, not one further up the chain.
         definesPresentationContext = true
         
-        makeButton()
+        makeButton()*/
         
         
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        /*// Do any additional setup after loading the view.
         
          // rohith - 8-4-2019
         searchResultController = SearchResultsController()
@@ -109,7 +109,11 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
         
         loadingCount = 1
         
-        loadingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)
+        loadingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerCall), userInfo: nil, repeats: true)*/
+        
+        let activity = ActivityView()
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
     }
     
     func forLoadingText()

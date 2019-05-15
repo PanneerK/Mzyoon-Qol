@@ -93,6 +93,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     {
         print("ERROR", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -122,6 +123,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
     func serviceTypeContent()
     {
         self.stopActivity()
+        activity.stopActivity()
     
         selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear

@@ -131,7 +131,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     var hintTag = 0
     let hintsImage = UIImageView()
     let detailedLabel = UILabel()
-
     
     var applicationDelegate = AppDelegate()
 
@@ -209,7 +208,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
     
     func activitySubContents()
     {
-        activeViewSub.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        /*activeViewSub.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeViewSub.backgroundColor = UIColor.black.withAlphaComponent(0.25)
         view.addSubview(activeViewSub)
         
@@ -219,18 +218,24 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         activityIndicatorSub.style = .whiteLarge
         activityIndicatorSub.color = UIColor.white
         activityIndicatorSub.startAnimating()
-        activeViewSub.addSubview(activityIndicatorSub)
+        activeViewSub.addSubview(activityIndicatorSub)*/
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
     }
     
     func stopSubActivity()
     {
-        activeViewSub.removeFromSuperview()
-        activityIndicatorSub.stopAnimating()
+        /*activeViewSub.removeFromSuperview()
+        activityIndicatorSub.stopAnimating()*/
+        
+        activity.stopActivity()
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -375,6 +380,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
             else
             {
                 stopActivity()
+                activity.stopActivity()
                 
                 var measurementAlert = UIAlertController()
                 
@@ -3428,6 +3434,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControl.Event.valueChanged)
         
         stopActivity()
+        activity.stopActivity()
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
         {
@@ -4430,6 +4437,7 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         let ResponseMsg = insUsrMeasurementVal.object(forKey: "ResponseMsg") as! String
         
         stopActivity()
+        activity.stopActivity()
         
         if ResponseMsg == "Success"
         {

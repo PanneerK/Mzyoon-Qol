@@ -142,6 +142,7 @@ class ViewDetailsViewController: CommonViewController, ServerAPIDelegate, UIScro
     func viewDetailsContents()
     {
         stopActivity()
+        activity.stopActivity()
         
         detailScrollView.frame = CGRect(x: (2 * x), y: navigationBar.frame.maxY + (2 * y), width: view.frame.width - (4 * x), height: view.frame.height - (40 * y))
         detailScrollView.backgroundColor = UIColor.clear
@@ -171,7 +172,6 @@ class ViewDetailsViewController: CommonViewController, ServerAPIDelegate, UIScro
                     let urlString = serviceCall.baseURL
                     let api = "\(urlString)/images/color/\(imageName)"
                     let apiurl = URL(string: api)
-                    print("VIEW DETAILS IMAGE API", apiurl)
                     if apiurl != nil
                     {
                         subImageView.dowloadFromServer(url: apiurl!)
@@ -182,7 +182,6 @@ class ViewDetailsViewController: CommonViewController, ServerAPIDelegate, UIScro
                     let urlString = serviceCall.baseURL
                     let api = "\(urlString)/images/pattern/\(imageName)"
                     let apiurl = URL(string: api)
-                    print("VIEW DETAILS IMAGE API", apiurl)
                     if apiurl != nil
                     {
                         subImageView.dowloadFromServer(url: apiurl!)
@@ -225,6 +224,8 @@ class ViewDetailsViewController: CommonViewController, ServerAPIDelegate, UIScro
             detailLabel.frame = CGRect(x: (2 * x), y: y1, width: (detailScrollView.frame.width / 2), height: (3 * y))
             detailLabel.text = headingString[i]
             detailLabel.textAlignment = .center
+            detailLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+            detailLabel.font = detailLabel.font.withSize(1.25 * x)
             view.addSubview(detailLabel)
             
             let getDetailLabel = UITextView()
@@ -300,6 +301,7 @@ class ViewDetailsViewController: CommonViewController, ServerAPIDelegate, UIScro
             
             getDetailLabel.isEditable = false
             getDetailLabel.textAlignment = .center
+            getDetailLabel.font = .systemFont(ofSize: (1.25 * x))
             view.addSubview(getDetailLabel)
             
             if i == 0

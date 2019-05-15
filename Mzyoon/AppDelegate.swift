@@ -203,7 +203,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {
             currentLocation = locationManager.location
-            print("Current Loc:",currentLocation.coordinate)
         }
         
         #endif

@@ -65,6 +65,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     {
         print("Tracking Details :", errorNumber)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -164,6 +165,7 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
     func TrackingView()
     {
         self.stopActivity()
+        activity.stopActivity()
         
         let TrackingDetailsNavigationBar = UIView()
         TrackingDetailsNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))

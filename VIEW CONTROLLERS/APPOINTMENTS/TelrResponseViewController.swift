@@ -262,6 +262,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     func ResponseContent()
     {
         stopActivity()
+        activity.stopActivity()
         
         // let PaymentNavigationBar = UIView()
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
@@ -409,6 +410,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     {
         print("Book an appointment : ", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     

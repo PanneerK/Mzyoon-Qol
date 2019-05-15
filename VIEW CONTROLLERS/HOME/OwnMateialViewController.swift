@@ -104,6 +104,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     {
         print("OWN MATERIAL", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -138,6 +139,7 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
     func addMaterialContent()
     {
         self.stopActivity()
+        activity.stopActivity()
         
         selfScreenContents.frame = CGRect(x: x, y: pageBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear
@@ -184,8 +186,8 @@ class OwnMateialViewController: CommonViewController, ServerAPIDelegate, UINavig
         addMaterialLabel.text = "Add material image for tailor refrence"
         addMaterialLabel.textColor = UIColor.black
         addMaterialLabel.textAlignment = .left
-        addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
-        addMaterialLabel.font = addMaterialLabel.font.withSize(1.25 * x)
+        addMaterialLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        addMaterialLabel.font = addMaterialLabel.font.withSize(1.5 * x)
         selfScreenContents.addSubview(addMaterialLabel)
         
         addReferenceScrolView.frame = CGRect(x: 0, y: selfScreenContents.frame.height - (14 * y), width: selfScreenContents.frame.width - (9 * y), height: (10 * y))
