@@ -56,7 +56,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }
         
-//        serviceCall.API_Gender(delegate: self)
+        serviceCall.API_Gender(delegate: self)
         
         super.viewDidLoad()
 
@@ -269,6 +269,8 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             genderButtonLabel.textColor = UIColor.white
             genderButtonLabel.textAlignment = .center
             genderButtonLabel.tag = ((genderButton.tag * 1) + 300)
+            genderButtonLabel.font = UIFont(name: "Avenir-Regular", size: x)
+            genderButtonLabel.font = genderButtonLabel.font.withSize(x)
             genderButton.addSubview(genderButtonLabel)
             
             if let language = UserDefaults.standard.value(forKey: "language") as? String

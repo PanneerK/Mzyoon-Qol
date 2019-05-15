@@ -1132,8 +1132,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         selfScreenNavigationTitle.text = "ADDRESS"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(1.5 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         let locationIcon = UIImageView()
@@ -1145,8 +1145,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         locationAddressLabel.text = "Location Address"
         locationAddressLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         locationAddressLabel.textAlignment = .left
-        locationAddressLabel.font = UIFont(name: "Avenir-Regular", size: 20)
-        locationAddressLabel.font = locationAddressLabel.font.withSize(20)
+        locationAddressLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        locationAddressLabel.font = locationAddressLabel.font.withSize((1.25 * x))
         view.addSubview(locationAddressLabel)
         
         let locationView = UIView()
@@ -1171,8 +1171,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         address1Label.textColor = UIColor.black
         address1Label.textAlignment = .left
-        address1Label.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
-        address1Label.font = address1Label.font.withSize(1.5 * x)
+        address1Label.font = UIFont(name: "Avenir-Regular", size: (x))
+        address1Label.font = address1Label.font.withSize(x)
         address1Label.numberOfLines = 3
         locationView.addSubview(address1Label)
         
@@ -1195,16 +1195,16 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         editLabel.text = "EDIT"
         editLabel.textColor = UIColor.white
         editLabel.textAlignment = .center
-        editLabel.font = UIFont(name: "Avenir-Regular", size: 15)
-        editLabel.font = editLabel.font.withSize(15)
+        editLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+        editLabel.font = editLabel.font.withSize(x)
         editLocationButton.addSubview(editLabel)
         
-        addressDefaultLabel.frame = CGRect(x: (18 * x), y: locationView.frame.maxY + y + (y / 4), width: (12 * x), height: (2 * y))
+        addressDefaultLabel.frame = CGRect(x: (18 * x), y: locationView.frame.maxY + y, width: (12 * x), height: (2 * y))
         addressDefaultLabel.text = "Make as Default"
         addressDefaultLabel.textColor = UIColor.black
         addressDefaultLabel.textAlignment = .center
-        addressDefaultLabel.font = UIFont(name: "Avenir-Regular", size: 15)
-        addressDefaultLabel.font = editLabel.font.withSize(15)
+        addressDefaultLabel.font = UIFont(name: "Avenir-Regular", size: x)
+        addressDefaultLabel.font = editLabel.font.withSize(x)
         view.addSubview(addressDefaultLabel)
         
         addressSwitchButton.frame = CGRect(x: addressDefaultLabel.frame.maxX + (2 * x), y: locationView.frame.maxY + y, width: (5 * x), height: (2 * y))
@@ -1224,8 +1224,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressInfoHeadingLabel.text = "Address Info"
         addressInfoHeadingLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addressInfoHeadingLabel.textAlignment = .center
-        addressInfoHeadingLabel.font = UIFont(name: "Avenir-Regular", size: 20)
-        addressInfoHeadingLabel.font = editLabel.font.withSize(20)
+        addressInfoHeadingLabel.font = UIFont(name: "Avenir-Regular", size: x)
+        addressInfoHeadingLabel.font = editLabel.font.withSize(x)
         view.addSubview(addressInfoHeadingLabel)
         
         addressScrollView.frame = CGRect(x: 0, y: addressInfoHeadingLabel.frame.maxY + y, width: view.frame.width, height: (33 * y))
@@ -1261,7 +1261,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         
         firstNameEnglishTextField.textColor = UIColor.black
         firstNameEnglishTextField.textAlignment = .left
-        firstNameEnglishTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        firstNameEnglishTextField.font = UIFont(name: "Avenir-Regular", size: x)
+        firstNameEnglishTextField.font = firstNameEnglishTextField.font?.withSize(x)
         //        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: firstNameEnglishTextField.frame.height))
         //        firstNameEnglishTextField.leftView = paddingView
         firstNameEnglishTextField.leftViewMode = UITextField.ViewMode.always
@@ -1292,7 +1293,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         secondNameEnglishTextField.placeholder = "Second Name"
         secondNameEnglishTextField.textColor = UIColor.black
         secondNameEnglishTextField.textAlignment = .left
-        secondNameEnglishTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        secondNameEnglishTextField.font = UIFont(name: "Avenir-Regular", size: x)
+        secondNameEnglishTextField.font = secondNameEnglishTextField.font?.withSize(x)
         //        let paddingView1 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
         //        secondNameEnglishTextField.leftView = paddingView1
         secondNameEnglishTextField.leftViewMode = UITextField.ViewMode.always
@@ -1343,6 +1345,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             }
         }
         countryButton.setTitleColor(UIColor.black, for: .normal)
+        countryButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: x)
+        countryButton.titleLabel?.font = countryButton.titleLabel?.font?.withSize(x)
         countryButton.contentHorizontalAlignment = .left
         countryButton.addTarget(self, action: #selector(self.countryButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(countryButton)
@@ -1432,7 +1436,7 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         addressScrollView.addSubview(underline3)
         
         let stateIcon = UIImageView()
-        stateIcon.frame = CGRect(x: x, y: underline3.frame.maxY + (3 * y), width: (2 * y), height: (2 * y))
+        stateIcon.frame = CGRect(x: x, y: underline3.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
         stateIcon.image = UIImage(named: "state")
         addressScrollView.addSubview(stateIcon)
         
@@ -1460,6 +1464,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
             }
         }
         stateButton.setTitleColor(UIColor.black, for: .normal)
+        stateButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: x)
+        stateButton.titleLabel?.font = stateButton.titleLabel?.font?.withSize(x)
         stateButton.contentHorizontalAlignment = .left
         stateButton.addTarget(self, action: #selector(self.stateButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(stateButton)
@@ -1598,6 +1604,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         }
         
         areaButton.setTitleColor(UIColor.black, for: .normal)
+        areaButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: x)
+        areaButton.titleLabel?.font = areaButton.titleLabel?.font?.withSize(x)
         areaButton.contentHorizontalAlignment = .left
         areaButton.addTarget(self, action: #selector(self.areaButtonAction(sender:)), for: .touchUpInside)
         addressScrollView.addSubview(areaButton)
@@ -1683,7 +1691,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         landMarkTextField.placeholder = "Land Mark"
         landMarkTextField.textColor = UIColor.black
         landMarkTextField.textAlignment = .left
-        landMarkTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        landMarkTextField.font = UIFont(name: "Avenir-Regular", size: x)
+        landMarkTextField.font = landMarkTextField.font?.withSize(x)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
         //        areaNameTextField.leftView = paddingView2
         landMarkTextField.leftViewMode = UITextField.ViewMode.always
@@ -1714,7 +1723,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         locationTypeTextField.placeholder = "Location Type"
         locationTypeTextField.textColor = UIColor.black
         locationTypeTextField.textAlignment = .left
-        locationTypeTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        locationTypeTextField.font = UIFont(name: "Avenir-Regular", size: x)
+        locationTypeTextField.font = locationTypeTextField.font?.withSize(x)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
         //        areaNameTextField.leftView = paddingView2
         locationTypeTextField.leftViewMode = UITextField.ViewMode.always
@@ -1745,7 +1755,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         floorTextField.placeholder = "Floor"
         floorTextField.textColor = UIColor.black
         floorTextField.textAlignment = .left
-        floorTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        floorTextField.font = UIFont(name: "Avenir-Regular", size: x)
+        floorTextField.font = floorTextField.font?.withSize(x)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
         //        areaNameTextField.leftView = paddingView2
         floorTextField.leftViewMode = UITextField.ViewMode.always
@@ -1795,7 +1806,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         mobileCountryCodeLabel.frame = CGRect(x: flagImageView.frame.maxX + (x / 2), y: 0, width: (4 * x), height: mobileCountryCodeButton.frame.height)
         mobileCountryCodeLabel.textColor = UIColor.black
         mobileCountryCodeLabel.textAlignment = .left
-        mobileCountryCodeLabel.font = UIFont(name: "Avenir-Regular", size: 18)
+        mobileCountryCodeLabel.font = UIFont(name: "Avenir-Regular", size: x)
+        mobileCountryCodeLabel.font = mobileCountryCodeLabel.font.withSize(x)
         mobileCountryCodeButton.addSubview(mobileCountryCodeLabel)
         
         if screenTag == 1
@@ -1903,7 +1915,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
       
         mobileTextField.textColor = UIColor.black
         mobileTextField.textAlignment = .left
-        mobileTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        mobileTextField.font = UIFont(name: "Avenir-Regular", size: x)
+        mobileTextField.font = mobileTextField.font?.withSize(x)
         //        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.mobileTextField.frame.height))
         //        mobileTextField.leftView = paddingView
         mobileTextField.leftViewMode = UITextField.ViewMode.always
@@ -1929,7 +1942,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         shippingNotesTextField.placeholder = "Shipping Notes"
         shippingNotesTextField.textColor = UIColor.black
         shippingNotesTextField.textAlignment = .left
-        shippingNotesTextField.font = UIFont(name: "Avenir-Regular", size: 18)
+        shippingNotesTextField.font = UIFont(name: "Avenir-Regular", size: x)
+        shippingNotesTextField.font = shippingNotesTextField.font?.withSize(x)
         //        let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: secondNameEnglishTextField.frame.height))
         //        areaNameTextField.leftView = paddingView2
         shippingNotesTextField.leftViewMode = UITextField.ViewMode.always
@@ -1956,7 +1970,8 @@ class Address2ViewController: UIViewController, UITextFieldDelegate, ServerAPIDe
         saveButton.backgroundColor = UIColor(red: 0.098, green: 0.302, blue: 0.7608, alpha: 1.0)
         saveButton.setTitle("SAVE", for: .normal)
         saveButton.setTitleColor(UIColor.white, for: .normal)
-        saveButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: 10)
+        saveButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: x)
+        saveButton.titleLabel?.font = saveButton.titleLabel?.font?.withSize(x)
         saveButton.addTarget(self, action: #selector(self.saveAndNextButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(saveButton)
         

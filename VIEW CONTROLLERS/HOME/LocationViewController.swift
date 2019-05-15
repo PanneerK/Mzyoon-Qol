@@ -198,8 +198,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         selfScreenNavigationTitle.text = "LOCATION"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(1.5 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         if CLLocationManager.locationServicesEnabled()
@@ -316,7 +316,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         addressLabel.backgroundColor = UIColor.white
         addressLabel.textColor = UIColor.black
         addressLabel.textAlignment = .center
-        addressLabel.font = UIFont(name: "Avenir-Next", size: (2 * x))
+        addressLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+        addressLabel.font = addressLabel.font.withSize(x)
         addressLabel.numberOfLines = 3
         mapView.addSubview(addressLabel)
         
@@ -335,6 +336,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
         addAddressButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addAddressButton.setTitle("Confirm Location", for: .normal)
         addAddressButton.setTitleColor(UIColor.white, for: .normal)
+        addAddressButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (x))
+        addAddressButton.titleLabel?.font = addAddressButton.titleLabel?.font.withSize(x)
         addAddressButton.addTarget(self, action: #selector(self.addAddressButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(addAddressButton)
         

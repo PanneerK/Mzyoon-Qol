@@ -71,6 +71,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     var selectName = false
     var apiName = String()
     
+    let getDate = DateFile()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -590,12 +592,12 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         view.addSubview(cameraButton)
         
         let nameIcon = UIImageView()
-        nameIcon.frame = CGRect(x: (3 * x), y: userImage.frame.maxY + (4 * y), width: (2.5 * x), height: (2 * y))
+        nameIcon.frame = CGRect(x: (3 * x), y: userImage.frame.maxY + (3 * y), width: (2.5 * x), height: (2 * y))
         nameIcon.image = UIImage(named: "account")
         view.addSubview(nameIcon)
         
         userName.isUserInteractionEnabled = false
-        userName.frame = CGRect(x: nameIcon.frame.maxX + x, y: userImage.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
+        userName.frame = CGRect(x: nameIcon.frame.maxX + x, y: userImage.frame.maxY + (3 * y), width: view.frame.width - (7 * x), height: (2 * y))
         if let getUserName = UserDefaults.standard.value(forKey: "userName") as? String
         {
             userName.text = getUserName
@@ -605,6 +607,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             userName.placeholder = "Please enter your name"
         }
         userName.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        userName.font = UIFont(name: "Avenir-Regular", size: (x))
+        userName.font = userName.font?.withSize(x)
         userName.delegate = self
         view.addSubview(userName)
         
@@ -614,12 +618,12 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         view.addSubview(nameUnderline)
         
         let mobileIcon = UIImageView()
-        mobileIcon.frame = CGRect(x: (3 * x), y: nameIcon.frame.maxY + (4 * y), width: (2 * y), height: (2 * y))
+        mobileIcon.frame = CGRect(x: (3 * x), y: nameIcon.frame.maxY + (3 * y), width: (2 * y), height: (2 * y))
         mobileIcon.image = UIImage(named: "mobile-number")
         view.addSubview(mobileIcon)
         
         mobileNumber.isUserInteractionEnabled = false
-        mobileNumber.frame = CGRect(x: nameIcon.frame.maxX + x, y: nameIcon.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
+        mobileNumber.frame = CGRect(x: nameIcon.frame.maxX + x, y: nameIcon.frame.maxY + (3 * y), width: view.frame.width - (7 * x), height: (2 * y))
         if let getMobileNumber = UserDefaults.standard.value(forKey: "Phone") as? String
         {
             if let code = UserDefaults.standard.value(forKey: "countryCode") as? String
@@ -636,6 +640,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             mobileNumber.placeholder = "Please enter your mobile number"
         }
         mobileNumber.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        mobileNumber.font = UIFont(name: "Avenir-Regular", size: (x))
+        mobileNumber.font = mobileNumber.font?.withSize(x)
         mobileNumber.delegate = self
         view.addSubview(mobileNumber)
         
@@ -645,12 +651,12 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         view.addSubview(mobileUnderline)
         
         let emailIcon = UIImageView()
-        emailIcon.frame = CGRect(x: (3 * x), y: mobileIcon.frame.maxY + (4 * y), width: (2 * y), height: (2 * y))
+        emailIcon.frame = CGRect(x: (3 * x), y: mobileIcon.frame.maxY + (3 * y), width: (2 * y), height: (2 * y))
         emailIcon.image = UIImage(named: "email")
         view.addSubview(emailIcon)
         
         email.isUserInteractionEnabled = false
-        email.frame = CGRect(x: nameIcon.frame.maxX + x, y: mobileIcon.frame.maxY + (4 * y), width: view.frame.width - (7 * x), height: (2 * y))
+        email.frame = CGRect(x: nameIcon.frame.maxX + x, y: mobileIcon.frame.maxY + (3 * y), width: view.frame.width - (7 * x), height: (2 * y))
         if getEmail.isEmpty == true
         {
             email.placeholder = "Please enter your email"
@@ -660,6 +666,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             email.text = getEmail
         }
         email.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        email.font = UIFont(name: "Avenir-Regular", size: (x))
+        email.font = email.font?.withSize(x)
         email.delegate = self
         view.addSubview(email)
         
@@ -669,12 +677,12 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         view.addSubview(emailUnderline)
         
         let dobIcon = UIImageView()
-        dobIcon.frame = CGRect(x: (3 * x), y: emailIcon.frame.maxY + (4 * y), width: (2.5 * x), height: (2 * y))
+        dobIcon.frame = CGRect(x: (3 * x), y: emailIcon.frame.maxY + (3 * y), width: (2.5 * x), height: (2 * y))
         dobIcon.image = UIImage(named: "dob")
         view.addSubview(dobIcon)
         
         dob.isUserInteractionEnabled = false
-        dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (4 * y), width: view.frame.width - (12 * x), height: (2 * y))
+        dob.frame = CGRect(x: nameIcon.frame.maxX + x, y: emailIcon.frame.maxY + (3 * y), width: view.frame.width - (12 * x), height: (2 * y))
         if getDOB.isEmpty == true
         {
             dob.placeholder = "dd/mm/yyyy - Date of Birth"
@@ -684,11 +692,13 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             dob.text = getDOB
         }
         dob.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        dob.font = UIFont(name: "Avenir-Regular", size: (x))
+        dob.font = dob.font?.withSize(x)
         dob.addTarget(self, action: #selector(self.calendarButtonAction), for: .allEditingEvents)
         dob.delegate = self
         view.addSubview(dob)
         
-        calendarButton.frame = CGRect(x: view.frame.width - (5 * x), y: emailIcon.frame.maxY + (4 * y), width: (2 * x), height: (2 * y))
+        calendarButton.frame = CGRect(x: view.frame.width - (5 * x), y: emailIcon.frame.maxY + (3 * y), width: (2 * x), height: (2 * y))
         calendarButton.setImage(UIImage(named: "calender"), for: .normal)
         calendarButton.addTarget(self, action: #selector(self.calendarButtonAction), for: .touchUpInside)
         view.addSubview(calendarButton)
@@ -702,6 +712,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         genderHeadingLabel.text = "Gender : "
         genderHeadingLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         genderHeadingLabel.textAlignment = .left
+        genderHeadingLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+        genderHeadingLabel.font = genderHeadingLabel.font?.withSize(x)
         view.addSubview(genderHeadingLabel)
         
         if getGender.isEmpty == true || getGender == ""
@@ -741,6 +753,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         }
         genderLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         genderLabel.textAlignment = .left
+        genderLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+        genderLabel.font = genderLabel.font?.withSize(x)
         genderButton.addSubview(genderLabel)
         
         let dropDownImageView = UIImageView()
@@ -786,6 +800,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         updateButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         updateButton.setTitle("Edit Profile", for: .normal)
         updateButton.setTitleColor(UIColor.white, for: .normal)
+        updateButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (x))
+        updateButton.titleLabel?.font = updateButton.titleLabel?.font?.withSize(x)
         updateButton.addTarget(self, action: #selector(self.updateButtonAction(sender:)), for: .touchUpInside)
         view.addSubview(updateButton)
         
@@ -981,11 +997,13 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     @objc func doneClick()
     {
-        let dateFormatter1 = DateFormatter()
+        /*let dateFormatter1 = DateFormatter()
         dateFormatter1.dateStyle = .medium
         dateFormatter1.timeStyle = .none
         dateFormatter1.dateFormat = "dd MMM yyyy"
-        dob.text = dateFormatter1.string(from: datePick.date)
+        dob.text = dateFormatter1.string(from: datePick.date)*/
+        
+        dob.text = getDate.returnDateForProfile(getDate: datePick.date)
         dob.resignFirstResponder()
     }
     
@@ -1253,6 +1271,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             cell.textLabel?.text = gendersArrayInEnglish[indexPath.row]
             cell.textLabel?.textAlignment = .left
         }
+        
+        cell.textLabel?.font = UIFont(name: "Avenir-Regular", size: (x))
+        cell.textLabel?.font = cell.textLabel?.font?.withSize(x)
         
         print("WELCOME")
         return cell

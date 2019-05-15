@@ -56,6 +56,7 @@
 		FD2ADFE62175A5AB0033025B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFE52175A5AB0033025B /* LoginViewController.swift */; };
 		FD2ADFED2175C0230033025B /* ServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFEB2175C0230033025B /* ServerAPI.swift */; };
 		FD2ADFEE2175C0230033025B /* ServerAPIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFEC2175C0230033025B /* ServerAPIDelegate.swift */; };
+		FD363EFD228A8A8800F077CC /* DateFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD363EFC228A8A8800F077CC /* DateFile.swift */; };
 		FD462DDA21AD0E9A0073B53B /* Measurement2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD462DD921AD0E9A0073B53B /* Measurement2ViewController.swift */; };
 		FD4631DC21775055002C06CA /* CountryCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD4631DB21775055002C06CA /* CountryCodeTableViewCell.swift */; };
 		FD53A3D521A809450097B4D9 /* TailorListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD53A3D421A809450097B4D9 /* TailorListViewController.swift */; };
@@ -171,6 +172,7 @@
 		FD2ADFE52175A5AB0033025B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FD2ADFEB2175C0230033025B /* ServerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerAPI.swift; sourceTree = "<group>"; };
 		FD2ADFEC2175C0230033025B /* ServerAPIDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerAPIDelegate.swift; sourceTree = "<group>"; };
+		FD363EFC228A8A8800F077CC /* DateFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFile.swift; sourceTree = "<group>"; };
 		FD462DD921AD0E9A0073B53B /* Measurement2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement2ViewController.swift; sourceTree = "<group>"; };
 		FD4631DB21775055002C06CA /* CountryCodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewCell.swift; sourceTree = "<group>"; };
 		FD53A3D421A809450097B4D9 /* TailorListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailorListViewController.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				FD0DD42C2242192800F7AF38 /* TestingViewController.swift */,
+				FD363EFB228A8A0E00F077CC /* COMMON CLASS */,
 				FD0785DA2209A464001B9FC9 /* SLIDE MENUS */,
 				FDFE07332189E47E0056E773 /* VIEW */,
 				FD2ADFEA2175C0160033025B /* SERVER */,
@@ -390,6 +393,15 @@
 				FD2ADFEB2175C0230033025B /* ServerAPI.swift */,
 			);
 			path = SERVER;
+			sourceTree = "<group>";
+		};
+		FD363EFB228A8A0E00F077CC /* COMMON CLASS */ = {
+			isa = PBXGroup;
+			children = (
+				DAC59758228944ED0059081D /* CodeInputView.swift */,
+				FD363EFC228A8A8800F077CC /* DateFile.swift */,
+			);
+			path = "COMMON CLASS";
 			sourceTree = "<group>";
 		};
 		FD71D255219E991300FFC067 /* COMMON */ = {
@@ -478,7 +490,6 @@
 			isa = PBXGroup;
 			children = (
 				FDFE07342189E49F0056E773 /* ActivityView.swift */,
-				DAC59758228944ED0059081D /* CodeInputView.swift */,
 			);
 			path = VIEW;
 			sourceTree = "<group>";
@@ -796,6 +807,7 @@
 				FD0F977F22255E40003744ED /* Variables.swift in Sources */,
 				FD53A3D521A809450097B4D9 /* TailorListViewController.swift in Sources */,
 				FDC9BB942186F707003BA5C9 /* ContactUsViewController.swift in Sources */,
+				FD363EFD228A8A8800F077CC /* DateFile.swift in Sources */,
 				FD71D25C219EE62F00FFC067 /* DressTypeViewController.swift in Sources */,
 				DA077FC021D62A5400D9E565 /* ListOfOrdersViewController.swift in Sources */,
 				FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */,
@@ -995,7 +1007,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1025,7 +1037,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Mzyoon/Mzyoon-Bridging-Header.h";
 				SWIFT_REFLECTION_METADATA_LEVEL = none;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

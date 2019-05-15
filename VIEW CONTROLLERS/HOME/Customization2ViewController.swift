@@ -558,7 +558,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         viewDetailsButton.addTarget(self, action: #selector(self.viewDetailsButtonAction(sender:)), for: .touchUpInside)
 //        selfScreenContents.addSubview(viewDetailsButton)
         
-        customization2NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: patternScrollView.frame.maxY, width: (4 * x), height: (4 * x))
+        customization2NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: patternScrollView.frame.maxY, width: (3 * x), height: (3 * x))
         customization2NextButton.layer.cornerRadius = customization2NextButton.frame.height / 2
         customization2NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization2NextButton.setImage(UIImage(named: "rightArrow"), for: .normal)
@@ -893,7 +893,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         materialTitleLabel.text = "MATERIAL TYPE"
         materialTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         materialTitleLabel.textAlignment = .center
-        materialTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        materialTitleLabel.font = UIFont(name: "Avenir-Regular", size: 15)
+        materialTitleLabel.font = colorTitleLabel.font.withSize(x)
         selfScreenContents.addSubview(materialTitleLabel)
         
         materialScrollView.frame = CGRect(x: 0, y: materialTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
@@ -953,6 +954,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
+            buttonTitle.font = buttonTitle.font.withSize(0.75 * x)
             buttonTitle.adjustsFontSizeToFitWidth = true
             buttonTitle.tag = -1
             materialButton.addSubview(buttonTitle)
@@ -972,7 +974,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         colorTitleLabel.text = "COLOR"
         colorTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         colorTitleLabel.textAlignment = .center
-        colorTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        colorTitleLabel.font = UIFont(name: "Avenir-Regular", size: 15)
+        colorTitleLabel.font = colorTitleLabel.font.withSize(x)
         selfScreenContents.addSubview(colorTitleLabel)
         
         colorScrollView.frame = CGRect(x: 0, y: colorTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
@@ -1034,6 +1037,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
+            buttonTitle.font = buttonTitle.font.withSize(0.75 * x)
             buttonTitle.tag = -1
             colorButton.addSubview(buttonTitle)
             
@@ -1068,7 +1072,8 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
         patternTitleLabel.text = "PATTERN"
         patternTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         patternTitleLabel.textAlignment = .center
-        patternTitleLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        patternTitleLabel.font = UIFont(name: "Avenir-Regular", size: 15)
+        patternTitleLabel.font = patternTitleLabel.font.withSize(x)
         selfScreenContents.addSubview(patternTitleLabel)
         
         patternScrollView.frame = CGRect(x: 0, y: patternTitleLabel.frame.maxY, width: selfScreenContents.frame.width, height: (11 * y))
@@ -1131,6 +1136,7 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
             buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
+            buttonTitle.font = buttonTitle.font.withSize(0.75 * x)
             buttonTitle.tag = -1
             patternButton.addSubview(buttonTitle)
             

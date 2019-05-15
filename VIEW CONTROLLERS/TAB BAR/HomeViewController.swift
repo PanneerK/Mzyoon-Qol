@@ -31,6 +31,10 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
     {
         Variables.sharedManager.screenNavigationBarTag = 1
         
+        let date = DateFile()
+        print("DATE FILE", date.returnDateAlone())
+        print("DATE AND TIME", date.returnDateAndTime())
+        
         UserDefaults.standard.set(1, forKey: "screenAppearance")
         
         xPos = 10 / 375 * 100
@@ -270,7 +274,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             y1 = selectionButton.frame.maxY + yPos
             
             let buttonImage = UIImageView()
-            buttonImage.frame = CGRect(x: ((selectionButton.frame.width - (8 * xPos)) / 2), y: yPos, width: (8 * xPos), height: (7 * yPos))
+            buttonImage.frame = CGRect(x: ((selectionButton.frame.width - (7 * yPos)) / 2), y: yPos, width: (7 * yPos), height: (7 * yPos))
             buttonImage.image = UIImage(named: imageName[i])
             selectionButton.addSubview(buttonImage)
             
@@ -279,7 +283,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.text = buttonTitleText[i]
             buttonTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: 5)
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+            buttonTitle.font = buttonTitle.font.withSize(1.25 * x)
             selectionButton.addSubview(buttonTitle)
         }
         
@@ -333,7 +338,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             y1 = selectionButton.frame.maxY + yPos
             
             let buttonImage = UIImageView()
-            buttonImage.frame = CGRect(x: ((selectionButton.frame.width - (8 * xPos)) / 2), y: yPos, width: (8 * xPos), height: (7 * yPos))
+            buttonImage.frame = CGRect(x: ((selectionButton.frame.width - (7 * yPos)) / 2), y: yPos, width: (7 * yPos), height: (7 * yPos))
             buttonImage.image = UIImage(named: imageName[i])
             selectionButton.addSubview(buttonImage)
             
@@ -342,8 +347,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
             buttonTitle.text = buttonTitleText[i]
             buttonTitle.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: x)
-            buttonTitle.font = buttonTitle.font.withSize(x)
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+            buttonTitle.font = buttonTitle.font.withSize(1.25 * x)
             selectionButton.addSubview(buttonTitle)
         }
     }

@@ -171,7 +171,7 @@ class CommonViewController: UIViewController
         activityView.startAnimating()
 //        activeView.addSubview(activityView)
         
-        backgroundCircle.frame = CGRect(x: ((activeView.frame.width - (10 * x)) / 2), y: ((activeView.frame.height - (10 * y)) / 2), width: (10 * x), height: (10 * y))
+        backgroundCircle.frame = CGRect(x: ((activeView.frame.width - (10 * y)) / 2), y: ((activeView.frame.height - (10 * y)) / 2), width: (10 * y), height: (10 * y))
         backgroundCircle.layer.cornerRadius = backgroundCircle.frame.height / 2
         backgroundCircle.backgroundColor = UIColor.black
         activeView.addSubview(backgroundCircle)
@@ -244,8 +244,8 @@ class CommonViewController: UIViewController
         navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
-        navigationTitle.font = navigationTitle.font.withSize(2 * x)
+        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 15)
+        navigationTitle.font = navigationTitle.font.withSize(1.5 * x)
         navigationBar.addSubview(navigationTitle)
         
         userImage.frame = CGRect(x: (2 * x), y: (2 * y), width: (4 * y), height: (4 * y))
@@ -378,7 +378,7 @@ class CommonViewController: UIViewController
         tab1Text.text = "Home"
         tab1Text.textColor = UIColor.orange
         tab1Text.textAlignment = .center
-        tab1Text.font = tab1Text.font.withSize(15)
+        tab1Text.font = tab1Text.font.withSize(x)
         tab1Button.addSubview(tab1Text)
         
         tab2Button.frame = CGRect(x: tab1Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
@@ -394,7 +394,7 @@ class CommonViewController: UIViewController
         tab2Text.text = "Request"
         tab2Text.textColor = UIColor.white
         tab2Text.textAlignment = .center
-        tab2Text.font = tab2Text.font.withSize(10)
+        tab2Text.font = tab2Text.font.withSize(0.75 * x)
         tab2Button.addSubview(tab2Text)
         
         tab3Button.frame = CGRect(x: tab2Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
@@ -410,7 +410,7 @@ class CommonViewController: UIViewController
         tab3Text.text = "Order"
         tab3Text.textColor = UIColor.white
         tab3Text.textAlignment = .center
-        tab3Text.font = tab3Text.font.withSize(10)
+        tab3Text.font = tab3Text.font.withSize(0.75 * x)
         tab3Button.addSubview(tab3Text)
         
         tab4Button.frame = CGRect(x: tab3Button.frame.maxX, y: 0, width: (9.37 * x), height: (5 * y))
@@ -426,7 +426,7 @@ class CommonViewController: UIViewController
         tab4Text.text = "Rewards"
         tab4Text.textColor = UIColor.white
         tab4Text.textAlignment = .center
-        tab4Text.font = tab4Text.font.withSize(10)
+        tab4Text.font = tab4Text.font.withSize(0.75 * x)
         tab4Button.addSubview(tab4Text)
         
         if let language = UserDefaults.standard.value(forKey: "language") as? String
@@ -619,88 +619,88 @@ class CommonViewController: UIViewController
         
         if tag == 0
         {
-            tab1Text.font = tab1Text.font.withSize(15)
+            tab1Text.font = tab1Text.font.withSize(x)
             tab1Text.textColor = UIColor.orange
             
             tab1ImageView.tintColor = UIColor.orange
             
-            tab2Text.font = tab2Text.font.withSize(10)
+            tab2Text.font = tab2Text.font.withSize(0.75 * x)
             tab2Text.textColor = UIColor.white
             
             tab2ImageView.tintColor = UIColor.white
             
-            tab3Text.font = tab3Text.font.withSize(10)
+            tab3Text.font = tab3Text.font.withSize(0.75 * x)
             tab3Text.textColor = UIColor.white
             
             tab3ImageView.tintColor = UIColor.white
             
-            tab4Text.font = tab4Text.font.withSize(10)
+            tab4Text.font = tab4Text.font.withSize(0.75 * x)
             tab4Text.textColor = UIColor.white
             
             tab4ImageView.tintColor = UIColor.white
         }
         else if tag == 1
         {
-            tab1Text.font = tab1Text.font.withSize(10)
+            tab1Text.font = tab1Text.font.withSize(0.75 * x)
             tab1Text.textColor = UIColor.white
             
             tab1ImageView.tintColor = UIColor.white
             
-            tab2Text.font = tab2Text.font.withSize(15)
+            tab2Text.font = tab2Text.font.withSize(x)
             tab2Text.textColor = UIColor.orange
             
             tab2ImageView.tintColor = UIColor.orange
             
-            tab3Text.font = tab3Text.font.withSize(10)
+            tab3Text.font = tab3Text.font.withSize(0.75 * x)
             tab3Text.textColor = UIColor.white
             
             tab3ImageView.tintColor = UIColor.white
             
-            tab4Text.font = tab4Text.font.withSize(10)
+            tab4Text.font = tab4Text.font.withSize(0.75 * x)
             tab4Text.textColor = UIColor.white
             
             tab4ImageView.tintColor = UIColor.white
         }
         else if tag == 2
         {
-            tab1Text.font = tab1Text.font.withSize(10)
+            tab1Text.font = tab1Text.font.withSize(0.75 * x)
             tab1Text.textColor = UIColor.white
             
             tab1ImageView.tintColor = UIColor.white
             
-            tab2Text.font = tab2Text.font.withSize(10)
+            tab2Text.font = tab2Text.font.withSize(0.75 * x)
             tab2Text.textColor = UIColor.white
             
             tab2ImageView.tintColor = UIColor.white
             
-            tab3Text.font = tab3Text.font.withSize(15)
+            tab3Text.font = tab3Text.font.withSize(x)
             tab3Text.textColor = UIColor.orange
             
             tab3ImageView.tintColor = UIColor.orange
             
-            tab4Text.font = tab4Text.font.withSize(10)
+            tab4Text.font = tab4Text.font.withSize(0.75 * x)
             tab4Text.textColor = UIColor.white
             
             tab4ImageView.tintColor = UIColor.white
         }
         else if tag == 3
         {
-            tab1Text.font = tab1Text.font.withSize(10)
+            tab1Text.font = tab1Text.font.withSize(0.75 * x)
             tab1Text.textColor = UIColor.white
             
             tab1ImageView.tintColor = UIColor.white
             
-            tab2Text.font = tab2Text.font.withSize(10)
+            tab2Text.font = tab2Text.font.withSize(0.75 * x)
             tab2Text.textColor = UIColor.white
             
             tab2ImageView.tintColor = UIColor.white
             
-            tab3Text.font = tab3Text.font.withSize(10)
+            tab3Text.font = tab3Text.font.withSize(0.75 * x)
             tab3Text.textColor = UIColor.white
             
             tab3ImageView.tintColor = UIColor.white
             
-            tab4Text.font = tab4Text.font.withSize(15)
+            tab4Text.font = tab4Text.font.withSize(x)
             tab4Text.textColor = UIColor.orange
             
             tab4ImageView.tintColor = UIColor.orange

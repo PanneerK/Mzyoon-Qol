@@ -108,6 +108,9 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     
      let emptyLabel = UILabel()
     
+    let getDate = DateFile()
+
+    
     var applicationDelegate = AppDelegate()
 
     var MaterialFromDate = String()
@@ -3954,21 +3957,25 @@ class AppointmentViewController: CommonViewController,ServerAPIDelegate,UIPicker
     }
     @objc func FMaterial_DoneClick()
     {
-        let FromMaterial_dateFormatter = DateFormatter()
+        /*let FromMaterial_dateFormatter = DateFormatter()
         FromMaterial_dateFormatter.dateStyle = .medium
         FromMaterial_dateFormatter.timeStyle = .none
         FromMaterial_dateFormatter.dateFormat = "MM/dd/yyyy"  //"yyyy/MM/dd"
-        From_MaterialType_TF.text = FromMaterial_dateFormatter.string(from: Material_FromDatePick.date)
+        From_MaterialType_TF.text = FromMaterial_dateFormatter.string(from: Material_FromDatePick.date)*/
+        
+        From_MaterialType_TF.text = getDate.getDateAndReturnDate(getDate: Material_FromDatePick.date)
         From_MaterialType_TF.resignFirstResponder()
         
     }
     @objc func TMaterial_DoneClick()
     {
-        let ToMaterial_dateFormatter = DateFormatter()
+        /*let ToMaterial_dateFormatter = DateFormatter()
         ToMaterial_dateFormatter.dateStyle = .medium
         ToMaterial_dateFormatter.timeStyle = .none
         ToMaterial_dateFormatter.dateFormat = "MM/dd/yyyy"  //"yyyy/MM/dd"
-        TO_MaterialType_TF.text = ToMaterial_dateFormatter.string(from: Material_ToDatePick.date)
+        TO_MaterialType_TF.text = ToMaterial_dateFormatter.string(from: Material_ToDatePick.date)*/
+        
+        TO_MaterialType_TF.text = getDate.getDateAndReturnDate(getDate: Material_ToDatePick.date)
         TO_MaterialType_TF.resignFirstResponder()
         
     }

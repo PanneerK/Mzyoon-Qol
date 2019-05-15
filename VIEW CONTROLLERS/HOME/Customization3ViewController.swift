@@ -875,7 +875,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customizationScrollView.contentSize.width = x3
         
         let customization3NextButton = UIButton()
-        customization3NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: customizationScrollView.frame.maxY + y, width: (4 * x), height: (4 * x))
+        customization3NextButton.frame = CGRect(x: selfScreenContents.frame.width - (4 * x), y: customizationScrollView.frame.maxY, width: (3 * x), height: (3 * x))
         customization3NextButton.layer.cornerRadius = customization3NextButton.frame.height / 2
         customization3NextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         customization3NextButton.layer.masksToBounds = true

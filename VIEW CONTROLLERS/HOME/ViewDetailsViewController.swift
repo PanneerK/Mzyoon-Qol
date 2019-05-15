@@ -322,7 +322,7 @@ class ViewDetailsViewController: CommonViewController, ServerAPIDelegate, UIScro
             y1 = detailLabel.frame.maxY + 1
         }
         
-        viewDetailsNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: y1 + y, width: (4 * x), height: (4 * x))
+        viewDetailsNextButton.frame = CGRect(x: view.frame.width - (5 * x), y: y1 + y, width: (3 * x), height: (3 * x))
         viewDetailsNextButton.layer.cornerRadius = viewDetailsNextButton.frame.height / 2
         viewDetailsNextButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         viewDetailsNextButton.setImage(UIImage(named: "rightArrow"), for: .normal)

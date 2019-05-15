@@ -151,7 +151,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
  
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any])
     {
@@ -172,7 +171,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         print(userInfo)
     }
  
-    
     func fetchingCurrentLocation()
     {
         locationManager.requestAlwaysAuthorization()
@@ -240,7 +238,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         alertWindow.makeKeyAndVisible()
         alertWindow.rootViewController?.present(exitAlert, animated: true, completion: nil)
     }
-    
 }
 
 

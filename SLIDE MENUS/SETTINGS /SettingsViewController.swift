@@ -59,7 +59,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         navigationTitle.text = "SETTINGS"
         navigationTitle.textColor = UIColor.white
         navigationTitle.textAlignment = .center
-        navigationTitle.font = UIFont(name: "Avenir-Regular", size: 20)
+        navigationTitle.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        navigationTitle.font = navigationTitle.font.withSize(1.5 * x)
         navigationBar.addSubview(navigationTitle)
         
         let settingsTableView = UITableView()
@@ -78,6 +79,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         languageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         languageButton.setTitle("Language Setting - English", for: .normal)
         languageButton.setTitleColor(UIColor.white, for: .normal)
+        languageButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        languageButton.titleLabel?.font = languageButton.titleLabel?.font?.withSize(1.25 * x)
         languageButton.addTarget(self, action: #selector(self.languageFunction), for: .touchUpInside)
         selfScreenContents.addSubview(languageButton)
         
@@ -85,6 +88,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         hintsButton.layer.cornerRadius = 10
         hintsButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         hintsButton.setTitleColor(UIColor.white, for: .normal)
+        hintsButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        hintsButton.titleLabel?.font = hintsButton.titleLabel?.font?.withSize(1.25 * x)
         hintsButton.addTarget(self, action: #selector(self.hintsSwicthAction), for: .touchUpInside)
         selfScreenContents.addSubview(hintsButton)
         

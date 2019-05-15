@@ -312,39 +312,8 @@ class TrackingViewController: CommonViewController,ServerAPIDelegate,UITableView
             
             print("Date:",TrackingDate)
             print("Time:",TrackingTime)
-            
-            /*
-             
-             // var ConvertDate : String = ""
-             //  var ConvertTime : String = ""
-             
-             let dateFormatter = DateFormatter()
-             dateFormatter.dateFormat = "yyyy-MM-dd"
-             let NewDateFormatter = DateFormatter()
-             NewDateFormatter.dateFormat = "MMM d"
-             
-             let TimeFormatter = DateFormatter()
-             TimeFormatter.dateFormat = "HH-mm-ss"
-             let NewTimeFormatter = DateFormatter()
-             NewTimeFormatter.dateFormat = "h:mm a"
-             
-             // let SplitDate = dateComponent[0]
-             // let SplitTime = dateComponent[1]
-             
-            if let NewDate = dateFormatter.date(from: SplitDate)
-            {
-                TrackingDate = NewDateFormatter.string(from: NewDate)
-                print("Date:",TrackingDate)
-            }
-            
-            if let NewTime = TimeFormatter.date(from: SplitTime)
-            {
-                TrackingTime = NewTimeFormatter.string(from: NewTime)
-                print("Time:",TrackingTime)
-            }
-            */
-            
         }
+        
         cell.TrackingDate.text = TrackingDate
         cell.TrackingTime.text = TrackingTime
         

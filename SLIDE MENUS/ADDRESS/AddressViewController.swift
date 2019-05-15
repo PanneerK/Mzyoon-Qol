@@ -416,8 +416,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         selfScreenNavigationTitle.text = "ADDRESS"
         selfScreenNavigationTitle.textColor = UIColor.white
         selfScreenNavigationTitle.textAlignment = .center
-        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
+        selfScreenNavigationTitle.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(1.5 * x)
         selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
         
         var yAxix:CGFloat = selfScreenNavigationBar.frame.maxY
@@ -575,6 +575,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
 //                addressEditButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressEditButton.setTitle("Edit", for: .normal)
                 addressEditButton.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0), for: .normal)
+                addressEditButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (x))
+                addressEditButton.titleLabel?.font = addressEditButton.titleLabel?.font?.withSize(x)
                 addressEditButton.tag = i
                 addressEditButton.addTarget(self, action: #selector(self.editButtonAction(sender:)), for: .touchUpInside)
                 addressSelectButton.addSubview(addressEditButton)
@@ -594,6 +596,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
 //                addressDeleteButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                 addressDeleteButton.setTitle("Delete", for: .normal)
                 addressDeleteButton.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0), for: .normal)
+                addressDeleteButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (x))
+                addressDeleteButton.titleLabel?.font = addressDeleteButton.titleLabel?.font?.withSize(x)
                 addressDeleteButton.tag = i
                 addressDeleteButton.addTarget(self, action: #selector(self.deleteButtonAction(sender:)), for: .touchUpInside)
                 addressSelectButton.addSubview(addressDeleteButton)
@@ -613,7 +617,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 nameLabel.text = "Name"
                 nameLabel.textColor = UIColor.black
                 nameLabel.textAlignment = .left
-                nameLabel.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
+                nameLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+                nameLabel.font = nameLabel.font?.withSize(x)
                 addressSelectButton.addSubview(nameLabel)
                 
                 let getNameLabel = UILabel()
@@ -621,8 +626,9 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getNameLabel.text = FirstName[i] as? String
                 getNameLabel.textColor = UIColor.black
                 getNameLabel.textAlignment = .left
-                getNameLabel.font = UIFont(name: "Avenir Next Regular", size: (1.5 * x))
-                getNameLabel.font = getNameLabel.font.withSize(15)
+                getNameLabel.font = UIFont(name: "Avenir Next Regular", size: (x))
+                getNameLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+                getNameLabel.font = getNameLabel.font?.withSize(x)
                 addressSelectButton.addSubview(getNameLabel)
                 
                 let underLine2 = UILabel()
@@ -635,7 +641,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 addressLabel.text = "Address"
                 addressLabel.textColor = UIColor.black
                 addressLabel.textAlignment = .left
-                addressLabel.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
+                addressLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+                addressLabel.font = addressLabel.font?.withSize(x)
                 addressSelectButton.addSubview(addressLabel)
                 
                 let getAddressLabel = UILabel()
@@ -660,8 +667,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getAddressLabel.text = "\(areaNameArray[i]),\(stateNameArray[i]),\(countryNameArray[i])"
                 getAddressLabel.textColor = UIColor.black
                 getAddressLabel.textAlignment = .left
-                getAddressLabel.font = UIFont(name: "Avenir Next Regular", size: (1.5 * x))
-                getAddressLabel.font = getAddressLabel.font.withSize(15)
+                getAddressLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+                getAddressLabel.font = getAddressLabel.font?.withSize(x)
                 getAddressLabel.adjustsFontSizeToFitWidth = true
                 addressSelectButton.addSubview(getAddressLabel)
                 
@@ -675,7 +682,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 mobileLabel.text = "Phone Number"
                 mobileLabel.textColor = UIColor.black
                 mobileLabel.textAlignment = .left
-                mobileLabel.font = UIFont(name: "AvenirNext-Bold", size: (1.5 * x))
+                mobileLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+                mobileLabel.font = mobileLabel.font?.withSize(x)
                 addressSelectButton.addSubview(mobileLabel)
                 
                 let getMobileLabel = UILabel()
@@ -683,8 +691,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                 getMobileLabel.text = PhoneNo[i] as? String
                 getMobileLabel.textColor = UIColor.black
                 getMobileLabel.textAlignment = .left
-                getMobileLabel.font = UIFont(name: "Avenir Next Regular", size: (1.5 * x))
-                getMobileLabel.font = getMobileLabel.font.withSize(15)
+                getMobileLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+                getMobileLabel.font = getMobileLabel.font?.withSize(x)
                 addressSelectButton.addSubview(getMobileLabel)
                 
                 let verticalLine1 = UILabel()
@@ -705,7 +713,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
                     defaultAddressLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
                     defaultAddressLabel.textAlignment = .left
                     defaultAddressLabel.adjustsFontSizeToFitWidth = true
-                    defaultAddressLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+                    defaultAddressLabel.font = UIFont(name: "Avenir-Regular", size: (x))
+                    defaultAddressLabel.font = defaultAddressLabel.font?.withSize(x)
                     
                     let defaultSwitch = UISwitch()
                     defaultSwitch.frame = CGRect(x: defaultAddressLabel.frame.maxX + x, y: addressSelectButton.frame.height - (3 * y), width: (3 * x), height: (2 * y))
@@ -861,6 +870,8 @@ class AddressViewController: UIViewController, ServerAPIDelegate, GMSMapViewDele
         addNewAddressButton.frame = CGRect(x: 0, y: selfScreenContents.frame.height - (5 * y), width: selfScreenContents.frame.width, height: (5 * y))
         addNewAddressButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         addNewAddressButton.setTitle("ADD NEW ADDRESS", for: .normal)
+        addNewAddressButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (x))
+        addNewAddressButton.titleLabel?.font = addNewAddressButton.titleLabel?.font?.withSize(x)
         addNewAddressButton.setTitleColor(UIColor.white, for: .normal)
         addNewAddressButton.addTarget(self, action: #selector(self.addNewAddressButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(addNewAddressButton)
