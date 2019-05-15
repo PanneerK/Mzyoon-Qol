@@ -116,7 +116,9 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
     override func viewDidLoad()
     {
         super.viewDidLoad()
-      
+        
+        selectedButton(tag: 1)
+        
         print("TailorId",TailorId)
         print("Global TailorID:",Variables.sharedManager.TailorID)
       
@@ -142,6 +144,7 @@ class PaymentViewController: CommonViewController,ServerAPIDelegate,UITextFieldD
         Currency = "AED"
         Description = "Mzyoon App Payment Confirmation.."
        
+        
         
        // ConvertBase64()
         

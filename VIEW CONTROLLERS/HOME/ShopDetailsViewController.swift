@@ -347,12 +347,13 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     selfScreenNavigationTitle.font = selfScreenNavigationTitle.font.withSize(2 * x)
     selfScreenNavigationBar.addSubview(selfScreenNavigationTitle)
     
-    selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+  //  selfScreenContents.frame = CGRect(x: (3 * x), y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (6 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
+     selfScreenContents.frame = CGRect(x: x, y: selfScreenNavigationBar.frame.maxY, width: view.frame.width - (2 * x), height: view.frame.height - ((5 * y) + selfScreenNavigationBar.frame.maxY))
     selfScreenContents.backgroundColor = UIColor.clear
     view.addSubview(selfScreenContents)
     
     // let shopName = UILabel()
-    shopName.frame = CGRect(x: 0, y: y, width: selfScreenContents.frame.width, height: (3 * y))
+    shopName.frame = CGRect(x: x, y: y, width: selfScreenContents.frame.width, height: (3 * y))
   //  shopName.text = ShopNameInEnglish   // marker.title?.uppercased()
     shopName.textColor = UIColor.blue
     shopName.textAlignment = .left
@@ -372,7 +373,7 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     //view.addSubview(ratingLabel)
     
     //let ratingImageView = UIImageView()
-    ratingImageView.frame = CGRect(x: 0, y: shopName.frame.maxY + (y / 2), width: view.frame.width / 4, height: (1.5 * y))
+    ratingImageView.frame = CGRect(x: x, y: shopName.frame.maxY + (y / 2), width: view.frame.width / 4, height: (1.5 * y))
     selfScreenContents.addSubview(ratingImageView)
     
     
@@ -393,12 +394,12 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     view.addSubview(ratingCountLabel)
     
     let Name_Icon = UIImageView()
-    Name_Icon.frame = CGRect(x: 0, y: ratingImageView.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
+    Name_Icon.frame = CGRect(x: x, y: ratingImageView.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
     Name_Icon.image = UIImage(named: "TailorName")
     selfScreenContents.addSubview(Name_Icon)
     
     let nameLabel = UILabel()
-    nameLabel.frame = CGRect(x: Name_Icon.frame.maxX + (x / 3), y: ratingImageView.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
+    nameLabel.frame = CGRect(x: Name_Icon.frame.maxX + x, y: ratingImageView.frame.maxY + (y / 2), width: (5 * x), height: (2 * y))
     nameLabel.text = "Name : "
     nameLabel.textColor = UIColor.blue
     nameLabel.textAlignment = .left
@@ -414,12 +415,12 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     selfScreenContents.addSubview(tailorName)
     
     let Order_Icon = UIImageView()
-    Order_Icon.frame = CGRect(x: 0, y: nameLabel.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
+    Order_Icon.frame = CGRect(x: x, y: nameLabel.frame.maxY + (y / 2), width: (2 * x), height: (2 * y))
     Order_Icon.image = UIImage(named: "No_of_orders")
     selfScreenContents.addSubview(Order_Icon)
     
     let ordersLabel = UILabel()
-    ordersLabel.frame = CGRect(x: Order_Icon.frame.maxX + (x / 3), y: nameLabel.frame.maxY  + (y / 2), width: (9 * x), height: (2 * y))
+    ordersLabel.frame = CGRect(x: Order_Icon.frame.maxX + x, y: nameLabel.frame.maxY  + (y / 2), width: (9 * x), height: (2 * y))
     ordersLabel.text = "No. of Orders : "
     ordersLabel.textColor = UIColor.blue
     ordersLabel.textAlignment = .left
@@ -436,7 +437,7 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     
     
     let DetailsView = UIView()
-    DetailsView.frame = CGRect(x: 0, y: ordersCountLabel.frame.maxY + y, width: view.frame.width - (6 * x), height: (11 * y))
+    DetailsView.frame = CGRect(x: 0, y: ordersCountLabel.frame.maxY + y, width: view.frame.width - (2 * x), height: (11 * y))
     DetailsView.backgroundColor = UIColor.white
     DetailsView.layer.borderWidth = 1
     DetailsView.layer.borderColor = UIColor.lightGray.cgColor
@@ -496,7 +497,7 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     
     // Directions Button..
     let Direction_Btn = UIButton()
-    Direction_Btn.frame = CGRect(x: (3 * x), y: DetailsView.frame.maxY + (2 * y), width: (5 * x), height: (4.8 * y))
+    Direction_Btn.frame = CGRect(x: (4 * x), y: DetailsView.frame.maxY + (2 * y), width: (5 * x), height: (4.8 * y))
     Direction_Btn.backgroundColor = UIColor.white
    // Direction_Btn.layer.shadowColor = UIColor.black.cgColor
     Direction_Btn.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
@@ -511,7 +512,7 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     selfScreenContents.addSubview(Direction_Btn)
     
     let Directions_LBL = UILabel()
-    Directions_LBL.frame = CGRect(x: (2 * x), y: Direction_Btn.frame.maxY + y, width: (8 * x), height: y)
+    Directions_LBL.frame = CGRect(x: (3 * x), y: Direction_Btn.frame.maxY + y, width: (8 * x), height: y)
    // Directions_LBL.backgroundColor = UIColor.lightGray
     Directions_LBL.text = "DIRECTIONS"
     Directions_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
@@ -572,7 +573,7 @@ class ShopDetailsViewController: CommonViewController, UITableViewDelegate, UITa
     
     // Order Type..
     let Photos_Label = UILabel()
-    Photos_Label.frame = CGRect(x: 0, y: Call_LBL.frame.maxY + (2 * y), width: selfScreenContents.frame.width, height: (3 * y))
+    Photos_Label.frame = CGRect(x: (2 * x), y: Call_LBL.frame.maxY + (2 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
     Photos_Label.backgroundColor = UIColor.white
     Photos_Label.text = "SHOP PHOTOS"
     Photos_Label.layer.borderColor = UIColor.lightGray.cgColor

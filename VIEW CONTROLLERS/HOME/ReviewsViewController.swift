@@ -573,7 +573,8 @@ class ReviewsViewController:CommonViewController,ServerAPIDelegate
     
     
     //Reviews ScrollView...
-    ReviewsScrollView.frame = CGRect(x: (3 * x), y: WriteReviewButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (30 * y))
+   // ReviewsScrollView.frame = CGRect(x: (3 * x), y: WriteReviewButton.frame.maxY + (2 * y), width: view.frame.width - (6 * x), height: (30 * y))
+    ReviewsScrollView.frame = CGRect(x: x, y: WriteReviewButton.frame.maxY + (2 * y), width: view.frame.width - (2 * x), height: (30 * y))
     ReviewsScrollView.backgroundColor = UIColor.groupTableViewBackground
     view.addSubview(ReviewsScrollView)
     

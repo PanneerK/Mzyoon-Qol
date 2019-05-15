@@ -380,7 +380,9 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             orderId_Label.frame = CGRect(x: orderId_Icon.frame.maxX + x, y: y/2, width: (10 * x), height: (2 * y))
             orderId_Label.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             orderId_Label.textAlignment = .left
-            orderId_Label.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
+            orderId_Label.font =  UIFont(name: "Avenir Next", size: 1.2 * x)
+           // orderId_Label.font =  UIFont(name: "OpenSans", size: x/2)  //  [UIFont fontWithName:@"OpenSans-Semibold" size:16.0f];
+            //nameLabel.font.withSize(1.2 * x)
             RequestViewButton.addSubview(orderId_Label)
             
             let orderNum_Label = UILabel()
@@ -391,6 +393,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             orderNum_Label.textColor = UIColor.black
             orderNum_Label.textAlignment = .left
             orderNum_Label.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+           // orderNum_Label.font =  UIFont(name: "OpenSans", size: x)
             orderNum_Label.adjustsFontSizeToFitWidth = true
             RequestViewButton.addSubview(orderNum_Label)
            
@@ -410,7 +413,8 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             nameLabel.frame = CGRect(x: ReqDate_Icon.frame.maxX + x, y: underLine0.frame.maxY, width: (10 * x), height: (2 * y))
             nameLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             nameLabel.textAlignment = .left
-            nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)  //nameLabel.font.withSize(1.2 * x)
+            nameLabel.font =  UIFont(name: "Avenir Next", size: 1.2 * x)
+           // nameLabel.font =  UIFont(name: "OpenSans", size: x)
             RequestViewButton.addSubview(nameLabel)
             
             let tailorName = UILabel()
@@ -422,6 +426,7 @@ class OrderRequestListViewController: CommonViewController,ServerAPIDelegate
             tailorName.textColor = UIColor.black
             tailorName.textAlignment = .left
             tailorName.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+          //  tailorName.font =  UIFont(name: "OpenSans", size: x)
             RequestViewButton.addSubview(tailorName)
             
             // UnderLine1..

@@ -143,4 +143,7 @@ import Foundation
     
     //04.05.2019
     @objc optional func API_CALLBACK_GetCustomImage(imageData : Data)
+    
+    //14.05.2019
+    @objc optional func API_CALLBACK_TailorOrderApprove(TailorApprove : NSDictionary)
 }
