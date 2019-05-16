@@ -88,6 +88,7 @@ class PriceDetailsViewController: CommonViewController,UITextFieldDelegate
     func PriceDetailsScreenContents()
     {
         stopActivity()
+        activity.stopActivity()
         
         
         QtyLbl.frame = CGRect(x: x, y: y, width: (10 * y), height: (3 * y))

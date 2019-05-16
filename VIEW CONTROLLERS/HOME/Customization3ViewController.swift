@@ -97,9 +97,9 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
             self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }
         
-        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
+//        self.serviceCall.API_Customization3(DressTypeId: "\(Variables.sharedManager.dressSubTypeId)", delegate: self)
         
-//        self.serviceCall.API_Customization3(DressTypeId: "112", delegate: self)
+        self.serviceCall.API_Customization3(DressTypeId: "1", delegate: self)
         
         super.viewDidLoad()
         
@@ -130,7 +130,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
     
     func activeStart1()
     {
-        activeViewSub.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        /*activeViewSub.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeViewSub.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(activeViewSub)
         
@@ -138,19 +138,25 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         activityIndicatorSub.color = UIColor.white
         activityIndicatorSub.style = .whiteLarge
         activityIndicatorSub.startAnimating()
-        activeViewSub.addSubview(activityIndicatorSub)
+        activeViewSub.addSubview(activityIndicatorSub)*/
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
     }
     
     func activeStop1()
     {
-        activeViewSub.removeFromSuperview()
-        activityIndicatorSub.stopAnimating()
+        /*activeViewSub.removeFromSuperview()
+        activityIndicatorSub.stopAnimating()*/
+        
+        activity.stopActivity()
     }
     
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR MESSAGE", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -249,6 +255,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
             else
             {
                 stopActivity()
+                activity.stopActivity()
                 let responseEmptyAlert = UIAlertController(title: "Alert", message: "Customization not available for this dress type", preferredStyle: .alert)
                 responseEmptyAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: responseEmptyAlertAction(action:)))
                 self.present(responseEmptyAlert, animated: true, completion: nil)
@@ -384,7 +391,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         viewDesignLabel.text = "PREVIEW"
         viewDesignLabel.textColor = UIColor.white
         viewDesignLabel.textAlignment = .center
-        viewDesignLabel.font = UIFont(name: "Avenir-Regular", size: 10)
+        viewDesignLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        viewDesignLabel.font = viewDesignLabel.font.withSize(2 * x)
         selfScreenContents.addSubview(viewDesignLabel)
         
         customedImageView.frame = CGRect(x: 0, y: viewDesignLabel.frame.maxY + y, width: (25 * x), height: (20 * y))
@@ -471,6 +479,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         }
         dropDownButton.titleLabel?.textAlignment = .right
         dropDownButton.setTitleColor(UIColor.black, for: .normal)
+        dropDownButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        dropDownButton.titleLabel?.font = dropDownButton.titleLabel?.font?.withSize(1.5 * x)
         dropDownButton.addTarget(self, action: #selector(self.dropDownButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(dropDownButton)
         
@@ -524,6 +534,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         headingLabel.textAlignment = .left
         headingLabel.textColor = UIColor(red: 0.902, green: 0.5294, blue: 0.1765, alpha: 1.0)
         headingLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
+        headingLabel.font = headingLabel.font.withSize(2 * x)
         hintsView.addSubview(headingLabel)
        
         hintsBackButton.isHidden = true
@@ -842,7 +853,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
             buttonTitle.adjustsFontSizeToFitWidth = true
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center
-            buttonTitle.font = UIFont(name: "Avenir-Regular", size: 10)
+            buttonTitle.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+            buttonTitle.font = buttonTitle.font.withSize(1.25 * x)
             buttonTitle.tag = -2
             customizationButton.addSubview(buttonTitle)
             
@@ -885,6 +897,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         
         self.stopActivity()
         self.activeStop1()
+        activity.stopActivity()
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -939,8 +952,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customTitleLabel.text = "Customize your material"
         customTitleLabel.textColor = UIColor.black
         customTitleLabel.textAlignment = .center
-        customTitleLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
-        customTitleLabel.font = customTitleLabel.font.withSize(2 * x)
+        customTitleLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        customTitleLabel.font = customTitleLabel.font.withSize(1.5 * x)
         customBlurView.addSubview(customTitleLabel)
         
         if customAttEnglishNameArray.count <= 5
@@ -973,6 +986,8 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         customCancelButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         customCancelButton.setTitle("Cancel", for: .normal)
         customCancelButton.setTitleColor(UIColor.white, for: .normal)
+        customCancelButton.titleLabel?.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+        customCancelButton.titleLabel?.font = customCancelButton.titleLabel?.font.withSize(1.5 * x)
         customCancelButton.addTarget(self, action: #selector(self.customCancelButtonAction(sender:)), for: .touchUpInside)
         customBlurView.addSubview(customCancelButton)
     }
@@ -993,15 +1008,17 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         
         let customLabel = UILabel()
         customLabel.frame = CGRect(x: x, y: 0, width: cell.frame.width - (5 * x), height: cell.frame.height)
-        customLabel.text = customAttEnglishNameArray[indexPath.row] as! String
+        customLabel.text = customAttEnglishNameArray[indexPath.row] as? String
         customLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         customLabel.textAlignment = .left
         customLabel.font = UIFont(name: "Avenir-Regular", size: (2 * x))
         customLabel.font = customLabel.font.withSize(2 * x)
 //        cell.addSubview(customLabel)
         
-        cell.textLabel?.text = customAttEnglishNameArray[indexPath.row] as! String
+        cell.textLabel?.text = customAttEnglishNameArray[indexPath.row] as? String
         cell.textLabel?.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        cell.textLabel?.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        cell.textLabel?.font = cell.textLabel?.font.withSize(1.25 * x)
         
         let customSelectedImage = UIImageView()
         customSelectedImage.frame = CGRect(x: cell.frame.width - (3 * y), y: y, width: (2 * y), height: (2 * y))

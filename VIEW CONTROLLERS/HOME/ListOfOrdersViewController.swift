@@ -136,6 +136,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     {
         print("Quotation List : ", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -320,6 +321,7 @@ class ListOfOrdersViewController: CommonViewController,ServerAPIDelegate
     func ListOfOrdersContent()
     {
         self.stopActivity()
+        activity.stopActivity()
         
       //  slideMenuButton.isHidden = false
         

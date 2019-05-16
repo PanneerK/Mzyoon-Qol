@@ -62,6 +62,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
     {
         print("Write Reviews Error:",errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -165,6 +166,7 @@ class WriteReviewRateViewController: CommonViewController,ServerAPIDelegate,UITe
    func writeReviewContent()
    {
     self.stopActivity()
+    activity.stopActivity()
     
     //let ReviewNavigationBar = UIView()
     selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))

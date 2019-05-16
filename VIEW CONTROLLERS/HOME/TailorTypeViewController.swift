@@ -55,6 +55,7 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
     {
         print("ERROR", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     func API_CALLBACK_GetTailorListType(tailorType: NSDictionary)
@@ -101,6 +102,7 @@ class TailorTypeViewController: CommonViewController,ServerAPIDelegate
         }
         
         stopActivity()
+        activity.stopActivity()
         
         let quoteButton = UIButton()
         quoteButton.frame = CGRect(x: x, y: pageBar.frame.maxY + y, width: view.frame.width - (2 * x), height: (20 * y))

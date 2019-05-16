@@ -337,6 +337,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     {
         print("Tailor List : ", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -549,6 +550,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     func orderSummaryContent()
     {
         self.stopActivity()
+        activity.stopActivity()
     
         selfScreenContents.frame = CGRect(x: 0, y: pageBar.frame.maxY, width: view.frame.width, height: view.frame.height - ((5 * y) + navigationBar.frame.maxY + pageBar.frame.height))
         selfScreenContents.backgroundColor = UIColor.clear

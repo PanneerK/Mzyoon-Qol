@@ -70,7 +70,8 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
     func API_CALLBACK_Error(errorNumber: Int, errorMessage: String)
     {
         print("ERROR IN Appointment List Page:", errorMessage)
-        stopActivity()        
+        stopActivity()
+        activity.stopActivity()
     }
     func API_CALLBACK_GetAppointmentList(getAppointmentList: NSDictionary)
     {
@@ -196,6 +197,7 @@ class AppointmentListViewController: CommonViewController,ServerAPIDelegate
     func AppointmentListContent()
     {
         self.stopActivity()
+        activity.stopActivity()
         
         //let RequestListNavigationBar = UIView()
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))

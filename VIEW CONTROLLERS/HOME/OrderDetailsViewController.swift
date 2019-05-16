@@ -122,6 +122,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     {
         print("Order Details :", errorNumber)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -433,6 +434,7 @@ class OrderDetailsViewController: CommonViewController,ServerAPIDelegate
     func orderDetailsContent()
     {
         self.stopActivity()
+        activity.stopActivity()
         
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)

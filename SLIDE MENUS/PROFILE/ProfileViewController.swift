@@ -73,6 +73,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     let getDate = DateFile()
     
+    let activity = ActivityView()
+
     var applicationDelegate = AppDelegate()
 
     
@@ -90,7 +92,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         backgroundImage.image = UIImage(named: "background")
         view.addSubview(backgroundImage)
         
-        active()
+//        active()
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
         
         if let userId = UserDefaults.standard.value(forKey: "userId") as? String
         {
@@ -330,6 +335,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         
         updateButton.isHidden = false
         activeStop()
+        activity.stopActivity()
     }
     
     func API_CALLBACK_ProfileImageUpload(ImageUpload: NSDictionary)
@@ -576,6 +582,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
             {
                 userImage.dowloadFromServer(url: apiurl!)
                 activeStop()
+                activity.stopActivity()
             }
         }
 

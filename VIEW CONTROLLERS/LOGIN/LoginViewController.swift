@@ -86,6 +86,8 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var selectedLanguage = "English"
     
+    let activity = ActivityView()
+    
     var applicationDelegate = AppDelegate()
 
     
@@ -1085,7 +1087,7 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func active()
     {
-        activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        /*activeView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         activeView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         view.addSubview(activeView)
         
@@ -1093,13 +1095,19 @@ class LoginViewController: UIViewController, UITableViewDataSource, UITableViewD
         activityIndicator.color = UIColor.white
         activityIndicator.style = .whiteLarge
         activityIndicator.startAnimating()
-        activeView.addSubview(activityIndicator)
+        activeView.addSubview(activityIndicator)*/
+        
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
     }
     
     func activeStop()
     {
-        activeView.removeFromSuperview()
-        activityIndicator.stopAnimating()
+        /*activeView.removeFromSuperview()
+        activityIndicator.stopAnimating()*/
+        
+        activity.stopActivity() 
     }
     
     func otpContents()

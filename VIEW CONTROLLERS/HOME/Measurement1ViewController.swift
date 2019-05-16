@@ -124,6 +124,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
     {
         print("MEASUREMENT 1", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -159,6 +160,7 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         if ResponseMsg == "Success"
         {
             stopActivity()
+            activity.stopActivity()
             
             let Result = measure1.object(forKey: "Result") as! NSArray
             

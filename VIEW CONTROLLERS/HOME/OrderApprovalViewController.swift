@@ -92,6 +92,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
     {
         print("Order approval : ", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
     
@@ -369,6 +370,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
     func orderApprovalContent()
     {
         self.stopActivity()
+        activity.stopActivity()
         
         selfScreenNavigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
         selfScreenNavigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)

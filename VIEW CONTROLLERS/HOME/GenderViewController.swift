@@ -29,7 +29,6 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     var PageNumStr:String!
     var MethodName:String!
     
-    
     var applicationDelegate = AppDelegate()
     
     override func viewDidLoad()
@@ -57,7 +56,11 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
         }
         
         serviceCall.API_Gender(delegate: self)
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> 36f49a710dd9b4936de60eb2fe29bd08bed4f601
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -109,6 +112,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
     {
         print("ERROR IN GENDER PAGE", errorMessage)
         stopActivity()
+        activity.stopActivity()
         applicationDelegate.exitContents()
     }
  
@@ -249,6 +253,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             if i == genderImageArray.count - 1
             {
                 self.stopActivity()
+                activity.stopActivity()
             }
             else
             {
@@ -258,19 +263,19 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             let genderButtonLabel = UILabel()
             if i == 0 || i == 2
             {
-                genderButtonLabel.frame = CGRect(x: 0, y: ((genderButton.frame.height - (2 * y)) / 2), width: (7 * x), height: (2 * y))
+                genderButtonLabel.frame = CGRect(x: 0, y: ((genderButton.frame.height - (3 * y)) / 2), width: (8 * x), height: (3 * y))
             }
             else
             {
-                genderButtonLabel.frame = CGRect(x: genderButton.frame.width - (7 * x), y: ((genderButton.frame.height - (2 * y)) / 2), width: (7 * x), height: (2 * y))
+                genderButtonLabel.frame = CGRect(x: genderButton.frame.width - (8 * x), y: ((genderButton.frame.height - (3 * y)) / 2), width: (8 * x), height: (3 * y))
             }
             genderButtonLabel.backgroundColor = UIColor.darkGray
             genderButtonLabel.text = (getInputArray[i] as? String)
             genderButtonLabel.textColor = UIColor.white
             genderButtonLabel.textAlignment = .center
             genderButtonLabel.tag = ((genderButton.tag * 1) + 300)
-            genderButtonLabel.font = UIFont(name: "Avenir-Regular", size: x)
-            genderButtonLabel.font = genderButtonLabel.font.withSize(x)
+            genderButtonLabel.font = UIFont(name: "Avenir-Regular", size: (1.5 * x))
+            genderButtonLabel.font = genderButtonLabel.font.withSize(1.5 * x)
             genderButton.addSubview(genderButtonLabel)
             
             if let language = UserDefaults.standard.value(forKey: "language") as? String

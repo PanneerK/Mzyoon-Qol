@@ -45,12 +45,14 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
     
     var currentCoordinate = CLLocationCoordinate2D()
     
-    var applicationDelegate = AppDelegate()
-
     // rohith - 9-4-2019
     var searchResultController: SearchResultsController!
     var resultsArray = [String]()
     var gmsFetcher: GMSAutocompleteFetcher!
+    
+    let activity = ActivityView()
+    
+    var applicationDelegate = AppDelegate()
     
     override func viewDidLoad()
     {
@@ -361,7 +363,10 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             changeViewToEnglishInSelf()
         }
         
-        activityContents()
+//        activityContents()
+        
+        activity.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        view.addSubview(activity)
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -463,6 +468,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             if selectedCoordinate.latitude == 0.0 || selectedCoordinate.longitude == 0.0
             {
                 stopActivity()
+                activity.stopActivity()
                 
                 let camera = GMSCameraPosition(target:location.coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
                 mapView.camera = camera
@@ -536,6 +542,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSMa
             }
             
             self.stopActivity()
+            self.activity.stopActivity()
             self.addAddressButton.isEnabled = true
         }
     }
@@ -559,9 +566,6 @@ extension LocationViewController : GMSAutocompleteViewControllerDelegate
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace)
     {
-        print("Place name: \(place.name)")
-        print("Place ID: \(place.placeID)")
-        print("Place attributions: \(place.attributions)")
         dismiss(animated: true, completion: nil)
     }
     
