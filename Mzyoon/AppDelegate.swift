@@ -288,6 +288,8 @@ extension AppDelegate: MessagingDelegate
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String)
     {
         print("Firebase registration token: \(fcmToken)")
+        UserDefaults.standard.set(fcmToken, forKey: "FCM")
+        
         Variables.sharedManager.Fcm = fcmToken
         
         print("FCM Token:",Variables.sharedManager.Fcm)
