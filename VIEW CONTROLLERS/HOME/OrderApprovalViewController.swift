@@ -255,11 +255,8 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
             if (AppoinmentArray.contains("Companies-Material") && AppoinmentArray.contains("Manually"))
             {
                 let PaymentScreen = PaymentViewController()
-                let TotalValue : Int = ChargesAmountArray[7] as! Int
-                PaymentScreen.TotalAmount = "\(TotalValue)"
-               // PaymentScreen.TailorId = TailorID
-               // Variables.sharedManager.TailorID
-                Variables.sharedManager.TotalAmount = "\(TotalValue)"
+                print("Total Amt:",Variables.sharedManager.TotalAmount)
+                
                 self.navigationController?.pushViewController(PaymentScreen, animated: true)
             }
             else
@@ -310,13 +307,12 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
           let AppointmentScreen = AppointmentViewController()
          if(ChargesAmountArray.count != 0)
          {
-            let TotalValue : Int = ChargesAmountArray[7] as! Int
-            AppointmentScreen.TotalAmount = "\(TotalValue)"
-            Variables.sharedManager.TotalAmount = "\(TotalValue)"
+           // Variables.sharedManager.TotalAmount = OrderTotalValueLBL.text!
+            print("Total Amt:",Variables.sharedManager.TotalAmount)
          }
         else
          {
-             AppointmentScreen.TotalAmount = "1"
+            // AppointmentScreen.TotalAmount = "1"
              Variables.sharedManager.TotalAmount = "1"
          }
         
@@ -495,7 +491,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         QtyNumTF.clearsOnBeginEditing = false
         QtyNumTF.returnKeyType = .done
         QtyNumTF.delegate = self
-        QtyNumTF.isUserInteractionEnabled = false
+        QtyNumTF.isUserInteractionEnabled = true
         DressDetView.addSubview(QtyNumTF)
         
         
@@ -581,10 +577,14 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
     
     @objc func doneButtonAction()
     {
-        
         Variables.sharedManager.ApprovalQty = self.QtyNumTF.text!
+        let orderTotal = ChargesAmountArray[7] as! Int
+        let QtyTotal = Int(Variables.sharedManager.ApprovalQty)!
+        let total:Int = (orderTotal * QtyTotal)
+        OrderTotalValueLBL.text = String(total)
+        Variables.sharedManager.TotalAmount = OrderTotalValueLBL.text!
+        
         self.view.endEditing(true)
-      
     }
     
     @objc func otpBackButtonAction(sender : UIButton)
@@ -1560,6 +1560,8 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         print("order_Id:",order_Id!)
         // OrderId = order_Id
         Variables.sharedManager.OrderID = order_Id!
+       //  Variables.sharedManager.TotalAmount = OrderTotalValueLBL.text!
+        print("Total Amount:",Variables.sharedManager.TotalAmount)
         
       if qtyNum != nil
       {

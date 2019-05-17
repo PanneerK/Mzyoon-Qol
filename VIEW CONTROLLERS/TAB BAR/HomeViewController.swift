@@ -76,6 +76,8 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        deviceDetails()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -164,7 +166,10 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         {
             mobileNumber = number
         }
-         print("FCM Token:",Variables.sharedManager.Fcm)
+        
+          let FCMToken =  UserDefaults.standard.value(forKey: "FCM")
+          Variables.sharedManager.Fcm = FCMToken as! String
+          print("FCM Token:",Variables.sharedManager.Fcm)
         
         serviceCall.API_InsertDeviceDetails(DeviceId: "", Os: systemVersion, Manufacturer: "Apple", CountryCode: countryCode, PhoneNumber: mobileNumber, Model: modelName, AppVersion: appVersion!, Type: "", Fcm: Variables.sharedManager.Fcm, delegate: self)
     }

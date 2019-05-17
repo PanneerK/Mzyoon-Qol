@@ -50,7 +50,6 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
     
     var applicationDelegate = AppDelegate()
 
-    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -64,7 +63,7 @@ class TelrResponseViewController: CommonViewController,ServerAPIDelegate
         
         TelrTransCode = UserDefaults.standard.value(forKey: "TransCode") as? String
         
-       self.serviceCall.API_GetPaymentStoreDetails(delegate: self)
+        self.serviceCall.API_GetPaymentStoreDetails(delegate: self)
         
        // ResponseContent()
         
