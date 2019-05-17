@@ -81,6 +81,8 @@ class Variables: NSObject
     
     public var editAddress:Int = 0
     public var selectedAddressId:Int = 0
+    
+    public var flowTypeId:Int = 0
         
     // Here is how you would get to it without there being a global collision of variables.
     // , or in other words, it is a globally accessable parameter that is specific to the

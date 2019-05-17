@@ -36,6 +36,7 @@
 		FD08181822857CDC00B6DEEB /* OTPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD08181722857CDC00B6DEEB /* OTPViewController.swift */; };
 		FD0AC35C21AFC55C00DBF9F3 /* Address2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */; };
 		FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0DD42C2242192800F7AF38 /* TestingViewController.swift */; };
+		FD0E7AB2228D7C5D0005D57B /* FlowTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0E7AB1228D7C590005D57B /* FlowTypeViewController.swift */; };
 		FD0EB0A12282A33400F7119F /* ViewDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB0A02282A33400F7119F /* ViewDetailsViewController.swift */; };
 		FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */; };
 		FD0F977F22255E40003744ED /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F977E22255E40003744ED /* Variables.swift */; };
@@ -145,6 +146,7 @@
 		FD08181722857CDC00B6DEEB /* OTPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPViewController.swift; sourceTree = "<group>"; };
 		FD0AC35B21AFC55C00DBF9F3 /* Address2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address2ViewController.swift; sourceTree = "<group>"; };
 		FD0DD42C2242192800F7AF38 /* TestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingViewController.swift; sourceTree = "<group>"; };
+		FD0E7AB1228D7C590005D57B /* FlowTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowTypeViewController.swift; sourceTree = "<group>"; };
 		FD0EB0A02282A33400F7119F /* ViewDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDetailsViewController.swift; sourceTree = "<group>"; };
 		FD0EB52A21B1267F0086044C /* MeasureScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureScrollViewController.swift; sourceTree = "<group>"; };
 		FD0F977E22255E40003744ED /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				FD71D259219EB21700FFC067 /* GenderViewController.swift */,
 				FD71D25B219EE62F00FFC067 /* DressTypeViewController.swift */,
 				FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */,
+				FD0E7AB1228D7C590005D57B /* FlowTypeViewController.swift */,
 				FD5774B1219ADE980026DBF8 /* FilterViewController.swift */,
 				FD5774AD219AA2950026DBF8 /* FilterTableViewCell.swift */,
 				FD71D25D219EF24200FFC067 /* OrderTypeViewController.swift */,
@@ -744,6 +747,7 @@
 				DA0BC660222E49630061245B /* ShopDetailsTableViewCell.swift in Sources */,
 				FD71D266219F234B00FFC067 /* Customization3ViewController.swift in Sources */,
 				DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */,
+				FD0E7AB2228D7C5D0005D57B /* FlowTypeViewController.swift in Sources */,
 				DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */,
 				DAA737BD2215D1BC00B4B573 /* TelrResponseViewController.swift in Sources */,
 				FD71D262219F055300FFC067 /* Customization1ViewController.swift in Sources */,

@@ -107,6 +107,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     override func viewDidLoad()
     {
+        fetchingCurrentLocation()
+
         Variables.sharedManager.screenNavigationBarTag = 0
         commonBackButton.addTarget(self, action: #selector(self.otpBackButtonAction(sender:)), for: .touchUpInside)
         selectedButton(tag: 0)
@@ -129,8 +131,6 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             self.navigationTitle.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         }
 
-        fetchingCurrentLocation()
-
          super.viewDidLoad()
         
         // Do any additional setup after loading the view.
@@ -140,27 +140,8 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     override func viewWillAppear(_ animated: Bool)
     {
 //         fetchingCurrentLocation()
-        
-        if let language = UserDefaults.standard.value(forKey: "language") as? String
-        {
-            if language == "en"
-            {
-                slideMenu()
-                changeViewToEnglish()
-            }
-            else if language == "ar"
-            {
-                slideMenuRight()
-                changeViewToArabic()
-            }
-        }
-        else
-        {
-            slideMenu()
-            changeViewToEnglish()
-        }
-        
     }
+    
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
@@ -169,11 +150,11 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
     
     func fetchingCurrentLocation()
     {
-        locationManager.requestAlwaysAuthorization()
+        /*locationManager.requestAlwaysAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        currentLocation = locationManager.location
+        currentLocation = locationManager.location*/
         
         if CLLocationManager.locationServicesEnabled()
         {
@@ -238,8 +219,23 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                 
             case .authorizedAlways, .authorizedWhenInUse:
                 print("Access")
+                
+                if CLLocationManager.locationServicesEnabled() {
+                    locationManager.requestAlwaysAuthorization()
+                    locationManager.delegate = self
+                    locationManager.startUpdatingLocation()
+                    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                    currentLocation = locationManager.location
+
+                }
+                else
+                {
+                    
+                }
             }
-        } else {
+        }
+        else
+        {
             print("Location services are not enabled")
         }
         
@@ -248,6 +244,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            currentLocation = locationManager.location
         }
         else
         {
@@ -325,9 +322,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {
-            
             currentLocation = locationManager.location
-            print("Current Loc:",currentLocation.coordinate)
         }
         
         #endif
@@ -1268,7 +1263,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         for i in 0..<IdArray.count
         {
             let tailorView = UIView()
-            tailorView.frame = CGRect(x: x, y: y1, width: tailorListScrollView.frame.width - (2 * x), height: (10 * y))
+            tailorView.frame = CGRect(x: x, y: y1, width: tailorListScrollView.frame.width - (2 * x), height: (13 * y))
             tailorView.backgroundColor = UIColor.white
             if let id = IdArray[i] as? Int
             {
@@ -1277,7 +1272,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             tailorListScrollView.addSubview(tailorView)
             
             let tailorImageButton = UIButton()
-            tailorImageButton.frame = CGRect(x: x, y: y, width: (8 * x), height: (8 * y))
+            tailorImageButton.frame = CGRect(x: x, y: y, width: (8 * x), height: (11 * y))
             tailorImageButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             //            tailorImageButton.setImage(UIImage(named: "men"), for: .normal)
             
@@ -1470,11 +1465,34 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             ratingCountLabel.adjustsFontSizeToFitWidth = true
             //  tailorView.addSubview(ratingCountLabel)
             
-            
             let ratingImageView = UIImageView()
             ratingImageView.frame = CGRect(x: ratingColon.frame.maxX, y: ordersLabel.frame.maxY + (y / 2), width: (5 * x), height: y)
             ratingImageView.image = UIImage(named: "\(ratingArray[i])")
             tailorView.addSubview(ratingImageView)
+            
+            let priceLabel = UILabel()
+            priceLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ratingLabel.frame.maxY, width: (9 * x), height: (2 * y))
+            priceLabel.text = "Price"
+            priceLabel.textColor = UIColor.blue
+            priceLabel.textAlignment = .left
+            priceLabel.font = ratingLabel.font.withSize(1.2 * x)
+            tailorView.addSubview(priceLabel)
+            
+            let priceColon = UILabel()
+            priceColon.frame = CGRect(x: priceLabel.frame.maxX, y: ratingLabel.frame.maxY, width: (x / 2), height: (2 * y))
+            priceColon.text = ":"
+            priceColon.textColor = UIColor.blue
+            priceColon.textAlignment = .left
+            tailorView.addSubview(priceColon)
+            
+            let priceCountLabel = UILabel()
+            priceCountLabel.frame = CGRect(x: priceColon.frame.maxX, y: ratingLabel.frame.maxY, width: tailorView.frame.width / 2.5, height: (2 * y))
+            priceCountLabel.text = "\(ratingArray[i])"
+            priceCountLabel.textColor = UIColor.black
+            priceCountLabel.textAlignment = .left
+            priceCountLabel.font = ordersCountLabel.font.withSize(1.2 * x)
+            priceCountLabel.adjustsFontSizeToFitWidth = true
+            tailorView.addSubview(priceCountLabel)
             
             #if targetEnvironment(simulator)
             // your simulator code  
@@ -1492,7 +1510,15 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     enableLocationServicesAlert()
                 case .authorizedAlways, .authorizedWhenInUse:
                     print("Access")
-                    coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+                    
+                    if currentLocation != nil
+                    {
+                        coordinate1 = CLLocation(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+                    }
+                    else
+                    {
+                        coordinate1 = CLLocation(latitude: 13.0168, longitude: 80.2269)
+                    }
                 }
             } else {
                 print("Location services are not enabled")
@@ -1516,7 +1542,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             let distanceInt = String(format: "%.2f", distanceInKiloMeters)
             
             let distanceLabel = UILabel()
-            distanceLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: ratingLabel.frame.maxY, width: tailorView.frame.width / 2.15, height: (2 * y))
+            distanceLabel.frame = CGRect(x: tailorImageButton.frame.maxX + x, y: priceLabel.frame.maxY, width: tailorView.frame.width / 2.15, height: (2 * y))
             distanceLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
             distanceLabel.text = "\(distanceInt) Km. from your location"
             distanceLabel.textColor = UIColor.white
@@ -2001,8 +2027,12 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                 print("No access")
                 enableLocationServicesAlert()
             case .authorizedAlways, .authorizedWhenInUse:
-                print("Access")
-                camera = GMSCameraPosition.camera(withLatitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, zoom: 17.0)
+                print("Access", currentLocation)
+                
+                if currentLocation != nil
+                {
+                    camera = GMSCameraPosition.camera(withLatitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, zoom: 17.0)
+                }
             }
         } else {
             print("Location services are not enabled")
@@ -2042,6 +2072,29 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             }
             marker.tracksInfoWindowChanges = true
             marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
+            marker.zIndex = Int32(i)
+            /*if let imageName = ShopOwnerImageArray[i] as? String
+            {
+                let urlString = serviceCall.baseURL
+                let api = "\(urlString)/images/Tailorimages/\(imageName)"
+                print("SMALL ICON", api)
+                let apiurl = URL(string: api)
+                
+                let dummyImageView = UIImageView()
+                dummyImageView.frame = CGRect(x: 0, y: 0, width: marker.accessibilityFrame.width, height: marker.accessibilityFrame.height)
+                if apiurl != nil
+                {
+                    dummyImageView.dowloadFromServer(url: apiurl!)
+                }
+                dummyImageView.tag = -1
+                dummyImageView.contentMode = .scaleToFill
+//                tailorImageButton.addSubview(dummyImageView)
+                
+                let url = URL(string: api)
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                marker.icon = UIImage(data: data!)                
+            }*/
+            marker.icon = UIImage(named: "account")
             marker.map = mapView
         }
 
@@ -2065,6 +2118,25 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
             marker.iconView = markerImageView
             marker.map = mapView
         }*/
+    }
+    
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView?
+    {
+        let customView = UIView()
+        customView.frame = CGRect(x: marker.accessibilityFrame.minX, y: marker.accessibilityFrame.minX, width: (10 * x), height: (3 * y))
+        customView.backgroundColor = UIColor.white
+        mapView.addSubview(customView)
+        
+        /*let nameLabel = UILabel()
+        nameLabel.frame = CGRect(x: marker.accessibilityFrame.maxX + x, y: marker.accessibilityFrame.minY, width: (10 * x), height: (2 * y))
+        nameLabel.text = tailorNameInArabicArray[Int(marker.zIndex)] as? String
+        nameLabel.textColor = UIColor.black
+        nameLabel.textAlignment = .left
+        nameLabel.font =  UIFont(name: "Avenir Next", size: (1.25 * x))
+        nameLabel.font = nameLabel.font.withSize(1.25 * x)
+        mapView.addSubview(nameLabel)*/
+        
+        return customView
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
@@ -2235,10 +2307,10 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
         locationButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         locationButton.layer.borderWidth = 1
         locationButton.layer.borderColor = UIColor.lightGray.cgColor
-        locationButton.setTitle("DIRECTIONS", for: .normal)
+        locationButton.setTitle("PROCEED", for: .normal)
         locationButton.setTitleColor(UIColor.white, for: .normal)
         locationButton.tag = 0
-        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
+//        locationButton.addTarget(self, action: #selector(self.directionButtonAction(sender:)), for: .touchUpInside)
         tailorDeatiledView.addSubview(locationButton)
       
         /*

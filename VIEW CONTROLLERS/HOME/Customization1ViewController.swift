@@ -739,6 +739,17 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     seasonalTagIntArray.append(sender.tag)
                 }
             }
+            
+            if seasonalTagIntArray.count == (seasonalIdArray.count - 1)
+            {
+                print("YES CONFIRMED WITHOUT ALL")
+                seasonalTagIntArray.append(1)
+            }
+            else
+            {
+                
+                
+            }
         }
         
         print("SEASOSNAL TAG INT ARRAY", seasonalTagIntArray)
@@ -764,7 +775,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             {
                 if views.tag == seasonalTagIntArray[i]
                 {
-                    print("VIEWS TAG", views.tag)
+                    print("VIEWS TAG IN SEASONAL", views.tag)
                     let seasonalSelectionImage = UIImageView()
                     seasonalSelectionImage.frame = CGRect(x: x, y: y, width: (2 * x), height: (2 * y))
                     seasonalSelectionImage.image = UIImage(named: "selectionImage")

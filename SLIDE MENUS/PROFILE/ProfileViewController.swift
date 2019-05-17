@@ -918,9 +918,22 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
     
     func cameraAlertAction(action : UIAlertAction)
     {
-        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized {
+        if AVCaptureDevice.authorizationStatus(for: .video) ==  .authorized
+        {
             //already authorized
-        } else {
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera){
+                print("Button capture")
+                
+                self.imagePicker.delegate = self
+                self.imagePicker.sourceType = .camera;
+                self.imagePicker.allowsEditing = false
+                
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+        }
+        else
+        {
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { (granted: Bool) in
                 if granted {
                     //access allowed

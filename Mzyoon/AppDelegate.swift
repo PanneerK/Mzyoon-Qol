@@ -84,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         print("SWITCH STATE IN LOGIN", onOrOff)
         
+        print("DEVICE ID", UIDevice.current.identifierForVendor?.uuidString)
+        
         if let screen = UserDefaults.standard.value(forKey: "screenAppearance") as? Int
         {
             if screen == 0
@@ -98,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             else
             {
                 window = UIWindow(frame: UIScreen.main.bounds)
-                let loginScreen = HomeViewController()
+                let loginScreen = Customization1ViewController()
                 let navigationScreen = UINavigationController(rootViewController: loginScreen)
                 navigationScreen.isNavigationBarHidden = true
                 window?.rootViewController = navigationScreen
