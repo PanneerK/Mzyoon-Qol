@@ -406,7 +406,7 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
         }
         else if sender.tag == 3
         {
-            if let language = UserDefaults.standard.value(forKey: "language") as? String
+            /*if let language = UserDefaults.standard.value(forKey: "language") as? String
             {
                 if language == "en"
                 {
@@ -426,7 +426,10 @@ class HomeViewController: CommonViewController, ServerAPIDelegate
                 let alert = UIAlertController(title: "Alert", message: "Refer and earn will be updated soon", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
-            }
+            }*/
+            
+            let referScreen = ReferAndEarnViewController()
+            self.navigationController?.pushViewController(referScreen, animated: true)
         }
     }
 

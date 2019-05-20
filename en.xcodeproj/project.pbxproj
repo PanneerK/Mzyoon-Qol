@@ -44,6 +44,8 @@
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
 		FD1160462264940B00D34EAD /* AddNewMeasurementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
+		FD19B531228E8A17000391CD /* ReferAndEarnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19B530228E8A17000391CD /* ReferAndEarnViewController.swift */; };
+		FD19B533228EC582000391CD /* OffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19B532228EC582000391CD /* OffersViewController.swift */; };
 		FD1C9F4B227AC1DF000F83EE /* TailorTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9F4A227AC1DF000F83EE /* TailorTypeViewController.swift */; };
 		FD1C9F4D227ACA6E000F83EE /* PriceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9F4C227ACA6E000F83EE /* PriceDetailsViewController.swift */; };
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
@@ -155,6 +157,8 @@
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
 		FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewMeasurementViewController.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
+		FD19B530228E8A17000391CD /* ReferAndEarnViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferAndEarnViewController.swift; sourceTree = "<group>"; };
+		FD19B532228EC582000391CD /* OffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersViewController.swift; sourceTree = "<group>"; };
 		FD1C9F4A227AC1DF000F83EE /* TailorTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailorTypeViewController.swift; sourceTree = "<group>"; };
 		FD1C9F4C227ACA6E000F83EE /* PriceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceDetailsViewController.swift; sourceTree = "<group>"; };
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -312,6 +316,15 @@
 			path = ADDRESS;
 			sourceTree = "<group>";
 		};
+		FD19B52F228E89E8000391CD /* REFER AND EARN */ = {
+			isa = PBXGroup;
+			children = (
+				FD19B530228E8A17000391CD /* ReferAndEarnViewController.swift */,
+				FD19B532228EC582000391CD /* OffersViewController.swift */,
+			);
+			path = "REFER AND EARN";
+			sourceTree = "<group>";
+		};
 		FD2ADFAB2175A5480033025B = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +390,7 @@
 		FD2ADFE72175BFF00033025B /* VIEW CONTROLLERS */ = {
 			isa = PBXGroup;
 			children = (
+				FD19B52F228E89E8000391CD /* REFER AND EARN */,
 				FD116044226493C700D34EAD /* ADD MEASUREMENTS */,
 				DAB3CE0C21DF29F50080549A /* APPOINTMENTS */,
 				FD71D258219EB20200FFC067 /* HOME */,
@@ -746,6 +760,7 @@
 				FDF7485421BFBF4E00F3BEFF /* FileHandler.swift in Sources */,
 				DA0BC660222E49630061245B /* ShopDetailsTableViewCell.swift in Sources */,
 				FD71D266219F234B00FFC067 /* Customization3ViewController.swift in Sources */,
+				FD19B533228EC582000391CD /* OffersViewController.swift in Sources */,
 				DAB3CE1021DF4E580080549A /* AppointmentViewController.swift in Sources */,
 				FD0E7AB2228D7C5D0005D57B /* FlowTypeViewController.swift in Sources */,
 				DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */,
@@ -762,6 +777,7 @@
 				FD71D26A219F2EFE00FFC067 /* ReferenceImageViewController.swift in Sources */,
 				FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */,
 				FDFF309321898928002A1A27 /* SlideViewController.swift in Sources */,
+				FD19B531228E8A17000391CD /* ReferAndEarnViewController.swift in Sources */,
 				FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */,
 				DA06035C21FB427C0081A96F /* ReviewsViewController.swift in Sources */,
 				DA07CF112223C571007DB14C /* OrderDetailsDeliveredVC.swift in Sources */,

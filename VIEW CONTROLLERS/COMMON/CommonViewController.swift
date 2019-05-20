@@ -225,10 +225,10 @@ class CommonViewController: UIViewController
     
     func stopActivity()
     {
-        activeView.removeFromSuperview()
-        activityView.stopAnimating()
         customLoader.stopAnimating()
         customLoading.stopAnimating()
+        activeView.removeFromSuperview()
+        activityView.stopAnimating()
     }
     
     func navigationContents()

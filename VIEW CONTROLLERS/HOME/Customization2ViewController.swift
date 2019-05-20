@@ -1215,6 +1215,15 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
                     materialTagIntArray.append(sender.tag)
                 }
             }
+            
+            if materialTagIntArray.count == (materialsIdArray.count - 1)
+            {
+                materialTagIntArray.append(1)
+            }
+            else
+            {
+                
+            }
         }
         
         print("MATERIAL TAG INT ARRAY", materialTagIntArray)
@@ -1514,6 +1523,18 @@ class Customization2ViewController: CommonViewController, ServerAPIDelegate, UIS
                 else
                 {
                     colorTagIntArray.append(sender.tag)
+                }
+            }
+            
+            if materialTagIntArray.contains(1)
+            {
+                if colorTagIntArray.count == (colorsIdArray.count - 1)
+                {
+                    colorTagIntArray.append(1)
+                }
+                else
+                {
+                    
                 }
             }
         }

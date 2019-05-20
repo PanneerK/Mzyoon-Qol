@@ -944,6 +944,16 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                     industryTagIntArray.append(sender.tag)
                 }
             }
+            
+            if industryTagIntArray.count == (industryIdArray.count - 1)
+            {
+                industryTagIntArray.append(1)
+            }
+            else
+            {
+                
+                
+            }
         }
         
         print("INDUSTRY TAG INT ARRAY", industryTagIntArray)
@@ -1151,6 +1161,19 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
                 else
                 {
                     brandTagIntArray.append(sender.tag)
+                }
+            }
+            
+            if industryTagIntArray.contains(1)
+            {
+                if brandTagIntArray.count == (industryIdArray.count - 1)
+                {
+                    industryTagIntArray.append(1)
+                }
+                else
+                {
+                    
+                    
                 }
             }
         }
