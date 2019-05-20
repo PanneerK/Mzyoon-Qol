@@ -84,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         
         print("SWITCH STATE IN LOGIN", onOrOff)
         
+        print("DEVICE ID", UIDevice.current.identifierForVendor?.uuidString)
+        
         if let screen = UserDefaults.standard.value(forKey: "screenAppearance") as? Int
         {
             if screen == 0

@@ -467,7 +467,7 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
     {
         if sender.tag != 0
         {
-            let dressSubScreen = OrderTypeViewController()
+            /*let dressSubScreen = OrderTypeViewController()
             Variables.sharedManager.dressSubTypeId = sender.tag
             
             if let label = view.viewWithTag((sender.tag * 1) + 300) as? UILabel
@@ -475,6 +475,25 @@ class DressSubTypeViewController: CommonViewController, UITextFieldDelegate, Ser
                 Variables.sharedManager.dressSubType = label.text!
             }
 
+            let tag = Variables.sharedManager.measurementTag
+            
+            if tag == 1
+            {
+                addNewAlertAction()
+            }
+            else
+            {
+                self.navigationController?.pushViewController(dressSubScreen, animated: true)
+            }*/
+            
+            let dressSubScreen = FlowTypeViewController()
+            Variables.sharedManager.dressSubTypeId = sender.tag
+            
+            if let label = view.viewWithTag((sender.tag * 1) + 300) as? UILabel
+            {
+                Variables.sharedManager.dressSubType = label.text!
+            }
+            
             let tag = Variables.sharedManager.measurementTag
             
             if tag == 1

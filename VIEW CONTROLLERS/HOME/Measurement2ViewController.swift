@@ -3910,23 +3910,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         let pageNumbers = round(imageScrollView .contentOffset.x / imageScrollView.frame.size.width)
         pageControl.currentPage = Int(pageNumbers)
         
-        /*for i in 0..<4
-         {
-         if let theLabel = self.view.viewWithTag((i + 1) * 20) as? UILabel {
-         let pageNo = Int(pageNumbers)
-         let no = Int(theLabel.text!)! + 1
-         if pageNo == no
-         {
-         pageNumber = pageNo
-         theLabel.backgroundColor = UIColor(red: 0.9098, green: 0.5255, blue: 0.1765, alpha: 1.0)
-         }
-         else
-         {
-         theLabel.backgroundColor = UIColor.clear
-         }
-         }
-         }*/
-        
         pageNumber = Int(pageNumbers)
         pageNumberContents()
     }
