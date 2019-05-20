@@ -20,6 +20,7 @@
 		DA0DB13A21F98D9C00C20299 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13921F98D9C00C20299 /* PaymentViewController.swift */; };
 		DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */; };
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
+		DA13C898228E9C8E00A5DF0C /* RewardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13C897228E9C8E00A5DF0C /* RewardsViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8F54D12211ACCA00CCA501 /* XMLReader.m */; };
 		DA9F66592249EC6E00969B34 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F66582249EC6E00969B34 /* SearchResultsController.swift */; };
@@ -126,6 +127,7 @@
 		DA0DB14721FA117400C20299 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
 		DA0DB14921FA117900C20299 /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AEXML.framework; sourceTree = "<group>"; };
 		DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotationListViewController.swift; sourceTree = "<group>"; };
+		DA13C897228E9C8E00A5DF0C /* RewardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsViewController.swift; sourceTree = "<group>"; };
 		DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mzyoon-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA8F54D02211ACCA00CCA501 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 				FD5774AF219AB2F30026DBF8 /* GenderTableViewCell.swift */,
 				FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */,
 				FDC9BB8F2186F6E1003BA5C9 /* OrdersViewController.swift */,
+				DA13C897228E9C8E00A5DF0C /* RewardsViewController.swift */,
 				FDC9BB912186F6F7003BA5C9 /* CartViewController.swift */,
 				FDC9BB932186F707003BA5C9 /* ContactUsViewController.swift */,
 			);
@@ -757,6 +760,7 @@
 				DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */,
 				FD71D26A219F2EFE00FFC067 /* ReferenceImageViewController.swift in Sources */,
 				FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */,
+				DA13C898228E9C8E00A5DF0C /* RewardsViewController.swift in Sources */,
 				FDFF309321898928002A1A27 /* SlideViewController.swift in Sources */,
 				FD0EB52B21B1267F0086044C /* MeasureScrollViewController.swift in Sources */,
 				DA06035C21FB427C0081A96F /* ReviewsViewController.swift in Sources */,

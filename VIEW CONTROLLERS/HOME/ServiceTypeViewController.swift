@@ -192,7 +192,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         
         // Appointment..
         courierDeliveryIcon.frame = CGRect(x: 0, y: y, width: (2 * x), height: (2 * y))
-        if let imageName = deliveryTypeIconArray[1] as? String
+        if let imageName = deliveryTypeIconArray[1] as? String  //1
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/ServiceType/\(imageName)"
@@ -217,7 +217,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         
         courierDeliveryButton.frame = CGRect(x: 0, y: courierDeliveryUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (11 * y))
         courierDeliveryButton.backgroundColor = UIColor.lightGray
-        if let imageName = deliveryTypeImageArray[1] as? String
+        if let imageName = deliveryTypeImageArray[1] as? String  //1
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/ServiceType/\(imageName)"
@@ -230,13 +230,13 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
             dummyImageView.contentMode = .scaleToFill
             courierDeliveryButton.addSubview(dummyImageView)
         }
-        courierDeliveryButton.tag = deliveryTypeIdArray[1] as! Int
+        courierDeliveryButton.tag = deliveryTypeIdArray[1] as! Int  //1
         courierDeliveryButton.addTarget(self, action: #selector(self.AppointmentButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(courierDeliveryButton)
         
         // Normal...
         companyIcon.frame = CGRect(x: 0, y: courierDeliveryButton.frame.maxY + y, width: (2 * x), height: (2 * y))
-        if let imageName = deliveryTypeIconArray[2] as? String
+        if let imageName = deliveryTypeIconArray[2] as? String  //2
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/ServiceType/\(imageName)"
@@ -259,7 +259,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         
         companyButton.frame = CGRect(x: 0, y: companyUnderline.frame.maxY + y, width: selfScreenContents.frame.width, height: (11 * y))
         companyButton.backgroundColor = UIColor.lightGray
-        if let imageName = deliveryTypeImageArray[2] as? String
+        if let imageName = deliveryTypeImageArray[2] as? String  //2
         {
             let urlString = serviceCall.baseURL
             let api = "\(urlString)/images/ServiceType/\(imageName)"
@@ -272,7 +272,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
             dummyImageView.contentMode = .scaleToFill
             companyButton.addSubview(dummyImageView)
         }
-        companyButton.tag = deliveryTypeIdArray[2] as! Int
+        companyButton.tag = deliveryTypeIdArray[2] as! Int  //2
         companyButton.addTarget(self, action: #selector(self.NormalButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(companyButton)
         
@@ -312,8 +312,9 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         companyIcon.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         companyLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         companyButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        companyLabel.text = deliveryTypeArabicNameArray[2] as? String
+      //  companyLabel.text = deliveryTypeArabicNameArray[2] as? String
         companyLabel.textAlignment = .right
+        
     }
     
     func changeViewToEnglishInSelf()
@@ -335,7 +336,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         companyIcon.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         companyLabel.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         companyButton.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-        companyLabel.text = deliveryTypeEnglishNameArray[2] as? String
+      //  companyLabel.text = deliveryTypeEnglishNameArray[2] as? String
         companyLabel.textAlignment = .left
     }
     

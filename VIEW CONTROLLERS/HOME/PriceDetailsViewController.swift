@@ -233,6 +233,7 @@ class PriceDetailsViewController: CommonViewController,UITextFieldDelegate
         if idType == 1
         {
             Variables.sharedManager.TotalAmount = getOrderTotalLabel.text!
+            Variables.sharedManager.ApprovalQty = self.QtyNum_TF.text!
         }
         let orderScreen = OrderSummaryViewController()
         self.navigationController?.pushViewController(orderScreen, animated: true)
