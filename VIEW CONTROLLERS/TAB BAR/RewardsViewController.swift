@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import ScratchCard
 
-class RewardsViewController: CommonViewController
+class RewardsViewController: CommonViewController, ScratchUIViewDelegate
 {
 
     //SCREEN PARAMETERS
@@ -31,19 +32,17 @@ class RewardsViewController: CommonViewController
     let CoinsImageView = UIImageView()
     
     //AccountView..
-     let AccountView = UIView()
-     //let Acc_LBL = UILabel()
-    // let AccPointsViewButton = UIButton()
-    
+    let AccountView = UIView()
+  
     // Purchase view..
-     let PurchaseView = UIView()
-    // let Purc_LBL = UILabel()
-    // let PurcPointsViewButton = UIButton()
-    
+    let PurchaseView = UIView()
+  
     // Share Link view..
     let ShareView = UIView()
-    //let Share_LBL = UILabel()
-   // let SharePointsViewButton = UIButton()
+
+    
+    // ScratchcardView..
+    var scratchCard: ScratchUIView!
     
     override func viewDidLoad()
     {
@@ -56,6 +55,9 @@ class RewardsViewController: CommonViewController
         super.viewDidLoad()
         
         screenContents()
+        
+        scratchCard.delegate = self
+        
     }
     override func viewWillAppear(_ animated: Bool)
     {
@@ -194,12 +196,33 @@ class RewardsViewController: CommonViewController
     func ScratchCardViewContents(isHidden : Bool)
     {
         ScratchCardScrollView.frame = CGRect(x: 0, y: EarnPointsButton.frame.maxY, width: selfScreenContents.frame.width, height: (38 * y))
-        ScratchCardScrollView.backgroundColor = UIColor.cyan
+        ScratchCardScrollView.backgroundColor = UIColor.clear
         selfScreenContents.addSubview(ScratchCardScrollView)
         
         ScratchCardScrollView.isHidden = isHidden
         
+        var y1:CGFloat = 0
+        var x1:CGFloat = 0
         
+        for views in ScratchCardScrollView.subviews
+        {
+            views.removeFromSuperview()
+        }
+        
+        for i in 0..<3  // getNameArray.count
+        {
+       
+          // scratchCard.frame = CGRect(x: x1, y: y1, width: (17.25 * x), height: (17 * y))
+            scratchCard = ScratchUIView(frame: CGRect(x: 0, y: y, width:(17.25 * x), height:(13 * y)), Coupon: "Scratch_Image", MaskImage: "Scratch_Mask", ScratchWidth: CGFloat(15))
+                y1 = scratchCard.frame.maxY + y
+            scratchCard.backgroundColor = UIColor.white
+            ScratchCardScrollView.addSubview(scratchCard)
+            
+            x1 = scratchCard.frame.maxX + x
+            
+        }
+            ScratchCardScrollView.contentSize.height = y1 + (2 * y)
+       
     }
     
     func EarnPointsViewContents(isHidden : Bool)
