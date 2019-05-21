@@ -596,6 +596,20 @@ class CommonViewController: UIViewController
              navigateScreen = CartViewController()
              */
         }
+            // Rewards..
+        else if sender.tag == 3
+        {
+            navigateScreen = RewardsViewController()
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let navigationScreen = UINavigationController(rootViewController: navigateScreen)
+            navigationScreen.isNavigationBarHidden = true
+            window?.rootViewController = navigationScreen
+            window?.makeKeyAndVisible()
+            
+            /*
+             navigateScreen = CartViewController()
+             */
+        }
         else
         {
             stopActivity()

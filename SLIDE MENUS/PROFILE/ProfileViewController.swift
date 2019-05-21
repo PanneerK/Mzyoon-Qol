@@ -77,6 +77,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
 
     var applicationDelegate = AppDelegate()
 
+     var Setting_Lng : String!
     
     override func viewDidLoad()
     {
@@ -405,9 +406,23 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 let EmailID = email.text
                 let DobStr = dob.text
                 let ModifyStr = "user"
+              //  let Setting_Lng : String!
                 
-                
-                serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
+                if let Language = UserDefaults.standard.value(forKey: "language") as? String
+                {
+                    var Lng_code = String()
+                    Lng_code = Language
+                    if(Lng_code == "en")
+                    {
+                      Setting_Lng = "English"
+                    }
+                    else
+                    {
+                        Setting_Lng = "Arabic"
+                    }
+                }
+              
+                serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, language: Setting_Lng, delegate: self)
             }
             
         }
@@ -1175,6 +1190,22 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
         let EmailID = email.text
         let DobStr = dob.text
         let ModifyStr = "user"
+       // var Setting_Lng : String!
+        
+        var Lng_code = String()
+        
+        if let Language = UserDefaults.standard.value(forKey: "language") as? String
+        {
+            Lng_code = Language
+            if(Lng_code == "en")
+            {
+                Setting_Lng = "English"
+            }
+            else
+            {
+                Setting_Lng = "Arabic"
+            }
+        }
         
         let validateEMail = isValidEmail(testStr: EmailID!)
         
@@ -1223,7 +1254,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                         }
                         else
                         {
-                            serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, delegate: self)
+                            serviceCall.API_ProfileUpdate(Id: userId, Email: EmailID!, Dob: DobStr!, Gender: GenderStr, ModifiedBy: ModifyStr, language: Setting_Lng, delegate: self)
                         }
                     }
                     else

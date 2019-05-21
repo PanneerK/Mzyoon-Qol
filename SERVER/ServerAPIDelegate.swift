@@ -146,4 +146,7 @@ import Foundation
     
     //14.05.2019
     @objc optional func API_CALLBACK_TailorOrderApprove(TailorApprove : NSDictionary)
+    
+    //21.05.2019
+    @objc optional func API_CALLBACK_InsertLanguage(insertLang : NSDictionary)
 }

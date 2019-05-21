@@ -466,7 +466,7 @@ class OrderApprovalViewController: CommonViewController, ServerAPIDelegate, UITe
         DressTypeLabel.font = UIFont(name: "Avenir Next", size: 1.5 * x)
         DressDetView.addSubview(DressTypeLabel)
         
-        
+
         let QtyLabel = UILabel()
         QtyLabel.frame = CGRect(x: StraightLine.frame.maxX + x, y: DressTypeLabel.frame.minY + (3 * y), width: (8 * x), height: (2 * y))
         QtyLabel.text = "Qty   : "

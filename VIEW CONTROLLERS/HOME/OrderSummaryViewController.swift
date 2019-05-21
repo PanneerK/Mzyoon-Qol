@@ -491,7 +491,7 @@ class OrderSummaryViewController: CommonViewController,ServerAPIDelegate
                 let customizationImageArray = ["Lapels", "Buttons", "Pockets", "Vents"]
                 var y2:CGFloat = y
                 
-                print("CUSTOM KEYS AND CUSTOM VALUES", customKeys, customvalues, customization3)
+                print("CUSTOM KEYS AND CUSTOM VALUES", customKeys, customvalues, customization3.count)
                 
                 var x1:CGFloat = x
                 
