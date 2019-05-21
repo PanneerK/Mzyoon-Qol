@@ -410,11 +410,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate, UITex
                 
                 if let Language = UserDefaults.standard.value(forKey: "language") as? String
                 {
-                    var Lng_code = String()
-                    Lng_code = Language
-                    if(Lng_code == "en")
+                    if(Language == "en")
                     {
-                      Setting_Lng = "English"
+                        Setting_Lng = "English"
                     }
                     else
                     {

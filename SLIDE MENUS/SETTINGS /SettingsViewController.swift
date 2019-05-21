@@ -8,11 +8,13 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
+class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ServerAPIDelegate
 {
 
     var x = CGFloat()
     var y = CGFloat()
+    
+    let serviceCall = ServerAPI()
     
     let selfScreenContents = UIView()
     
@@ -36,6 +38,14 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func API_CALLBACK_Error(errorNumber: Int, errorMessage: String) {
+        print("ERROR MESSAGE", errorMessage)
+    }
+    
+    func API_CALLBACK_InsertLanguage(insertLang: NSDictionary) {
+        print("insertLang", insertLang)
     }
     
     func screenContents()
@@ -251,13 +261,23 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func languageAlertAction(action : UIAlertAction)
     {
+        
         if action.title == "English"
         {
+            if let id = UserDefaults.standard.value(forKey: "userId") as? Int
+            {
+                serviceCall.API_InsertLanguage(Id: id, language: "English", delegate: self)
+            }
             UserDefaults.standard.set("en", forKey: "language")
             changeViewToEnglish()
         }
         else if action.title == "Arabic" || action.title == "عربى"
         {
+            if let id = UserDefaults.standard.value(forKey: "userId") as? Int
+            {
+                serviceCall.API_InsertLanguage(Id: id, language: "Arabic", delegate: self)
+            }
+
             UserDefaults.standard.set("ar", forKey: "language")
             changeViewToArabic()
         }

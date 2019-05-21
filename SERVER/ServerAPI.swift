@@ -2781,37 +2781,40 @@ class ServerAPI : NSObject
         }
     }
     
- func API_InsertLanguage(Id : Int, language : String, delegate : ServerAPIDelegate)
- {
-    if Reachability.Connection.self != .none
+    
+    func API_InsertLanguage(Id : Int, language : String, delegate : ServerAPIDelegate)
     {
-      print("Server Reached - Language settings..")
-    
-      let parameters = ["Id" : Id, "language" : language] as [String : Any]
-    
-      let urlString:String = String(format: "%@/API/Login/InsertLanguage", arguments: [baseURL])
-    
-      print("Language setting IsApprove: ", urlString)
-    
-      request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
-      // print("REQUEST", request)
-      if response.result.value != nil
-      {
-        self.resultDict = response.result.value as! NSDictionary // method in apidelegate
-        print("response", self.resultDict)
-        delegate.API_CALLBACK_InsertLanguage!(insertLang: self.resultDict)
-      }
-      else
-      {
-        delegate.API_CALLBACK_Error(errorNumber: 51, errorMessage: "Insert Language Failed")
-      }
-     }
+        if Reachability.Connection.self != .none
+        {
+            print("Server Reached - Language settings..")
+            
+            let parameters = ["Id" : Id, "language" : language] as [String : Any]
+            
+            let urlString:String = String(format: "%@/API/Login/InsertLanguage", arguments: [baseURL])
+            
+            print("Language setting IsApprove: ", urlString)
+            
+            request(urlString, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON {response in
+                // print("REQUEST", request)
+                if response.result.value != nil
+                {
+                    self.resultDict = response.result.value as! NSDictionary // method in apidelegate
+                    print("response", self.resultDict)
+                    delegate.API_CALLBACK_InsertLanguage!(insertLang: self.resultDict)
+                }
+                else
+                {
+                    delegate.API_CALLBACK_Error(errorNumber: 51, errorMessage: "Insert Language Failed")
+                }
+            }
+        }
+        else
+        {
+            delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
+        }
     }
-    else
-    {
-      delegate.API_CALLBACK_Error(errorNumber: 0, errorMessage: "No Internet")
-    }
-  }
+    
+    
 }
 
 class Connectivity {
