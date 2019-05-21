@@ -49,8 +49,10 @@
 		FD1C9F4B227AC1DF000F83EE /* TailorTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9F4A227AC1DF000F83EE /* TailorTypeViewController.swift */; };
 		FD1C9F4D227ACA6E000F83EE /* PriceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9F4C227ACA6E000F83EE /* PriceDetailsViewController.swift */; };
 		FD1E6CB5218AE44400395814 /* DressTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */; };
+		FD2145812292D23700B6101A /* OffersFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2145802292D23700B6101A /* OffersFilterViewController.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
+		FD2A6C6B2293FC9500FB8946 /* CheckOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2A6C6A2293FC9500FB8946 /* CheckOutViewController.swift */; };
 		FD2ADFB82175A5480033025B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFB72175A5480033025B /* AppDelegate.swift */; };
 		FD2ADFBF2175A5500033025B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFBE2175A5500033025B /* Assets.xcassets */; };
 		FD2ADFC22175A5500033025B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFC02175A5500033025B /* LaunchScreen.storyboard */; };
@@ -162,8 +164,10 @@
 		FD1C9F4A227AC1DF000F83EE /* TailorTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailorTypeViewController.swift; sourceTree = "<group>"; };
 		FD1C9F4C227ACA6E000F83EE /* PriceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceDetailsViewController.swift; sourceTree = "<group>"; };
 		FD1E6CB4218AE44400395814 /* DressTypeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressTypeCollectionViewCell.swift; sourceTree = "<group>"; };
+		FD2145802292D23700B6101A /* OffersFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersFilterViewController.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
+		FD2A6C6A2293FC9500FB8946 /* CheckOutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutViewController.swift; sourceTree = "<group>"; };
 		FD2ADFB42175A5480033025B /* Mzyoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mzyoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2ADFB72175A5480033025B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD2ADFBE2175A5500033025B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -321,8 +325,17 @@
 			children = (
 				FD19B530228E8A17000391CD /* ReferAndEarnViewController.swift */,
 				FD19B532228EC582000391CD /* OffersViewController.swift */,
+				FD2145802292D23700B6101A /* OffersFilterViewController.swift */,
 			);
 			path = "REFER AND EARN";
+			sourceTree = "<group>";
+		};
+		FD2A6C692293FA5500FB8946 /* CHECK OUT */ = {
+			isa = PBXGroup;
+			children = (
+				FD2A6C6A2293FC9500FB8946 /* CheckOutViewController.swift */,
+			);
+			path = "CHECK OUT";
 			sourceTree = "<group>";
 		};
 		FD2ADFAB2175A5480033025B = {
@@ -390,6 +403,7 @@
 		FD2ADFE72175BFF00033025B /* VIEW CONTROLLERS */ = {
 			isa = PBXGroup;
 			children = (
+				FD2A6C692293FA5500FB8946 /* CHECK OUT */,
 				FD19B52F228E89E8000391CD /* REFER AND EARN */,
 				FD116044226493C700D34EAD /* ADD MEASUREMENTS */,
 				DAB3CE0C21DF29F50080549A /* APPOINTMENTS */,
@@ -829,8 +843,10 @@
 				FDC9BB942186F707003BA5C9 /* ContactUsViewController.swift in Sources */,
 				FD363EFD228A8A8800F077CC /* DateFile.swift in Sources */,
 				FD71D25C219EE62F00FFC067 /* DressTypeViewController.swift in Sources */,
+				FD2A6C6B2293FC9500FB8946 /* CheckOutViewController.swift in Sources */,
 				DA077FC021D62A5400D9E565 /* ListOfOrdersViewController.swift in Sources */,
 				FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */,
+				FD2145812292D23700B6101A /* OffersFilterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
