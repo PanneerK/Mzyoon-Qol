@@ -29,7 +29,6 @@ class TestingViewController: UIViewController, UISearchBarDelegate,LocateOnTheMa
     var loadingTimer = Timer()
     let loadingText = UILabel()
 
-    
     let mapView = GMSMapView()
 
     override func viewDidLoad()
