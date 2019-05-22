@@ -225,6 +225,7 @@ class CheckOutViewController: CommonViewController
         viewAllButton.backgroundColor = UIColor.clear
         viewAllButton.setTitle("View All Promo Code", for: .normal)
         viewAllButton.setTitleColor(UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85), for: .normal)
+         viewAllButton.addTarget(self, action: #selector(self.promosButtonAction(sender:)), for: .touchUpInside)
         promoCodeView.addSubview(viewAllButton)
         
         let pointImageView = UIImageView()
@@ -238,6 +239,7 @@ class CheckOutViewController: CommonViewController
         conversionButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
         conversionButton.setTitle("Convert points to cash", for: .normal)
         conversionButton.setTitleColor(UIColor.white, for: .normal)
+        conversionButton.addTarget(self, action: #selector(self.redeemButtonAction(sender:)), for: .touchUpInside)
         selfScreenContents.addSubview(conversionButton)
         
         let paymentView = UIView()
@@ -382,6 +384,18 @@ class CheckOutViewController: CommonViewController
     @objc func otpBackButtonAction(sender : UIButton)
     {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func redeemButtonAction(sender : UIButton)
+    {
+        let redeemScreen = RedeemViewController()
+        self.navigationController?.pushViewController(redeemScreen, animated: true)
+    }
+    
+    @objc func promosButtonAction(sender : UIButton)
+    {
+        let redeemScreen = OffersViewController()
+        self.navigationController?.pushViewController(redeemScreen, animated: true)
     }
     
 
