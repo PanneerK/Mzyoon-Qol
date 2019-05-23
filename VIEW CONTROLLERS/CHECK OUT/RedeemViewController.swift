@@ -60,22 +60,81 @@ class RedeemViewController: CommonViewController
         selfScreenContents.backgroundColor = UIColor.clear
         view.addSubview(selfScreenContents)
         
-        let TotPtsCount_LBL = UILabel()
-        TotPtsCount_LBL.frame = CGRect(x: x , y: (3 * y), width: selfScreenContents.frame.width - (2 * x), height: (2 * y))
-        TotPtsCount_LBL.text = "Total Available Points   4800 Points"
-        TotPtsCount_LBL.textColor = UIColor.white
-        TotPtsCount_LBL.layer.cornerRadius = 10
-        TotPtsCount_LBL.layer.borderWidth = 0.5
-        TotPtsCount_LBL.layer.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
-        TotPtsCount_LBL.layer.borderColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
-        TotPtsCount_LBL.clipsToBounds = true
-        TotPtsCount_LBL.textAlignment = .center
-        TotPtsCount_LBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
-        selfScreenContents.addSubview(TotPtsCount_LBL)
+        let TotPtsView_LBL = UILabel()
+        TotPtsView_LBL.frame = CGRect(x: x , y: (3 * y), width: selfScreenContents.frame.width - (2 * x), height: (3 * y))
+       // TotPtsCount_LBL.text = "Total Available Points   4800 Points"
+       // TotPtsView_LBL.textColor = UIColor.white
+        TotPtsView_LBL.layer.cornerRadius = 10
+        TotPtsView_LBL.layer.borderWidth = 0.5
+        //TotPtsCount_LBL.layer.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
+        TotPtsView_LBL.layer.borderColor = UIColor.lightGray.cgColor
+        TotPtsView_LBL.clipsToBounds = true
+        //TotPtsView_LBL.textAlignment = .center
+        TotPtsView_LBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        selfScreenContents.addSubview(TotPtsView_LBL)
+        
+        let TotPts_LBL = UILabel()
+        TotPts_LBL.frame = CGRect(x: x/2 , y: 0, width: (TotPtsView_LBL.frame.width / 2) + x, height: (3 * y))
+        TotPts_LBL.text = "TOTAL AVAILABLE POINTS"
+       // TotPts_LBL.backgroundColor = UIColor.lightGray
+        TotPtsView_LBL.textAlignment = .center
+        TotPts_LBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
+        TotPtsView_LBL.addSubview(TotPts_LBL)
+        
+        let PointsViewButton = UIButton()
+        PointsViewButton.frame = CGRect(x: TotPts_LBL.frame.maxX , y: 0, width: (TotPtsView_LBL.frame.width) - (TotPts_LBL.frame.width), height: (3 * y))
+        PointsViewButton.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        PointsViewButton.setTitle("4800 POINTS", for: .normal)
+        PointsViewButton.setTitleColor(UIColor.white, for: .normal)
+        PointsViewButton.titleLabel?.font =  UIFont(name: "Avenir Next", size: 1.5 * x)
+        PointsViewButton.layer.cornerRadius = 10;  // this value vary as per your desire
+        PointsViewButton.clipsToBounds = true;
+        PointsViewButton.isUserInteractionEnabled = false
+        TotPtsView_LBL.addSubview(PointsViewButton)
+        
+        let CoinsImageView = UIImageView()
+        CoinsImageView.frame = CGRect(x: x, y: y/2, width: (2 * x), height: (2 * y))
+        CoinsImageView.image = UIImage(named: "Coins")
+        PointsViewButton.addSubview(CoinsImageView)
+        
+        // UnderLine..
+        let UnderLine = UILabel()
+        UnderLine.frame = CGRect(x: x/2, y: TotPtsView_LBL.frame.maxY + (2 * y) , width: self.selfScreenContents.frame.width - x, height: 0.3)
+        UnderLine.backgroundColor = UIColor.lightGray
+        selfScreenContents.addSubview(UnderLine)
+        
+        let Mzyoon_LBL = UILabel()
+        Mzyoon_LBL.frame = CGRect(x: x, y: UnderLine.frame.maxY + y, width: selfScreenContents.frame.width - (2 * x), height: (2 * y))
+        Mzyoon_LBL.text = "USE YOUR MZYOON POINTS"
+        Mzyoon_LBL.textAlignment = .left
+        Mzyoon_LBL.font = UIFont(name: "Avenir-Regular", size: x)
+        selfScreenContents.addSubview(Mzyoon_LBL)
+        
+        let MzyoonCont_LBL = UILabel()
+        MzyoonCont_LBL.frame = CGRect(x: x, y: Mzyoon_LBL.frame.maxY + y/2, width: selfScreenContents.frame.width - (2 * x), height: (2 * y))
+        MzyoonCont_LBL.text = "Select the amount to pay with your Mzyoon Points"
+        MzyoonCont_LBL.textAlignment = .left
+        MzyoonCont_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        selfScreenContents.addSubview(MzyoonCont_LBL)
+        
+        // SliderMenu..
+        let slider = UISlider()
+        slider.frame = CGRect(x: (2 * x), y: MzyoonCont_LBL.frame.maxY + (3 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
+        //slider.center = self.view.center
+       // slider.backgroundColor = UIColor.cyan
+        slider.minimumTrackTintColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        slider.maximumTrackTintColor = .lightGray
+        slider.thumbTintColor = .white
+        slider.maximumValue = 100
+        slider.minimumValue = 0
+        slider.setValue(50, animated: false)
+        slider.addTarget(self, action: #selector(SliderChangeValue(_:)), for: .valueChanged)
+        selfScreenContents.addSubview(slider)
+        
         
         // Points View..
         let PointsView = UIView()
-        PointsView.frame = CGRect(x: x/2, y: TotPtsCount_LBL.frame.maxY + (3 * y), width: selfScreenContents.frame.width - x, height: (10 * y))
+        PointsView.frame = CGRect(x: x/2, y: slider.frame.maxY + (3 * y), width: selfScreenContents.frame.width - x, height: (10 * y))
         //PointsView.layer.cornerRadius = 5
         PointsView.layer.borderWidth = 1
         PointsView.layer.backgroundColor = UIColor.white.cgColor
@@ -213,6 +272,10 @@ class RedeemViewController: CommonViewController
     @objc func AddToPaymentButtonAction(sender : UIButton)
     {
         print("Redirecting To Payment..!")
+    }
+    @objc func SliderChangeValue(_ sender: UISlider)
+    {
+        print("value is" , Int(sender.value));
     }
     /*
     // MARK: - Navigation
