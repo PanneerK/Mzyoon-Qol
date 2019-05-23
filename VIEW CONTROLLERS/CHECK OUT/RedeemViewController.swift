@@ -17,6 +17,8 @@ class RedeemViewController: CommonViewController
     let selfScreenContents = UIView()
     let PaymentButton = UIButton()
     
+    let ChangeValue_LBL = UILabel()
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -117,20 +119,42 @@ class RedeemViewController: CommonViewController
         MzyoonCont_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
         selfScreenContents.addSubview(MzyoonCont_LBL)
         
+        // let ChangeValue_LBL = UILabel()
+        ChangeValue_LBL.frame = CGRect(x: (selfScreenContents.frame.width / 2) - (2 * x), y: Mzyoon_LBL.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
+        ChangeValue_LBL.backgroundColor = UIColor.orange
+        ChangeValue_LBL.textColor = UIColor.white
+        ChangeValue_LBL.text = "2400"
+        ChangeValue_LBL.textAlignment = .center
+        ChangeValue_LBL.font = UIFont(name: "Avenir Next", size: 1.4 * x)
+        selfScreenContents.addSubview(ChangeValue_LBL)
+        
         // SliderMenu..
         let slider = UISlider()
-        slider.frame = CGRect(x: (2 * x), y: MzyoonCont_LBL.frame.maxY + (3 * y), width: selfScreenContents.frame.width - (4 * x), height: (3 * y))
+        slider.frame = CGRect(x: (2 * x), y: ChangeValue_LBL.frame.maxY + y, width: selfScreenContents.frame.width - (4 * x), height: (2 * y))
         //slider.center = self.view.center
-       // slider.backgroundColor = UIColor.cyan
+        //slider.backgroundColor = UIColor.cyan
         slider.minimumTrackTintColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         slider.maximumTrackTintColor = .lightGray
         slider.thumbTintColor = .white
-        slider.maximumValue = 100
+        slider.maximumValue = 4800
         slider.minimumValue = 0
-        slider.setValue(50, animated: false)
+        slider.setValue(2400, animated: false)
         slider.addTarget(self, action: #selector(SliderChangeValue(_:)), for: .valueChanged)
         selfScreenContents.addSubview(slider)
         
+        let StartPts_LBL = UILabel()
+        StartPts_LBL.frame = CGRect(x: x, y: slider.frame.maxY, width: (3 * x), height: (2 * y))
+        StartPts_LBL.text = "0"
+        StartPts_LBL.textAlignment = .left
+        StartPts_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        selfScreenContents.addSubview(StartPts_LBL)
+        
+        let EndPts_LBL = UILabel()
+        EndPts_LBL.frame = CGRect(x: slider.frame.width, y: slider.frame.maxY, width: (3 * x), height: (2 * y))
+        EndPts_LBL.text = "4800"
+        EndPts_LBL.textAlignment = .left
+        EndPts_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
+        selfScreenContents.addSubview(EndPts_LBL)
         
         // Points View..
         let PointsView = UIView()
@@ -276,7 +300,10 @@ class RedeemViewController: CommonViewController
     @objc func SliderChangeValue(_ sender: UISlider)
     {
         print("value is" , Int(sender.value));
+        let value = Int(sender.value)
+        ChangeValue_LBL.text = "\(value)"
     }
+    
     /*
     // MARK: - Navigation
 

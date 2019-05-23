@@ -19,9 +19,9 @@ class ServerAPI : NSObject
     var resultDict:NSDictionary = NSDictionary()
     
 
-    //  var baseURL:String = "http://192.168.0.29/TailorAPI"
+     //   var baseURL:String = "http://192.168.0.29/TailorAPI"
     
-        var baseURL:String = "http://appsapi.mzyoon.com"
+         var baseURL:String = "http://appsapi.mzyoon.com"
  
     let deviceId = UIDevice.current.identifierForVendor
     
@@ -1258,13 +1258,13 @@ class ServerAPI : NSObject
     }
     
     // Tailor List View..
-    func API_GetTailorList(DressSubType : String, OrderType : String, MeasuremenType : String, DeliveryType : String, AreaId : String, Customization : [[String: Int]], delegate : ServerAPIDelegate)
+    func API_GetTailorList(DressSubType : String, OrderType : String, MeasuremenType : String, DeliveryType : String, AreaId : String, Customization : [[String: Int]], MaterialId : String, delegate : ServerAPIDelegate)
     {
         if Reachability.Connection.self != .none
         {
             print("Server Reached - Tailor List Page")
             
-            let parameters = ["DressSubType" : DressSubType, "OrderType" : OrderType, "MeasuremenType" : MeasuremenType, "DeliveryType" : DeliveryType, "AreaId" : AreaId, "Customization" : Customization] as [String : Any]
+            let parameters = ["DressSubType" : DressSubType, "OrderType" : OrderType, "MeasuremenType" : MeasuremenType, "DeliveryType" : DeliveryType, "AreaId" : AreaId, "Customization" : Customization, "MaterialId" : MaterialId] as [String : Any]
             
             let urlString:String = String(format: "%@/API/Order/GetTailorlist", arguments: [baseURL])
             
