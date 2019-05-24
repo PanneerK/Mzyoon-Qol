@@ -387,7 +387,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
         viewDesignLabel.frame = CGRect(x: 0, y: y, width: (25 * x), height: (4 * y))
         viewDesignLabel.layer.cornerRadius = 10
         viewDesignLabel.layer.masksToBounds = true
-        viewDesignLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+        viewDesignLabel.backgroundColor = ColorCode.buttonColor
         viewDesignLabel.text = "PREVIEW"
         viewDesignLabel.textColor = UIColor.white
         viewDesignLabel.textAlignment = .center
@@ -848,7 +848,7 @@ class Customization3ViewController: CommonViewController, ServerAPIDelegate, UIT
             
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: customizationButton.frame.height - (2 * y), width: customizationButton.frame.width, height: (2 * y))
-            buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            buttonTitle.backgroundColor = ColorCode.buttonColor
             buttonTitle.text = (inputArray[i] as! String)
             buttonTitle.adjustsFontSizeToFitWidth = true
             buttonTitle.textColor = UIColor.white

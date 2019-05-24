@@ -14,49 +14,9 @@ class ColorCode:NSObject
 {
     //MZYOON COLORS
     public static let navigationBarColor:UIColor = ("#194ec2").hexStringToUIColor()
+    public static let genderColor:UIColor = ("#494a4c").hexStringToUIColor()
+    public static let buttonColor:UIColor = ("#0c2c75").hexStringToUIColor()
     
-    //
-    
-    public static let purple: UIColor = ("#7e51df").hexStringToUIColor()
-    public static let appBlue: UIColor = ("#346af8").hexStringToUIColor()
-    public static let switchBlue: UIColor = ("#346af8").hexStringToUIColor()
-    
-    public static let btnSelectedColor: UIColor = ("#fe924a").hexStringToUIColor()
-    public static let menuSelectedColor: UIColor = ("#33b5de").hexStringToUIColor()
-    public static let btnDisabledColor: UIColor = ("#cbcbcb").hexStringToUIColor()//("#bfc0c1")
-    public static let switchBackground: UIColor = ("#ebebeb").hexStringToUIColor()
-    
-    //in
-    public static let login_background: UIColor = ("#8dd558").hexStringToUIColor()
-    public static let login_storke: UIColor = ("#27864f").hexStringToUIColor()
-    public static let login_finished: UIColor = ("#6cbb33").hexStringToUIColor()
-    public static let login_unfinished: UIColor = ("#e6f0df").hexStringToUIColor()
-    
-    //out
-    public static let logout_background: UIColor = ("#e03939").hexStringToUIColor()
-    public static let logout_storke: UIColor = ("#862729").hexStringToUIColor()
-    public static let logout_finished: UIColor = ("#bf1a1a").hexStringToUIColor()
-    public static let logout_unfinished: UIColor = ("#f0dfdf").hexStringToUIColor()
-    
-    //Share Page
-    public static let headerBlue: UIColor = ("#33b5de").hexStringToUIColor()
-    public static let recentShareBg: UIColor = ("#e7f9fe").hexStringToUIColor()
-    public static let orangeBtn: UIColor = ("#ee9534").hexStringToUIColor()
-    public static let durationBlue: UIColor = ("#33b5de").hexStringToUIColor()
-    public static let bodyBg: UIColor = ("#f8f7f7").hexStringToUIColor()
-    public static let navigationPath: UIColor = ("#006d98").hexStringToUIColor()
-    
-    public static let destinationSelectedColor: UIColor = ("#96bf25").hexStringToUIColor()
-    public static let destinationDisabledColor: UIColor = ("#282c3f").hexStringToUIColor()
-    public static let contactsTagColor: UIColor = ("#b9e4f4").hexStringToUIColor()
-    
-    public static let headerTitleColor: UIColor = ("#465167").hexStringToUIColor()
-    
-    public static let shadowColor: UIColor = ("#d3d3d3").hexStringToUIColor()
-    public static let sideMenuProfileBorder: UIColor = ("#5dcbee").hexStringToUIColor()
-    
-    
-    //open static let statusBarColor: UIColor = ("#244dc6").hexStringToUIColor()
 }
 
 extension String {

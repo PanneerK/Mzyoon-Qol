@@ -265,7 +265,7 @@ class GenderViewController: CommonViewController, ServerAPIDelegate
             {
                 genderButtonLabel.frame = CGRect(x: genderButton.frame.width - (8 * x), y: ((genderButton.frame.height - (3 * y)) / 2), width: (8 * x), height: (3 * y))
             }
-            genderButtonLabel.backgroundColor = UIColor.darkGray
+            genderButtonLabel.backgroundColor = ColorCode.genderColor
             genderButtonLabel.text = (getInputArray[i] as? String)
             genderButtonLabel.textColor = UIColor.white
             genderButtonLabel.textAlignment = .center

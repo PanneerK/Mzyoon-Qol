@@ -173,7 +173,6 @@ class Measurement2ViewController: CommonViewController, UITableViewDataSource, U
         convertedPartsImageArray.removeAll()
         
         self.serviceCall.API_GetMeasurement2(Measurement1Value: Variables.sharedManager.dressSubTypeId, delegate: self)
-
         
         addDoneButtonOnKeyboard()
         

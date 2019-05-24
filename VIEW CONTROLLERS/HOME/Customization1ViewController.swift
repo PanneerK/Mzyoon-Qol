@@ -657,7 +657,7 @@ class Customization1ViewController: CommonViewController, ServerAPIDelegate
             
             let buttonTitle = UILabel()
             buttonTitle.frame = CGRect(x: 0, y: brandButton.frame.height - (2 * y), width: brandButton.frame.width, height: (2 * y))
-            buttonTitle.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            buttonTitle.backgroundColor = ColorCode.buttonColor
             buttonTitle.text = getInputArray[i] as? String
             buttonTitle.textColor = UIColor.white
             buttonTitle.textAlignment = .center

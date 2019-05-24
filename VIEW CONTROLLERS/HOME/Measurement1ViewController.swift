@@ -273,6 +273,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         manualTitleLabel.text = Measure1NameEngArray[0] as! String
         manualTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         manualTitleLabel.textAlignment = .left
+        manualTitleLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        manualTitleLabel.font = manualTitleLabel.font.withSize(1.25 * x)
         selfScreenContents.addSubview(manualTitleLabel)
         
         let underLine1 = UILabel()
@@ -310,6 +312,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         goTitleLabel.text = Measure1NameEngArray[1] as! String
         goTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         goTitleLabel.textAlignment = .left
+        goTitleLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        goTitleLabel.font = goTitleLabel.font.withSize(1.25 * x)
         selfScreenContents.addSubview(goTitleLabel)
         
         let underLine2 = UILabel()
@@ -333,6 +337,8 @@ class Measurement1ViewController: CommonViewController, ServerAPIDelegate
         comeTitleLabel.text = Measure1NameEngArray[2] as! String
         comeTitleLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         comeTitleLabel.textAlignment = .left
+        comeTitleLabel.font = UIFont(name: "Avenir-Regular", size: (1.25 * x))
+        comeTitleLabel.font = comeTitleLabel.font.withSize(1.25 * x)
         selfScreenContents.addSubview(comeTitleLabel)
         
         let underLine3 = UILabel()

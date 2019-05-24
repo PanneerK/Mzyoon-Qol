@@ -458,7 +458,7 @@ class DressTypeViewController: CommonViewController, ServerAPIDelegate, UITextFi
                     dressTypeNameLabel.numberOfLines = 1
                 }
             }
-            dressTypeNameLabel.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
+            dressTypeNameLabel.backgroundColor = ColorCode.buttonColor
             dressTypeNameLabel.text = inputTextArray[i] as? String
             dressTypeNameLabel.textColor = UIColor.white
             dressTypeNameLabel.textAlignment = .center

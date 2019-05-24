@@ -55,7 +55,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         view.addSubview(backgroundImage)
         
         navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        navigationBar.backgroundColor = ColorCode.navigationBarColor
         view.addSubview(navigationBar)
         
         let backButton = UIButton()

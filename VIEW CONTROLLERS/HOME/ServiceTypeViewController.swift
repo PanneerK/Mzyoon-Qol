@@ -206,7 +206,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         courierDeliveryLabel.text = (deliveryTypeEnglishNameArray[1] as! String).uppercased()
         courierDeliveryLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         courierDeliveryLabel.textAlignment = .left
-        courierDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.5 * x))
+        courierDeliveryLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.25 * x))
         courierDeliveryLabel.adjustsFontSizeToFitWidth = true
         selfScreenContents.addSubview(courierDeliveryLabel)
         
@@ -249,7 +249,7 @@ class ServiceTypeViewController: CommonViewController, ServerAPIDelegate
         companyLabel.text = (deliveryTypeEnglishNameArray[2] as! String).uppercased()
         companyLabel.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         companyLabel.textAlignment = .left
-        companyLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.5 * x))
+        companyLabel.font = UIFont(name: "AvenirNext-Regular", size: (1.25 * x))
         selfScreenContents.addSubview(companyLabel)
         
         let companyUnderline = UILabel()
