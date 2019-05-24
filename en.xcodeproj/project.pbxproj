@@ -21,6 +21,8 @@
 		DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */; };
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA13C898228E9C8E00A5DF0C /* RewardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13C897228E9C8E00A5DF0C /* RewardsViewController.swift */; };
+		DA6F623922954BBF00A9BFB0 /* CheckOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6F623822954BBF00A9BFB0 /* CheckOutViewController.swift */; };
+		DA6F623B22954DAA00A9BFB0 /* RedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6F623A22954DAA00A9BFB0 /* RedeemViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8F54D12211ACCA00CCA501 /* XMLReader.m */; };
 		DA9F66592249EC6E00969B34 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F66582249EC6E00969B34 /* SearchResultsController.swift */; };
@@ -133,6 +135,8 @@
 		DA0DB14921FA117900C20299 /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AEXML.framework; sourceTree = "<group>"; };
 		DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotationListViewController.swift; sourceTree = "<group>"; };
 		DA13C897228E9C8E00A5DF0C /* RewardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsViewController.swift; sourceTree = "<group>"; };
+		DA6F623822954BBF00A9BFB0 /* CheckOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckOutViewController.swift; sourceTree = "<group>"; };
+		DA6F623A22954DAA00A9BFB0 /* RedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemViewController.swift; sourceTree = "<group>"; };
 		DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mzyoon-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA8F54D02211ACCA00CCA501 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
@@ -335,6 +339,11 @@
 		FD2A6C692293FA5500FB8946 /* CHECK OUT */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
+=======
+				DA6F623822954BBF00A9BFB0 /* CheckOutViewController.swift */,
+				DA6F623A22954DAA00A9BFB0 /* RedeemViewController.swift */,
+>>>>>>> 663b40d038f159210467268ec5f100947db433c5
 			);
 			path = "CHECK OUT";
 			sourceTree = "<group>";
@@ -784,6 +793,7 @@
 				FD0E7AB2228D7C5D0005D57B /* FlowTypeViewController.swift in Sources */,
 				DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */,
 				DAA737BD2215D1BC00B4B573 /* TelrResponseViewController.swift in Sources */,
+				DA6F623922954BBF00A9BFB0 /* CheckOutViewController.swift in Sources */,
 				FD71D262219F055300FFC067 /* Customization1ViewController.swift in Sources */,
 				FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */,
 				FD71D268219F29AD00FFC067 /* Measurement1ViewController.swift in Sources */,
@@ -832,6 +842,7 @@
 				FD60980221A2B27600DCCF58 /* AddressViewController.swift in Sources */,
 				FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */,
 				FD1C9F4B227AC1DF000F83EE /* TailorTypeViewController.swift in Sources */,
+				DA6F623B22954DAA00A9BFB0 /* RedeemViewController.swift in Sources */,
 				FD5774B0219AB2F30026DBF8 /* GenderTableViewCell.swift in Sources */,
 				DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */,
 				FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */,
