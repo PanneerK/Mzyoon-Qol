@@ -44,6 +44,7 @@
 		FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */; };
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
 		FD1160462264940B00D34EAD /* AddNewMeasurementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */; };
+		FD1207F12297BFE100F5C276 /* ColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1207F02297BFE100F5C276 /* ColorCode.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
 		FD19B531228E8A17000391CD /* ReferAndEarnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19B530228E8A17000391CD /* ReferAndEarnViewController.swift */; };
 		FD19B533228EC582000391CD /* OffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19B532228EC582000391CD /* OffersViewController.swift */; };
@@ -160,6 +161,7 @@
 		FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCustomizationToJson.swift; sourceTree = "<group>"; };
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
 		FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewMeasurementViewController.swift; sourceTree = "<group>"; };
+		FD1207F02297BFE100F5C276 /* ColorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCode.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
 		FD19B530228E8A17000391CD /* ReferAndEarnViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferAndEarnViewController.swift; sourceTree = "<group>"; };
 		FD19B532228EC582000391CD /* OffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersViewController.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				FD110BFD220D724D00814BAD /* OrderCustomizationToJson.swift */,
 				FD110BFF220D9FE400814BAD /* FileAccess.swift */,
 				FD0F977E22255E40003744ED /* Variables.swift */,
+				FD1207F02297BFE100F5C276 /* ColorCode.swift */,
 			);
 			path = COMMON;
 			sourceTree = "<group>";
@@ -790,6 +793,7 @@
 				FD462DDA21AD0E9A0073B53B /* Measurement2ViewController.swift in Sources */,
 				DA02A4F922265FD700577CBA /* ShopDetailsViewController.swift in Sources */,
 				DA0DB13A21F98D9C00C20299 /* PaymentViewController.swift in Sources */,
+				FD1207F12297BFE100F5C276 /* ColorCode.swift in Sources */,
 				FD08181822857CDC00B6DEEB /* OTPViewController.swift in Sources */,
 				DAE1A10A21DCBE2A009A612F /* TrackingViewController.swift in Sources */,
 				DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */,

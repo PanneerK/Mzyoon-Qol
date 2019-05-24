@@ -243,7 +243,7 @@ class CommonViewController: UIViewController
         //        view.addSubview(testImage)
         
         navigationBar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: (6.4 * y))
-        navigationBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        navigationBar.backgroundColor = ColorCode.navigationBarColor
         selfScreenContents1.addSubview(navigationBar)
         
         navigationTitle.frame = CGRect(x: 0, y: (2 * y), width: navigationBar.frame.width, height: (3 * y))
@@ -363,7 +363,7 @@ class CommonViewController: UIViewController
         selfScreenContents1.addSubview(slideMenuButton)
         
         tabBar.frame = CGRect(x: 0, y: view.frame.height - (5 * y), width: view.frame.width, height: (5 * y))
-        tabBar.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 0.85)
+        tabBar.backgroundColor = ColorCode.navigationBarColor
         selfScreenContents1.addSubview(tabBar)
         
         tab1Button.frame = CGRect(x: 0, y: 0, width: (9.37 * x), height: (5 * y))
