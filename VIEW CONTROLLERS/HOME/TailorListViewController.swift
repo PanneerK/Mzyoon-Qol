@@ -280,7 +280,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     let orderCustomization = orderCustom.makeRequest(attId: custom3KeyInt, imgId: custom3ValuesInt)
                     print("FINALIZED ORDER", orderCustomization)
                     
-                    self.serviceCall.API_GetTailorList(DressSubType: "\(dressSubTypeId)", OrderType: "\(orderTypeId)", MeasuremenType: "\(measurementId)", DeliveryType: "\(deliveryId)", AreaId: "1", Customization: orderCustomization, delegate: self)
+                    self.serviceCall.API_GetTailorList(DressSubType: "\(dressSubTypeId)", OrderType: "\(orderTypeId)", MeasuremenType: "\(measurementId)", DeliveryType: "\(deliveryId)", AreaId: "1", Customization: orderCustomization, MaterialId: "1", delegate: self)
                     
                 }
             }
@@ -313,7 +313,7 @@ class TailorListViewController: CommonViewController, CLLocationManagerDelegate,
                     let orderCustomization = orderCustom.makeRequest(attId: custom3KeyInt, imgId: custom3ValuesInt)
                     print("FINALIZED ORDER", orderCustomization)
                     
-                    self.serviceCall.API_GetTailorList(DressSubType: "\(dressSubTypeId)", OrderType: "\(orderTypeId)", MeasuremenType: "\(measurementId)", DeliveryType: "\(deliveryId)", AreaId: "1", Customization: orderCustomization, delegate: self)
+                    self.serviceCall.API_GetTailorList(DressSubType: "\(dressSubTypeId)", OrderType: "\(orderTypeId)", MeasuremenType: "\(measurementId)", DeliveryType: "\(deliveryId)", AreaId: "1", Customization: orderCustomization, MaterialId: "1", delegate: self)
 
                 }
             }

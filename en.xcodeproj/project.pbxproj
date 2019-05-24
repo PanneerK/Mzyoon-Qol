@@ -21,6 +21,8 @@
 		DA0DB13E21FA0AEC00C20299 /* TelrGateWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DB13D21FA0AEC00C20299 /* TelrGateWayViewController.swift */; };
 		DA0DEAAB21D39EA700A62B7E /* QuotationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */; };
 		DA13C898228E9C8E00A5DF0C /* RewardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA13C897228E9C8E00A5DF0C /* RewardsViewController.swift */; };
+		DA6F623922954BBF00A9BFB0 /* CheckOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6F623822954BBF00A9BFB0 /* CheckOutViewController.swift */; };
+		DA6F623B22954DAA00A9BFB0 /* RedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6F623A22954DAA00A9BFB0 /* RedeemViewController.swift */; };
 		DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */; };
 		DA8F54D22211ACCA00CCA501 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = DA8F54D12211ACCA00CCA501 /* XMLReader.m */; };
 		DA9F66592249EC6E00969B34 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F66582249EC6E00969B34 /* SearchResultsController.swift */; };
@@ -55,7 +57,6 @@
 		FD2145812292D23700B6101A /* OffersFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2145802292D23700B6101A /* OffersFilterViewController.swift */; };
 		FD2435FA21B0C8F5003479CA /* PartsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */; };
 		FD2435FC21B0D090003479CA /* PartsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2435FB21B0D090003479CA /* PartsViewController.swift */; };
-		FD2A6C6B2293FC9500FB8946 /* CheckOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2A6C6A2293FC9500FB8946 /* CheckOutViewController.swift */; };
 		FD2ADFB82175A5480033025B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD2ADFB72175A5480033025B /* AppDelegate.swift */; };
 		FD2ADFBF2175A5500033025B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFBE2175A5500033025B /* Assets.xcassets */; };
 		FD2ADFC22175A5500033025B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD2ADFC02175A5500033025B /* LaunchScreen.storyboard */; };
@@ -135,6 +136,8 @@
 		DA0DB14921FA117900C20299 /* AEXML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AEXML.framework; sourceTree = "<group>"; };
 		DA0DEAAA21D39EA700A62B7E /* QuotationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotationListViewController.swift; sourceTree = "<group>"; };
 		DA13C897228E9C8E00A5DF0C /* RewardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsViewController.swift; sourceTree = "<group>"; };
+		DA6F623822954BBF00A9BFB0 /* CheckOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckOutViewController.swift; sourceTree = "<group>"; };
+		DA6F623A22954DAA00A9BFB0 /* RedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemViewController.swift; sourceTree = "<group>"; };
 		DA7ADCCA21CBA5120083CE87 /* OrderDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailsViewController.swift; sourceTree = "<group>"; };
 		DA8F54CF2211ACC600CCA501 /* Mzyoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mzyoon-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA8F54D02211ACCA00CCA501 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
@@ -173,7 +176,6 @@
 		FD2145802292D23700B6101A /* OffersFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersFilterViewController.swift; sourceTree = "<group>"; };
 		FD2435F921B0C8F5003479CA /* PartsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsTableViewCell.swift; sourceTree = "<group>"; };
 		FD2435FB21B0D090003479CA /* PartsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartsViewController.swift; sourceTree = "<group>"; };
-		FD2A6C6A2293FC9500FB8946 /* CheckOutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutViewController.swift; sourceTree = "<group>"; };
 		FD2ADFB42175A5480033025B /* Mzyoon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mzyoon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2ADFB72175A5480033025B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD2ADFBE2175A5500033025B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -339,8 +341,16 @@
 		FD2A6C692293FA5500FB8946 /* CHECK OUT */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				FD2A6C6A2293FC9500FB8946 /* CheckOutViewController.swift */,
 				FD1207F22297CF0A00F5C276 /* RedeemViewController.swift */,
+=======
+<<<<<<< HEAD
+=======
+				DA6F623822954BBF00A9BFB0 /* CheckOutViewController.swift */,
+				DA6F623A22954DAA00A9BFB0 /* RedeemViewController.swift */,
+>>>>>>> 663b40d038f159210467268ec5f100947db433c5
+>>>>>>> d3c938dfc52ac251c682059b689fcc13c6149580
 			);
 			path = "CHECK OUT";
 			sourceTree = "<group>";
@@ -790,6 +800,7 @@
 				FD0E7AB2228D7C5D0005D57B /* FlowTypeViewController.swift in Sources */,
 				DA7ADCCB21CBA5120083CE87 /* OrderDetailsViewController.swift in Sources */,
 				DAA737BD2215D1BC00B4B573 /* TelrResponseViewController.swift in Sources */,
+				DA6F623922954BBF00A9BFB0 /* CheckOutViewController.swift in Sources */,
 				FD71D262219F055300FFC067 /* Customization1ViewController.swift in Sources */,
 				FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */,
 				FD71D268219F29AD00FFC067 /* Measurement1ViewController.swift in Sources */,
@@ -838,6 +849,7 @@
 				FD60980221A2B27600DCCF58 /* AddressViewController.swift in Sources */,
 				FD110BFE220D725600814BAD /* OrderCustomizationToJson.swift in Sources */,
 				FD1C9F4B227AC1DF000F83EE /* TailorTypeViewController.swift in Sources */,
+				DA6F623B22954DAA00A9BFB0 /* RedeemViewController.swift in Sources */,
 				FD5774B0219AB2F30026DBF8 /* GenderTableViewCell.swift in Sources */,
 				DAE43B5421C2492E002ED428 /* OrderApprovalViewController.swift in Sources */,
 				FD0DD42D2242192800F7AF38 /* TestingViewController.swift in Sources */,
@@ -857,7 +869,6 @@
 				FDC9BB942186F707003BA5C9 /* ContactUsViewController.swift in Sources */,
 				FD363EFD228A8A8800F077CC /* DateFile.swift in Sources */,
 				FD71D25C219EE62F00FFC067 /* DressTypeViewController.swift in Sources */,
-				FD2A6C6B2293FC9500FB8946 /* CheckOutViewController.swift in Sources */,
 				DA077FC021D62A5400D9E565 /* ListOfOrdersViewController.swift in Sources */,
 				FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */,
 				FD2145812292D23700B6101A /* OffersFilterViewController.swift in Sources */,

@@ -2,7 +2,7 @@
 //  RedeemViewController.swift
 //  Mzyoon
 //
-//  Created by QOL on 24/05/19.
+
 //  Copyright © 2019 QOL. All rights reserved.
 //
 
@@ -22,9 +22,9 @@ class RedeemViewController: CommonViewController
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-        
+   
         screenContents()
     }
     
@@ -64,8 +64,6 @@ class RedeemViewController: CommonViewController
         
         let TotPtsView_LBL = UILabel()
         TotPtsView_LBL.frame = CGRect(x: x , y: (3 * y), width: selfScreenContents.frame.width - (2 * x), height: (3 * y))
-        // TotPtsCount_LBL.text = "Total Available Points   4800 Points"
-        // TotPtsView_LBL.textColor = UIColor.white
         TotPtsView_LBL.layer.cornerRadius = 10
         TotPtsView_LBL.layer.borderWidth = 0.5
         //TotPtsCount_LBL.layer.backgroundColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0).cgColor
@@ -78,7 +76,6 @@ class RedeemViewController: CommonViewController
         let TotPts_LBL = UILabel()
         TotPts_LBL.frame = CGRect(x: x/2 , y: 0, width: (TotPtsView_LBL.frame.width / 2) + x, height: (3 * y))
         TotPts_LBL.text = "TOTAL AVAILABLE POINTS"
-        // TotPts_LBL.backgroundColor = UIColor.lightGray
         TotPtsView_LBL.textAlignment = .center
         TotPts_LBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         TotPtsView_LBL.addSubview(TotPts_LBL)
@@ -120,7 +117,7 @@ class RedeemViewController: CommonViewController
         selfScreenContents.addSubview(MzyoonCont_LBL)
         
         // let ChangeValue_LBL = UILabel()
-        ChangeValue_LBL.frame = CGRect(x: (selfScreenContents.frame.width / 2) - (2 * x), y: Mzyoon_LBL.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
+        ChangeValue_LBL.frame = CGRect(x: TotPtsView_LBL.frame.width / 2, y: Mzyoon_LBL.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
         ChangeValue_LBL.backgroundColor = UIColor.orange
         ChangeValue_LBL.textColor = UIColor.white
         ChangeValue_LBL.text = "2400"
@@ -167,15 +164,12 @@ class RedeemViewController: CommonViewController
         
         let pointsImageView = UIImageView()
         pointsImageView.frame = CGRect(x: (4 * x), y: y, width: (6 * x), height:(6 * y))
-        // pointsImageView.backgroundColor = UIColor.white
         pointsImageView.image = UIImage(named: "Coins")
         PointsView.addSubview(pointsImageView)
         
         let PtsRedeem_LBL = UILabel()
         PtsRedeem_LBL.frame = CGRect(x: 0, y: pointsImageView.frame.maxY + y/2, width: (14 * x), height: (2 * y))
         PtsRedeem_LBL.text = "POINTS TO REDEEM"
-        // PtsRedeem_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        // PtsRedeem_LBL.backgroundColor = UIColor.gray
         PtsRedeem_LBL.textAlignment = .center
         PtsRedeem_LBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         PointsView.addSubview(PtsRedeem_LBL)
@@ -189,8 +183,6 @@ class RedeemViewController: CommonViewController
         let PtsUsed_LBL = UILabel()
         PtsUsed_LBL.frame = CGRect(x: Pts_StraightLine.frame.maxX + x, y: (2 * y), width: (8 * x), height: (2 * y))
         PtsUsed_LBL.text = "Points Used"
-        // PtsUsed_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        // PtsUsed_LBL.backgroundColor = UIColor.gray
         PtsUsed_LBL.textAlignment = .left
         PtsUsed_LBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         PointsView.addSubview(PtsUsed_LBL)
@@ -211,8 +203,6 @@ class RedeemViewController: CommonViewController
         let PtsLeft_LBL = UILabel()
         PtsLeft_LBL.frame = CGRect(x: Pts_StraightLine.frame.maxX + x, y: PtsUsed_LBL.frame.minY + (3 * y), width: (8 * x), height: (2 * y))
         PtsLeft_LBL.text = "Points Left"
-        // PtsLeft_LBL.backgroundColor = UIColor.gray
-        // PtsLeft_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
         PtsLeft_LBL.textAlignment = .left
         PtsLeft_LBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         PointsView.addSubview(PtsLeft_LBL)
@@ -240,7 +230,6 @@ class RedeemViewController: CommonViewController
         
         let DiscImageView = UIImageView()
         DiscImageView.frame = CGRect(x: (4 * x), y: y, width: (4 * x), height:(4 * y))
-        // DiscImageView.backgroundColor = UIColor.gray
         DiscImageView.image = UIImage(named: "Coins")
         ConvertedView.addSubview(DiscImageView)
         
@@ -249,8 +238,6 @@ class RedeemViewController: CommonViewController
         Discount_LBL.text = "USE MONEY FOR DISCOUNT"
         Discount_LBL.numberOfLines = 2
         Discount_LBL.adjustsFontSizeToFitWidth = true
-        // Discount_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        //  Discount_LBL.backgroundColor = UIColor.gray
         Discount_LBL.textAlignment = .center
         Discount_LBL.font = UIFont(name: "Avenir Next", size: 1.3 * x)
         ConvertedView.addSubview(Discount_LBL)
@@ -264,8 +251,6 @@ class RedeemViewController: CommonViewController
         let ConvMoney_LBL = UILabel()
         ConvMoney_LBL.frame = CGRect(x: Disc_StraightLine.frame.maxX + (3 * x), y: (2 * y), width: (14 * x), height: (2 * y))
         ConvMoney_LBL.text = "Converted Money"
-        // PtsUsed_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        // ConvMoney_LBL.backgroundColor = UIColor.gray
         ConvMoney_LBL.textAlignment = .center
         ConvMoney_LBL.font = UIFont(name: "Avenir Next", size: 1.2 * x)
         ConvertedView.addSubview(ConvMoney_LBL)
@@ -274,7 +259,6 @@ class RedeemViewController: CommonViewController
         ConvMoneyAmt_LBL.frame = CGRect(x: Disc_StraightLine.frame.maxX + (3 * x), y: ConvMoney_LBL.frame.minY + (3 * y), width: (14 * x), height: (2 * y))
         ConvMoneyAmt_LBL.text = "35.00 AED"
         // PtsLeft_LBL.textColor = UIColor(red: 0.0392, green: 0.2078, blue: 0.5922, alpha: 1.0)
-        // ConvMoneyAmt_LBL.backgroundColor = UIColor.gray
         ConvMoneyAmt_LBL.textAlignment = .center
         ConvMoneyAmt_LBL.font = UIFont(name: "Avenir-Regular", size: 1.4 * x)
         ConvertedView.addSubview(ConvMoneyAmt_LBL)
@@ -304,14 +288,6 @@ class RedeemViewController: CommonViewController
         ChangeValue_LBL.text = "\(value)"
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     
 }
