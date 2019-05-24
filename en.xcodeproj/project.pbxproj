@@ -45,6 +45,7 @@
 		FD110C00220D9FE500814BAD /* FileAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD110BFF220D9FE400814BAD /* FileAccess.swift */; };
 		FD1160462264940B00D34EAD /* AddNewMeasurementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */; };
 		FD1207F12297BFE100F5C276 /* ColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1207F02297BFE100F5C276 /* ColorCode.swift */; };
+		FD1207F32297CF0A00F5C276 /* RedeemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1207F22297CF0A00F5C276 /* RedeemViewController.swift */; };
 		FD14F56321B50AF000D74E2B /* DressSubTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */; };
 		FD19B531228E8A17000391CD /* ReferAndEarnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19B530228E8A17000391CD /* ReferAndEarnViewController.swift */; };
 		FD19B533228EC582000391CD /* OffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD19B532228EC582000391CD /* OffersViewController.swift */; };
@@ -162,6 +163,7 @@
 		FD110BFF220D9FE400814BAD /* FileAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccess.swift; sourceTree = "<group>"; };
 		FD1160452264940B00D34EAD /* AddNewMeasurementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewMeasurementViewController.swift; sourceTree = "<group>"; };
 		FD1207F02297BFE100F5C276 /* ColorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCode.swift; sourceTree = "<group>"; };
+		FD1207F22297CF0A00F5C276 /* RedeemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemViewController.swift; sourceTree = "<group>"; };
 		FD14F56221B50AF000D74E2B /* DressSubTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DressSubTypeViewController.swift; sourceTree = "<group>"; };
 		FD19B530228E8A17000391CD /* ReferAndEarnViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferAndEarnViewController.swift; sourceTree = "<group>"; };
 		FD19B532228EC582000391CD /* OffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersViewController.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				FD2A6C6A2293FC9500FB8946 /* CheckOutViewController.swift */,
+				FD1207F22297CF0A00F5C276 /* RedeemViewController.swift */,
 			);
 			path = "CHECK OUT";
 			sourceTree = "<group>";
@@ -845,6 +848,7 @@
 				FD0611A821D4F481006FDAC4 /* MeasurementCall.swift in Sources */,
 				DA06108721E4C4D1005BB29D /* ServiceTypeViewController.swift in Sources */,
 				FD2ADFED2175C0230033025B /* ServerAPI.swift in Sources */,
+				FD1207F32297CF0A00F5C276 /* RedeemViewController.swift in Sources */,
 				FD71D25E219EF24200FFC067 /* OrderTypeViewController.swift in Sources */,
 				DA9F66592249EC6E00969B34 /* SearchResultsController.swift in Sources */,
 				FD0785D9220964E1001B9FC9 /* ConversionToJson.swift in Sources */,

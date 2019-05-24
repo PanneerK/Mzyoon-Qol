@@ -15,6 +15,8 @@ class SlideViewController: UIViewController
     var x = CGFloat()
     var y = CGFloat()
     
+    let backgroundImage = UIImageView()
+    
     var slideViewWidth = CGFloat()
     
     var window: UIWindow?
@@ -72,6 +74,10 @@ class SlideViewController: UIViewController
     
     func screenContents()
     {
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        backgroundImage.image = UIImage(named: "sideMenuImage")
+        view.addSubview(backgroundImage)
+        
         userImage.frame = CGRect(x: ((slideViewWidth - (10 * x)) / 2), y: (5 * y), width: (10 * x), height: (10 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
         userImage.layer.borderWidth = 0.50
@@ -148,6 +154,10 @@ class SlideViewController: UIViewController
     
     func screenContentsInArabic()
     {
+        backgroundImage.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
+        backgroundImage.image = UIImage(named: "sideMenuImage")
+        view.addSubview(backgroundImage)
+        
         let userImage = UIImageView()
         userImage.frame = CGRect(x: ((slideViewWidth - (10 * x)) / 2), y: (2.5 * y), width: (10 * x), height: (10 * x))
         userImage.layer.cornerRadius = userImage.frame.height / 2
