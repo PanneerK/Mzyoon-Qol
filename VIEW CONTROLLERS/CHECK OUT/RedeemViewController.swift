@@ -120,7 +120,7 @@ class RedeemViewController: CommonViewController
         selfScreenContents.addSubview(MzyoonCont_LBL)
         
         // let ChangeValue_LBL = UILabel()
-        ChangeValue_LBL.frame = CGRect(x: (selfScreenContents.frame.width / 2) - (2 * x), y: Mzyoon_LBL.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
+        ChangeValue_LBL.frame = CGRect(x: TotPtsView_LBL.frame.width / 2, y: Mzyoon_LBL.frame.maxY + (3 * y), width: (8 * x), height: (2 * y))
         ChangeValue_LBL.backgroundColor = UIColor.orange
         ChangeValue_LBL.textColor = UIColor.white
         ChangeValue_LBL.text = "2400"
